@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/r-downing",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "r-downing/library/AutoPID/1.0.4/AutoPID-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoPID-1.0.4.tar.gz",
+    "size_bytes": 3938,
+    "sha256": "8b079538e1fa00a6e4d3932761c45b4a043feacc71ec47681f2feca4cc4db2fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/r-downing/library/AutoPID/1.0.4/AutoPID-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/r-downing/library/AutoPID/1.0.4/AutoPID-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "r-downing/library/EasySSDP/0.0.0/EasySSDP-0.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasySSDP-0.0.0.tar.gz",
+    "size_bytes": 1061,
+    "sha256": "e77ea5849d86ed70229f62d8d810fe3ffb9632229e8f6a92e3c5e79ebdb4eccc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/r-downing/library/EasySSDP/0.0.0/EasySSDP-0.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/r-downing/library/EasySSDP/0.0.0/EasySSDP-0.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "r-downing/library/PersWiFiManager/5.0.0/PersWiFiManager-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PersWiFiManager-5.0.0.tar.gz",
+    "size_bytes": 9276,
+    "sha256": "e240724b8f2daa1a01509b315a45bdf5879dd2ab0b84325bfcb566341f018f5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/r-downing/library/PersWiFiManager/5.0.0/PersWiFiManager-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/r-downing/library/PersWiFiManager/5.0.0/PersWiFiManager-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "r-downing/library/SPIFFSReadServer/0.0.4/SPIFFSReadServer-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPIFFSReadServer-0.0.4.tar.gz",
+    "size_bytes": 3661,
+    "sha256": "3852189b8a87037fe7041bf87af52673bc456a2be11d83a2bce4e1988d5aaa06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/r-downing/library/SPIFFSReadServer/0.0.4/SPIFFSReadServer-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/r-downing/library/SPIFFSReadServer/0.0.4/SPIFFSReadServer-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

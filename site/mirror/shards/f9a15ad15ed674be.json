@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mahfuz195",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mahfuz195/library/BMP280/1.0.0/BMP280-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP280-1.0.0.tar.gz",
+    "size_bytes": 5688,
+    "sha256": "8a6c12de8cbccc6cf19a9af738849499d911a240e51cfd7a5dfed6b15b30bd38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mahfuz195/library/BMP280/1.0.0/BMP280-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mahfuz195/library/BMP280/1.0.0/BMP280-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

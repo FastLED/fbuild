@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-esmacat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-esmacat/library/EsmacatShield/0.0.0+sha.77c2a6061e77/EsmacatShield-0.0.0+sha.77c2a6061e77.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EsmacatShield-0.0.0+sha.77c2a6061e77.tar.gz",
+    "size_bytes": 3369,
+    "sha256": "aebee26dbf289d92381c107a11379f88a04653bf732e7623a3c3f8dd8ecbf067",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-esmacat/library/EsmacatShield/0.0.0%2Bsha.77c2a6061e77/EsmacatShield-0.0.0%2Bsha.77c2a6061e77.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-esmacat/library/EsmacatShield/0.0.0%2Bsha.77c2a6061e77/EsmacatShield-0.0.0%2Bsha.77c2a6061e77.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-margadon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-margadon/library/Freetronics_16x2_LCD_Rus/0.0.0+sha.08abb319acab/Freetronics_16x2_LCD_Rus-0.0.0+sha.08abb319acab.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Freetronics_16x2_LCD_Rus-0.0.0+sha.08abb319acab.tar.gz",
+    "size_bytes": 4163,
+    "sha256": "53805105ab4ccf9d9b6880d65d1f5597b5ddc83907e39926bd23216eb9741009",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-margadon/library/Freetronics_16x2_LCD_Rus/0.0.0%2Bsha.08abb319acab/Freetronics_16x2_LCD_Rus-0.0.0%2Bsha.08abb319acab.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-margadon/library/Freetronics_16x2_LCD_Rus/0.0.0%2Bsha.08abb319acab/Freetronics_16x2_LCD_Rus-0.0.0%2Bsha.08abb319acab.tar.gz"
+    ]
+   }
+  }
+ ]
+}

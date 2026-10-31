@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/danyev3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "danyev3/library/JAREL/1.0.0/JAREL-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JAREL-1.0.0.tar.gz",
+    "size_bytes": 16534,
+    "sha256": "72d21933473abfb99328291f2ba72a1c1f1f8305cd8294366b805d6fd7e61ef3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danyev3/library/JAREL/1.0.0/JAREL-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danyev3/library/JAREL/1.0.0/JAREL-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

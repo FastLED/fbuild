@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/daguerpedro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "daguerpedro/library/MQSensor/3.1.0/MQSensor-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQSensor-3.1.0.tar.gz",
+    "size_bytes": 7146,
+    "sha256": "d222d8b3b251ef5cf52356c87ee8c0b9bbeea23319649957de0779e7625d8af7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daguerpedro/library/MQSensor/3.1.0/MQSensor-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/daguerpedro/library/MQSensor/3.1.0/MQSensor-3.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rleusden",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rleusden/library/LTC2944_BMS/1.0.2/LTC2944_BMS-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTC2944_BMS-1.0.2.tar.gz",
+    "size_bytes": 20059,
+    "sha256": "112d2a41f9cd5087675190309c0195e24ebe5b9b29a52c7e51b949125da19426",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rleusden/library/LTC2944_BMS/1.0.2/LTC2944_BMS-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rleusden/library/LTC2944_BMS/1.0.2/LTC2944_BMS-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rleusden/library/LTC2944_BMS/1.0.7/LTC2944_BMS-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTC2944_BMS-1.0.7.tar.gz",
+    "size_bytes": 24880,
+    "sha256": "96eb590a43aa0df166ee1923b823500c34edcfbdf08bf77c502bd4c6207a3329",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rleusden/library/LTC2944_BMS/1.0.7/LTC2944_BMS-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/rleusden/library/LTC2944_BMS/1.0.7/LTC2944_BMS-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rleusden/library/LTC2944_BMS/1.0.8/LTC2944_BMS-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTC2944_BMS-1.0.8.tar.gz",
+    "size_bytes": 28659,
+    "sha256": "1ee1e042751869d3dc3e729909e2d14a8dadf6eed47e27e9085cd3addc8092dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rleusden/library/LTC2944_BMS/1.0.8/LTC2944_BMS-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/rleusden/library/LTC2944_BMS/1.0.8/LTC2944_BMS-1.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

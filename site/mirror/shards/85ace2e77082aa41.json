@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zhu-jiatong",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zhu-jiatong/library/AccessPermissionManager/1.0.0/AccessPermissionManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AccessPermissionManager-1.0.0.tar.gz",
+    "size_bytes": 2135,
+    "sha256": "3228f6c0edbd550a0d2aa5401e3fec931a2b9a3390b9889af8b09f3b2f5c53ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zhu-jiatong/library/AccessPermissionManager/1.0.0/AccessPermissionManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zhu-jiatong/library/AccessPermissionManager/1.0.0/AccessPermissionManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zhu-jiatong/library/CredentialManager/1.0.0/CredentialManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CredentialManager-1.0.0.tar.gz",
+    "size_bytes": 1761,
+    "sha256": "f28529ec0baa0c6d0203c6f5ff1b63af0333478605ad18d22d381633afe9ee3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zhu-jiatong/library/CredentialManager/1.0.0/CredentialManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zhu-jiatong/library/CredentialManager/1.0.0/CredentialManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zhu-jiatong/library/FilesystemAccessInterface/1.0.0/FilesystemAccessInterface-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FilesystemAccessInterface-1.0.0.tar.gz",
+    "size_bytes": 1517,
+    "sha256": "aa6f610bf9c048d74d2c0c58445547d50cf8da7cb623c094dab9a198e5ef2f3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zhu-jiatong/library/FilesystemAccessInterface/1.0.0/FilesystemAccessInterface-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zhu-jiatong/library/FilesystemAccessInterface/1.0.0/FilesystemAccessInterface-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zhu-jiatong/library/FilesystemUtilities/0.0.1/FilesystemUtilities-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FilesystemUtilities-0.0.1.tar.gz",
+    "size_bytes": 83254,
+    "sha256": "839ec9adb1b1feb7b78a031a5e24822a1dafc2a5a93faa6bff1b4758a33cf867",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zhu-jiatong/library/FilesystemUtilities/0.0.1/FilesystemUtilities-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zhu-jiatong/library/FilesystemUtilities/0.0.1/FilesystemUtilities-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zhu-jiatong/library/FilesystemUtility/1.0.0/FilesystemUtility-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FilesystemUtility-1.0.0.tar.gz",
+    "size_bytes": 1948,
+    "sha256": "63ea5597f7da6fd249962e9526c1caced5f40950e4d6d507f3679cee86177f0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zhu-jiatong/library/FilesystemUtility/1.0.0/FilesystemUtility-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zhu-jiatong/library/FilesystemUtility/1.0.0/FilesystemUtility-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zhu-jiatong/library/SQLiteDatabaseConnection/1.0.1/SQLiteDatabaseConnection-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SQLiteDatabaseConnection-1.0.1.tar.gz",
+    "size_bytes": 2072,
+    "sha256": "40ab1bcb66840755c489c6f7340ae3fd1e0a95e6453d09177ce3c50ba0180a0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zhu-jiatong/library/SQLiteDatabaseConnection/1.0.1/SQLiteDatabaseConnection-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zhu-jiatong/library/SQLiteDatabaseConnection/1.0.1/SQLiteDatabaseConnection-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zhu-jiatong/library/SessionManager/1.0.1/SessionManager-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SessionManager-1.0.1.tar.gz",
+    "size_bytes": 1708,
+    "sha256": "3113ffe33d2a1a2b0a60bc3fa5c3bb3d3ab2f9393979b520106240fed19204d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zhu-jiatong/library/SessionManager/1.0.1/SessionManager-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zhu-jiatong/library/SessionManager/1.0.1/SessionManager-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zhu-jiatong/library/TaskQueue/1.2.0/TaskQueue-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskQueue-1.2.0.tar.gz",
+    "size_bytes": 84528,
+    "sha256": "0d722a875e2e1ee4f383fae16d7e0c262d021f86b4c7f0dc14cb12a0dca3fa2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zhu-jiatong/library/TaskQueue/1.2.0/TaskQueue-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zhu-jiatong/library/TaskQueue/1.2.0/TaskQueue-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zhu-jiatong/library/WebServerSessionManager/2.0.0/WebServerSessionManager-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebServerSessionManager-2.0.0.tar.gz",
+    "size_bytes": 149193,
+    "sha256": "036065c980fcd9c3a99c2800cd26fbb92d69c6fcd687853ca1eed345680dcd76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zhu-jiatong/library/WebServerSessionManager/2.0.0/WebServerSessionManager-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zhu-jiatong/library/WebServerSessionManager/2.0.0/WebServerSessionManager-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

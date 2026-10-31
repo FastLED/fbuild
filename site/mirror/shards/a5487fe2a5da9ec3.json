@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-internet-of-tings",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-internet-of-tings/library/motor-mining/0.0.0+sha.d3e69e507616/motor-mining-0.0.0+sha.d3e69e507616.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "motor-mining-0.0.0+sha.d3e69e507616.tar.gz",
+    "size_bytes": 5570,
+    "sha256": "e2794958684c597dcf60383c388320da472aef4c6c76c42e58ae3bd452e5ff5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-internet-of-tings/library/motor-mining/0.0.0%2Bsha.d3e69e507616/motor-mining-0.0.0%2Bsha.d3e69e507616.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-internet-of-tings/library/motor-mining/0.0.0%2Bsha.d3e69e507616/motor-mining-0.0.0%2Bsha.d3e69e507616.tar.gz"
+    ]
+   }
+  }
+ ]
+}

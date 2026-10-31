@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sambo007",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sambo007/library/ADS1015/0.0.0+sha.976073ea60df/ADS1015-0.0.0+sha.976073ea60df.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1015-0.0.0+sha.976073ea60df.tar.gz",
+    "size_bytes": 5972,
+    "sha256": "b35e8342d4a8cfc1b9a773b527309f352ee6d0046c9e54c8fee1a70d6585984f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sambo007/library/ADS1015/0.0.0%2Bsha.976073ea60df/ADS1015-0.0.0%2Bsha.976073ea60df.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sambo007/library/ADS1015/0.0.0%2Bsha.976073ea60df/ADS1015-0.0.0%2Bsha.976073ea60df.tar.gz"
+    ]
+   }
+  }
+ ]
+}

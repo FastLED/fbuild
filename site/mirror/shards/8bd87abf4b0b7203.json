@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/danidask",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "danidask/library/MatrizLed/2.0.5/MatrizLed-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrizLed-2.0.5.tar.gz",
+    "size_bytes": 7023,
+    "sha256": "3e284686a3bb353c190629c53e480428d37bdddddd0ec5d1c5b9955d7e824719",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danidask/library/MatrizLed/2.0.5/MatrizLed-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/danidask/library/MatrizLed/2.0.5/MatrizLed-2.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

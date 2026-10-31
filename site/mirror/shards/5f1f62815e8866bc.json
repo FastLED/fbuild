@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yuuichiakagawa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yuuichiakagawa/library/UHS2-MIDI/1.0.1/UHS2-MIDI-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UHS2-MIDI-1.0.1.tar.gz",
+    "size_bytes": 7320,
+    "sha256": "df330ec6041dbf8513f7fa4caffa6198113b0e5b07d0601db2bfe82422184277",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yuuichiakagawa/library/UHS2-MIDI/1.0.1/UHS2-MIDI-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yuuichiakagawa/library/UHS2-MIDI/1.0.1/UHS2-MIDI-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

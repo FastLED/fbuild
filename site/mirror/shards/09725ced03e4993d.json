@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dancol90",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dancol90/library/ESP8266Ping/1.1.0/ESP8266Ping-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Ping-1.1.0.tar.gz",
+    "size_bytes": 11793,
+    "sha256": "833c83e7ea5787750521a08f458624c15b1fa39156744697bfe29d4fb3289789",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dancol90/library/ESP8266Ping/1.1.0/ESP8266Ping-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dancol90/library/ESP8266Ping/1.1.0/ESP8266Ping-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

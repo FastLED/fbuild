@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gaitolini",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gaitolini/library/CaixaDaguaSensor/1.0/CaixaDaguaSensor-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CaixaDaguaSensor-1.0.tar.gz",
+    "size_bytes": 8999,
+    "sha256": "6db76143ba86d6de7c8e6dcd50d2e0055ef8bfe6e76b1c651fd0b7d01e52afc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gaitolini/library/CaixaDaguaSensor/1.0/CaixaDaguaSensor-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gaitolini/library/CaixaDaguaSensor/1.0/CaixaDaguaSensor-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gaitolini/library/SoftwareSerial/1.0/SoftwareSerial-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftwareSerial-1.0.tar.gz",
+    "size_bytes": 8640,
+    "sha256": "3cbe2e7e7db287322db56c19cdec98afb1f63547c5c1972ac938d17055085249",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gaitolini/library/SoftwareSerial/1.0/SoftwareSerial-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gaitolini/library/SoftwareSerial/1.0/SoftwareSerial-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gaitolini/library/Timing/1.0.0/Timing-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timing-1.0.0.tar.gz",
+    "size_bytes": 1890,
+    "sha256": "e40cdd99fe039bbcfe32a2faff26e31e8feb9b58b9d235ba90fe7cfc41ca9a11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gaitolini/library/Timing/1.0.0/Timing-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gaitolini/library/Timing/1.0.0/Timing-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

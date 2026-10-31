@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/radariq",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "radariq/library/RadarIQ/1.0.5/RadarIQ-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadarIQ-1.0.5.tar.gz",
+    "size_bytes": 18125,
+    "sha256": "b57f260f9a90a5fa0b337ce6780966c4f9d585c1412b4b335206763fa76152ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/radariq/library/RadarIQ/1.0.5/RadarIQ-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/radariq/library/RadarIQ/1.0.5/RadarIQ-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

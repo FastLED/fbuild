@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/timothyfran",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "timothyfran/library/OtamaticClient/0.1.0/OtamaticClient-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OtamaticClient-0.1.0.tar.gz",
+    "size_bytes": 17010,
+    "sha256": "7f2fd894ffe4f75969ef473e25e9069af45a1385f4c016316430af904e8f1ca9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/timothyfran/library/OtamaticClient/0.1.0/OtamaticClient-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/timothyfran/library/OtamaticClient/0.1.0/OtamaticClient-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "timothyfran/library/OtamaticClient/0.2.0/OtamaticClient-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OtamaticClient-0.2.0.tar.gz",
+    "size_bytes": 18409,
+    "sha256": "10314163488cc275373e4bbdef959839b956e3f788527d714aabd29eb97a9de2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/timothyfran/library/OtamaticClient/0.2.0/OtamaticClient-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/timothyfran/library/OtamaticClient/0.2.0/OtamaticClient-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "timothyfran/library/OtamaticClient/0.3.0/OtamaticClient-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OtamaticClient-0.3.0.tar.gz",
+    "size_bytes": 28861,
+    "sha256": "8e8e9652388a3e25c8469fb1daf45ecfaac049bf72f082a1e0382567a3907087",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/timothyfran/library/OtamaticClient/0.3.0/OtamaticClient-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/timothyfran/library/OtamaticClient/0.3.0/OtamaticClient-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "timothyfran/library/OtamaticClient/0.3.1/OtamaticClient-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OtamaticClient-0.3.1.tar.gz",
+    "size_bytes": 36491,
+    "sha256": "b5fffaa84dc3246fb3d179bd56247b6231c8a57c09f34d03eb6b3b8f2e860c5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/timothyfran/library/OtamaticClient/0.3.1/OtamaticClient-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/timothyfran/library/OtamaticClient/0.3.1/OtamaticClient-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "timothyfran/library/OtamaticClient/0.4.0/OtamaticClient-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OtamaticClient-0.4.0.tar.gz",
+    "size_bytes": 36816,
+    "sha256": "ae49e0803c9fe70ce2c9ecb88bc5af8571e9d8628998d23d18c0d73117f6c2a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/timothyfran/library/OtamaticClient/0.4.0/OtamaticClient-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/timothyfran/library/OtamaticClient/0.4.0/OtamaticClient-0.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

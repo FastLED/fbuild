@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-prabhuvd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-prabhuvd/library/motorlib/0.0.0+sha.c1f9f9d74f35/motorlib-0.0.0+sha.c1f9f9d74f35.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "motorlib-0.0.0+sha.c1f9f9d74f35.tar.gz",
+    "size_bytes": 2473,
+    "sha256": "619b106ea887d4b836fdfc7a39bd6ecb1d22e4d485edd6b9f310d13bb2ca9925",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-prabhuvd/library/motorlib/0.0.0%2Bsha.c1f9f9d74f35/motorlib-0.0.0%2Bsha.c1f9f9d74f35.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-prabhuvd/library/motorlib/0.0.0%2Bsha.c1f9f9d74f35/motorlib-0.0.0%2Bsha.c1f9f9d74f35.tar.gz"
+    ]
+   }
+  }
+ ]
+}

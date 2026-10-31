@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-soft-robot-team",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-soft-robot-team/library/ros_lib_melodic/0.0.0+sha.b964e3f71102/ros_lib_melodic-0.0.0+sha.b964e3f71102.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ros_lib_melodic-0.0.0+sha.b964e3f71102.tar.gz",
+    "size_bytes": 137248,
+    "sha256": "fb70ad266926e6bf55e4976b30aad12c557f97edb693270f2c8f188275fe7d3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-soft-robot-team/library/ros_lib_melodic/0.0.0%2Bsha.b964e3f71102/ros_lib_melodic-0.0.0%2Bsha.b964e3f71102.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-soft-robot-team/library/ros_lib_melodic/0.0.0%2Bsha.b964e3f71102/ros_lib_melodic-0.0.0%2Bsha.b964e3f71102.tar.gz"
+    ]
+   }
+  }
+ ]
+}

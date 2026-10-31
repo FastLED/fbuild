@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lsprain",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lsprain/library/RTC_RX8025/1.0.0/RTC_RX8025-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC_RX8025-1.0.0.tar.gz",
+    "size_bytes": 14660,
+    "sha256": "d060e8c0e5b0093f67f6ce944f6c8f3c036ad782613c4abe5f128a5a2b58c2c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lsprain/library/RTC_RX8025/1.0.0/RTC_RX8025-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lsprain/library/RTC_RX8025/1.0.0/RTC_RX8025-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lsprain/library/RTC_RX8025T/1.2.1/RTC_RX8025T-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC_RX8025T-1.2.1.tar.gz",
+    "size_bytes": 11370,
+    "sha256": "4cc14a7b7ec91f712f99964e4d069f7006ce616406f85351acb0b96b44415eb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lsprain/library/RTC_RX8025T/1.2.1/RTC_RX8025T-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lsprain/library/RTC_RX8025T/1.2.1/RTC_RX8025T-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

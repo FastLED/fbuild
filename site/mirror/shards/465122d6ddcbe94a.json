@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/uberi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "uberi/library/CommandParser/1.1.0/CommandParser-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CommandParser-1.1.0.tar.gz",
+    "size_bytes": 8142,
+    "sha256": "c97fbcfe4af55d0923af57548f37549514467c2efaf4a1d73201cb9a6d5bd68c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uberi/library/CommandParser/1.1.0/CommandParser-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uberi/library/CommandParser/1.1.0/CommandParser-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uberi/library/HardwareBLESerial/1.0.0/HardwareBLESerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HardwareBLESerial-1.0.0.tar.gz",
+    "size_bytes": 8704,
+    "sha256": "92d3e73de1f1df218b2f4bb6124a5a4d173cd82fa1099c323ea7300c33779203",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uberi/library/HardwareBLESerial/1.0.0/HardwareBLESerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uberi/library/HardwareBLESerial/1.0.0/HardwareBLESerial-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

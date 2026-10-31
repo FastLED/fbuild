@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/button-hq",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "button-hq/library/ButtonConnect/0.4.3/ButtonConnect-0.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonConnect-0.4.3.tar.gz",
+    "size_bytes": 27385,
+    "sha256": "bab039bba7e4c4bd6fcb1876a72e13e89e6465b786900a5a39d5b2a7bff718e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/button-hq/library/ButtonConnect/0.4.3/ButtonConnect-0.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/button-hq/library/ButtonConnect/0.4.3/ButtonConnect-0.4.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

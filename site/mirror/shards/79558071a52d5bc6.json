@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zvonler",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zvonler/library/CircuitPlaygroundGestures/1.0.1/CircuitPlaygroundGestures-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircuitPlaygroundGestures-1.0.1.tar.gz",
+    "size_bytes": 18089,
+    "sha256": "609ff27c5729a2374de042ba5f2b73a941a67a52490f2953b91512c1d2aae9ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zvonler/library/CircuitPlaygroundGestures/1.0.1/CircuitPlaygroundGestures-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zvonler/library/CircuitPlaygroundGestures/1.0.1/CircuitPlaygroundGestures-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zvonler/library/DebouncedButton/1.0.0/DebouncedButton-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebouncedButton-1.0.0.tar.gz",
+    "size_bytes": 15653,
+    "sha256": "22eb1ee5bc21cb12c9b7a318b20406f832325fd11c37d79c63cdfebf8de7f10a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zvonler/library/DebouncedButton/1.0.0/DebouncedButton-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zvonler/library/DebouncedButton/1.0.0/DebouncedButton-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zvonler/library/DebouncedLDR/1.0.0/DebouncedLDR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebouncedLDR-1.0.0.tar.gz",
+    "size_bytes": 14643,
+    "sha256": "63353185dc62a3a7fea19f0aecdefb558196d826889d9849ba9ef240387763dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zvonler/library/DebouncedLDR/1.0.0/DebouncedLDR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zvonler/library/DebouncedLDR/1.0.0/DebouncedLDR-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

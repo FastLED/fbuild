@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tomo2k",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tomo2k/library/FlashM25PSpi/0.0.0+sha.63399e648bfc/FlashM25PSpi-0.0.0+sha.63399e648bfc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashM25PSpi-0.0.0+sha.63399e648bfc.tar.gz",
+    "size_bytes": 4391,
+    "sha256": "77c71c17586e3ce294060a58591d3c05617d966ba7e1cf0afa9edc2b2545bfc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tomo2k/library/FlashM25PSpi/0.0.0%2Bsha.63399e648bfc/FlashM25PSpi-0.0.0%2Bsha.63399e648bfc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tomo2k/library/FlashM25PSpi/0.0.0%2Bsha.63399e648bfc/FlashM25PSpi-0.0.0%2Bsha.63399e648bfc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tomo2k/library/IntDisabler/0.0.0+sha.cd6400023513/IntDisabler-0.0.0+sha.cd6400023513.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IntDisabler-0.0.0+sha.cd6400023513.tar.gz",
+    "size_bytes": 979,
+    "sha256": "3977d545100b3e0d873bce1af14d00f849c221c4bec598e92cda0c1f2baa7357",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tomo2k/library/IntDisabler/0.0.0%2Bsha.cd6400023513/IntDisabler-0.0.0%2Bsha.cd6400023513.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tomo2k/library/IntDisabler/0.0.0%2Bsha.cd6400023513/IntDisabler-0.0.0%2Bsha.cd6400023513.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tomo2k/library/Multi_WS2811/0.0.0+sha.58623ad7f310/Multi_WS2811-0.0.0+sha.58623ad7f310.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Multi_WS2811-0.0.0+sha.58623ad7f310.tar.gz",
+    "size_bytes": 8085,
+    "sha256": "bbf82c940a01830dac865e7aaa28254315c5e70429ab6c8df7a59c514d60d74c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tomo2k/library/Multi_WS2811/0.0.0%2Bsha.58623ad7f310/Multi_WS2811-0.0.0%2Bsha.58623ad7f310.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tomo2k/library/Multi_WS2811/0.0.0%2Bsha.58623ad7f310/Multi_WS2811-0.0.0%2Bsha.58623ad7f310.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tomo2k/library/MutexLocker/0.0.0+sha.aab6944f2ed3/MutexLocker-0.0.0+sha.aab6944f2ed3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MutexLocker-0.0.0+sha.aab6944f2ed3.tar.gz",
+    "size_bytes": 1103,
+    "sha256": "d12707d9feee889c4da229497a807ef991ca182a41569c3c6e2feb239df0e1ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tomo2k/library/MutexLocker/0.0.0%2Bsha.aab6944f2ed3/MutexLocker-0.0.0%2Bsha.aab6944f2ed3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tomo2k/library/MutexLocker/0.0.0%2Bsha.aab6944f2ed3/MutexLocker-0.0.0%2Bsha.aab6944f2ed3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

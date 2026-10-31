@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jeelabs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jeelabs/library/ELClient/0.0.0-broken/ELClient-0.0.0-alphasha.cf329e8b84.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ELClient-0.0.0-alphasha.cf329e8b84.tar.gz",
+    "size_bytes": 492,
+    "sha256": "9a084ffbc21854933f4ab378cdeb01031decbad6a069658a6e1249451450e32b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeelabs/library/ELClient/0.0.0-broken/ELClient-0.0.0-alphasha.cf329e8b84.tar.gz",
+     "https://dl.registry.platformio.org/download/jeelabs/library/ELClient/0.0.0-broken/ELClient-0.0.0-alphasha.cf329e8b84.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeelabs/library/JeeLib/0.0.0-alpha+sha.635113edea/JeeLib-0.0.0-alphasha.635113edea.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JeeLib-0.0.0-alphasha.635113edea.tar.gz",
+    "size_bytes": 286880,
+    "sha256": "869955a1b8b4dedf3a4f25089ae7e07200b72cd5335f22a5c84cd87406c4de48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeelabs/library/JeeLib/0.0.0-alpha%2Bsha.635113edea/JeeLib-0.0.0-alphasha.635113edea.tar.gz",
+     "https://dl.registry.platformio.org/download/jeelabs/library/JeeLib/0.0.0-alpha%2Bsha.635113edea/JeeLib-0.0.0-alphasha.635113edea.tar.gz"
+    ]
+   }
+  }
+ ]
+}

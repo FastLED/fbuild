@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-osmeest",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-osmeest/library/KeyboardManager/0.0.0+sha.1310c57aca77/KeyboardManager-0.0.0+sha.1310c57aca77.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KeyboardManager-0.0.0+sha.1310c57aca77.tar.gz",
+    "size_bytes": 8867,
+    "sha256": "31e53e9f8ddbb7c1b45f95903700edd97bd581ebe7346a889140e689fec65ba5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-osmeest/library/KeyboardManager/0.0.0%2Bsha.1310c57aca77/KeyboardManager-0.0.0%2Bsha.1310c57aca77.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-osmeest/library/KeyboardManager/0.0.0%2Bsha.1310c57aca77/KeyboardManager-0.0.0%2Bsha.1310c57aca77.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-osmeest/library/Motordriver/0.0.0+sha.83245b45ea70/Motordriver-0.0.0+sha.83245b45ea70.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motordriver-0.0.0+sha.83245b45ea70.tar.gz",
+    "size_bytes": 2950,
+    "sha256": "c7591c3d9fadc8dc3af12ddc51afca4ad0d5a4366d2d4018e093d3ba24a7bc9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-osmeest/library/Motordriver/0.0.0%2Bsha.83245b45ea70/Motordriver-0.0.0%2Bsha.83245b45ea70.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-osmeest/library/Motordriver/0.0.0%2Bsha.83245b45ea70/Motordriver-0.0.0%2Bsha.83245b45ea70.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-osmeest/library/SoundWaveGenerator/0.0.0+sha.6864fd480178/SoundWaveGenerator-0.0.0+sha.6864fd480178.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoundWaveGenerator-0.0.0+sha.6864fd480178.tar.gz",
+    "size_bytes": 3265,
+    "sha256": "257e7741e71a792f364d4e4b269d0def775fd42d5c08f9850897b9a461bfc77d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-osmeest/library/SoundWaveGenerator/0.0.0%2Bsha.6864fd480178/SoundWaveGenerator-0.0.0%2Bsha.6864fd480178.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-osmeest/library/SoundWaveGenerator/0.0.0%2Bsha.6864fd480178/SoundWaveGenerator-0.0.0%2Bsha.6864fd480178.tar.gz"
+    ]
+   }
+  }
+ ]
+}

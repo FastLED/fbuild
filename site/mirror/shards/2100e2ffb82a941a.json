@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/puara",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "puara/library/puara-gestures/1.0.0/puara-gestures-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "puara-gestures-1.0.0.tar.gz",
+    "size_bytes": 45935,
+    "sha256": "fb6e7f9d128059df61e5fee25c97cdfc50f56b5081c5cd40b08678792354c027",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/puara/library/puara-gestures/1.0.0/puara-gestures-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/puara/library/puara-gestures/1.0.0/puara-gestures-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "puara/library/puara-module/1.0.0/puara-module-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "puara-module-1.0.0.tar.gz",
+    "size_bytes": 36117,
+    "sha256": "8b064d3129f7b429e6e385536fbf38cbb7fbbc20c2bf78a51eedb6e5fb6ba6b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/puara/library/puara-module/1.0.0/puara-module-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/puara/library/puara-module/1.0.0/puara-module-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "puara/library/puara-module/1.0.1/puara-module-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "puara-module-1.0.1.tar.gz",
+    "size_bytes": 36279,
+    "sha256": "d6deb5a170aa4fa9216d259e087634b023faf5c23a478ec3aa1dc5ccc29afe23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/puara/library/puara-module/1.0.1/puara-module-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/puara/library/puara-module/1.0.1/puara-module-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

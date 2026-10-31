@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dycodex",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dycodex/library/Alora/0.5.1/Alora-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Alora-0.5.1.tar.gz",
+    "size_bytes": 57584,
+    "sha256": "9c10d810b8503c84209f2782310e4046fc105dfe3a576c7f58d19c1d05a41a91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dycodex/library/Alora/0.5.1/Alora-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dycodex/library/Alora/0.5.1/Alora-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dycodex/library/ESPectro32/0.3.2/ESPectro32-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPectro32-0.3.2.tar.gz",
+    "size_bytes": 342230,
+    "sha256": "f4944191715884204c23479b6fe1bd1460887849406627bda795df920a83d834",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dycodex/library/ESPectro32/0.3.2/ESPectro32-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dycodex/library/ESPectro32/0.3.2/ESPectro32-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dycodex/library/MakestroCloudClient/1.0.3/MakestroCloudClient-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MakestroCloudClient-1.0.3.tar.gz",
+    "size_bytes": 4041,
+    "sha256": "cf862b0ff2e6e22a0d0e5d21b813d8ce082a6fc362c603abeb7a357bc6c1028d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dycodex/library/MakestroCloudClient/1.0.3/MakestroCloudClient-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dycodex/library/MakestroCloudClient/1.0.3/MakestroCloudClient-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cpei2025",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cpei2025/library/ESPNowAdhoc/1.0.3/ESPNowAdhoc-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPNowAdhoc-1.0.3.tar.gz",
+    "size_bytes": 12562,
+    "sha256": "1d7845cfc124da0e7738d5ee573e9a6ece084711d6877770e1d5e7888dfc9bc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cpei2025/library/ESPNowAdhoc/1.0.3/ESPNowAdhoc-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cpei2025/library/ESPNowAdhoc/1.0.3/ESPNowAdhoc-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

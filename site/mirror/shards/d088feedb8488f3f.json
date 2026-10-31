@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hpsaturn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hpsaturn/library/CanAirIO%20Air%20Quality%20Sensors%20Library/0.7.6/CanAirIOAirQualitySensorsLibrary-0.7.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CanAirIOAirQualitySensorsLibrary-0.7.6.tar.gz",
+    "size_bytes": 104695,
+    "sha256": "8d30fa5d005cc38379403a94111b6c271d302c6615444b56dc9918a97923330e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hpsaturn/library/CanAirIO%2520Air%2520Quality%2520Sensors%2520Library/0.7.6/CanAirIOAirQualitySensorsLibrary-0.7.6.tar.gz",
+     "https://dl.registry.platformio.org/download/hpsaturn/library/CanAirIO%20Air%20Quality%20Sensors%20Library/0.7.6/CanAirIOAirQualitySensorsLibrary-0.7.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hpsaturn/library/CanAirIO%20Air%20Quality%20Sensors%20Library/0.7.7/CanAirIOAirQualitySensorsLibrary-0.7.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CanAirIOAirQualitySensorsLibrary-0.7.7.tar.gz",
+    "size_bytes": 103080,
+    "sha256": "cb92b6cd20b3952888b23b07c57a6b320de9bf1baa07f3b95c5ab77daf3a68b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hpsaturn/library/CanAirIO%2520Air%2520Quality%2520Sensors%2520Library/0.7.7/CanAirIOAirQualitySensorsLibrary-0.7.7.tar.gz",
+     "https://dl.registry.platformio.org/download/hpsaturn/library/CanAirIO%20Air%20Quality%20Sensors%20Library/0.7.7/CanAirIOAirQualitySensorsLibrary-0.7.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hpsaturn/library/ESP32%20Wifi%20CLI/0.3.4/ESP32WifiCLI-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32WifiCLI-0.3.4.tar.gz",
+    "size_bytes": 27613,
+    "sha256": "7c11a11ef2c524e31ec7da518b7cadbd2227b4d7555a840bffb177a440e14129",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hpsaturn/library/ESP32%2520Wifi%2520CLI/0.3.4/ESP32WifiCLI-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/hpsaturn/library/ESP32%20Wifi%20CLI/0.3.4/ESP32WifiCLI-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hpsaturn/library/ESP32%20Wifi%20CLI/0.3.5/ESP32WifiCLI-0.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32WifiCLI-0.3.5.tar.gz",
+    "size_bytes": 27597,
+    "sha256": "2e9c45d43f27f5ef6d381a8a0f6bc79c0f4882f415f3daf593bc829070133fae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hpsaturn/library/ESP32%2520Wifi%2520CLI/0.3.5/ESP32WifiCLI-0.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/hpsaturn/library/ESP32%20Wifi%20CLI/0.3.5/ESP32WifiCLI-0.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hpsaturn/library/ESP32%20Wifi%20CLI/0.3.6/ESP32WifiCLI-0.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32WifiCLI-0.3.6.tar.gz",
+    "size_bytes": 27724,
+    "sha256": "23f9531bc4d5e902767e1c122d1f3bfc2b606aabe0f766d5db6dbac5abda2841",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hpsaturn/library/ESP32%2520Wifi%2520CLI/0.3.6/ESP32WifiCLI-0.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/hpsaturn/library/ESP32%20Wifi%20CLI/0.3.6/ESP32WifiCLI-0.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hpsaturn/library/EasyPreferences/0.1.3/EasyPreferences-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyPreferences-0.1.3.tar.gz",
+    "size_bytes": 19007,
+    "sha256": "1d26224e4fe7813b49fba6b7bb7f4e57cf61781a92939dad97894e5b048d9eb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hpsaturn/library/EasyPreferences/0.1.3/EasyPreferences-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hpsaturn/library/EasyPreferences/0.1.3/EasyPreferences-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hpsaturn/library/EasyPreferences/0.1.4/EasyPreferences-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyPreferences-0.1.4.tar.gz",
+    "size_bytes": 19106,
+    "sha256": "94ef19c4d0a8fbbaa538884280c52ebeb286b7573124853ee1d80f04760e3d7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hpsaturn/library/EasyPreferences/0.1.4/EasyPreferences-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/hpsaturn/library/EasyPreferences/0.1.4/EasyPreferences-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hpsaturn/library/EspNowCam/0.1.17/EspNowCam-0.1.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowCam-0.1.17.tar.gz",
+    "size_bytes": 50402,
+    "sha256": "61ca7b7dcd9f8a1522ac7a560680cb051284e40bae874af9d9ef2525b3921fd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hpsaturn/library/EspNowCam/0.1.17/EspNowCam-0.1.17.tar.gz",
+     "https://dl.registry.platformio.org/download/hpsaturn/library/EspNowCam/0.1.17/EspNowCam-0.1.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hpsaturn/library/EspNowCam/0.2.0/EspNowCam-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowCam-0.2.0.tar.gz",
+    "size_bytes": 57617,
+    "sha256": "1ec97f9ef68a608687bc9449d8fdd79841a870ec4935cda5fa2439ec9f5a18fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hpsaturn/library/EspNowCam/0.2.0/EspNowCam-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hpsaturn/library/EspNowCam/0.2.0/EspNowCam-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hpsaturn/library/EspNowCam/0.2.1/EspNowCam-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowCam-0.2.1.tar.gz",
+    "size_bytes": 59387,
+    "sha256": "f8cfe925996eec675be78062221ebace499ac9c783300095cc95867ec4f0c025",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hpsaturn/library/EspNowCam/0.2.1/EspNowCam-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hpsaturn/library/EspNowCam/0.2.1/EspNowCam-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hpsaturn/library/EspNowCam/0.2.2/EspNowCam-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowCam-0.2.2.tar.gz",
+    "size_bytes": 77171,
+    "sha256": "f8ce17cbc29f2e058a53f3df5009497f0e8be75da47fa2a6c7c61624bce95447",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hpsaturn/library/EspNowCam/0.2.2/EspNowCam-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hpsaturn/library/EspNowCam/0.2.2/EspNowCam-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hpsaturn/library/EspNowJoystick/0.1.5/EspNowJoystick-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowJoystick-0.1.5.tar.gz",
+    "size_bytes": 119552,
+    "sha256": "6487562b5ce4a0ed6dc83ba5897d207c5d437e506cd6416cff88adc0a17af5eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hpsaturn/library/EspNowJoystick/0.1.5/EspNowJoystick-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/hpsaturn/library/EspNowJoystick/0.1.5/EspNowJoystick-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hpsaturn/library/MATRIXVoiceESP32ArduinoOTA/0.15.0/MATRIXVoiceESP32ArduinoOTA-0.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MATRIXVoiceESP32ArduinoOTA-0.15.0.tar.gz",
+    "size_bytes": 19674,
+    "sha256": "106097aa2ef60831606fe74ce01ffd3371b851e34da6e761505c729b2f7cab43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hpsaturn/library/MATRIXVoiceESP32ArduinoOTA/0.15.0/MATRIXVoiceESP32ArduinoOTA-0.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hpsaturn/library/MATRIXVoiceESP32ArduinoOTA/0.15.0/MATRIXVoiceESP32ArduinoOTA-0.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hpsaturn/library/MultiFuncShield/1.0.6/MultiFuncShield-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiFuncShield-1.0.6.tar.gz",
+    "size_bytes": 39372,
+    "sha256": "04e014b2c4c653b43f5f96b44b7f1d9d94cfe6c62cefc3989833e4d064e68693",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hpsaturn/library/MultiFuncShield/1.0.6/MultiFuncShield-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/hpsaturn/library/MultiFuncShield/1.0.6/MultiFuncShield-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

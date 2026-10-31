@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/glmnet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "glmnet/library/Dsmr/0.5/Dsmr-0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dsmr-0.5.tar.gz",
+    "size_bytes": 21300,
+    "sha256": "bc2d787b3f0b2b2117180ad7d34c8609ebdbdb320f0dd0af09953abb3689bce5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glmnet/library/Dsmr/0.5/Dsmr-0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/glmnet/library/Dsmr/0.5/Dsmr-0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glmnet/library/Dsmr/0.7/Dsmr-0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dsmr-0.7.tar.gz",
+    "size_bytes": 21859,
+    "sha256": "fa3555f0f2421fe07ce1db32a100bd756c5635055a86644ff425cc7517a4547f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glmnet/library/Dsmr/0.7/Dsmr-0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/glmnet/library/Dsmr/0.7/Dsmr-0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glmnet/library/Dsmr/0.8/Dsmr-0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dsmr-0.8.tar.gz",
+    "size_bytes": 22315,
+    "sha256": "d34f83a220a4fe098406e36cc50d10508d7f15b7c058c3002e52ef3fe9970dc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glmnet/library/Dsmr/0.8/Dsmr-0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/glmnet/library/Dsmr/0.8/Dsmr-0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "glmnet/library/Dsmr/0.9/Dsmr-0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dsmr-0.9.tar.gz",
+    "size_bytes": 24721,
+    "sha256": "9460dd6409af641523a09035883e0ac232b57d7cf5fb5242f9a2ac277f225bd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/glmnet/library/Dsmr/0.9/Dsmr-0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/glmnet/library/Dsmr/0.9/Dsmr-0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

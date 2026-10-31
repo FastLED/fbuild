@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ayresnet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ayresnet/library/AyresShell/1.0.0/AyresShell-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AyresShell-1.0.0.tar.gz",
+    "size_bytes": 8701,
+    "sha256": "3c054a40756787f21d60fcdba32812560e9ad82f4412532c257829b52a40ee0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayresnet/library/AyresShell/1.0.0/AyresShell-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ayresnet/library/AyresShell/1.0.0/AyresShell-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayresnet/library/AyresTimer/4.1.0/AyresTimer-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AyresTimer-4.1.0.tar.gz",
+    "size_bytes": 27372,
+    "sha256": "c4a6fb906801f24a812ab14e6ed526df3a3b099a437af3b3037b811e6864edf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayresnet/library/AyresTimer/4.1.0/AyresTimer-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ayresnet/library/AyresTimer/4.1.0/AyresTimer-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayresnet/library/AyresWiFiManager/2.0.0/AyresWiFiManager-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AyresWiFiManager-2.0.0.tar.gz",
+    "size_bytes": 31062,
+    "sha256": "e073f27f4b2d53819f3ee17fa3a8818f7c08f2153264b2b3d13666e9d41ab5c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayresnet/library/AyresWiFiManager/2.0.0/AyresWiFiManager-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ayresnet/library/AyresWiFiManager/2.0.0/AyresWiFiManager-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayresnet/library/AyresWiFiManager/2.0.1/AyresWiFiManager-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AyresWiFiManager-2.0.1.tar.gz",
+    "size_bytes": 33801,
+    "sha256": "bb690e029b25c9ff97e22d391f6060224d9606d389a5f07c29f6a4f2dd051347",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayresnet/library/AyresWiFiManager/2.0.1/AyresWiFiManager-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ayresnet/library/AyresWiFiManager/2.0.1/AyresWiFiManager-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayresnet/library/AyresWiFiManager/2.3.0/AyresWiFiManager-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AyresWiFiManager-2.3.0.tar.gz",
+    "size_bytes": 81494,
+    "sha256": "e22b18abad55f8a72fe9257336c832632a5b16dc553d1420621d5466f9af6a6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayresnet/library/AyresWiFiManager/2.3.0/AyresWiFiManager-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ayresnet/library/AyresWiFiManager/2.3.0/AyresWiFiManager-2.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

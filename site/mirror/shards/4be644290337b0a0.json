@@ -1,0 +1,568 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/persuader72",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "persuader72/library/ESPMeshMesh-dev/1.1.1/ESPMeshMesh-dev-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-dev-1.1.1.tar.gz",
+    "size_bytes": 42829,
+    "sha256": "047086d3a6acad6c68458f051a79b1face48688698621b25fba9a951054c58fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh-dev/1.1.1/ESPMeshMesh-dev-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh-dev/1.1.1/ESPMeshMesh-dev-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh-dev/1.3.1/ESPMeshMesh-dev-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-dev-1.3.1.tar.gz",
+    "size_bytes": 51293,
+    "sha256": "cc06fcf237e01d9a6683fa06c888338546a0f56de44860d846f2bb962e7d3776",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh-dev/1.3.1/ESPMeshMesh-dev-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh-dev/1.3.1/ESPMeshMesh-dev-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh-dev/1.3.2/ESPMeshMesh-dev-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-dev-1.3.2.tar.gz",
+    "size_bytes": 51678,
+    "sha256": "0351670dfb8052e7c48efbf02522070724abcd75093ae4863524de18c89c5d9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh-dev/1.3.2/ESPMeshMesh-dev-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh-dev/1.3.2/ESPMeshMesh-dev-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh-dev/1.3.3/ESPMeshMesh-dev-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-dev-1.3.3.tar.gz",
+    "size_bytes": 52329,
+    "sha256": "284c779500ab08ae344f67a053012ddd615347e425ff31f376b34c9ff50636d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh-dev/1.3.3/ESPMeshMesh-dev-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh-dev/1.3.3/ESPMeshMesh-dev-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.0.0/ESPMeshMesh-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.0.0.tar.gz",
+    "size_bytes": 35434,
+    "sha256": "516f534f80564759cd599730c32091be7a2c6df22c4614b246b2115f90c3582b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.0.0/ESPMeshMesh-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.0.0/ESPMeshMesh-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.0.1/ESPMeshMesh-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.0.1.tar.gz",
+    "size_bytes": 34226,
+    "sha256": "1619d288fa24d1ce5dc546914806621325cb665381dc7a06a8a03e4aaa06135a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.0.1/ESPMeshMesh-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.0.1/ESPMeshMesh-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.0.2/ESPMeshMesh-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.0.2.tar.gz",
+    "size_bytes": 34210,
+    "sha256": "b00fcc774c92021ff1578b67b539a0d4310357974834454e38f26f8a85f279a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.0.2/ESPMeshMesh-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.0.2/ESPMeshMesh-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.0.3/ESPMeshMesh-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.0.3.tar.gz",
+    "size_bytes": 36042,
+    "sha256": "21a47d5d46e306860cd28bb744d501d5f2b4958605065ca5540c3309b14fccc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.0.3/ESPMeshMesh-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.0.3/ESPMeshMesh-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.0.4/ESPMeshMesh-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.0.4.tar.gz",
+    "size_bytes": 36074,
+    "sha256": "76e0acbea7154e7983702210a78b1809dd3794f153e6de8294416d499bdd9b5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.0.4/ESPMeshMesh-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.0.4/ESPMeshMesh-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.0.5/ESPMeshMesh-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.0.5.tar.gz",
+    "size_bytes": 36097,
+    "sha256": "a37f42b47de4515c89a0248ae66773b2627ff40da6598d35f0256a3393285322",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.0.5/ESPMeshMesh-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.0.5/ESPMeshMesh-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.0.6/ESPMeshMesh-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.0.6.tar.gz",
+    "size_bytes": 36095,
+    "sha256": "554b037ac96454f94fef4686376cf79c0c730bf507d41c735027e8af519374ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.0.6/ESPMeshMesh-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.0.6/ESPMeshMesh-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.0.7/ESPMeshMesh-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.0.7.tar.gz",
+    "size_bytes": 36082,
+    "sha256": "248f7aacb471d2c2f5be09e942a7f820c0c16c4307117c94fa22ade9ce9a3974",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.0.7/ESPMeshMesh-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.0.7/ESPMeshMesh-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.0.8/ESPMeshMesh-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.0.8.tar.gz",
+    "size_bytes": 36058,
+    "sha256": "a6872ed2cf84d8c7151b5c688228219462222e2bd263d174eb718469fd58ca7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.0.8/ESPMeshMesh-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.0.8/ESPMeshMesh-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.1.0/ESPMeshMesh-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.1.0.tar.gz",
+    "size_bytes": 42951,
+    "sha256": "422b21cc2038e817170c322b3637be2ba22f65497e22d0633c9ec6644439fbfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.1.0/ESPMeshMesh-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.1.0/ESPMeshMesh-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.1.1/ESPMeshMesh-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.1.1.tar.gz",
+    "size_bytes": 42784,
+    "sha256": "423335c32644177845534d38dd023183df4b6682b89668504890d4ecd0119729",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.1.1/ESPMeshMesh-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.1.1/ESPMeshMesh-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.1.2/ESPMeshMesh-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.1.2.tar.gz",
+    "size_bytes": 42739,
+    "sha256": "6ea44266da939b37bd50af638225126cde86bf0453deacf66fcdbabc14e8d19a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.1.2/ESPMeshMesh-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.1.2/ESPMeshMesh-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.2.0/ESPMeshMesh-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.2.0.tar.gz",
+    "size_bytes": 43244,
+    "sha256": "2f3810431275cdd9dea840c2c519dc7be7bb1a0d570e8e4457d366dd084061bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.2.0/ESPMeshMesh-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.2.0/ESPMeshMesh-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.2.1/ESPMeshMesh-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.2.1.tar.gz",
+    "size_bytes": 43276,
+    "sha256": "845a1e5a5572ed3f743f158d1afa617a03c749a59cc7b461ed067da5465c6978",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.2.1/ESPMeshMesh-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.2.1/ESPMeshMesh-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.2.2/ESPMeshMesh-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.2.2.tar.gz",
+    "size_bytes": 43316,
+    "sha256": "9a77361cde7baf6edd2e134a6ae9f0ec6db7dd40948a231b17419797440b395e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.2.2/ESPMeshMesh-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.2.2/ESPMeshMesh-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.2.3/ESPMeshMesh-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.2.3.tar.gz",
+    "size_bytes": 43408,
+    "sha256": "2060ed43b9883d087cc372760824359e6fa96ac82bd18d6c4064c79ba25c0ffe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.2.3/ESPMeshMesh-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.2.3/ESPMeshMesh-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.2.4/ESPMeshMesh-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.2.4.tar.gz",
+    "size_bytes": 43844,
+    "sha256": "7f64740e7a9cde3433cfe1d96c28ef92238f16c3ffc761dc0c84d6a1f4964b27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.2.4/ESPMeshMesh-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.2.4/ESPMeshMesh-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.2.5/ESPMeshMesh-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.2.5.tar.gz",
+    "size_bytes": 43855,
+    "sha256": "fe59f66f0c78aa6b71d305d0a1ca9b5c4733cf21677d3a423d3b693327dac29c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.2.5/ESPMeshMesh-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.2.5/ESPMeshMesh-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.4.0/ESPMeshMesh-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.4.0.tar.gz",
+    "size_bytes": 51809,
+    "sha256": "898373e3f6ded8083c290a186e63430f843c9cd80508e771fd447f9068a711cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.4.0/ESPMeshMesh-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.4.0/ESPMeshMesh-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.4.1/ESPMeshMesh-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.4.1.tar.gz",
+    "size_bytes": 52328,
+    "sha256": "45b2020d52f9c92e63ce36716dfda772b7a08ce9b6ff93bb19527724ba800fd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.4.1/ESPMeshMesh-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.4.1/ESPMeshMesh-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.4.2/ESPMeshMesh-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.4.2.tar.gz",
+    "size_bytes": 52506,
+    "sha256": "47db57b95af8866cd14ffafc7add76058231f8150825a396b35e52b448518f7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.4.2/ESPMeshMesh-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.4.2/ESPMeshMesh-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.4.3/ESPMeshMesh-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.4.3.tar.gz",
+    "size_bytes": 53774,
+    "sha256": "8a2b0d78f64052b6e0814a4fa65d92cb4d003530c99b8815a7435c1f63b6c202",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.4.3/ESPMeshMesh-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.4.3/ESPMeshMesh-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.4.4/ESPMeshMesh-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.4.4.tar.gz",
+    "size_bytes": 52902,
+    "sha256": "684e89406cbd272d05b537bad7827dcb10f79e13a2dcc72c5d91f324cf62cfdc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.4.4/ESPMeshMesh-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.4.4/ESPMeshMesh-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.4.5/ESPMeshMesh-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.4.5.tar.gz",
+    "size_bytes": 53074,
+    "sha256": "a3fb6228544cad3b695d9695f3770c502f1430bcb693d5db85817fb058fa0e6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.4.5/ESPMeshMesh-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.4.5/ESPMeshMesh-1.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.4.6/ESPMeshMesh-1.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.4.6.tar.gz",
+    "size_bytes": 53460,
+    "sha256": "cb5e5c297e75120c09c31b87ccea0b7388de5321f34d35b642a32c52c80b8809",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.4.6/ESPMeshMesh-1.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.4.6/ESPMeshMesh-1.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.4.7/ESPMeshMesh-1.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.4.7.tar.gz",
+    "size_bytes": 53493,
+    "sha256": "6e2090e18b575300211297ae366696a18bb410ccd1e493ac2ecdfbfcb3f582b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.4.7/ESPMeshMesh-1.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.4.7/ESPMeshMesh-1.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.4.8/ESPMeshMesh-1.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.4.8.tar.gz",
+    "size_bytes": 53495,
+    "sha256": "54c1d3fa6187d813006a1db85c030fafe11add2239fa4a526554352ae513e14b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.4.8/ESPMeshMesh-1.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.4.8/ESPMeshMesh-1.4.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.5.0/ESPMeshMesh-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.5.0.tar.gz",
+    "size_bytes": 55739,
+    "sha256": "858af54b9c594ba0059e28b1ad85b0dfc269887a129b9f220cf058001317d7ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.5.0/ESPMeshMesh-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.5.0/ESPMeshMesh-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.5.1/ESPMeshMesh-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.5.1.tar.gz",
+    "size_bytes": 55944,
+    "sha256": "48bdc7d4f59f29cada799115c629b56a11750090fed7902724d1b07b6bab8af7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.5.1/ESPMeshMesh-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.5.1/ESPMeshMesh-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.5.2/ESPMeshMesh-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.5.2.tar.gz",
+    "size_bytes": 56010,
+    "sha256": "839a62d00b79667b1df1531082f588d89bba6a0e231aa46b4389ee12131edc46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.5.2/ESPMeshMesh-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.5.2/ESPMeshMesh-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.6.1/ESPMeshMesh-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.6.1.tar.gz",
+    "size_bytes": 60464,
+    "sha256": "dfef439f6c5a5afc9e3c45208113f957d86511e5fd4d1751c0044e0912390d6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.6.1/ESPMeshMesh-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.6.1/ESPMeshMesh-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.6.2/ESPMeshMesh-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.6.2.tar.gz",
+    "size_bytes": 60714,
+    "sha256": "b78b37f9cb4743f70d38fcb5631955bb59241f3143cf2cadd8a72ecb91318ed0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.6.2/ESPMeshMesh-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.6.2/ESPMeshMesh-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.6.3/ESPMeshMesh-1.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.6.3.tar.gz",
+    "size_bytes": 61400,
+    "sha256": "7b4f0936962d4ec36c8b2102a0c3f9db45e37eaa32463f6ce80078c9b608a244",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.6.3/ESPMeshMesh-1.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.6.3/ESPMeshMesh-1.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.6.4/ESPMeshMesh-1.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.6.4.tar.gz",
+    "size_bytes": 62019,
+    "sha256": "b95b76f742a3112781ce615e8f8eba08eaf75e3edf58c42fefe990bcffdb1da8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.6.4/ESPMeshMesh-1.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.6.4/ESPMeshMesh-1.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.6.5/ESPMeshMesh-1.6.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.6.5.tar.gz",
+    "size_bytes": 62023,
+    "sha256": "9d3376e89a23016d4fb588c75eba82816eada1603ed9270982cc00ff1f8dab42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.6.5/ESPMeshMesh-1.6.5.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.6.5/ESPMeshMesh-1.6.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.6.6/ESPMeshMesh-1.6.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.6.6.tar.gz",
+    "size_bytes": 62045,
+    "sha256": "171a667e9eea397e692f9b2d1fa0de0a1de21ceee4ffd2b7660c94d54bcf1a8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.6.6/ESPMeshMesh-1.6.6.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.6.6/ESPMeshMesh-1.6.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.6.7/ESPMeshMesh-1.6.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.6.7.tar.gz",
+    "size_bytes": 65641,
+    "sha256": "89f8156eaefa423402de4dacea192b04031c4438bd3c53e9d898d43fd5760ddc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.6.7/ESPMeshMesh-1.6.7.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.6.7/ESPMeshMesh-1.6.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.6.8/ESPMeshMesh-1.6.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.6.8.tar.gz",
+    "size_bytes": 65752,
+    "sha256": "f1cc7cddded2459d1a08bcd83d46da87df5ece066209f638d239352d4bb514a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.6.8/ESPMeshMesh-1.6.8.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.6.8/ESPMeshMesh-1.6.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "persuader72/library/ESPMeshMesh/1.6.9/ESPMeshMesh-1.6.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshMesh-1.6.9.tar.gz",
+    "size_bytes": 66046,
+    "sha256": "01f8afcbad820b5614c1e0d012bc1dfb79cebc94610ede370a7e5e30c9525835",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/persuader72/library/ESPMeshMesh/1.6.9/ESPMeshMesh-1.6.9.tar.gz",
+     "https://dl.registry.platformio.org/download/persuader72/library/ESPMeshMesh/1.6.9/ESPMeshMesh-1.6.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

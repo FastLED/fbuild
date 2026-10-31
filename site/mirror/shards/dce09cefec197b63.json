@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aleksandr-ru",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aleksandr-ru/library/StepperMulti/1.0.1/StepperMulti-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperMulti-1.0.1.tar.gz",
+    "size_bytes": 4703,
+    "sha256": "14b139c00927f64a04b027c2e36059f2693de5c29ab16af851c7faef1ba24c05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aleksandr-ru/library/StepperMulti/1.0.1/StepperMulti-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aleksandr-ru/library/StepperMulti/1.0.1/StepperMulti-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

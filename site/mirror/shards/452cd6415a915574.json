@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/circuitsfun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "circuitsfun/library/CircuitsFunBasic/1.0.3/CircuitsFunBasic-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircuitsFunBasic-1.0.3.tar.gz",
+    "size_bytes": 31485,
+    "sha256": "3945370c739f0ff34777087509b09ddd8da41f89b7aff42ad3cee39e3685a4a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuitsfun/library/CircuitsFunBasic/1.0.3/CircuitsFunBasic-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/circuitsfun/library/CircuitsFunBasic/1.0.3/CircuitsFunBasic-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuitsfun/library/CircuitsFunProjects/1.0.2/CircuitsFunProjects-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircuitsFunProjects-1.0.2.tar.gz",
+    "size_bytes": 10792,
+    "sha256": "63052f4d77b9261680ce492169b0fecc4ac4f7d39a162a15a029043b6ae645ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuitsfun/library/CircuitsFunProjects/1.0.2/CircuitsFunProjects-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/circuitsfun/library/CircuitsFunProjects/1.0.2/CircuitsFunProjects-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

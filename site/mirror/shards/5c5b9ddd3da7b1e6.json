@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iotdevicesdev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iotdevicesdev/library/GGreg20_V3/1.0.0/GGreg20_V3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GGreg20_V3-1.0.0.tar.gz",
+    "size_bytes": 8896,
+    "sha256": "bdddbac0e93f4cd5a4086424249531ab15944938a7c08a60ee0c4035fb596cd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iotdevicesdev/library/GGreg20_V3/1.0.0/GGreg20_V3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iotdevicesdev/library/GGreg20_V3/1.0.0/GGreg20_V3-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

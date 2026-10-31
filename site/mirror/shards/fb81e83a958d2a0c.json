@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yuri-rage",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yuri-rage/library/I2C_Slave/0.3.1/I2C_Slave-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C_Slave-0.3.1.tar.gz",
+    "size_bytes": 5901,
+    "sha256": "2e83ed2ffe2b4b0cb9de5af4039e608cefd8c67c45aef733c802bd76f5bf6138",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yuri-rage/library/I2C_Slave/0.3.1/I2C_Slave-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yuri-rage/library/I2C_Slave/0.3.1/I2C_Slave-0.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

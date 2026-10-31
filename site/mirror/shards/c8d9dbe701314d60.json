@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mizuyoukanao",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mizuyoukanao/library/Bluewhale/1.0.4/Bluewhale-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bluewhale-1.0.4.tar.gz",
+    "size_bytes": 15872,
+    "sha256": "1d71187753ef786d0c3cad7b7c465057d50dd4239be7644956a4be636ab45403",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mizuyoukanao/library/Bluewhale/1.0.4/Bluewhale-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mizuyoukanao/library/Bluewhale/1.0.4/Bluewhale-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

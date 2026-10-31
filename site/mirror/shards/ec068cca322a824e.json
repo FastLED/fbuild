@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/netnspace",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "netnspace/library/CanSatNeXT/1.0.1/CanSatNeXT-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CanSatNeXT-1.0.1.tar.gz",
+    "size_bytes": 11378,
+    "sha256": "a5c00959867730c845963a130c134a99286e1cbea7c5422d10b5135be39d512e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/netnspace/library/CanSatNeXT/1.0.1/CanSatNeXT-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/netnspace/library/CanSatNeXT/1.0.1/CanSatNeXT-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "netnspace/library/CanSatNeXT_GNSS/1.0.2/CanSatNeXT_GNSS-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CanSatNeXT_GNSS-1.0.2.tar.gz",
+    "size_bytes": 4824,
+    "sha256": "398002ff609c4720e56f6cafc86bebc3c9c4b29c5efc41fe1ccee9cbefefd297",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/netnspace/library/CanSatNeXT_GNSS/1.0.2/CanSatNeXT_GNSS-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/netnspace/library/CanSatNeXT_GNSS/1.0.2/CanSatNeXT_GNSS-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

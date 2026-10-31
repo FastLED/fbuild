@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lucaschoeneberg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lucaschoeneberg/library/LW09-Dali/1.0.3/LW09-Dali-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LW09-Dali-1.0.3.tar.gz",
+    "size_bytes": 7064,
+    "sha256": "ea3f24ad4b6e866d140e8b39cd54a18d6b440487fcaa9b5cac0be01f4e19abb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucaschoeneberg/library/LW09-Dali/1.0.3/LW09-Dali-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lucaschoeneberg/library/LW09-Dali/1.0.3/LW09-Dali-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

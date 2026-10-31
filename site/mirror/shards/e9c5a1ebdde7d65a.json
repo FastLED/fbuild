@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dennisfrett",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dennisfrett/library/Arduino%20Direct%20NEC%20Transmitter/1.0.0/ArduinoDirectNECTransmitter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoDirectNECTransmitter-1.0.0.tar.gz",
+    "size_bytes": 3628,
+    "sha256": "feda5c1d73014a36b967764be193ee28cbaf74e153ba127b12ed32af992e0b33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dennisfrett/library/Arduino%2520Direct%2520NEC%2520Transmitter/1.0.0/ArduinoDirectNECTransmitter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dennisfrett/library/Arduino%20Direct%20NEC%20Transmitter/1.0.0/ArduinoDirectNECTransmitter-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

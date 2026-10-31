@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-networksocketapi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-networksocketapi/library/ATParser/0.0.0+sha.c08984860329/ATParser-0.0.0+sha.c08984860329.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATParser-0.0.0+sha.c08984860329.tar.gz",
+    "size_bytes": 4195,
+    "sha256": "7f5fae3d86319367a7478b739a87f2cb08aa894996628e0fbaf330a2eb2996ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-networksocketapi/library/ATParser/0.0.0%2Bsha.c08984860329/ATParser-0.0.0%2Bsha.c08984860329.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-networksocketapi/library/ATParser/0.0.0%2Bsha.c08984860329/ATParser-0.0.0%2Bsha.c08984860329.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-networksocketapi/library/BSDInterface/0.0.0+sha.363dd62309cf/BSDInterface-0.0.0+sha.363dd62309cf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSDInterface-0.0.0+sha.363dd62309cf.tar.gz",
+    "size_bytes": 2547,
+    "sha256": "75236543cc4f384f8f88cdb580cf6630d88c1819929cb59c56eb22e14fd7eb2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-networksocketapi/library/BSDInterface/0.0.0%2Bsha.363dd62309cf/BSDInterface-0.0.0%2Bsha.363dd62309cf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-networksocketapi/library/BSDInterface/0.0.0%2Bsha.363dd62309cf/BSDInterface-0.0.0%2Bsha.363dd62309cf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-networksocketapi/library/C027Interface/0.0.0+sha.5e320842ccad/C027Interface-0.0.0+sha.5e320842ccad.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C027Interface-0.0.0+sha.5e320842ccad.tar.gz",
+    "size_bytes": 4337,
+    "sha256": "aef439955ef636feeb0b59a743ececf48854386ec6456fdbe61a9c3f3f15e4a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-networksocketapi/library/C027Interface/0.0.0%2Bsha.5e320842ccad/C027Interface-0.0.0%2Bsha.5e320842ccad.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-networksocketapi/library/C027Interface/0.0.0%2Bsha.5e320842ccad/C027Interface-0.0.0%2Bsha.5e320842ccad.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-networksocketapi/library/DnsQuery/0.0.0+sha.2cb1fffed50c/DnsQuery-0.0.0+sha.2cb1fffed50c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DnsQuery-0.0.0+sha.2cb1fffed50c.tar.gz",
+    "size_bytes": 3388,
+    "sha256": "6541683c8a37c5dedcaf26c53543163e5a1b34fe5972f5dce80e3fcdc252b207",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-networksocketapi/library/DnsQuery/0.0.0%2Bsha.2cb1fffed50c/DnsQuery-0.0.0%2Bsha.2cb1fffed50c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-networksocketapi/library/DnsQuery/0.0.0%2Bsha.2cb1fffed50c/DnsQuery-0.0.0%2Bsha.2cb1fffed50c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-networksocketapi/library/NSAPITests/0.0.0+sha.152ae238ddc1/NSAPITests-0.0.0+sha.152ae238ddc1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NSAPITests-0.0.0+sha.152ae238ddc1.tar.gz",
+    "size_bytes": 3602,
+    "sha256": "05bba3224147ae87417c2480466247c3351e2d80c2afda79dd4fc7258f740f21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-networksocketapi/library/NSAPITests/0.0.0%2Bsha.152ae238ddc1/NSAPITests-0.0.0%2Bsha.152ae238ddc1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-networksocketapi/library/NSAPITests/0.0.0%2Bsha.152ae238ddc1/NSAPITests-0.0.0%2Bsha.152ae238ddc1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-networksocketapi/library/NetworkSocketAPI/0.0.0+sha.ea3a618e0818/NetworkSocketAPI-0.0.0+sha.ea3a618e0818.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkSocketAPI-0.0.0+sha.ea3a618e0818.tar.gz",
+    "size_bytes": 10105,
+    "sha256": "cf6d6c3431183e46e1e76a086a09eee9ee2cdb3cdf10a4cca3424cf25d61f7c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-networksocketapi/library/NetworkSocketAPI/0.0.0%2Bsha.ea3a618e0818/NetworkSocketAPI-0.0.0%2Bsha.ea3a618e0818.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-networksocketapi/library/NetworkSocketAPI/0.0.0%2Bsha.ea3a618e0818/NetworkSocketAPI-0.0.0%2Bsha.ea3a618e0818.tar.gz"
+    ]
+   }
+  }
+ ]
+}

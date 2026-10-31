@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sh123",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sh123/library/esp32_codec2/1.0.5/esp32_codec2-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_codec2-1.0.5.tar.gz",
+    "size_bytes": 1176147,
+    "sha256": "94c03c24af7850156eb706a2653cda1956ee2665f77ba914328b3700df90bcb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sh123/library/esp32_codec2/1.0.5/esp32_codec2-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sh123/library/esp32_codec2/1.0.5/esp32_codec2-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sh123/library/esp32_codec2/1.0.6/esp32_codec2-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_codec2-1.0.6.tar.gz",
+    "size_bytes": 1176142,
+    "sha256": "bc9794bc13d4734bb72e455dcc2fea42af801106d0c46ff4714c659f6cfb9239",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sh123/library/esp32_codec2/1.0.6/esp32_codec2-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sh123/library/esp32_codec2/1.0.6/esp32_codec2-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sh123/library/esp32_codec2/1.0.7/esp32_codec2-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_codec2-1.0.7.tar.gz",
+    "size_bytes": 1094204,
+    "sha256": "e391d411371a3e456d45b04e85599ea7209d8a6ce067a2e8e11a6e13bff672bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sh123/library/esp32_codec2/1.0.7/esp32_codec2-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/sh123/library/esp32_codec2/1.0.7/esp32_codec2-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sh123/library/esp32_opus/1.0.1/esp32_opus-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_opus-1.0.1.tar.gz",
+    "size_bytes": 461656,
+    "sha256": "d63edc194cc9c33570e3a75c704552e9149d86101a6d56b4b4790665575d81b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sh123/library/esp32_opus/1.0.1/esp32_opus-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sh123/library/esp32_opus/1.0.1/esp32_opus-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sh123/library/esp32_opus/1.0.3/esp32_opus-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_opus-1.0.3.tar.gz",
+    "size_bytes": 461277,
+    "sha256": "c8492b15355be2aab65d31f37f48b70ced66a13daa15a799f00223644413ab26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sh123/library/esp32_opus/1.0.3/esp32_opus-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sh123/library/esp32_opus/1.0.3/esp32_opus-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

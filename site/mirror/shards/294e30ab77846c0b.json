@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/drglaucous",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "drglaucous/library/DShot-rmt-NEO/4.3.0/DShot-rmt-NEO-4.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DShot-rmt-NEO-4.3.0.tar.gz",
+    "size_bytes": 50401,
+    "sha256": "39f98ed014a5d90bdf3369fbff7f7eaca58ccd09072a3781c3e8030bfebcc1b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drglaucous/library/DShot-rmt-NEO/4.3.0/DShot-rmt-NEO-4.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/drglaucous/library/DShot-rmt-NEO/4.3.0/DShot-rmt-NEO-4.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

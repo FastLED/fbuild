@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adlerre",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adlerre/library/BLESerial/1.0.0/BLESerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLESerial-1.0.0.tar.gz",
+    "size_bytes": 26073,
+    "sha256": "0f26ae068bbfd860d721d6eae1255166a0a1b8de39db48955309d51fd2a53274",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adlerre/library/BLESerial/1.0.0/BLESerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adlerre/library/BLESerial/1.0.0/BLESerial-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/axelelettronica",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "axelelettronica/library/SmartEverything%20BLE%20RN4870/1.0.0/SmartEverythingBLERN4870-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartEverythingBLERN4870-1.0.0.tar.gz",
+    "size_bytes": 8320,
+    "sha256": "445ab18e66c0a30c6ba75b8e85a4ef3215026ba7ed22d3d394e32ba2d28b7dc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/axelelettronica/library/SmartEverything%2520BLE%2520RN4870/1.0.0/SmartEverythingBLERN4870-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/axelelettronica/library/SmartEverything%20BLE%20RN4870/1.0.0/SmartEverythingBLERN4870-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "axelelettronica/library/SmartEverything%20LSM6DS3/1.0.1/SmartEverythingLSM6DS3-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartEverythingLSM6DS3-1.0.1.tar.gz",
+    "size_bytes": 9665,
+    "sha256": "2f416c622a534b97a78bd2569a434485a74d8188ef65658a56330fd940305df2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/axelelettronica/library/SmartEverything%2520LSM6DS3/1.0.1/SmartEverythingLSM6DS3-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/axelelettronica/library/SmartEverything%20LSM6DS3/1.0.1/SmartEverythingLSM6DS3-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "axelelettronica/library/SmartEverything%20Lion%20RN2483/1.3.0/SmartEverythingLionRN2483-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartEverythingLionRN2483-1.3.0.tar.gz",
+    "size_bytes": 15250,
+    "sha256": "b8a1a5c3f2ff72e5e2eaf252134c20e7bdf678029037b91f739e820caeb14f9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/axelelettronica/library/SmartEverything%2520Lion%2520RN2483/1.3.0/SmartEverythingLionRN2483-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/axelelettronica/library/SmartEverything%20Lion%20RN2483/1.3.0/SmartEverythingLionRN2483-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

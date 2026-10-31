@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/moddingear",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "moddingear/library/ComplexCAN/1.0.0/ComplexCAN-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ComplexCAN-1.0.0.tar.gz",
+    "size_bytes": 11197,
+    "sha256": "cd17c39c9f94445924fa5e2e4fcbf302aa0d8faa33b7eeb403b99cb84dc29e6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moddingear/library/ComplexCAN/1.0.0/ComplexCAN-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moddingear/library/ComplexCAN/1.0.0/ComplexCAN-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moddingear/library/ComplexCAN/1.0.1/ComplexCAN-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ComplexCAN-1.0.1.tar.gz",
+    "size_bytes": 11486,
+    "sha256": "a60160dbb67a8ff1b17489b7c8fa4b98c69d77f250d6a9a3b037270e17e311c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moddingear/library/ComplexCAN/1.0.1/ComplexCAN-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/moddingear/library/ComplexCAN/1.0.1/ComplexCAN-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moddingear/library/ComplexCAN/1.0.2/ComplexCAN-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ComplexCAN-1.0.2.tar.gz",
+    "size_bytes": 11485,
+    "sha256": "472bd559cfb2a763cff2aeb1b7d874674eb9c24b53bec9edac5ceaf22513edc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moddingear/library/ComplexCAN/1.0.2/ComplexCAN-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/moddingear/library/ComplexCAN/1.0.2/ComplexCAN-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moddingear/library/ComplexCAN/1.1.0/ComplexCAN-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ComplexCAN-1.1.0.tar.gz",
+    "size_bytes": 11990,
+    "sha256": "8e647b050f6b364ada1fa1e67616a81532e2cc37f9c00c1354849d8aed181dd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moddingear/library/ComplexCAN/1.1.0/ComplexCAN-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moddingear/library/ComplexCAN/1.1.0/ComplexCAN-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moddingear/library/ComplexCAN/1.2.0/ComplexCAN-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ComplexCAN-1.2.0.tar.gz",
+    "size_bytes": 11741,
+    "sha256": "bc738831d4dd9fcad864a0fc292e836e4257f6a47bfcbb63f021ec3069251f47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moddingear/library/ComplexCAN/1.2.0/ComplexCAN-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moddingear/library/ComplexCAN/1.2.0/ComplexCAN-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moddingear/library/ESP32%20ESC/1.0.0/ESP32ESC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ESC-1.0.0.tar.gz",
+    "size_bytes": 5378,
+    "sha256": "e421a6f9100b04fbceb693bbd9fa075ac254e656e945d9f55923e33c928ede63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moddingear/library/ESP32%2520ESC/1.0.0/ESP32ESC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moddingear/library/ESP32%20ESC/1.0.0/ESP32ESC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moddingear/library/HWStepper/1.0.2/HWStepper-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HWStepper-1.0.2.tar.gz",
+    "size_bytes": 6979,
+    "sha256": "cdb5f53ffcf6caf5657fa618b7bf024454495d2b3c7847514c8a163ab020a3dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moddingear/library/HWStepper/1.0.2/HWStepper-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/moddingear/library/HWStepper/1.0.2/HWStepper-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moddingear/library/RMTRGB/1.0.0/RMTRGB-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RMTRGB-1.0.0.tar.gz",
+    "size_bytes": 3355,
+    "sha256": "0c124ea7a324755b47b9b80eda7009004afd2ec099cd05b6d248923bf1eef471",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moddingear/library/RMTRGB/1.0.0/RMTRGB-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moddingear/library/RMTRGB/1.0.0/RMTRGB-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

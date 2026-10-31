@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/phuongnamzz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "phuongnamzz/library/HLK-LD2410S/1.0.4/HLK-LD2410S-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HLK-LD2410S-1.0.4.tar.gz",
+    "size_bytes": 45841,
+    "sha256": "855d8d2b2fd582c3f30f6b0b37707737e4866fa263bdea2ff00ef446486140cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phuongnamzz/library/HLK-LD2410S/1.0.4/HLK-LD2410S-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/phuongnamzz/library/HLK-LD2410S/1.0.4/HLK-LD2410S-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

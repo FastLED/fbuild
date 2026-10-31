@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-elmicro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-elmicro/library/FM25W256/0.0.0+sha.2290931492e7/FM25W256-0.0.0+sha.2290931492e7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FM25W256-0.0.0+sha.2290931492e7.tar.gz",
+    "size_bytes": 2815,
+    "sha256": "f21a672d94df4d3ebcbfa8c1c20be970fdb71543b5bf2088c739426122fb80c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-elmicro/library/FM25W256/0.0.0%2Bsha.2290931492e7/FM25W256-0.0.0%2Bsha.2290931492e7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-elmicro/library/FM25W256/0.0.0%2Bsha.2290931492e7/FM25W256-0.0.0%2Bsha.2290931492e7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

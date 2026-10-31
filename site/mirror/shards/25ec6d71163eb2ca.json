@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sssrc-adcs-mbed1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sssrc-adcs-mbed1/library/MCP3002/0.0.0+sha.9521949c460b/MCP3002-0.0.0+sha.9521949c460b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP3002-0.0.0+sha.9521949c460b.tar.gz",
+    "size_bytes": 1157,
+    "sha256": "8c88a9a0d6a52cdeb0034516732236e8d31fc08f3b0573e85af4ae5d616a736a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sssrc-adcs-mbed1/library/MCP3002/0.0.0%2Bsha.9521949c460b/MCP3002-0.0.0%2Bsha.9521949c460b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sssrc-adcs-mbed1/library/MCP3002/0.0.0%2Bsha.9521949c460b/MCP3002-0.0.0%2Bsha.9521949c460b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

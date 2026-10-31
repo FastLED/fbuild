@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ricki-z",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ricki-z/library/MMA7455%20sensor%20Library/0.0.2/MMA7455sensorLibrary-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA7455sensorLibrary-0.0.2.tar.gz",
+    "size_bytes": 17380,
+    "sha256": "5bd33553520a5f5a19e29db911e07db88dac5fa14daaf71f3eb7dc9aa645807a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ricki-z/library/MMA7455%2520sensor%2520Library/0.0.2/MMA7455sensorLibrary-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ricki-z/library/MMA7455%20sensor%20Library/0.0.2/MMA7455sensorLibrary-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ricki-z/library/SDS011%20sensor%20Library/0.0.8/SDS011sensorLibrary-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDS011sensorLibrary-0.0.8.tar.gz",
+    "size_bytes": 14573,
+    "sha256": "ce2e42c51af2fa6b3a3368ba6617a16c63d3aeae1ca73e2c02c33420f3b71a6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ricki-z/library/SDS011%2520sensor%2520Library/0.0.8/SDS011sensorLibrary-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/ricki-z/library/SDS011%20sensor%20Library/0.0.8/SDS011sensorLibrary-0.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

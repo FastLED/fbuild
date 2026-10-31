@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jonniezg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jonniezg/library/DFPlayerMini/1.0.0/DFPlayerMini-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFPlayerMini-1.0.0.tar.gz",
+    "size_bytes": 6816,
+    "sha256": "5848d41636218358f8e5dbab8c580a2a2038b46718c7231ab2ef5cf6336a1ffa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jonniezg/library/DFPlayerMini/1.0.0/DFPlayerMini-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jonniezg/library/DFPlayerMini/1.0.0/DFPlayerMini-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jonniezg/library/EButton/1.4.0/EButton-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EButton-1.4.0.tar.gz",
+    "size_bytes": 10126,
+    "sha256": "2300b37a580e1f36b1cb24117fd181caef4f515611435b39c9d308c129c52504",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jonniezg/library/EButton/1.4.0/EButton-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jonniezg/library/EButton/1.4.0/EButton-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jonniezg/library/EButton/1.4.1/EButton-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EButton-1.4.1.tar.gz",
+    "size_bytes": 10225,
+    "sha256": "76722501790cc0456ade24932a83eb00c6517eba5ed380be83ad3e9023026ab0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jonniezg/library/EButton/1.4.1/EButton-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jonniezg/library/EButton/1.4.1/EButton-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jonniezg/library/EWMA/1.0.2/EWMA-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EWMA-1.0.2.tar.gz",
+    "size_bytes": 3796,
+    "sha256": "2f9aab404ff1c8ad1965bc4541a4c161b24ed5a39c4125d7a765a0d009aafd0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jonniezg/library/EWMA/1.0.2/EWMA-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jonniezg/library/EWMA/1.0.2/EWMA-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jonniezg/library/EWMA/1.0.3/EWMA-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EWMA-1.0.3.tar.gz",
+    "size_bytes": 4044,
+    "sha256": "d4450d96f9924f2319c473be90cb1bf3fcbe4f283e0acdceb04d0e18d858196e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jonniezg/library/EWMA/1.0.3/EWMA-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jonniezg/library/EWMA/1.0.3/EWMA-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jonniezg/library/LinkedPointerList/1.0.0/LinkedPointerList-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LinkedPointerList-1.0.0.tar.gz",
+    "size_bytes": 5151,
+    "sha256": "88a70857081a0ced61e4a48057b42b0cf50115570cdfc530e461d2c944eb3f15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jonniezg/library/LinkedPointerList/1.0.0/LinkedPointerList-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jonniezg/library/LinkedPointerList/1.0.0/LinkedPointerList-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

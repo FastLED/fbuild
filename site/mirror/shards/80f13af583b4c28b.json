@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/legenddcr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "legenddcr/library/AliyunMqttArduino/0.2.0/AliyunMqttArduino-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AliyunMqttArduino-0.2.0.tar.gz",
+    "size_bytes": 7760,
+    "sha256": "9761488d2debc2a078940a5561885f8779f49390e9fc6eb6a8a59d290186f433",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/legenddcr/library/AliyunMqttArduino/0.2.0/AliyunMqttArduino-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/legenddcr/library/AliyunMqttArduino/0.2.0/AliyunMqttArduino-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

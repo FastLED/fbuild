@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fritzhausmann",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fritzhausmann/library/LM75B/0.0.0+sha.c622220fe79d/LM75B-0.0.0+sha.c622220fe79d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM75B-0.0.0+sha.c622220fe79d.tar.gz",
+    "size_bytes": 1073,
+    "sha256": "1e8ef764131898182eea332570f7dae0e22d441f2625cd0b99d7425e140d38fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fritzhausmann/library/LM75B/0.0.0%2Bsha.c622220fe79d/LM75B-0.0.0%2Bsha.c622220fe79d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fritzhausmann/library/LM75B/0.0.0%2Bsha.c622220fe79d/LM75B-0.0.0%2Bsha.c622220fe79d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-leandromattioli",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-leandromattioli/library/Mux7SegsDisplay/1.0.1/Mux7SegsDisplay-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mux7SegsDisplay-1.0.1.tar.gz",
+    "size_bytes": 3904,
+    "sha256": "dcd32930f176256aa75034b847ac5d4d31bf12000782fa1f8e8e52982c24ba9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-leandromattioli/library/Mux7SegsDisplay/1.0.1/Mux7SegsDisplay-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-leandromattioli/library/Mux7SegsDisplay/1.0.1/Mux7SegsDisplay-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-leandromattioli/library/Mux7SegsDisplay/2.0.0/Mux7SegsDisplay-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mux7SegsDisplay-2.0.0.tar.gz",
+    "size_bytes": 3933,
+    "sha256": "a7a8586ae92d8c53bf199a7771bc46c335568599f5533c7204d13689480cd7e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-leandromattioli/library/Mux7SegsDisplay/2.0.0/Mux7SegsDisplay-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-leandromattioli/library/Mux7SegsDisplay/2.0.0/Mux7SegsDisplay-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/naveitay",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "naveitay/library/NonBlockingDelay/1.0.0/NonBlockingDelay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NonBlockingDelay-1.0.0.tar.gz",
+    "size_bytes": 3559,
+    "sha256": "84e008d6acd6a1579ebb22417c3af53123a94c02160f3c37100843033c8f766f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naveitay/library/NonBlockingDelay/1.0.0/NonBlockingDelay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/naveitay/library/NonBlockingDelay/1.0.0/NonBlockingDelay-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naveitay/library/PCA6408A/1.0.0/PCA6408A-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA6408A-1.0.0.tar.gz",
+    "size_bytes": 4021,
+    "sha256": "315c773944a1b60f75c55c44a5d9d9f273727cae886c2a6ec3655d6f40414a04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naveitay/library/PCA6408A/1.0.0/PCA6408A-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/naveitay/library/PCA6408A/1.0.0/PCA6408A-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naveitay/library/XRA1405/1.0.0/XRA1405-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XRA1405-1.0.0.tar.gz",
+    "size_bytes": 4713,
+    "sha256": "af43e4443b299b74594e8cb4686f80102eedc59802bd5d919b46964e2f5b359b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naveitay/library/XRA1405/1.0.0/XRA1405-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/naveitay/library/XRA1405/1.0.0/XRA1405-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "naveitay/library/XRA1405_Button/1.0.0/XRA1405_Button-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XRA1405_Button-1.0.0.tar.gz",
+    "size_bytes": 4109,
+    "sha256": "17d0ab56966902bc0eb5ca07fd9ea2b7a14513096c66f44ac3db7d8f37711e10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/naveitay/library/XRA1405_Button/1.0.0/XRA1405_Button-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/naveitay/library/XRA1405_Button/1.0.0/XRA1405_Button-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

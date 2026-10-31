@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bmdlh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bmdlh/library/TSI/0.0.0+sha.a192baf6250c/TSI-0.0.0+sha.a192baf6250c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSI-0.0.0+sha.a192baf6250c.tar.gz",
+    "size_bytes": 3570,
+    "sha256": "e8b56baa9c3145f903edfa67ba7faa7a2f20dedcee991a62f5a9417a06a50c9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bmdlh/library/TSI/0.0.0%2Bsha.a192baf6250c/TSI-0.0.0%2Bsha.a192baf6250c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bmdlh/library/TSI/0.0.0%2Bsha.a192baf6250c/TSI-0.0.0%2Bsha.a192baf6250c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

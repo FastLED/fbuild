@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/blanu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "blanu/library/Codec2/1.0.0/Codec2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Codec2-1.0.0.tar.gz",
+    "size_bytes": 4765504,
+    "sha256": "ed432b11522b6dbc2321388f3ef4309efc95ba9d888c79898f071c168ac57eed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blanu/library/Codec2/1.0.0/Codec2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blanu/library/Codec2/1.0.0/Codec2-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/irock",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "irock/library/Compare/1.0.3/Compare-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Compare-1.0.3.tar.gz",
+    "size_bytes": 3792,
+    "sha256": "5fd2afffe44020f6f0c70ae4371c98e1dffd11bd1c55100b2a5fc4a6c3e21b93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irock/library/Compare/1.0.3/Compare-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/irock/library/Compare/1.0.3/Compare-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "irock/library/PersistentStorage/3.1.0/PersistentStorage-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PersistentStorage-3.1.0.tar.gz",
+    "size_bytes": 7798,
+    "sha256": "53d326d1de46d5c784e540022373024c39b0be5833a1ab2c9ecef80e8c80f2ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irock/library/PersistentStorage/3.1.0/PersistentStorage-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/irock/library/PersistentStorage/3.1.0/PersistentStorage-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "irock/library/Scaler/1.0.34/Scaler-1.0.34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Scaler-1.0.34.tar.gz",
+    "size_bytes": 2145,
+    "sha256": "e5ce894207cb5d4c8f897c9b7b16b38aa89c1930a2d49a15423a9b9a5ab08435",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irock/library/Scaler/1.0.34/Scaler-1.0.34.tar.gz",
+     "https://dl.registry.platformio.org/download/irock/library/Scaler/1.0.34/Scaler-1.0.34.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "irock/library/VEDirect/1.0.0/VEDirect-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEDirect-1.0.0.tar.gz",
+    "size_bytes": 7000,
+    "sha256": "a8e18c127e8ae60519e0d6f28ddd4567bb31ea6fc138c4e32dc3a6939da8b3e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/irock/library/VEDirect/1.0.0/VEDirect-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/irock/library/VEDirect/1.0.0/VEDirect-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

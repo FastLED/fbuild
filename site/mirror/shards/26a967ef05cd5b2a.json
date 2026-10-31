@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-paasukusai",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-paasukusai/library/pololu33926/0.0.0+sha.0ded52387c65/pololu33926-0.0.0+sha.0ded52387c65.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pololu33926-0.0.0+sha.0ded52387c65.tar.gz",
+    "size_bytes": 1285,
+    "sha256": "c19b43f7205bde3000e4142576d719feebb70e75d5fc67a8d48f47039e7f2b26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-paasukusai/library/pololu33926/0.0.0%2Bsha.0ded52387c65/pololu33926-0.0.0%2Bsha.0ded52387c65.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-paasukusai/library/pololu33926/0.0.0%2Bsha.0ded52387c65/pololu33926-0.0.0%2Bsha.0ded52387c65.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-paasukusai/library/stepping_moter/0.0.0+sha.110462dc43d1/stepping_moter-0.0.0+sha.110462dc43d1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stepping_moter-0.0.0+sha.110462dc43d1.tar.gz",
+    "size_bytes": 1071,
+    "sha256": "7d38d0f836dedf10def16e90e0616f1224be490f5fb0b08672bd5bee2e220d12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-paasukusai/library/stepping_moter/0.0.0%2Bsha.110462dc43d1/stepping_moter-0.0.0%2Bsha.110462dc43d1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-paasukusai/library/stepping_moter/0.0.0%2Bsha.110462dc43d1/stepping_moter-0.0.0%2Bsha.110462dc43d1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

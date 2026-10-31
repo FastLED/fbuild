@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rneurink",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rneurink/library/LP50XX/1.0.0/LP50XX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LP50XX-1.0.0.tar.gz",
+    "size_bytes": 39102,
+    "sha256": "f39ff3862d7de9c44bec42b4c225c416c12579c1576820b286fd7776732f83ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rneurink/library/LP50XX/1.0.0/LP50XX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rneurink/library/LP50XX/1.0.0/LP50XX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rneurink/library/PCA9622/1.1.0/PCA9622-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9622-1.1.0.tar.gz",
+    "size_bytes": 42633,
+    "sha256": "cd222bc9794a2faeb27cd755b6c1eeb951d05de50fff90bd18eb36a02701817a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rneurink/library/PCA9622/1.1.0/PCA9622-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rneurink/library/PCA9622/1.1.0/PCA9622-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rneurink/library/VL53L1X_ULD/1.2.3/VL53L1X_ULD-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL53L1X_ULD-1.2.3.tar.gz",
+    "size_bytes": 29559,
+    "sha256": "cf82ff175f01b48bf65581db1005d3f84601c75d40882f8f0ee7c65d19c2216f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rneurink/library/VL53L1X_ULD/1.2.3/VL53L1X_ULD-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rneurink/library/VL53L1X_ULD/1.2.3/VL53L1X_ULD-1.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

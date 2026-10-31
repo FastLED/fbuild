@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bitbucket-vandrham",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bitbucket-vandrham/library/JsonRPC/0.0.0-alpha+sha.4048c242f2/JsonRPC-0.0.0-alphasha.4048c242f2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JsonRPC-0.0.0-alphasha.4048c242f2.tar.gz",
+    "size_bytes": 2084,
+    "sha256": "abf6e49800a09fac95ca107f582d50e7a33b1fd779984687a55ead570e9fa860",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-vandrham/library/JsonRPC/0.0.0-alpha%2Bsha.4048c242f2/JsonRPC-0.0.0-alphasha.4048c242f2.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-vandrham/library/JsonRPC/0.0.0-alpha%2Bsha.4048c242f2/JsonRPC-0.0.0-alphasha.4048c242f2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bapho-bush",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bapho-bush/library/TroykaDHT11/1.0/TroykaDHT11-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TroykaDHT11-1.0.tar.gz",
+    "size_bytes": 2472,
+    "sha256": "bebe91204346fb0afb8ff7379cf4119bbdbf98d9707c68832c650cf53c5f8ed6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bapho-bush/library/TroykaDHT11/1.0/TroykaDHT11-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bapho-bush/library/TroykaDHT11/1.0/TroykaDHT11-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

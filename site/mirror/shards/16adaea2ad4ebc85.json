@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-thing-innovations",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-thing-innovations/library/DHT/0.0.0+sha.6d97d5338f91/DHT-0.0.0+sha.6d97d5338f91.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT-0.0.0+sha.6d97d5338f91.tar.gz",
+    "size_bytes": 3464,
+    "sha256": "5a1637a56ca1037e3f84fb825ec34a94de6beecad4f5a4c075ccabaa1b24f205",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thing-innovations/library/DHT/0.0.0%2Bsha.6d97d5338f91/DHT-0.0.0%2Bsha.6d97d5338f91.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thing-innovations/library/DHT/0.0.0%2Bsha.6d97d5338f91/DHT-0.0.0%2Bsha.6d97d5338f91.tar.gz"
+    ]
+   }
+  }
+ ]
+}

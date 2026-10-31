@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/devjune-apiota",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "devjune-apiota/library/APIOTA/1.2.1/APIOTA-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APIOTA-1.2.1.tar.gz",
+    "size_bytes": 44681,
+    "sha256": "027cca43c9c9fed7b5f3f4693e4ce103b333b1db5eb056e47330f763a99ddcc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devjune-apiota/library/APIOTA/1.2.1/APIOTA-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/devjune-apiota/library/APIOTA/1.2.1/APIOTA-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devjune-apiota/library/APIOTA/1.4.1/APIOTA-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APIOTA-1.4.1.tar.gz",
+    "size_bytes": 49963,
+    "sha256": "59822850e9b65e174fe42d87c7214dbb321b0d13a6d6f4f4eb9f6ca8fef260c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devjune-apiota/library/APIOTA/1.4.1/APIOTA-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/devjune-apiota/library/APIOTA/1.4.1/APIOTA-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devjune-apiota/library/APIOTA/1.4.2/APIOTA-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APIOTA-1.4.2.tar.gz",
+    "size_bytes": 50218,
+    "sha256": "70f7651aec761796b053130b37d2856a76a2f2bb72c82f33e9c313d08a2b7a0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devjune-apiota/library/APIOTA/1.4.2/APIOTA-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/devjune-apiota/library/APIOTA/1.4.2/APIOTA-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devjune-apiota/library/APIOTA/1.4.3/APIOTA-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APIOTA-1.4.3.tar.gz",
+    "size_bytes": 50691,
+    "sha256": "73d7ab9b87e18737255bd2c84997e0772bff9e25dc616b0c8e35a837bf0f0573",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devjune-apiota/library/APIOTA/1.4.3/APIOTA-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/devjune-apiota/library/APIOTA/1.4.3/APIOTA-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devjune-apiota/library/APIOTA/1.4.4/APIOTA-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APIOTA-1.4.4.tar.gz",
+    "size_bytes": 52164,
+    "sha256": "ddd1d6ac5421f7a36050eb6239a49a1235de7a29dc5574f4f79acc47ded19956",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devjune-apiota/library/APIOTA/1.4.4/APIOTA-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/devjune-apiota/library/APIOTA/1.4.4/APIOTA-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devjune-apiota/library/APIOTA/1.4.5/APIOTA-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APIOTA-1.4.5.tar.gz",
+    "size_bytes": 55332,
+    "sha256": "2758e425eb7f56c170d8f70bfd2f5e20b3de9e2360576604157360f5fa338e4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devjune-apiota/library/APIOTA/1.4.5/APIOTA-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/devjune-apiota/library/APIOTA/1.4.5/APIOTA-1.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devjune-apiota/library/APIOTA/1.4.6/APIOTA-1.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APIOTA-1.4.6.tar.gz",
+    "size_bytes": 59727,
+    "sha256": "96d6d9337f63e3ea47baeebd5af1b89c1bd4896ad3221796d4c62c87d3e68864",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devjune-apiota/library/APIOTA/1.4.6/APIOTA-1.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/devjune-apiota/library/APIOTA/1.4.6/APIOTA-1.4.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cyberonebu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cyberonebu/library/DSpotterSDK_Maker_33BLE/1.0.5/DSpotterSDK_Maker_33BLE-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DSpotterSDK_Maker_33BLE-1.0.5.tar.gz",
+    "size_bytes": 753791,
+    "sha256": "ca4fd0660dc3a85e52ad6ab343a02a7d9a0efc06fe341a9c57e08d1c8e291d3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyberonebu/library/DSpotterSDK_Maker_33BLE/1.0.5/DSpotterSDK_Maker_33BLE-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/cyberonebu/library/DSpotterSDK_Maker_33BLE/1.0.5/DSpotterSDK_Maker_33BLE-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyberonebu/library/DSpotterSDK_Maker_NiclaVision/1.0.5/DSpotterSDK_Maker_NiclaVision-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DSpotterSDK_Maker_NiclaVision-1.0.5.tar.gz",
+    "size_bytes": 743784,
+    "sha256": "6af51c6f15976fcfda0f834d3d28d54bf986cc7dca29aff0ae1f67435d9a2ea7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyberonebu/library/DSpotterSDK_Maker_NiclaVision/1.0.5/DSpotterSDK_Maker_NiclaVision-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/cyberonebu/library/DSpotterSDK_Maker_NiclaVision/1.0.5/DSpotterSDK_Maker_NiclaVision-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyberonebu/library/DSpotterSDK_Maker_PortentaH7/1.0.5/DSpotterSDK_Maker_PortentaH7-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DSpotterSDK_Maker_PortentaH7-1.0.5.tar.gz",
+    "size_bytes": 755530,
+    "sha256": "40cdcc16c6978a0e3cddc1fc5a26a11e785f94babc6a856b9ce6ae93f656f8e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyberonebu/library/DSpotterSDK_Maker_PortentaH7/1.0.5/DSpotterSDK_Maker_PortentaH7-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/cyberonebu/library/DSpotterSDK_Maker_PortentaH7/1.0.5/DSpotterSDK_Maker_PortentaH7-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyberonebu/library/DSpotterSDK_Maker_RP2040/1.1.0/DSpotterSDK_Maker_RP2040-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DSpotterSDK_Maker_RP2040-1.1.0.tar.gz",
+    "size_bytes": 760603,
+    "sha256": "af99a4a7fa3aab5ed5245ead6a7cf6fd5f5cc94c2bac15231709e84e532d710c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyberonebu/library/DSpotterSDK_Maker_RP2040/1.1.0/DSpotterSDK_Maker_RP2040-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cyberonebu/library/DSpotterSDK_Maker_RP2040/1.1.0/DSpotterSDK_Maker_RP2040-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

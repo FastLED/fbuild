@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/onedevelopmentpl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "onedevelopmentpl/library/EasyIR/1.0.2/EasyIR-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyIR-1.0.2.tar.gz",
+    "size_bytes": 5632,
+    "sha256": "0dcf772085659af45d0f4df85b86e50a4668fc0487389cca95e45eb483f173ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/onedevelopmentpl/library/EasyIR/1.0.2/EasyIR-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/onedevelopmentpl/library/EasyIR/1.0.2/EasyIR-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "onedevelopmentpl/library/UltraSense/1.0.0/UltraSense-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltraSense-1.0.0.tar.gz",
+    "size_bytes": 7150,
+    "sha256": "bf913d21a6518bbab8280cfc584b3fdb093d82b5b0f35db0bd8e25156bfed6d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/onedevelopmentpl/library/UltraSense/1.0.0/UltraSense-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/onedevelopmentpl/library/UltraSense/1.0.0/UltraSense-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "onedevelopmentpl/library/UltraSense/2.0.0/UltraSense-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltraSense-2.0.0.tar.gz",
+    "size_bytes": 8280,
+    "sha256": "d2fc9bb3da99be93352e689eb07438bf3112e84e6384513afd923960881c56fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/onedevelopmentpl/library/UltraSense/2.0.0/UltraSense-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/onedevelopmentpl/library/UltraSense/2.0.0/UltraSense-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "onedevelopmentpl/library/UltraSense/2.0.1/UltraSense-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltraSense-2.0.1.tar.gz",
+    "size_bytes": 8298,
+    "sha256": "9fc3a7cb104b69147dfefdcd1e5dbbbbb5229c551c4609d1ab97c3ba10b2ad3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/onedevelopmentpl/library/UltraSense/2.0.1/UltraSense-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/onedevelopmentpl/library/UltraSense/2.0.1/UltraSense-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "onedevelopmentpl/library/UltraSense/2.0.2/UltraSense-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltraSense-2.0.2.tar.gz",
+    "size_bytes": 8109,
+    "sha256": "8691737a6be402d01bce596ae4a83ee2deaecc8fbd9d003a61b49976f24a99e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/onedevelopmentpl/library/UltraSense/2.0.2/UltraSense-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/onedevelopmentpl/library/UltraSense/2.0.2/UltraSense-2.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

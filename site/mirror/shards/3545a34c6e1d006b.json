@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ttlappalainen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ttlappalainen/library/NMEA0183/1.10.1/NMEA0183-1.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMEA0183-1.10.1.tar.gz",
+    "size_bytes": 38083,
+    "sha256": "f66fba68effa04b7fd756f2b8627af0258ff193fa1543fcd7614916917eab10d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ttlappalainen/library/NMEA0183/1.10.1/NMEA0183-1.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ttlappalainen/library/NMEA0183/1.10.1/NMEA0183-1.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ttlappalainen/library/NMEA2000-library/4.22.0/NMEA2000-library-4.22.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMEA2000-library-4.22.0.tar.gz",
+    "size_bytes": 419792,
+    "sha256": "81c8f5288c4fd5873e14bc451dd228fdcbc2bdd35e10d649b71fa4b4af7cd783",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ttlappalainen/library/NMEA2000-library/4.22.0/NMEA2000-library-4.22.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ttlappalainen/library/NMEA2000-library/4.22.0/NMEA2000-library-4.22.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ttlappalainen/library/NMEA2000-library/4.22.1/NMEA2000-library-4.22.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMEA2000-library-4.22.1.tar.gz",
+    "size_bytes": 420326,
+    "sha256": "f5c82f54fb02ae0bb0ece2a4c6d3194dc4bebf00199fc625a0bf0597cbe0e2f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ttlappalainen/library/NMEA2000-library/4.22.1/NMEA2000-library-4.22.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ttlappalainen/library/NMEA2000-library/4.22.1/NMEA2000-library-4.22.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ttlappalainen/library/NMEA2000-library/4.23.1/NMEA2000-library-4.23.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMEA2000-library-4.23.1.tar.gz",
+    "size_bytes": 427639,
+    "sha256": "a7713df2adb7b11bf6618674834e74cd45eff61d826d0f26126e2f4d29534336",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ttlappalainen/library/NMEA2000-library/4.23.1/NMEA2000-library-4.23.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ttlappalainen/library/NMEA2000-library/4.23.1/NMEA2000-library-4.23.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ttlappalainen/library/NMEA2000-library/4.24.1/NMEA2000-library-4.24.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMEA2000-library-4.24.1.tar.gz",
+    "size_bytes": 428397,
+    "sha256": "568166298921a41bc8f6458481afd8a4b22f2977296fa5a93da411d2463afec6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ttlappalainen/library/NMEA2000-library/4.24.1/NMEA2000-library-4.24.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ttlappalainen/library/NMEA2000-library/4.24.1/NMEA2000-library-4.24.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ttlappalainen/library/NMEA2000-library/4.25.1/NMEA2000-library-4.25.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMEA2000-library-4.25.1.tar.gz",
+    "size_bytes": 429110,
+    "sha256": "df4badf4bb965e5c76ec4a99d38d970c18f043f640e87991e1db0deb4bd23531",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ttlappalainen/library/NMEA2000-library/4.25.1/NMEA2000-library-4.25.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ttlappalainen/library/NMEA2000-library/4.25.1/NMEA2000-library-4.25.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ttlappalainen/library/NMEA2000_esp32/1.0.3/NMEA2000_esp32-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMEA2000_esp32-1.0.3.tar.gz",
+    "size_bytes": 8040,
+    "sha256": "9ca4107b193ad6c8aabd0280f1e3ccee5cf71580f319f8bfc37aeece3cb8c89d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ttlappalainen/library/NMEA2000_esp32/1.0.3/NMEA2000_esp32-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ttlappalainen/library/NMEA2000_esp32/1.0.3/NMEA2000_esp32-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ttlappalainen/library/NMEA2000_mcp/1.1.2/NMEA2000_mcp-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMEA2000_mcp-1.1.2.tar.gz",
+    "size_bytes": 5836,
+    "sha256": "f2d6960dd703e37821c1ef1c4ded9cad436eff73dfa6378fe2ecd6fcdeb23e53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ttlappalainen/library/NMEA2000_mcp/1.1.2/NMEA2000_mcp-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ttlappalainen/library/NMEA2000_mcp/1.1.2/NMEA2000_mcp-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

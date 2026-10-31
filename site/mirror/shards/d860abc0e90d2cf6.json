@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ninagawa123",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ninagawa123/library/Meridian/0.1.0/Meridian-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Meridian-0.1.0.tar.gz",
+    "size_bytes": 5919,
+    "sha256": "89cd31340114fb0487f7457d28aba3a04fc0ae70fc541028020663a2e7ec6e52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ninagawa123/library/Meridian/0.1.0/Meridian-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ninagawa123/library/Meridian/0.1.0/Meridian-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

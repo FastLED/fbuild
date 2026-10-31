@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-csggreen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-csggreen/library/TEST001/0.0.0+sha.e30defb9581f/TEST001-0.0.0+sha.e30defb9581f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TEST001-0.0.0+sha.e30defb9581f.tar.gz",
+    "size_bytes": 5085,
+    "sha256": "78b1cc54576758979ac79702ddfa011a45a78b5ddf3fe96af0cd7298063315f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-csggreen/library/TEST001/0.0.0%2Bsha.e30defb9581f/TEST001-0.0.0%2Bsha.e30defb9581f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-csggreen/library/TEST001/0.0.0%2Bsha.e30defb9581f/TEST001-0.0.0%2Bsha.e30defb9581f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

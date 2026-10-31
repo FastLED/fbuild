@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/explocion",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "explocion/library/libhd44780/0.1.0/libhd44780-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libhd44780-0.1.0.tar.gz",
+    "size_bytes": 4284,
+    "sha256": "5a46eb5a8cb78562b17900cab36bb452ddcfae448c5c2a89da4fe8f57537f4a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/explocion/library/libhd44780/0.1.0/libhd44780-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/explocion/library/libhd44780/0.1.0/libhd44780-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

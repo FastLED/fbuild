@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bousiya03",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bousiya03/library/interruptin_mod/0.0.0+sha.1cc9d9e3cf8c/interruptin_mod-0.0.0+sha.1cc9d9e3cf8c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "interruptin_mod-0.0.0+sha.1cc9d9e3cf8c.tar.gz",
+    "size_bytes": 1142,
+    "sha256": "430a3070def832967d6a7048a33aba32952ca4ddbe0a647e27936f8e589aed9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bousiya03/library/interruptin_mod/0.0.0%2Bsha.1cc9d9e3cf8c/interruptin_mod-0.0.0%2Bsha.1cc9d9e3cf8c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bousiya03/library/interruptin_mod/0.0.0%2Bsha.1cc9d9e3cf8c/interruptin_mod-0.0.0%2Bsha.1cc9d9e3cf8c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

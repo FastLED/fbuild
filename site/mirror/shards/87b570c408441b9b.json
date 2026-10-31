@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/schm1tz1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "schm1tz1/library/AWS-SDK-ESP/0.9.1-beta/AWS-SDK-ESP-0.9.1-beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AWS-SDK-ESP-0.9.1-beta.tar.gz",
+    "size_bytes": 75429,
+    "sha256": "110af110a9051b9fd14958c3e12908d85e7c108138b9ca21464dd73b3c3ce70e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/schm1tz1/library/AWS-SDK-ESP/0.9.1-beta/AWS-SDK-ESP-0.9.1-beta.tar.gz",
+     "https://dl.registry.platformio.org/download/schm1tz1/library/AWS-SDK-ESP/0.9.1-beta/AWS-SDK-ESP-0.9.1-beta.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "schm1tz1/library/MS5xxx/1.1.2/MS5xxx-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MS5xxx-1.1.2.tar.gz",
+    "size_bytes": 29277,
+    "sha256": "2f123ca05b1b979a10ac027102a06dd182b6e0737701aba30e92495a7916319f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/schm1tz1/library/MS5xxx/1.1.2/MS5xxx-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/schm1tz1/library/MS5xxx/1.1.2/MS5xxx-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "schm1tz1/library/TSIC/1.1.2/TSIC-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSIC-1.1.2.tar.gz",
+    "size_bytes": 16254,
+    "sha256": "f373033753ae5abdf776c93a23d689d2f8996945035db2ba382a81b2b702bb38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/schm1tz1/library/TSIC/1.1.2/TSIC-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/schm1tz1/library/TSIC/1.1.2/TSIC-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

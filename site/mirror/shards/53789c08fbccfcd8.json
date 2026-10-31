@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-roamingbot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-roamingbot/library/RC5/0.0.0+sha.119028593e38/RC5-0.0.0+sha.119028593e38.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RC5-0.0.0+sha.119028593e38.tar.gz",
+    "size_bytes": 3855,
+    "sha256": "5093b49dc761cfc73ce4a6e2d2f9b9a05e5c25bda11838f821cddc100d499f14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-roamingbot/library/RC5/0.0.0%2Bsha.119028593e38/RC5-0.0.0%2Bsha.119028593e38.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-roamingbot/library/RC5/0.0.0%2Bsha.119028593e38/RC5-0.0.0%2Bsha.119028593e38.tar.gz"
+    ]
+   }
+  }
+ ]
+}

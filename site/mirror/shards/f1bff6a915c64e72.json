@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nitins11",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nitins11/library/Nokia5110/0.1/Nokia5110-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nokia5110-0.1.tar.gz",
+    "size_bytes": 3887,
+    "sha256": "ac6c7928dadf47e5dc5c7a30656a24b60efdaf723d08e5898af5681dd2fc1a4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitins11/library/Nokia5110/0.1/Nokia5110-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nitins11/library/Nokia5110/0.1/Nokia5110-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/danielbwr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "danielbwr/library/ini-parser/1.1.0/ini-parser-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ini-parser-1.1.0.tar.gz",
+    "size_bytes": 2450,
+    "sha256": "4711699c5370150d8e5af4d3b477dc1ac11430f3c99b3ef7657e4f381d922aab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danielbwr/library/ini-parser/1.1.0/ini-parser-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danielbwr/library/ini-parser/1.1.0/ini-parser-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

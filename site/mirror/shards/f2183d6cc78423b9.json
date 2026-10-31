@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-karen801",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-karen801/library/wifi-x-nucleo-idw01m1/0.0.0+sha.79ce2b184a43/wifi-x-nucleo-idw01m1-0.0.0+sha.79ce2b184a43.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wifi-x-nucleo-idw01m1-0.0.0+sha.79ce2b184a43.tar.gz",
+    "size_bytes": 24368,
+    "sha256": "6b9a06def62b545582c72f553055d2adc7f3770de94f3c35b3ef4b5fc713082f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-karen801/library/wifi-x-nucleo-idw01m1/0.0.0%2Bsha.79ce2b184a43/wifi-x-nucleo-idw01m1-0.0.0%2Bsha.79ce2b184a43.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-karen801/library/wifi-x-nucleo-idw01m1/0.0.0%2Bsha.79ce2b184a43/wifi-x-nucleo-idw01m1-0.0.0%2Bsha.79ce2b184a43.tar.gz"
+    ]
+   }
+  }
+ ]
+}

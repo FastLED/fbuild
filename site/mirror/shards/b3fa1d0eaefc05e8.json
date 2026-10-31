@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/end2endzone",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "end2endzone/library/AnyRtttl/2.4.0/AnyRtttl-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnyRtttl-2.4.0.tar.gz",
+    "size_bytes": 37917,
+    "sha256": "d912b7bc52129401269fac81ac2bd581a3cec518856368916176ff845271ec97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/end2endzone/library/AnyRtttl/2.4.0/AnyRtttl-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/end2endzone/library/AnyRtttl/2.4.0/AnyRtttl-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "end2endzone/library/AnyRtttl/2.5.0/AnyRtttl-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnyRtttl-2.5.0.tar.gz",
+    "size_bytes": 46026,
+    "sha256": "060d865f0f1c0ffdffa579e99f59748f235c1be5ee9de11fc27037631227156a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/end2endzone/library/AnyRtttl/2.5.0/AnyRtttl-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/end2endzone/library/AnyRtttl/2.5.0/AnyRtttl-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "end2endzone/library/AnyRtttl/2.6.0/AnyRtttl-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnyRtttl-2.6.0.tar.gz",
+    "size_bytes": 57343,
+    "sha256": "e3cb730e0904d3f88a6dbb8355a7e6c855d5829ee15af5468057e6c4c1c1e819",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/end2endzone/library/AnyRtttl/2.6.0/AnyRtttl-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/end2endzone/library/AnyRtttl/2.6.0/AnyRtttl-2.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "end2endzone/library/BitReader/1.3.0/BitReader-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BitReader-1.3.0.tar.gz",
+    "size_bytes": 16185,
+    "sha256": "5c3c28019b30f1a68415d2a60c5bc2456aa6ec20b0f70ef34f1ae07f7532b003",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/end2endzone/library/BitReader/1.3.0/BitReader-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/end2endzone/library/BitReader/1.3.0/BitReader-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "end2endzone/library/NonBlockingRTTTL/1.3.0/NonBlockingRTTTL-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NonBlockingRTTTL-1.3.0.tar.gz",
+    "size_bytes": 9542,
+    "sha256": "6d018449338929bcdc6bf79f83b553b0a05e2a7bbc996561374db2407db61847",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/end2endzone/library/NonBlockingRTTTL/1.3.0/NonBlockingRTTTL-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/end2endzone/library/NonBlockingRTTTL/1.3.0/NonBlockingRTTTL-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "end2endzone/library/NonBlockingRTTTL/1.4.0/NonBlockingRTTTL-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NonBlockingRTTTL-1.4.0.tar.gz",
+    "size_bytes": 10750,
+    "sha256": "0e0a90662dd9aed43c39ed7bcd48e4e8ab6a910c2519a4a422dde654884128c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/end2endzone/library/NonBlockingRTTTL/1.4.0/NonBlockingRTTTL-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/end2endzone/library/NonBlockingRTTTL/1.4.0/NonBlockingRTTTL-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "end2endzone/library/SoftTimers/2.1.0/SoftTimers-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftTimers-2.1.0.tar.gz",
+    "size_bytes": 28421,
+    "sha256": "5f4c7973ec3ed179daa762f6d82c08a334be7d898419e639219d53e68872ff15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/end2endzone/library/SoftTimers/2.1.0/SoftTimers-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/end2endzone/library/SoftTimers/2.1.0/SoftTimers-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bieleluk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bieleluk/library/DEBUG_F042F6P6/0.0.0+sha.e255eaf79cd2/DEBUG_F042F6P6-0.0.0+sha.e255eaf79cd2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DEBUG_F042F6P6-0.0.0+sha.e255eaf79cd2.tar.gz",
+    "size_bytes": 5585,
+    "sha256": "c6d1c918b9638d43a75b69606c5b571207fd206fd3aee28643e721f9712f48f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bieleluk/library/DEBUG_F042F6P6/0.0.0%2Bsha.e255eaf79cd2/DEBUG_F042F6P6-0.0.0%2Bsha.e255eaf79cd2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bieleluk/library/DEBUG_F042F6P6/0.0.0%2Bsha.e255eaf79cd2/DEBUG_F042F6P6-0.0.0%2Bsha.e255eaf79cd2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bieleluk/library/DEBUG_UNIVERSAL/0.0.0+sha.5b0dd2a6b130/DEBUG_UNIVERSAL-0.0.0+sha.5b0dd2a6b130.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DEBUG_UNIVERSAL-0.0.0+sha.5b0dd2a6b130.tar.gz",
+    "size_bytes": 7587,
+    "sha256": "1c6a70b49b6103c9da19d063cd4a9e7381814974e4993e917508eb4b81ce7042",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bieleluk/library/DEBUG_UNIVERSAL/0.0.0%2Bsha.5b0dd2a6b130/DEBUG_UNIVERSAL-0.0.0%2Bsha.5b0dd2a6b130.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bieleluk/library/DEBUG_UNIVERSAL/0.0.0%2Bsha.5b0dd2a6b130/DEBUG_UNIVERSAL-0.0.0%2Bsha.5b0dd2a6b130.tar.gz"
+    ]
+   }
+  }
+ ]
+}

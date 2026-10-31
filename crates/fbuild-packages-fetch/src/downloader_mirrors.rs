@@ -8,7 +8,7 @@ use std::path::Path;
 use fbuild_core::{FbuildError, Result};
 use sha2::Digest;
 
-use super::manifest::{self, MirrorEntry, MirrorManifest, is_loopback_url};
+use super::manifest::{self, MirrorEntry, is_loopback_url};
 use super::{
     DownloadProgress, RetryTiming, download_file_with_progress_named, get_with_retry_timed,
     hex_encode,
@@ -68,7 +68,16 @@ pub(super) async fn resolve_candidates(url: &str) -> Candidates {
     } else {
         None
     };
-    resolve_with(url, manifest.as_deref())
+    let canonical = canonical_url(url);
+    let entry = match &manifest {
+        Some(manifest) => {
+            manifest
+                .entry_for(&canonical, registry_owner(&canonical).as_deref())
+                .await
+        }
+        None => None,
+    };
+    resolve_with(url, entry.as_deref())
 }
 
 /// Candidates for `url`, highest precedence first:
@@ -81,14 +90,14 @@ pub(super) async fn resolve_candidates(url: &str) -> Candidates {
 /// 3. The built-in [`DEFAULT_MIRROR`] for hosts the bucket mirrors, tried
 ///    first unless `FBUILD_DOWNLOAD_MIRROR_FIRST` says otherwise.
 /// 4. The primary URL alone.
-pub(super) fn resolve_with(url: &str, manifest: Option<&MirrorManifest>) -> Candidates {
+pub(super) fn resolve_with(url: &str, entry: Option<&MirrorEntry>) -> Candidates {
     if let Ok(value) = std::env::var(MIRRORS_ENV) {
         return Candidates::new(
             candidate_urls(url, &parse_mirrors(&value)),
             mirror_first_requested(),
         );
     }
-    if let Some(entry) = manifest.and_then(|m| m.lookup(url)) {
+    if let Some(entry) = entry {
         return from_manifest(url, entry);
     }
     if mirror_path(url).is_none() {
@@ -101,22 +110,42 @@ pub(super) fn resolve_with(url: &str, manifest: Option<&MirrorManifest>) -> Cand
     )
 }
 
+/// The form the manifest lists a URL in. The registry API hands out
+/// download URLs with a literal space in some owner and package names
+/// (`.../download/dmytro korniienko/...`); the manifest, like the request on
+/// the wire, has `%20`.
+pub(super) fn canonical_url(url: &str) -> String {
+    url.replace(' ', "%20")
+}
+
 fn from_manifest(url: &str, entry: &MirrorEntry) -> Candidates {
     if entry.yanked {
         return Candidates::new(vec![url.to_string()], false);
     }
+    let canonical = canonical_url(url);
+    let is_primary = |u: &String| *u == url || *u == canonical;
     let mut urls = vec![url.to_string()];
-    urls.extend(entry.urls.iter().filter(|u| *u != url).cloned());
-    let order = if std::env::var(MIRROR_FIRST_ENV).is_ok() {
+    urls.extend(entry.urls.iter().filter(|u| !is_primary(u)).cloned());
+    let mut order: Vec<usize> = if std::env::var(MIRROR_FIRST_ENV).is_ok() {
         attempt_order(urls.len(), mirror_first_requested())
     } else {
-        // `entry` was found by `url`, so every listed URL is in `urls`.
         entry
             .urls
             .iter()
-            .filter_map(|u| urls.iter().position(|c| c == u))
+            .filter_map(|u| {
+                if is_primary(u) {
+                    Some(0)
+                } else {
+                    urls.iter().position(|c| c == u)
+                }
+            })
             .collect()
     };
+    // The primary is always tried: its error is the one reported, and a
+    // manifest that omits it must never leave it out.
+    if !order.contains(&0) {
+        order.push(0);
+    }
     Candidates {
         urls,
         order,
@@ -158,22 +187,22 @@ pub(super) fn attempt_order(count: usize, mirror_first: bool) -> Vec<usize> {
 /// path a mirror bucket reproduces key for key.
 const REGISTRY_DOWNLOAD_HOST: &str = "dl.registry.platformio.org";
 
-/// GitHub, whose archive and release-asset paths a mirror bucket keeps under
-/// a `github.com/` prefix so equal file names in different repos never
-/// collide (FastLED/fbuild#1806).
-const GITHUB_HOST: &str = "github.com";
-
 /// The key a mirror bucket stores `url` under. A PlatformIO registry download
 /// maps to everything after `/download/`, e.g.
-/// `platformio/tool/framework-arduino-avr/5.4.0/…tar.gz`; a GitHub URL maps
-/// to `github.com/<owner>/<repo>/…`. `None` for any other host, including a
-/// `/download/` segment off the registry.
+/// `platformio/tool/framework-arduino-avr/5.4.0/…tar.gz`. `None` for any
+/// other host, including GitHub and a `/download/` segment off the registry:
+/// the bucket mirrors only the registry layout (FastLED/fbuild#1815).
+/// The registry owner of `url` (the first [`mirror_path`] segment), which
+/// names its manifest shard.
+pub(super) fn registry_owner(url: &str) -> Option<String> {
+    mirror_path(url).map(|path| path.split('/').next().unwrap_or_default().to_string())
+}
+
 fn mirror_path(url: &str) -> Option<String> {
     let (_, after_scheme) = url.split_once("://")?;
     let (host, path) = after_scheme.split_once('/')?;
     match host {
         REGISTRY_DOWNLOAD_HOST => path.strip_prefix("download/").map(str::to_string),
-        GITHUB_HOST => Some(format!("{GITHUB_HOST}/{path}")),
         _ => None,
     }
 }

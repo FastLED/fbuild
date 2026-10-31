@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wisnup",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wisnup/library/DCM/0.0.0+sha.2b4ec92bff8b/DCM-0.0.0+sha.2b4ec92bff8b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCM-0.0.0+sha.2b4ec92bff8b.tar.gz",
+    "size_bytes": 5008,
+    "sha256": "225f06f8041a8f623074e74fe4da4fd891005936b3c7543d5fcc3f4346757ec6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wisnup/library/DCM/0.0.0%2Bsha.2b4ec92bff8b/DCM-0.0.0%2Bsha.2b4ec92bff8b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wisnup/library/DCM/0.0.0%2Bsha.2b4ec92bff8b/DCM-0.0.0%2Bsha.2b4ec92bff8b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wisnup/library/HMC5883L/0.0.0+sha.b02e2917fb8f/HMC5883L-0.0.0+sha.b02e2917fb8f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC5883L-0.0.0+sha.b02e2917fb8f.tar.gz",
+    "size_bytes": 2994,
+    "sha256": "3e878e14f54fe64bba06b1c6383ab5dd7f451439e6ea15d99b1e401c9087fc59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wisnup/library/HMC5883L/0.0.0%2Bsha.b02e2917fb8f/HMC5883L-0.0.0%2Bsha.b02e2917fb8f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wisnup/library/HMC5883L/0.0.0%2Bsha.b02e2917fb8f/HMC5883L-0.0.0%2Bsha.b02e2917fb8f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wisnup/library/MS5611/0.0.0+sha.375aa941f760/MS5611-0.0.0+sha.375aa941f760.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MS5611-0.0.0+sha.375aa941f760.tar.gz",
+    "size_bytes": 2099,
+    "sha256": "e57ed2ed7622b941f035acb8af036178c5fb6b8d87612e18154b4ddf52677e85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wisnup/library/MS5611/0.0.0%2Bsha.375aa941f760/MS5611-0.0.0%2Bsha.375aa941f760.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wisnup/library/MS5611/0.0.0%2Bsha.375aa941f760/MS5611-0.0.0%2Bsha.375aa941f760.tar.gz"
+    ]
+   }
+  }
+ ]
+}

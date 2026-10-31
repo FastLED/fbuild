@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tmittet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tmittet/library/SonosUPnP/1.1/SonosUPnP-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SonosUPnP-1.1.tar.gz",
+    "size_bytes": 25558,
+    "sha256": "9cdec843fe156aec84fb5e94703e640211637fdf6096055c03bbb8d8abd4d6d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tmittet/library/SonosUPnP/1.1/SonosUPnP-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tmittet/library/SonosUPnP/1.1/SonosUPnP-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

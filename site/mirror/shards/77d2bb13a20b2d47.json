@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-maxim-integrated",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-maxim-integrated/library/MAX11300/0.0.0+sha.09a5c5c8081c/MAX11300-0.0.0+sha.09a5c5c8081c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX11300-0.0.0+sha.09a5c5c8081c.tar.gz",
+    "size_bytes": 5181,
+    "sha256": "9f3d5dc6a1f59a87a519b4f0854e1922ae068905f5b6c9c4a50fc8809ecfdaf5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maxim-integrated/library/MAX11300/0.0.0%2Bsha.09a5c5c8081c/MAX11300-0.0.0%2Bsha.09a5c5c8081c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maxim-integrated/library/MAX11300/0.0.0%2Bsha.09a5c5c8081c/MAX11300-0.0.0%2Bsha.09a5c5c8081c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maxim-integrated/library/MAX14871_Shield/0.0.0+sha.c0bee1397f3e/MAX14871_Shield-0.0.0+sha.c0bee1397f3e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX14871_Shield-0.0.0+sha.c0bee1397f3e.tar.gz",
+    "size_bytes": 5816,
+    "sha256": "e4f23cec450ceae738e13b8d4ee6d00fe9541e8da02506270dc16bbbc21e559a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maxim-integrated/library/MAX14871_Shield/0.0.0%2Bsha.c0bee1397f3e/MAX14871_Shield-0.0.0%2Bsha.c0bee1397f3e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maxim-integrated/library/MAX14871_Shield/0.0.0%2Bsha.c0bee1397f3e/MAX14871_Shield-0.0.0%2Bsha.c0bee1397f3e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maxim-integrated/library/MAX31856/0.0.0+sha.a1bbb5c254f2/MAX31856-0.0.0+sha.a1bbb5c254f2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX31856-0.0.0+sha.a1bbb5c254f2.tar.gz",
+    "size_bytes": 10887,
+    "sha256": "1889e37a916514b90ff82421e5c12891a47b3e5730cb822b2368a8f3fc366da3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maxim-integrated/library/MAX31856/0.0.0%2Bsha.a1bbb5c254f2/MAX31856-0.0.0%2Bsha.a1bbb5c254f2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maxim-integrated/library/MAX31856/0.0.0%2Bsha.a1bbb5c254f2/MAX31856-0.0.0%2Bsha.a1bbb5c254f2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maxim-integrated/library/MAX4822/0.0.0+sha.90f7cd976f18/MAX4822-0.0.0+sha.90f7cd976f18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX4822-0.0.0+sha.90f7cd976f18.tar.gz",
+    "size_bytes": 3272,
+    "sha256": "8ae3b976a1a90061638673ab6c32a2e33cfa60da9403ae7ef8c341c7d981e3ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maxim-integrated/library/MAX4822/0.0.0%2Bsha.90f7cd976f18/MAX4822-0.0.0%2Bsha.90f7cd976f18.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maxim-integrated/library/MAX4822/0.0.0%2Bsha.90f7cd976f18/MAX4822-0.0.0%2Bsha.90f7cd976f18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maxim-integrated/library/MAX7219/0.0.0+sha.b5e4379a3d90/MAX7219-0.0.0+sha.b5e4379a3d90.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX7219-0.0.0+sha.b5e4379a3d90.tar.gz",
+    "size_bytes": 4887,
+    "sha256": "9f66dd0ae6906f341f7c1eaeb08e33a5859fea5898eefc626db4235156bce843",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maxim-integrated/library/MAX7219/0.0.0%2Bsha.b5e4379a3d90/MAX7219-0.0.0%2Bsha.b5e4379a3d90.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maxim-integrated/library/MAX7219/0.0.0%2Bsha.b5e4379a3d90/MAX7219-0.0.0%2Bsha.b5e4379a3d90.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maxim-integrated/library/MaximInterface/0.0.0+sha.7eb41621ba22/MaximInterface-0.0.0+sha.7eb41621ba22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MaximInterface-0.0.0+sha.7eb41621ba22.tar.gz",
+    "size_bytes": 95677,
+    "sha256": "19e9a857085d8b1e74bd24c839ef768d188c3ad84b5cba1cc22ac12cf87710cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maxim-integrated/library/MaximInterface/0.0.0%2Bsha.7eb41621ba22/MaximInterface-0.0.0%2Bsha.7eb41621ba22.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maxim-integrated/library/MaximInterface/0.0.0%2Bsha.7eb41621ba22/MaximInterface-0.0.0%2Bsha.7eb41621ba22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maxim-integrated/library/OWGridEye/0.0.0+sha.4b7ac3b21d91/OWGridEye-0.0.0+sha.4b7ac3b21d91.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OWGridEye-0.0.0+sha.4b7ac3b21d91.tar.gz",
+    "size_bytes": 24078,
+    "sha256": "d0c0d13a177861f898af300662bf0700110bfe1a3a4857edd19f81945995171c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maxim-integrated/library/OWGridEye/0.0.0%2Bsha.4b7ac3b21d91/OWGridEye-0.0.0%2Bsha.4b7ac3b21d91.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maxim-integrated/library/OWGridEye/0.0.0%2Bsha.4b7ac3b21d91/OWGridEye-0.0.0%2Bsha.4b7ac3b21d91.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maxim-integrated/library/ard2pmod/0.0.0+sha.abb327ca5580/ard2pmod-0.0.0+sha.abb327ca5580.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ard2pmod-0.0.0+sha.abb327ca5580.tar.gz",
+    "size_bytes": 3036,
+    "sha256": "14babfa26468067f7095bbe9fb5512f5fb5d5aceba021d6b568b544939fab4bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maxim-integrated/library/ard2pmod/0.0.0%2Bsha.abb327ca5580/ard2pmod-0.0.0%2Bsha.abb327ca5580.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maxim-integrated/library/ard2pmod/0.0.0%2Bsha.abb327ca5580/ard2pmod-0.0.0%2Bsha.abb327ca5580.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maxim-integrated/library/ds3231/0.0.0+sha.11630748e2f2/ds3231-0.0.0+sha.11630748e2f2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ds3231-0.0.0+sha.11630748e2f2.tar.gz",
+    "size_bytes": 6122,
+    "sha256": "1dbc54f3f8a97bd3898d6bcd64d5982b4bb1665eb59af28b3039a8dbfe0dc755",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maxim-integrated/library/ds3231/0.0.0%2Bsha.11630748e2f2/ds3231-0.0.0%2Bsha.11630748e2f2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maxim-integrated/library/ds3231/0.0.0%2Bsha.11630748e2f2/ds3231-0.0.0%2Bsha.11630748e2f2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maxim-integrated/library/max14661/0.0.0+sha.27cfbbce3094/max14661-0.0.0+sha.27cfbbce3094.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "max14661-0.0.0+sha.27cfbbce3094.tar.gz",
+    "size_bytes": 3763,
+    "sha256": "71b22e4cdb5bc7aed61304397157561e22dfb5a870ba0abedca275216c8bdaa7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maxim-integrated/library/max14661/0.0.0%2Bsha.27cfbbce3094/max14661-0.0.0%2Bsha.27cfbbce3094.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maxim-integrated/library/max14661/0.0.0%2Bsha.27cfbbce3094/max14661-0.0.0%2Bsha.27cfbbce3094.tar.gz"
+    ]
+   }
+  }
+ ]
+}

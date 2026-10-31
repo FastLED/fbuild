@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-uh-robotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-uh-robotics/library/Sharp/0.0.0+sha.a5ced48cfedc/Sharp-0.0.0+sha.a5ced48cfedc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sharp-0.0.0+sha.a5ced48cfedc.tar.gz",
+    "size_bytes": 971,
+    "sha256": "800aa799562c555d3fffdcff39f9e2052fc86d5f180aa03b360c845bdecae344",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-uh-robotics/library/Sharp/0.0.0%2Bsha.a5ced48cfedc/Sharp-0.0.0%2Bsha.a5ced48cfedc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-uh-robotics/library/Sharp/0.0.0%2Bsha.a5ced48cfedc/Sharp-0.0.0%2Bsha.a5ced48cfedc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

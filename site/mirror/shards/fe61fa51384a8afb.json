@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jeanlucmichel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jeanlucmichel/library/iniSettings/0.0.11/iniSettings-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iniSettings-0.0.11.tar.gz",
+    "size_bytes": 6885,
+    "sha256": "f9032bf73c2fead642fe20fd148cef388283d43719452e0e2b03257180be3ea0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeanlucmichel/library/iniSettings/0.0.11/iniSettings-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/jeanlucmichel/library/iniSettings/0.0.11/iniSettings-0.0.11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

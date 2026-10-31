@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aeroboticsglobalteam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aeroboticsglobalteam/library/AEBO/0.0.3/AEBO-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AEBO-0.0.3.tar.gz",
+    "size_bytes": 3040,
+    "sha256": "2a258f70626257841215347d3e56c4be2cd95c1a6e23fed79d9bd09f9d728c06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aeroboticsglobalteam/library/AEBO/0.0.3/AEBO-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/aeroboticsglobalteam/library/AEBO/0.0.3/AEBO-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

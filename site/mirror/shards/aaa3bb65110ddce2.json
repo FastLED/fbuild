@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-glemasson",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-glemasson/library/CircularArray/0.0.0+sha.5036a532fe62/CircularArray-0.0.0+sha.5036a532fe62.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircularArray-0.0.0+sha.5036a532fe62.tar.gz",
+    "size_bytes": 1517,
+    "sha256": "c574cbb09c9c96a1d4acf89288c386c3bdaab794248e8a8ea9fc5961d824bdd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-glemasson/library/CircularArray/0.0.0%2Bsha.5036a532fe62/CircularArray-0.0.0%2Bsha.5036a532fe62.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-glemasson/library/CircularArray/0.0.0%2Bsha.5036a532fe62/CircularArray-0.0.0%2Bsha.5036a532fe62.tar.gz"
+    ]
+   }
+  }
+ ]
+}

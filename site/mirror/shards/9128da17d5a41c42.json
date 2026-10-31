@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/enkei0x",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "enkei0x/library/ESPAI/0.6.0/ESPAI-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAI-0.6.0.tar.gz",
+    "size_bytes": 28635,
+    "sha256": "8e1b6f6dfa39d847347dc5c571084fb662365668e10d1a58acf3febb0616c1ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enkei0x/library/ESPAI/0.6.0/ESPAI-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/enkei0x/library/ESPAI/0.6.0/ESPAI-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "enkei0x/library/ESPAI/0.6.1/ESPAI-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAI-0.6.1.tar.gz",
+    "size_bytes": 28658,
+    "sha256": "dbae45ce039c4ef124b2361963a66b1eff2fce5cfa3cc9c982c804f16ab75059",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enkei0x/library/ESPAI/0.6.1/ESPAI-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/enkei0x/library/ESPAI/0.6.1/ESPAI-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "enkei0x/library/ESPAI/0.7.0/ESPAI-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAI-0.7.0.tar.gz",
+    "size_bytes": 31635,
+    "sha256": "7321b3e19f5e7c07e370bf76ffc8e13ac124a12ae9fd3b4376a34ad639fada78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enkei0x/library/ESPAI/0.7.0/ESPAI-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/enkei0x/library/ESPAI/0.7.0/ESPAI-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "enkei0x/library/ESPAI/0.8.0/ESPAI-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAI-0.8.0.tar.gz",
+    "size_bytes": 43300,
+    "sha256": "37268cd73b79839cc07d2094f849c51433a305d346575e2cdba372c37fd51ef2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enkei0x/library/ESPAI/0.8.0/ESPAI-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/enkei0x/library/ESPAI/0.8.0/ESPAI-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "enkei0x/library/ESPAI/0.9.0/ESPAI-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAI-0.9.0.tar.gz",
+    "size_bytes": 45401,
+    "sha256": "bf8414ebde95d2d2014a51e0a6e736dcc18eb87a71bd13fb17bd7b852713180c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enkei0x/library/ESPAI/0.9.0/ESPAI-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/enkei0x/library/ESPAI/0.9.0/ESPAI-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

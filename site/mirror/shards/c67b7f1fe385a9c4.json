@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bobboteck",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bobboteck/library/SRF02/0.0.0+sha.6b978ea41787/SRF02-0.0.0+sha.6b978ea41787.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SRF02-0.0.0+sha.6b978ea41787.tar.gz",
+    "size_bytes": 2636,
+    "sha256": "0d578399d7d61bd11b8bd9bf0f55eaa40d44283fc10112ff898a468a2fc0315c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bobboteck/library/SRF02/0.0.0%2Bsha.6b978ea41787/SRF02-0.0.0%2Bsha.6b978ea41787.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bobboteck/library/SRF02/0.0.0%2Bsha.6b978ea41787/SRF02-0.0.0%2Bsha.6b978ea41787.tar.gz"
+    ]
+   }
+  }
+ ]
+}

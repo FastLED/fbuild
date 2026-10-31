@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/drewcassidy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "drewcassidy/library/Nokia-5110-lcd/1.0.2/Nokia-5110-lcd-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nokia-5110-lcd-1.0.2.tar.gz",
+    "size_bytes": 40340,
+    "sha256": "0b1df2a223f0cf6bf382f17f04cc01fb80f189272576d48c0e4d86075ebcbbc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drewcassidy/library/Nokia-5110-lcd/1.0.2/Nokia-5110-lcd-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/drewcassidy/library/Nokia-5110-lcd/1.0.2/Nokia-5110-lcd-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

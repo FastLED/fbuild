@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mittelab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mittelab/library/libSpookyAction/1.0.2/libSpookyAction-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libSpookyAction-1.0.2.tar.gz",
+    "size_bytes": 952105,
+    "sha256": "7431a007a8633a00d48df15fec759eaf3ba0c140815f2dc10fe6ac5528770185",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mittelab/library/libSpookyAction/1.0.2/libSpookyAction-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mittelab/library/libSpookyAction/1.0.2/libSpookyAction-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mittelab/library/mitteLib/1.0.8/mitteLib-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mitteLib-1.0.8.tar.gz",
+    "size_bytes": 19913,
+    "sha256": "fe897c8f88767e2107c48e1ab3545728bba41b52fffe54f320a8be965c647d5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mittelab/library/mitteLib/1.0.8/mitteLib-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/mittelab/library/mitteLib/1.0.8/mitteLib-1.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

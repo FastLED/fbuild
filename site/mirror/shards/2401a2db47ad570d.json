@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-renesas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-renesas/library/AsciiFont/0.0.0+sha.1eaa4942db53/AsciiFont-0.0.0+sha.1eaa4942db53.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsciiFont-0.0.0+sha.1eaa4942db53.tar.gz",
+    "size_bytes": 4833,
+    "sha256": "0f26911d0487e5a5b3de9d59713537a1276c5e4da73e6c3c377bc7a03bbec7c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-renesas/library/AsciiFont/0.0.0%2Bsha.1eaa4942db53/AsciiFont-0.0.0%2Bsha.1eaa4942db53.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-renesas/library/AsciiFont/0.0.0%2Bsha.1eaa4942db53/AsciiFont-0.0.0%2Bsha.1eaa4942db53.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-renesas/library/GR-PEACH_video/0.0.0+sha.aeefe5171463/GR-PEACH_video-0.0.0+sha.aeefe5171463.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GR-PEACH_video-0.0.0+sha.aeefe5171463.tar.gz",
+    "size_bytes": 133443,
+    "sha256": "335c45e50ae168848cbc2a52d49187c598eda379a62e42b994400ded20565e0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-renesas/library/GR-PEACH_video/0.0.0%2Bsha.aeefe5171463/GR-PEACH_video-0.0.0%2Bsha.aeefe5171463.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-renesas/library/GR-PEACH_video/0.0.0%2Bsha.aeefe5171463/GR-PEACH_video-0.0.0%2Bsha.aeefe5171463.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-renesas/library/TLV320_RBSP/0.0.0+sha.15487e571d9f/TLV320_RBSP-0.0.0+sha.15487e571d9f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLV320_RBSP-0.0.0+sha.15487e571d9f.tar.gz",
+    "size_bytes": 5015,
+    "sha256": "c338c10674eba134782fbe665df97883f2b71bf8c773f3dbd4a6e9ca7ca44e97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-renesas/library/TLV320_RBSP/0.0.0%2Bsha.15487e571d9f/TLV320_RBSP-0.0.0%2Bsha.15487e571d9f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-renesas/library/TLV320_RBSP/0.0.0%2Bsha.15487e571d9f/TLV320_RBSP-0.0.0%2Bsha.15487e571d9f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-renesas/library/esp32-driver/0.0.0+sha.cb5c0d3fa776/esp32-driver-0.0.0+sha.cb5c0d3fa776.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-driver-0.0.0+sha.cb5c0d3fa776.tar.gz",
+    "size_bytes": 13654,
+    "sha256": "25622c01ca0da6def214b14096381c7abbfde7ddf57061f9b8d9c68bf253b7bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-renesas/library/esp32-driver/0.0.0%2Bsha.cb5c0d3fa776/esp32-driver-0.0.0%2Bsha.cb5c0d3fa776.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-renesas/library/esp32-driver/0.0.0%2Bsha.cb5c0d3fa776/esp32-driver-0.0.0%2Bsha.cb5c0d3fa776.tar.gz"
+    ]
+   }
+  }
+ ]
+}

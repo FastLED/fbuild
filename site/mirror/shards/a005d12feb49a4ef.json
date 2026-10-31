@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yfrobot-tm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yfrobot-tm/library/YFKeypadLib/1.0.1/YFKeypadLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YFKeypadLib-1.0.1.tar.gz",
+    "size_bytes": 9821,
+    "sha256": "a9f7066c0c0041315e1d1a916e8eb2b9b0dba6c2e25c66315ddbae931fe68c6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yfrobot-tm/library/YFKeypadLib/1.0.1/YFKeypadLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yfrobot-tm/library/YFKeypadLib/1.0.1/YFKeypadLib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yfrobot-tm/library/YFPS2UARTLib/1.0.0/YFPS2UARTLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YFPS2UARTLib-1.0.0.tar.gz",
+    "size_bytes": 15800,
+    "sha256": "c939b1168be34afe5d1c6a5a8e0c11d04e1cbda7905ff10a68def80b57b8d5ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yfrobot-tm/library/YFPS2UARTLib/1.0.0/YFPS2UARTLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yfrobot-tm/library/YFPS2UARTLib/1.0.0/YFPS2UARTLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yfrobot-tm/library/YFPS2UARTLib/1.0.1/YFPS2UARTLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YFPS2UARTLib-1.0.1.tar.gz",
+    "size_bytes": 15943,
+    "sha256": "1b24a4f41c0663c8ac9a6815791d185c01e3c3ce51acac97e12e551126f17a25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yfrobot-tm/library/YFPS2UARTLib/1.0.1/YFPS2UARTLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yfrobot-tm/library/YFPS2UARTLib/1.0.1/YFPS2UARTLib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yfrobot-tm/library/YFPS2UARTLib/2.0.0/YFPS2UARTLib-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YFPS2UARTLib-2.0.0.tar.gz",
+    "size_bytes": 17215,
+    "sha256": "02e8c0f26c716f525ea2f935a49180004167b832a02b33c4adecb298c860db5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yfrobot-tm/library/YFPS2UARTLib/2.0.0/YFPS2UARTLib-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yfrobot-tm/library/YFPS2UARTLib/2.0.0/YFPS2UARTLib-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yfrobot-tm/library/YFPS2UARTLib/2.0.1/YFPS2UARTLib-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YFPS2UARTLib-2.0.1.tar.gz",
+    "size_bytes": 17360,
+    "sha256": "1fc280ef5b17a6da15d2d6a34f3d9fd935e83da884f39df5bb437e3d4d06439b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yfrobot-tm/library/YFPS2UARTLib/2.0.1/YFPS2UARTLib-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yfrobot-tm/library/YFPS2UARTLib/2.0.1/YFPS2UARTLib-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yfrobot-tm/library/YFVCLib/1.1.1/YFVCLib-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YFVCLib-1.1.1.tar.gz",
+    "size_bytes": 14207,
+    "sha256": "be4372c4f326e75ea4ca6e9593ab81c336e0fc5edb871376a9c2c40ff7893ff3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yfrobot-tm/library/YFVCLib/1.1.1/YFVCLib-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yfrobot-tm/library/YFVCLib/1.1.1/YFVCLib-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yfrobot-tm/library/Yfrobot%20MP3%20V3/1.1.1/YfrobotMP3V3-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YfrobotMP3V3-1.1.1.tar.gz",
+    "size_bytes": 20021,
+    "sha256": "dd36e4115ce5f9c9485c151d9ebd18a6c0e6ee8987bf0ee7c2db32f5414566de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yfrobot-tm/library/Yfrobot%2520MP3%2520V3/1.1.1/YfrobotMP3V3-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yfrobot-tm/library/Yfrobot%20MP3%20V3/1.1.1/YfrobotMP3V3-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jpb10",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jpb10/library/SolarCalculator/2.0.1/SolarCalculator-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolarCalculator-2.0.1.tar.gz",
+    "size_bytes": 8358,
+    "sha256": "789abfaf3e75220e485abe37799f1ac44043f4ba456fc1476bce237d23555173",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jpb10/library/SolarCalculator/2.0.1/SolarCalculator-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jpb10/library/SolarCalculator/2.0.1/SolarCalculator-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jpb10/library/SolarCalculator/2.0.2/SolarCalculator-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolarCalculator-2.0.2.tar.gz",
+    "size_bytes": 7773,
+    "sha256": "7c6c87f7317e1b0700d76dc3224463d7a9339dbfbd46b2f2bf8f522fafd1ee7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jpb10/library/SolarCalculator/2.0.2/SolarCalculator-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jpb10/library/SolarCalculator/2.0.2/SolarCalculator-2.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

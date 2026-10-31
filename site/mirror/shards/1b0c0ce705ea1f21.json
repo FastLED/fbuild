@@ -1,0 +1,1803 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/esphome",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "esphome/library/AsyncTCP-esphome/1.2.2/AsyncTCP-esphome-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-esphome-1.2.2.tar.gz",
+    "size_bytes": 17335,
+    "sha256": "41db33d7e58666665577b2a20383d642f8326122784e316a20da9aa856b3b84f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/AsyncTCP-esphome/1.2.2/AsyncTCP-esphome-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/AsyncTCP-esphome/1.2.2/AsyncTCP-esphome-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/AsyncTCP-esphome/2.0.0/AsyncTCP-esphome-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-esphome-2.0.0.tar.gz",
+    "size_bytes": 17582,
+    "sha256": "908572e49beefd1a1e25636d6c006f4abe1f1e042e0d049b9a061a1ff8afc99e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/AsyncTCP-esphome/2.0.0/AsyncTCP-esphome-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/AsyncTCP-esphome/2.0.0/AsyncTCP-esphome-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/AsyncTCP-esphome/2.0.1/AsyncTCP-esphome-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-esphome-2.0.1.tar.gz",
+    "size_bytes": 17611,
+    "sha256": "0abf056d57aefd49e30ac15e691a93a3e0caa00c36cba060289650605f76007f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/AsyncTCP-esphome/2.0.1/AsyncTCP-esphome-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/AsyncTCP-esphome/2.0.1/AsyncTCP-esphome-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/AsyncTCP-esphome/2.1.1/AsyncTCP-esphome-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-esphome-2.1.1.tar.gz",
+    "size_bytes": 16127,
+    "sha256": "1e03ceff8d2718639356f0141540ac54684269ea424e15e86981d20507831054",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/AsyncTCP-esphome/2.1.1/AsyncTCP-esphome-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/AsyncTCP-esphome/2.1.1/AsyncTCP-esphome-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/AsyncTCP-esphome/2.1.3/AsyncTCP-esphome-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-esphome-2.1.3.tar.gz",
+    "size_bytes": 16207,
+    "sha256": "fcccffdb11cf543c5813c3c5c2fbffd1e0a53f1c2bea1357f12112407f09563e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/AsyncTCP-esphome/2.1.3/AsyncTCP-esphome-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/AsyncTCP-esphome/2.1.3/AsyncTCP-esphome-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/AsyncTCP-esphome/2.1.4/AsyncTCP-esphome-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-esphome-2.1.4.tar.gz",
+    "size_bytes": 16408,
+    "sha256": "80adae19bc2cd6c178e350df79f0a8b5db99d99831e30fc284d7364faedeb8fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/AsyncTCP-esphome/2.1.4/AsyncTCP-esphome-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/AsyncTCP-esphome/2.1.4/AsyncTCP-esphome-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/ESP32-audioI2S/2.0.6/ESP32-audioI2S-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-audioI2S-2.0.6.tar.gz",
+    "size_bytes": 4681881,
+    "sha256": "ce50e1180de3f470c00f083a8a6fb419b193875a0abd78fde6cfd92a7d6d644d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/ESP32-audioI2S/2.0.6/ESP32-audioI2S-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/ESP32-audioI2S/2.0.6/ESP32-audioI2S-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/ESP32-audioI2S/2.0.7/ESP32-audioI2S-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-audioI2S-2.0.7.tar.gz",
+    "size_bytes": 4681879,
+    "sha256": "69623f1996a7e13b9a6abf43cc4d3275635b5a0efa78fb8140f0696a5188f1d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/ESP32-audioI2S/2.0.7/ESP32-audioI2S-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/ESP32-audioI2S/2.0.7/ESP32-audioI2S-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/ESP32-audioI2S/2.1.0/ESP32-audioI2S-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-audioI2S-2.1.0.tar.gz",
+    "size_bytes": 2690582,
+    "sha256": "1236334dfe99d6db9abc45ff8b7b5d08684fe3df2f2ebaec50c2b310b6c81a6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/ESP32-audioI2S/2.1.0/ESP32-audioI2S-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/ESP32-audioI2S/2.1.0/ESP32-audioI2S-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/ESP32-audioI2S/2.2.0/ESP32-audioI2S-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-audioI2S-2.2.0.tar.gz",
+    "size_bytes": 4682578,
+    "sha256": "c24cad3e6f9b6a14884b1658a86282333b0e865767825c5ecb99a7f6ff8f525a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/ESP32-audioI2S/2.2.0/ESP32-audioI2S-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/ESP32-audioI2S/2.2.0/ESP32-audioI2S-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/ESP32-audioI2S/2.3.0/ESP32-audioI2S-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-audioI2S-2.3.0.tar.gz",
+    "size_bytes": 4682623,
+    "sha256": "687a513b333178c79fe4615731a7121f765e7eaac217eb8e58a1ac77ae6c4fdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/ESP32-audioI2S/2.3.0/ESP32-audioI2S-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/ESP32-audioI2S/2.3.0/ESP32-audioI2S-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/ESPAsyncTCP-esphome/1.2.3/ESPAsyncTCP-esphome-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncTCP-esphome-1.2.3.tar.gz",
+    "size_bytes": 37048,
+    "sha256": "af347b7a82d3cf379d6037c654a00dae45e9026299155800b3cd6fbbb57c379f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/ESPAsyncTCP-esphome/1.2.3/ESPAsyncTCP-esphome-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/ESPAsyncTCP-esphome/1.2.3/ESPAsyncTCP-esphome-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/ESPAsyncTCP-esphome/2.0.0/ESPAsyncTCP-esphome-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncTCP-esphome-2.0.0.tar.gz",
+    "size_bytes": 37230,
+    "sha256": "5a381f815d29c5577c7b0ee9734b2a377e9836cfff7698d6eac313bdfcb2de57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/ESPAsyncTCP-esphome/2.0.0/ESPAsyncTCP-esphome-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/ESPAsyncTCP-esphome/2.0.0/ESPAsyncTCP-esphome-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/ESPAsyncWebServer-esphome/2.1.0/ESPAsyncWebServer-esphome-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-2.1.0.tar.gz",
+    "size_bytes": 60837,
+    "sha256": "1a1ef43af31de1b709944771a5442468849fb4480482d7a90f1f78806104e7d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/ESPAsyncWebServer-esphome/2.1.0/ESPAsyncWebServer-esphome-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/ESPAsyncWebServer-esphome/2.1.0/ESPAsyncWebServer-esphome-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/ESPAsyncWebServer-esphome/3.0.0/ESPAsyncWebServer-esphome-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-3.0.0.tar.gz",
+    "size_bytes": 61127,
+    "sha256": "139826b39ec9a61ed6d59f4a4120e2cbb82e1ee7721061065c9a7dd33d19899d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/ESPAsyncWebServer-esphome/3.0.0/ESPAsyncWebServer-esphome-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/ESPAsyncWebServer-esphome/3.0.0/ESPAsyncWebServer-esphome-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/ESPAsyncWebServer-esphome/3.1.0/ESPAsyncWebServer-esphome-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-3.1.0.tar.gz",
+    "size_bytes": 61216,
+    "sha256": "36a43afb55957cf960083ea65db26382a64378233ac32624ee8fa805be3db46b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/ESPAsyncWebServer-esphome/3.1.0/ESPAsyncWebServer-esphome-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/ESPAsyncWebServer-esphome/3.1.0/ESPAsyncWebServer-esphome-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/ESPAsyncWebServer-esphome/3.2.0/ESPAsyncWebServer-esphome-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-3.2.0.tar.gz",
+    "size_bytes": 61317,
+    "sha256": "6debef96860666cfa9a51be218240007a61ee796c94818a59bc01802331d1923",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/ESPAsyncWebServer-esphome/3.2.0/ESPAsyncWebServer-esphome-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/ESPAsyncWebServer-esphome/3.2.0/ESPAsyncWebServer-esphome-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/ESPAsyncWebServer-esphome/3.2.2/ESPAsyncWebServer-esphome-3.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-3.2.2.tar.gz",
+    "size_bytes": 61368,
+    "sha256": "1fc4aed46dfbea5238a4945c0948edb175b6bb16595187cb0fd6c6cb9396aab1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/ESPAsyncWebServer-esphome/3.2.2/ESPAsyncWebServer-esphome-3.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/ESPAsyncWebServer-esphome/3.2.2/ESPAsyncWebServer-esphome-3.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/ESPAsyncWebServer-esphome/3.3.0/ESPAsyncWebServer-esphome-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-3.3.0.tar.gz",
+    "size_bytes": 62384,
+    "sha256": "98942c7d1eebf020e881217be13f867710354d1cbede56dffb1b08e22b779fe2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/ESPAsyncWebServer-esphome/3.3.0/ESPAsyncWebServer-esphome-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/ESPAsyncWebServer-esphome/3.3.0/ESPAsyncWebServer-esphome-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/ESPAsyncWebServer-esphome/3.4.0/ESPAsyncWebServer-esphome-3.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-3.4.0.tar.gz",
+    "size_bytes": 62446,
+    "sha256": "554ab1792c0ba870f035f3ba44c447dbf94c56a61c7269cb757ec31070a8badc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/ESPAsyncWebServer-esphome/3.4.0/ESPAsyncWebServer-esphome-3.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/ESPAsyncWebServer-esphome/3.4.0/ESPAsyncWebServer-esphome-3.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/Improv/1.2.3/Improv-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Improv-1.2.3.tar.gz",
+    "size_bytes": 7877,
+    "sha256": "f2ca777f8f5e61dba19bd65b6891e09bb15c22c9ed41064873b2074648e2c32c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/Improv/1.2.3/Improv-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/Improv/1.2.3/Improv-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dlms_parser/1.0.0/dlms_parser-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dlms_parser-1.0.0.tar.gz",
+    "size_bytes": 26272,
+    "sha256": "be878a6009e4da807e311eb28b70a4638956bdd129040fe8724d49697859a5a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dlms_parser/1.0.0/dlms_parser-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dlms_parser/1.0.0/dlms_parser-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dlms_parser/1.0.2/dlms_parser-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dlms_parser-1.0.2.tar.gz",
+    "size_bytes": 26265,
+    "sha256": "6349ac98dea5e399d7e6e580f36ff09743bcf627e93d2b3bba011af18f3a7610",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dlms_parser/1.0.2/dlms_parser-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dlms_parser/1.0.2/dlms_parser-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dlms_parser/1.1.0/dlms_parser-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dlms_parser-1.1.0.tar.gz",
+    "size_bytes": 26664,
+    "sha256": "c91812d552ddf60136c11899318fd364990e04340c983aa1d8f9ce07d1dd5287",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dlms_parser/1.1.0/dlms_parser-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dlms_parser/1.1.0/dlms_parser-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dlms_parser/1.2.0/dlms_parser-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dlms_parser-1.2.0.tar.gz",
+    "size_bytes": 29029,
+    "sha256": "71076a91aab46f5f38de8c8cb09c1d302ce095a10a89f1091329010638990bac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dlms_parser/1.2.0/dlms_parser-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dlms_parser/1.2.0/dlms_parser-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dlms_parser/1.3.0/dlms_parser-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dlms_parser-1.3.0.tar.gz",
+    "size_bytes": 29127,
+    "sha256": "bc8823750112647930313a88d7d5dca7dcabce8d4ae6e5d56afc077d4863c71c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dlms_parser/1.3.0/dlms_parser-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dlms_parser/1.3.0/dlms_parser-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dlms_parser/2.0.0/dlms_parser-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dlms_parser-2.0.0.tar.gz",
+    "size_bytes": 27692,
+    "sha256": "352d72f67402bb56e9ac75b8fd8bc0abb07508a13af055a9c71472a573437d98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dlms_parser/2.0.0/dlms_parser-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dlms_parser/2.0.0/dlms_parser-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dlms_parser/2.1.0/dlms_parser-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dlms_parser-2.1.0.tar.gz",
+    "size_bytes": 27763,
+    "sha256": "86b7f270fe9eb59def4da8d35298a1bdcf8377fb0d11e9bffba613d293f9f4b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dlms_parser/2.1.0/dlms_parser-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dlms_parser/2.1.0/dlms_parser-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dlms_parser/2.2.0/dlms_parser-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dlms_parser-2.2.0.tar.gz",
+    "size_bytes": 27770,
+    "sha256": "a8a2246fe9f98a0a84a2ffb9d5664a45fbfe4bcbfefe4bbfb56d4dfad3c871a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dlms_parser/2.2.0/dlms_parser-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dlms_parser/2.2.0/dlms_parser-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dlms_parser/2.2.2/dlms_parser-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dlms_parser-2.2.2.tar.gz",
+    "size_bytes": 27771,
+    "sha256": "476edde675de5102dba2f3d42458ff657ca3aabad837df1e010b3055f07bbd56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dlms_parser/2.2.2/dlms_parser-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dlms_parser/2.2.2/dlms_parser-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dsmr_parser/1.0.0/dsmr_parser-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dsmr_parser-1.0.0.tar.gz",
+    "size_bytes": 18052,
+    "sha256": "3c4e110782c5f34b7af32623c868b7fa4d967003c82394bc81c4e65cbf31abe2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dsmr_parser/1.0.0/dsmr_parser-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dsmr_parser/1.0.0/dsmr_parser-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dsmr_parser/1.1.0/dsmr_parser-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dsmr_parser-1.1.0.tar.gz",
+    "size_bytes": 18143,
+    "sha256": "84651b897a2db96387fc4de28c82063a140261f5dd19358c15ef0a4feec31242",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dsmr_parser/1.1.0/dsmr_parser-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dsmr_parser/1.1.0/dsmr_parser-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dsmr_parser/1.10.0/dsmr_parser-1.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dsmr_parser-1.10.0.tar.gz",
+    "size_bytes": 17541,
+    "sha256": "28166f40beae0ff23ab415d130b25111f9f592c895f1452e380b8805a90dcbd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dsmr_parser/1.10.0/dsmr_parser-1.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dsmr_parser/1.10.0/dsmr_parser-1.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dsmr_parser/1.2.0/dsmr_parser-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dsmr_parser-1.2.0.tar.gz",
+    "size_bytes": 18240,
+    "sha256": "6dbb33b4d74143f5508452aac320423df31fc601f5b09e65ae4264ca2bb45265",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dsmr_parser/1.2.0/dsmr_parser-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dsmr_parser/1.2.0/dsmr_parser-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dsmr_parser/1.3.0/dsmr_parser-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dsmr_parser-1.3.0.tar.gz",
+    "size_bytes": 14526,
+    "sha256": "50e1322c3c75b9eb4b5008e33ab2fd53c365ce6f9023153ea00bd83c4f5c1034",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dsmr_parser/1.3.0/dsmr_parser-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dsmr_parser/1.3.0/dsmr_parser-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dsmr_parser/1.4.0/dsmr_parser-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dsmr_parser-1.4.0.tar.gz",
+    "size_bytes": 16039,
+    "sha256": "0f52ec24ba3ebbb69599b80520f16797cfdd93a4bbef67d61100408712f333d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dsmr_parser/1.4.0/dsmr_parser-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dsmr_parser/1.4.0/dsmr_parser-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dsmr_parser/1.5.0/dsmr_parser-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dsmr_parser-1.5.0.tar.gz",
+    "size_bytes": 16043,
+    "sha256": "bf4b7abd8342b04ff69a8f624d96a2165ffe49df3703d98f75fc03c1a25d4790",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dsmr_parser/1.5.0/dsmr_parser-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dsmr_parser/1.5.0/dsmr_parser-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dsmr_parser/1.6.0/dsmr_parser-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dsmr_parser-1.6.0.tar.gz",
+    "size_bytes": 16047,
+    "sha256": "499e8c8775928d2839f1a5743fd9fd86e61e01927bc0076499b2784098e2cac2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dsmr_parser/1.6.0/dsmr_parser-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dsmr_parser/1.6.0/dsmr_parser-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dsmr_parser/1.7.0/dsmr_parser-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dsmr_parser-1.7.0.tar.gz",
+    "size_bytes": 16833,
+    "sha256": "0bc79060bed1952d7ca53a0151bc59edbf9515c1504e70e109a4154acd650baf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dsmr_parser/1.7.0/dsmr_parser-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dsmr_parser/1.7.0/dsmr_parser-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dsmr_parser/1.8.0/dsmr_parser-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dsmr_parser-1.8.0.tar.gz",
+    "size_bytes": 17168,
+    "sha256": "62afdfd02d291d0acf2592b12aae817b7a715d588620427d5b57ca223f146b36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dsmr_parser/1.8.0/dsmr_parser-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dsmr_parser/1.8.0/dsmr_parser-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/dsmr_parser/1.9.0/dsmr_parser-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dsmr_parser-1.9.0.tar.gz",
+    "size_bytes": 17168,
+    "sha256": "33fb02c10cf9867c28d79092e843f6838e5cbb9a1c04021e56dbb9d4b85c0791",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/dsmr_parser/1.9.0/dsmr_parser-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/dsmr_parser/1.9.0/dsmr_parser-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-audio-libs/1.1.1/esp-audio-libs-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-audio-libs-1.1.1.tar.gz",
+    "size_bytes": 87778,
+    "sha256": "f26e1bbe017c6ed35f955636de32c7ce3b21ce97ad44efeb0df7be1eb6f1786d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-audio-libs/1.1.1/esp-audio-libs-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-audio-libs/1.1.1/esp-audio-libs-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-audio-libs/1.1.3/esp-audio-libs-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-audio-libs-1.1.3.tar.gz",
+    "size_bytes": 88032,
+    "sha256": "74b90a1c3793b217f1aec9b502d3e1005c36eea8b735f68a14ae89b09626e0d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-audio-libs/1.1.3/esp-audio-libs-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-audio-libs/1.1.3/esp-audio-libs-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-audio-libs/1.1.4/esp-audio-libs-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-audio-libs-1.1.4.tar.gz",
+    "size_bytes": 88014,
+    "sha256": "3202536ac7b66b4fe180c447ffb180639463c04b6670d376bef9d73a023e9eb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-audio-libs/1.1.4/esp-audio-libs-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-audio-libs/1.1.4/esp-audio-libs-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-audio-libs/2.0.0/esp-audio-libs-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-audio-libs-2.0.0.tar.gz",
+    "size_bytes": 129732,
+    "sha256": "73bdeb31ba897f75df17fadf775766bca07cfc09d7b35e180f1240fb72340822",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-audio-libs/2.0.0/esp-audio-libs-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-audio-libs/2.0.0/esp-audio-libs-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-audio-libs/2.0.1/esp-audio-libs-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-audio-libs-2.0.1.tar.gz",
+    "size_bytes": 133879,
+    "sha256": "6ac23fd90b6755e94c6fa8ca8b450addd0ec10e4e725b2d2ae8ac9f60dc1eeca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-audio-libs/2.0.1/esp-audio-libs-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-audio-libs/2.0.1/esp-audio-libs-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-audio-libs/2.0.2/esp-audio-libs-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-audio-libs-2.0.2.tar.gz",
+    "size_bytes": 134026,
+    "sha256": "d235b5a1c42ba5466f39e1dcfe48b8a68c16cd1a13b1f0d42ff545aeb77114fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-audio-libs/2.0.2/esp-audio-libs-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-audio-libs/2.0.2/esp-audio-libs-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-audio-libs/2.0.3/esp-audio-libs-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-audio-libs-2.0.3.tar.gz",
+    "size_bytes": 134486,
+    "sha256": "80b9d82fbfc2f47e9823c9312eb7e635b59533d2c0caed8cf0903120fbe692f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-audio-libs/2.0.3/esp-audio-libs-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-audio-libs/2.0.3/esp-audio-libs-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-audio-libs/2.0.4/esp-audio-libs-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-audio-libs-2.0.4.tar.gz",
+    "size_bytes": 134528,
+    "sha256": "8097d60094af51f83b30c91f4f5ccff7421a9a023aa58c96dcd848b42ce8e8b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-audio-libs/2.0.4/esp-audio-libs-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-audio-libs/2.0.4/esp-audio-libs-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-audio-libs/3.0.0/esp-audio-libs-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-audio-libs-3.0.0.tar.gz",
+    "size_bytes": 33258,
+    "sha256": "cd2c678999a90bfba96e1439e01ac73ab8f1ec4345e47ab025da2013e031e31a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-audio-libs/3.0.0/esp-audio-libs-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-audio-libs/3.0.0/esp-audio-libs-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-audio-libs/3.1.0/esp-audio-libs-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-audio-libs-3.1.0.tar.gz",
+    "size_bytes": 40660,
+    "sha256": "4c91d879ddcf5037cba73671ec506ef5fa209755bf8401b36c3bfe5a45283cf7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-audio-libs/3.1.0/esp-audio-libs-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-audio-libs/3.1.0/esp-audio-libs-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-audio-libs/3.2.0/esp-audio-libs-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-audio-libs-3.2.0.tar.gz",
+    "size_bytes": 50522,
+    "sha256": "77a288c43d0e985c4f1938c4e3cd4fcf3aa57de76b3a920372653d1ca1e57dc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-audio-libs/3.2.0/esp-audio-libs-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-audio-libs/3.2.0/esp-audio-libs-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-audio-libs/3.2.1/esp-audio-libs-3.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-audio-libs-3.2.1.tar.gz",
+    "size_bytes": 50688,
+    "sha256": "e6d941d3a8c4c1dd2ff57f55a6c1ebc08a9f41717fed648e6e4e8de919c21d11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-audio-libs/3.2.1/esp-audio-libs-3.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-audio-libs/3.2.1/esp-audio-libs-3.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-audio-libs/4.0.0/esp-audio-libs-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-audio-libs-4.0.0.tar.gz",
+    "size_bytes": 53261,
+    "sha256": "9ee8f368068479b340282fa2dde4d4b3310eec2f1a016cb112e104f7794a3c16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-audio-libs/4.0.0/esp-audio-libs-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-audio-libs/4.0.0/esp-audio-libs-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-audio-libs/4.0.1/esp-audio-libs-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-audio-libs-4.0.1.tar.gz",
+    "size_bytes": 53320,
+    "sha256": "0a85bceb1efa0d6722b0a23fe64142e179827f1fcb9e8afa4c42dee10cbe012e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-audio-libs/4.0.1/esp-audio-libs-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-audio-libs/4.0.1/esp-audio-libs-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-audio-libs/4.1.0/esp-audio-libs-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-audio-libs-4.1.0.tar.gz",
+    "size_bytes": 57066,
+    "sha256": "8db130e17ab37a710d169a42eb28d64050ed41a5b74644c5c6dcd4a2a0bd2e8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-audio-libs/4.1.0/esp-audio-libs-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-audio-libs/4.1.0/esp-audio-libs-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-hub75/0.1.5/esp-hub75-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-hub75-0.1.5.tar.gz",
+    "size_bytes": 53176,
+    "sha256": "c76b9e07869f8956ceb74f81cfe4bac4e385315e7182ed2f15fa650e9518ab40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-hub75/0.1.5/esp-hub75-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-hub75/0.1.5/esp-hub75-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-hub75/0.1.6/esp-hub75-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-hub75-0.1.6.tar.gz",
+    "size_bytes": 53161,
+    "sha256": "6c89f59da564eaa6252de1b6f0df35c24af05e01fd6a23c6096517af91eec30c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-hub75/0.1.6/esp-hub75-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-hub75/0.1.6/esp-hub75-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-hub75/0.1.7/esp-hub75-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-hub75-0.1.7.tar.gz",
+    "size_bytes": 53386,
+    "sha256": "f5dccd930b12fda835b138a59b06a385cb0f378e9570fb8c4a7e5083f13a6d6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-hub75/0.1.7/esp-hub75-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-hub75/0.1.7/esp-hub75-0.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-hub75/0.2.0/esp-hub75-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-hub75-0.2.0.tar.gz",
+    "size_bytes": 55497,
+    "sha256": "c194817b229448801cc78b439764a90110c542ae6f20bd8141e8c8e66209b0dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-hub75/0.2.0/esp-hub75-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-hub75/0.2.0/esp-hub75-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-hub75/0.2.1/esp-hub75-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-hub75-0.2.1.tar.gz",
+    "size_bytes": 55521,
+    "sha256": "5559658f82f959dea693dfc7cf342f1f5c8673758b3042810c69ab7d7cb855cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-hub75/0.2.1/esp-hub75-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-hub75/0.2.1/esp-hub75-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-hub75/0.2.2/esp-hub75-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-hub75-0.2.2.tar.gz",
+    "size_bytes": 56896,
+    "sha256": "fc77a63e4fcb83d934e823299cc9ac111c8271a7ed9c423629eef522231eeff8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-hub75/0.2.2/esp-hub75-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-hub75/0.2.2/esp-hub75-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-hub75/0.3.0/esp-hub75-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-hub75-0.3.0.tar.gz",
+    "size_bytes": 62889,
+    "sha256": "0efe02e55cab26b4acf9391f0464077ac7e3e53f582c2d43b96a2b983343a2f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-hub75/0.3.0/esp-hub75-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-hub75/0.3.0/esp-hub75-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-hub75/0.3.1/esp-hub75-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-hub75-0.3.1.tar.gz",
+    "size_bytes": 65840,
+    "sha256": "8a0a5a5a36b3602cb7abfff0673208d04e8a53872a904f0ec4a4acdb1bce11dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-hub75/0.3.1/esp-hub75-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-hub75/0.3.1/esp-hub75-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-hub75/0.3.2/esp-hub75-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-hub75-0.3.2.tar.gz",
+    "size_bytes": 67547,
+    "sha256": "477258877feb2f4a843a8bd61586be9321db53ab8e54c54719e1ce3cab60aed8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-hub75/0.3.2/esp-hub75-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-hub75/0.3.2/esp-hub75-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-hub75/0.3.3/esp-hub75-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-hub75-0.3.3.tar.gz",
+    "size_bytes": 69441,
+    "sha256": "af29d16ed7fc05b3863169da5ebbad36406d7b5a4fa71f92babbdfaeefadeb5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-hub75/0.3.3/esp-hub75-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-hub75/0.3.3/esp-hub75-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-hub75/0.3.4/esp-hub75-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-hub75-0.3.4.tar.gz",
+    "size_bytes": 69550,
+    "sha256": "a2bca9c5d725560186bef7ca9408a6e811fe5e3f307722574287654bf23a0b22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-hub75/0.3.4/esp-hub75-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-hub75/0.3.4/esp-hub75-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-hub75/0.3.5/esp-hub75-0.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-hub75-0.3.5.tar.gz",
+    "size_bytes": 69530,
+    "sha256": "04d246fcb7ae7ba19a0c35f7d31d8dfcd71d1fd53ac96784db62c2d24918d09b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-hub75/0.3.5/esp-hub75-0.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-hub75/0.3.5/esp-hub75-0.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-hub75/0.3.6/esp-hub75-0.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-hub75-0.3.6.tar.gz",
+    "size_bytes": 69557,
+    "sha256": "34bffb17cb11c6a1ec6c566607915b831954022ff7fffcdd58a02d6756102592",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-hub75/0.3.6/esp-hub75-0.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-hub75/0.3.6/esp-hub75-0.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/esp-micro-speech-features/1.2.0/esp-micro-speech-features-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-micro-speech-features-1.2.0.tar.gz",
+    "size_bytes": 27846,
+    "sha256": "aed9f48667560fbaa857672b7743c2b0fb7d298a5c7bebd33cb80a5d243f00c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/esp-micro-speech-features/1.2.0/esp-micro-speech-features-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/esp-micro-speech-features/1.2.0/esp-micro-speech-features-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10018.1/libsodium-1.10018.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10018.1.tar.gz",
+    "size_bytes": 248962,
+    "sha256": "0b65bc77f301806b4de387bb1bb033061a97d2b5df4e7933dc4353b5e6c5ca27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10018.1/libsodium-1.10018.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10018.1/libsodium-1.10018.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10018.4/libsodium-1.10018.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10018.4.tar.gz",
+    "size_bytes": 248818,
+    "sha256": "532dbd0d8cdf22499ba8d9feeac5d3b4a99dc0edcdea511ee21b6ddd89ddcc5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10018.4/libsodium-1.10018.4.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10018.4/libsodium-1.10018.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10020.7/libsodium-1.10020.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10020.7.tar.gz",
+    "size_bytes": 296069,
+    "sha256": "59b7456f4dc10210a2d2beac916afa6f2b1faf0cf7a30babdb5269567f70f226",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10020.7/libsodium-1.10020.7.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10020.7/libsodium-1.10020.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10021.0/libsodium-1.10021.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10021.0.tar.gz",
+    "size_bytes": 322164,
+    "sha256": "5deb2343bf95b65286bd21dcb8f12a2f4aac0981bff2718ea8b0969851f79d50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10021.0/libsodium-1.10021.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10021.0/libsodium-1.10021.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10021.1/libsodium-1.10021.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10021.1.tar.gz",
+    "size_bytes": 322065,
+    "sha256": "2c63e9b8192af065ed3f27bdbcb7350d88b9ca718e9ccdbf91937193ff8cb914",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10021.1/libsodium-1.10021.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10021.1/libsodium-1.10021.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10021.10/libsodium-1.10021.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10021.10.tar.gz",
+    "size_bytes": 356934,
+    "sha256": "d46bba6572a9b8b2d7798fbbacdac9575d715c3a434664660ae7f63596efed76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10021.10/libsodium-1.10021.10.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10021.10/libsodium-1.10021.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10021.11/libsodium-1.10021.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10021.11.tar.gz",
+    "size_bytes": 359349,
+    "sha256": "be2f1dda856da072f1e71e1d1a25c8bf8678386461aa0774534d7e1545922948",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10021.11/libsodium-1.10021.11.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10021.11/libsodium-1.10021.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10021.12/libsodium-1.10021.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10021.12.tar.gz",
+    "size_bytes": 360696,
+    "sha256": "f2ae8d67a00616cd8ea0f6ea86e4c73a8d5f4c2aad31b6092c4964f6f1650b15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10021.12/libsodium-1.10021.12.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10021.12/libsodium-1.10021.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10021.2/libsodium-1.10021.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10021.2.tar.gz",
+    "size_bytes": 322355,
+    "sha256": "59e443ce64fd07712dd4f8008db58d3fff4fa9ec859bc76561d7d9ec910e7edb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10021.2/libsodium-1.10021.2.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10021.2/libsodium-1.10021.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10021.3/libsodium-1.10021.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10021.3.tar.gz",
+    "size_bytes": 322871,
+    "sha256": "0be6b4cde2a51b9a6c0a75ebc651300dad6c5e5a933f54b604d8ee0cc8692cc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10021.3/libsodium-1.10021.3.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10021.3/libsodium-1.10021.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10021.4/libsodium-1.10021.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10021.4.tar.gz",
+    "size_bytes": 325916,
+    "sha256": "28517f979793d631a1daa0b1ebcd77a5e4eefacf6c2a5b615f4cf0304d720a2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10021.4/libsodium-1.10021.4.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10021.4/libsodium-1.10021.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10021.5/libsodium-1.10021.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10021.5.tar.gz",
+    "size_bytes": 326245,
+    "sha256": "8d52558a5a7c043dba73e2d2c1e58a94b83030f695106589cd0ca545fdeb73ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10021.5/libsodium-1.10021.5.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10021.5/libsodium-1.10021.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10021.6/libsodium-1.10021.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10021.6.tar.gz",
+    "size_bytes": 334771,
+    "sha256": "7994c69bfa6f2095897a8b07be6988781ad8961e8ee7c07a3527e82630592535",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10021.6/libsodium-1.10021.6.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10021.6/libsodium-1.10021.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10021.7/libsodium-1.10021.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10021.7.tar.gz",
+    "size_bytes": 354540,
+    "sha256": "048907f23b0e1e315353178bb72c6e03fb762b0619e5488cb01d6f285aec85fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10021.7/libsodium-1.10021.7.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10021.7/libsodium-1.10021.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10021.8/libsodium-1.10021.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10021.8.tar.gz",
+    "size_bytes": 355639,
+    "sha256": "54a02b36b89d7f8fe7356a4b42c7544e968c528e265e99ea1a455320e902fe42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10021.8/libsodium-1.10021.8.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10021.8/libsodium-1.10021.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/libsodium/1.10021.9/libsodium-1.10021.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsodium-1.10021.9.tar.gz",
+    "size_bytes": 356555,
+    "sha256": "2749ae7df404dbc6bbaa5f465841d36bf65a18a3a553c6e9bcbde0e6ab1e2b48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/libsodium/1.10021.9/libsodium-1.10021.9.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/libsodium/1.10021.9/libsodium-1.10021.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/micro-flac/0.1.0/micro-flac-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-flac-0.1.0.tar.gz",
+    "size_bytes": 62176,
+    "sha256": "7b44b566f7e2dfa4c19f82875c4fc158c99ed30800e320ca0e89271b70f6640e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/micro-flac/0.1.0/micro-flac-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/micro-flac/0.1.0/micro-flac-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/micro-flac/0.1.1/micro-flac-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-flac-0.1.1.tar.gz",
+    "size_bytes": 89942,
+    "sha256": "ac832edd9f1e24e7bda2149425a61a71f37ee9f2755ee82d8443150ca3b53b38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/micro-flac/0.1.1/micro-flac-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/micro-flac/0.1.1/micro-flac-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/micro-flac/0.2.0/micro-flac-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-flac-0.2.0.tar.gz",
+    "size_bytes": 94439,
+    "sha256": "87e82b18f00f0af74f8c88d2b100f9bc97814bf53be2b6c0876e308f2fac4fe3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/micro-flac/0.2.0/micro-flac-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/micro-flac/0.2.0/micro-flac-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/micro-flac/0.3.0/micro-flac-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-flac-0.3.0.tar.gz",
+    "size_bytes": 202654,
+    "sha256": "374c1a46721f6f8f6393f58d26381be2f0d21f9fd81b9cfb2ed63cefe833f9c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/micro-flac/0.3.0/micro-flac-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/micro-flac/0.3.0/micro-flac-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/micro-opus/0.3.1/micro-opus-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-opus-0.3.1.tar.gz",
+    "size_bytes": 982292,
+    "sha256": "c1d872b9bf57b2c1d821f4cd971eddde83dcde572a7bbdeae602a3ebf78aaf0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/micro-opus/0.3.1/micro-opus-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/micro-opus/0.3.1/micro-opus-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/micro-opus/0.3.2/micro-opus-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-opus-0.3.2.tar.gz",
+    "size_bytes": 983022,
+    "sha256": "ca07f9528045c9b9b6a8d2c6e148147a813f88b234ddc9f186365648478f8b21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/micro-opus/0.3.2/micro-opus-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/micro-opus/0.3.2/micro-opus-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/micro-opus/0.3.3/micro-opus-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-opus-0.3.3.tar.gz",
+    "size_bytes": 5761231,
+    "sha256": "6c6f3bd212561b6cf78cfd48084a3f9c1e73eb8c4b62a4dfeca31adbfbaca490",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/micro-opus/0.3.3/micro-opus-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/micro-opus/0.3.3/micro-opus-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/micro-opus/0.3.4/micro-opus-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-opus-0.3.4.tar.gz",
+    "size_bytes": 5763318,
+    "sha256": "9d3856e547a426f9e8f66dd2b63f6a16f98aa219059259dc351415c4284d388b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/micro-opus/0.3.4/micro-opus-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/micro-opus/0.3.4/micro-opus-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/micro-opus/0.3.5/micro-opus-0.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-opus-0.3.5.tar.gz",
+    "size_bytes": 5730337,
+    "sha256": "29a585f6773426c3e75375625c02d0124e326385990bd7205103bf3595149ea8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/micro-opus/0.3.5/micro-opus-0.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/micro-opus/0.3.5/micro-opus-0.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/micro-opus/0.3.6/micro-opus-0.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-opus-0.3.6.tar.gz",
+    "size_bytes": 5730822,
+    "sha256": "e72cc9217506e0e24f050fcd98bf512bc669f70d20f0343ab9dccf1424195ba2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/micro-opus/0.3.6/micro-opus-0.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/micro-opus/0.3.6/micro-opus-0.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/micro-opus/0.4.0/micro-opus-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-opus-0.4.0.tar.gz",
+    "size_bytes": 5732179,
+    "sha256": "cdf665e2591e18443347c64252e4a74c1c13d3e0c5d3ad916a7a12f6af5ba0db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/micro-opus/0.4.0/micro-opus-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/micro-opus/0.4.0/micro-opus-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/micro-opus/0.4.1/micro-opus-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-opus-0.4.1.tar.gz",
+    "size_bytes": 5732523,
+    "sha256": "3e95362df57c89792df90968d1a9a4f48bbda6bca60726abedd4485f7f04ec35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/micro-opus/0.4.1/micro-opus-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/micro-opus/0.4.1/micro-opus-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/micro-vorbis/0.1.0/micro-vorbis-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-vorbis-0.1.0.tar.gz",
+    "size_bytes": 186859,
+    "sha256": "cb49c29096c6c83a647e6dd01b414f043fb2df70a4c3a468419d168d9d8c1788",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/micro-vorbis/0.1.0/micro-vorbis-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/micro-vorbis/0.1.0/micro-vorbis-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/micro-wav/0.1.0/micro-wav-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-wav-0.1.0.tar.gz",
+    "size_bytes": 13966,
+    "sha256": "b28da04b1f3347b882dcb6feea51ed25acd3fe5c4e648238bb5ad2fd14b1ca11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/micro-wav/0.1.0/micro-wav-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/micro-wav/0.1.0/micro-wav-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/micro-wav/0.1.1/micro-wav-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro-wav-0.1.1.tar.gz",
+    "size_bytes": 14530,
+    "sha256": "6614e173d60f0838c755e94c006866a800f9eb64a6f1cdb516cd2fe1a6d52a61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/micro-wav/0.1.1/micro-wav-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/micro-wav/0.1.1/micro-wav-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/microMP3/0.1.0/microMP3-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microMP3-0.1.0.tar.gz",
+    "size_bytes": 3037440,
+    "sha256": "d9c11c1b891076e86a3974d1d842de65598ad45894c31ae5dfef3e78fbf32d4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/microMP3/0.1.0/microMP3-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/microMP3/0.1.0/microMP3-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/microMP3/0.1.1/microMP3-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microMP3-0.1.1.tar.gz",
+    "size_bytes": 3037535,
+    "sha256": "825bfb9edb0f6a1c03de5101195de72c49ced6ef905f80b45a9cc0b313b8ef27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/microMP3/0.1.1/microMP3-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/microMP3/0.1.1/microMP3-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/microMP3/0.2.0/microMP3-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microMP3-0.2.0.tar.gz",
+    "size_bytes": 3040247,
+    "sha256": "36860d9709699bfde0d0e161b307d14d1d6ff0a174ee417567116a523f977127",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/microMP3/0.2.0/microMP3-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/microMP3/0.2.0/microMP3-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/microMP3/0.2.1/microMP3-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microMP3-0.2.1.tar.gz",
+    "size_bytes": 3040722,
+    "sha256": "029f3f76ed026505da5472f32723272e59a2b5e8f1bbb86c7de760b135568aed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/microMP3/0.2.1/microMP3-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/microMP3/0.2.1/microMP3-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/microMP3/0.2.2/microMP3-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microMP3-0.2.2.tar.gz",
+    "size_bytes": 3044425,
+    "sha256": "f3a8b3eeff145e6d812cf7111e885cabd01409cbfe67ac87e31148a24f6f0b95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/microMP3/0.2.2/microMP3-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/microMP3/0.2.2/microMP3-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/microMP3/0.2.3/microMP3-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microMP3-0.2.3.tar.gz",
+    "size_bytes": 3044815,
+    "sha256": "a65ff7619c8ab568989af2e52a37c1fb6519812ec9dfb1aeadc848f89af54449",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/microMP3/0.2.3/microMP3-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/microMP3/0.2.3/microMP3-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/microMP3/0.3.0/microMP3-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microMP3-0.3.0.tar.gz",
+    "size_bytes": 99087,
+    "sha256": "3d1e2c183918a024f2d61c6baaeb31bee261c6317e54d2970ef52ec1db139cc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/microMP3/0.3.0/microMP3-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/microMP3/0.3.0/microMP3-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/microMP3/0.3.1/microMP3-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microMP3-0.3.1.tar.gz",
+    "size_bytes": 99570,
+    "sha256": "210a36ea7619bb0709c62792b7add8965a89a4ab1e59e64d6feb1de559ff6044",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/microMP3/0.3.1/microMP3-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/microMP3/0.3.1/microMP3-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/microMP3/0.3.2/microMP3-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microMP3-0.3.2.tar.gz",
+    "size_bytes": 101158,
+    "sha256": "4ecfe8b56372b598736079759964cc960cebc390e25a60e2f5d7d61509750d83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/microMP3/0.3.2/microMP3-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/microMP3/0.3.2/microMP3-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/microMP3/0.4.0/microMP3-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microMP3-0.4.0.tar.gz",
+    "size_bytes": 106784,
+    "sha256": "d63dd097ca8d976d52e0afbf5067ef781c2e4670d178d50490746819fe0a8157",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/microMP3/0.4.0/microMP3-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/microMP3/0.4.0/microMP3-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.1/noise-c-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.1.tar.gz",
+    "size_bytes": 114060,
+    "sha256": "01dfbf99ded1150e3f6c80bf33bfd21838e3b13b451aed94ff093bf001e73f6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.1/noise-c-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.1/noise-c-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.10/noise-c-0.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.10.tar.gz",
+    "size_bytes": 113551,
+    "sha256": "c330c8a6b3986a22cb6f38465159675dca7839592f77c8ad0eac058bb4508830",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.10/noise-c-0.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.10/noise-c-0.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.11/noise-c-0.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.11.tar.gz",
+    "size_bytes": 113636,
+    "sha256": "1f01cf84be434585feba8a3d11cc937c67fd10b60d1e4eec730b0628fb636203",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.11/noise-c-0.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.11/noise-c-0.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.12/noise-c-0.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.12.tar.gz",
+    "size_bytes": 113652,
+    "sha256": "a419814b0959548df97530b45f096eb5501f435eb6c3cd8807fa23a914f37ab9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.12/noise-c-0.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.12/noise-c-0.1.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.13/noise-c-0.1.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.13.tar.gz",
+    "size_bytes": 113714,
+    "sha256": "430dfb97a6676f7ebb9a9a3495cd4c431ea877a0f99be0707ee0e54cf11bd5cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.13/noise-c-0.1.13.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.13/noise-c-0.1.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.14/noise-c-0.1.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.14.tar.gz",
+    "size_bytes": 114474,
+    "sha256": "0fed0e7a2bc15fbf5cc8e26e255706bfea52e87b187d1f85c01e8fde4f70486c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.14/noise-c-0.1.14.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.14/noise-c-0.1.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.15/noise-c-0.1.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.15.tar.gz",
+    "size_bytes": 114472,
+    "sha256": "3c8c150fe0d4089ae530d59aaf2e3840fba8487a28fbd72706afbbb14ba16f64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.15/noise-c-0.1.15.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.15/noise-c-0.1.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.17/noise-c-0.1.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.17.tar.gz",
+    "size_bytes": 115543,
+    "sha256": "52b053afae3000369bd7f7f51b4e31fb9cb31f63405385e0f964c54ba99b13b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.17/noise-c-0.1.17.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.17/noise-c-0.1.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.18/noise-c-0.1.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.18.tar.gz",
+    "size_bytes": 115546,
+    "sha256": "3aa22c04eabe915d14b2c3677242b7759046ec0b721081764d60ada5912ac331",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.18/noise-c-0.1.18.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.18/noise-c-0.1.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.19/noise-c-0.1.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.19.tar.gz",
+    "size_bytes": 115534,
+    "sha256": "2d403e270ba27126347db7f173e838c975bc775a36f17e98613c157c58b52d1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.19/noise-c-0.1.19.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.19/noise-c-0.1.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.20/noise-c-0.1.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.20.tar.gz",
+    "size_bytes": 115944,
+    "sha256": "0a69f79bbd8b8cf17257471741965f0338008aff07b929d73c6aad389273825a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.20/noise-c-0.1.20.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.20/noise-c-0.1.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.21/noise-c-0.1.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.21.tar.gz",
+    "size_bytes": 117154,
+    "sha256": "d8314b8324358811b1e2df9d9d5be6ea7f4cc8e7474e3efe074fc9649c054d18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.21/noise-c-0.1.21.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.21/noise-c-0.1.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.22/noise-c-0.1.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.22.tar.gz",
+    "size_bytes": 117126,
+    "sha256": "c79fae3adb578dca5c20782a26bcf45fcaea8f64b4641b90f426605213c46a33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.22/noise-c-0.1.22.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.22/noise-c-0.1.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.23/noise-c-0.1.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.23.tar.gz",
+    "size_bytes": 117133,
+    "sha256": "eea63a74733a48ad1f6614d2647a2de8d05814e8c344f4577064161f4fa717ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.23/noise-c-0.1.23.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.23/noise-c-0.1.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.24/noise-c-0.1.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.24.tar.gz",
+    "size_bytes": 118327,
+    "sha256": "49aa4672885fa465ec9a56c35159a94b153da99ca64e9a16501a0fdfdfdde037",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.24/noise-c-0.1.24.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.24/noise-c-0.1.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.25/noise-c-0.1.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.25.tar.gz",
+    "size_bytes": 118340,
+    "sha256": "91518451086178e3a0f3abf6774afcb39b31fa0693a193f18e980d75debbf461",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.25/noise-c-0.1.25.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.25/noise-c-0.1.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.26/noise-c-0.1.26.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.26.tar.gz",
+    "size_bytes": 118339,
+    "sha256": "2dc39deb522c9283eb442a646f9c924f63fe7c14f1a126d6d878b5ff822effae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.26/noise-c-0.1.26.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.26/noise-c-0.1.26.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.27/noise-c-0.1.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.27.tar.gz",
+    "size_bytes": 119939,
+    "sha256": "ea6c977b4b5baf3d61cc514f8fd3fe6c479f7ed01b796f522c30d3c142e936c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.27/noise-c-0.1.27.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.27/noise-c-0.1.27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.28/noise-c-0.1.28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.28.tar.gz",
+    "size_bytes": 121321,
+    "sha256": "a0a3e510dd38ca8af31198682030c85587a3dc6d9d5721188b9c207fbc0e25dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.28/noise-c-0.1.28.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.28/noise-c-0.1.28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.29/noise-c-0.1.29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.29.tar.gz",
+    "size_bytes": 121347,
+    "sha256": "399eda09b071863bc18e4cffe4a9b84bb1b9eb1627a77b102dbf3f54f72824f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.29/noise-c-0.1.29.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.29/noise-c-0.1.29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.30/noise-c-0.1.30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.30.tar.gz",
+    "size_bytes": 121340,
+    "sha256": "fa3c70e8b862ae3aa46000f1b420efdd407b9685ce696f5b42a1a250e178d802",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.30/noise-c-0.1.30.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.30/noise-c-0.1.30.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.31/noise-c-0.1.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.31.tar.gz",
+    "size_bytes": 121323,
+    "sha256": "11edd0afab225d96159c104095a2df66e0dff29a577f56fa5fcfe92213d99d4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.31/noise-c-0.1.31.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.31/noise-c-0.1.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.4/noise-c-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.4.tar.gz",
+    "size_bytes": 113029,
+    "sha256": "3a65405cc1d8b4350b0cea0e56c066b26cc9376b0540512e52be5da5873b8138",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.4/noise-c-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.4/noise-c-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/noise-c/0.1.6/noise-c-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noise-c-0.1.6.tar.gz",
+    "size_bytes": 113559,
+    "sha256": "4dc431487daf7a03d6bc8c87b330f8f8e637d1ee58a53482ac8deafc8381bc26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/noise-c/0.1.6/noise-c-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/noise-c/0.1.6/noise-c-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/wireguard/0.4.6/wireguard-0.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wireguard-0.4.6.tar.gz",
+    "size_bytes": 41398,
+    "sha256": "ce5c3810a1979da526b5f25da2a02f6f410a8e899c6556871ad1a25a7f0a15ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/wireguard/0.4.6/wireguard-0.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/wireguard/0.4.6/wireguard-0.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/wireguard/0.4.7/wireguard-0.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wireguard-0.4.7.tar.gz",
+    "size_bytes": 41416,
+    "sha256": "60cdfe2eb9c815bfd5cc669255fc0f66bc3c68472de4cbb5c1fec577dcb7bec3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/wireguard/0.4.7/wireguard-0.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/wireguard/0.4.7/wireguard-0.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esphome/library/wireguard/0.4.8/wireguard-0.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wireguard-0.4.8.tar.gz",
+    "size_bytes": 41444,
+    "sha256": "abbfd83899076e6b2585bf54bc17c21194c68dcb615b1da8833d0020a800d918",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esphome/library/wireguard/0.4.8/wireguard-0.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/esphome/library/wireguard/0.4.8/wireguard-0.4.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

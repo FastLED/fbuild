@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nicogou",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nicogou/library/surf-checker/0.0.1/surf-checker-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "surf-checker-0.0.1.tar.gz",
+    "size_bytes": 12549,
+    "sha256": "0d289dea1e8c3cc10933dd2553dc4420749109aa2f1606a5301b17f5bd5ce940",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nicogou/library/surf-checker/0.0.1/surf-checker-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nicogou/library/surf-checker/0.0.1/surf-checker-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

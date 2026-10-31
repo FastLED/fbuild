@@ -1,0 +1,581 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chrisjtwomey",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.10.0/EpdBoardInkplate-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.10.0.tar.gz",
+    "size_bytes": 3901,
+    "sha256": "9dfd197bfa86fe6f0560e5c50b2c9c1821c9c45080c4f816f39fbc24594c3926",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.10.0/EpdBoardInkplate-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.10.0/EpdBoardInkplate-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.10.1/EpdBoardInkplate-0.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.10.1.tar.gz",
+    "size_bytes": 3902,
+    "sha256": "608cb4c6f3be65ba3b26dfc5a3fce820f7c077e3487581db0b677d3d992dc53d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.10.1/EpdBoardInkplate-0.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.10.1/EpdBoardInkplate-0.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.10.2/EpdBoardInkplate-0.10.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.10.2.tar.gz",
+    "size_bytes": 3901,
+    "sha256": "99b23261dc4f9aea50749334bf40b1f8a8fe009c85f5512d0945a10dd7455176",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.10.2/EpdBoardInkplate-0.10.2.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.10.2/EpdBoardInkplate-0.10.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.10.3/EpdBoardInkplate-0.10.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.10.3.tar.gz",
+    "size_bytes": 4565,
+    "sha256": "c52325c62e03d9229f30ebeb570f446389ca6e92a2b7df71e14f1318c211b72f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.10.3/EpdBoardInkplate-0.10.3.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.10.3/EpdBoardInkplate-0.10.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.11.0/EpdBoardInkplate-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.11.0.tar.gz",
+    "size_bytes": 4566,
+    "sha256": "8e54acf1df63598772e86e4dcd3518ac4cb475bfab792027a253798deabcb92e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.11.0/EpdBoardInkplate-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.11.0/EpdBoardInkplate-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.11.1/EpdBoardInkplate-0.11.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.11.1.tar.gz",
+    "size_bytes": 4566,
+    "sha256": "194dc7a4303434e168b6164e80a45af65d3fde282e2353e0c4d7d022de09a923",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.11.1/EpdBoardInkplate-0.11.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.11.1/EpdBoardInkplate-0.11.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.12.0/EpdBoardInkplate-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.12.0.tar.gz",
+    "size_bytes": 4567,
+    "sha256": "7bca81a0136e598a23ebcf27ae259d0757e74d32bd753dcaccfab827e9270934",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.12.0/EpdBoardInkplate-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.12.0/EpdBoardInkplate-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.13.0/EpdBoardInkplate-0.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.13.0.tar.gz",
+    "size_bytes": 4565,
+    "sha256": "54e1f28addd723e89c1e31e25be4824b5482a87219a6c9d705026a8ff7c07089",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.13.0/EpdBoardInkplate-0.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.13.0/EpdBoardInkplate-0.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.14.0/EpdBoardInkplate-0.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.14.0.tar.gz",
+    "size_bytes": 4286,
+    "sha256": "69792a82f2ec588aba0ab18197993a57aa080c4be92dea84b9f0823287410971",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.14.0/EpdBoardInkplate-0.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.14.0/EpdBoardInkplate-0.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.15.0/EpdBoardInkplate-0.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.15.0.tar.gz",
+    "size_bytes": 4290,
+    "sha256": "9359d32d2e77aca1cf8d971a6cc3a04e5ffff443d13cbeac478244a1a89719e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.15.0/EpdBoardInkplate-0.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.15.0/EpdBoardInkplate-0.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.16.0/EpdBoardInkplate-0.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.16.0.tar.gz",
+    "size_bytes": 4292,
+    "sha256": "296700ec9bd155a5e203c38e272adb63577bd74760a0114113df545252e1c918",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.16.0/EpdBoardInkplate-0.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.16.0/EpdBoardInkplate-0.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.17.0/EpdBoardInkplate-0.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.17.0.tar.gz",
+    "size_bytes": 4293,
+    "sha256": "885c72ab044315340ddb8b3ea5b052c104665dda2b325dc3c160b33907ad6eae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.17.0/EpdBoardInkplate-0.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.17.0/EpdBoardInkplate-0.17.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.18.0/EpdBoardInkplate-0.18.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.18.0.tar.gz",
+    "size_bytes": 5882,
+    "sha256": "31c5e19e57a23adf6bd947de1214ed41dd8c61d850544e86c37fdf3cd9188cad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.18.0/EpdBoardInkplate-0.18.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.18.0/EpdBoardInkplate-0.18.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.19.0/EpdBoardInkplate-0.19.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.19.0.tar.gz",
+    "size_bytes": 6616,
+    "sha256": "b8cce9df1d3d8f7f6ceb70ead6bde755f377569af6cffbc51e1a719e8d9da156",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.19.0/EpdBoardInkplate-0.19.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.19.0/EpdBoardInkplate-0.19.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.2.0/EpdBoardInkplate-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.2.0.tar.gz",
+    "size_bytes": 2982,
+    "sha256": "50a2c3681f3cd5dfabec92e9a53fe09dc54b291badfee6b61d3c2f52e276f68f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.2.0/EpdBoardInkplate-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.2.0/EpdBoardInkplate-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.20.0/EpdBoardInkplate-0.20.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.20.0.tar.gz",
+    "size_bytes": 7097,
+    "sha256": "f944612938e9bec424ddd7eaa5e6ab840ac27a62acc7df131e849fc4737531bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.20.0/EpdBoardInkplate-0.20.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.20.0/EpdBoardInkplate-0.20.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.21.0/EpdBoardInkplate-0.21.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.21.0.tar.gz",
+    "size_bytes": 7112,
+    "sha256": "7dbffc301fe492dbfd3c941fb1d79b82fef65cccffc1eed5dc2725e462c14674",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.21.0/EpdBoardInkplate-0.21.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.21.0/EpdBoardInkplate-0.21.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.3.0/EpdBoardInkplate-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.3.0.tar.gz",
+    "size_bytes": 3258,
+    "sha256": "2a0f87ee66cce57f029ad1c6357d29b32a9a404257c49977a7efebc4f469ccf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.3.0/EpdBoardInkplate-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.3.0/EpdBoardInkplate-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.3.1/EpdBoardInkplate-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.3.1.tar.gz",
+    "size_bytes": 3265,
+    "sha256": "0142dbfd58861ead4359ed05e005b5a9e4cda6a4f46ba287557b0edc0199d58d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.3.1/EpdBoardInkplate-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.3.1/EpdBoardInkplate-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.5.0/EpdBoardInkplate-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.5.0.tar.gz",
+    "size_bytes": 3452,
+    "sha256": "1fe6dd106d183c54d33c64755ea77df5ed5a4609fe99c5c59b6a5c3006bc443b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.5.0/EpdBoardInkplate-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.5.0/EpdBoardInkplate-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.9.0/EpdBoardInkplate-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.9.0.tar.gz",
+    "size_bytes": 3899,
+    "sha256": "8995f6cb5d6bef278d74177819faa5e4a971632500a781437c22b00dac5d056c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.9.0/EpdBoardInkplate-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.9.0/EpdBoardInkplate-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdBoardInkplate/0.9.1/EpdBoardInkplate-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdBoardInkplate-0.9.1.tar.gz",
+    "size_bytes": 3901,
+    "sha256": "885e058008f8bc9fba3b9b897e4e37be9d901b316c169162baad9de89d3c1071",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdBoardInkplate/0.9.1/EpdBoardInkplate-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdBoardInkplate/0.9.1/EpdBoardInkplate-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.10.0/EpdClient-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.10.0.tar.gz",
+    "size_bytes": 33094,
+    "sha256": "3405bf835aa5901b65d9e4f93312bf10a365df200217bad815b7b4d7f8a9393b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.10.0/EpdClient-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.10.0/EpdClient-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.10.1/EpdClient-0.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.10.1.tar.gz",
+    "size_bytes": 33098,
+    "sha256": "0be7f9c2c896625ff3960d65b707bf226f5763c2c1890159607e338663619859",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.10.1/EpdClient-0.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.10.1/EpdClient-0.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.10.2/EpdClient-0.10.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.10.2.tar.gz",
+    "size_bytes": 33099,
+    "sha256": "abaad5cac1406ce158bf6bd263dfe873882aefcc6a3ba15104a58f61dab68fff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.10.2/EpdClient-0.10.2.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.10.2/EpdClient-0.10.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.10.3/EpdClient-0.10.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.10.3.tar.gz",
+    "size_bytes": 33749,
+    "sha256": "52a8790591413e34799c5ca38f81d24706621c65fb67b6bf3c14a09dcb528b76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.10.3/EpdClient-0.10.3.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.10.3/EpdClient-0.10.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.11.0/EpdClient-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.11.0.tar.gz",
+    "size_bytes": 45210,
+    "sha256": "3e28da886fbf7d3085b22791a39be3df3789c2be0ce3d0bb9d54c84b026bf639",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.11.0/EpdClient-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.11.0/EpdClient-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.11.1/EpdClient-0.11.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.11.1.tar.gz",
+    "size_bytes": 45207,
+    "sha256": "3b8a6a6c7c205addb562c61b31e7a0bab9c5d3ea48a4c61ac66ace32c973ea0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.11.1/EpdClient-0.11.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.11.1/EpdClient-0.11.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.12.0/EpdClient-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.12.0.tar.gz",
+    "size_bytes": 45202,
+    "sha256": "dafcbb1ab5ae20d4e94d641432f4fb5cdde9b26c29dbac2204566773a5ab2df9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.12.0/EpdClient-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.12.0/EpdClient-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.13.0/EpdClient-0.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.13.0.tar.gz",
+    "size_bytes": 48504,
+    "sha256": "89c8c20ca7b1e216b9f2c04412bd8e4ef20a9fde02636e835d701bceb63f0564",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.13.0/EpdClient-0.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.13.0/EpdClient-0.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.14.0/EpdClient-0.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.14.0.tar.gz",
+    "size_bytes": 53535,
+    "sha256": "1192a6efeed6ba6cc726919e17f91992c4a5915f6920257b985637f513b0766e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.14.0/EpdClient-0.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.14.0/EpdClient-0.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.15.0/EpdClient-0.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.15.0.tar.gz",
+    "size_bytes": 54310,
+    "sha256": "6b248571d59d5d3e853625c629c74d382d23e99307930f8cff9fd05a98313241",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.15.0/EpdClient-0.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.15.0/EpdClient-0.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.16.0/EpdClient-0.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.16.0.tar.gz",
+    "size_bytes": 54311,
+    "sha256": "30beb0020f922263c797941f46f96f9c9a2dbf0bac7ff7d9e517310edddf15ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.16.0/EpdClient-0.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.16.0/EpdClient-0.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.17.0/EpdClient-0.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.17.0.tar.gz",
+    "size_bytes": 55216,
+    "sha256": "730c16aff0761aa5c77f36a0b09f4d93122b71c64a382b97097bcc9cee4f0e11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.17.0/EpdClient-0.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.17.0/EpdClient-0.17.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.18.0/EpdClient-0.18.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.18.0.tar.gz",
+    "size_bytes": 55218,
+    "sha256": "f120e48d0f8dc5b83c8de0deed75e2f439f8d259c6abcdba5c7110268b509c8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.18.0/EpdClient-0.18.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.18.0/EpdClient-0.18.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.19.0/EpdClient-0.19.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.19.0.tar.gz",
+    "size_bytes": 55218,
+    "sha256": "4d98fac19245a0f5f275061ef9e18b5b73d73e2f61497a46d04c8db20bb04a2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.19.0/EpdClient-0.19.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.19.0/EpdClient-0.19.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.2.0/EpdClient-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.2.0.tar.gz",
+    "size_bytes": 38998,
+    "sha256": "db640fa32c769bc9d79825d6aede265a6436751cb928a3070ad43c756bed9dcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.2.0/EpdClient-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.2.0/EpdClient-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.20.0/EpdClient-0.20.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.20.0.tar.gz",
+    "size_bytes": 54343,
+    "sha256": "8f0aec70ee8db3fd03a97803ee51ad1f38371ef300559cb6f4d5da5b55ae8324",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.20.0/EpdClient-0.20.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.20.0/EpdClient-0.20.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.21.0/EpdClient-0.21.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.21.0.tar.gz",
+    "size_bytes": 54621,
+    "sha256": "68e9192e125ba13ee2025ad0ae85025b904351aaae90994e8a00ba07097464f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.21.0/EpdClient-0.21.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.21.0/EpdClient-0.21.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.3.0/EpdClient-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.3.0.tar.gz",
+    "size_bytes": 26611,
+    "sha256": "39ef57ea2e198dc5d0d8cc9bebb5afa35976e40814d4e5db050d76543eabfcaa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.3.0/EpdClient-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.3.0/EpdClient-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.3.1/EpdClient-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.3.1.tar.gz",
+    "size_bytes": 26615,
+    "sha256": "edc70a9f71ffcd9bd10e9fa87094e887e141f71c5c50145a31bfd4e3402c62fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.3.1/EpdClient-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.3.1/EpdClient-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.5.0/EpdClient-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.5.0.tar.gz",
+    "size_bytes": 27163,
+    "sha256": "4ba80c1663133a7117cb5ca4a76d7830e0da7be20d38ae587cc6192c8b8cafad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.5.0/EpdClient-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.5.0/EpdClient-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.9.0/EpdClient-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.9.0.tar.gz",
+    "size_bytes": 32604,
+    "sha256": "83c868046d8c90a880de081e7b02e7b2539b4be46540c75b270ff72aa9412875",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.9.0/EpdClient-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.9.0/EpdClient-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisjtwomey/library/EpdClient/0.9.1/EpdClient-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpdClient-0.9.1.tar.gz",
+    "size_bytes": 32665,
+    "sha256": "eb9168a2b1c0e8bca5237f6b84fa525157b81cc8ab42b76f7affd6b9d952e877",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisjtwomey/library/EpdClient/0.9.1/EpdClient-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisjtwomey/library/EpdClient/0.9.1/EpdClient-0.9.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

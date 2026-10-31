@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/south-river",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "south-river/library/High%20Performance%20IMU%20BMI085/1.0.0/HighPerformanceIMUBMI085-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HighPerformanceIMUBMI085-1.0.0.tar.gz",
+    "size_bytes": 14388,
+    "sha256": "e63d4e94249c1ca3388d34b3ad7ba064f1608e8c3d99f1b6fa5a9b7a35f3e72e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/south-river/library/High%2520Performance%2520IMU%2520BMI085/1.0.0/HighPerformanceIMUBMI085-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/south-river/library/High%20Performance%20IMU%20BMI085/1.0.0/HighPerformanceIMUBMI085-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alejandroap00",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alejandroap00/library/IoTerDevelopmentSDK/1.0.0/IoTerDevelopmentSDK-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTerDevelopmentSDK-1.0.0.tar.gz",
+    "size_bytes": 4174,
+    "sha256": "e37b5b99c4a39f4594516fcd195ca0fa279fda765b162401eb452a2f5f53b7cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alejandroap00/library/IoTerDevelopmentSDK/1.0.0/IoTerDevelopmentSDK-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alejandroap00/library/IoTerDevelopmentSDK/1.0.0/IoTerDevelopmentSDK-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alejandroap00/library/IoTerDevelopmentSDK/1.0.1/IoTerDevelopmentSDK-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTerDevelopmentSDK-1.0.1.tar.gz",
+    "size_bytes": 4169,
+    "sha256": "09d0caff11f23880b381476adb6c1d0105b14b95daab530a1a310aeb770d7665",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alejandroap00/library/IoTerDevelopmentSDK/1.0.1/IoTerDevelopmentSDK-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alejandroap00/library/IoTerDevelopmentSDK/1.0.1/IoTerDevelopmentSDK-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alejandroap00/library/IoTerDevelopmentSDK/1.1.0/IoTerDevelopmentSDK-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTerDevelopmentSDK-1.1.0.tar.gz",
+    "size_bytes": 4211,
+    "sha256": "bd917b47e2adceaef8cbebfe214c05a6855a43852d2b24a4ef4fbc10c4af3607",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alejandroap00/library/IoTerDevelopmentSDK/1.1.0/IoTerDevelopmentSDK-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alejandroap00/library/IoTerDevelopmentSDK/1.1.0/IoTerDevelopmentSDK-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alejandroap00/library/IoTerDevelopmentSDK/1.1.1/IoTerDevelopmentSDK-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTerDevelopmentSDK-1.1.1.tar.gz",
+    "size_bytes": 4209,
+    "sha256": "474db5ec77cd4a1df78780c9f42cbaa64f3c32d80c4b9c5efd57bae82fb404fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alejandroap00/library/IoTerDevelopmentSDK/1.1.1/IoTerDevelopmentSDK-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alejandroap00/library/IoTerDevelopmentSDK/1.1.1/IoTerDevelopmentSDK-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alejandroap00/library/IoTerDevelopmentSDK/1.1.11/IoTerDevelopmentSDK-1.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTerDevelopmentSDK-1.1.11.tar.gz",
+    "size_bytes": 9686,
+    "sha256": "d5f9c3d240df6e7926a7a4e1ad0946754ea15023929d52ddbc56f8ce07472809",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alejandroap00/library/IoTerDevelopmentSDK/1.1.11/IoTerDevelopmentSDK-1.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/alejandroap00/library/IoTerDevelopmentSDK/1.1.11/IoTerDevelopmentSDK-1.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alejandroap00/library/IoTerDevelopmentSDK/1.1.12/IoTerDevelopmentSDK-1.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTerDevelopmentSDK-1.1.12.tar.gz",
+    "size_bytes": 9745,
+    "sha256": "a351cc411cfd870a8b4da8387c88611d782b1ad12974f20d236b678474177ff6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alejandroap00/library/IoTerDevelopmentSDK/1.1.12/IoTerDevelopmentSDK-1.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/alejandroap00/library/IoTerDevelopmentSDK/1.1.12/IoTerDevelopmentSDK-1.1.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alejandroap00/library/IoTerDevelopmentSDK/1.1.2/IoTerDevelopmentSDK-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTerDevelopmentSDK-1.1.2.tar.gz",
+    "size_bytes": 5742,
+    "sha256": "6f0030c74be5631498ff421467cae20e1de64d8a1d2342325a7e36418039cad3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alejandroap00/library/IoTerDevelopmentSDK/1.1.2/IoTerDevelopmentSDK-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alejandroap00/library/IoTerDevelopmentSDK/1.1.2/IoTerDevelopmentSDK-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alejandroap00/library/IoTerDevelopmentSDK/1.1.8/IoTerDevelopmentSDK-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTerDevelopmentSDK-1.1.8.tar.gz",
+    "size_bytes": 7473,
+    "sha256": "4e64231ee1ac59dc2dcced3ffe62154193f15852850dc5e7868f9aa53761b9e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alejandroap00/library/IoTerDevelopmentSDK/1.1.8/IoTerDevelopmentSDK-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/alejandroap00/library/IoTerDevelopmentSDK/1.1.8/IoTerDevelopmentSDK-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alejandroap00/library/IoTerDevelopmentSDK/1.2.0/IoTerDevelopmentSDK-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTerDevelopmentSDK-1.2.0.tar.gz",
+    "size_bytes": 10030,
+    "sha256": "41e07cbe499adc78a1a224a4a59fd69b3b3e21816b323553d2e40b74c6a9012a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alejandroap00/library/IoTerDevelopmentSDK/1.2.0/IoTerDevelopmentSDK-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alejandroap00/library/IoTerDevelopmentSDK/1.2.0/IoTerDevelopmentSDK-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alejandroap00/library/IoTerDevelopmentSDK/1.2.2/IoTerDevelopmentSDK-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTerDevelopmentSDK-1.2.2.tar.gz",
+    "size_bytes": 12179,
+    "sha256": "eeb6bccc20f5c9a21fb284300bb322e657e8dd9e34e35451375d26eb8a50663c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alejandroap00/library/IoTerDevelopmentSDK/1.2.2/IoTerDevelopmentSDK-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alejandroap00/library/IoTerDevelopmentSDK/1.2.2/IoTerDevelopmentSDK-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alejandroap00/library/IoTerDevelopmentSDK/1.2.3/IoTerDevelopmentSDK-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTerDevelopmentSDK-1.2.3.tar.gz",
+    "size_bytes": 12187,
+    "sha256": "6d10fa20699d541f8467d47e1dfdac7de41a16709d3482e7a90322443de29740",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alejandroap00/library/IoTerDevelopmentSDK/1.2.3/IoTerDevelopmentSDK-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/alejandroap00/library/IoTerDevelopmentSDK/1.2.3/IoTerDevelopmentSDK-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alejandroap00/library/TestLibrary/1.1.0/TestLibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TestLibrary-1.1.0.tar.gz",
+    "size_bytes": 3530,
+    "sha256": "f4eb07b475a1415712f5a2be7cbb4317464321e6b3dfef36c3d5c2ac1e5fdca7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alejandroap00/library/TestLibrary/1.1.0/TestLibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alejandroap00/library/TestLibrary/1.1.0/TestLibrary-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

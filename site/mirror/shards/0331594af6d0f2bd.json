@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-chasefarmer2808",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-chasefarmer2808/library/BMP180/0.0.0+sha.ae101ea7bd90/BMP180-0.0.0+sha.ae101ea7bd90.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP180-0.0.0+sha.ae101ea7bd90.tar.gz",
+    "size_bytes": 3783,
+    "sha256": "95b818ec9b35998714f2cef7e17577c34f4a6c898447cd8c1d4006800bdf0616",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-chasefarmer2808/library/BMP180/0.0.0%2Bsha.ae101ea7bd90/BMP180-0.0.0%2Bsha.ae101ea7bd90.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-chasefarmer2808/library/BMP180/0.0.0%2Bsha.ae101ea7bd90/BMP180-0.0.0%2Bsha.ae101ea7bd90.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-chasefarmer2808/library/beep/0.0.0+sha.302fee3845f7/beep-0.0.0+sha.302fee3845f7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "beep-0.0.0+sha.302fee3845f7.tar.gz",
+    "size_bytes": 1526,
+    "sha256": "680dcf464a1ddbeb45e22ff004eda324c3bcca2aa5724188ce4517db0a246ab0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-chasefarmer2808/library/beep/0.0.0%2Bsha.302fee3845f7/beep-0.0.0%2Bsha.302fee3845f7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-chasefarmer2808/library/beep/0.0.0%2Bsha.302fee3845f7/beep-0.0.0%2Bsha.302fee3845f7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

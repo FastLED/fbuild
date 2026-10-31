@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ginnieandmartin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-darwin_arm64-5.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ttgo-tdisplay-emulator-darwin_arm64-5.4.2.tar.gz",
+    "size_bytes": 5488610,
+    "sha256": "aab3708f8b2676d52ffe9cd93c8af2622b8ff972ca8d02d99b26fcad4b31fddb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-darwin_arm64-5.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-darwin_arm64-5.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-darwin_x86_64-5.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ttgo-tdisplay-emulator-darwin_x86_64-5.4.2.tar.gz",
+    "size_bytes": 5735581,
+    "sha256": "0152839e96776389228463e3c8b6d4c12599c375ea48febb335a282b499908d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-darwin_x86_64-5.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-darwin_x86_64-5.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-linux_x86_64-5.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ttgo-tdisplay-emulator-linux_x86_64-5.4.2.tar.gz",
+    "size_bytes": 5582287,
+    "sha256": "72e597ff2e5090ee98ccb34415c960dc1cd01fab3e84f57da0bf482d8382ea82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-linux_x86_64-5.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-linux_x86_64-5.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-windows_amd64-5.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ttgo-tdisplay-emulator-windows_amd64-5.4.2.tar.gz",
+    "size_bytes": 18959294,
+    "sha256": "c89801ba71961ea6a75d283d38ecd75ffc141f2352090b7166e0bd8fdc918da2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-windows_amd64-5.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-windows_amd64-5.4.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

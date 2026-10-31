@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iot-loony-bin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iot-loony-bin/library/fsm/0.0.0-broken/fsm-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fsm-1.2.0.tar.gz",
+    "size_bytes": 581,
+    "sha256": "9b116ed8fb82b9812dd635375e0c67ff535043840b0e3bcd62dd9195df9ab583",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iot-loony-bin/library/fsm/0.0.0-broken/fsm-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iot-loony-bin/library/fsm/0.0.0-broken/fsm-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vvb333007",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vvb333007/library/ESPShell/0.99.12/ESPShell-0.99.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPShell-0.99.12.tar.gz",
+    "size_bytes": 185276,
+    "sha256": "c5bc2baebfb4dbf1490b82acae3cf62043bf0ceee62b7d2e7f450ba91177a60b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vvb333007/library/ESPShell/0.99.12/ESPShell-0.99.12.tar.gz",
+     "https://dl.registry.platformio.org/download/vvb333007/library/ESPShell/0.99.12/ESPShell-0.99.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vvb333007/library/ESPShell/0.99.13/ESPShell-0.99.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPShell-0.99.13.tar.gz",
+    "size_bytes": 237024,
+    "sha256": "51286b3876c9c7af3c65a5e3479787fa969a0ed479adbb98bfbe19b715b0c9d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vvb333007/library/ESPShell/0.99.13/ESPShell-0.99.13.tar.gz",
+     "https://dl.registry.platformio.org/download/vvb333007/library/ESPShell/0.99.13/ESPShell-0.99.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vvb333007/library/ESPShell/0.99.14/ESPShell-0.99.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPShell-0.99.14.tar.gz",
+    "size_bytes": 283361,
+    "sha256": "385a2dfe239c21aa273da6a91c8abe481a10c19304838957575a52e9914d5908",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vvb333007/library/ESPShell/0.99.14/ESPShell-0.99.14.tar.gz",
+     "https://dl.registry.platformio.org/download/vvb333007/library/ESPShell/0.99.14/ESPShell-0.99.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vvb333007/library/ESPShell/0.99.15/ESPShell-0.99.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPShell-0.99.15.tar.gz",
+    "size_bytes": 287574,
+    "sha256": "4da53092b40230acbb0d50031a110447daf44ea22e06a0c7fba51c6005beeaa6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vvb333007/library/ESPShell/0.99.15/ESPShell-0.99.15.tar.gz",
+     "https://dl.registry.platformio.org/download/vvb333007/library/ESPShell/0.99.15/ESPShell-0.99.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vvb333007/library/ESPShell/0.99.16/ESPShell-0.99.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPShell-0.99.16.tar.gz",
+    "size_bytes": 293727,
+    "sha256": "4fc8fde82ab4ddb06ceef03a5d8f5fc322ec067523a16910262aea4d43f4ccf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vvb333007/library/ESPShell/0.99.16/ESPShell-0.99.16.tar.gz",
+     "https://dl.registry.platformio.org/download/vvb333007/library/ESPShell/0.99.16/ESPShell-0.99.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vvb333007/library/ESPShell/0.99.17/ESPShell-0.99.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPShell-0.99.17.tar.gz",
+    "size_bytes": 294471,
+    "sha256": "b9cc2a9a88e4f22f95064dbaab5accefa6ffc172842d4f75973a739f42d21918",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vvb333007/library/ESPShell/0.99.17/ESPShell-0.99.17.tar.gz",
+     "https://dl.registry.platformio.org/download/vvb333007/library/ESPShell/0.99.17/ESPShell-0.99.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vvb333007/library/ESPShell/0.99.18/ESPShell-0.99.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPShell-0.99.18.tar.gz",
+    "size_bytes": 302811,
+    "sha256": "a129e68b4451be0d6a9d7a59eefccc1e1344a29266d1ff79ffb0040127e5a0a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vvb333007/library/ESPShell/0.99.18/ESPShell-0.99.18.tar.gz",
+     "https://dl.registry.platformio.org/download/vvb333007/library/ESPShell/0.99.18/ESPShell-0.99.18.tar.gz"
+    ]
+   }
+  }
+ ]
+}

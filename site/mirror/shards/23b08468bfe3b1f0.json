@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jenscski",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jenscski/library/DoubleResetDetect/1.0.0/DoubleResetDetect-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DoubleResetDetect-1.0.0.tar.gz",
+    "size_bytes": 2342,
+    "sha256": "10add90378e9441d95edffc8fc554894e0eeca9bf07e61252b5463496f1be09b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jenscski/library/DoubleResetDetect/1.0.0/DoubleResetDetect-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jenscski/library/DoubleResetDetect/1.0.0/DoubleResetDetect-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

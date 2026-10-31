@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ryokosaka",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ryokosaka/library/Hello%20Drum/0.7.7/HelloDrum-0.7.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HelloDrum-0.7.7.tar.gz",
+    "size_bytes": 33924,
+    "sha256": "aeaeea7b46edd85977676031c02ea025facc977df61b6c9007d5c9831d4cbbd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ryokosaka/library/Hello%2520Drum/0.7.7/HelloDrum-0.7.7.tar.gz",
+     "https://dl.registry.platformio.org/download/ryokosaka/library/Hello%20Drum/0.7.7/HelloDrum-0.7.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

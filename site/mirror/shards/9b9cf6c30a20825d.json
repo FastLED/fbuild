@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-aswinsivakumar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-aswinsivakumar/library/FXAS21002/0.0.0+sha.c9ebfc81e8b6/FXAS21002-0.0.0+sha.c9ebfc81e8b6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXAS21002-0.0.0+sha.c9ebfc81e8b6.tar.gz",
+    "size_bytes": 2338,
+    "sha256": "c6d3183dba6230a9be1ca6aa7f5dcafbcfaa57af2e657e67ee97e3a21824f0b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aswinsivakumar/library/FXAS21002/0.0.0%2Bsha.c9ebfc81e8b6/FXAS21002-0.0.0%2Bsha.c9ebfc81e8b6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aswinsivakumar/library/FXAS21002/0.0.0%2Bsha.c9ebfc81e8b6/FXAS21002-0.0.0%2Bsha.c9ebfc81e8b6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-aswinsivakumar/library/FXOS8700/0.0.0+sha.df2167370234/FXOS8700-0.0.0+sha.df2167370234.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXOS8700-0.0.0+sha.df2167370234.tar.gz",
+    "size_bytes": 2478,
+    "sha256": "c96118615ce69270553ced929617f940b0fbc4f06b104a8cda93f6bcc40ce804",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aswinsivakumar/library/FXOS8700/0.0.0%2Bsha.df2167370234/FXOS8700-0.0.0%2Bsha.df2167370234.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aswinsivakumar/library/FXOS8700/0.0.0%2Bsha.df2167370234/FXOS8700-0.0.0%2Bsha.df2167370234.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-aswinsivakumar/library/MPL3115A2/0.0.0+sha.423fad528a24/MPL3115A2-0.0.0+sha.423fad528a24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPL3115A2-0.0.0+sha.423fad528a24.tar.gz",
+    "size_bytes": 2156,
+    "sha256": "7c845a18155646a5eb348c44fac88d8f2039e76676aa59686813861df5e127d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aswinsivakumar/library/MPL3115A2/0.0.0%2Bsha.423fad528a24/MPL3115A2-0.0.0%2Bsha.423fad528a24.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aswinsivakumar/library/MPL3115A2/0.0.0%2Bsha.423fad528a24/MPL3115A2-0.0.0%2Bsha.423fad528a24.tar.gz"
+    ]
+   }
+  }
+ ]
+}

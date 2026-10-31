@@ -1,0 +1,256 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jrowberg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jrowberg/library/I2Cdevlib-AD7746/1.0.0/I2Cdevlib-AD7746-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-AD7746-1.0.0.tar.gz",
+    "size_bytes": 3368,
+    "sha256": "bed2e8d663df2f217e35069448bcf7a5000d59e0f53ad4836ebec8e82639b359",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-AD7746/1.0.0/I2Cdevlib-AD7746-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-AD7746/1.0.0/I2Cdevlib-AD7746-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-ADS1115/1.0.0/I2Cdevlib-ADS1115-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-ADS1115-1.0.0.tar.gz",
+    "size_bytes": 7866,
+    "sha256": "bee1116847159aae83e722053043d917366cfff39fe9ade875de8ccd616e8451",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-ADS1115/1.0.0/I2Cdevlib-ADS1115-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-ADS1115/1.0.0/I2Cdevlib-ADS1115-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-ADXL345/1.0.0/I2Cdevlib-ADXL345-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-ADXL345-1.0.0.tar.gz",
+    "size_bytes": 14923,
+    "sha256": "3fa9230faffb035354b5155addbea97ec532c45c6c117a8b5f28ee3ecba20cbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-ADXL345/1.0.0/I2Cdevlib-ADXL345-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-ADXL345/1.0.0/I2Cdevlib-ADXL345-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-AK8975/1.0.0/I2Cdevlib-AK8975-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-AK8975-1.0.0.tar.gz",
+    "size_bytes": 4691,
+    "sha256": "3e8bf18524ca27fe60b3b2f315ffa395d2328bbdd71e3ba6f654d038d8689152",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-AK8975/1.0.0/I2Cdevlib-AK8975-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-AK8975/1.0.0/I2Cdevlib-AK8975-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-BMA150/1.0.0/I2Cdevlib-BMA150-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-BMA150-1.0.0.tar.gz",
+    "size_bytes": 5967,
+    "sha256": "8e86a104975682d7102034072073ad57ad0a4ff1d7019d74eeb1395b18271ed6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-BMA150/1.0.0/I2Cdevlib-BMA150-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-BMA150/1.0.0/I2Cdevlib-BMA150-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-BMP085/1.0.0/I2Cdevlib-BMP085-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-BMP085-1.0.0.tar.gz",
+    "size_bytes": 4949,
+    "sha256": "880c4323c3a1621c1eb016fcc1fe48d13d5c2f9b53c0fe3bd41eadca8a003fc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-BMP085/1.0.0/I2Cdevlib-BMP085-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-BMP085/1.0.0/I2Cdevlib-BMP085-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-Core/1.0.1/I2Cdevlib-Core-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-Core-1.0.1.tar.gz",
+    "size_bytes": 14649,
+    "sha256": "e80cccea9e34335fdd4264638a20e2f1eaae2c66b59b807f0562976046f57730",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-Core/1.0.1/I2Cdevlib-Core-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-Core/1.0.1/I2Cdevlib-Core-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-DS1307/1.0.0/I2Cdevlib-DS1307-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-DS1307-1.0.0.tar.gz",
+    "size_bytes": 7490,
+    "sha256": "c6ab57c66dafbadecf6cecab673cc786d9cb8145eb5feb9a0f572e10f3d23c22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-DS1307/1.0.0/I2Cdevlib-DS1307-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-DS1307/1.0.0/I2Cdevlib-DS1307-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-HMC5843/1.0.0/I2Cdevlib-HMC5843-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-HMC5843-1.0.0.tar.gz",
+    "size_bytes": 6827,
+    "sha256": "9e4d3f28333adceae8697f92762f6db5ba7f53a1baec8fcf64c4e44f9054f045",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-HMC5843/1.0.0/I2Cdevlib-HMC5843-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-HMC5843/1.0.0/I2Cdevlib-HMC5843-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-HMC5883L/1.0.0/I2Cdevlib-HMC5883L-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-HMC5883L-1.0.0.tar.gz",
+    "size_bytes": 6269,
+    "sha256": "c0db4a49be9cd2ae1e9e258792784cfdc37655c940a51313a0fdf4a3a7d0a8ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-HMC5883L/1.0.0/I2Cdevlib-HMC5883L-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-HMC5883L/1.0.0/I2Cdevlib-HMC5883L-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-IAQ2000/1.0.0/I2Cdevlib-IAQ2000-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-IAQ2000-1.0.0.tar.gz",
+    "size_bytes": 4432,
+    "sha256": "adb6f26e49a5d8f09c654de2e5bb86771be8abe7efa46fbfad06eeda2a972b45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-IAQ2000/1.0.0/I2Cdevlib-IAQ2000-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-IAQ2000/1.0.0/I2Cdevlib-IAQ2000-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-ITG3200/1.0.0/I2Cdevlib-ITG3200-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-ITG3200-1.0.0.tar.gz",
+    "size_bytes": 6798,
+    "sha256": "1b138d2b947e1811a003ade8dd7b06828570e5a36dd5bd670d6f157028451ba4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-ITG3200/1.0.0/I2Cdevlib-ITG3200-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-ITG3200/1.0.0/I2Cdevlib-ITG3200-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-L3G4200D/1.0.0/I2Cdevlib-L3G4200D-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-L3G4200D-1.0.0.tar.gz",
+    "size_bytes": 11240,
+    "sha256": "2a7fee3290cfe13b61fc9870160603babc4d22ce9efcfd2fba5d56a0f8aa6656",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-L3G4200D/1.0.0/I2Cdevlib-L3G4200D-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-L3G4200D/1.0.0/I2Cdevlib-L3G4200D-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-LM73/1.0.0/I2Cdevlib-LM73-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-LM73-1.0.0.tar.gz",
+    "size_bytes": 1958,
+    "sha256": "8f16fe7949f02180e457bbea6d51eef8f966471aeb24bfc9e5a4bd7b3093d93d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-LM73/1.0.0/I2Cdevlib-LM73-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-LM73/1.0.0/I2Cdevlib-LM73-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-MPR121/1.0.0/I2Cdevlib-MPR121-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-MPR121-1.0.0.tar.gz",
+    "size_bytes": 5524,
+    "sha256": "ac27fae1d25424e4a2413d845d3d69bef387f8016dee24ec526aa94540086a31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-MPR121/1.0.0/I2Cdevlib-MPR121-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-MPR121/1.0.0/I2Cdevlib-MPR121-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-MPU6050/1.0.0/I2Cdevlib-MPU6050-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-MPU6050-1.0.0.tar.gz",
+    "size_bytes": 102840,
+    "sha256": "117e661ca5286d57f87ac10face781e201e09bd758a53e48aee1594ff0761126",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-MPU6050/1.0.0/I2Cdevlib-MPU6050-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-MPU6050/1.0.0/I2Cdevlib-MPU6050-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-MPU9150/1.0.0/I2Cdevlib-MPU9150-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-MPU9150-1.0.0.tar.gz",
+    "size_bytes": 47683,
+    "sha256": "d4713c8a9d65d9be3db2453a1aa6de97371a0db3c750ee5517bd5885a007007c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-MPU9150/1.0.0/I2Cdevlib-MPU9150-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-MPU9150/1.0.0/I2Cdevlib-MPU9150-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-SSD1308/1.0.0/I2Cdevlib-SSD1308-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-SSD1308-1.0.0.tar.gz",
+    "size_bytes": 5964,
+    "sha256": "596e40179e9fabb5219c5d986ebb9d6e4212ae0e42aacfc76b8f54ca53e07c0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-SSD1308/1.0.0/I2Cdevlib-SSD1308-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-SSD1308/1.0.0/I2Cdevlib-SSD1308-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrowberg/library/I2Cdevlib-TCA6424A/1.0.0/I2Cdevlib-TCA6424A-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-TCA6424A-1.0.0.tar.gz",
+    "size_bytes": 3800,
+    "sha256": "27a6aaf8b6e1cd35af704db087c606464a31f7ebe638f190e842eb4324f75565",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrowberg/library/I2Cdevlib-TCA6424A/1.0.0/I2Cdevlib-TCA6424A-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrowberg/library/I2Cdevlib-TCA6424A/1.0.0/I2Cdevlib-TCA6424A-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

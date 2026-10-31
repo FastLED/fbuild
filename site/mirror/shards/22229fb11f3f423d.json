@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ivans",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ivans/library/Generic%20HDC1080/1.3.3.5d/GenericHDC1080-1.3.3.5d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GenericHDC1080-1.3.3.5d.tar.gz",
+    "size_bytes": 4457,
+    "sha256": "45863cab108bb8a31c4e99af207c87de51394587773f8f5f33a1095f185885c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ivans/library/Generic%2520HDC1080/1.3.3.5d/GenericHDC1080-1.3.3.5d.tar.gz",
+     "https://dl.registry.platformio.org/download/ivans/library/Generic%20HDC1080/1.3.3.5d/GenericHDC1080-1.3.3.5d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

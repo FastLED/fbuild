@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/razkar-studio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "razkar-studio/library/Stimeration/0.1.5/Stimeration-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stimeration-0.1.5.tar.gz",
+    "size_bytes": 42583,
+    "sha256": "911fd3b86971632997ab5c73cfb2d4174c2f7a731d326168350cd9753c664687",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/razkar-studio/library/Stimeration/0.1.5/Stimeration-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/razkar-studio/library/Stimeration/0.1.5/Stimeration-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "razkar-studio/library/Stimeration/0.1.6/Stimeration-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stimeration-0.1.6.tar.gz",
+    "size_bytes": 42639,
+    "sha256": "343e8e6b3990d7741394f23b5eae04cff0c15476875103cf7d4d418dc5b353e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/razkar-studio/library/Stimeration/0.1.6/Stimeration-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/razkar-studio/library/Stimeration/0.1.6/Stimeration-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "razkar-studio/library/Stimeration/0.1.7/Stimeration-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stimeration-0.1.7.tar.gz",
+    "size_bytes": 42664,
+    "sha256": "7fd7b5ef0935c63c7aec135dfc54080381505953101759af20bad9634fa68f48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/razkar-studio/library/Stimeration/0.1.7/Stimeration-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/razkar-studio/library/Stimeration/0.1.7/Stimeration-0.1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

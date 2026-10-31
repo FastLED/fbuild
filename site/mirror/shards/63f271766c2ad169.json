@@ -1,0 +1,256 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/microbotsio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "microbotsio/library/CodeCell%20MicroLink/1.0.6/CodeCellMicroLink-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodeCellMicroLink-1.0.6.tar.gz",
+    "size_bytes": 12084,
+    "sha256": "0bb772b9cd7a2f6a82720f231f9e480b7eafda1e38bdef750bd1172a29408ab0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/CodeCell%2520MicroLink/1.0.6/CodeCellMicroLink-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/CodeCell%20MicroLink/1.0.6/CodeCellMicroLink-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/CodeCell/2.0.0/CodeCell-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodeCell-2.0.0.tar.gz",
+    "size_bytes": 1082427,
+    "sha256": "f6683086cd31647895d5d95b17f38af72fd8ab80629ace2f5c90e25226af54f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/CodeCell/2.0.0/CodeCell-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/CodeCell/2.0.0/CodeCell-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/CodeCell/2.0.1/CodeCell-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodeCell-2.0.1.tar.gz",
+    "size_bytes": 1083319,
+    "sha256": "b06be75c03df37f1ab6005d0c628458c50bb2f5ee6f8d744a58ab7f2891bc675",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/CodeCell/2.0.1/CodeCell-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/CodeCell/2.0.1/CodeCell-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/CodeCell/2.0.2/CodeCell-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodeCell-2.0.2.tar.gz",
+    "size_bytes": 4222459,
+    "sha256": "c02863f6b2a9b375366951a60423a4230ec4b31392069e2f6a8e953438caaec5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/CodeCell/2.0.2/CodeCell-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/CodeCell/2.0.2/CodeCell-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/CodeCell/2.0.3/CodeCell-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodeCell-2.0.3.tar.gz",
+    "size_bytes": 4227662,
+    "sha256": "748ea9335a23f498fabd25b23f80a9e0d45bb5d2c5cb6edfa311e9163789db87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/CodeCell/2.0.3/CodeCell-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/CodeCell/2.0.3/CodeCell-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/CodeCell/2.0.4/CodeCell-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodeCell-2.0.4.tar.gz",
+    "size_bytes": 4228667,
+    "sha256": "bd820e4fca3debe0e2f56abcb8cbdc722e94d716044c423291020dd968e7fb43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/CodeCell/2.0.4/CodeCell-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/CodeCell/2.0.4/CodeCell-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/CodeCell/2.0.6/CodeCell-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodeCell-2.0.6.tar.gz",
+    "size_bytes": 4228678,
+    "sha256": "6d29f0585f1a55c7978a61d70e6673386af19991ef93dfa0d760da09fe898889",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/CodeCell/2.0.6/CodeCell-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/CodeCell/2.0.6/CodeCell-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/CodeCell/2.0.7/CodeCell-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodeCell-2.0.7.tar.gz",
+    "size_bytes": 4229708,
+    "sha256": "f4c0b6f10da7d3caf837e77c7fc2b717084035eca33dcf9f127243df98612e14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/CodeCell/2.0.7/CodeCell-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/CodeCell/2.0.7/CodeCell-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/CodeCell/2.0.8/CodeCell-2.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodeCell-2.0.8.tar.gz",
+    "size_bytes": 4234004,
+    "sha256": "8b380f56f21184079cab34154ed1f2e7c00e1106451373e73a73fb161ddd0063",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/CodeCell/2.0.8/CodeCell-2.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/CodeCell/2.0.8/CodeCell-2.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/CoilCell/1.1.3/CoilCell-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoilCell-1.1.3.tar.gz",
+    "size_bytes": 145630,
+    "sha256": "8695e8163cd636580ffbd6ff9b011ee8ba5fef9264583073a30edac277f4685b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/CoilCell/1.1.3/CoilCell-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/CoilCell/1.1.3/CoilCell-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/DriveCell/1.1.3/DriveCell-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DriveCell-1.1.3.tar.gz",
+    "size_bytes": 192948,
+    "sha256": "836622a8f7221cd81272a12e654b06285b0c747e33d22938fea8da8933266c5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/DriveCell/1.1.3/DriveCell-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/DriveCell/1.1.3/DriveCell-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/MotorCell/1.1.4/MotorCell-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorCell-1.1.4.tar.gz",
+    "size_bytes": 2087921,
+    "sha256": "425d53d80994a6ef2ef6de3aa90545dbf1d124b77a5e28f9ff77d7f0c8e84709",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/MotorCell/1.1.4/MotorCell-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/MotorCell/1.1.4/MotorCell-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/ProtoBot/1.0.0/ProtoBot-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoBot-1.0.0.tar.gz",
+    "size_bytes": 60921,
+    "sha256": "fd438c852e32d189e9254aebd3faeb474bd7bee7781d3aef984e28562c15f890",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/ProtoBot/1.0.0/ProtoBot-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/ProtoBot/1.0.0/ProtoBot-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/ProtoBot/1.0.1/ProtoBot-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoBot-1.0.1.tar.gz",
+    "size_bytes": 1255199,
+    "sha256": "fa5778b4b3a625ebf0d2af7444a020d6a523fc90d2729c5c7a84e4d498b061f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/ProtoBot/1.0.1/ProtoBot-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/ProtoBot/1.0.1/ProtoBot-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/ProtoBot/1.0.2/ProtoBot-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoBot-1.0.2.tar.gz",
+    "size_bytes": 1255185,
+    "sha256": "04bdbd20f4e5a8c8ad596b9c322b198bc052c4d2975cc32dd9959249965498ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/ProtoBot/1.0.2/ProtoBot-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/ProtoBot/1.0.2/ProtoBot-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/ProtoBot/1.0.4/ProtoBot-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoBot-1.0.4.tar.gz",
+    "size_bytes": 1255153,
+    "sha256": "7ac44f00df88b32850dbc4ab61d25d8d0694de63257ab04cd9c9b54a0bd68e84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/ProtoBot/1.0.4/ProtoBot-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/ProtoBot/1.0.4/ProtoBot-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/ProtoBot/1.0.5/ProtoBot-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoBot-1.0.5.tar.gz",
+    "size_bytes": 4648297,
+    "sha256": "ba4d4f968991dcf0bc39fd1ad501b0811e11929a1c64e9e804e1500ff9dc513a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/ProtoBot/1.0.5/ProtoBot-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/ProtoBot/1.0.5/ProtoBot-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/ProtoBot/1.0.6/ProtoBot-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoBot-1.0.6.tar.gz",
+    "size_bytes": 5589494,
+    "sha256": "3865a49260a91506506c77545db29d539f165428787e0e77d1e89d9d360797a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/ProtoBot/1.0.6/ProtoBot-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/ProtoBot/1.0.6/ProtoBot-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbotsio/library/ProtoBot/1.0.7/ProtoBot-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtoBot-1.0.7.tar.gz",
+    "size_bytes": 5637045,
+    "sha256": "58be20f5cc1ac31a33c4e82de3d898de13837fafeca78d05d2594e022b93a1ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbotsio/library/ProtoBot/1.0.7/ProtoBot-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/microbotsio/library/ProtoBot/1.0.7/ProtoBot-1.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-amouroug",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-amouroug/library/SPI_TFT_ILI9341/0.0.0+sha.f5b0f2709e19/SPI_TFT_ILI9341-0.0.0+sha.f5b0f2709e19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_TFT_ILI9341-0.0.0+sha.f5b0f2709e19.tar.gz",
+    "size_bytes": 18683,
+    "sha256": "80b7a9d8bc1467ebf6a5c2f6f2aebfb3bb9b02ee3666a48ff8aa5989b086f918",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-amouroug/library/SPI_TFT_ILI9341/0.0.0%2Bsha.f5b0f2709e19/SPI_TFT_ILI9341-0.0.0%2Bsha.f5b0f2709e19.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-amouroug/library/SPI_TFT_ILI9341/0.0.0%2Bsha.f5b0f2709e19/SPI_TFT_ILI9341-0.0.0%2Bsha.f5b0f2709e19.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-reichi19",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-reichi19/library/C12832_lcd/0.0.0+sha.5c166367513c/C12832_lcd-0.0.0+sha.5c166367513c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C12832_lcd-0.0.0+sha.5c166367513c.tar.gz",
+    "size_bytes": 10734,
+    "sha256": "ddf7d4be0930dc3181cb72027866f65d5451a1d91c639255612c12f22b33f3d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-reichi19/library/C12832_lcd/0.0.0%2Bsha.5c166367513c/C12832_lcd-0.0.0%2Bsha.5c166367513c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-reichi19/library/C12832_lcd/0.0.0%2Bsha.5c166367513c/C12832_lcd-0.0.0%2Bsha.5c166367513c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-timrock",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-timrock/library/C027_C20_U20_G350_GPS/0.0.0+sha.7f0ed1d69dc1/C027_C20_U20_G350_GPS-0.0.0+sha.7f0ed1d69dc1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C027_C20_U20_G350_GPS-0.0.0+sha.7f0ed1d69dc1.tar.gz",
+    "size_bytes": 1174,
+    "sha256": "192142557579f8d4f2c06340c27d0387bfe32c1d7bbeb12803238beb2eb39f87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-timrock/library/C027_C20_U20_G350_GPS/0.0.0%2Bsha.7f0ed1d69dc1/C027_C20_U20_G350_GPS-0.0.0%2Bsha.7f0ed1d69dc1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-timrock/library/C027_C20_U20_G350_GPS/0.0.0%2Bsha.7f0ed1d69dc1/C027_C20_U20_G350_GPS-0.0.0%2Bsha.7f0ed1d69dc1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

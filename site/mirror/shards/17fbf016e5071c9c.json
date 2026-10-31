@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leequix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leequix/library/AnalogJoystick/1.0.0/AnalogJoystick-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogJoystick-1.0.0.tar.gz",
+    "size_bytes": 2604,
+    "sha256": "61594481cc00d15877271348408607099a39760e60a645a382d4c088b7c39287",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leequix/library/AnalogJoystick/1.0.0/AnalogJoystick-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leequix/library/AnalogJoystick/1.0.0/AnalogJoystick-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

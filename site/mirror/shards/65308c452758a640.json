@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lasselukkari",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lasselukkari/library/JsonLogic/0.1.0/JsonLogic-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JsonLogic-0.1.0.tar.gz",
+    "size_bytes": 14519,
+    "sha256": "29a8b135f28fd8ce2a333b677bc1372db1d63041ce70e1d7175b382377bc9dc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lasselukkari/library/JsonLogic/0.1.0/JsonLogic-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lasselukkari/library/JsonLogic/0.1.0/JsonLogic-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lasselukkari/library/aWOT/3.5.0/aWOT-3.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "aWOT-3.5.0.tar.gz",
+    "size_bytes": 25447,
+    "sha256": "4debc741cedac23753862aaf87322d37eda7b192daf0563f06c7e68688183406",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lasselukkari/library/aWOT/3.5.0/aWOT-3.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lasselukkari/library/aWOT/3.5.0/aWOT-3.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

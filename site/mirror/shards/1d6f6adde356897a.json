@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sourcesimian",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sourcesimian/library/uICAL/0.0.1/uICAL-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uICAL-0.0.1.tar.gz",
+    "size_bytes": 26327,
+    "sha256": "d442b43abcd304f44cdfd5152dee5e30821500fecddaadd125d270d36e18e899",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sourcesimian/library/uICAL/0.0.1/uICAL-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sourcesimian/library/uICAL/0.0.1/uICAL-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

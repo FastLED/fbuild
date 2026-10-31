@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sunfounder",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sunfounder/library/RobotShield/1.0.2/RobotShield-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobotShield-1.0.2.tar.gz",
+    "size_bytes": 12699,
+    "sha256": "178095de6db597c760982d630d7bc24e532ccd15eaa0e7e5bad5b5871a024b9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunfounder/library/RobotShield/1.0.2/RobotShield-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sunfounder/library/RobotShield/1.0.2/RobotShield-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunfounder/library/RobotShield/1.0.3/RobotShield-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobotShield-1.0.3.tar.gz",
+    "size_bytes": 12692,
+    "sha256": "5d048f08fc50524264f986c4fc736ba5cf66ebe648d96aeb1ca0d3453cc4ec1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunfounder/library/RobotShield/1.0.3/RobotShield-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sunfounder/library/RobotShield/1.0.3/RobotShield-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunfounder/library/RobotShield/1.0.4/RobotShield-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobotShield-1.0.4.tar.gz",
+    "size_bytes": 12691,
+    "sha256": "5a3cd3de3081c365f83ee24ae1f92fb2801b6013e24af8d7c2edca73b3c8c2bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunfounder/library/RobotShield/1.0.4/RobotShield-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sunfounder/library/RobotShield/1.0.4/RobotShield-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunfounder/library/RobotShield/1.0.6/RobotShield-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobotShield-1.0.6.tar.gz",
+    "size_bytes": 12810,
+    "sha256": "5dd4c30d0a48f8fd9c9838e42216cf71d2b31d93d7dc9f7485173775ac5742af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunfounder/library/RobotShield/1.0.6/RobotShield-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sunfounder/library/RobotShield/1.0.6/RobotShield-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunfounder/library/SunFounder%20AI%20Camera/1.1.1/SunFounderAICamera-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SunFounderAICamera-1.1.1.tar.gz",
+    "size_bytes": 15054,
+    "sha256": "77d144c671b54592a48127143b3ddaf6d2074cdf1ccc1b4a29f8ec840b2de64a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunfounder/library/SunFounder%2520AI%2520Camera/1.1.1/SunFounderAICamera-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sunfounder/library/SunFounder%20AI%20Camera/1.1.1/SunFounderAICamera-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunfounder/library/SunFounder%20AI%20Camera/1.2.1/SunFounderAICamera-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SunFounderAICamera-1.2.1.tar.gz",
+    "size_bytes": 17660,
+    "sha256": "9ee86edce80ca51bba1055585c7bf871e6fbb5351d68b07b833488257800c24a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunfounder/library/SunFounder%2520AI%2520Camera/1.2.1/SunFounderAICamera-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sunfounder/library/SunFounder%20AI%20Camera/1.2.1/SunFounderAICamera-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunfounder/library/SunFounder%20AI%20Camera/1.2.2/SunFounderAICamera-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SunFounderAICamera-1.2.2.tar.gz",
+    "size_bytes": 18912,
+    "sha256": "93bbd543f5bc7c8ad48cb71dc9ef59772ff3bda71c1163e726c0b6901a4f9985",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunfounder/library/SunFounder%2520AI%2520Camera/1.2.2/SunFounderAICamera-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sunfounder/library/SunFounder%20AI%20Camera/1.2.2/SunFounderAICamera-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunfounder/library/SunFounderPowerControl/0.0.6/SunFounderPowerControl-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SunFounderPowerControl-0.0.6.tar.gz",
+    "size_bytes": 19945,
+    "sha256": "86cda5539d3d0125ee453580edf6ff71bee4fc78d02bcc7530e38eead3f14020",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunfounder/library/SunFounderPowerControl/0.0.6/SunFounderPowerControl-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sunfounder/library/SunFounderPowerControl/0.0.6/SunFounderPowerControl-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunfounder/library/SunFounder_IMU/1.0.0/SunFounder_IMU-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SunFounder_IMU-1.0.0.tar.gz",
+    "size_bytes": 14057,
+    "sha256": "51d72be3522526547a06f488575e69ce284f3b0fe65d72cd8cf3326887be2136",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunfounder/library/SunFounder_IMU/1.0.0/SunFounder_IMU-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sunfounder/library/SunFounder_IMU/1.0.0/SunFounder_IMU-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunfounder/library/SunFounder_IMU/1.1.0/SunFounder_IMU-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SunFounder_IMU-1.1.0.tar.gz",
+    "size_bytes": 19478,
+    "sha256": "fe0f2f862ca5b99de7c33329e19953ea04e498025a93a0c8600ab8354fa4795d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunfounder/library/SunFounder_IMU/1.1.0/SunFounder_IMU-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sunfounder/library/SunFounder_IMU/1.1.0/SunFounder_IMU-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunfounder/library/SunFounder_IMU/1.1.2/SunFounder_IMU-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SunFounder_IMU-1.1.2.tar.gz",
+    "size_bytes": 19672,
+    "sha256": "1ea4c083157fc4437fa39d5be40d3bd1fc8b9ee9070fb1251a0d7b52ff97f1a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunfounder/library/SunFounder_IMU/1.1.2/SunFounder_IMU-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sunfounder/library/SunFounder_IMU/1.1.2/SunFounder_IMU-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunfounder/library/SunFounder_IMU/1.1.4/SunFounder_IMU-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SunFounder_IMU-1.1.4.tar.gz",
+    "size_bytes": 19720,
+    "sha256": "441083568858e925b091b632cee56aebf173517515823458d5881551f1a60687",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunfounder/library/SunFounder_IMU/1.1.4/SunFounder_IMU-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sunfounder/library/SunFounder_IMU/1.1.4/SunFounder_IMU-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunfounder/library/SunFounder_IMU/1.1.5/SunFounder_IMU-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SunFounder_IMU-1.1.5.tar.gz",
+    "size_bytes": 19716,
+    "sha256": "e7938607df32223052b2e1c51bc61004d1f3a4b75a8e067af242ae39caa6706e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunfounder/library/SunFounder_IMU/1.1.5/SunFounder_IMU-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sunfounder/library/SunFounder_IMU/1.1.5/SunFounder_IMU-1.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

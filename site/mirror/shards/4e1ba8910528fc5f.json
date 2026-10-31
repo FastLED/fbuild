@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/konnextra",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "konnextra/library/KonnextraKNX/0.1.9/KonnextraKNX-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KonnextraKNX-0.1.9.tar.gz",
+    "size_bytes": 96006,
+    "sha256": "b204204cf505bf025cc3573b12040e856294fe0b7f2eea961d1743d2c9b34a15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/konnextra/library/KonnextraKNX/0.1.9/KonnextraKNX-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/konnextra/library/KonnextraKNX/0.1.9/KonnextraKNX-0.1.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,867 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hideakitai",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hideakitai/library/ADS1x1x/0.1.1/ADS1x1x-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1x1x-0.1.1.tar.gz",
+    "size_bytes": 4691,
+    "sha256": "9a74d733282d4c20e130b6ef150884bcb881adc39c8ce8a09b7aecfd589ddad3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ADS1x1x/0.1.1/ADS1x1x-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ADS1x1x/0.1.1/ADS1x1x-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ArduinoEigen/0.3.2/ArduinoEigen-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoEigen-0.3.2.tar.gz",
+    "size_bytes": 1014576,
+    "sha256": "7ee1c229fa1e347e57d96725376fb2aa55a3e148b4c1bb94809cd00dbb797db9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ArduinoEigen/0.3.2/ArduinoEigen-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ArduinoEigen/0.3.2/ArduinoEigen-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ArduinoOSC/0.5.2/ArduinoOSC-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoOSC-0.5.2.tar.gz",
+    "size_bytes": 61653,
+    "sha256": "1bb117e5cf242fdbbf01b4b1008b8a97ec0a0485c66327cf76c7fd6e369401d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ArduinoOSC/0.5.2/ArduinoOSC-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ArduinoOSC/0.5.2/ArduinoOSC-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ArduinoOSC/0.6.0/ArduinoOSC-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoOSC-0.6.0.tar.gz",
+    "size_bytes": 62668,
+    "sha256": "72706a00360b35991bfbc5e98dcb561e481520038b0f37b172d1f49acfbf2e60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ArduinoOSC/0.6.0/ArduinoOSC-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ArduinoOSC/0.6.0/ArduinoOSC-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ArtNet/0.8.3/ArtNet-0.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtNet-0.8.3.tar.gz",
+    "size_bytes": 31127,
+    "sha256": "d2f08cb5923c8976c2121c7405bf2ed8cc6fea5196bc24aaefc47c4dbe4c3b81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ArtNet/0.8.3/ArtNet-0.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ArtNet/0.8.3/ArtNet-0.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ArtNet/0.9.0/ArtNet-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtNet-0.9.0.tar.gz",
+    "size_bytes": 32808,
+    "sha256": "1e8c1395d4c0718ae74667f4dd3b39f05211a2d953c330dc7f1b34bb3613b383",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ArtNet/0.9.0/ArtNet-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ArtNet/0.9.0/ArtNet-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ArtNet/0.9.1/ArtNet-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtNet-0.9.1.tar.gz",
+    "size_bytes": 33711,
+    "sha256": "efdeb7701753258a976f3d7fc76b60399da097fafff71927a96dcea57dbafefa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ArtNet/0.9.1/ArtNet-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ArtNet/0.9.1/ArtNet-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ArtNet/0.9.2/ArtNet-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtNet-0.9.2.tar.gz",
+    "size_bytes": 33726,
+    "sha256": "49c2d0e3d753dc023d29827c6d5dc3669df2bc4224fe2409a786b859bdf5a91b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ArtNet/0.9.2/ArtNet-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ArtNet/0.9.2/ArtNet-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ArxContainer/0.7.0/ArxContainer-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArxContainer-0.7.0.tar.gz",
+    "size_bytes": 10098,
+    "sha256": "36709cf2619aae7ff3849ac4aa2fe43ff1c33f8e05465a425adb7d76c2b5d2bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ArxContainer/0.7.0/ArxContainer-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ArxContainer/0.7.0/ArxContainer-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ArxSmartPtr/0.3.0/ArxSmartPtr-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArxSmartPtr-0.3.0.tar.gz",
+    "size_bytes": 7632,
+    "sha256": "5c5e31e2c9c19b2ed66db7f5ffefe9ce15f65c7a2ceff400be95a07328152303",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ArxSmartPtr/0.3.0/ArxSmartPtr-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ArxSmartPtr/0.3.0/ArxSmartPtr-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ArxStringUtils/0.3.2/ArxStringUtils-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArxStringUtils-0.3.2.tar.gz",
+    "size_bytes": 5343,
+    "sha256": "fbe59d288967ba72a8e1bb56be9d841f8333208406ebe4a6018d6218e3aac551",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ArxStringUtils/0.3.2/ArxStringUtils-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ArxStringUtils/0.3.2/ArxStringUtils-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ArxTypeTraits/0.3.1/ArxTypeTraits-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArxTypeTraits-0.3.1.tar.gz",
+    "size_bytes": 13236,
+    "sha256": "7d948a652d217814ed34bfcb6c067f0ae84ec8b6d3bc2e9aeaf5c32464eab439",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ArxTypeTraits/0.3.1/ArxTypeTraits-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ArxTypeTraits/0.3.1/ArxTypeTraits-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ArxTypeTraits/0.3.2/ArxTypeTraits-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArxTypeTraits-0.3.2.tar.gz",
+    "size_bytes": 13239,
+    "sha256": "7c889e7c3cc64b0732d5383d76ff92042c30ce4a0cfd58d676ef56c942d56d62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ArxTypeTraits/0.3.2/ArxTypeTraits-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ArxTypeTraits/0.3.2/ArxTypeTraits-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/CRCx/0.4.0/CRCx-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRCx-0.4.0.tar.gz",
+    "size_bytes": 17544,
+    "sha256": "b284613f94ec8de8a4bef4cee9ed0df920e48f5684b3dd8c2e3ac1c3f26fc60b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/CRCx/0.4.0/CRCx-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/CRCx/0.4.0/CRCx-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/Choreograph/0.1.0/Choreograph-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Choreograph-0.1.0.tar.gz",
+    "size_bytes": 27699,
+    "sha256": "4e57bc65c7826e523ad6b731a20b244b4badc646a76736f79ea28cc5d9625fa1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/Choreograph/0.1.0/Choreograph-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/Choreograph/0.1.0/Choreograph-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/DRV2667/0.1.0/DRV2667-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DRV2667-0.1.0.tar.gz",
+    "size_bytes": 6794,
+    "sha256": "863c79a2695e178191f172d1f87ba304cc1909622fa59feb6d68161f5ff478d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/DRV2667/0.1.0/DRV2667-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/DRV2667/0.1.0/DRV2667-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/DS323x/0.1.2/DS323x-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS323x-0.1.2.tar.gz",
+    "size_bytes": 8578,
+    "sha256": "2091ffaf17fb02ab43ef112e8c5d982f54084322927929fe9b68ff6d04ce227c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/DS323x/0.1.2/DS323x-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/DS323x/0.1.2/DS323x-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/Debouncer/0.3.2/Debouncer-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Debouncer-0.3.2.tar.gz",
+    "size_bytes": 7145,
+    "sha256": "a5b60329f9416d88beebc6f9414ca0f81236b80b89de749c7e321f67dfc0571b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/Debouncer/0.3.2/Debouncer-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/Debouncer/0.3.2/Debouncer-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/DebugLog/0.8.4/DebugLog-0.8.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebugLog-0.8.4.tar.gz",
+    "size_bytes": 13242,
+    "sha256": "18d9b40d219b76386a0ffe20fb506cf05bb5c290c89c40c3032b79b2a3ad9d1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/DebugLog/0.8.4/DebugLog-0.8.4.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/DebugLog/0.8.4/DebugLog-0.8.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/Dynamixel/0.3.1/Dynamixel-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dynamixel-0.3.1.tar.gz",
+    "size_bytes": 28961,
+    "sha256": "9880825683abcf7b51292ce3c00efd80e8f7ce1d393f256ad3d9bd6190180708",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/Dynamixel/0.3.1/Dynamixel-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/Dynamixel/0.3.1/Dynamixel-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ES920/0.3.1/ES920-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ES920-0.3.1.tar.gz",
+    "size_bytes": 21564,
+    "sha256": "4ed7d283f4a8f5a8b7fcb7cd52937de4043cfa721ac0c71165b3b9abe0ee2d1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ES920/0.3.1/ES920-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ES920/0.3.1/ES920-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ESP32DMASPI/0.2.0/ESP32DMASPI-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32DMASPI-0.2.0.tar.gz",
+    "size_bytes": 9539,
+    "sha256": "d43db4345985dc1a51ed745f0c0bf2a6ec905bb69cdd313e58c53223c88ee39d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ESP32DMASPI/0.2.0/ESP32DMASPI-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ESP32DMASPI/0.2.0/ESP32DMASPI-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ESP32DMASPI/0.6.8/ESP32DMASPI-0.6.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32DMASPI-0.6.8.tar.gz",
+    "size_bytes": 22942,
+    "sha256": "dc4370af7277c82ce04254379c95e21fd0351b86a7e16677e2bc8b366c52309f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ESP32DMASPI/0.6.8/ESP32DMASPI-0.6.8.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ESP32DMASPI/0.6.8/ESP32DMASPI-0.6.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ESP32DMASPI/0.8.0/ESP32DMASPI-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32DMASPI-0.8.0.tar.gz",
+    "size_bytes": 23715,
+    "sha256": "a16aa3f15fb9895074b30489cc757ba594289ef7020d59eb55cc444fdfbb7538",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ESP32DMASPI/0.8.0/ESP32DMASPI-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ESP32DMASPI/0.8.0/ESP32DMASPI-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ESP32SPISlave/0.2.0/ESP32SPISlave-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32SPISlave-0.2.0.tar.gz",
+    "size_bytes": 5148,
+    "sha256": "529f31e5a31248ecac0caf8b3c64a04266f7ab0848b3a599c1def4c60131b078",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ESP32SPISlave/0.2.0/ESP32SPISlave-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ESP32SPISlave/0.2.0/ESP32SPISlave-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ESP32SPISlave/0.6.9/ESP32SPISlave-0.6.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32SPISlave-0.6.9.tar.gz",
+    "size_bytes": 13467,
+    "sha256": "fd5de50153b541ae5a3074c0e3db062baebd88f1db4c8dbacc48b6150a36dbb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ESP32SPISlave/0.6.9/ESP32SPISlave-0.6.9.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ESP32SPISlave/0.6.9/ESP32SPISlave-0.6.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/ESP32SPISlave/0.8.0/ESP32SPISlave-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32SPISlave-0.8.0.tar.gz",
+    "size_bytes": 13652,
+    "sha256": "72b8273f8108b845a9a78b653ee113db5ff482b35491e6cf29203d10e5f93f41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/ESP32SPISlave/0.8.0/ESP32SPISlave-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/ESP32SPISlave/0.8.0/ESP32SPISlave-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/Easing/0.1.0/Easing-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Easing-0.1.0.tar.gz",
+    "size_bytes": 5425,
+    "sha256": "38f8e135fc4a89f82d899ba07acc196900354229fa6fd6b8f806b2288bd2d828",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/Easing/0.1.0/Easing-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/Easing/0.1.0/Easing-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/EmbeddedDevices/0.1.0/EmbeddedDevices-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedDevices-0.1.0.tar.gz",
+    "size_bytes": 1602,
+    "sha256": "d1ac539b1ac307cad57c40abca2e36ccdac66a0b64d6d89263d6a66393e7f2da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/EmbeddedDevices/0.1.0/EmbeddedDevices-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/EmbeddedDevices/0.1.0/EmbeddedDevices-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/EmbeddedUtils/0.1.2/EmbeddedUtils-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedUtils-0.1.2.tar.gz",
+    "size_bytes": 34098,
+    "sha256": "3e75a5a6a442a15b795d54cb50bc288d0000e528d93684faa9a04865d646e547",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/EmbeddedUtils/0.1.2/EmbeddedUtils-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/EmbeddedUtils/0.1.2/EmbeddedUtils-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/FastLEDManager/0.2.1/FastLEDManager-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLEDManager-0.2.1.tar.gz",
+    "size_bytes": 18001,
+    "sha256": "fc3b5e244d80676183709e08f8cdd3a4719b44e2170aa741128f745544ffb968",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/FastLEDManager/0.2.1/FastLEDManager-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/FastLEDManager/0.2.1/FastLEDManager-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/Filters/0.1.2/Filters-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Filters-0.1.2.tar.gz",
+    "size_bytes": 11370,
+    "sha256": "360fa12d19588dcc2de59c89894ec0b28c531ec6a92c65da693cb4ac58141e6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/Filters/0.1.2/Filters-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/Filters/0.1.2/Filters-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/HyperDeck/0.2.0/HyperDeck-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HyperDeck-0.2.0.tar.gz",
+    "size_bytes": 5451,
+    "sha256": "887d8671072edf5adb59cedb6cedc4caa046f2ee5bc42a6100aa8a879b061b2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/HyperDeck/0.2.0/HyperDeck-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/HyperDeck/0.2.0/HyperDeck-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/I2CExtension/0.1.0/I2CExtension-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2CExtension-0.1.0.tar.gz",
+    "size_bytes": 2642,
+    "sha256": "7e3601f50915be5c8d22cd1090a4c3ef41ff5336c4145a4edc318925a809f37a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/I2CExtension/0.1.0/I2CExtension-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/I2CExtension/0.1.0/I2CExtension-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/IM920/0.1.1/IM920-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IM920-0.1.1.tar.gz",
+    "size_bytes": 7187,
+    "sha256": "4a1549394624ac1a419d0f9d41005618fc5f4ce63c323fec8ace3d11ff2524ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/IM920/0.1.1/IM920-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/IM920/0.1.1/IM920-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/L6470Stepper/0.1.0/L6470Stepper-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L6470Stepper-0.1.0.tar.gz",
+    "size_bytes": 10303,
+    "sha256": "f4a85c9a5c67fdfff65f1fe459258763db59c4ffc2056cbad77bf7994ea00fad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/L6470Stepper/0.1.0/L6470Stepper-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/L6470Stepper/0.1.0/L6470Stepper-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/LTC230x/0.1.2/LTC230x-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTC230x-0.1.2.tar.gz",
+    "size_bytes": 3336,
+    "sha256": "79af8f0bc69240046d761e4da3f06d7bf1dab94502693aa8c82b4344f63c0773",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/LTC230x/0.1.2/LTC230x-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/LTC230x/0.1.2/LTC230x-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/MAX17048/0.1.0/MAX17048-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX17048-0.1.0.tar.gz",
+    "size_bytes": 3371,
+    "sha256": "9fb8cbfc2223da5f1abcc592134dac07651841d29551e0919d666512fc84d000",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/MAX17048/0.1.0/MAX17048-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/MAX17048/0.1.0/MAX17048-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/MCP4728/0.1.2/MCP4728-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP4728-0.1.2.tar.gz",
+    "size_bytes": 3529,
+    "sha256": "fa5230eb5eb831f6c22b3af83baa656eb2c5830237dfbc756cde549ec0d4815b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/MCP4728/0.1.2/MCP4728-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/MCP4728/0.1.2/MCP4728-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/MPU9250/0.4.8/MPU9250-0.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9250-0.4.8.tar.gz",
+    "size_bytes": 28253,
+    "sha256": "b23fcd51723a75060073cd4a0334755684d85acf13fa71613a56652541681975",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/MPU9250/0.4.8/MPU9250-0.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/MPU9250/0.4.8/MPU9250-0.4.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/MQTTPubSubClient/0.3.2/MQTTPubSubClient-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTPubSubClient-0.3.2.tar.gz",
+    "size_bytes": 19854,
+    "sha256": "1effd14d0dbb2771739a62919ef7ff3fc72964d4a21a99366fa30c108c6f2fa0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/MQTTPubSubClient/0.3.2/MQTTPubSubClient-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/MQTTPubSubClient/0.3.2/MQTTPubSubClient-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/MTCParser/0.1.0/MTCParser-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTCParser-0.1.0.tar.gz",
+    "size_bytes": 7203,
+    "sha256": "a435d6a7fdd67017e26e9bf8ca61103aedc9072afff1cbcb64007abb714fdb16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/MTCParser/0.1.0/MTCParser-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/MTCParser/0.1.0/MTCParser-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/MaxMtrParser/0.2.2/MaxMtrParser-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MaxMtrParser-0.2.2.tar.gz",
+    "size_bytes": 7175,
+    "sha256": "e0c6b070380b36f24534dd7a796dcc987311c1bbe4a7774321f5beb3ef2777e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/MaxMtrParser/0.2.2/MaxMtrParser-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/MaxMtrParser/0.2.2/MaxMtrParser-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/MsgPack/0.4.2/MsgPack-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MsgPack-0.4.2.tar.gz",
+    "size_bytes": 320095,
+    "sha256": "8261b0e12cf010abe380ec5265f2e77dff8af3233a9d36e9809d704b329cf6ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/MsgPack/0.4.2/MsgPack-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/MsgPack/0.4.2/MsgPack-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/MsgPackRosInterfaces/0.1.0/MsgPackRosInterfaces-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MsgPackRosInterfaces-0.1.0.tar.gz",
+    "size_bytes": 207839,
+    "sha256": "f350b89a3988ac46597e37ed6d44229474f1e0f57caf299a8b6139b0a8aa4f7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/MsgPackRosInterfaces/0.1.0/MsgPackRosInterfaces-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/MsgPackRosInterfaces/0.1.0/MsgPackRosInterfaces-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/MsgPacketizer/0.5.3/MsgPacketizer-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MsgPacketizer-0.5.3.tar.gz",
+    "size_bytes": 82396,
+    "sha256": "a96be9b8ab056baac1a2c4287f153f8ef41782e83a18eb6495217f959b88bdae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/MsgPacketizer/0.5.3/MsgPacketizer-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/MsgPacketizer/0.5.3/MsgPacketizer-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/PCA9536/0.1.0/PCA9536-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9536-0.1.0.tar.gz",
+    "size_bytes": 2254,
+    "sha256": "bd4347cf2b24e09d3f363be2e2bfae43a51a569082d0e84c9c2f37fd2ba96893",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/PCA9536/0.1.0/PCA9536-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/PCA9536/0.1.0/PCA9536-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/PCA9547/0.1.1/PCA9547-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9547-0.1.1.tar.gz",
+    "size_bytes": 2587,
+    "sha256": "ac6303833a32b458707129fb38eb64cac4af98a75eb8a152f89b6dd1c65b9de0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/PCA9547/0.1.1/PCA9547-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/PCA9547/0.1.1/PCA9547-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/PCA95x5/0.1.3/PCA95x5-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA95x5-0.1.3.tar.gz",
+    "size_bytes": 3118,
+    "sha256": "dbcbbc1260b2c1473d8db2c0d9b081d0a89f03ed1c4cd872aa7a74e9f7595702",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/PCA95x5/0.1.3/PCA95x5-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/PCA95x5/0.1.3/PCA95x5-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/PCF2129/0.1.0/PCF2129-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF2129-0.1.0.tar.gz",
+    "size_bytes": 2671,
+    "sha256": "e8209684b91028512712dd26a052ecfd4a482ca1fade8bb75e85175bdddd8d9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/PCF2129/0.1.0/PCF2129-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/PCF2129/0.1.0/PCF2129-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/Packetizer/0.8.3/Packetizer-0.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Packetizer-0.8.3.tar.gz",
+    "size_bytes": 38932,
+    "sha256": "07cbd7fae8e97863e29dc78607ad1719de54d8397b0277f91c8626dec95d3bbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/Packetizer/0.8.3/Packetizer-0.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/Packetizer/0.8.3/Packetizer-0.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/PollingTimer/0.6.0/PollingTimer-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PollingTimer-0.6.0.tar.gz",
+    "size_bytes": 10181,
+    "sha256": "b358321847ff8b986d61384a466d9ad596b4314bbf1023fb3075e578d20551ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/PollingTimer/0.6.0/PollingTimer-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/PollingTimer/0.6.0/PollingTimer-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/SPIExtension/0.1.0/SPIExtension-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPIExtension-0.1.0.tar.gz",
+    "size_bytes": 2776,
+    "sha256": "05fe047a26ff9672a389ed5e4a88d780079a809e1136cf9a6bab1a6675481f39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/SPIExtension/0.1.0/SPIExtension-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/SPIExtension/0.1.0/SPIExtension-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/SceneManager/0.2.1/SceneManager-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SceneManager-0.2.1.tar.gz",
+    "size_bytes": 29945,
+    "sha256": "d7402bef7926325396def065a513fead8a6169f40f3be498f65f40fa73f148e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/SceneManager/0.2.1/SceneManager-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/SceneManager/0.2.1/SceneManager-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/Sony9PinRemote/0.3.2/Sony9PinRemote-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sony9PinRemote-0.3.2.tar.gz",
+    "size_bytes": 33054,
+    "sha256": "02a8cf57e67a36ed6bfca5b4f7ad4c97efaa16c2a6b036ef191367133e3260ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/Sony9PinRemote/0.3.2/Sony9PinRemote-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/Sony9PinRemote/0.3.2/Sony9PinRemote-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/SpresenseNeoPixel/0.1.1/SpresenseNeoPixel-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpresenseNeoPixel-0.1.1.tar.gz",
+    "size_bytes": 2766,
+    "sha256": "c0b4bc4fab259e6674ae312b70c8adfe93e29a05c20743ef3ce5cd240fd89181",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/SpresenseNeoPixel/0.1.1/SpresenseNeoPixel-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/SpresenseNeoPixel/0.1.1/SpresenseNeoPixel-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/TCA9534/0.1.1/TCA9534-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCA9534-0.1.1.tar.gz",
+    "size_bytes": 3012,
+    "sha256": "0b94d145814579c911ec26513d2e2c70cc93175dc13f8b4c23fac997cf40d021",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/TCA9534/0.1.1/TCA9534-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/TCA9534/0.1.1/TCA9534-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/TCS34725/0.1.2/TCS34725-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCS34725-0.1.2.tar.gz",
+    "size_bytes": 5041,
+    "sha256": "8c4e4dba4333bb5f30ff94b593f0edf9746813a17735a8bce23b227ed3216b2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/TCS34725/0.1.2/TCS34725-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/TCS34725/0.1.2/TCS34725-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/TFmini/0.1.0/TFmini-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFmini-0.1.0.tar.gz",
+    "size_bytes": 3512,
+    "sha256": "f5d9ac4b32adf871adca20625fe0744d97dc2106f8830b9969ca47813b1083fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/TFmini/0.1.0/TFmini-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/TFmini/0.1.0/TFmini-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/TaskManager/0.5.2/TaskManager-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskManager-0.5.2.tar.gz",
+    "size_bytes": 16457,
+    "sha256": "ce4cf834afea4436ecf2778f896b63e1595d0aa192ad66212cb8f3cf146828fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/TaskManager/0.5.2/TaskManager-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/TaskManager/0.5.2/TaskManager-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/TimeProfiler/0.2.2/TimeProfiler-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimeProfiler-0.2.2.tar.gz",
+    "size_bytes": 3627,
+    "sha256": "1aae893450dc929546899513a47ce2b859059f58b8c7b63703fe2998b83d16ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/TimeProfiler/0.2.2/TimeProfiler-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/TimeProfiler/0.2.2/TimeProfiler-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/TsyDMASPI/0.1.3/TsyDMASPI-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TsyDMASPI-0.1.3.tar.gz",
+    "size_bytes": 7974,
+    "sha256": "1405e8a8b4671f5c0987af7ed968b43c10108b5a4656d35adfd0d97b38f517a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/TsyDMASPI/0.1.3/TsyDMASPI-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/TsyDMASPI/0.1.3/TsyDMASPI-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/Tween/0.4.2/Tween-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tween-0.4.2.tar.gz",
+    "size_bytes": 11706,
+    "sha256": "4d055a9247383fae9de091e046a4b62d352bef802f1f327b0f551adfafed38e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/Tween/0.4.2/Tween-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/Tween/0.4.2/Tween-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/VectorXf/0.1.0/VectorXf-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VectorXf-0.1.0.tar.gz",
+    "size_bytes": 24839,
+    "sha256": "5412516f19df6f39f818e5a43c61afda137e463bad49d4007fef029975ca49b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/VectorXf/0.1.0/VectorXf-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/VectorXf/0.1.0/VectorXf-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/XBeeATCmds/0.1.0/XBeeATCmds-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XBeeATCmds-0.1.0.tar.gz",
+    "size_bytes": 4247,
+    "sha256": "c3316649349295da10dcca23388d8cbe854fb006530699ff0a23d6998e2446c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/XBeeATCmds/0.1.0/XBeeATCmds-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/XBeeATCmds/0.1.0/XBeeATCmds-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hideakitai/library/msgpack-arduino/0.1.0/msgpack-arduino-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "msgpack-arduino-0.1.0.tar.gz",
+    "size_bytes": 358452,
+    "sha256": "71e79a6738cfbb566c493e5c5f09e1a7cd3e0f39a3ef043eff6e336cee04b2cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hideakitai/library/msgpack-arduino/0.1.0/msgpack-arduino-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hideakitai/library/msgpack-arduino/0.1.0/msgpack-arduino-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

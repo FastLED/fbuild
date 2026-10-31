@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jomkippur",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jomkippur/library/btbee/0.0.0+sha.6d8cebc874fb/btbee-0.0.0+sha.6d8cebc874fb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "btbee-0.0.0+sha.6d8cebc874fb.tar.gz",
+    "size_bytes": 1412,
+    "sha256": "ee55f875ec8c1cc94358ecf0ea2ded10cb850407833d43118696d7027ca8291d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jomkippur/library/btbee/0.0.0%2Bsha.6d8cebc874fb/btbee-0.0.0%2Bsha.6d8cebc874fb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jomkippur/library/btbee/0.0.0%2Bsha.6d8cebc874fb/btbee-0.0.0%2Bsha.6d8cebc874fb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jomkippur/library/m3pi_ng/0.0.0+sha.bfad7a7422fb/m3pi_ng-0.0.0+sha.bfad7a7422fb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m3pi_ng-0.0.0+sha.bfad7a7422fb.tar.gz",
+    "size_bytes": 4444,
+    "sha256": "6e39c92811057ec501d108bd2a93a9daba271adb808c3fb93906a23c30e1d133",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jomkippur/library/m3pi_ng/0.0.0%2Bsha.bfad7a7422fb/m3pi_ng-0.0.0%2Bsha.bfad7a7422fb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jomkippur/library/m3pi_ng/0.0.0%2Bsha.bfad7a7422fb/m3pi_ng-0.0.0%2Bsha.bfad7a7422fb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

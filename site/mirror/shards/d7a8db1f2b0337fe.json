@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cocoos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cocoos/library/cocoOS/5.0.4/cocoOS-5.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cocoOS-5.0.4.tar.gz",
+    "size_bytes": 53028,
+    "sha256": "b73392bb85a1e61904dda915a839a4a7d0484f3bc330f2bed2ea9ccf855250f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cocoos/library/cocoOS/5.0.4/cocoOS-5.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/cocoos/library/cocoOS/5.0.4/cocoOS-5.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

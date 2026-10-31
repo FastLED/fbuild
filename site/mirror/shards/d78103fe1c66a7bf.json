@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/horihiro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "horihiro/library/esp8266-google-home-notifier/1.0.8/esp8266-google-home-notifier-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp8266-google-home-notifier-1.0.8.tar.gz",
+    "size_bytes": 44999,
+    "sha256": "46ddcc8c7f25b2ef33d45194b93cfbd290ce890ececf15f7555b3ff02aad5576",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/horihiro/library/esp8266-google-home-notifier/1.0.8/esp8266-google-home-notifier-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/horihiro/library/esp8266-google-home-notifier/1.0.8/esp8266-google-home-notifier-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "horihiro/library/esp8266-google-tts/1.1.0/esp8266-google-tts-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp8266-google-tts-1.1.0.tar.gz",
+    "size_bytes": 3211,
+    "sha256": "02c490783500c96efc8485608208501fc1c18ae3fe90da905ccb43b61a94e9c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/horihiro/library/esp8266-google-tts/1.1.0/esp8266-google-tts-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/horihiro/library/esp8266-google-tts/1.1.0/esp8266-google-tts-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

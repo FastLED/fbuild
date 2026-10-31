@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gianni-carbone",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gianni-carbone/library/STM32ad9833/0.9.2/STM32ad9833-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32ad9833-0.9.2.tar.gz",
+    "size_bytes": 21050,
+    "sha256": "2b09f9f096f1fab5244333cc55863b0fb65f12fef1c9954117c5067a81cb7774",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gianni-carbone/library/STM32ad9833/0.9.2/STM32ad9833-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gianni-carbone/library/STM32ad9833/0.9.2/STM32ad9833-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gianni-carbone/library/STM32mcp4151/0.9.1/STM32mcp4151-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32mcp4151-0.9.1.tar.gz",
+    "size_bytes": 16477,
+    "sha256": "a89ae25ce12a36536df160f47b8158dd2c0d80bf5e742474d041c2495f36df71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gianni-carbone/library/STM32mcp4151/0.9.1/STM32mcp4151-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gianni-carbone/library/STM32mcp4151/0.9.1/STM32mcp4151-0.9.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

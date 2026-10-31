@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xopxe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xopxe/library/micro_rosso/0.4.1/micro_rosso-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro_rosso-0.4.1.tar.gz",
+    "size_bytes": 17206,
+    "sha256": "c46f38039cd3262a35a68dab22a25ac65df2c2091e2bfb4302f238e0e799136b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xopxe/library/micro_rosso/0.4.1/micro_rosso-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xopxe/library/micro_rosso/0.4.1/micro_rosso-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xopxe/library/micro_rosso_bme680/0.1.2/micro_rosso_bme680-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro_rosso_bme680-0.1.2.tar.gz",
+    "size_bytes": 4186,
+    "sha256": "39212ef0375e0ad80a66365d11e306a1a7df1320e73e179707ddbad1f95a9500",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xopxe/library/micro_rosso_bme680/0.1.2/micro_rosso_bme680-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xopxe/library/micro_rosso_bme680/0.1.2/micro_rosso_bme680-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xopxe/library/micro_rosso_bno08x/0.1.2/micro_rosso_bno08x-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro_rosso_bno08x-0.1.2.tar.gz",
+    "size_bytes": 4567,
+    "sha256": "a7d3c675019f5a900c6fd14fd9a15342b12965518667cbf775c60f28f78b364b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xopxe/library/micro_rosso_bno08x/0.1.2/micro_rosso_bno08x-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xopxe/library/micro_rosso_bno08x/0.1.2/micro_rosso_bno08x-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xopxe/library/micro_rosso_dht22/0.1.2/micro_rosso_dht22-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro_rosso_dht22-0.1.2.tar.gz",
+    "size_bytes": 5022,
+    "sha256": "3daa1140b76fcc3a71c3e1168671c333563eac7b78cfac42a4cc5a75520c8128",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xopxe/library/micro_rosso_dht22/0.1.2/micro_rosso_dht22-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xopxe/library/micro_rosso_dht22/0.1.2/micro_rosso_dht22-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xopxe/library/micro_rosso_mlx90640/0.1.1/micro_rosso_mlx90640-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro_rosso_mlx90640-0.1.1.tar.gz",
+    "size_bytes": 5033,
+    "sha256": "e0c75ce5a35126fd5ff3c34452a8c4454ae4719a7fd1c70c87b9831ed14fc433",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xopxe/library/micro_rosso_mlx90640/0.1.1/micro_rosso_mlx90640-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xopxe/library/micro_rosso_mlx90640/0.1.1/micro_rosso_mlx90640-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xopxe/library/micro_rosso_mpu6050/0.1.2/micro_rosso_mpu6050-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro_rosso_mpu6050-0.1.2.tar.gz",
+    "size_bytes": 4092,
+    "sha256": "fb5c7f4728fc52b1aa3f00337327c4d90bd79c7761a1be22754454e6a991b7ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xopxe/library/micro_rosso_mpu6050/0.1.2/micro_rosso_mpu6050-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xopxe/library/micro_rosso_mpu6050/0.1.2/micro_rosso_mpu6050-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xopxe/library/micro_rosso_odom_helper/0.2.0/micro_rosso_odom_helper-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro_rosso_odom_helper-0.2.0.tar.gz",
+    "size_bytes": 4655,
+    "sha256": "074434f8624da6ad565093341a7c93af8cf2c38a37cd942bbe11b6f134e72ed4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xopxe/library/micro_rosso_odom_helper/0.2.0/micro_rosso_odom_helper-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xopxe/library/micro_rosso_odom_helper/0.2.0/micro_rosso_odom_helper-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pokitto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pokitto/library/PokittoLib/0.0.0+sha.531419862202/PokittoLib-0.0.0+sha.531419862202.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PokittoLib-0.0.0+sha.531419862202.tar.gz",
+    "size_bytes": 403647,
+    "sha256": "c2eda1588770f00b82ffb297060b36cdac27ecc03b464721903a6d594aadfc40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pokitto/library/PokittoLib/0.0.0%2Bsha.531419862202/PokittoLib-0.0.0%2Bsha.531419862202.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pokitto/library/PokittoLib/0.0.0%2Bsha.531419862202/PokittoLib-0.0.0%2Bsha.531419862202.tar.gz"
+    ]
+   }
+  }
+ ]
+}

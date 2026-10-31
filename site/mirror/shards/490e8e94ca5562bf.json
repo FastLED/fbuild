@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sprog-ev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sprog-ev/library/DynamicPacketCodec/1.0.0/DynamicPacketCodec-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DynamicPacketCodec-1.0.0.tar.gz",
+    "size_bytes": 5908,
+    "sha256": "2f1f87f1fd6f5802cbd50548a7c3b4bf2bf6927348f05809972f96ea58e2fd2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sprog-ev/library/DynamicPacketCodec/1.0.0/DynamicPacketCodec-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sprog-ev/library/DynamicPacketCodec/1.0.0/DynamicPacketCodec-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sprog-ev/library/DynamicPacketCodec/1.0.1/DynamicPacketCodec-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DynamicPacketCodec-1.0.1.tar.gz",
+    "size_bytes": 5968,
+    "sha256": "1628ceab16c754cb9985f1be94ea46d10467ec217342a494a521cfcee8323e1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sprog-ev/library/DynamicPacketCodec/1.0.1/DynamicPacketCodec-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sprog-ev/library/DynamicPacketCodec/1.0.1/DynamicPacketCodec-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sprog-ev/library/Radiocrafts_RC17xxHP_RC232/1.0.0/Radiocrafts_RC17xxHP_RC232-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Radiocrafts_RC17xxHP_RC232-1.0.0.tar.gz",
+    "size_bytes": 6707,
+    "sha256": "58b4625bb10d30976aaf4ce08c2fc0db48ed673780c4ab06ed58d88580deadea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sprog-ev/library/Radiocrafts_RC17xxHP_RC232/1.0.0/Radiocrafts_RC17xxHP_RC232-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sprog-ev/library/Radiocrafts_RC17xxHP_RC232/1.0.0/Radiocrafts_RC17xxHP_RC232-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sprog-ev/library/Radiocrafts_RC17xxHP_RC232/1.0.1/Radiocrafts_RC17xxHP_RC232-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Radiocrafts_RC17xxHP_RC232-1.0.1.tar.gz",
+    "size_bytes": 6770,
+    "sha256": "9cb7d33b9f51d694ce142f0f398dc6df00291aca7c43433c7c8b5b6ada39013e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sprog-ev/library/Radiocrafts_RC17xxHP_RC232/1.0.1/Radiocrafts_RC17xxHP_RC232-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sprog-ev/library/Radiocrafts_RC17xxHP_RC232/1.0.1/Radiocrafts_RC17xxHP_RC232-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

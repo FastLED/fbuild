@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/briscoetech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "briscoetech/library/FreeRTOS_SAMD21/2.3.0/FreeRTOS_SAMD21-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreeRTOS_SAMD21-2.3.0.tar.gz",
+    "size_bytes": 197072,
+    "sha256": "ee5a443d43b81fcf3fc133a0efd558b9be309b87dfce45202e0bb739d660abdb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/briscoetech/library/FreeRTOS_SAMD21/2.3.0/FreeRTOS_SAMD21-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/briscoetech/library/FreeRTOS_SAMD21/2.3.0/FreeRTOS_SAMD21-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "briscoetech/library/FreeRTOS_SAMD51/1.3.0/FreeRTOS_SAMD51-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreeRTOS_SAMD51-1.3.0.tar.gz",
+    "size_bytes": 202267,
+    "sha256": "1e8d22d1823eb459793c43d85c2b357bc3da19b6fb6b6aa56e213bc73256c5fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/briscoetech/library/FreeRTOS_SAMD51/1.3.0/FreeRTOS_SAMD51-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/briscoetech/library/FreeRTOS_SAMD51/1.3.0/FreeRTOS_SAMD51-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

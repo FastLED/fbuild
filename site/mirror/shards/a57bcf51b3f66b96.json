@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ladner-schmied",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ladner-schmied/library/Led-libary/0.0.0+sha.a2549b9f2785/Led-libary-0.0.0+sha.a2549b9f2785.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Led-libary-0.0.0+sha.a2549b9f2785.tar.gz",
+    "size_bytes": 1563,
+    "sha256": "6c60b71d42a1708acf61104f54ffe930fa1034e32f582e6019162d156cf78190",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ladner-schmied/library/Led-libary/0.0.0%2Bsha.a2549b9f2785/Led-libary-0.0.0%2Bsha.a2549b9f2785.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ladner-schmied/library/Led-libary/0.0.0%2Bsha.a2549b9f2785/Led-libary-0.0.0%2Bsha.a2549b9f2785.tar.gz"
+    ]
+   }
+  }
+ ]
+}

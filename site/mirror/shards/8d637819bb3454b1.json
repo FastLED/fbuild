@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xcookie987x",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xcookie987x/library/lvgl-c/8.4.1/lvgl-c-8.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-c-8.4.1.tar.gz",
+    "size_bytes": 17760627,
+    "sha256": "27716f47c11bcdd9b94834fb12d4e97394623f38d0dd13cf996c0f2605a33c47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xcookie987x/library/lvgl-c/8.4.1/lvgl-c-8.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xcookie987x/library/lvgl-c/8.4.1/lvgl-c-8.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xcookie987x/library/lvgl-c/8.4.2/lvgl-c-8.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-c-8.4.2.tar.gz",
+    "size_bytes": 17760676,
+    "sha256": "1e044bc7d6917e73e23be875ee7eb0de48f31fa04d8a02915c98ae81cb148e1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xcookie987x/library/lvgl-c/8.4.2/lvgl-c-8.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xcookie987x/library/lvgl-c/8.4.2/lvgl-c-8.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xcookie987x/library/lvgl-c/8.4.3/lvgl-c-8.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-c-8.4.3.tar.gz",
+    "size_bytes": 17861705,
+    "sha256": "a1e603704f85630474672fdb6db52ab6e38cbc430fc82e19dffec6128350b334",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xcookie987x/library/lvgl-c/8.4.3/lvgl-c-8.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/xcookie987x/library/lvgl-c/8.4.3/lvgl-c-8.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xcookie987x/library/lvgl-c/8.4.4/lvgl-c-8.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-c-8.4.4.tar.gz",
+    "size_bytes": 17864680,
+    "sha256": "2fa2d52b8eedd88e240cff653237a312b8c038f0d00db5678729c2aea2db5181",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xcookie987x/library/lvgl-c/8.4.4/lvgl-c-8.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/xcookie987x/library/lvgl-c/8.4.4/lvgl-c-8.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xcookie987x/library/lvgl-c/9.5.0/lvgl-c-9.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-c-9.5.0.tar.gz",
+    "size_bytes": 33713553,
+    "sha256": "ec9fb848e043f1e5fdcc517b760a7b5a92cd261d4b42b78b9d19bb6c42f86aeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xcookie987x/library/lvgl-c/9.5.0/lvgl-c-9.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xcookie987x/library/lvgl-c/9.5.0/lvgl-c-9.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xcookie987x/library/lvgl-cookie987/8.4.0/lvgl-cookie987-8.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lvgl-cookie987-8.4.0.tar.gz",
+    "size_bytes": 17742684,
+    "sha256": "82532b963edd42c52ddd7d546d1d721c15760adfc6ad9cd6c4e5d422f456aa4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xcookie987x/library/lvgl-cookie987/8.4.0/lvgl-cookie987-8.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xcookie987x/library/lvgl-cookie987/8.4.0/lvgl-cookie987-8.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

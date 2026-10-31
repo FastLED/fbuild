@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eitol",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eitol/library/EasyOta/1.0/EasyOta-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyOta-1.0.tar.gz",
+    "size_bytes": 3945,
+    "sha256": "5637ac57c44ab66b55daa15c436004e9d8785eeef25efdbb25828d8e7aaab542",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eitol/library/EasyOta/1.0/EasyOta-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eitol/library/EasyOta/1.0/EasyOta-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

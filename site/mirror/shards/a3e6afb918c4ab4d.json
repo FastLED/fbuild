@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dashio-connect",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dashio-connect/library/Dashio/1.2.4/Dashio-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dashio-1.2.4.tar.gz",
+    "size_bytes": 15523,
+    "sha256": "c79a243bf425966b908203b8717fadd2dd28989bc01721726c553f2b56323d0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dashio-connect/library/Dashio/1.2.4/Dashio-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dashio-connect/library/Dashio/1.2.4/Dashio-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dashio-connect/library/Dashio/1.2.5/Dashio-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dashio-1.2.5.tar.gz",
+    "size_bytes": 15862,
+    "sha256": "80064f72576e2138c46a052da47fd553a1daf75c6951388ffba099752d5de487",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dashio-connect/library/Dashio/1.2.5/Dashio-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dashio-connect/library/Dashio/1.2.5/Dashio-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dashio-connect/library/DashioBluefruit/1.1.0/DashioBluefruit-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DashioBluefruit-1.1.0.tar.gz",
+    "size_bytes": 8251,
+    "sha256": "e1a7857266615bf3d3f8ac48e124461f24973a2ecf2666e9c09b9df410b54668",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dashio-connect/library/DashioBluefruit/1.1.0/DashioBluefruit-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dashio-connect/library/DashioBluefruit/1.1.0/DashioBluefruit-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dashio-connect/library/DashioBluno/1.1.0/DashioBluno-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DashioBluno-1.1.0.tar.gz",
+    "size_bytes": 5350,
+    "sha256": "056584e067b85802f6ff6910b775b53c2d8669519697037b79795d53c031ae94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dashio-connect/library/DashioBluno/1.1.0/DashioBluno-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dashio-connect/library/DashioBluno/1.1.0/DashioBluno-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dashio-connect/library/DashioESP/1.2.11/DashioESP-1.2.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DashioESP-1.2.11.tar.gz",
+    "size_bytes": 31408,
+    "sha256": "3d7e64612e284ac8eaae9ab16a875c92e1af406549eb54085b45dbcd99bbd43e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dashio-connect/library/DashioESP/1.2.11/DashioESP-1.2.11.tar.gz",
+     "https://dl.registry.platformio.org/download/dashio-connect/library/DashioESP/1.2.11/DashioESP-1.2.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dashio-connect/library/DashioMKR1500/1.1.0/DashioMKR1500-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DashioMKR1500-1.1.0.tar.gz",
+    "size_bytes": 7359,
+    "sha256": "604815a70e60a18c91227e3a89478acf8d058c1350705975004eca9870458931",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dashio-connect/library/DashioMKR1500/1.1.0/DashioMKR1500-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dashio-connect/library/DashioMKR1500/1.1.0/DashioMKR1500-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dashio-connect/library/DashioNano33BLE/1.2.3/DashioNano33BLE-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DashioNano33BLE-1.2.3.tar.gz",
+    "size_bytes": 5435,
+    "sha256": "50bff650359e4a0bc7be4f7da4c071048e3868c770b1a8e0e5bd28b5e7f33786",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dashio-connect/library/DashioNano33BLE/1.2.3/DashioNano33BLE-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dashio-connect/library/DashioNano33BLE/1.2.3/DashioNano33BLE-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dashio-connect/library/DashioSAMD_NINA/1.2.3/DashioSAMD_NINA-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DashioSAMD_NINA-1.2.3.tar.gz",
+    "size_bytes": 10899,
+    "sha256": "ccba3339df8aa998468ff22f0a3b13f5a68ccb7f62209ea247e0700792d62484",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dashio-connect/library/DashioSAMD_NINA/1.2.3/DashioSAMD_NINA-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dashio-connect/library/DashioSAMD_NINA/1.2.3/DashioSAMD_NINA-1.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

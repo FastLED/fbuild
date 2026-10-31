@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jandelgado",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jandelgado/library/JLed/4.15.0/JLed-4.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JLed-4.15.0.tar.gz",
+    "size_bytes": 36552,
+    "sha256": "e037c99fb9cffc6c99b64a97667f134f8fd9f6ced7de8b97ee9edf70c6ab0e1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jandelgado/library/JLed/4.15.0/JLed-4.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jandelgado/library/JLed/4.15.0/JLed-4.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jandelgado/library/JLedPCA9685-HAL/1.1.1/JLedPCA9685-HAL-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JLedPCA9685-HAL-1.1.1.tar.gz",
+    "size_bytes": 3703154,
+    "sha256": "314a1a3eb75d803d97bc4385550f96b48eb7f5e9543f4614371071ae3c639b77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jandelgado/library/JLedPCA9685-HAL/1.1.1/JLedPCA9685-HAL-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jandelgado/library/JLedPCA9685-HAL/1.1.1/JLedPCA9685-HAL-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jandelgado/library/log4arduino/1.1.0/log4arduino-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "log4arduino-1.1.0.tar.gz",
+    "size_bytes": 4942,
+    "sha256": "15dfbd2326fa26a976877ad06364778cc6f0f32de98dcbb5df3018223d4045b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jandelgado/library/log4arduino/1.1.0/log4arduino-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jandelgado/library/log4arduino/1.1.0/log4arduino-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

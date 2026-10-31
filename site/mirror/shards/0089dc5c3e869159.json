@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-masato",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-masato/library/SSD1306/0.0.0+sha.ec5add86f335/SSD1306-0.0.0+sha.ec5add86f335.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1306-0.0.0+sha.ec5add86f335.tar.gz",
+    "size_bytes": 8411,
+    "sha256": "ae955eea904b6a605b79ea61ad00088916077bcf873b4832c0423203b8b81263",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-masato/library/SSD1306/0.0.0%2Bsha.ec5add86f335/SSD1306-0.0.0%2Bsha.ec5add86f335.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-masato/library/SSD1306/0.0.0%2Bsha.ec5add86f335/SSD1306-0.0.0%2Bsha.ec5add86f335.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-masato/library/sharp_mlcd/0.0.0+sha.f8ba3b236d12/sharp_mlcd-0.0.0+sha.f8ba3b236d12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sharp_mlcd-0.0.0+sha.f8ba3b236d12.tar.gz",
+    "size_bytes": 10295,
+    "sha256": "a52725f295fa224d21dfb6c4393c6f7d0551142b1db66f4b2dc5b15af2f2e279",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-masato/library/sharp_mlcd/0.0.0%2Bsha.f8ba3b236d12/sharp_mlcd-0.0.0%2Bsha.f8ba3b236d12.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-masato/library/sharp_mlcd/0.0.0%2Bsha.f8ba3b236d12/sharp_mlcd-0.0.0%2Bsha.f8ba3b236d12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-masato/library/st7565LCD/0.0.0+sha.29ff79184a05/st7565LCD-0.0.0+sha.29ff79184a05.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "st7565LCD-0.0.0+sha.29ff79184a05.tar.gz",
+    "size_bytes": 7148,
+    "sha256": "eca95c1a909584daed1d4985238c5c568c0c8d84231963c308acb294a87fc403",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-masato/library/st7565LCD/0.0.0%2Bsha.29ff79184a05/st7565LCD-0.0.0%2Bsha.29ff79184a05.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-masato/library/st7565LCD/0.0.0%2Bsha.29ff79184a05/st7565LCD-0.0.0%2Bsha.29ff79184a05.tar.gz"
+    ]
+   }
+  }
+ ]
+}

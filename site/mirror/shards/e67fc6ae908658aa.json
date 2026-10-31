@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aram-usa-support",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aram-usa-support/library/ARAM_FS_Stepper/1.0.2/ARAM_FS_Stepper-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ARAM_FS_Stepper-1.0.2.tar.gz",
+    "size_bytes": 1952,
+    "sha256": "9bdfb4ca2d3d373f9f934351e751352e3c5468acee10a462629393e79577fa62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aram-usa-support/library/ARAM_FS_Stepper/1.0.2/ARAM_FS_Stepper-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/aram-usa-support/library/ARAM_FS_Stepper/1.0.2/ARAM_FS_Stepper-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aram-usa-support/library/ARAM_Metal_Orchestra/1.0.1/ARAM_Metal_Orchestra-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ARAM_Metal_Orchestra-1.0.1.tar.gz",
+    "size_bytes": 7393,
+    "sha256": "17ab670dbe5caee13935dbf65d77d8a23e94ec016c1598e95e3b971f50f2f6de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aram-usa-support/library/ARAM_Metal_Orchestra/1.0.1/ARAM_Metal_Orchestra-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aram-usa-support/library/ARAM_Metal_Orchestra/1.0.1/ARAM_Metal_Orchestra-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aram-usa-support/library/ARAM_Metal_Orchestra/1.0.2/ARAM_Metal_Orchestra-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ARAM_Metal_Orchestra-1.0.2.tar.gz",
+    "size_bytes": 7395,
+    "sha256": "9dc34307bbbdef396c836488d10c0538d302cf96c85775ba0b52e06c928a74f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aram-usa-support/library/ARAM_Metal_Orchestra/1.0.2/ARAM_Metal_Orchestra-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/aram-usa-support/library/ARAM_Metal_Orchestra/1.0.2/ARAM_Metal_Orchestra-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aram-usa-support/library/ARAM_Metal_Orchestra/1.0.3/ARAM_Metal_Orchestra-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ARAM_Metal_Orchestra-1.0.3.tar.gz",
+    "size_bytes": 4075,
+    "sha256": "16521f456d27bfdf956d4d2406a012a9f3eccd0f2d9eecda9d100782563cf695",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aram-usa-support/library/ARAM_Metal_Orchestra/1.0.3/ARAM_Metal_Orchestra-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/aram-usa-support/library/ARAM_Metal_Orchestra/1.0.3/ARAM_Metal_Orchestra-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aram-usa-support/library/ARAM_Toggle_Actuator/1.0.2/ARAM_Toggle_Actuator-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ARAM_Toggle_Actuator-1.0.2.tar.gz",
+    "size_bytes": 2560,
+    "sha256": "fa05037b7e2c7b4422034a4663214f84e7e086581d5f560aad8d5ee669eb6259",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aram-usa-support/library/ARAM_Toggle_Actuator/1.0.2/ARAM_Toggle_Actuator-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/aram-usa-support/library/ARAM_Toggle_Actuator/1.0.2/ARAM_Toggle_Actuator-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aram-usa-support/library/ARAM_Toggle_Actuator/1.0.3/ARAM_Toggle_Actuator-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ARAM_Toggle_Actuator-1.0.3.tar.gz",
+    "size_bytes": 6137,
+    "sha256": "50e0ec2336a0fcaded33ee01472f4779e18981041582c1e9ba4f66075a20cd48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aram-usa-support/library/ARAM_Toggle_Actuator/1.0.3/ARAM_Toggle_Actuator-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/aram-usa-support/library/ARAM_Toggle_Actuator/1.0.3/ARAM_Toggle_Actuator-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aram-usa-support/library/ARAM_Toggle_Actuator/1.0.4/ARAM_Toggle_Actuator-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ARAM_Toggle_Actuator-1.0.4.tar.gz",
+    "size_bytes": 8549,
+    "sha256": "9d9818d8e7f03958132ba827ddc4b0e11aad12e43daf5078fc894d8b7208c587",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aram-usa-support/library/ARAM_Toggle_Actuator/1.0.4/ARAM_Toggle_Actuator-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/aram-usa-support/library/ARAM_Toggle_Actuator/1.0.4/ARAM_Toggle_Actuator-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aram-usa-support/library/ARAM_Toggle_Actuator/1.0.5/ARAM_Toggle_Actuator-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ARAM_Toggle_Actuator-1.0.5.tar.gz",
+    "size_bytes": 8700,
+    "sha256": "5ee4383e015592b154e5e41d05420e161af9c6ae5d2c7e1ff6be56b7cdaadd62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aram-usa-support/library/ARAM_Toggle_Actuator/1.0.5/ARAM_Toggle_Actuator-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/aram-usa-support/library/ARAM_Toggle_Actuator/1.0.5/ARAM_Toggle_Actuator-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aram-usa-support/library/ARAM_Toggle_Actuator/1.0.6/ARAM_Toggle_Actuator-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ARAM_Toggle_Actuator-1.0.6.tar.gz",
+    "size_bytes": 8639,
+    "sha256": "2f9c4d38b8fcc459422b5b6cd04f7acf315233be2f39d7acae350465dbb15e7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aram-usa-support/library/ARAM_Toggle_Actuator/1.0.6/ARAM_Toggle_Actuator-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/aram-usa-support/library/ARAM_Toggle_Actuator/1.0.6/ARAM_Toggle_Actuator-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

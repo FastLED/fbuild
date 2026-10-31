@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/engduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "engduino/library/EngduinoMagnetometer/3.1.0/EngduinoMagnetometer-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EngduinoMagnetometer-3.1.0.tar.gz",
+    "size_bytes": 4555,
+    "sha256": "ad40ba30fb93cc154ceae02cedbc4b8c5edcfdbeb11bee7cd8362348b9280050",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/engduino/library/EngduinoMagnetometer/3.1.0/EngduinoMagnetometer-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/engduino/library/EngduinoMagnetometer/3.1.0/EngduinoMagnetometer-3.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

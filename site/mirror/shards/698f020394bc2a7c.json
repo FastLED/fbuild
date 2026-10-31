@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lennart080",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lennart080/library/CaptivePortal/1.2.0/CaptivePortal-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CaptivePortal-1.2.0.tar.gz",
+    "size_bytes": 11453,
+    "sha256": "7a512b74d19a6c3d19f7c65051355ce0b6ae875088687e6e51d05c66a1d261af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennart080/library/CaptivePortal/1.2.0/CaptivePortal-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lennart080/library/CaptivePortal/1.2.0/CaptivePortal-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lennart080/library/TinyConfig/1.2.0/TinyConfig-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyConfig-1.2.0.tar.gz",
+    "size_bytes": 9817,
+    "sha256": "7d9410133567a2eec66ad29c9bc0b63ae88e0384530b1dcc2677b4a1ebebc80c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lennart080/library/TinyConfig/1.2.0/TinyConfig-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lennart080/library/TinyConfig/1.2.0/TinyConfig-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/memeexpert",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "memeexpert/library/bq2589x/1.0.3/bq2589x-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bq2589x-1.0.3.tar.gz",
+    "size_bytes": 6524,
+    "sha256": "fd35bc55500ec9c5f800013b42cc47fbd5cd4357d7701d60dcb369a5d9898ec1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/memeexpert/library/bq2589x/1.0.3/bq2589x-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/memeexpert/library/bq2589x/1.0.3/bq2589x-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

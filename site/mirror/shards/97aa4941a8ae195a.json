@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dhrbaksteen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dhrbaksteen/library/Arduino%20OPL2/2.1.3/ArduinoOPL2-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoOPL2-2.1.3.tar.gz",
+    "size_bytes": 848468,
+    "sha256": "f4205171704e6cf93ff5e31e79f9e2e553c728a63e4b633578173305e22172d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dhrbaksteen/library/Arduino%2520OPL2/2.1.3/ArduinoOPL2-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dhrbaksteen/library/Arduino%20OPL2/2.1.3/ArduinoOPL2-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dhrbaksteen/library/Piano%20Board/1.0.1/PianoBoard-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PianoBoard-1.0.1.tar.gz",
+    "size_bytes": 5797,
+    "sha256": "1ba079c8e0a0d144a5592e0574801d6b984f8626f255c20e088e94bfb677840b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dhrbaksteen/library/Piano%2520Board/1.0.1/PianoBoard-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dhrbaksteen/library/Piano%20Board/1.0.1/PianoBoard-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

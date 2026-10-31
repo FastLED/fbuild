@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hijelhub",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hijelhub/library/HijelHID_BLEKeyboard/0.3.1/HijelHID_BLEKeyboard-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HijelHID_BLEKeyboard-0.3.1.tar.gz",
+    "size_bytes": 31930,
+    "sha256": "ee03f61a499503b8021e859050bd05987f741d37a037a71bbd2456068847d4c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hijelhub/library/HijelHID_BLEKeyboard/0.3.1/HijelHID_BLEKeyboard-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hijelhub/library/HijelHID_BLEKeyboard/0.3.1/HijelHID_BLEKeyboard-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hijelhub/library/HijelHID_BLEKeyboard/0.4.0/HijelHID_BLEKeyboard-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HijelHID_BLEKeyboard-0.4.0.tar.gz",
+    "size_bytes": 35470,
+    "sha256": "00a5672d8e789e62b15aca4ae04fe7ecf2261d697f363a6569d6622c7308a29e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hijelhub/library/HijelHID_BLEKeyboard/0.4.0/HijelHID_BLEKeyboard-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hijelhub/library/HijelHID_BLEKeyboard/0.4.0/HijelHID_BLEKeyboard-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hijelhub/library/HijelHID_BLEKeyboard/0.4.1/HijelHID_BLEKeyboard-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HijelHID_BLEKeyboard-0.4.1.tar.gz",
+    "size_bytes": 38538,
+    "sha256": "7b605233362f00ec05d40c93cd5af56bf51bb46d06fa4d2135226848c2d1b6e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hijelhub/library/HijelHID_BLEKeyboard/0.4.1/HijelHID_BLEKeyboard-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hijelhub/library/HijelHID_BLEKeyboard/0.4.1/HijelHID_BLEKeyboard-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hijelhub/library/HijelHID_BLEKeyboard/0.5.0/HijelHID_BLEKeyboard-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HijelHID_BLEKeyboard-0.5.0.tar.gz",
+    "size_bytes": 46340,
+    "sha256": "7b3e72a1da5e2c31d6bd6e5a6b0abab626c76f8066c6df803cf8c90edf349c9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hijelhub/library/HijelHID_BLEKeyboard/0.5.0/HijelHID_BLEKeyboard-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hijelhub/library/HijelHID_BLEKeyboard/0.5.0/HijelHID_BLEKeyboard-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hijelhub/library/HijelHID_BLEMouse/0.1.0/HijelHID_BLEMouse-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HijelHID_BLEMouse-0.1.0.tar.gz",
+    "size_bytes": 27369,
+    "sha256": "3daf59ae2df92eff2935ac44266b77ecd21c972dbfc6e9460c4bdeef16fbf9d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hijelhub/library/HijelHID_BLEMouse/0.1.0/HijelHID_BLEMouse-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hijelhub/library/HijelHID_BLEMouse/0.1.0/HijelHID_BLEMouse-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

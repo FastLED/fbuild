@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dirkx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dirkx/library/CurrentTransformerWithCallbacks/2.0.1/CurrentTransformerWithCallbacks-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CurrentTransformerWithCallbacks-2.0.1.tar.gz",
+    "size_bytes": 8044,
+    "sha256": "0756eccbb39d3de86acfe89ac9ec3a714f51e3042b78168846e6baa4d120f8ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dirkx/library/CurrentTransformerWithCallbacks/2.0.1/CurrentTransformerWithCallbacks-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dirkx/library/CurrentTransformerWithCallbacks/2.0.1/CurrentTransformerWithCallbacks-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/l5y",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "l5y/platform/ardulinux/0.2.3/ardulinux-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ardulinux-0.2.3.tar.gz",
+    "size_bytes": 3631706,
+    "sha256": "3d2b41c94152f4665687de4e81e967772edaf73b84d80ea326aaaca4bad03a17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/l5y/platform/ardulinux/0.2.3/ardulinux-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/l5y/platform/ardulinux/0.2.3/ardulinux-0.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kuvee-base-micro-firmware",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kuvee-base-micro-firmware/library/Accelerometer%20%2B%20Motor%20Driver%20Porting/0.0.0+sha.d123694a690c/Accelerometer+MotorDriverPorting-0.0.0+sha.d123694a690c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Accelerometer+MotorDriverPorting-0.0.0+sha.d123694a690c.tar.gz",
+    "size_bytes": 2995,
+    "sha256": "38b0fc8a552eff19519101643a5c6a52718765b56c5abf95543cd245ecb5900f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kuvee-base-micro-firmware/library/Accelerometer%2520%252B%2520Motor%2520Driver%2520Porting/0.0.0%2Bsha.d123694a690c/Accelerometer%2BMotorDriverPorting-0.0.0%2Bsha.d123694a690c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kuvee-base-micro-firmware/library/Accelerometer%20%2B%20Motor%20Driver%20Porting/0.0.0%2Bsha.d123694a690c/Accelerometer%2BMotorDriverPorting-0.0.0%2Bsha.d123694a690c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kuvee-base-micro-firmware/library/Base_I2C_Device/0.0.0+sha.bc08f5c87a7d/Base_I2C_Device-0.0.0+sha.bc08f5c87a7d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Base_I2C_Device-0.0.0+sha.bc08f5c87a7d.tar.gz",
+    "size_bytes": 1274,
+    "sha256": "5d5b2e13f54f6ae95e7086b6689762999a5de19889f50d08c0d660cbfe005692",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kuvee-base-micro-firmware/library/Base_I2C_Device/0.0.0%2Bsha.bc08f5c87a7d/Base_I2C_Device-0.0.0%2Bsha.bc08f5c87a7d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kuvee-base-micro-firmware/library/Base_I2C_Device/0.0.0%2Bsha.bc08f5c87a7d/Base_I2C_Device-0.0.0%2Bsha.bc08f5c87a7d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kuvee-base-micro-firmware/library/TestConsoleLib/0.0.0+sha.b1fdd7ea6f72/TestConsoleLib-0.0.0+sha.b1fdd7ea6f72.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TestConsoleLib-0.0.0+sha.b1fdd7ea6f72.tar.gz",
+    "size_bytes": 5737,
+    "sha256": "7f88369f1dc18d699ca2db5dc7e47f75aa2f2ad984165573ce56808651551ecd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kuvee-base-micro-firmware/library/TestConsoleLib/0.0.0%2Bsha.b1fdd7ea6f72/TestConsoleLib-0.0.0%2Bsha.b1fdd7ea6f72.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kuvee-base-micro-firmware/library/TestConsoleLib/0.0.0%2Bsha.b1fdd7ea6f72/TestConsoleLib-0.0.0%2Bsha.b1fdd7ea6f72.tar.gz"
+    ]
+   }
+  }
+ ]
+}

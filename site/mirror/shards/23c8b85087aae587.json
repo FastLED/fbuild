@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rock7",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rock7/library/RockBLOCK-9704/0.1.25/RockBLOCK-9704-0.1.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RockBLOCK-9704-0.1.25.tar.gz",
+    "size_bytes": 146802,
+    "sha256": "f10b8ced67361b18d8600f5e4c362ee546f6da591711c889c3bdbe12f6c8e9e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rock7/library/RockBLOCK-9704/0.1.25/RockBLOCK-9704-0.1.25.tar.gz",
+     "https://dl.registry.platformio.org/download/rock7/library/RockBLOCK-9704/0.1.25/RockBLOCK-9704-0.1.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rock7/library/RockBLOCK-9704/0.1.26/RockBLOCK-9704-0.1.26.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RockBLOCK-9704-0.1.26.tar.gz",
+    "size_bytes": 146806,
+    "sha256": "44941f28fddf3e4ad86c07c5a74c33e6b174e587c0f379deaa5c70c3d431d0d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rock7/library/RockBLOCK-9704/0.1.26/RockBLOCK-9704-0.1.26.tar.gz",
+     "https://dl.registry.platformio.org/download/rock7/library/RockBLOCK-9704/0.1.26/RockBLOCK-9704-0.1.26.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rock7/library/RockBLOCK-9704/0.1.27/RockBLOCK-9704-0.1.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RockBLOCK-9704-0.1.27.tar.gz",
+    "size_bytes": 146871,
+    "sha256": "2d3e6f27cd067db92573d4a00eec7313801b6cf4961016be03febe86c1dc77a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rock7/library/RockBLOCK-9704/0.1.27/RockBLOCK-9704-0.1.27.tar.gz",
+     "https://dl.registry.platformio.org/download/rock7/library/RockBLOCK-9704/0.1.27/RockBLOCK-9704-0.1.27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rock7/library/RockBLOCK-9704/0.1.28/RockBLOCK-9704-0.1.28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RockBLOCK-9704-0.1.28.tar.gz",
+    "size_bytes": 147837,
+    "sha256": "dbfb0a9668b5fc06be202ba0fddeaa5ad1d7568f72932a3213b8742b01bd16cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rock7/library/RockBLOCK-9704/0.1.28/RockBLOCK-9704-0.1.28.tar.gz",
+     "https://dl.registry.platformio.org/download/rock7/library/RockBLOCK-9704/0.1.28/RockBLOCK-9704-0.1.28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rock7/library/RockBLOCK-9704/0.1.29/RockBLOCK-9704-0.1.29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RockBLOCK-9704-0.1.29.tar.gz",
+    "size_bytes": 147945,
+    "sha256": "fd9e4166455c0bf00f884d7fa5f3b25676e241d01e3c9b512c4ef0c0a3095e17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rock7/library/RockBLOCK-9704/0.1.29/RockBLOCK-9704-0.1.29.tar.gz",
+     "https://dl.registry.platformio.org/download/rock7/library/RockBLOCK-9704/0.1.29/RockBLOCK-9704-0.1.29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rock7/library/RockBLOCK-9704/0.1.30/RockBLOCK-9704-0.1.30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RockBLOCK-9704-0.1.30.tar.gz",
+    "size_bytes": 148670,
+    "sha256": "e91d9471e5c40bef685d8971fe6ef426064ed1f738abb8516eb29cb8881ada05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rock7/library/RockBLOCK-9704/0.1.30/RockBLOCK-9704-0.1.30.tar.gz",
+     "https://dl.registry.platformio.org/download/rock7/library/RockBLOCK-9704/0.1.30/RockBLOCK-9704-0.1.30.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rock7/library/RockBLOCK-9704/0.1.31/RockBLOCK-9704-0.1.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RockBLOCK-9704-0.1.31.tar.gz",
+    "size_bytes": 148653,
+    "sha256": "5faad9a8f2a39335576d5705e9d22e82b4c4f5dfece331fab6728f18385fb502",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rock7/library/RockBLOCK-9704/0.1.31/RockBLOCK-9704-0.1.31.tar.gz",
+     "https://dl.registry.platformio.org/download/rock7/library/RockBLOCK-9704/0.1.31/RockBLOCK-9704-0.1.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rock7/library/RockBLOCK-9704/1.0.0/RockBLOCK-9704-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RockBLOCK-9704-1.0.0.tar.gz",
+    "size_bytes": 150546,
+    "sha256": "b18f29a34cf3f2297253362d8410b0359d31453a669e86e415359a21a7e1f9a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rock7/library/RockBLOCK-9704/1.0.0/RockBLOCK-9704-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rock7/library/RockBLOCK-9704/1.0.0/RockBLOCK-9704-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rock7/library/RockBLOCK-9704/1.0.1/RockBLOCK-9704-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RockBLOCK-9704-1.0.1.tar.gz",
+    "size_bytes": 150600,
+    "sha256": "8bb226625b5952ecb6a42dcda36c35b0e7a8a1606cfb6323fa69df8e3de4bb58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rock7/library/RockBLOCK-9704/1.0.1/RockBLOCK-9704-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rock7/library/RockBLOCK-9704/1.0.1/RockBLOCK-9704-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rock7/library/RockBLOCK-9704/1.0.2/RockBLOCK-9704-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RockBLOCK-9704-1.0.2.tar.gz",
+    "size_bytes": 150984,
+    "sha256": "7e7f00f0c23a08fe814a7629074eee142030a693b68bb6faef0502b3add1b7bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rock7/library/RockBLOCK-9704/1.0.2/RockBLOCK-9704-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rock7/library/RockBLOCK-9704/1.0.2/RockBLOCK-9704-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rock7/library/RockBLOCK-9704/1.1.2/RockBLOCK-9704-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RockBLOCK-9704-1.1.2.tar.gz",
+    "size_bytes": 153434,
+    "sha256": "4ba1910d1d7545e26716f487c27e9e5e0cbdf5b01107622c6f2a7935522255fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rock7/library/RockBLOCK-9704/1.1.2/RockBLOCK-9704-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rock7/library/RockBLOCK-9704/1.1.2/RockBLOCK-9704-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rock7/library/RockBLOCK-9704/1.1.4/RockBLOCK-9704-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RockBLOCK-9704-1.1.4.tar.gz",
+    "size_bytes": 153616,
+    "sha256": "368ed5deae44da0ad11a277d3c91b25f1a0b90d2771368064ec1edc2a96bfdad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rock7/library/RockBLOCK-9704/1.1.4/RockBLOCK-9704-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rock7/library/RockBLOCK-9704/1.1.4/RockBLOCK-9704-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

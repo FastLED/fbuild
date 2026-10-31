@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/matth-m",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "matth-m/library/EM4095Reader/0.1.0/EM4095Reader-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EM4095Reader-0.1.0.tar.gz",
+    "size_bytes": 16975,
+    "sha256": "c5c8f82af008926db01dcd1de86952f744b43de2ebe1c27f44b7a638cbab0d82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matth-m/library/EM4095Reader/0.1.0/EM4095Reader-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matth-m/library/EM4095Reader/0.1.0/EM4095Reader-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

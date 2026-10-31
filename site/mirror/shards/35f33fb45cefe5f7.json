@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rosscoetrain",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rosscoetrain/library/arduino%20xpt2046%20library/0.2.0/arduinoxpt2046library-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduinoxpt2046library-0.2.0.tar.gz",
+    "size_bytes": 2533,
+    "sha256": "bc307cada1869088d4437f331e6c026d990b193e0347ccde48a309c8ce1274ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rosscoetrain/library/arduino%2520xpt2046%2520library/0.2.0/arduinoxpt2046library-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rosscoetrain/library/arduino%20xpt2046%20library/0.2.0/arduinoxpt2046library-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

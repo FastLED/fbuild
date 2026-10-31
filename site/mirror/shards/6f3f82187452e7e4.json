@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sepastian",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sepastian/library/tinyxml2/11.0.0/tinyxml2-11.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyxml2-11.0.0.tar.gz",
+    "size_bytes": 8813031,
+    "sha256": "718c432a28bfacefbd1fef69b7178002abd957ebc3e62e2384bb5bec9df3118e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sepastian/library/tinyxml2/11.0.0/tinyxml2-11.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sepastian/library/tinyxml2/11.0.0/tinyxml2-11.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

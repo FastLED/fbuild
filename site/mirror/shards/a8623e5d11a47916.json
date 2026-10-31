@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/majuss",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "majuss/library/EnOcean/1.1.4/EnOcean-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EnOcean-1.1.4.tar.gz",
+    "size_bytes": 32829,
+    "sha256": "d4277d904719a457f1d11a556f799f380c9a571be8a8d58512e356c1bc8e126a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majuss/library/EnOcean/1.1.4/EnOcean-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/majuss/library/EnOcean/1.1.4/EnOcean-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

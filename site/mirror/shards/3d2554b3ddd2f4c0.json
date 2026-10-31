@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ifrah",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ifrah/library/NokiaLCD/0.0.0+sha.d829f93abd27/NokiaLCD-0.0.0+sha.d829f93abd27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NokiaLCD-0.0.0+sha.d829f93abd27.tar.gz",
+    "size_bytes": 5395,
+    "sha256": "41cefa4deadabcdaa1191ac04f0176a0da6b57493aaabb283af86fc2fc7dc05f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ifrah/library/NokiaLCD/0.0.0%2Bsha.d829f93abd27/NokiaLCD-0.0.0%2Bsha.d829f93abd27.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ifrah/library/NokiaLCD/0.0.0%2Bsha.d829f93abd27/NokiaLCD-0.0.0%2Bsha.d829f93abd27.tar.gz"
+    ]
+   }
+  }
+ ]
+}

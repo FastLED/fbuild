@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yiannisbourkelis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yiannisbourkelis/library/Uptime%20Library/1.0.0/UptimeLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UptimeLibrary-1.0.0.tar.gz",
+    "size_bytes": 15021,
+    "sha256": "5726b7704db3a1573ca127f950caf9d337184e098470ab6814d6e15c3e6aadc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yiannisbourkelis/library/Uptime%2520Library/1.0.0/UptimeLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yiannisbourkelis/library/Uptime%20Library/1.0.0/UptimeLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

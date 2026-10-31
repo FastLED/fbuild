@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/intel-iot-devkit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "intel-iot-devkit/library/FirmataCurieIMU/0.0.1/FirmataCurieIMU-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirmataCurieIMU-0.0.1.tar.gz",
+    "size_bytes": 5155,
+    "sha256": "975537d4033b1a0f0455c265cc8fbea70044d60e1286147dd1f71feac31457d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/intel-iot-devkit/library/FirmataCurieIMU/0.0.1/FirmataCurieIMU-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/intel-iot-devkit/library/FirmataCurieIMU/0.0.1/FirmataCurieIMU-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

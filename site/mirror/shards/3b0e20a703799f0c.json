@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pippijn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pippijn/library/Callback/0.1/Callback-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Callback-0.1.tar.gz",
+    "size_bytes": 1004,
+    "sha256": "56010c052dc8ed4a37246a1d279c7b21b867d9df8f31b128dde53584e6fcb989",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pippijn/library/Callback/0.1/Callback-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pippijn/library/Callback/0.1/Callback-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pippijn/library/unittest/0.1/unittest-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "unittest-0.1.tar.gz",
+    "size_bytes": 1384,
+    "sha256": "0c92fbfb1e7538602ff30c867fbccc79caf5c1b1fb19c3919a6119bafb91f1bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pippijn/library/unittest/0.1/unittest-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pippijn/library/unittest/0.1/unittest-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

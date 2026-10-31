@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-star297",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-star297/library/BME280/0.0.0+sha.eaf30b268430/BME280-0.0.0+sha.eaf30b268430.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280-0.0.0+sha.eaf30b268430.tar.gz",
+    "size_bytes": 2754,
+    "sha256": "79eae5bface9e316d1f47c9ae8ae4fb79fa29477b220859ea92b8b52ad9f85ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-star297/library/BME280/0.0.0%2Bsha.eaf30b268430/BME280-0.0.0%2Bsha.eaf30b268430.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-star297/library/BME280/0.0.0%2Bsha.eaf30b268430/BME280-0.0.0%2Bsha.eaf30b268430.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-star297/library/EFM32_BUrtc/0.0.0+sha.7756f444d879/EFM32_BUrtc-0.0.0+sha.7756f444d879.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EFM32_BUrtc-0.0.0+sha.7756f444d879.tar.gz",
+    "size_bytes": 3233,
+    "sha256": "7120ef4ce3eb12074c35b2a03603b5facf5c93cdd5bfbee6dbf05e1a84212954",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-star297/library/EFM32_BUrtc/0.0.0%2Bsha.7756f444d879/EFM32_BUrtc-0.0.0%2Bsha.7756f444d879.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-star297/library/EFM32_BUrtc/0.0.0%2Bsha.7756f444d879/EFM32_BUrtc-0.0.0%2Bsha.7756f444d879.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-star297/library/ERC1602-4-i2c/0.0.0+sha.5b8f0de660ec/ERC1602-4-i2c-0.0.0+sha.5b8f0de660ec.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC1602-4-i2c-0.0.0+sha.5b8f0de660ec.tar.gz",
+    "size_bytes": 2334,
+    "sha256": "0899321414d2576b41786973e3ce395baf3447c3f31926f96b630a90746f85d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-star297/library/ERC1602-4-i2c/0.0.0%2Bsha.5b8f0de660ec/ERC1602-4-i2c-0.0.0%2Bsha.5b8f0de660ec.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-star297/library/ERC1602-4-i2c/0.0.0%2Bsha.5b8f0de660ec/ERC1602-4-i2c-0.0.0%2Bsha.5b8f0de660ec.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-star297/library/Firebase-https/0.0.0+sha.4d7c08734a91/Firebase-https-0.0.0+sha.4d7c08734a91.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Firebase-https-0.0.0+sha.4d7c08734a91.tar.gz",
+    "size_bytes": 31262,
+    "sha256": "e69e36436f67afc916abc81ebeb4d12869cc61f39814e95fcc58755fa27f9e30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-star297/library/Firebase-https/0.0.0%2Bsha.4d7c08734a91/Firebase-https-0.0.0%2Bsha.4d7c08734a91.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-star297/library/Firebase-https/0.0.0%2Bsha.4d7c08734a91/Firebase-https-0.0.0%2Bsha.4d7c08734a91.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-star297/library/Fonts/0.0.0+sha.b7905075b31a/Fonts-0.0.0+sha.b7905075b31a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Fonts-0.0.0+sha.b7905075b31a.tar.gz",
+    "size_bytes": 106673,
+    "sha256": "abfb0d2f5958e945df347e2f42e7c3ea07d40f4c7600715fde18a7a337eda05c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-star297/library/Fonts/0.0.0%2Bsha.b7905075b31a/Fonts-0.0.0%2Bsha.b7905075b31a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-star297/library/Fonts/0.0.0%2Bsha.b7905075b31a/Fonts-0.0.0%2Bsha.b7905075b31a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-star297/library/HT1621_16seg_LCD/0.0.0+sha.45d8278c902a/HT1621_16seg_LCD-0.0.0+sha.45d8278c902a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HT1621_16seg_LCD-0.0.0+sha.45d8278c902a.tar.gz",
+    "size_bytes": 3834,
+    "sha256": "7278e3b0a42318671a80a2e4517240832ab786173566d50a26e1fed8001541cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-star297/library/HT1621_16seg_LCD/0.0.0%2Bsha.45d8278c902a/HT1621_16seg_LCD-0.0.0%2Bsha.45d8278c902a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-star297/library/HT1621_16seg_LCD/0.0.0%2Bsha.45d8278c902a/HT1621_16seg_LCD-0.0.0%2Bsha.45d8278c902a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-star297/library/HY-1_8TFT_ST7735_KL25Z/0.0.0+sha.35a1964228b4/HY-1_8TFT_ST7735_KL25Z-0.0.0+sha.35a1964228b4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HY-1_8TFT_ST7735_KL25Z-0.0.0+sha.35a1964228b4.tar.gz",
+    "size_bytes": 10643,
+    "sha256": "4585a4edcfa1c1835bc1943249167cf932d397cceceea6ce3025b90393e1c90e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-star297/library/HY-1_8TFT_ST7735_KL25Z/0.0.0%2Bsha.35a1964228b4/HY-1_8TFT_ST7735_KL25Z-0.0.0%2Bsha.35a1964228b4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-star297/library/HY-1_8TFT_ST7735_KL25Z/0.0.0%2Bsha.35a1964228b4/HY-1_8TFT_ST7735_KL25Z-0.0.0%2Bsha.35a1964228b4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-star297/library/Images/0.0.0+sha.3e8992321919/Images-0.0.0+sha.3e8992321919.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Images-0.0.0+sha.3e8992321919.tar.gz",
+    "size_bytes": 5533,
+    "sha256": "85a6ba47958dbd46fdc3acfd21ad7f869462cb1fc06137649efea83479bcb06c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-star297/library/Images/0.0.0%2Bsha.3e8992321919/Images-0.0.0%2Bsha.3e8992321919.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-star297/library/Images/0.0.0%2Bsha.3e8992321919/Images-0.0.0%2Bsha.3e8992321919.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-star297/library/RDA5807M/0.0.0+sha.3e7968bd455d/RDA5807M-0.0.0+sha.3e7968bd455d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RDA5807M-0.0.0+sha.3e7968bd455d.tar.gz",
+    "size_bytes": 4549,
+    "sha256": "e0058b27901980aecf39626865de9e835cd1dabe8494b79b57133c417fb121bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-star297/library/RDA5807M/0.0.0%2Bsha.3e7968bd455d/RDA5807M-0.0.0%2Bsha.3e7968bd455d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-star297/library/RDA5807M/0.0.0%2Bsha.3e7968bd455d/RDA5807M-0.0.0%2Bsha.3e7968bd455d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-star297/library/SharpMemoryLCD/0.0.0+sha.1bd2b42b305d/SharpMemoryLCD-0.0.0+sha.1bd2b42b305d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SharpMemoryLCD-0.0.0+sha.1bd2b42b305d.tar.gz",
+    "size_bytes": 8079,
+    "sha256": "c97756db91ae333f1648646d992481da0c16a2e6433b883d1a5807c1d0815fd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-star297/library/SharpMemoryLCD/0.0.0%2Bsha.1bd2b42b305d/SharpMemoryLCD-0.0.0%2Bsha.1bd2b42b305d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-star297/library/SharpMemoryLCD/0.0.0%2Bsha.1bd2b42b305d/SharpMemoryLCD-0.0.0%2Bsha.1bd2b42b305d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-star297/library/max6675/0.0.0+sha.74731b8476a0/max6675-0.0.0+sha.74731b8476a0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "max6675-0.0.0+sha.74731b8476a0.tar.gz",
+    "size_bytes": 1551,
+    "sha256": "43c315b2dd9966cf1931e10bbf1e46cd65b9521e5d1691ed1405cf9b6f66b29d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-star297/library/max6675/0.0.0%2Bsha.74731b8476a0/max6675-0.0.0%2Bsha.74731b8476a0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-star297/library/max6675/0.0.0%2Bsha.74731b8476a0/max6675-0.0.0%2Bsha.74731b8476a0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-star297/library/ssd1331/0.0.0+sha.4385fd242db0/ssd1331-0.0.0+sha.4385fd242db0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ssd1331-0.0.0+sha.4385fd242db0.tar.gz",
+    "size_bytes": 9120,
+    "sha256": "fbd9b7f469b8ab5544eff8ec216fbfe7a8735fbf1ff1bc95ce17ed3f9fb6f666",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-star297/library/ssd1331/0.0.0%2Bsha.4385fd242db0/ssd1331-0.0.0%2Bsha.4385fd242db0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-star297/library/ssd1331/0.0.0%2Bsha.4385fd242db0/ssd1331-0.0.0%2Bsha.4385fd242db0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

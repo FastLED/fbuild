@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-miruga27",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-miruga27/library/SDL_lib/0.0.0+sha.dda4f4550403/SDL_lib-0.0.0+sha.dda4f4550403.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDL_lib-0.0.0+sha.dda4f4550403.tar.gz",
+    "size_bytes": 200579,
+    "sha256": "46a54699ab86629b1fe73dc964ecd36a7db338780edb6fa78406deb8bfb4e301",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-miruga27/library/SDL_lib/0.0.0%2Bsha.dda4f4550403/SDL_lib-0.0.0%2Bsha.dda4f4550403.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-miruga27/library/SDL_lib/0.0.0%2Bsha.dda4f4550403/SDL_lib-0.0.0%2Bsha.dda4f4550403.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-miruga27/library/SDL_lib2/0.0.0+sha.7fb6877b5d7c/SDL_lib2-0.0.0+sha.7fb6877b5d7c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDL_lib2-0.0.0+sha.7fb6877b5d7c.tar.gz",
+    "size_bytes": 200579,
+    "sha256": "1c0222eb08e4cb69a59c977d0ef6816c46374f6d588b6dec6ead9518259ac6de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-miruga27/library/SDL_lib2/0.0.0%2Bsha.7fb6877b5d7c/SDL_lib2-0.0.0%2Bsha.7fb6877b5d7c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-miruga27/library/SDL_lib2/0.0.0%2Bsha.7fb6877b5d7c/SDL_lib2-0.0.0%2Bsha.7fb6877b5d7c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

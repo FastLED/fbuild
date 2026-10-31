@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-austinbrown124",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-austinbrown124/library/SSD1306_simple/0.0.0+sha.b9855e428053/SSD1306_simple-0.0.0+sha.b9855e428053.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1306_simple-0.0.0+sha.b9855e428053.tar.gz",
+    "size_bytes": 8344,
+    "sha256": "1842eb6b83c40685e34c778c00cb0e0b8ff6d424954e266549b152787c500fbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-austinbrown124/library/SSD1306_simple/0.0.0%2Bsha.b9855e428053/SSD1306_simple-0.0.0%2Bsha.b9855e428053.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-austinbrown124/library/SSD1306_simple/0.0.0%2Bsha.b9855e428053/SSD1306_simple-0.0.0%2Bsha.b9855e428053.tar.gz"
+    ]
+   }
+  }
+ ]
+}

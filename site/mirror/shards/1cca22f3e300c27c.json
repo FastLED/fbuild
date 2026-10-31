@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/phillipweinstock",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "phillipweinstock/library/libsdi12/0.1.0/libsdi12-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsdi12-0.1.0.tar.gz",
+    "size_bytes": 102204,
+    "sha256": "948c0be872b461f868faf7f5e13e489a0e2ebb9067f88abc0bada3da034defee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phillipweinstock/library/libsdi12/0.1.0/libsdi12-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/phillipweinstock/library/libsdi12/0.1.0/libsdi12-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "phillipweinstock/library/libsdi12/0.2.0/libsdi12-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsdi12-0.2.0.tar.gz",
+    "size_bytes": 112366,
+    "sha256": "68337dafb70bc6e807e6ad25e9bf659f6ed2f64b4ac06eed4c3b5bb3a7a7aefb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phillipweinstock/library/libsdi12/0.2.0/libsdi12-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/phillipweinstock/library/libsdi12/0.2.0/libsdi12-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "phillipweinstock/library/libsdi12/0.3.0/libsdi12-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsdi12-0.3.0.tar.gz",
+    "size_bytes": 69676,
+    "sha256": "a5e3e3c035a6420fcf724be96a5401586baf6ad8e24da07341b7928ad0d19dcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phillipweinstock/library/libsdi12/0.3.0/libsdi12-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/phillipweinstock/library/libsdi12/0.3.0/libsdi12-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "phillipweinstock/library/libsdi12/0.4.0/libsdi12-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsdi12-0.4.0.tar.gz",
+    "size_bytes": 76072,
+    "sha256": "46f20792a03757bb9c12cead80d7ddf1736084c6b64ce787389fc976dd8aaa41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phillipweinstock/library/libsdi12/0.4.0/libsdi12-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/phillipweinstock/library/libsdi12/0.4.0/libsdi12-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "phillipweinstock/library/libsdi12/0.5.0/libsdi12-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsdi12-0.5.0.tar.gz",
+    "size_bytes": 81832,
+    "sha256": "d0905c06841fa5f4e6c03884d8052fca2ef887bcb19d52c00272dd1228d6f562",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phillipweinstock/library/libsdi12/0.5.0/libsdi12-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/phillipweinstock/library/libsdi12/0.5.0/libsdi12-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "phillipweinstock/library/libsdi12/0.5.1/libsdi12-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsdi12-0.5.1.tar.gz",
+    "size_bytes": 85420,
+    "sha256": "a83c8198be07c4e1614f2fcbc5dad2ea19c27c08010d595b7c5ea05caa3faf41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phillipweinstock/library/libsdi12/0.5.1/libsdi12-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/phillipweinstock/library/libsdi12/0.5.1/libsdi12-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "phillipweinstock/library/libsdi12/0.5.2/libsdi12-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsdi12-0.5.2.tar.gz",
+    "size_bytes": 90350,
+    "sha256": "0e9cd29a6934d7317ded8b98dd3d59f54d16415a3a4b183d988adc7b3b0b5a05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phillipweinstock/library/libsdi12/0.5.2/libsdi12-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/phillipweinstock/library/libsdi12/0.5.2/libsdi12-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "phillipweinstock/library/libsdi12/0.5.3/libsdi12-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsdi12-0.5.3.tar.gz",
+    "size_bytes": 93465,
+    "sha256": "e19af6e4dece0f4d2ab30319b5fc189f17748b302fcab5c24fbc5e374313fde8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phillipweinstock/library/libsdi12/0.5.3/libsdi12-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/phillipweinstock/library/libsdi12/0.5.3/libsdi12-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "phillipweinstock/library/libsdi12/0.5.4/libsdi12-0.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsdi12-0.5.4.tar.gz",
+    "size_bytes": 94250,
+    "sha256": "cdc0c8b51773e6bdafa55d1d5a536a4208d87a4fa932a88e9bad4997f4b01282",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phillipweinstock/library/libsdi12/0.5.4/libsdi12-0.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/phillipweinstock/library/libsdi12/0.5.4/libsdi12-0.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "phillipweinstock/library/libsdi12/0.6.1/libsdi12-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libsdi12-0.6.1.tar.gz",
+    "size_bytes": 97121,
+    "sha256": "3afb701594227f722ae2062d9acd12ed6a0ec40c4c220d840978958d28c967d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phillipweinstock/library/libsdi12/0.6.1/libsdi12-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/phillipweinstock/library/libsdi12/0.6.1/libsdi12-0.6.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

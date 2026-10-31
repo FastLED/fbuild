@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cesarcazal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cesarcazal/library/I2C_Driver/0.0.0+sha.2514f1c72462/I2C_Driver-0.0.0+sha.2514f1c72462.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C_Driver-0.0.0+sha.2514f1c72462.tar.gz",
+    "size_bytes": 5452,
+    "sha256": "6a0568df0e7adf3588d2e1782a8520c631cd77f8f1b6cbf28e0610c84d9c268e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cesarcazal/library/I2C_Driver/0.0.0%2Bsha.2514f1c72462/I2C_Driver-0.0.0%2Bsha.2514f1c72462.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cesarcazal/library/I2C_Driver/0.0.0%2Bsha.2514f1c72462/I2C_Driver-0.0.0%2Bsha.2514f1c72462.tar.gz"
+    ]
+   }
+  }
+ ]
+}

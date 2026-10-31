@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/peterembedded",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "peterembedded/library/BH1750FVI/1.1.1/BH1750FVI-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BH1750FVI-1.1.1.tar.gz",
+    "size_bytes": 3588,
+    "sha256": "e5bfe4168dde88b8350066ce1349cb282b85a4c670788f11abbd4585dd2c8894",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peterembedded/library/BH1750FVI/1.1.1/BH1750FVI-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/peterembedded/library/BH1750FVI/1.1.1/BH1750FVI-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

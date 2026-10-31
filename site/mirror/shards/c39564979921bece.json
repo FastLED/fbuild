@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vart",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vart/library/DS3231/0.0.0+sha.6fab75b89838/DS3231-0.0.0+sha.6fab75b89838.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS3231-0.0.0+sha.6fab75b89838.tar.gz",
+    "size_bytes": 6823,
+    "sha256": "3f7f37cce6b0debc2d7cfe60e62a5ba50bc79171cb90a0b46c0b8e60848e6097",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vart/library/DS3231/0.0.0%2Bsha.6fab75b89838/DS3231-0.0.0%2Bsha.6fab75b89838.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vart/library/DS3231/0.0.0%2Bsha.6fab75b89838/DS3231-0.0.0%2Bsha.6fab75b89838.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-vart/library/MIDISongPlayer/0.0.0+sha.82508cd9f17a/MIDISongPlayer-0.0.0+sha.82508cd9f17a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MIDISongPlayer-0.0.0+sha.82508cd9f17a.tar.gz",
+    "size_bytes": 3320,
+    "sha256": "07d421a2ce291dc96f36355d4a5e74c0423c38433209390df06da640bfa47f23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vart/library/MIDISongPlayer/0.0.0%2Bsha.82508cd9f17a/MIDISongPlayer-0.0.0%2Bsha.82508cd9f17a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vart/library/MIDISongPlayer/0.0.0%2Bsha.82508cd9f17a/MIDISongPlayer-0.0.0%2Bsha.82508cd9f17a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-vart/library/SSD1327/0.0.0+sha.dae0ebfc0852/SSD1327-0.0.0+sha.dae0ebfc0852.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1327-0.0.0+sha.dae0ebfc0852.tar.gz",
+    "size_bytes": 4827,
+    "sha256": "1297efc15a3e4890446166b5fec54e2635f6c80b839e41edead0b5374c5b524c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vart/library/SSD1327/0.0.0%2Bsha.dae0ebfc0852/SSD1327-0.0.0%2Bsha.dae0ebfc0852.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vart/library/SSD1327/0.0.0%2Bsha.dae0ebfc0852/SSD1327-0.0.0%2Bsha.dae0ebfc0852.tar.gz"
+    ]
+   }
+  }
+ ]
+}

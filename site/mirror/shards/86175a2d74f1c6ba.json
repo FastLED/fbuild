@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pkerspe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pkerspe/library/ESP-FlexyStepper/1.5.0/ESP-FlexyStepper-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-FlexyStepper-1.5.0.tar.gz",
+    "size_bytes": 25488,
+    "sha256": "eb1a27e4746f4e0f76459262cdced3c776e86ae2687b5b905988a4b706c4b782",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pkerspe/library/ESP-FlexyStepper/1.5.0/ESP-FlexyStepper-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pkerspe/library/ESP-FlexyStepper/1.5.0/ESP-FlexyStepper-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pkerspe/library/ESP-FlexyStepper/1.5.1/ESP-FlexyStepper-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-FlexyStepper-1.5.1.tar.gz",
+    "size_bytes": 25666,
+    "sha256": "b9eb872118a0361c3c25d13ffe2c25b9cee377e71a46d83f8d1cab7fe8a565ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pkerspe/library/ESP-FlexyStepper/1.5.1/ESP-FlexyStepper-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pkerspe/library/ESP-FlexyStepper/1.5.1/ESP-FlexyStepper-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pkerspe/library/ESP-IntelHex-Parser/0.1.0/ESP-IntelHex-Parser-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-IntelHex-Parser-0.1.0.tar.gz",
+    "size_bytes": 11953,
+    "sha256": "55c4b45762787ae740e46916ba267f614ca53ed2eba5d00b3cc7b1c6fa3af05a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pkerspe/library/ESP-IntelHex-Parser/0.1.0/ESP-IntelHex-Parser-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pkerspe/library/ESP-IntelHex-Parser/0.1.0/ESP-IntelHex-Parser-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pkerspe/library/ESP-StepperMotor-Server/0.4.12/ESP-StepperMotor-Server-0.4.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-StepperMotor-Server-0.4.12.tar.gz",
+    "size_bytes": 76604,
+    "sha256": "0a645db1cf8729685a7e635f8c1e43cff6a186a51555f1e34bf788593a11df9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pkerspe/library/ESP-StepperMotor-Server/0.4.12/ESP-StepperMotor-Server-0.4.12.tar.gz",
+     "https://dl.registry.platformio.org/download/pkerspe/library/ESP-StepperMotor-Server/0.4.12/ESP-StepperMotor-Server-0.4.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pkerspe/library/ESP-UARTArduinoFirmwareUpdate/0.1.0/ESP-UARTArduinoFirmwareUpdate-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-UARTArduinoFirmwareUpdate-0.1.0.tar.gz",
+    "size_bytes": 10109,
+    "sha256": "a7b79c98987ea6fed0ccb678ab9f3c421d02303ac6365950790a52b9cc932f8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pkerspe/library/ESP-UARTArduinoFirmwareUpdate/0.1.0/ESP-UARTArduinoFirmwareUpdate-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pkerspe/library/ESP-UARTArduinoFirmwareUpdate/0.1.0/ESP-UARTArduinoFirmwareUpdate-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pkerspe/library/PCA9685-ESP32/0.0.0-broken/PCA9685-ESP32-0.0.0-alphasha.7970982b28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9685-ESP32-0.0.0-alphasha.7970982b28.tar.gz",
+    "size_bytes": 625,
+    "sha256": "5cf05961b35b9097d9e750aa1406d4083e4194cb1f4d02745308336948c87f6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pkerspe/library/PCA9685-ESP32/0.0.0-broken/PCA9685-ESP32-0.0.0-alphasha.7970982b28.tar.gz",
+     "https://dl.registry.platformio.org/download/pkerspe/library/PCA9685-ESP32/0.0.0-broken/PCA9685-ESP32-0.0.0-alphasha.7970982b28.tar.gz"
+    ]
+   }
+  }
+ ]
+}

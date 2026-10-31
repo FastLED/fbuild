@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-piniels",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-piniels/library/ArduinoMotorShield/0.0.0+sha.5f2774bf44a5/ArduinoMotorShield-0.0.0+sha.5f2774bf44a5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMotorShield-0.0.0+sha.5f2774bf44a5.tar.gz",
+    "size_bytes": 3350,
+    "sha256": "e1044aad8ed68bfd4d757042243ecc37171ec40b4cffd8f4bdda0c2c68c2fbc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-piniels/library/ArduinoMotorShield/0.0.0%2Bsha.5f2774bf44a5/ArduinoMotorShield-0.0.0%2Bsha.5f2774bf44a5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-piniels/library/ArduinoMotorShield/0.0.0%2Bsha.5f2774bf44a5/ArduinoMotorShield-0.0.0%2Bsha.5f2774bf44a5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-piniels/library/HIH6130/0.0.0+sha.43e3d6d843de/HIH6130-0.0.0+sha.43e3d6d843de.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HIH6130-0.0.0+sha.43e3d6d843de.tar.gz",
+    "size_bytes": 1714,
+    "sha256": "c8897435c6e4da8054c879d5e1f9c92aa66f0bdbae6373eb2c3e17a3e855e420",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-piniels/library/HIH6130/0.0.0%2Bsha.43e3d6d843de/HIH6130-0.0.0%2Bsha.43e3d6d843de.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-piniels/library/HIH6130/0.0.0%2Bsha.43e3d6d843de/HIH6130-0.0.0%2Bsha.43e3d6d843de.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-piniels/library/Motor_shield_Arduino/0.0.0+sha.34dc80e97224/Motor_shield_Arduino-0.0.0+sha.34dc80e97224.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor_shield_Arduino-0.0.0+sha.34dc80e97224.tar.gz",
+    "size_bytes": 1968,
+    "sha256": "47468604bdcd24cbe5d575f3d2ba1d3491df78b7c2ee9ed6e08d6eb591028645",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-piniels/library/Motor_shield_Arduino/0.0.0%2Bsha.34dc80e97224/Motor_shield_Arduino-0.0.0%2Bsha.34dc80e97224.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-piniels/library/Motor_shield_Arduino/0.0.0%2Bsha.34dc80e97224/Motor_shield_Arduino-0.0.0%2Bsha.34dc80e97224.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-piniels/library/motorControl/0.0.0+sha.9156e6b6bf46/motorControl-0.0.0+sha.9156e6b6bf46.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "motorControl-0.0.0+sha.9156e6b6bf46.tar.gz",
+    "size_bytes": 5862,
+    "sha256": "53f956a9ff243b9f171e799ba353f80924657d148439cf964919b535cc2f0cab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-piniels/library/motorControl/0.0.0%2Bsha.9156e6b6bf46/motorControl-0.0.0%2Bsha.9156e6b6bf46.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-piniels/library/motorControl/0.0.0%2Bsha.9156e6b6bf46/motorControl-0.0.0%2Bsha.9156e6b6bf46.tar.gz"
+    ]
+   }
+  }
+ ]
+}

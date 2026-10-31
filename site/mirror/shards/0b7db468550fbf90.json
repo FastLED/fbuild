@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-phlaphead",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-phlaphead/library/FTPServer/0.0.0+sha.f5789613b955/FTPServer-0.0.0+sha.f5789613b955.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FTPServer-0.0.0+sha.f5789613b955.tar.gz",
+    "size_bytes": 6755,
+    "sha256": "ec19b68542646c818b62bd1989cb4be27deb16ef8c43fd61aada6d70e4048d17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-phlaphead/library/FTPServer/0.0.0%2Bsha.f5789613b955/FTPServer-0.0.0%2Bsha.f5789613b955.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-phlaphead/library/FTPServer/0.0.0%2Bsha.f5789613b955/FTPServer-0.0.0%2Bsha.f5789613b955.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-phlaphead/library/FileSystemInterface/0.0.0+sha.63761ecf509c/FileSystemInterface-0.0.0+sha.63761ecf509c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FileSystemInterface-0.0.0+sha.63761ecf509c.tar.gz",
+    "size_bytes": 2923,
+    "sha256": "41c65c6a3a43c5286bbcc436e8c163394e2e0ce768c06af701ba574126e8f764",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-phlaphead/library/FileSystemInterface/0.0.0%2Bsha.63761ecf509c/FileSystemInterface-0.0.0%2Bsha.63761ecf509c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-phlaphead/library/FileSystemInterface/0.0.0%2Bsha.63761ecf509c/FileSystemInterface-0.0.0%2Bsha.63761ecf509c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-phlaphead/library/LCDSerial/0.0.0+sha.df5850d83ee5/LCDSerial-0.0.0+sha.df5850d83ee5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCDSerial-0.0.0+sha.df5850d83ee5.tar.gz",
+    "size_bytes": 1219,
+    "sha256": "cd748e02013fa280562225334f9bb9c987fc9bd1b480b50428d0d8cd733167f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-phlaphead/library/LCDSerial/0.0.0%2Bsha.df5850d83ee5/LCDSerial-0.0.0%2Bsha.df5850d83ee5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-phlaphead/library/LCDSerial/0.0.0%2Bsha.df5850d83ee5/LCDSerial-0.0.0%2Bsha.df5850d83ee5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-phlaphead/library/TaskManager/0.0.0+sha.3cb7f5770feb/TaskManager-0.0.0+sha.3cb7f5770feb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskManager-0.0.0+sha.3cb7f5770feb.tar.gz",
+    "size_bytes": 1549,
+    "sha256": "a394dea7f1973f59c18389ccf981c35743c9b6f96b76f7d6552059e3026cd7b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-phlaphead/library/TaskManager/0.0.0%2Bsha.3cb7f5770feb/TaskManager-0.0.0%2Bsha.3cb7f5770feb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-phlaphead/library/TaskManager/0.0.0%2Bsha.3cb7f5770feb/TaskManager-0.0.0%2Bsha.3cb7f5770feb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-phlaphead/library/Util/0.0.0+sha.3d93ff64fdee/Util-0.0.0+sha.3d93ff64fdee.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Util-0.0.0+sha.3d93ff64fdee.tar.gz",
+    "size_bytes": 2182,
+    "sha256": "767487cc5f6dbb28836cc542479948eed375794e51b6b4cbaad7434514050f50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-phlaphead/library/Util/0.0.0%2Bsha.3d93ff64fdee/Util-0.0.0%2Bsha.3d93ff64fdee.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-phlaphead/library/Util/0.0.0%2Bsha.3d93ff64fdee/Util-0.0.0%2Bsha.3d93ff64fdee.tar.gz"
+    ]
+   }
+  }
+ ]
+}

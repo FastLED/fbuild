@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vortigont",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vortigont/library/CronoS/1.0.1/CronoS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CronoS-1.0.1.tar.gz",
+    "size_bytes": 20576,
+    "sha256": "355200d04d60959597740daf07446a42dbfeaf9d0379da5f2fecb18955dc0a15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vortigont/library/CronoS/1.0.1/CronoS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vortigont/library/CronoS/1.0.1/CronoS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vortigont/library/ESPAsyncButton/1.2.2/ESPAsyncButton-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncButton-1.2.2.tar.gz",
+    "size_bytes": 31522,
+    "sha256": "2f85863bf9f88ae970222f5e7407eb5e22470829380c6c76d56969473438f46b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vortigont/library/ESPAsyncButton/1.2.2/ESPAsyncButton-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vortigont/library/ESPAsyncButton/1.2.2/ESPAsyncButton-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vortigont/library/EmbUI/4.3.0/EmbUI-4.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbUI-4.3.0.tar.gz",
+    "size_bytes": 337228,
+    "sha256": "8e69da5ea44fbc4ef3477833c2466d5c2bcf001e2f3bd980e224b201dcc63160",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vortigont/library/EmbUI/4.3.0/EmbUI-4.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vortigont/library/EmbUI/4.3.0/EmbUI-4.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vortigont/library/EmbUI/4.3.2/EmbUI-4.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbUI-4.3.2.tar.gz",
+    "size_bytes": 338453,
+    "sha256": "b11b70ec6244752667784465fbd90ca537b176b17be54cf7b175cb760d03d2ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vortigont/library/EmbUI/4.3.2/EmbUI-4.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vortigont/library/EmbUI/4.3.2/EmbUI-4.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vortigont/library/EmbUI/4.3.4/EmbUI-4.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbUI-4.3.4.tar.gz",
+    "size_bytes": 353288,
+    "sha256": "c962e92e0af0ac015df24d6195ff94a1be6bc2f718819b391880a6847ece0f3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vortigont/library/EmbUI/4.3.4/EmbUI-4.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vortigont/library/EmbUI/4.3.4/EmbUI-4.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vortigont/library/LinkedList/1.5.0/LinkedList-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LinkedList-1.5.0.tar.gz",
+    "size_bytes": 11814,
+    "sha256": "af5b551846bf872a7d15e15944c96324992566fe407591e9a458da400cbfb157",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vortigont/library/LinkedList/1.5.0/LinkedList-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vortigont/library/LinkedList/1.5.0/LinkedList-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vortigont/library/MuiPlusPlus/0.1.0/MuiPlusPlus-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MuiPlusPlus-0.1.0.tar.gz",
+    "size_bytes": 46384,
+    "sha256": "240b7dd1cebb4f28bbc2a09bb35e5ceccb8cf84207c7c39b2385834ce4230be5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vortigont/library/MuiPlusPlus/0.1.0/MuiPlusPlus-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vortigont/library/MuiPlusPlus/0.1.0/MuiPlusPlus-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vortigont/library/esp32-flashz/1.1.5/esp32-flashz-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-flashz-1.1.5.tar.gz",
+    "size_bytes": 44925,
+    "sha256": "6f51447a1a59d8e830cd51b511a52ba6a67a630e6da5c361b10804afab53b44b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vortigont/library/esp32-flashz/1.1.5/esp32-flashz-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/vortigont/library/esp32-flashz/1.1.5/esp32-flashz-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vortigont/library/pzem-edl/1.2.0/pzem-edl-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pzem-edl-1.2.0.tar.gz",
+    "size_bytes": 121655,
+    "sha256": "023bec14cad4e9f54e9658ce72c3b327dfbe8f6069048f500258f7a94c378e8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vortigont/library/pzem-edl/1.2.0/pzem-edl-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vortigont/library/pzem-edl/1.2.0/pzem-edl-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

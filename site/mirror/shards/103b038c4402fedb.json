@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/igor-krechetov",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "igor-krechetov/library/hsmcpp/1.0.4/hsmcpp-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hsmcpp-1.0.4.tar.gz",
+    "size_bytes": 72950,
+    "sha256": "acfbb218edab1ed0de49b07ad4a9802f58c7f201859c1e9119a8b1c5d1e73ad5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/igor-krechetov/library/hsmcpp/1.0.4/hsmcpp-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/igor-krechetov/library/hsmcpp/1.0.4/hsmcpp-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

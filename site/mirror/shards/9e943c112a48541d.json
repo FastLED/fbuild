@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aerl-official",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aerl-official/library/AERL%20C%20Framework/0.1.1/AERLCFramework-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AERLCFramework-0.1.1.tar.gz",
+    "size_bytes": 9886,
+    "sha256": "ad377f48befa78666fb45c6b257161eab61621a4f3f1c2a585e39bd84e35bd61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aerl-official/library/AERL%2520C%2520Framework/0.1.1/AERLCFramework-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aerl-official/library/AERL%20C%20Framework/0.1.1/AERLCFramework-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aerl-official/library/AERL%20C%20Framework/0.1.2/AERLCFramework-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AERLCFramework-0.1.2.tar.gz",
+    "size_bytes": 9936,
+    "sha256": "40ac616ee8ce68c42ddd806eb200d5ac9f9f80464c429801e27f8ac2bc4992d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aerl-official/library/AERL%2520C%2520Framework/0.1.2/AERLCFramework-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/aerl-official/library/AERL%20C%20Framework/0.1.2/AERLCFramework-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

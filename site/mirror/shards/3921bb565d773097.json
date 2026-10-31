@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jack-zen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jack-zen/library/DS18B20/0.0.0+sha.cf42e1112753/DS18B20-0.0.0+sha.cf42e1112753.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS18B20-0.0.0+sha.cf42e1112753.tar.gz",
+    "size_bytes": 2284,
+    "sha256": "201c3af1f7a990d682435d8fdfb7513445be6b9e3da2ee0dcf9d3b05fcbc7c85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jack-zen/library/DS18B20/0.0.0%2Bsha.cf42e1112753/DS18B20-0.0.0%2Bsha.cf42e1112753.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jack-zen/library/DS18B20/0.0.0%2Bsha.cf42e1112753/DS18B20-0.0.0%2Bsha.cf42e1112753.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jack-zen/library/DS18S20/0.0.0+sha.d7eea3b21e1d/DS18S20-0.0.0+sha.d7eea3b21e1d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS18S20-0.0.0+sha.d7eea3b21e1d.tar.gz",
+    "size_bytes": 1871,
+    "sha256": "575c4d608407bbda359ee9e3324fd8ecc51e76d735660a372f67bc1093cee961",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jack-zen/library/DS18S20/0.0.0%2Bsha.d7eea3b21e1d/DS18S20-0.0.0%2Bsha.d7eea3b21e1d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jack-zen/library/DS18S20/0.0.0%2Bsha.d7eea3b21e1d/DS18S20-0.0.0%2Bsha.d7eea3b21e1d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jack-zen/library/DebugTrace/0.0.0+sha.1934d9b9fd80/DebugTrace-0.0.0+sha.1934d9b9fd80.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebugTrace-0.0.0+sha.1934d9b9fd80.tar.gz",
+    "size_bytes": 2584,
+    "sha256": "d6bbea65182edb7a44eb639f82304e57ca6228964f9111d07090343f4f83b41e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jack-zen/library/DebugTrace/0.0.0%2Bsha.1934d9b9fd80/DebugTrace-0.0.0%2Bsha.1934d9b9fd80.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jack-zen/library/DebugTrace/0.0.0%2Bsha.1934d9b9fd80/DebugTrace-0.0.0%2Bsha.1934d9b9fd80.tar.gz"
+    ]
+   }
+  }
+ ]
+}

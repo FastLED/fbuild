@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/samelement",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "samelement/library/ACS-M1128%20IoT%20WiFi%20MQTT%20Library/2.2.1-b2/ACS-M1128IoTWiFiMQTTLibrary-2.2.1-b2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACS-M1128IoTWiFiMQTTLibrary-2.2.1-b2.tar.gz",
+    "size_bytes": 23102,
+    "sha256": "190b92280de077a36059b1f0ec7e9cb3e8e759c0809af9971509d6a001512d4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samelement/library/ACS-M1128%2520IoT%2520WiFi%2520MQTT%2520Library/2.2.1-b2/ACS-M1128IoTWiFiMQTTLibrary-2.2.1-b2.tar.gz",
+     "https://dl.registry.platformio.org/download/samelement/library/ACS-M1128%20IoT%20WiFi%20MQTT%20Library/2.2.1-b2/ACS-M1128IoTWiFiMQTTLibrary-2.2.1-b2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

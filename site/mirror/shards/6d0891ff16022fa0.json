@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jsnkan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jsnkan/library/lcd128_32_io/1.0.1/lcd128_32_io-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lcd128_32_io-1.0.1.tar.gz",
+    "size_bytes": 4180,
+    "sha256": "8369caa386a62e49075c826b4868eb895667e14b50951560fdee416a00597690",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jsnkan/library/lcd128_32_io/1.0.1/lcd128_32_io-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jsnkan/library/lcd128_32_io/1.0.1/lcd128_32_io-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

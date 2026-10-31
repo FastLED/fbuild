@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/es-factory",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "es-factory/library/DigiCombo/1.0.0/DigiCombo-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigiCombo-1.0.0.tar.gz",
+    "size_bytes": 77989,
+    "sha256": "d4825acc8ffe3b4ca416af22e113ba236b956fa25a978eb031a71e16eaac9fdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/es-factory/library/DigiCombo/1.0.0/DigiCombo-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/es-factory/library/DigiCombo/1.0.0/DigiCombo-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/qiweimao",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "qiweimao/library/LoRaLite/0.0.3/LoRaLite-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaLite-0.0.3.tar.gz",
+    "size_bytes": 14398,
+    "sha256": "f77d56e9cfd84adb899c53ec410bdbdf6f3cae82172e3468fa4c29acd05c3619",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qiweimao/library/LoRaLite/0.0.3/LoRaLite-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/qiweimao/library/LoRaLite/0.0.3/LoRaLite-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

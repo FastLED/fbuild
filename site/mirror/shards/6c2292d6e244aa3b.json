@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/diy-electron1cs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "diy-electron1cs/library/DE_tacho/1.1.0/DE_tacho-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DE_tacho-1.1.0.tar.gz",
+    "size_bytes": 3212,
+    "sha256": "ea4278ed1cbe5f89a80a4fb79e6b728f8363550122a777519531c7fc26c6daf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diy-electron1cs/library/DE_tacho/1.1.0/DE_tacho-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diy-electron1cs/library/DE_tacho/1.1.0/DE_tacho-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

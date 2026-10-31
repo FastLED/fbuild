@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fachrain02",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fachrain02/library/FA-Lectric-IoT/1.1.0/FA-Lectric-IoT-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FA-Lectric-IoT-1.1.0.tar.gz",
+    "size_bytes": 8039,
+    "sha256": "ca72261327006419cf516a6b0fa20bc6a64e64971334071f1cdf1429456659b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fachrain02/library/FA-Lectric-IoT/1.1.0/FA-Lectric-IoT-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fachrain02/library/FA-Lectric-IoT/1.1.0/FA-Lectric-IoT-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fachrain02/library/FA-Lectric-IoT/1.2.5/FA-Lectric-IoT-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FA-Lectric-IoT-1.2.5.tar.gz",
+    "size_bytes": 12094,
+    "sha256": "75c90bc4991aee6369567efd1239681595e19ea2a881c980fb35b8d191f314ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fachrain02/library/FA-Lectric-IoT/1.2.5/FA-Lectric-IoT-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/fachrain02/library/FA-Lectric-IoT/1.2.5/FA-Lectric-IoT-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fachrain02/library/FA-Lectric-IoT/2.0.0/FA-Lectric-IoT-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FA-Lectric-IoT-2.0.0.tar.gz",
+    "size_bytes": 14915,
+    "sha256": "b4fca5cbd9f8676589c942e343ae806dec5941974e49e9df130954a047302c5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fachrain02/library/FA-Lectric-IoT/2.0.0/FA-Lectric-IoT-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fachrain02/library/FA-Lectric-IoT/2.0.0/FA-Lectric-IoT-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fachrain02/library/FA-Lectric-IoT/2.1.0/FA-Lectric-IoT-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FA-Lectric-IoT-2.1.0.tar.gz",
+    "size_bytes": 19799,
+    "sha256": "038dcfd42f202838efbae31e97397f6a47012e05c83b20b45c5896fc76e97f76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fachrain02/library/FA-Lectric-IoT/2.1.0/FA-Lectric-IoT-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fachrain02/library/FA-Lectric-IoT/2.1.0/FA-Lectric-IoT-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

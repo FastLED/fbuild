@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-att-m2x-team",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-att-m2x-team/library/M2XStreamClient/0.0.0+sha.4d895e732765/M2XStreamClient-0.0.0+sha.4d895e732765.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M2XStreamClient-0.0.0+sha.4d895e732765.tar.gz",
+    "size_bytes": 13934,
+    "sha256": "6b934150c4c6f0555704a1376764ea0773b880a5e63ac20eb034ee5c107af998",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-att-m2x-team/library/M2XStreamClient/0.0.0%2Bsha.4d895e732765/M2XStreamClient-0.0.0%2Bsha.4d895e732765.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-att-m2x-team/library/M2XStreamClient/0.0.0%2Bsha.4d895e732765/M2XStreamClient-0.0.0%2Bsha.4d895e732765.tar.gz"
+    ]
+   }
+  }
+ ]
+}

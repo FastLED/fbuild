@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/soundstorm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "soundstorm/library/DBAPI/2.2.0/DBAPI-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DBAPI-2.2.0.tar.gz",
+    "size_bytes": 40417,
+    "sha256": "632420b94a9281ca69642d787762074230392a483ad2421c8218bad4983a0f5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soundstorm/library/DBAPI/2.2.0/DBAPI-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soundstorm/library/DBAPI/2.2.0/DBAPI-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soundstorm/library/DBAPI/2.3.0/DBAPI-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DBAPI-2.3.0.tar.gz",
+    "size_bytes": 46503,
+    "sha256": "f3a951b4412051b62df8967e5008c2b26907220b9271fb612306e95382439e76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soundstorm/library/DBAPI/2.3.0/DBAPI-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soundstorm/library/DBAPI/2.3.0/DBAPI-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soundstorm/library/DBAPI/2.3.1/DBAPI-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DBAPI-2.3.1.tar.gz",
+    "size_bytes": 46667,
+    "sha256": "a8c4b4de514a2db3f4fc645e10fbc0cfc821a130aff78a668b8b4f06b4264401",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soundstorm/library/DBAPI/2.3.1/DBAPI-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soundstorm/library/DBAPI/2.3.1/DBAPI-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soundstorm/library/DBAPI/2.4.0/DBAPI-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DBAPI-2.4.0.tar.gz",
+    "size_bytes": 51016,
+    "sha256": "5782e44633998bcfaf2142180e0446777485cf60cfa16f3459a40483a2b8de4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soundstorm/library/DBAPI/2.4.0/DBAPI-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soundstorm/library/DBAPI/2.4.0/DBAPI-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soundstorm/library/DBAPI/2.4.1/DBAPI-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DBAPI-2.4.1.tar.gz",
+    "size_bytes": 48280,
+    "sha256": "76e24f1d6e9d00c53aa8382b88b4f02ad535200492b5f3b29e4aebd313a3ab8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soundstorm/library/DBAPI/2.4.1/DBAPI-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soundstorm/library/DBAPI/2.4.1/DBAPI-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soundstorm/library/DBAPI/2.4.2/DBAPI-2.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DBAPI-2.4.2.tar.gz",
+    "size_bytes": 36451,
+    "sha256": "99ee535c25dd4422fe2b45999c9b336854963ad5b32d93b9435a16150df858af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soundstorm/library/DBAPI/2.4.2/DBAPI-2.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/soundstorm/library/DBAPI/2.4.2/DBAPI-2.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soundstorm/library/DBAPI/3.0.0/DBAPI-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DBAPI-3.0.0.tar.gz",
+    "size_bytes": 54146,
+    "sha256": "de8ee400ce8cc0a88a2dcc96a496542a3416a72f81a759e59993c210507e2db0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soundstorm/library/DBAPI/3.0.0/DBAPI-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soundstorm/library/DBAPI/3.0.0/DBAPI-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soundstorm/library/DBAPI/3.1.0/DBAPI-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DBAPI-3.1.0.tar.gz",
+    "size_bytes": 35626,
+    "sha256": "938ffc9f12adf10934bda6220ad1481813b92ab9be13bdd55fc27ff1db158c0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soundstorm/library/DBAPI/3.1.0/DBAPI-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soundstorm/library/DBAPI/3.1.0/DBAPI-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soundstorm/library/DBAPI/3.1.1/DBAPI-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DBAPI-3.1.1.tar.gz",
+    "size_bytes": 35643,
+    "sha256": "0b5323d2d1ee6cea54c9cb3540ce0298e5e9fd4e757498d9148d0afe6eb27a61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soundstorm/library/DBAPI/3.1.1/DBAPI-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soundstorm/library/DBAPI/3.1.1/DBAPI-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soundstorm/library/DBAPI/3.2.0/DBAPI-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DBAPI-3.2.0.tar.gz",
+    "size_bytes": 37716,
+    "sha256": "541911402e9ccf71adb98e3bd0e7336e0940431fbda02b67cc9491488f36b849",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soundstorm/library/DBAPI/3.2.0/DBAPI-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soundstorm/library/DBAPI/3.2.0/DBAPI-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soundstorm/library/DBAPI/3.2.1/DBAPI-3.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DBAPI-3.2.1.tar.gz",
+    "size_bytes": 38753,
+    "sha256": "8ca4ba87186aa010890dd6829ee5225cdecfbd7cf792a657d5e3ca120a23845a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soundstorm/library/DBAPI/3.2.1/DBAPI-3.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soundstorm/library/DBAPI/3.2.1/DBAPI-3.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soundstorm/library/DBAPI/3.3.0/DBAPI-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DBAPI-3.3.0.tar.gz",
+    "size_bytes": 39164,
+    "sha256": "e49395d7e238b2904288883bcc61e9e161cf95ed28899e3784a14873d5242863",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soundstorm/library/DBAPI/3.3.0/DBAPI-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soundstorm/library/DBAPI/3.3.0/DBAPI-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soundstorm/library/DBAPI/3.3.1/DBAPI-3.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DBAPI-3.3.1.tar.gz",
+    "size_bytes": 41011,
+    "sha256": "8da3937eff28f376f8e18bc875936eb8e6e176f7cd8b8e34a608b50ce1037109",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soundstorm/library/DBAPI/3.3.1/DBAPI-3.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soundstorm/library/DBAPI/3.3.1/DBAPI-3.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tamctec",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tamctec/library/IRM-Mini/1.3.1/IRM-Mini-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRM-Mini-1.3.1.tar.gz",
+    "size_bytes": 43666,
+    "sha256": "025da7129c797bfc8a26f6e7f5ebea2e53aa2cc9807b4521042c82700375da3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tamctec/library/IRM-Mini/1.3.1/IRM-Mini-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tamctec/library/IRM-Mini/1.3.1/IRM-Mini-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tamctec/library/TAMC_FT62X6/1.0.0/TAMC_FT62X6-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TAMC_FT62X6-1.0.0.tar.gz",
+    "size_bytes": 14188,
+    "sha256": "95c816d75eb37e69c7eaf21e141489bb4d0f0fe8e24a209c27b2180941ea29ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tamctec/library/TAMC_FT62X6/1.0.0/TAMC_FT62X6-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tamctec/library/TAMC_FT62X6/1.0.0/TAMC_FT62X6-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tamctec/library/TAMC_GT911/1.0.2/TAMC_GT911-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TAMC_GT911-1.0.2.tar.gz",
+    "size_bytes": 7840,
+    "sha256": "3350e9027529a211bff646d26e006bc40a3c99d00dc892e1d47a63960b5083ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tamctec/library/TAMC_GT911/1.0.2/TAMC_GT911-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tamctec/library/TAMC_GT911/1.0.2/TAMC_GT911-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/postpersonality",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "postpersonality/library/Melt7SegLcd/1.0.4/Melt7SegLcd-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Melt7SegLcd-1.0.4.tar.gz",
+    "size_bytes": 3877,
+    "sha256": "654d3eb2d1fc3568728dd868ce00bea894d1aaa349ead0fc65695bad712cee7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/postpersonality/library/Melt7SegLcd/1.0.4/Melt7SegLcd-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/postpersonality/library/Melt7SegLcd/1.0.4/Melt7SegLcd-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pileoni",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pileoni/library/FutabaNAGP1250/1.0.0/FutabaNAGP1250-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FutabaNAGP1250-1.0.0.tar.gz",
+    "size_bytes": 10262,
+    "sha256": "22e33f2fab57d9de00b6728723df8646bdfc8e7fc5db609101584fe2ef2369df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pileoni/library/FutabaNAGP1250/1.0.0/FutabaNAGP1250-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pileoni/library/FutabaNAGP1250/1.0.0/FutabaNAGP1250-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pileoni/library/FutabaNAGP1250/1.0.1/FutabaNAGP1250-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FutabaNAGP1250-1.0.1.tar.gz",
+    "size_bytes": 10259,
+    "sha256": "9981f2b3fcebd7db1adfdd1fcd13b00e6e2fd6127a4af50afe2e3e4d44c6a651",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pileoni/library/FutabaNAGP1250/1.0.1/FutabaNAGP1250-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pileoni/library/FutabaNAGP1250/1.0.1/FutabaNAGP1250-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pileoni/library/FutabaNAGP1250/1.0.2/FutabaNAGP1250-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FutabaNAGP1250-1.0.2.tar.gz",
+    "size_bytes": 10260,
+    "sha256": "840e63dc0e8c8f9ce28da7cbb99d80f93ac2ce05bd42efa90b2c1ceeb4443fb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pileoni/library/FutabaNAGP1250/1.0.2/FutabaNAGP1250-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pileoni/library/FutabaNAGP1250/1.0.2/FutabaNAGP1250-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pileoni/library/FutabaNAGP1250/1.0.3/FutabaNAGP1250-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FutabaNAGP1250-1.0.3.tar.gz",
+    "size_bytes": 10254,
+    "sha256": "ba0bdd124827ef2be393a5183137f8f90a0b014011243a65fea0000cd09c0ae0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pileoni/library/FutabaNAGP1250/1.0.3/FutabaNAGP1250-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pileoni/library/FutabaNAGP1250/1.0.3/FutabaNAGP1250-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pileoni/library/FutabaNAGP1250/1.0.4/FutabaNAGP1250-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FutabaNAGP1250-1.0.4.tar.gz",
+    "size_bytes": 10281,
+    "sha256": "e68299e5a8c3a85cacff3a319706f288291d7d4b9717984e3e16d8475ccdfe0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pileoni/library/FutabaNAGP1250/1.0.4/FutabaNAGP1250-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pileoni/library/FutabaNAGP1250/1.0.4/FutabaNAGP1250-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

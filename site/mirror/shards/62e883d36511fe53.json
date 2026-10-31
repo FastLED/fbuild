@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yo-robot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yo-robot/library/DS1820/0.0.0+sha.f03fd57106ea/DS1820-0.0.0+sha.f03fd57106ea.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1820-0.0.0+sha.f03fd57106ea.tar.gz",
+    "size_bytes": 6556,
+    "sha256": "f15f5bf523e91a4109e3dbda1cd715abf4a6b05e8fa5abb0518cac828a7aa12d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yo-robot/library/DS1820/0.0.0%2Bsha.f03fd57106ea/DS1820-0.0.0%2Bsha.f03fd57106ea.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yo-robot/library/DS1820/0.0.0%2Bsha.f03fd57106ea/DS1820-0.0.0%2Bsha.f03fd57106ea.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yo-robot/library/Matrix/0.0.0+sha.a4014ab0a8cf/Matrix-0.0.0+sha.a4014ab0a8cf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Matrix-0.0.0+sha.a4014ab0a8cf.tar.gz",
+    "size_bytes": 7519,
+    "sha256": "d8c1050c0630c5bdb1f0c12630027c5e12dafcb7397048bb9154b0bd4898adf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yo-robot/library/Matrix/0.0.0%2Bsha.a4014ab0a8cf/Matrix-0.0.0%2Bsha.a4014ab0a8cf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yo-robot/library/Matrix/0.0.0%2Bsha.a4014ab0a8cf/Matrix-0.0.0%2Bsha.a4014ab0a8cf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yo-robot/library/MatrixMath/0.0.0+sha.aa5e94cddb3f/MatrixMath-0.0.0+sha.aa5e94cddb3f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixMath-0.0.0+sha.aa5e94cddb3f.tar.gz",
+    "size_bytes": 4080,
+    "sha256": "684bbe2a587986d8f9bfddb6c64582c12bfe885091f7bb8fe012bab790acbacb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yo-robot/library/MatrixMath/0.0.0%2Bsha.aa5e94cddb3f/MatrixMath-0.0.0%2Bsha.aa5e94cddb3f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yo-robot/library/MatrixMath/0.0.0%2Bsha.aa5e94cddb3f/MatrixMath-0.0.0%2Bsha.aa5e94cddb3f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yo-robot/library/Matrix_class/0.0.0+sha.e3b963c560d8/Matrix_class-0.0.0+sha.e3b963c560d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Matrix_class-0.0.0+sha.e3b963c560d8.tar.gz",
+    "size_bytes": 2429,
+    "sha256": "0b8b89d8f489742a3f50bbe08739bbacc0f4d7d7a1881172e15dce0d3168d4df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yo-robot/library/Matrix_class/0.0.0%2Bsha.e3b963c560d8/Matrix_class-0.0.0%2Bsha.e3b963c560d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yo-robot/library/Matrix_class/0.0.0%2Bsha.e3b963c560d8/Matrix_class-0.0.0%2Bsha.e3b963c560d8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yo-robot/library/TrackVector2D/0.0.0+sha.958e1e10e536/TrackVector2D-0.0.0+sha.958e1e10e536.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TrackVector2D-0.0.0+sha.958e1e10e536.tar.gz",
+    "size_bytes": 3770,
+    "sha256": "0ff2ce5a093632069322a17a6b1ad6a35bf6976d165f883d24cf3be32908c1b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yo-robot/library/TrackVector2D/0.0.0%2Bsha.958e1e10e536/TrackVector2D-0.0.0%2Bsha.958e1e10e536.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yo-robot/library/TrackVector2D/0.0.0%2Bsha.958e1e10e536/TrackVector2D-0.0.0%2Bsha.958e1e10e536.tar.gz"
+    ]
+   }
+  }
+ ]
+}

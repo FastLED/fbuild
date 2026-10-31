@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/e-lagori",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "e-lagori/library/ELi_McM_4_00/1.1.1/ELi_McM_4_00-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ELi_McM_4_00-1.1.1.tar.gz",
+    "size_bytes": 9503,
+    "sha256": "1286d162990a662172721b59bd5524cd724481a083350882d9f10354ea87e8b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/e-lagori/library/ELi_McM_4_00/1.1.1/ELi_McM_4_00-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/e-lagori/library/ELi_McM_4_00/1.1.1/ELi_McM_4_00-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "e-lagori/library/ELi_MdM_4_00/1.2.3/ELi_MdM_4_00-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ELi_MdM_4_00-1.2.3.tar.gz",
+    "size_bytes": 15899,
+    "sha256": "95420c1f885ee0f076526904d92c78c69cb59c12174688f4ff0d437908de82c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/e-lagori/library/ELi_MdM_4_00/1.2.3/ELi_MdM_4_00-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/e-lagori/library/ELi_MdM_4_00/1.2.3/ELi_MdM_4_00-1.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

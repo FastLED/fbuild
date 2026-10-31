@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/schreinerman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "schreinerman/library/AMx8x5/1.0.0/AMx8x5-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMx8x5-1.0.0.tar.gz",
+    "size_bytes": 40502,
+    "sha256": "99a2abeb1b4cdf1b68225f10c41e5b512909dff8e5253de7b0fdb4621a27158c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/schreinerman/library/AMx8x5/1.0.0/AMx8x5-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/schreinerman/library/AMx8x5/1.0.0/AMx8x5-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

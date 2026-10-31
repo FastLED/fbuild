@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/johnogle222",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "johnogle222/library/AnalogInput/0.0.0-alpha+sha.92458c49f4/AnalogInput-0.0.0-alphasha.92458c49f4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogInput-0.0.0-alphasha.92458c49f4.tar.gz",
+    "size_bytes": 962,
+    "sha256": "346599b2126e46333d877256fc6ccdd04e65376db16c7ed12e6367931330a1b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johnogle222/library/AnalogInput/0.0.0-alpha%2Bsha.92458c49f4/AnalogInput-0.0.0-alphasha.92458c49f4.tar.gz",
+     "https://dl.registry.platformio.org/download/johnogle222/library/AnalogInput/0.0.0-alpha%2Bsha.92458c49f4/AnalogInput-0.0.0-alphasha.92458c49f4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

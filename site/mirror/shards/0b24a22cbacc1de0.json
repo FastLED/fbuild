@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robbie-remote",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robbie-remote/library/RESTClient/1.0.0/RESTClient-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RESTClient-1.0.0.tar.gz",
+    "size_bytes": 4107,
+    "sha256": "7b1f3e45d56e04f6fd8870330db3a19a42650a490cd626cc2adb81c15e6764ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robbie-remote/library/RESTClient/1.0.0/RESTClient-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robbie-remote/library/RESTClient/1.0.0/RESTClient-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

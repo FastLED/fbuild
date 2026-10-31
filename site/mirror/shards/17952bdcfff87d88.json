@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-timo-k2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-timo-k2/library/Adafruit-GFX-MbedOS6/0.0.0+sha.27c133247105/Adafruit-GFX-MbedOS6-0.0.0+sha.27c133247105.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit-GFX-MbedOS6-0.0.0+sha.27c133247105.tar.gz",
+    "size_bytes": 6527,
+    "sha256": "388c3d9b3c3950231fa1e14367ab2d8af48c803bcecf65a6ae816f13bf46894b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-timo-k2/library/Adafruit-GFX-MbedOS6/0.0.0%2Bsha.27c133247105/Adafruit-GFX-MbedOS6-0.0.0%2Bsha.27c133247105.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-timo-k2/library/Adafruit-GFX-MbedOS6/0.0.0%2Bsha.27c133247105/Adafruit-GFX-MbedOS6-0.0.0%2Bsha.27c133247105.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-timo-k2/library/Adafruit_SSD1331_MbedOS6/0.0.0+sha.5fe0e63aef2e/Adafruit_SSD1331_MbedOS6-0.0.0+sha.5fe0e63aef2e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_SSD1331_MbedOS6-0.0.0+sha.5fe0e63aef2e.tar.gz",
+    "size_bytes": 4068,
+    "sha256": "07a9d56851addebf0cf09d207a799f1e709c44d69eb2dd8f662b0dfb92fa48cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-timo-k2/library/Adafruit_SSD1331_MbedOS6/0.0.0%2Bsha.5fe0e63aef2e/Adafruit_SSD1331_MbedOS6-0.0.0%2Bsha.5fe0e63aef2e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-timo-k2/library/Adafruit_SSD1331_MbedOS6/0.0.0%2Bsha.5fe0e63aef2e/Adafruit_SSD1331_MbedOS6-0.0.0%2Bsha.5fe0e63aef2e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

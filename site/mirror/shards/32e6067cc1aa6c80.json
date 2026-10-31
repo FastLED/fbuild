@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jolyon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jolyon/library/PCF8574/0.0.0+sha.6c22af0aafbb/PCF8574-0.0.0+sha.6c22af0aafbb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8574-0.0.0+sha.6c22af0aafbb.tar.gz",
+    "size_bytes": 1903,
+    "sha256": "5b6e9bf3f2517db6043a6cb30668f21db5599cd3737a87bcffb2c52c7559b7b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jolyon/library/PCF8574/0.0.0%2Bsha.6c22af0aafbb/PCF8574-0.0.0%2Bsha.6c22af0aafbb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jolyon/library/PCF8574/0.0.0%2Bsha.6c22af0aafbb/PCF8574-0.0.0%2Bsha.6c22af0aafbb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

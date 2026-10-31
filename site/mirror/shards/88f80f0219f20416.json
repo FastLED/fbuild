@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-richbayliss",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-richbayliss/library/AndroidAccessory/0.0.0+sha.ca0516beb781/AndroidAccessory-0.0.0+sha.ca0516beb781.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AndroidAccessory-0.0.0+sha.ca0516beb781.tar.gz",
+    "size_bytes": 23913,
+    "sha256": "7a5182c520c364b4ec512e3687009c80e3fce6bd5a124e620f5769e7119cec83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-richbayliss/library/AndroidAccessory/0.0.0%2Bsha.ca0516beb781/AndroidAccessory-0.0.0%2Bsha.ca0516beb781.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-richbayliss/library/AndroidAccessory/0.0.0%2Bsha.ca0516beb781/AndroidAccessory-0.0.0%2Bsha.ca0516beb781.tar.gz"
+    ]
+   }
+  }
+ ]
+}

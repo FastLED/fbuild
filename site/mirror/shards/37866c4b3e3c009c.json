@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ewertons",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ewertons/library/Espressif%20ESP32%20Azure%20IoT%20Kit%20Sensors/1.0.0-beta.1/EspressifESP32AzureIoTKitSensors-1.0.0-beta.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspressifESP32AzureIoTKitSensors-1.0.0-beta.1.tar.gz",
+    "size_bytes": 38074,
+    "sha256": "842574d3a068abd3e115e267a0905b204ba211ba526ad38aebe810ec8c341b89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ewertons/library/Espressif%2520ESP32%2520Azure%2520IoT%2520Kit%2520Sensors/1.0.0-beta.1/EspressifESP32AzureIoTKitSensors-1.0.0-beta.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ewertons/library/Espressif%20ESP32%20Azure%20IoT%20Kit%20Sensors/1.0.0-beta.1/EspressifESP32AzureIoTKitSensors-1.0.0-beta.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

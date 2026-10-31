@@ -1,0 +1,217 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ssilverman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ssilverman/library/LiteOSCParser/1.4.0/LiteOSCParser-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiteOSCParser-1.4.0.tar.gz",
+    "size_bytes": 17676,
+    "sha256": "3f39fac81a1d36a424783b07aad40b11aaa58b5846825ec53aa7c68199440950",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/LiteOSCParser/1.4.0/LiteOSCParser-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/LiteOSCParser/1.4.0/LiteOSCParser-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilverman/library/QNEthernet/0.26.0/QNEthernet-0.26.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QNEthernet-0.26.0.tar.gz",
+    "size_bytes": 686813,
+    "sha256": "4795235adaf2f0ec007fc608df30cbc7f46a9b3dfb4c5a170a9a06fefde1df93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/QNEthernet/0.26.0/QNEthernet-0.26.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/QNEthernet/0.26.0/QNEthernet-0.26.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilverman/library/QNEthernet/0.27.0/QNEthernet-0.27.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QNEthernet-0.27.0.tar.gz",
+    "size_bytes": 696899,
+    "sha256": "a9516a0a171bc57dd7930a11716985fc5286d3553a31872cf327c5aaca004620",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/QNEthernet/0.27.0/QNEthernet-0.27.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/QNEthernet/0.27.0/QNEthernet-0.27.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilverman/library/QNEthernet/0.29.1/QNEthernet-0.29.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QNEthernet-0.29.1.tar.gz",
+    "size_bytes": 708103,
+    "sha256": "c621e86e3080b9fc660c98700efc43b6a97b81fd67a25847ea3a9ff97380f2f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/QNEthernet/0.29.1/QNEthernet-0.29.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/QNEthernet/0.29.1/QNEthernet-0.29.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilverman/library/QNEthernet/0.30.1/QNEthernet-0.30.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QNEthernet-0.30.1.tar.gz",
+    "size_bytes": 715294,
+    "sha256": "8b7c8c5b885884e17fac6eb8a96e1925314fc2292716ae845f51926aeb95f58a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/QNEthernet/0.30.1/QNEthernet-0.30.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/QNEthernet/0.30.1/QNEthernet-0.30.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilverman/library/QNEthernet/0.31.0/QNEthernet-0.31.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QNEthernet-0.31.0.tar.gz",
+    "size_bytes": 719446,
+    "sha256": "3691a515e2df9443c458dfbcbf82f41bd4cf160d32ce3eb5a096efaabfdea209",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/QNEthernet/0.31.0/QNEthernet-0.31.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/QNEthernet/0.31.0/QNEthernet-0.31.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilverman/library/QNEthernet/0.32.0/QNEthernet-0.32.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QNEthernet-0.32.0.tar.gz",
+    "size_bytes": 723203,
+    "sha256": "5084a0ef9d61506b7669e5703e4fcaab1310a70a7ec697d4d3493e8786d991a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/QNEthernet/0.32.0/QNEthernet-0.32.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/QNEthernet/0.32.0/QNEthernet-0.32.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilverman/library/QNEthernet/0.33.0/QNEthernet-0.33.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QNEthernet-0.33.0.tar.gz",
+    "size_bytes": 728423,
+    "sha256": "854161a29281a714eb32c0635d40d58498046fcaf837e0bd0bfcc0c4b670e0b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/QNEthernet/0.33.0/QNEthernet-0.33.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/QNEthernet/0.33.0/QNEthernet-0.33.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilverman/library/QNEthernet/0.33.1/QNEthernet-0.33.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QNEthernet-0.33.1.tar.gz",
+    "size_bytes": 728631,
+    "sha256": "7e2f53ecf96beddf154933e62eb85f68714d6a6451851590dc075d703f0ccbe2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/QNEthernet/0.33.1/QNEthernet-0.33.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/QNEthernet/0.33.1/QNEthernet-0.33.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilverman/library/QNEthernet/0.34.0/QNEthernet-0.34.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QNEthernet-0.34.0.tar.gz",
+    "size_bytes": 735973,
+    "sha256": "daa5e500f4a8b1d4554232961eec50cd62df9de83b870b37c5e167c0d5b0e7bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/QNEthernet/0.34.0/QNEthernet-0.34.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/QNEthernet/0.34.0/QNEthernet-0.34.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilverman/library/QNEthernet/0.35.0/QNEthernet-0.35.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QNEthernet-0.35.0.tar.gz",
+    "size_bytes": 755601,
+    "sha256": "d9730cffdaf0259f9445fcba5f2110c8e361f42efd1855af81515fda908d2bc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/QNEthernet/0.35.0/QNEthernet-0.35.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/QNEthernet/0.35.0/QNEthernet-0.35.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilverman/library/QNEthernet/0.36.0/QNEthernet-0.36.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QNEthernet-0.36.0.tar.gz",
+    "size_bytes": 758467,
+    "sha256": "67d700819b25a6b16316b5b68b5b322c8de4f1fa3a561e85c6e2d4ae6ac2618f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/QNEthernet/0.36.0/QNEthernet-0.36.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/QNEthernet/0.36.0/QNEthernet-0.36.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilverman/library/QNEthernet/0.37.0/QNEthernet-0.37.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QNEthernet-0.37.0.tar.gz",
+    "size_bytes": 848788,
+    "sha256": "42b184fde2421fe5e990cf8b4c8ab8cf051475fbd987a531f3893fcdb12754f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/QNEthernet/0.37.0/QNEthernet-0.37.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/QNEthernet/0.37.0/QNEthernet-0.37.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilverman/library/SLIPStream/1.0.2/SLIPStream-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SLIPStream-1.0.2.tar.gz",
+    "size_bytes": 9120,
+    "sha256": "6fa4b8faafee060c99e6846f53c68d0e8f2ee826ebd6bb18fd75ed2a7f297224",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/SLIPStream/1.0.2/SLIPStream-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/SLIPStream/1.0.2/SLIPStream-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilverman/library/TeensyDMX/4.3.0-snapshot/TeensyDMX-4.3.0-snapshot.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeensyDMX-4.3.0-snapshot.tar.gz",
+    "size_bytes": 76822,
+    "sha256": "cce2192f62a325614c798f1f4bb736f050ebe603829a3ea75d6639f1e9b7b9a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/TeensyDMX/4.3.0-snapshot/TeensyDMX-4.3.0-snapshot.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/TeensyDMX/4.3.0-snapshot/TeensyDMX-4.3.0-snapshot.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilverman/library/libCBOR/1.6.1/libCBOR-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libCBOR-1.6.1.tar.gz",
+    "size_bytes": 28071,
+    "sha256": "d266d4872a08ce0d8234db554735bc012a3eb54e896121c376d3400bea9d7548",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilverman/library/libCBOR/1.6.1/libCBOR-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilverman/library/libCBOR/1.6.1/libCBOR-1.6.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

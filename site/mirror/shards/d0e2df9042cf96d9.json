@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/castro.fernando",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "castro.fernando/library/AS5050A/1.0.0/AS5050A-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS5050A-1.0.0.tar.gz",
+    "size_bytes": 13283,
+    "sha256": "6d9ac045dfe67488a3aca922a5ace877bea8f5606f1bb07f3363c5e5f181e407",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/castro.fernando/library/AS5050A/1.0.0/AS5050A-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/castro.fernando/library/AS5050A/1.0.0/AS5050A-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "castro.fernando/library/Wiegand%20Output/1.0.3/WiegandOutput-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiegandOutput-1.0.3.tar.gz",
+    "size_bytes": 4636,
+    "sha256": "51e0f4cb72533c3a7d6a1917f405601cc4d74780bff0c72f53878891d245c4b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/castro.fernando/library/Wiegand%2520Output/1.0.3/WiegandOutput-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/castro.fernando/library/Wiegand%20Output/1.0.3/WiegandOutput-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

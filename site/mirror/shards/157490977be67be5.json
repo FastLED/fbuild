@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fantm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fantm/library/Libdevlpr/0.2.1/Libdevlpr-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Libdevlpr-0.2.1.tar.gz",
+    "size_bytes": 5666,
+    "sha256": "97f6fc0a061970a36a4630d512bb181eb355d482d549273abcf12f355ec9a10d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fantm/library/Libdevlpr/0.2.1/Libdevlpr-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fantm/library/Libdevlpr/0.2.1/Libdevlpr-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,10 +1,18 @@
-//! Server-side download fallback settings (FastLED/fbuild#1810).
+//! Server-side download fallback settings (FastLED/fbuild#1810, #1815).
 //!
-//! fbuild publishes a [manifest.json](https://github.com/zackees/manifest.json)
-//! v1 `Release` on its GitHub Pages site. Each `components[].asset` lists the
-//! `urls[]` one artifact can be fetched from, in the order fbuild should try
-//! them, plus an optional `sha256`. Changing that document changes every
-//! client's fallback order without an fbuild release.
+//! fbuild publishes [manifest.json](https://github.com/zackees/manifest.json)
+//! v1 documents on its GitHub Pages site. A `Release`'s
+//! `components[].asset` lists the `urls[]` one artifact can be fetched from,
+//! in the order fbuild should try them, plus an optional `sha256`. Changing
+//! the documents changes every client's fallback order without an fbuild
+//! release.
+//!
+//! The top document may instead be an `Index` mapping each registry owner to
+//! a shard `Release` through a `{url, sha256, size_bytes}` descriptor, so the
+//! checksums of every object in the bucket fit without one huge document. A
+//! shard is fetched only when a download from its owner is resolved, must
+//! hash to its descriptor, and is cached by owner; a stale cached shard is
+//! used when no source serves the current one.
 //!
 //! The document is fetched at most once per process and cached under the
 //! cache root. Fallback ladder: fresh cache, then each manifest URL, then the
@@ -15,6 +23,7 @@
 
 use std::collections::HashMap;
 use std::path::Path;
+use std::sync::Mutex;
 
 use fbuild_core::path::NormalizedPath;
 use std::sync::Arc;
@@ -43,8 +52,9 @@ pub(super) const MAX_MANIFEST_BYTES: usize = 8 * 1024 * 1024;
 /// Per-source fetch budget; the manifest must never stall a build.
 const FETCH_TIMEOUT: Duration = Duration::from_secs(10);
 
-/// The only `kind` and `schema_version` this reader understands.
-const EXPECTED_KIND: &str = "Release";
+/// The `kind`s and `schema_version` this reader understands.
+const RELEASE_KIND: &str = "Release";
+const INDEX_KIND: &str = "Index";
 const EXPECTED_SCHEMA_VERSION: u32 = 1;
 
 #[derive(Deserialize)]
@@ -53,6 +63,38 @@ struct Document {
     schema_version: u32,
     #[serde(default)]
     components: Vec<Component>,
+    #[serde(default)]
+    tools: HashMap<String, ToolDoc>,
+}
+
+#[derive(Deserialize)]
+struct ToolDoc {
+    descriptor: Option<DescriptorDoc>,
+}
+
+#[derive(Deserialize)]
+struct DescriptorDoc {
+    url: String,
+    sha256: String,
+    size_bytes: u64,
+}
+
+/// Where an owner's shard lives and what it must hash to.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(super) struct ShardRef {
+    /// Absolute URL, or a path relative to the document that listed it.
+    pub url: String,
+    pub sha256: String,
+    pub size_bytes: u64,
+}
+
+/// What a loaded manifest needs to fetch its shards later.
+#[derive(Debug)]
+struct ShardSource {
+    client: reqwest::Client,
+    /// The manifest sources; a relative shard URL is tried against each.
+    bases: Vec<String>,
+    cache_dir: Option<NormalizedPath>,
 }
 
 #[derive(Deserialize)]
@@ -81,10 +123,14 @@ pub(super) struct MirrorEntry {
     pub yanked: bool,
 }
 
-/// A validated manifest, indexed by every URL it lists.
+/// A validated manifest, indexed by every URL it lists, plus the shards of
+/// an `Index`.
 #[derive(Debug, Default)]
 pub(super) struct MirrorManifest {
     by_url: HashMap<String, Arc<MirrorEntry>>,
+    shards: HashMap<String, ShardRef>,
+    source: Option<ShardSource>,
+    loaded: Mutex<HashMap<String, Option<Arc<MirrorManifest>>>>,
 }
 
 impl MirrorManifest {
@@ -99,9 +145,9 @@ impl MirrorManifest {
         }
         let doc: Document =
             serde_json::from_slice(bytes).map_err(|e| format!("manifest is not valid: {e}"))?;
-        if doc.kind != EXPECTED_KIND {
+        if doc.kind != RELEASE_KIND && doc.kind != INDEX_KIND {
             return Err(format!(
-                "manifest kind is {:?}, expected {EXPECTED_KIND:?}",
+                "manifest kind is {:?}, expected {RELEASE_KIND:?} or {INDEX_KIND:?}",
                 doc.kind
             ));
         }
@@ -111,6 +157,11 @@ impl MirrorManifest {
                 doc.schema_version
             ));
         }
+        let shards = if doc.kind == INDEX_KIND {
+            validate_shards(doc.tools)?
+        } else {
+            HashMap::new()
+        };
         let mut by_url = HashMap::new();
         for (index, component) in doc.components.into_iter().enumerate() {
             let Some(asset) = component.asset else {
@@ -124,13 +175,202 @@ impl MirrorManifest {
                 }
             }
         }
-        Ok(Self { by_url })
+        Ok(Self {
+            by_url,
+            shards,
+            ..Self::default()
+        })
     }
 
-    /// The entry listing `url`, if any.
+    /// The entry listing `url` in this document itself, if any.
+    #[cfg(test)]
     pub fn lookup(&self, url: &str) -> Option<&MirrorEntry> {
         self.by_url.get(url).map(Arc::as_ref)
     }
+
+    /// The shard descriptor for `owner`, if this is an `Index` listing it.
+    #[cfg(test)]
+    pub fn shard_ref(&self, owner: &str) -> Option<&ShardRef> {
+        self.shards.get(owner)
+    }
+
+    /// The entry for `url`: from this document, else from `owner`'s shard,
+    /// fetched (once per process) on first use.
+    pub async fn entry_for(&self, url: &str, owner: Option<&str>) -> Option<Arc<MirrorEntry>> {
+        if let Some(entry) = self.by_url.get(url) {
+            return Some(entry.clone());
+        }
+        let shard = self.shard(owner?).await?;
+        shard.by_url.get(url).cloned()
+    }
+
+    async fn shard(&self, owner: &str) -> Option<Arc<MirrorManifest>> {
+        if let Some(hit) = self.loaded_shard(owner) {
+            return hit;
+        }
+        let shard_ref = self.shards.get(owner)?;
+        let source = self.source.as_ref()?;
+        let shard = load_shard(source, owner, shard_ref).await.map(Arc::new);
+        self.loaded
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .insert(owner.to_string(), shard.clone());
+        shard
+    }
+
+    fn loaded_shard(&self, owner: &str) -> Option<Option<Arc<MirrorManifest>>> {
+        self.loaded
+            .lock()
+            .unwrap_or_else(|e| e.into_inner())
+            .get(owner)
+            .cloned()
+    }
+
+    fn with_source(mut self, source: ShardSource) -> Self {
+        self.source = Some(source);
+        self
+    }
+}
+
+fn is_sha256_hex(hex: &str) -> bool {
+    hex.len() == 64 && hex.bytes().all(|b| matches!(b, b'0'..=b'9' | b'a'..=b'f'))
+}
+
+/// A shard URL is an allowed absolute URL or a plain relative path that
+/// cannot climb out of the directory the manifest was served from.
+fn is_allowed_shard_url(url: &str) -> bool {
+    if url.contains("://") {
+        return is_allowed_url(url);
+    }
+    !url.is_empty()
+        && !url.starts_with('/')
+        && !url.contains(['\\', '?', '#', ':'])
+        && !url.chars().any(|c| c.is_whitespace() || c.is_control())
+        && url
+            .split('/')
+            .all(|seg| !seg.is_empty() && seg != "." && seg != "..")
+}
+
+fn validate_shards(tools: HashMap<String, ToolDoc>) -> Result<HashMap<String, ShardRef>, String> {
+    let mut shards = HashMap::new();
+    for (owner, tool) in tools {
+        let Some(descriptor) = tool.descriptor else {
+            return Err(format!("index entry {owner:?} has no descriptor"));
+        };
+        if owner.is_empty() || owner.contains('/') {
+            return Err(format!("index entry {owner:?} is not an owner name"));
+        }
+        if !is_allowed_shard_url(&descriptor.url) {
+            return Err(format!("shard url {:?} is not allowed", descriptor.url));
+        }
+        if !is_sha256_hex(&descriptor.sha256) {
+            return Err(format!(
+                "shard {owner:?} sha256 is not 64 lowercase hex digits"
+            ));
+        }
+        if descriptor.size_bytes > MAX_MANIFEST_BYTES as u64 {
+            return Err(format!(
+                "shard {owner:?} exceeds {MAX_MANIFEST_BYTES} bytes"
+            ));
+        }
+        shards.insert(
+            owner,
+            ShardRef {
+                url: descriptor.url,
+                sha256: descriptor.sha256,
+                size_bytes: descriptor.size_bytes,
+            },
+        );
+    }
+    Ok(shards)
+}
+
+/// `rel` resolved against the directory of `base` (a manifest source URL).
+fn resolve_shard_url(base: &str, rel: &str) -> String {
+    if rel.contains("://") {
+        return rel.to_string();
+    }
+    match base.rfind('/') {
+        Some(slash) => format!("{}{rel}", &base[..=slash]),
+        None => rel.to_string(),
+    }
+}
+
+fn sha256_hex(bytes: &[u8]) -> String {
+    Sha256::digest(bytes)
+        .iter()
+        .map(|b| format!("{b:02x}"))
+        .collect()
+}
+
+/// Parse shard bytes; a shard must be a flat `Release`.
+fn parse_shard(bytes: &[u8]) -> Result<MirrorManifest, String> {
+    let shard = MirrorManifest::parse(bytes)?;
+    if !shard.shards.is_empty() {
+        return Err("a shard may not be an Index".to_string());
+    }
+    Ok(shard)
+}
+
+/// Fetch and verify `owner`'s shard: verified cache, each source, then the
+/// stale cache.
+async fn load_shard(
+    source: &ShardSource,
+    owner: &str,
+    shard_ref: &ShardRef,
+) -> Option<MirrorManifest> {
+    let cache = source.cache_dir.as_ref().map(|dir| {
+        dir.join("shards").join(format!(
+            "shard-{}.json",
+            &sha256_hex(owner.as_bytes())[..16]
+        ))
+    });
+    let cached = cache.as_ref().and_then(|c| std::fs::read(c.as_path()).ok());
+    if let Some(shard) = cached.as_deref().and_then(|b| verified_shard(b, shard_ref)) {
+        return Some(shard);
+    }
+    for base in &source.bases {
+        let url = resolve_shard_url(base, &shard_ref.url);
+        match fetch_shard(&source.client, &url, shard_ref).await {
+            Ok((bytes, shard)) => {
+                if let Some(cache) = &cache {
+                    write_cache(cache.as_path(), &bytes);
+                }
+                return Some(shard);
+            }
+            Err(error) => tracing::warn!("mirror shard {url}: {error}"),
+        }
+    }
+    let shard = cached.and_then(|bytes| parse_shard(&bytes).ok());
+    if shard.is_some() {
+        tracing::warn!("using a stale cached mirror shard for {owner}");
+    }
+    shard
+}
+
+/// `bytes` parsed as a shard, if they hash to `shard_ref`.
+fn verified_shard(bytes: &[u8], shard_ref: &ShardRef) -> Option<MirrorManifest> {
+    (sha256_hex(bytes) == shard_ref.sha256)
+        .then(|| parse_shard(bytes).ok())
+        .flatten()
+}
+
+/// Fetch one candidate shard URL and verify it against `shard_ref`.
+async fn fetch_shard(
+    client: &reqwest::Client,
+    url: &str,
+    shard_ref: &ShardRef,
+) -> Result<(Vec<u8>, MirrorManifest), String> {
+    if !is_allowed_url(url) {
+        return Err("not an https URL".to_string());
+    }
+    let limit = usize::try_from(shard_ref.size_bytes).unwrap_or(MAX_MANIFEST_BYTES);
+    let bytes = fetch_bytes(client, url, limit).await?;
+    if sha256_hex(&bytes) != shard_ref.sha256 {
+        return Err("sha256 does not match the index".to_string());
+    }
+    let shard = parse_shard(&bytes)?;
+    Ok((bytes, shard))
 }
 
 fn validate_asset(asset: AssetDoc) -> Result<MirrorEntry, String> {
@@ -147,9 +387,7 @@ fn validate_asset(asset: AssetDoc) -> Result<MirrorEntry, String> {
     }
     let sha256 = match asset.sha256.as_str() {
         "" => None,
-        hex if hex.len() == 64 && hex.bytes().all(|b| matches!(b, b'0'..=b'9' | b'a'..=b'f')) => {
-            Some(hex.to_string())
-        }
+        hex if is_sha256_hex(hex) => Some(hex.to_string()),
         other => return Err(format!("sha256 {other:?} is not 64 lowercase hex digits")),
     };
     Ok(MirrorEntry {
@@ -169,7 +407,9 @@ pub(super) fn is_allowed_url(url: &str) -> bool {
         return false;
     };
     let host = rest.split(['/', '?', '#']).next().unwrap_or("");
-    !host.is_empty() && !host.contains('@') && !rest.chars().any(char::is_whitespace)
+    !host.is_empty()
+        && !host.contains('@')
+        && !rest.chars().any(|c| c.is_whitespace() || c.is_control())
 }
 
 /// True when the authority of `rest` (a URL with its scheme removed) is a
@@ -241,8 +481,25 @@ pub(super) async fn current() -> Option<Arc<MirrorManifest>> {
         .clone()
 }
 
-/// Walk the fallback ladder: fresh cache, each source, stale cache.
+/// Walk the fallback ladder: fresh cache, each source, stale cache. The
+/// result can fetch its shards with the same client, sources and cache dir.
 pub(super) async fn load_with(
+    client: &reqwest::Client,
+    sources: &[String],
+    cache: Option<&Path>,
+    ttl: Duration,
+) -> Option<MirrorManifest> {
+    let source = ShardSource {
+        client: client.clone(),
+        bases: sources.to_vec(),
+        cache_dir: cache.and_then(Path::parent).map(NormalizedPath::new),
+    };
+    load_document(client, sources, cache, ttl)
+        .await
+        .map(|manifest| manifest.with_source(source))
+}
+
+async fn load_document(
     client: &reqwest::Client,
     sources: &[String],
     cache: Option<&Path>,
@@ -276,19 +533,25 @@ async fn fetch(
     if !is_allowed_url(source) {
         return Err("not an https URL".to_string());
     }
-    let mut response = client.get(source).send().await.map_err(|e| e.to_string())?;
+    let body = fetch_bytes(client, source, MAX_MANIFEST_BYTES).await?;
+    let manifest = MirrorManifest::parse(&body)?;
+    Ok((body, manifest))
+}
+
+/// GET `url`, refusing bodies over `limit` bytes.
+async fn fetch_bytes(client: &reqwest::Client, url: &str, limit: usize) -> Result<Vec<u8>, String> {
+    let mut response = client.get(url).send().await.map_err(|e| e.to_string())?;
     if !response.status().is_success() {
         return Err(format!("HTTP {}", response.status()));
     }
     let mut body = Vec::new();
     while let Some(chunk) = response.chunk().await.map_err(|e| e.to_string())? {
         body.extend_from_slice(&chunk);
-        if body.len() > MAX_MANIFEST_BYTES {
-            return Err(format!("body exceeds {MAX_MANIFEST_BYTES} bytes"));
+        if body.len() > limit {
+            return Err(format!("body exceeds {limit} bytes"));
         }
     }
-    let manifest = MirrorManifest::parse(&body)?;
-    Ok((body, manifest))
+    Ok(body)
 }
 
 fn is_fresh(path: &Path, ttl: Duration) -> bool {

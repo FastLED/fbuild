@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-alexallen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-alexallen/library/HIH4030/0.0.0+sha.eabb18deaf3f/HIH4030-0.0.0+sha.eabb18deaf3f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HIH4030-0.0.0+sha.eabb18deaf3f.tar.gz",
+    "size_bytes": 1604,
+    "sha256": "4564ff8737efe68de54fbf8a3ea2583c039885e4afb11d7e2e8a950865cda96a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alexallen/library/HIH4030/0.0.0%2Bsha.eabb18deaf3f/HIH4030-0.0.0%2Bsha.eabb18deaf3f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alexallen/library/HIH4030/0.0.0%2Bsha.eabb18deaf3f/HIH4030-0.0.0%2Bsha.eabb18deaf3f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-alexallen/library/UM12/0.0.0+sha.c947442469dd/UM12-0.0.0+sha.c947442469dd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UM12-0.0.0+sha.c947442469dd.tar.gz",
+    "size_bytes": 2156,
+    "sha256": "f542d73377468d79139dd5a35e602c3adbda79a75c2fdb55ccbb0aa2ef607277",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alexallen/library/UM12/0.0.0%2Bsha.c947442469dd/UM12-0.0.0%2Bsha.c947442469dd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alexallen/library/UM12/0.0.0%2Bsha.c947442469dd/UM12-0.0.0%2Bsha.c947442469dd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-alexallen/library/flash/0.0.0+sha.86859efa4841/flash-0.0.0+sha.86859efa4841.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "flash-0.0.0+sha.86859efa4841.tar.gz",
+    "size_bytes": 2064,
+    "sha256": "4113b221092806789bf454cd8f0c2d11e30b97144058f8173e2e45c9a8ac9767",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alexallen/library/flash/0.0.0%2Bsha.86859efa4841/flash-0.0.0%2Bsha.86859efa4841.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alexallen/library/flash/0.0.0%2Bsha.86859efa4841/flash-0.0.0%2Bsha.86859efa4841.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-alexallen/library/quaternions/0.0.0+sha.363c412dba04/quaternions-0.0.0+sha.363c412dba04.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "quaternions-0.0.0+sha.363c412dba04.tar.gz",
+    "size_bytes": 2175,
+    "sha256": "d2e267206a392712d6aa3a62c179eae27c8b3c9bbba27dd202308f5c483bae38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alexallen/library/quaternions/0.0.0%2Bsha.363c412dba04/quaternions-0.0.0%2Bsha.363c412dba04.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alexallen/library/quaternions/0.0.0%2Bsha.363c412dba04/quaternions-0.0.0%2Bsha.363c412dba04.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-alexallen/library/vectr/0.0.0+sha.55dbdc9614f8/vectr-0.0.0+sha.55dbdc9614f8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vectr-0.0.0+sha.55dbdc9614f8.tar.gz",
+    "size_bytes": 2378,
+    "sha256": "c0a842c9d1147068e38ffd0b66bd6f8732ab7b145109f8f99384ae2ebaa23ced",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alexallen/library/vectr/0.0.0%2Bsha.55dbdc9614f8/vectr-0.0.0%2Bsha.55dbdc9614f8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alexallen/library/vectr/0.0.0%2Bsha.55dbdc9614f8/vectr-0.0.0%2Bsha.55dbdc9614f8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mimeau",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mimeau/library/AT24C256/1.2.2/AT24C256-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT24C256-1.2.2.tar.gz",
+    "size_bytes": 7577,
+    "sha256": "c24783b8e7469419bf58c04223d44e1fa6bac89b696f022efbbeb1ef768e7f99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mimeau/library/AT24C256/1.2.2/AT24C256-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mimeau/library/AT24C256/1.2.2/AT24C256-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/full-stack-ex",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "full-stack-ex/library/TinyTemplateEngine/1.1/TinyTemplateEngine-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyTemplateEngine-1.1.tar.gz",
+    "size_bytes": 6496,
+    "sha256": "5f5703a60678f6d2441013a246d975d4d77f83457cc9f332d8a6890c4ea70992",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/full-stack-ex/library/TinyTemplateEngine/1.1/TinyTemplateEngine-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/full-stack-ex/library/TinyTemplateEngine/1.1/TinyTemplateEngine-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

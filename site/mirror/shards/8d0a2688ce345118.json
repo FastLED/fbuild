@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-simon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-simon/library/Flasher/0.0.0+sha.95c61fdf5872/Flasher-0.0.0+sha.95c61fdf5872.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Flasher-0.0.0+sha.95c61fdf5872.tar.gz",
+    "size_bytes": 908,
+    "sha256": "11fadf06544ff5d79f486b6345fee9b7d4d35f88b8933e2c859259256c51f7e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-simon/library/Flasher/0.0.0%2Bsha.95c61fdf5872/Flasher-0.0.0%2Bsha.95c61fdf5872.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-simon/library/Flasher/0.0.0%2Bsha.95c61fdf5872/Flasher-0.0.0%2Bsha.95c61fdf5872.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-simon/library/ID12RFID/0.0.0+sha.f04afa911cf5/ID12RFID-0.0.0+sha.f04afa911cf5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ID12RFID-0.0.0+sha.f04afa911cf5.tar.gz",
+    "size_bytes": 2229,
+    "sha256": "a106e81c48b11504340c8283a9421e0932fd638cbef3b33401b82fa4c2812e2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-simon/library/ID12RFID/0.0.0%2Bsha.f04afa911cf5/ID12RFID-0.0.0%2Bsha.f04afa911cf5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-simon/library/ID12RFID/0.0.0%2Bsha.f04afa911cf5/ID12RFID-0.0.0%2Bsha.f04afa911cf5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-simon/library/ID12RFIDIRQ/0.0.0+sha.a740ea2424e5/ID12RFIDIRQ-0.0.0+sha.a740ea2424e5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ID12RFIDIRQ-0.0.0+sha.a740ea2424e5.tar.gz",
+    "size_bytes": 2269,
+    "sha256": "66e12baf885ddd4e3c2441975b1004cd920533340059d2560f88292c19a3e1d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-simon/library/ID12RFIDIRQ/0.0.0%2Bsha.a740ea2424e5/ID12RFIDIRQ-0.0.0%2Bsha.a740ea2424e5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-simon/library/ID12RFIDIRQ/0.0.0%2Bsha.a740ea2424e5/ID12RFIDIRQ-0.0.0%2Bsha.a740ea2424e5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-simon/library/LIS302/0.0.0+sha.fe7ccd3480e6/LIS302-0.0.0+sha.fe7ccd3480e6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIS302-0.0.0+sha.fe7ccd3480e6.tar.gz",
+    "size_bytes": 3067,
+    "sha256": "fa90d1b9c1e823d3284137d7d02310e892473e264c3b45d1cec245f628e6c064",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-simon/library/LIS302/0.0.0%2Bsha.fe7ccd3480e6/LIS302-0.0.0%2Bsha.fe7ccd3480e6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-simon/library/LIS302/0.0.0%2Bsha.fe7ccd3480e6/LIS302-0.0.0%2Bsha.fe7ccd3480e6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-simon/library/Motor/0.0.0+sha.f265e441bcd9/Motor-0.0.0+sha.f265e441bcd9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor-0.0.0+sha.f265e441bcd9.tar.gz",
+    "size_bytes": 2165,
+    "sha256": "0d86626a5208c5fe519fd2cff2ce5b62dc44421bfea710b083c22638b4929073",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-simon/library/Motor/0.0.0%2Bsha.f265e441bcd9/Motor-0.0.0%2Bsha.f265e441bcd9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-simon/library/Motor/0.0.0%2Bsha.f265e441bcd9/Motor-0.0.0%2Bsha.f265e441bcd9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-simon/library/NokiaLCD/0.0.0+sha.2d1b23692cbb/NokiaLCD-0.0.0+sha.2d1b23692cbb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NokiaLCD-0.0.0+sha.2d1b23692cbb.tar.gz",
+    "size_bytes": 5405,
+    "sha256": "60b80245c830312674aaebdb9f9386d0da2e5e7a9834c15bf6125395d87c3d2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-simon/library/NokiaLCD/0.0.0%2Bsha.2d1b23692cbb/NokiaLCD-0.0.0%2Bsha.2d1b23692cbb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-simon/library/NokiaLCD/0.0.0%2Bsha.2d1b23692cbb/NokiaLCD-0.0.0%2Bsha.2d1b23692cbb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-simon/library/PwmIn/0.0.0+sha.6d68eb9b6bbb/PwmIn-0.0.0+sha.6d68eb9b6bbb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwmIn-0.0.0+sha.6d68eb9b6bbb.tar.gz",
+    "size_bytes": 2105,
+    "sha256": "2df1473cc933d023e8789f5844b79e4cfbd27d01d4bc0580a92e7407fd14b23e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-simon/library/PwmIn/0.0.0%2Bsha.6d68eb9b6bbb/PwmIn-0.0.0%2Bsha.6d68eb9b6bbb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-simon/library/PwmIn/0.0.0%2Bsha.6d68eb9b6bbb/PwmIn-0.0.0%2Bsha.6d68eb9b6bbb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-simon/library/SRF05/0.0.0+sha.e758665e072c/SRF05-0.0.0+sha.e758665e072c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SRF05-0.0.0+sha.e758665e072c.tar.gz",
+    "size_bytes": 2399,
+    "sha256": "9de669feb957ab2b680029a63a97784855d9198daf0ce81bf8329a9e141369fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-simon/library/SRF05/0.0.0%2Bsha.e758665e072c/SRF05-0.0.0%2Bsha.e758665e072c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-simon/library/SRF05/0.0.0%2Bsha.e758665e072c/SRF05-0.0.0%2Bsha.e758665e072c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-simon/library/Servo/0.0.0+sha.36b69a7ced07/Servo-0.0.0+sha.36b69a7ced07.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Servo-0.0.0+sha.36b69a7ced07.tar.gz",
+    "size_bytes": 2564,
+    "sha256": "9c63d20221c00a1a20d963871c0c565c812e824564df49f3e4b74369af2387db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-simon/library/Servo/0.0.0%2Bsha.36b69a7ced07/Servo-0.0.0%2Bsha.36b69a7ced07.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-simon/library/Servo/0.0.0%2Bsha.36b69a7ced07/Servo-0.0.0%2Bsha.36b69a7ced07.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-simon/library/Terminal/0.0.0+sha.85184c13476c/Terminal-0.0.0+sha.85184c13476c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Terminal-0.0.0+sha.85184c13476c.tar.gz",
+    "size_bytes": 2383,
+    "sha256": "e24ef9c68f315af892faea23f6a7819d5fd3e535fb95b5cd154c285dd2f4e7cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-simon/library/Terminal/0.0.0%2Bsha.85184c13476c/Terminal-0.0.0%2Bsha.85184c13476c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-simon/library/Terminal/0.0.0%2Bsha.85184c13476c/Terminal-0.0.0%2Bsha.85184c13476c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-simon/library/USBMIDI/0.0.0+sha.10d694d6ccdc/USBMIDI-0.0.0+sha.10d694d6ccdc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBMIDI-0.0.0+sha.10d694d6ccdc.tar.gz",
+    "size_bytes": 7075,
+    "sha256": "f8cae8aec67a45f60815d1d53c6a9b09962b7b9490a9889c9837eec9d0501fb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-simon/library/USBMIDI/0.0.0%2Bsha.10d694d6ccdc/USBMIDI-0.0.0%2Bsha.10d694d6ccdc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-simon/library/USBMIDI/0.0.0%2Bsha.10d694d6ccdc/USBMIDI-0.0.0%2Bsha.10d694d6ccdc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-simon/library/debug/0.0.0+sha.b6e4a45bd418/debug-0.0.0+sha.b6e4a45bd418.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "debug-0.0.0+sha.b6e4a45bd418.tar.gz",
+    "size_bytes": 1663,
+    "sha256": "88aa592ca6ede566f2dc60df21d32dccb3984fc93efbcd1e8d228b981c0f9995",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-simon/library/debug/0.0.0%2Bsha.b6e4a45bd418/debug-0.0.0%2Bsha.b6e4a45bd418.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-simon/library/debug/0.0.0%2Bsha.b6e4a45bd418/debug-0.0.0%2Bsha.b6e4a45bd418.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-simon/library/dsp/0.0.0+sha.208cacc9d789/dsp-0.0.0+sha.208cacc9d789.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dsp-0.0.0+sha.208cacc9d789.tar.gz",
+    "size_bytes": 405989,
+    "sha256": "d452267e17dc02841b65544357448e14bc1822f346273c221a7aa98a35f929f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-simon/library/dsp/0.0.0%2Bsha.208cacc9d789/dsp-0.0.0%2Bsha.208cacc9d789.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-simon/library/dsp/0.0.0%2Bsha.208cacc9d789/dsp-0.0.0%2Bsha.208cacc9d789.tar.gz"
+    ]
+   }
+  }
+ ]
+}

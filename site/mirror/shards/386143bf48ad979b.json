@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maxchinni",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maxchinni/library/ControlDM11A88/2.0.0/ControlDM11A88-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ControlDM11A88-2.0.0.tar.gz",
+    "size_bytes": 4724,
+    "sha256": "4423a79bb92c57f22d5b72f2f4d1b5a9d6100b550ff28deaf69907c9f93c475e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxchinni/library/ControlDM11A88/2.0.0/ControlDM11A88-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maxchinni/library/ControlDM11A88/2.0.0/ControlDM11A88-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

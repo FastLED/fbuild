@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mkogax",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mkogax/library/GG/1.2.1/GG-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GG-1.2.1.tar.gz",
+    "size_bytes": 25461,
+    "sha256": "06192d8892a0a593cad615f5a7def8b05ef0d584500163ac693fda1807a7a0b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mkogax/library/GG/1.2.1/GG-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mkogax/library/GG/1.2.1/GG-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

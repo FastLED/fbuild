@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/satspares",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "satspares/library/Satspares_DWIN_DGUS_HMI/2.1.6/Satspares_DWIN_DGUS_HMI-2.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Satspares_DWIN_DGUS_HMI-2.1.6.tar.gz",
+    "size_bytes": 40186467,
+    "sha256": "3bfcf05bbe91ad4ad64ffe45600cea9ae3c41db9284deb71f8bef88d66ed82af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/satspares/library/Satspares_DWIN_DGUS_HMI/2.1.6/Satspares_DWIN_DGUS_HMI-2.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/satspares/library/Satspares_DWIN_DGUS_HMI/2.1.6/Satspares_DWIN_DGUS_HMI-2.1.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

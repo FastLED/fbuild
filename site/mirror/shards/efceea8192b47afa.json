@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ameltech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ameltech/library/SmartEverything%20CC2541/1.0.1/SmartEverythingCC2541-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartEverythingCC2541-1.0.1.tar.gz",
+    "size_bytes": 4737,
+    "sha256": "b82b2101af238bfd0e65430843109b1ab3ab47212a50e9ade329e37ce6790dd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ameltech/library/SmartEverything%2520CC2541/1.0.1/SmartEverythingCC2541-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ameltech/library/SmartEverything%20CC2541/1.0.1/SmartEverythingCC2541-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ameltech/library/SmartEverything%20HTS221/1.1.2/SmartEverythingHTS221-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartEverythingHTS221-1.1.2.tar.gz",
+    "size_bytes": 5806,
+    "sha256": "81ab8a7dadfb5beaf39025ff498b8bf89cb1116c92aecfee8a6c92a1679522c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ameltech/library/SmartEverything%2520HTS221/1.1.2/SmartEverythingHTS221-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ameltech/library/SmartEverything%20HTS221/1.1.2/SmartEverythingHTS221-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ameltech/library/SmartEverything%20LPS25H/1.1.1/SmartEverythingLPS25H-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartEverythingLPS25H-1.1.1.tar.gz",
+    "size_bytes": 4740,
+    "sha256": "3c297b8c9726b3123f0ab8aecf62590d49d8f003952d7f0806337f7baed13d32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ameltech/library/SmartEverything%2520LPS25H/1.1.1/SmartEverythingLPS25H-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ameltech/library/SmartEverything%20LPS25H/1.1.1/SmartEverythingLPS25H-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ameltech/library/SmartEverything%20LSM9DS1/1.1.0/SmartEverythingLSM9DS1-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartEverythingLSM9DS1-1.1.0.tar.gz",
+    "size_bytes": 5168,
+    "sha256": "6488dd50dcde2b54f3856bca9ae93e1c1ad5e77a199ddca4645921069660979a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ameltech/library/SmartEverything%2520LSM9DS1/1.1.0/SmartEverythingLSM9DS1-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ameltech/library/SmartEverything%20LSM9DS1/1.1.0/SmartEverythingLSM9DS1-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ameltech/library/SmartEverything%20NFC%20NT3H1101/1.1.1/SmartEverythingNFCNT3H1101-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartEverythingNFCNT3H1101-1.1.1.tar.gz",
+    "size_bytes": 9610,
+    "sha256": "d4e0e84c872ad232e631dc3b8c55def280a90d0077e822ac897f1ce751b4a7fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ameltech/library/SmartEverything%2520NFC%2520NT3H1101/1.1.1/SmartEverythingNFCNT3H1101-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ameltech/library/SmartEverything%20NFC%20NT3H1101/1.1.1/SmartEverythingNFCNT3H1101-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ameltech/library/SmartEverything%20SE868-AS/1.1.1/SmartEverythingSE868-AS-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartEverythingSE868-AS-1.1.1.tar.gz",
+    "size_bytes": 10513,
+    "sha256": "475236eb8151fcb25b1a1b8db853a4f4461afaf76efd1985aa3154196d9ed1a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ameltech/library/SmartEverything%2520SE868-AS/1.1.1/SmartEverythingSE868-AS-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ameltech/library/SmartEverything%20SE868-AS/1.1.1/SmartEverythingSE868-AS-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ameltech/library/SmartEverything%20SIGFOX%20LE51-868/2.1.1/SmartEverythingSIGFOXLE51-868-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartEverythingSIGFOXLE51-868-2.1.1.tar.gz",
+    "size_bytes": 17746,
+    "sha256": "a0f91ba20ea5d828d5f68c8e242205c198d5fa1a95a67d5bcc995b7b24f62dc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ameltech/library/SmartEverything%2520SIGFOX%2520LE51-868/2.1.1/SmartEverythingSIGFOXLE51-868-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ameltech/library/SmartEverything%20SIGFOX%20LE51-868/2.1.1/SmartEverythingSIGFOXLE51-868-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ameltech/library/SmartEverything%20VL6180X/1.1.1/SmartEverythingVL6180X-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartEverythingVL6180X-1.1.1.tar.gz",
+    "size_bytes": 9271,
+    "sha256": "a42fc6870cba00f837155a0a0e9abb5d95e2e8310131c2592aa56e94fba4bc75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ameltech/library/SmartEverything%2520VL6180X/1.1.1/SmartEverythingVL6180X-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ameltech/library/SmartEverything%20VL6180X/1.1.1/SmartEverythingVL6180X-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

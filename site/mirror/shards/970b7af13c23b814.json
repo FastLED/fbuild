@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/blackhack",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "blackhack/library/LCD_I2C/2.4.0/LCD_I2C-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_I2C-2.4.0.tar.gz",
+    "size_bytes": 16832,
+    "sha256": "0f73589db00fdc39f1f17ae00cb54437642dcb514c9af5decb49437e5bb4b84e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blackhack/library/LCD_I2C/2.4.0/LCD_I2C-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blackhack/library/LCD_I2C/2.4.0/LCD_I2C-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blackhack/library/LittleVector/1.1.0/LittleVector-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LittleVector-1.1.0.tar.gz",
+    "size_bytes": 7728,
+    "sha256": "b76f42c14e540ba2089479b493c8d0c1e0d6e505b89845854b990d52a2e752cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blackhack/library/LittleVector/1.1.0/LittleVector-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blackhack/library/LittleVector/1.1.0/LittleVector-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

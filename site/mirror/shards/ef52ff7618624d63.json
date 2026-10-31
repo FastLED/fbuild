@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ianh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ianh/library/TRGBArduinoSupport/0.0.4/TRGBArduinoSupport-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TRGBArduinoSupport-0.0.4.tar.gz",
+    "size_bytes": 76672,
+    "sha256": "8f647e88d2c5a0fc99e9e9f47feb4c91ddf71a49bddb1302322a4b8297b33fbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ianh/library/TRGBArduinoSupport/0.0.4/TRGBArduinoSupport-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ianh/library/TRGBArduinoSupport/0.0.4/TRGBArduinoSupport-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

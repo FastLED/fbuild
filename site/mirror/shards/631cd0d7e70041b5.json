@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/roman3349",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "roman3349/library/MCP980X/1.0.3/MCP980X-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP980X-1.0.3.tar.gz",
+    "size_bytes": 12197,
+    "sha256": "a843a6b85b4bb530185ac7fac42181f92d6977617d2ccb182349f2edc4eda522",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roman3349/library/MCP980X/1.0.3/MCP980X-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/roman3349/library/MCP980X/1.0.3/MCP980X-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

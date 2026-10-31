@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/makervision",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "makervision/library/MakerVision/0.0.3/MakerVision-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MakerVision-0.0.3.tar.gz",
+    "size_bytes": 4941,
+    "sha256": "a2aa27c720173509fbe6bd3c787403ecc6a49bdd278539d051fc8e976eaa2257",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makervision/library/MakerVision/0.0.3/MakerVision-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/makervision/library/MakerVision/0.0.3/MakerVision-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/streamlogic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "streamlogic/platform/upduino_hls/0.3.0/upduino_hls-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "upduino_hls-0.3.0.tar.gz",
+    "size_bytes": 3337,
+    "sha256": "790cdb6013f4c34a1fde37007d019057327dce2bba93bb7de2ba4417296bd026",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/streamlogic/platform/upduino_hls/0.3.0/upduino_hls-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/streamlogic/platform/upduino_hls/0.3.0/upduino_hls-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "streamlogic/tool/toolchain-fpgaoss/0.2.0/toolchain-fpgaoss-windows_amd64-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-fpgaoss-windows_amd64-0.2.0.tar.gz",
+    "size_bytes": 279194335,
+    "sha256": "4564023d61e8011ff691928dba076a3891389b0c02eb17a609fa3a995d19434e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/streamlogic/tool/toolchain-fpgaoss/0.2.0/toolchain-fpgaoss-windows_amd64-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/streamlogic/tool/toolchain-fpgaoss/0.2.0/toolchain-fpgaoss-windows_amd64-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "streamlogic/tool/toolchain-logicc/0.3.0/toolchain-logicc-windows_amd64-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-logicc-windows_amd64-0.3.0.tar.gz",
+    "size_bytes": 15810963,
+    "sha256": "aca8c4c38515908e103ef813d0b9313fb87d15edaffb42ccb1f8df9cd789442d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/streamlogic/tool/toolchain-logicc/0.3.0/toolchain-logicc-windows_amd64-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/streamlogic/tool/toolchain-logicc/0.3.0/toolchain-logicc-windows_amd64-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-creazymiracle",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-creazymiracle/library/SnakeEngine/0.0.0+sha.2851b575bf5d/SnakeEngine-0.0.0+sha.2851b575bf5d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SnakeEngine-0.0.0+sha.2851b575bf5d.tar.gz",
+    "size_bytes": 2227,
+    "sha256": "956d1a034ec9ef30f35c16e3756d9898bb76dc16f07e1effd99da3717cfa6013",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-creazymiracle/library/SnakeEngine/0.0.0%2Bsha.2851b575bf5d/SnakeEngine-0.0.0%2Bsha.2851b575bf5d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-creazymiracle/library/SnakeEngine/0.0.0%2Bsha.2851b575bf5d/SnakeEngine-0.0.0%2Bsha.2851b575bf5d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

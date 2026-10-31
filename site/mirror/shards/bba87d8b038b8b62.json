@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iwilkey",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iwilkey/library/tinyrtos/2026.5.22+3.1/tinyrtos-2026.5.22+3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyrtos-2026.5.22+3.1.tar.gz",
+    "size_bytes": 24241,
+    "sha256": "f435f438cb544a85e025e491f0086c8202bd7a00dfb59156f1335c4f3bb8889c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iwilkey/library/tinyrtos/2026.5.22%2B3.1/tinyrtos-2026.5.22%2B3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iwilkey/library/tinyrtos/2026.5.22%2B3.1/tinyrtos-2026.5.22%2B3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iwilkey/library/tinyrtos/2026.5.22+3/tinyrtos-2026.5.22+3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyrtos-2026.5.22+3.tar.gz",
+    "size_bytes": 20679,
+    "sha256": "a7989389e6642852fb18943660099066b5d8a5c5fb9c78295a85ad3eb691675f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iwilkey/library/tinyrtos/2026.5.22%2B3/tinyrtos-2026.5.22%2B3.tar.gz",
+     "https://dl.registry.platformio.org/download/iwilkey/library/tinyrtos/2026.5.22%2B3/tinyrtos-2026.5.22%2B3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iwilkey/library/tinyrtos/2026.5.22+4/tinyrtos-2026.5.22+4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyrtos-2026.5.22+4.tar.gz",
+    "size_bytes": 27990,
+    "sha256": "23869d590cac6dbd321e6d0325bbb1d4b8c72220da4c2ad6ed6ae4df9911cd58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iwilkey/library/tinyrtos/2026.5.22%2B4/tinyrtos-2026.5.22%2B4.tar.gz",
+     "https://dl.registry.platformio.org/download/iwilkey/library/tinyrtos/2026.5.22%2B4/tinyrtos-2026.5.22%2B4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iwilkey/library/tinyrtos/2026.5.27+4/tinyrtos-2026.5.27+4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyrtos-2026.5.27+4.tar.gz",
+    "size_bytes": 27985,
+    "sha256": "df00daefd44c0a7251f3d61e20d3f36406c1b574db85f4897d7e1e148dbc3f98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iwilkey/library/tinyrtos/2026.5.27%2B4/tinyrtos-2026.5.27%2B4.tar.gz",
+     "https://dl.registry.platformio.org/download/iwilkey/library/tinyrtos/2026.5.27%2B4/tinyrtos-2026.5.27%2B4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

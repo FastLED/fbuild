@@ -1,0 +1,204 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/k3ldar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "k3ldar/library/MovementDetector/1.0.0/MovementDetector-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MovementDetector-1.0.0.tar.gz",
+    "size_bytes": 5983,
+    "sha256": "f57d9a56c95cb93d704f460b85a4a07e92a6bd109b06d4934c42a8d00c4e14c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3ldar/library/MovementDetector/1.0.0/MovementDetector-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3ldar/library/MovementDetector/1.0.0/MovementDetector-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k3ldar/library/NextionControl/1.0.0/NextionControl-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NextionControl-1.0.0.tar.gz",
+    "size_bytes": 22418,
+    "sha256": "2e36d85a0f236068aa6e566240d040d84d22196876e0595d917f5a6fb747d4e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3ldar/library/NextionControl/1.0.0/NextionControl-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3ldar/library/NextionControl/1.0.0/NextionControl-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k3ldar/library/NextionControl/1.3.0/NextionControl-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NextionControl-1.3.0.tar.gz",
+    "size_bytes": 26596,
+    "sha256": "7f69f857b0dee6e463a672a4576322e32bc700ecb2cce1740808c7b10f0d4124",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3ldar/library/NextionControl/1.3.0/NextionControl-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3ldar/library/NextionControl/1.3.0/NextionControl-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k3ldar/library/NextionControl/1.4.0/NextionControl-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NextionControl-1.4.0.tar.gz",
+    "size_bytes": 26796,
+    "sha256": "8630998dca4fde8affe4f28766b8888c09488ce2f93f2eafa2d3f54f6f9d2fae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3ldar/library/NextionControl/1.4.0/NextionControl-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3ldar/library/NextionControl/1.4.0/NextionControl-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k3ldar/library/NextionControl/1.5.0/NextionControl-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NextionControl-1.5.0.tar.gz",
+    "size_bytes": 27026,
+    "sha256": "a0e1a6b29865f6d3f5cebac844c1e33eb063e686fdacf8a3c8e8025b6bdc3c82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3ldar/library/NextionControl/1.5.0/NextionControl-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3ldar/library/NextionControl/1.5.0/NextionControl-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k3ldar/library/NextionControl/1.6.0/NextionControl-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NextionControl-1.6.0.tar.gz",
+    "size_bytes": 27544,
+    "sha256": "e8b6773854756e64b8790f6b9255b5fa7c94437b9845c480254c1180883a42c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3ldar/library/NextionControl/1.6.0/NextionControl-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3ldar/library/NextionControl/1.6.0/NextionControl-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k3ldar/library/NextionControl/1.7.0/NextionControl-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NextionControl-1.7.0.tar.gz",
+    "size_bytes": 27535,
+    "sha256": "2c78c4f777aeb7cc9202e9fe60046b36cf57e0037bc87e1d2244d6c092437968",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3ldar/library/NextionControl/1.7.0/NextionControl-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3ldar/library/NextionControl/1.7.0/NextionControl-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k3ldar/library/SensorManager/1.0.0/SensorManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorManager-1.0.0.tar.gz",
+    "size_bytes": 18194,
+    "sha256": "97c56b00282c04adfb63cb6e49162611d8d05062019d2d4ba22fcf004f6362c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3ldar/library/SensorManager/1.0.0/SensorManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3ldar/library/SensorManager/1.0.0/SensorManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k3ldar/library/SensorManager/1.1.0/SensorManager-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorManager-1.1.0.tar.gz",
+    "size_bytes": 18200,
+    "sha256": "63c77254ad833fbf365d7ce2bb7869fd10b0dea7fb8a80e4957f86dbef91a8b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3ldar/library/SensorManager/1.1.0/SensorManager-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3ldar/library/SensorManager/1.1.0/SensorManager-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k3ldar/library/SerialCommandManager/1.0.0/SerialCommandManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialCommandManager-1.0.0.tar.gz",
+    "size_bytes": 6161,
+    "sha256": "d0aaa268e97c4225f2b68152f5163ac5be5a13fbf7b3305073fd31e203fec5b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3ldar/library/SerialCommandManager/1.0.0/SerialCommandManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3ldar/library/SerialCommandManager/1.0.0/SerialCommandManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k3ldar/library/SerialCommandManager/2.0.0/SerialCommandManager-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialCommandManager-2.0.0.tar.gz",
+    "size_bytes": 7458,
+    "sha256": "9ec4762948695224cd93b6173b694ae1de6edfb003576e04cb0c1721905e68a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3ldar/library/SerialCommandManager/2.0.0/SerialCommandManager-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3ldar/library/SerialCommandManager/2.0.0/SerialCommandManager-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k3ldar/library/SerialCommandManager/2.4.0/SerialCommandManager-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialCommandManager-2.4.0.tar.gz",
+    "size_bytes": 8273,
+    "sha256": "233784413500b7b4fa8956997c22258731dd6c5242c1a4071c5a381589fb8e0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3ldar/library/SerialCommandManager/2.4.0/SerialCommandManager-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3ldar/library/SerialCommandManager/2.4.0/SerialCommandManager-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k3ldar/library/SerialCommandManager/2.5.0/SerialCommandManager-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialCommandManager-2.5.0.tar.gz",
+    "size_bytes": 8315,
+    "sha256": "ef7289f743edb4727c614a42a2ce77d9ae7a567e6d426ce1accba4a24db4083a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3ldar/library/SerialCommandManager/2.5.0/SerialCommandManager-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3ldar/library/SerialCommandManager/2.5.0/SerialCommandManager-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k3ldar/library/SerialCommandManager/3.0.0/SerialCommandManager-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialCommandManager-3.0.0.tar.gz",
+    "size_bytes": 12398,
+    "sha256": "57435719a6480a0d66e04dffae05905535839130b294982c41390a5a7f62a09f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3ldar/library/SerialCommandManager/3.0.0/SerialCommandManager-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3ldar/library/SerialCommandManager/3.0.0/SerialCommandManager-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k3ldar/library/SerialCommandManager/3.1.0/SerialCommandManager-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialCommandManager-3.1.0.tar.gz",
+    "size_bytes": 12505,
+    "sha256": "6633ad31819d91b80b6b079c38826d8f7e5ce5448840d81d68a6c33c5abf74b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3ldar/library/SerialCommandManager/3.1.0/SerialCommandManager-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3ldar/library/SerialCommandManager/3.1.0/SerialCommandManager-3.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

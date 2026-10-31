@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bartoszbielawski",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bartoszbielawski/library/AJSP/0.1.2/AJSP-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AJSP-0.1.2.tar.gz",
+    "size_bytes": 10021,
+    "sha256": "b43b2cf36633c4a0a5c15a47de5d295461a304378c8945e0ead77058c0a2926e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bartoszbielawski/library/AJSP/0.1.2/AJSP-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bartoszbielawski/library/AJSP/0.1.2/AJSP-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bartoszbielawski/library/CPPTasks/0.1.2/CPPTasks-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CPPTasks-0.1.2.tar.gz",
+    "size_bytes": 3547,
+    "sha256": "5623ee57e0f1756ba273915228d9af7b61e8793aa6c936a3ac7eb7e578612d1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bartoszbielawski/library/CPPTasks/0.1.2/CPPTasks-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bartoszbielawski/library/CPPTasks/0.1.2/CPPTasks-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bartoszbielawski/library/LEDMatrixDriver/0.2.2/LEDMatrixDriver-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEDMatrixDriver-0.2.2.tar.gz",
+    "size_bytes": 13709,
+    "sha256": "d9dbf1fcb2846bd1e6f328d004d46466cab1d00159d2a6ce71960e85c60d8ee1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bartoszbielawski/library/LEDMatrixDriver/0.2.2/LEDMatrixDriver-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bartoszbielawski/library/LEDMatrixDriver/0.2.2/LEDMatrixDriver-0.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

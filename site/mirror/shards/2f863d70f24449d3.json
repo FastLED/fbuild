@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/korneliusthomas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "korneliusthomas/library/PID%20controllers%20Modular%20Professional/1.0.2/PIDcontrollersModularProfessional-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIDcontrollersModularProfessional-1.0.2.tar.gz",
+    "size_bytes": 13020,
+    "sha256": "ecfb8ad3e82c7658a78f45d5f32b271542f98e3e76f974afeb1bc08604f625f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/korneliusthomas/library/PID%2520controllers%2520Modular%2520Professional/1.0.2/PIDcontrollersModularProfessional-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/korneliusthomas/library/PID%20controllers%20Modular%20Professional/1.0.2/PIDcontrollersModularProfessional-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

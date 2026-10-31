@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cardi8982",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cardi8982/library/AceButton/1.10.1/AceButton-1.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceButton-1.10.1.tar.gz",
+    "size_bytes": 94449,
+    "sha256": "dd43fc403c5641d1f450152be092ae2d011ec6713c8ffce20459a02f0a20401b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cardi8982/library/AceButton/1.10.1/AceButton-1.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cardi8982/library/AceButton/1.10.1/AceButton-1.10.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ahmed-idrees",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ahmed-idrees/library/Quadrature%20Encoder/1.0.0/Quadrature_Encoder-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Quadrature_Encoder-1.0.0.tar.gz",
+    "size_bytes": 27334,
+    "sha256": "fcc004e321597b221b7f93be9b1bfe8dd242835521f0209ba8b656d5ba08df60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ahmed-idrees/library/Quadrature%2520Encoder/1.0.0/Quadrature_Encoder-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ahmed-idrees/library/Quadrature%20Encoder/1.0.0/Quadrature_Encoder-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ahmed-idrees/library/Quadrature%20Encoder/1.0.2/QuadratureEncoder-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuadratureEncoder-1.0.2.tar.gz",
+    "size_bytes": 27621,
+    "sha256": "988c6a57d6a0d87a826564d0b91623619173b269a9e208c246105acef0650841",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ahmed-idrees/library/Quadrature%2520Encoder/1.0.2/QuadratureEncoder-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ahmed-idrees/library/Quadrature%20Encoder/1.0.2/QuadratureEncoder-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

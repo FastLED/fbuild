@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/canavix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "canavix/library/LogicPins/1.0.0/LogicPins-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LogicPins-1.0.0.tar.gz",
+    "size_bytes": 3952,
+    "sha256": "9db426b75725875bfbc494a050b77d1c5b4c834bef6f2a148bfb07bb04f188f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/canavix/library/LogicPins/1.0.0/LogicPins-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/canavix/library/LogicPins/1.0.0/LogicPins-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

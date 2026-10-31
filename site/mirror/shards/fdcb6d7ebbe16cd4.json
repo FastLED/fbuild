@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gianbacchio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gianbacchio/library/ESP8266Spiram/1.0/ESP8266Spiram-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Spiram-1.0.tar.gz",
+    "size_bytes": 10435,
+    "sha256": "b5de7286709c2f54464d1c99fd3710d16ece4e75ece6e19be6c8e88a5b1ccda8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gianbacchio/library/ESP8266Spiram/1.0/ESP8266Spiram-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gianbacchio/library/ESP8266Spiram/1.0/ESP8266Spiram-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gianbacchio/library/ESP8266TelegramBOT/1.0/ESP8266TelegramBOT-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266TelegramBOT-1.0.tar.gz",
+    "size_bytes": 12460,
+    "sha256": "5e1f2a1691248d96254f800a785b792f6702eec1e1f2f43562ddb20376d77662",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gianbacchio/library/ESP8266TelegramBOT/1.0/ESP8266TelegramBOT-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gianbacchio/library/ESP8266TelegramBOT/1.0/ESP8266TelegramBOT-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

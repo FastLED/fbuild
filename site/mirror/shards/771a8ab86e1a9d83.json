@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pushsla",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pushsla/library/PushedDisplay/0.0.5/PushedDisplay-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PushedDisplay-0.0.5.tar.gz",
+    "size_bytes": 7953,
+    "sha256": "abbbbaa6ede6545b45bfad38f56a0feb8c8fa78ba6a0288fb9f715a1f3f2fe12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pushsla/library/PushedDisplay/0.0.5/PushedDisplay-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pushsla/library/PushedDisplay/0.0.5/PushedDisplay-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pushsla/library/PushedDisplayFonts/0.0.1/PushedDisplayFonts-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PushedDisplayFonts-0.0.1.tar.gz",
+    "size_bytes": 19316,
+    "sha256": "b565d41c279568c31f2746eefcc37e241af9804f16c3725ccace1d2fefcffdd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pushsla/library/PushedDisplayFonts/0.0.1/PushedDisplayFonts-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pushsla/library/PushedDisplayFonts/0.0.1/PushedDisplayFonts-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pushsla/library/PushedSSD1306/0.0.1/PushedSSD1306-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PushedSSD1306-0.0.1.tar.gz",
+    "size_bytes": 20608,
+    "sha256": "8d84cb91210740e569836a347473daa6f847b635ade91c80f988452564a76433",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pushsla/library/PushedSSD1306/0.0.1/PushedSSD1306-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pushsla/library/PushedSSD1306/0.0.1/PushedSSD1306-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

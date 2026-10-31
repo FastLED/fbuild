@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/learnprg-py",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "learnprg-py/library/Vectorial/1.0.2/Vectorial-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Vectorial-1.0.2.tar.gz",
+    "size_bytes": 4149,
+    "sha256": "6f73fcf8325bf78169aa55e1824995404c22daf2121e8c4fbb73cfed448324d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/learnprg-py/library/Vectorial/1.0.2/Vectorial-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/learnprg-py/library/Vectorial/1.0.2/Vectorial-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

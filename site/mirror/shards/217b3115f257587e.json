@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ribera-iot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ribera-iot/library/Json/0.0.0+sha.c1cd8e6ecdc9/Json-0.0.0+sha.c1cd8e6ecdc9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Json-0.0.0+sha.c1cd8e6ecdc9.tar.gz",
+    "size_bytes": 9775,
+    "sha256": "c306584d3d6f95bee0b16190d82e53a9409aced5799f78609a061e20023434d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ribera-iot/library/Json/0.0.0%2Bsha.c1cd8e6ecdc9/Json-0.0.0%2Bsha.c1cd8e6ecdc9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ribera-iot/library/Json/0.0.0%2Bsha.c1cd8e6ecdc9/Json-0.0.0%2Bsha.c1cd8e6ecdc9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ribera-iot/library/MQTTS/0.0.0+sha.8a88045f2b79/MQTTS-0.0.0+sha.8a88045f2b79.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTS-0.0.0+sha.8a88045f2b79.tar.gz",
+    "size_bytes": 11529,
+    "sha256": "d3800ab34a5d9ec47ecf96a46ebb3c019364f405c97bd250a35f47820b49878e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ribera-iot/library/MQTTS/0.0.0%2Bsha.8a88045f2b79/MQTTS-0.0.0%2Bsha.8a88045f2b79.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ribera-iot/library/MQTTS/0.0.0%2Bsha.8a88045f2b79/MQTTS-0.0.0%2Bsha.8a88045f2b79.tar.gz"
+    ]
+   }
+  }
+ ]
+}

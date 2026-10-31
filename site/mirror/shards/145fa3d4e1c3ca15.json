@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vrabec",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vrabec/library/BH1750/0.0.0+sha.58ee8a917618/BH1750-0.0.0+sha.58ee8a917618.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BH1750-0.0.0+sha.58ee8a917618.tar.gz",
+    "size_bytes": 2238,
+    "sha256": "14c7fb2112b34266287f14d43bb0bf9dbdd036bc4e9a1801a79fd30ba1823e78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vrabec/library/BH1750/0.0.0%2Bsha.58ee8a917618/BH1750-0.0.0%2Bsha.58ee8a917618.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vrabec/library/BH1750/0.0.0%2Bsha.58ee8a917618/BH1750-0.0.0%2Bsha.58ee8a917618.tar.gz"
+    ]
+   }
+  }
+ ]
+}

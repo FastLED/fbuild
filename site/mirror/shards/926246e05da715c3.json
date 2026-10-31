@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cmakera",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cmakera/library/ESP_LM35/1.0.0/ESP_LM35-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_LM35-1.0.0.tar.gz",
+    "size_bytes": 5430,
+    "sha256": "f4aca3cf98d899762017a32ade4b39cc7370a327e54f8c2cc1490e1e8f85645f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmakera/library/ESP_LM35/1.0.0/ESP_LM35-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cmakera/library/ESP_LM35/1.0.0/ESP_LM35-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/uecs-star",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "uecs-star/library/UARDECS_ESP32C3/1.0.0/UARDECS_ESP32C3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UARDECS_ESP32C3-1.0.0.tar.gz",
+    "size_bytes": 43561,
+    "sha256": "638b22482d41b03616ee4b532401b6ec4c2875cc52b10c9624f9b9f0bc8cba07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uecs-star/library/UARDECS_ESP32C3/1.0.0/UARDECS_ESP32C3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uecs-star/library/UARDECS_ESP32C3/1.0.0/UARDECS_ESP32C3-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uecs-star/library/UARDECS_ESP32C3/1.0.1/UARDECS_ESP32C3-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UARDECS_ESP32C3-1.0.1.tar.gz",
+    "size_bytes": 43639,
+    "sha256": "57274a851ec0098a775eb25ef788627b4db43f5580f2c418661999ce5c791c31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uecs-star/library/UARDECS_ESP32C3/1.0.1/UARDECS_ESP32C3-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/uecs-star/library/UARDECS_ESP32C3/1.0.1/UARDECS_ESP32C3-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

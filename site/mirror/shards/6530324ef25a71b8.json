@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marscaper",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marscaper/library/Ephemeris/1.0.1/Ephemeris-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ephemeris-1.0.1.tar.gz",
+    "size_bytes": 55097,
+    "sha256": "47bbd7ed5067f4119f5ad88f8536f47bc9bf7e4c99cfcc3a86818dccccf2cb77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marscaper/library/Ephemeris/1.0.1/Ephemeris-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/marscaper/library/Ephemeris/1.0.1/Ephemeris-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

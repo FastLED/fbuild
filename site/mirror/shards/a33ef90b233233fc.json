@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kaizen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kaizen/library/WizFi250Interface/0.0.0+sha.f29dd1d06e89/WizFi250Interface-0.0.0+sha.f29dd1d06e89.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WizFi250Interface-0.0.0+sha.f29dd1d06e89.tar.gz",
+    "size_bytes": 13993,
+    "sha256": "4146e23e2f49b9825d7c6747be0e31f252e95c35e5b5fd9b3f6f07f9e304d33b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kaizen/library/WizFi250Interface/0.0.0%2Bsha.f29dd1d06e89/WizFi250Interface-0.0.0%2Bsha.f29dd1d06e89.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kaizen/library/WizFi250Interface/0.0.0%2Bsha.f29dd1d06e89/WizFi250Interface-0.0.0%2Bsha.f29dd1d06e89.tar.gz"
+    ]
+   }
+  }
+ ]
+}

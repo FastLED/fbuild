@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mistersandman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mistersandman/library/I2C%20dev/1.0.1/I2Cdev-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdev-1.0.1.tar.gz",
+    "size_bytes": 14973,
+    "sha256": "5cd824d06bc84a4d7a24d3929f612d50a41519a2e074701408499052cba4c80f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mistersandman/library/I2C%2520dev/1.0.1/I2Cdev-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mistersandman/library/I2C%20dev/1.0.1/I2Cdev-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

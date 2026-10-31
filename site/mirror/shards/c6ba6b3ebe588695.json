@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dlloydev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dlloydev/library/ESP32%20ESP32S2%20AnalogWrite/3.0.3/ESP32ESP32S2AnalogWrite-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ESP32S2AnalogWrite-3.0.3.tar.gz",
+    "size_bytes": 6864,
+    "sha256": "371a6ebc567cc1224edf027ce3d0523c042b900ce5491dd0f54956ccc2151334",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dlloydev/library/ESP32%2520ESP32S2%2520AnalogWrite/3.0.3/ESP32ESP32S2AnalogWrite-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dlloydev/library/ESP32%20ESP32S2%20AnalogWrite/3.0.3/ESP32ESP32S2AnalogWrite-3.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dlloydev/library/ESP32%20ESP32S2%20AnalogWrite/5.0.2/ESP32ESP32S2AnalogWrite-5.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ESP32S2AnalogWrite-5.0.2.tar.gz",
+    "size_bytes": 20102,
+    "sha256": "1b2b62327e55823c82704b39fdab8a274a7b0e8557d7213d6f74624ae94a8b29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dlloydev/library/ESP32%2520ESP32S2%2520AnalogWrite/5.0.2/ESP32ESP32S2AnalogWrite-5.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dlloydev/library/ESP32%20ESP32S2%20AnalogWrite/5.0.2/ESP32ESP32S2AnalogWrite-5.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dlloydev/library/QuickPID/3.1.9/QuickPID-3.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuickPID-3.1.9.tar.gz",
+    "size_bytes": 10704,
+    "sha256": "37fd466f6825cdd713ddaa980af69d54d77e5d2f57dc6b128a5a5a351ed2507d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dlloydev/library/QuickPID/3.1.9/QuickPID-3.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/dlloydev/library/QuickPID/3.1.9/QuickPID-3.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dlloydev/library/Toggle/3.1.8/Toggle-3.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Toggle-3.1.8.tar.gz",
+    "size_bytes": 13664,
+    "sha256": "4f7231893b3eb167732a17e97c9699663b6d555577bbbae3f345179b87109026",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dlloydev/library/Toggle/3.1.8/Toggle-3.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/dlloydev/library/Toggle/3.1.8/Toggle-3.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dlloydev/library/sTune/2.4.0/sTune-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sTune-2.4.0.tar.gz",
+    "size_bytes": 14978,
+    "sha256": "c2c5c7ae24f478ba93f14fecd81fec05033397a21d777e789abe08f76d9173cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dlloydev/library/sTune/2.4.0/sTune-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dlloydev/library/sTune/2.4.0/sTune-2.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

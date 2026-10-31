@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sprilukin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sprilukin/library/lib_bl999/0.0.9/lib_bl999-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lib_bl999-0.0.9.tar.gz",
+    "size_bytes": 8151,
+    "sha256": "f95d3bb498060505f205a41b21f1e69aaae33d1125842f1d7b9a2aad6df0c621",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sprilukin/library/lib_bl999/0.0.9/lib_bl999-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/sprilukin/library/lib_bl999/0.0.9/lib_bl999-0.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

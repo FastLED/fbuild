@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chriss158",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chriss158/library/HAMqttDevice/1.0.0/HAMqttDevice-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HAMqttDevice-1.0.0.tar.gz",
+    "size_bytes": 16370,
+    "sha256": "ae9ea98c16c15671ca9f978d01c2237b1a6b909c1b2a40709bb1c42dff8cd6d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chriss158/library/HAMqttDevice/1.0.0/HAMqttDevice-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chriss158/library/HAMqttDevice/1.0.0/HAMqttDevice-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-adamsona",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-adamsona/library/lmt70_sensor/0.0.0+sha.2cbfc517b1c4/lmt70_sensor-0.0.0+sha.2cbfc517b1c4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lmt70_sensor-0.0.0+sha.2cbfc517b1c4.tar.gz",
+    "size_bytes": 1007,
+    "sha256": "c0425f45cf8035a990f8281ab28230986dad77c30b67dab1207b28b2b5ded1ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adamsona/library/lmt70_sensor/0.0.0%2Bsha.2cbfc517b1c4/lmt70_sensor-0.0.0%2Bsha.2cbfc517b1c4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adamsona/library/lmt70_sensor/0.0.0%2Bsha.2cbfc517b1c4/lmt70_sensor-0.0.0%2Bsha.2cbfc517b1c4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bettettet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bettettet/library/TurboOLED/1.0.0/TurboOLED-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TurboOLED-1.0.0.tar.gz",
+    "size_bytes": 2141,
+    "sha256": "daa938a4f09a9b0f9f10a6c2ac5970a7248676f6b1ac28f39c2b0655562390f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bettettet/library/TurboOLED/1.0.0/TurboOLED-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bettettet/library/TurboOLED/1.0.0/TurboOLED-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bettettet/library/TurboOLED/1.0.1/TurboOLED-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TurboOLED-1.0.1.tar.gz",
+    "size_bytes": 2204,
+    "sha256": "a0f0f4f5b1ab841e4a8b9bd6254024dae77cd3a27996eb79237fd4800312f7e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bettettet/library/TurboOLED/1.0.1/TurboOLED-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bettettet/library/TurboOLED/1.0.1/TurboOLED-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bettettet/library/TurboOLED/1.0.2/TurboOLED-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TurboOLED-1.0.2.tar.gz",
+    "size_bytes": 2206,
+    "sha256": "a91b0bac3752a2990b2971a7bbd73cd680140a2fe4953a808dd79439050b971d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bettettet/library/TurboOLED/1.0.2/TurboOLED-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bettettet/library/TurboOLED/1.0.2/TurboOLED-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bettettet/library/TurboOLED/1.0.4/TurboOLED-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TurboOLED-1.0.4.tar.gz",
+    "size_bytes": 3007,
+    "sha256": "b123b583eeb87067b84bfd70f9c7631e2c7eec6bd08d783dd6186bbb19357719",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bettettet/library/TurboOLED/1.0.4/TurboOLED-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bettettet/library/TurboOLED/1.0.4/TurboOLED-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bettettet/library/TurboOLED/1.0.5/TurboOLED-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TurboOLED-1.0.5.tar.gz",
+    "size_bytes": 2967,
+    "sha256": "2cab525b021f04162661cc8c8dcc6cd0a143f8a1e4c166ce7b3ac225cfd0dbf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bettettet/library/TurboOLED/1.0.5/TurboOLED-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bettettet/library/TurboOLED/1.0.5/TurboOLED-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

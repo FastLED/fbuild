@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/laserlicht",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "laserlicht/library/MaerklinMotorola/0.2.2/MaerklinMotorola-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MaerklinMotorola-0.2.2.tar.gz",
+    "size_bytes": 59290,
+    "sha256": "a2fe0f34f8bc87f61203ace64c1a350a1b77cc6d16f4f1ba93132dec4cfe167e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/laserlicht/library/MaerklinMotorola/0.2.2/MaerklinMotorola-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/laserlicht/library/MaerklinMotorola/0.2.2/MaerklinMotorola-0.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

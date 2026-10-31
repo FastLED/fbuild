@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wayoda",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wayoda/library/LedControl/1.0.6/LedControl-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedControl-1.0.6.tar.gz",
+    "size_bytes": 5968,
+    "sha256": "b0443c2d25b30a315a9db2fb42af2113bb03cc6ffb63076c4a4ffdc8b5c80832",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wayoda/library/LedControl/1.0.6/LedControl-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/wayoda/library/LedControl/1.0.6/LedControl-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

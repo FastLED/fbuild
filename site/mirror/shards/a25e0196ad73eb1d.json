@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/micooke",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "micooke/library/wwvb/1.0.0/wwvb-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wwvb-1.0.0.tar.gz",
+    "size_bytes": 504238,
+    "sha256": "7fa5a4da367d346cf89c8ff04490200ec4f4421d0395a297d14c0b60032b0aeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/micooke/library/wwvb/1.0.0/wwvb-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/micooke/library/wwvb/1.0.0/wwvb-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "micooke/library/wwvb_jjy/1.0.0/wwvb_jjy-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wwvb_jjy-1.0.0.tar.gz",
+    "size_bytes": 73386,
+    "sha256": "0451766f5a2ceeafc462b26c526508bd3ce9313bb0bf3d0bb42dccbc956a0f03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/micooke/library/wwvb_jjy/1.0.0/wwvb_jjy-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/micooke/library/wwvb_jjy/1.0.0/wwvb_jjy-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

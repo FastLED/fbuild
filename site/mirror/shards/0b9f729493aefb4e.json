@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rocorbera",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rocorbera/library/BlueVGA%20Library%20for%20BluePill/0.1.1/BlueVGALibraryforBluePill-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlueVGALibraryforBluePill-0.1.1.tar.gz",
+    "size_bytes": 67699,
+    "sha256": "f0a7219d0a05274c990fab1daca58eea95060d36e461ecc0c4f6e2b2b8e8ad28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rocorbera/library/BlueVGA%2520Library%2520for%2520BluePill/0.1.1/BlueVGALibraryforBluePill-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rocorbera/library/BlueVGA%20Library%20for%20BluePill/0.1.1/BlueVGALibraryforBluePill-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rocorbera/library/BlueVGA/0.1.3/BlueVGA-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlueVGA-0.1.3.tar.gz",
+    "size_bytes": 115317,
+    "sha256": "4392d4b7573a11aaf1fdbcccb6612aff73989542ea19725c47cfa5fd281feeda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rocorbera/library/BlueVGA/0.1.3/BlueVGA-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rocorbera/library/BlueVGA/0.1.3/BlueVGA-0.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

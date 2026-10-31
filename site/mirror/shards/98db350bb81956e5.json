@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bcan77",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bcan77/library/CiftPulsarOTA/2.0.0/CiftPulsarOTA-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CiftPulsarOTA-2.0.0.tar.gz",
+    "size_bytes": 12920,
+    "sha256": "aa90fba8dc05388c1329c40ddd8d650cd40f95d839d8dc527c11affcfe234a68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bcan77/library/CiftPulsarOTA/2.0.0/CiftPulsarOTA-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bcan77/library/CiftPulsarOTA/2.0.0/CiftPulsarOTA-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

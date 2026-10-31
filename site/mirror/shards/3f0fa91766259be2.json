@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/javos65",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "javos65/library/WDTZero/1.3.0/WDTZero-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WDTZero-1.3.0.tar.gz",
+    "size_bytes": 4151,
+    "sha256": "6bebf77424f566a50f5768593a41d588efa6f04e4f31508baa687124d6dc85d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/javos65/library/WDTZero/1.3.0/WDTZero-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/javos65/library/WDTZero/1.3.0/WDTZero-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

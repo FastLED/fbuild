@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cnhzcy14",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cnhzcy14/library/CyThread/0.0.0+sha.c555ee16b8e7/CyThread-0.0.0+sha.c555ee16b8e7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CyThread-0.0.0+sha.c555ee16b8e7.tar.gz",
+    "size_bytes": 2316,
+    "sha256": "abd36ac25df595984f5f883ade120961549ba72a33f7074d65c92d7b05517e80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cnhzcy14/library/CyThread/0.0.0%2Bsha.c555ee16b8e7/CyThread-0.0.0%2Bsha.c555ee16b8e7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cnhzcy14/library/CyThread/0.0.0%2Bsha.c555ee16b8e7/CyThread-0.0.0%2Bsha.c555ee16b8e7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

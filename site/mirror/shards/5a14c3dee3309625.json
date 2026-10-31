@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gipetrou",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gipetrou/library/MX28/0.0.0+sha.85216442d3ef/MX28-0.0.0+sha.85216442d3ef.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MX28-0.0.0+sha.85216442d3ef.tar.gz",
+    "size_bytes": 12101,
+    "sha256": "359fcfc7dbb9d499002c37495456639ea9b56006e68384fd53354cc65e5657f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gipetrou/library/MX28/0.0.0%2Bsha.85216442d3ef/MX28-0.0.0%2Bsha.85216442d3ef.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gipetrou/library/MX28/0.0.0%2Bsha.85216442d3ef/MX28-0.0.0%2Bsha.85216442d3ef.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-saxion-lectoraat-mt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-saxion-lectoraat-mt/library/AS5048/0.0.0+sha.06b89a41109e/AS5048-0.0.0+sha.06b89a41109e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS5048-0.0.0+sha.06b89a41109e.tar.gz",
+    "size_bytes": 2765,
+    "sha256": "64555e32019dbdad8be88ce757a72216e696c63fd41f58b607f2fc879889255f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-saxion-lectoraat-mt/library/AS5048/0.0.0%2Bsha.06b89a41109e/AS5048-0.0.0%2Bsha.06b89a41109e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-saxion-lectoraat-mt/library/AS5048/0.0.0%2Bsha.06b89a41109e/AS5048-0.0.0%2Bsha.06b89a41109e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

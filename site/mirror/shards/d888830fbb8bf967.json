@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sith",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sith/library/ArduinoStandardStateMachines/1.0.1/ArduinoStandardStateMachines-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoStandardStateMachines-1.0.1.tar.gz",
+    "size_bytes": 3075,
+    "sha256": "20da383cb54905e8203d7d456d86dc96a03a17013ffdac6db044cd35bbf38903",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sith/library/ArduinoStandardStateMachines/1.0.1/ArduinoStandardStateMachines-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sith/library/ArduinoStandardStateMachines/1.0.1/ArduinoStandardStateMachines-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sith/library/ArduinoStates/1.0.11/ArduinoStates-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoStates-1.0.11.tar.gz",
+    "size_bytes": 6076,
+    "sha256": "3f5b59b2f73e8a3ace0084b119d47f94605eb6994f87ff253175cec79cab73cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sith/library/ArduinoStates/1.0.11/ArduinoStates-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/sith/library/ArduinoStates/1.0.11/ArduinoStates-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sith/library/ArduinoTime/1.0.11/ArduinoTime-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoTime-1.0.11.tar.gz",
+    "size_bytes": 2386,
+    "sha256": "41e83303482118317c56af23e4de9febdbff94f44639ecdab615baced8fdaf5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sith/library/ArduinoTime/1.0.11/ArduinoTime-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/sith/library/ArduinoTime/1.0.11/ArduinoTime-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sith/library/StateMachine/1.0.1/StateMachine-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StateMachine-1.0.1.tar.gz",
+    "size_bytes": 2113,
+    "sha256": "8d88e8d6081e9629881e8707ec5d8c0fb2ec5bd82d625ef91237efd3827faa50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sith/library/StateMachine/1.0.1/StateMachine-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sith/library/StateMachine/1.0.1/StateMachine-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

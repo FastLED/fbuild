@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nhz2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nhz2/library/XYZgeomag/2.1.0/XYZgeomag-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XYZgeomag-2.1.0.tar.gz",
+    "size_bytes": 15628,
+    "sha256": "ef13554ed5199ff3629979b7fc66e69dedd8159d5b4ae220fc4d165c2402aad6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nhz2/library/XYZgeomag/2.1.0/XYZgeomag-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nhz2/library/XYZgeomag/2.1.0/XYZgeomag-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

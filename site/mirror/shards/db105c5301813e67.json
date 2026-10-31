@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ddollar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ddollar/library/WiflyInterface/0.0.0+sha.5c9c3fdd67fb/WiflyInterface-0.0.0+sha.5c9c3fdd67fb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiflyInterface-0.0.0+sha.5c9c3fdd67fb.tar.gz",
+    "size_bytes": 10382,
+    "sha256": "e95f120cb1e88258a2f5457936c7db483b291b280b7db5e20cc1765cf85876e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ddollar/library/WiflyInterface/0.0.0%2Bsha.5c9c3fdd67fb/WiflyInterface-0.0.0%2Bsha.5c9c3fdd67fb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ddollar/library/WiflyInterface/0.0.0%2Bsha.5c9c3fdd67fb/WiflyInterface-0.0.0%2Bsha.5c9c3fdd67fb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ddollar/library/XBee/0.0.0+sha.73d051b01344/XBee-0.0.0+sha.73d051b01344.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XBee-0.0.0+sha.73d051b01344.tar.gz",
+    "size_bytes": 15430,
+    "sha256": "57f7dd69fc067af9d07db84d786611dd101ca7bcbd49e6574bb338e630a13321",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ddollar/library/XBee/0.0.0%2Bsha.73d051b01344/XBee-0.0.0%2Bsha.73d051b01344.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ddollar/library/XBee/0.0.0%2Bsha.73d051b01344/XBee-0.0.0%2Bsha.73d051b01344.tar.gz"
+    ]
+   }
+  }
+ ]
+}

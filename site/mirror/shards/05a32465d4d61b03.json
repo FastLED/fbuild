@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-luisfrdr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-luisfrdr/library/LCD_ST7066U/0.0.0+sha.3b4b05d44398/LCD_ST7066U-0.0.0+sha.3b4b05d44398.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_ST7066U-0.0.0+sha.3b4b05d44398.tar.gz",
+    "size_bytes": 2629,
+    "sha256": "a0b0f4ab9cc47df2a2b8e0a32fc6c303da70856dc82d8c8026043f9bd71538ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-luisfrdr/library/LCD_ST7066U/0.0.0%2Bsha.3b4b05d44398/LCD_ST7066U-0.0.0%2Bsha.3b4b05d44398.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-luisfrdr/library/LCD_ST7066U/0.0.0%2Bsha.3b4b05d44398/LCD_ST7066U-0.0.0%2Bsha.3b4b05d44398.tar.gz"
+    ]
+   }
+  }
+ ]
+}

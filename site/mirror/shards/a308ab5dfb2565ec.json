@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/davidlmorris",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "davidlmorris/library/debuggery/1.2.2/debuggery-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "debuggery-1.2.2.tar.gz",
+    "size_bytes": 26123,
+    "sha256": "58d1bcfb8bc08a90b5de17f6f3a547d4022bd7d59eaa0d8fcfb2a707aac4349c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davidlmorris/library/debuggery/1.2.2/debuggery-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/davidlmorris/library/debuggery/1.2.2/debuggery-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

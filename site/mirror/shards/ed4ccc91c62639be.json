@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yknivag",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yknivag/library/ESP%20OTA%20GitHub/0.0.3/ESPOTAGitHub-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPOTAGitHub-0.0.3.tar.gz",
+    "size_bytes": 136647,
+    "sha256": "45c7070b2525bc179196dbefda983592d5f79001adafd46cc8adb2b844d473c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yknivag/library/ESP%2520OTA%2520GitHub/0.0.3/ESPOTAGitHub-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/yknivag/library/ESP%20OTA%20GitHub/0.0.3/ESPOTAGitHub-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yknivag/library/PxMatrix%20Christmas%20Icons/0.0.3/PxMatrixChristmasIcons-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PxMatrixChristmasIcons-0.0.3.tar.gz",
+    "size_bytes": 33116,
+    "sha256": "02f9648e859b932939cf519c5032cc70fd1744f6551d72049bc5272df8b37754",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yknivag/library/PxMatrix%2520Christmas%2520Icons/0.0.3/PxMatrixChristmasIcons-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/yknivag/library/PxMatrix%20Christmas%20Icons/0.0.3/PxMatrixChristmasIcons-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

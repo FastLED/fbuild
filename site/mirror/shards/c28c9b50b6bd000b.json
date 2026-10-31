@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-carlosftm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-carlosftm/library/pcd8544_drv/0.0.0+sha.9948e71af151/pcd8544_drv-0.0.0+sha.9948e71af151.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pcd8544_drv-0.0.0+sha.9948e71af151.tar.gz",
+    "size_bytes": 3707,
+    "sha256": "67a0ac266e8463ef3ccb5fd2ecda73d3be7ab24e28316cbd01496da813d070de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-carlosftm/library/pcd8544_drv/0.0.0%2Bsha.9948e71af151/pcd8544_drv-0.0.0%2Bsha.9948e71af151.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-carlosftm/library/pcd8544_drv/0.0.0%2Bsha.9948e71af151/pcd8544_drv-0.0.0%2Bsha.9948e71af151.tar.gz"
+    ]
+   }
+  }
+ ]
+}

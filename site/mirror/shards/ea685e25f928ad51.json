@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/matsujirushi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "matsujirushi/library/MjGrove/1.4.0/MjGrove-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MjGrove-1.4.0.tar.gz",
+    "size_bytes": 30068,
+    "sha256": "8d3eee9b4e735363f465961a17810c31414f6ab221bece24c3114916bf619ba4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matsujirushi/library/MjGrove/1.4.0/MjGrove-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matsujirushi/library/MjGrove/1.4.0/MjGrove-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

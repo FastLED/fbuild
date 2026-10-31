@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/werecatf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "werecatf/library/Adafruit%20PCD8544%20Nokia%205110%20LCD%20library/0.0.0-alpha+sha.0c92b10794/AdafruitPCD8544Nokia5110LCDlibrary-0.0.0-alphasha.0c92b10794.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdafruitPCD8544Nokia5110LCDlibrary-0.0.0-alphasha.0c92b10794.tar.gz",
+    "size_bytes": 10237,
+    "sha256": "0b71ea8b3c37140756d9d06d49fe4b19ae3f3f522b4cb13c7014df1626c08028",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/werecatf/library/Adafruit%2520PCD8544%2520Nokia%25205110%2520LCD%2520library/0.0.0-alpha%2Bsha.0c92b10794/AdafruitPCD8544Nokia5110LCDlibrary-0.0.0-alphasha.0c92b10794.tar.gz",
+     "https://dl.registry.platformio.org/download/werecatf/library/Adafruit%20PCD8544%20Nokia%205110%20LCD%20library/0.0.0-alpha%2Bsha.0c92b10794/AdafruitPCD8544Nokia5110LCDlibrary-0.0.0-alphasha.0c92b10794.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "werecatf/library/PCF8574_ESP/1.0.10/PCF8574_ESP-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8574_ESP-1.0.10.tar.gz",
+    "size_bytes": 6141,
+    "sha256": "cd1386e1d3a1e27daaaa644099cb93066f05f14361b9927ee7040d0c90650fd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/werecatf/library/PCF8574_ESP/1.0.10/PCF8574_ESP-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/werecatf/library/PCF8574_ESP/1.0.10/PCF8574_ESP-1.0.10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-zaber-core-libs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-zaber-core-libs/library/Zaber%20ASCII/2.0.1/ZaberASCII-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZaberASCII-2.0.1.tar.gz",
+    "size_bytes": 22601,
+    "sha256": "6132302892dc4b2b2f617ddeae1b384b0e253b5a89ec3527e3bff587f166c5b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-zaber-core-libs/library/Zaber%2520ASCII/2.0.1/ZaberASCII-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-zaber-core-libs/library/Zaber%20ASCII/2.0.1/ZaberASCII-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-zaber-core-libs/library/Zaber%20Binary/1.2.0/ZaberBinary-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZaberBinary-1.2.0.tar.gz",
+    "size_bytes": 25205,
+    "sha256": "79cdc5948cfb1bb07cedd1ac766659a54f905532b8cbff816d43aac90213c012",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-zaber-core-libs/library/Zaber%2520Binary/1.2.0/ZaberBinary-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-zaber-core-libs/library/Zaber%20Binary/1.2.0/ZaberBinary-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

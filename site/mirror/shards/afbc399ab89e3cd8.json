@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-emree",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-emree/library/MAX30001%20SYS%20EvKit/0.0.0+sha.e2ce56bb0d2e/MAX30001SYSEvKit-0.0.0+sha.e2ce56bb0d2e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30001SYSEvKit-0.0.0+sha.e2ce56bb0d2e.tar.gz",
+    "size_bytes": 53211,
+    "sha256": "304894e25c5d56db28bfd598c57f28192585d32cac9a738e0f79bd0b0c6f8b13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-emree/library/MAX30001%2520SYS%2520EvKit/0.0.0%2Bsha.e2ce56bb0d2e/MAX30001SYSEvKit-0.0.0%2Bsha.e2ce56bb0d2e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-emree/library/MAX30001%20SYS%20EvKit/0.0.0%2Bsha.e2ce56bb0d2e/MAX30001SYSEvKit-0.0.0%2Bsha.e2ce56bb0d2e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

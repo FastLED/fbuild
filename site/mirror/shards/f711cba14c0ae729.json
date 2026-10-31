@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/miq19",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "miq19/library/Ethernet/2.0.0/Ethernet-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ethernet-2.0.0.tar.gz",
+    "size_bytes": 38228,
+    "sha256": "77012320c318b3f26a3f8ed75bdfcd7f87219877479b1d12879447e73f5ca1dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miq19/library/Ethernet/2.0.0/Ethernet-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/miq19/library/Ethernet/2.0.0/Ethernet-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "miq19/library/eModbus/1.0.0/eModbus-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eModbus-1.0.0.tar.gz",
+    "size_bytes": 58343,
+    "sha256": "3947c3febb1422c0168128ba6b95b707cb129b8e3e1b664210f4d0ab377b1adb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miq19/library/eModbus/1.0.0/eModbus-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/miq19/library/eModbus/1.0.0/eModbus-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "miq19/library/eModbus/1.7.2/eModbus-1.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eModbus-1.7.2.tar.gz",
+    "size_bytes": 1092480,
+    "sha256": "54c8ddb693980a942e1b63306c6922f0e629aebe29cf3d68e3a81eca5f28ad9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miq19/library/eModbus/1.7.2/eModbus-1.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/miq19/library/eModbus/1.7.2/eModbus-1.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "miq19/library/eModbus/1.7.4/eModbus-1.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eModbus-1.7.4.tar.gz",
+    "size_bytes": 1093965,
+    "sha256": "29e7cb874ca059c74cae5ae76f0c6e7749d7bb69a09ea5f364593d6106a4e07d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miq19/library/eModbus/1.7.4/eModbus-1.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/miq19/library/eModbus/1.7.4/eModbus-1.7.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

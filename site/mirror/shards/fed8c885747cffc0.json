@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-enomoto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-enomoto/library/LED_TOGGLE/0.0.0+sha.4c3498745f6c/LED_TOGGLE-0.0.0+sha.4c3498745f6c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LED_TOGGLE-0.0.0+sha.4c3498745f6c.tar.gz",
+    "size_bytes": 771,
+    "sha256": "0416ced1f2b0c6209a295faeb1077b6cddd2bf4180e0112b9350612d2279de94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-enomoto/library/LED_TOGGLE/0.0.0%2Bsha.4c3498745f6c/LED_TOGGLE-0.0.0%2Bsha.4c3498745f6c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-enomoto/library/LED_TOGGLE/0.0.0%2Bsha.4c3498745f6c/LED_TOGGLE-0.0.0%2Bsha.4c3498745f6c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/piotrmalek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "piotrmalek/library/BQ25672/0.1.0/BQ25672-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BQ25672-0.1.0.tar.gz",
+    "size_bytes": 33104,
+    "sha256": "a5817f1108e22fa8fa3fa82d46efeea1da71e2009863e148a8cf31c3d6c2d3a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piotrmalek/library/BQ25672/0.1.0/BQ25672-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/piotrmalek/library/BQ25672/0.1.0/BQ25672-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "piotrmalek/library/BQ25672/0.1.1/BQ25672-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BQ25672-0.1.1.tar.gz",
+    "size_bytes": 66983,
+    "sha256": "e8572ee389352e23cceaf5d4b02394e1c3aa737a7940ab3ef238878ebe97e2db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/piotrmalek/library/BQ25672/0.1.1/BQ25672-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/piotrmalek/library/BQ25672/0.1.1/BQ25672-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

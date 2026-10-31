@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-teamelectronics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-teamelectronics/library/MCP3204/0.0.0+sha.b5950cd5e330/MCP3204-0.0.0+sha.b5950cd5e330.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP3204-0.0.0+sha.b5950cd5e330.tar.gz",
+    "size_bytes": 2445,
+    "sha256": "1ec04e9323be8a27c099802c281ab61f09ea3c60177eb5fb7d7d9327ca810323",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-teamelectronics/library/MCP3204/0.0.0%2Bsha.b5950cd5e330/MCP3204-0.0.0%2Bsha.b5950cd5e330.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-teamelectronics/library/MCP3204/0.0.0%2Bsha.b5950cd5e330/MCP3204-0.0.0%2Bsha.b5950cd5e330.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-teamelectronics/library/MCP4261/0.0.0+sha.ff10d457fef2/MCP4261-0.0.0+sha.ff10d457fef2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP4261-0.0.0+sha.ff10d457fef2.tar.gz",
+    "size_bytes": 3432,
+    "sha256": "599914a3dad5fdfcea415cddd681a00cd870e307fc07d075f2e272fd25512b9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-teamelectronics/library/MCP4261/0.0.0%2Bsha.ff10d457fef2/MCP4261-0.0.0%2Bsha.ff10d457fef2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-teamelectronics/library/MCP4261/0.0.0%2Bsha.ff10d457fef2/MCP4261-0.0.0%2Bsha.ff10d457fef2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-teamelectronics/library/MCP4822/0.0.0+sha.929babff65b1/MCP4822-0.0.0+sha.929babff65b1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP4822-0.0.0+sha.929babff65b1.tar.gz",
+    "size_bytes": 2638,
+    "sha256": "4e47f9d8eb17896c58d6b120d3ca6d1841cdecf6d415bc5a8930303391abb34c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-teamelectronics/library/MCP4822/0.0.0%2Bsha.929babff65b1/MCP4822-0.0.0%2Bsha.929babff65b1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-teamelectronics/library/MCP4822/0.0.0%2Bsha.929babff65b1/MCP4822-0.0.0%2Bsha.929babff65b1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

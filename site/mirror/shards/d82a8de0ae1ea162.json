@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/duhjoker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "duhjoker/library/ILI9341_esp/1.0/ILI9341_esp-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341_esp-1.0.tar.gz",
+    "size_bytes": 334918,
+    "sha256": "82b402c7719ff6894928a36e15c49912b845be04265de494865c2b1ed319bc0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duhjoker/library/ILI9341_esp/1.0/ILI9341_esp-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/duhjoker/library/ILI9341_esp/1.0/ILI9341_esp-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

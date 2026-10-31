@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kanope-benny",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kanope-benny/library/TM1638/0.0.0+sha.346d7c9dd1b2/TM1638-0.0.0+sha.346d7c9dd1b2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1638-0.0.0+sha.346d7c9dd1b2.tar.gz",
+    "size_bytes": 12153,
+    "sha256": "14380a60b7293df8216580c4d2afd5fa4c279d3a72fd89d2a3df42b927cb4cd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kanope-benny/library/TM1638/0.0.0%2Bsha.346d7c9dd1b2/TM1638-0.0.0%2Bsha.346d7c9dd1b2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kanope-benny/library/TM1638/0.0.0%2Bsha.346d7c9dd1b2/TM1638-0.0.0%2Bsha.346d7c9dd1b2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

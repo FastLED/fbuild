@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-phillippsm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-phillippsm/library/PololuQTRSensors/0.0.0+sha.a664ab7aba8d/PololuQTRSensors-0.0.0+sha.a664ab7aba8d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PololuQTRSensors-0.0.0+sha.a664ab7aba8d.tar.gz",
+    "size_bytes": 7779,
+    "sha256": "fe8b8ee99f253dddf1183dfac08226a0764c36bbdf14f63038bffa30da8097eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-phillippsm/library/PololuQTRSensors/0.0.0%2Bsha.a664ab7aba8d/PololuQTRSensors-0.0.0%2Bsha.a664ab7aba8d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-phillippsm/library/PololuQTRSensors/0.0.0%2Bsha.a664ab7aba8d/PololuQTRSensors-0.0.0%2Bsha.a664ab7aba8d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

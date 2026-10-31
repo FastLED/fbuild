@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/salesiopark",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "salesiopark/library/Chaino/0.9.6/Chaino-0.9.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Chaino-0.9.6.tar.gz",
+    "size_bytes": 21930,
+    "sha256": "d7628d27aa585f967d007ea734dd0b896f03ba9164b0acfb70dc0109f509c104",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/salesiopark/library/Chaino/0.9.6/Chaino-0.9.6.tar.gz",
+     "https://dl.registry.platformio.org/download/salesiopark/library/Chaino/0.9.6/Chaino-0.9.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

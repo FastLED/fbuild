@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lebuni",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lebuni/library/ZACwire%20for%20TSic/2.0.0/ZACwireforTSic-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZACwireforTSic-2.0.0.tar.gz",
+    "size_bytes": 5683,
+    "sha256": "19fc58c2412187fffd100dd495c553c70d7e144649386a33be4c2d75cb1a10f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lebuni/library/ZACwire%2520for%2520TSic/2.0.0/ZACwireforTSic-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lebuni/library/ZACwire%20for%20TSic/2.0.0/ZACwireforTSic-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

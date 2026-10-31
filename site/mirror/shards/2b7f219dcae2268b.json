@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-johnvanlaanen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-johnvanlaanen/library/SDFlashDisk/0.0.0+sha.99935a94f153/SDFlashDisk-0.0.0+sha.99935a94f153.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDFlashDisk-0.0.0+sha.99935a94f153.tar.gz",
+    "size_bytes": 5759,
+    "sha256": "41d5983b9cb55999ea7b560b31f4959c2ab0d755aeab9b37af9eafe0b01ccdf4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-johnvanlaanen/library/SDFlashDisk/0.0.0%2Bsha.99935a94f153/SDFlashDisk-0.0.0%2Bsha.99935a94f153.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-johnvanlaanen/library/SDFlashDisk/0.0.0%2Bsha.99935a94f153/SDFlashDisk-0.0.0%2Bsha.99935a94f153.tar.gz"
+    ]
+   }
+  }
+ ]
+}

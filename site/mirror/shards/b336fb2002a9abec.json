@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/belidzs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "belidzs/library/PreciseLM35/1.0.2/PreciseLM35-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PreciseLM35-1.0.2.tar.gz",
+    "size_bytes": 15185,
+    "sha256": "591e8712ae22cb4e22b2544d2a48e410fe4458df14961997094d7dd32269c967",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/belidzs/library/PreciseLM35/1.0.2/PreciseLM35-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/belidzs/library/PreciseLM35/1.0.2/PreciseLM35-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

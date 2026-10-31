@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-goodgod",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-goodgod/library/PPM/0.0.0+sha.ab42e541f04d/PPM-0.0.0+sha.ab42e541f04d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PPM-0.0.0+sha.ab42e541f04d.tar.gz",
+    "size_bytes": 1573,
+    "sha256": "3de5e54068545fbebf63b02aa6c649e76f8aa190ce89b6989fb1f28e415e8102",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-goodgod/library/PPM/0.0.0%2Bsha.ab42e541f04d/PPM-0.0.0%2Bsha.ab42e541f04d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-goodgod/library/PPM/0.0.0%2Bsha.ab42e541f04d/PPM-0.0.0%2Bsha.ab42e541f04d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

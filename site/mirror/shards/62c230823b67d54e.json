@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/netguy204",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "netguy204/library/OakOLED/0.9.0/OakOLED-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OakOLED-0.9.0.tar.gz",
+    "size_bytes": 3538,
+    "sha256": "c732a4819b91fb6ef613d85c075fb4b6a1bad6ff7c5f6821ce518bf498484bb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/netguy204/library/OakOLED/0.9.0/OakOLED-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/netguy204/library/OakOLED/0.9.0/OakOLED-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

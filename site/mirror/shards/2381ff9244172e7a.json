@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/goodfilling",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "goodfilling/library/DRV8251-Driver/1.0.0/DRV8251-Driver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DRV8251-Driver-1.0.0.tar.gz",
+    "size_bytes": 5433,
+    "sha256": "ba421c1c9a0e4f49a0d8df81ae0a888fbcbd28e43fedcb611b366d5399b8af14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/goodfilling/library/DRV8251-Driver/1.0.0/DRV8251-Driver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/goodfilling/library/DRV8251-Driver/1.0.0/DRV8251-Driver-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

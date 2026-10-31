@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/0xf6",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "0xf6/library/TM74/1.1.4/TM74-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM74-1.1.4.tar.gz",
+    "size_bytes": 4448,
+    "sha256": "1abc0e618318937a9e86f7575fbc690df27f333b2a1752c35515592c99489f2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/0xf6/library/TM74/1.1.4/TM74-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/0xf6/library/TM74/1.1.4/TM74-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "0xf6/library/arduino-pin-api/1.1.8-r201002/arduino-pin-api-1.1.8-r201002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-pin-api-1.1.8-r201002.tar.gz",
+    "size_bytes": 3109,
+    "sha256": "f0be8401bddb154e0f066ff46e8d5b5f9ef51a794dc8db4e32f557a7dfc1b8d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/0xf6/library/arduino-pin-api/1.1.8-r201002/arduino-pin-api-1.1.8-r201002.tar.gz",
+     "https://dl.registry.platformio.org/download/0xf6/library/arduino-pin-api/1.1.8-r201002/arduino-pin-api-1.1.8-r201002.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pec1985",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pec1985/library/PEVario/1.0.0/PEVario-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PEVario-1.0.0.tar.gz",
+    "size_bytes": 5956,
+    "sha256": "88f7b16e8dc27a68d79ed9f0f0a77f9d82cbd45ca7886bb9d50633b4a4698289",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pec1985/library/PEVario/1.0.0/PEVario-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pec1985/library/PEVario/1.0.0/PEVario-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

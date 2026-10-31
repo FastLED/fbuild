@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wertyfrog",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wertyfrog/library/LCD40x2/0.0.0+sha.ca430b27054d/LCD40x2-0.0.0+sha.ca430b27054d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD40x2-0.0.0+sha.ca430b27054d.tar.gz",
+    "size_bytes": 3867,
+    "sha256": "8f170236851ee534931b41a81bb02d93b8ffccf37665a1542f09eb8009db8407",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wertyfrog/library/LCD40x2/0.0.0%2Bsha.ca430b27054d/LCD40x2-0.0.0%2Bsha.ca430b27054d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wertyfrog/library/LCD40x2/0.0.0%2Bsha.ca430b27054d/LCD40x2-0.0.0%2Bsha.ca430b27054d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wertyfrog/library/ws2801/0.0.0+sha.0611499dd15d/ws2801-0.0.0+sha.0611499dd15d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ws2801-0.0.0+sha.0611499dd15d.tar.gz",
+    "size_bytes": 4810,
+    "sha256": "f681ee922fef10498fcd634930249a42be4411e6494c61ad01aee56d8f505c1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wertyfrog/library/ws2801/0.0.0%2Bsha.0611499dd15d/ws2801-0.0.0%2Bsha.0611499dd15d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wertyfrog/library/ws2801/0.0.0%2Bsha.0611499dd15d/ws2801-0.0.0%2Bsha.0611499dd15d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/genilto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "genilto/library/EpeverTracer/0.0.7/EpeverTracer-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpeverTracer-0.0.7.tar.gz",
+    "size_bytes": 388297,
+    "sha256": "4f06c0730f90eebf3a4b1f8e7fdfb8e8d3202bef2ba401a4538272da3e2276a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/genilto/library/EpeverTracer/0.0.7/EpeverTracer-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/genilto/library/EpeverTracer/0.0.7/EpeverTracer-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "genilto/library/SimpleTimer/0.0.1/SimpleTimer-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleTimer-0.0.1.tar.gz",
+    "size_bytes": 14060,
+    "sha256": "1f6135b60b61957ffdc100eaca60d0ddfe1a469466dd481f7eee04d0e1e01d92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/genilto/library/SimpleTimer/0.0.1/SimpleTimer-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/genilto/library/SimpleTimer/0.0.1/SimpleTimer-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

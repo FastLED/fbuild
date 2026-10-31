@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/makist-edu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "makist-edu/library/MakistCar/1.0.1/MakistCar-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MakistCar-1.0.1.tar.gz",
+    "size_bytes": 4512,
+    "sha256": "69d80acf8674b6246e56fb94dd65dcc9b4f006e6b24b86c67ebd59d54190ada8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makist-edu/library/MakistCar/1.0.1/MakistCar-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/makist-edu/library/MakistCar/1.0.1/MakistCar-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

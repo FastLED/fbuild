@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/minhaj6",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "minhaj6/library/DigiPotX9Cxxx/0.1.1/DigiPotX9Cxxx-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigiPotX9Cxxx-0.1.1.tar.gz",
+    "size_bytes": 7354,
+    "sha256": "56fc70d4cc0ad74291ab18040a8c58422fcb2ac8a09cae9386c11daf0915e742",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/minhaj6/library/DigiPotX9Cxxx/0.1.1/DigiPotX9Cxxx-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/minhaj6/library/DigiPotX9Cxxx/0.1.1/DigiPotX9Cxxx-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

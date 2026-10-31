@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kwokkayan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kwokkayan/library/SparkFun%20MPU-9250%20Digital%20Motion%20Processing%20%28DMP%29%20Arduino%20Library%20%28For%20ESP32%29/1.0.1/SparkFunMPU-9250DigitalMotionProcessingDMPArduinoLibraryForESP32-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMPU-9250DigitalMotionProcessingDMPArduinoLibraryForESP32-1.0.1.tar.gz",
+    "size_bytes": 57076,
+    "sha256": "6bc69281e4e31290af801be4089c56f4e18b1584766d53d7a2b118388f951bba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kwokkayan/library/SparkFun%2520MPU-9250%2520Digital%2520Motion%2520Processing%2520%2528DMP%2529%2520Arduino%2520Library%2520%2528For%2520ESP32%2529/1.0.1/SparkFunMPU-9250DigitalMotionProcessingDMPArduinoLibraryForESP32-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kwokkayan/library/SparkFun%20MPU-9250%20Digital%20Motion%20Processing%20%28DMP%29%20Arduino%20Library%20%28For%20ESP32%29/1.0.1/SparkFunMPU-9250DigitalMotionProcessingDMPArduinoLibraryForESP32-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

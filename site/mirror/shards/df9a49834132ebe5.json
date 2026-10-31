@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-stonie",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-stonie/library/flash25spi/0.0.0+sha.14c5db5e54df/flash25spi-0.0.0+sha.14c5db5e54df.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "flash25spi-0.0.0+sha.14c5db5e54df.tar.gz",
+    "size_bytes": 3864,
+    "sha256": "a6312c1d63b18af33b27860249d508adfcfa057ad165625a366b6edc0bf218dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stonie/library/flash25spi/0.0.0%2Bsha.14c5db5e54df/flash25spi-0.0.0%2Bsha.14c5db5e54df.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stonie/library/flash25spi/0.0.0%2Bsha.14c5db5e54df/flash25spi-0.0.0%2Bsha.14c5db5e54df.tar.gz"
+    ]
+   }
+  }
+ ]
+}

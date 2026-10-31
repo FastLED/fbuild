@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maximiliankautzsch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maximiliankautzsch/library/Moving-Average/1.1.1/Moving-Average-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Moving-Average-1.1.1.tar.gz",
+    "size_bytes": 4001,
+    "sha256": "dd6b86410b424c2477b95734d0373542ac683a3d0e7d0ea47056c0b4c57f8b58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maximiliankautzsch/library/Moving-Average/1.1.1/Moving-Average-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/maximiliankautzsch/library/Moving-Average/1.1.1/Moving-Average-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kammerlo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kammerlo/library/EasyHomeassistant/0.0.5/EasyHomeassistant-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyHomeassistant-0.0.5.tar.gz",
+    "size_bytes": 4068,
+    "sha256": "24315a41f63cf1ebd0bf328d9ecf5756a0b822383bf84dc60b5f1f5ebace76cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kammerlo/library/EasyHomeassistant/0.0.5/EasyHomeassistant-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/kammerlo/library/EasyHomeassistant/0.0.5/EasyHomeassistant-0.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bobbylindsey",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bobbylindsey/library/TelegramAsync/0.1.1/TelegramAsync-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TelegramAsync-0.1.1.tar.gz",
+    "size_bytes": 24441,
+    "sha256": "aba34014212214994b48b8fadf27bfbf7b58a57a0e1b3b0a87069d7d8a949a2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bobbylindsey/library/TelegramAsync/0.1.1/TelegramAsync-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bobbylindsey/library/TelegramAsync/0.1.1/TelegramAsync-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bobbylindsey/library/TelegramAsync/0.1.2/TelegramAsync-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TelegramAsync-0.1.2.tar.gz",
+    "size_bytes": 26227,
+    "sha256": "048e92bcc6f4937e4156122a8c6d8abd0b0452a5b543fe8291ca82430bcbde19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bobbylindsey/library/TelegramAsync/0.1.2/TelegramAsync-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bobbylindsey/library/TelegramAsync/0.1.2/TelegramAsync-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bobbylindsey/library/TelegramAsync/0.1.3/TelegramAsync-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TelegramAsync-0.1.3.tar.gz",
+    "size_bytes": 28896,
+    "sha256": "46767d9b48cf730f1740b7db6b7f745df875ab9f68e88f1dfc18d237ffba7336",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bobbylindsey/library/TelegramAsync/0.1.3/TelegramAsync-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bobbylindsey/library/TelegramAsync/0.1.3/TelegramAsync-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bobbylindsey/library/TelegramAsync/0.1.4/TelegramAsync-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TelegramAsync-0.1.4.tar.gz",
+    "size_bytes": 28344,
+    "sha256": "e2d01541b800dafd5113536f169285e845b9cd7baafef78214215bb445fcd477",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bobbylindsey/library/TelegramAsync/0.1.4/TelegramAsync-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bobbylindsey/library/TelegramAsync/0.1.4/TelegramAsync-0.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

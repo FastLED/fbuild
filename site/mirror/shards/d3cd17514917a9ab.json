@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mischief",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mischief/library/lua/0.1.1/lua-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lua-0.1.1.tar.gz",
+    "size_bytes": 625994,
+    "sha256": "396a0b9d022f769ea9fe64256b36f155666e2e46cdebfeabb4071a0cc153003d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mischief/library/lua/0.1.1/lua-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mischief/library/lua/0.1.1/lua-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

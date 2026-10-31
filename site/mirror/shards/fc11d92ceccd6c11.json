@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/oleoleg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "oleoleg/library/Oleoleg_ULN2003_Stepper/1.0.0/Oleoleg_ULN2003_Stepper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Oleoleg_ULN2003_Stepper-1.0.0.tar.gz",
+    "size_bytes": 4802,
+    "sha256": "6ac10923c7a46740f67e71e3178fc538bbfa9a183a918cb5f657a88c939b516c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/oleoleg/library/Oleoleg_ULN2003_Stepper/1.0.0/Oleoleg_ULN2003_Stepper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/oleoleg/library/Oleoleg_ULN2003_Stepper/1.0.0/Oleoleg_ULN2003_Stepper-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,256 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chintal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chintal/library/ebs-cryptolib/0.2.0/ebs-cryptolib-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-cryptolib-0.2.0.tar.gz",
+    "size_bytes": 44512,
+    "sha256": "cd4008acc194c08841e6f2506121c5c202c627486e903603d7000776680ab092",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-cryptolib/0.2.0/ebs-cryptolib-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-cryptolib/0.2.0/ebs-cryptolib-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-driver-tm1637/0.2.0/ebs-driver-tm1637-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-driver-tm1637-0.2.0.tar.gz",
+    "size_bytes": 19628,
+    "sha256": "4481140ccbc9173ae9667f6c3e415294abdd0be1b46c82ded04e04c39794dadb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-driver-tm1637/0.2.0/ebs-driver-tm1637-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-driver-tm1637/0.2.0/ebs-driver-tm1637-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-ds/0.3.3/ebs-ds-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-ds-0.3.3.tar.gz",
+    "size_bytes": 28172,
+    "sha256": "5d2813dc22f0a18f065ce37d78930a1cc9a00c48ed5d6740c5104288a4204605",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-ds/0.3.3/ebs-ds-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-ds/0.3.3/ebs-ds-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-dsp/0.1.1/ebs-dsp-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-dsp-0.1.1.tar.gz",
+    "size_bytes": 18054,
+    "sha256": "b39652630959b865082de32f7dc8b682b05a28ee51cd88c695f634dd97553ccc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-dsp/0.1.1/ebs-dsp-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-dsp/0.1.1/ebs-dsp-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-hal-uc-avr/0.0.5/ebs-hal-uc-avr-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-hal-uc-avr-0.0.5.tar.gz",
+    "size_bytes": 26869,
+    "sha256": "5adebe4ff86265609c50e099f7e97272a6b0604efcc3e79dad520673cf427644",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-hal-uc-avr/0.0.5/ebs-hal-uc-avr-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-hal-uc-avr/0.0.5/ebs-hal-uc-avr-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-hal-uc-ch32v/0.1.1/ebs-hal-uc-ch32v-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-hal-uc-ch32v-0.1.1.tar.gz",
+    "size_bytes": 21977,
+    "sha256": "5e234935874b56baf597dabddd315bf7e88d0d03d4d86c45dbfdcfaf590dd974",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-hal-uc-ch32v/0.1.1/ebs-hal-uc-ch32v-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-hal-uc-ch32v/0.1.1/ebs-hal-uc-ch32v-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-hal-uc-stm32/0.4.0/ebs-hal-uc-stm32-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-hal-uc-stm32-0.4.0.tar.gz",
+    "size_bytes": 109413,
+    "sha256": "a745949332f52e782550fcb38530ed68c6923926cedf05ce2ded9b7584179519",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-hal-uc-stm32/0.4.0/ebs-hal-uc-stm32-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-hal-uc-stm32/0.4.0/ebs-hal-uc-stm32-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-hal-uc-stm32f4xx/0.0.1/ebs-hal-uc-stm32f4xx-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-hal-uc-stm32f4xx-0.0.1.tar.gz",
+    "size_bytes": 19942,
+    "sha256": "d39d0522e320b8c276ad187d496f5e4e4ecd3545de9a000170c0b2f56763061e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-hal-uc-stm32f4xx/0.0.1/ebs-hal-uc-stm32f4xx-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-hal-uc-stm32f4xx/0.0.1/ebs-hal-uc-stm32f4xx-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-hal-uc/0.4.1/ebs-hal-uc-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-hal-uc-0.4.1.tar.gz",
+    "size_bytes": 39212,
+    "sha256": "b696a0d6a9effe768ef00e876cc4b1a542e5110b203537d928b417a3a110703f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-hal-uc/0.4.1/ebs-hal-uc-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-hal-uc/0.4.1/ebs-hal-uc-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-modbus/0.1.0/ebs-modbus-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-modbus-0.1.0.tar.gz",
+    "size_bytes": 19046,
+    "sha256": "6918088a1edae74bd1666db0a58010bc4f143d8a9667fad74e08c78505fe7638",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-modbus/0.1.0/ebs-modbus-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-modbus/0.1.0/ebs-modbus-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-platform/0.4.1/ebs-platform-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-platform-0.4.1.tar.gz",
+    "size_bytes": 19897,
+    "sha256": "a87a29ae9ec7f93cda9386554306195eedf5b854c1232d06fb3f9c7e3ad0abe9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-platform/0.4.1/ebs-platform-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-platform/0.4.1/ebs-platform-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-prbs/0.2.0/ebs-prbs-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-prbs-0.2.0.tar.gz",
+    "size_bytes": 21088,
+    "sha256": "5e6c890c9399d9a62b54016356b3191f20f58abca156439214d0eeecd2a6262f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-prbs/0.2.0/ebs-prbs-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-prbs/0.2.0/ebs-prbs-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-printf/0.3.4/ebs-printf-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-printf-0.3.4.tar.gz",
+    "size_bytes": 19123,
+    "sha256": "af1f6fb4c745d0ebeaf4cc7f0fcb6ced662725c5f3ee009c517ae559087f5f40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-printf/0.3.4/ebs-printf-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-printf/0.3.4/ebs-printf-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-rand/0.1.0/ebs-rand-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-rand-0.1.0.tar.gz",
+    "size_bytes": 16586,
+    "sha256": "3714bd2d396ed52962a8245f7fbb9c8973fe9bab358b67ee2c0c637ec86c5017",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-rand/0.1.0/ebs-rand-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-rand/0.1.0/ebs-rand-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-seg7/0.1.1/ebs-seg7-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-seg7-0.1.1.tar.gz",
+    "size_bytes": 16117,
+    "sha256": "d711335b06e7c974d9052f380bbaf12721ce9449acf3ba3c66638eb1e1601a64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-seg7/0.1.1/ebs-seg7-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-seg7/0.1.1/ebs-seg7-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-time/0.3.3/ebs-time-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-time-0.3.3.tar.gz",
+    "size_bytes": 31867,
+    "sha256": "8ab98ee9f1f6790ff51ed1628434ee856753d316353267d911d57bf5965d33b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-time/0.3.3/ebs-time-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-time/0.3.3/ebs-time-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-ucdm/0.3.2/ebs-ucdm-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-ucdm-0.3.2.tar.gz",
+    "size_bytes": 24095,
+    "sha256": "65443ed7b46b0b36a1dcc7d48cd38f0002d45b673b12b62e88f5e2b0aa301fb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-ucdm/0.3.2/ebs-ucdm-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-ucdm/0.3.2/ebs-ucdm-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/library/ebs-uuid/0.1.0/ebs-uuid-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ebs-uuid-0.1.0.tar.gz",
+    "size_bytes": 20665,
+    "sha256": "9067316dc4b6d268895ac09791911baaa825c71d90a7dee8a32aa8a5c8936bd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/library/ebs-uuid/0.1.0/ebs-uuid-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/library/ebs-uuid/0.1.0/ebs-uuid-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chintal/tool/tool-ebs/1.0.0/tool-ebs-linux_x86_64-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-ebs-linux_x86_64-1.0.0.tar.gz",
+    "size_bytes": 1752,
+    "sha256": "d635dd67e5e58454dab81eb4794a922aefe5a9c344fcd6d7df6763ec736d62c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chintal/tool/tool-ebs/1.0.0/tool-ebs-linux_x86_64-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chintal/tool/tool-ebs/1.0.0/tool-ebs-linux_x86_64-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

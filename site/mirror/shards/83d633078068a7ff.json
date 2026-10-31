@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nilon123456789",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nilon123456789/library/Firmetix/7.1.2/Firmetix-7.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Firmetix-7.1.2.tar.gz",
+    "size_bytes": 57995,
+    "sha256": "7f2b7567cdc95640eb8168c3e938acf6d9f9287c5feb909aa7b95b6ec9879cfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nilon123456789/library/Firmetix/7.1.2/Firmetix-7.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nilon123456789/library/Firmetix/7.1.2/Firmetix-7.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nilon123456789/library/RC%20Receiver/1.0.2/RCReceiver-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RCReceiver-1.0.2.tar.gz",
+    "size_bytes": 3518,
+    "sha256": "0a8d9a7512f400e8b637f705502e78c85a16664ea37dc293c339c6fd48fed8dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nilon123456789/library/RC%2520Receiver/1.0.2/RCReceiver-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nilon123456789/library/RC%20Receiver/1.0.2/RCReceiver-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

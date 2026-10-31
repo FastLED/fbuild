@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/clefa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "clefa/library/I2C/1.0.1/I2C-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C-1.0.1.tar.gz",
+    "size_bytes": 2641,
+    "sha256": "ca8111eafad15333c96897a4d650e1e80c43ff298e68c694e9fc33c0f67ce2bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clefa/library/I2C/1.0.1/I2C-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/clefa/library/I2C/1.0.1/I2C-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "clefa/library/I2C_LCD/1.0.5/I2C_LCD-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C_LCD-1.0.5.tar.gz",
+    "size_bytes": 4538,
+    "sha256": "07acc2553328027f023d8df9b163d6984c761fb5946d6582e321fd0dee4035d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clefa/library/I2C_LCD/1.0.5/I2C_LCD-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/clefa/library/I2C_LCD/1.0.5/I2C_LCD-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "clefa/library/I2C_LCD_DN/1.0.2/I2C_LCD_DN-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C_LCD_DN-1.0.2.tar.gz",
+    "size_bytes": 2929,
+    "sha256": "3ed52319c93874fc16587c5b348c5845930369d3da9882ebcbde0f2abe3ebc3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clefa/library/I2C_LCD_DN/1.0.2/I2C_LCD_DN-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/clefa/library/I2C_LCD_DN/1.0.2/I2C_LCD_DN-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

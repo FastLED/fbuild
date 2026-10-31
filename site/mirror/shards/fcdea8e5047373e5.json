@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-richarde",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-richarde/library/CommonTypes/0.0.0+sha.033e112463bb/CommonTypes-0.0.0+sha.033e112463bb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CommonTypes-0.0.0+sha.033e112463bb.tar.gz",
+    "size_bytes": 937,
+    "sha256": "3a68ce7badd85ca2fc7201dd01f2afbd1473c2fae80370051136948fb5080a26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-richarde/library/CommonTypes/0.0.0%2Bsha.033e112463bb/CommonTypes-0.0.0%2Bsha.033e112463bb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-richarde/library/CommonTypes/0.0.0%2Bsha.033e112463bb/CommonTypes-0.0.0%2Bsha.033e112463bb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-richarde/library/Gameduino/0.0.0+sha.d614b857b940/Gameduino-0.0.0+sha.d614b857b940.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gameduino-0.0.0+sha.d614b857b940.tar.gz",
+    "size_bytes": 7350,
+    "sha256": "0d13e310ccada081acde867eb95c9684924720b1d5389ac75e3b40477bbddadd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-richarde/library/Gameduino/0.0.0%2Bsha.d614b857b940/Gameduino-0.0.0%2Bsha.d614b857b940.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-richarde/library/Gameduino/0.0.0%2Bsha.d614b857b940/Gameduino-0.0.0%2Bsha.d614b857b940.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-richarde/library/WiiClassicControllerLib/0.0.0+sha.79d04d737f02/WiiClassicControllerLib-0.0.0+sha.79d04d737f02.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiiClassicControllerLib-0.0.0+sha.79d04d737f02.tar.gz",
+    "size_bytes": 4885,
+    "sha256": "b59ac17c2685f7b96aa7b24c715200e1ba085697c650eeb427bb0f9a14680bad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-richarde/library/WiiClassicControllerLib/0.0.0%2Bsha.79d04d737f02/WiiClassicControllerLib-0.0.0%2Bsha.79d04d737f02.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-richarde/library/WiiClassicControllerLib/0.0.0%2Bsha.79d04d737f02/WiiClassicControllerLib-0.0.0%2Bsha.79d04d737f02.tar.gz"
+    ]
+   }
+  }
+ ]
+}

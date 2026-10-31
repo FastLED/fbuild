@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pazi88",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pazi88/library/STM32_CAN/1.2.2/STM32_CAN-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32_CAN-1.2.2.tar.gz",
+    "size_bytes": 34522,
+    "sha256": "20dd92354916dcca171a89a010e43e14aee8f5ffeae1c77b92dc9d147f0ffe06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pazi88/library/STM32_CAN/1.2.2/STM32_CAN-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pazi88/library/STM32_CAN/1.2.2/STM32_CAN-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

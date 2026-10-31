@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-prj1401-lidar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-prj1401-lidar/library/PwmIn/0.0.0+sha.cb7cc6f299eb/PwmIn-0.0.0+sha.cb7cc6f299eb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwmIn-0.0.0+sha.cb7cc6f299eb.tar.gz",
+    "size_bytes": 2030,
+    "sha256": "fe88a8444af2feab803b114b715e3924c4c73561000bcb3ffc7abcf55109d8af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-prj1401-lidar/library/PwmIn/0.0.0%2Bsha.cb7cc6f299eb/PwmIn-0.0.0%2Bsha.cb7cc6f299eb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-prj1401-lidar/library/PwmIn/0.0.0%2Bsha.cb7cc6f299eb/PwmIn-0.0.0%2Bsha.cb7cc6f299eb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

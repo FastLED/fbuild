@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vase7u",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vase7u/library/ExponentMap/1.0.0/ExponentMap-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExponentMap-1.0.0.tar.gz",
+    "size_bytes": 8971,
+    "sha256": "48cb2cd2880041003cfa1f5fd45c658da47dd9990481921d8c763f3d70311b0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vase7u/library/ExponentMap/1.0.0/ExponentMap-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vase7u/library/ExponentMap/1.0.0/ExponentMap-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vase7u/library/LiquidMenu/1.6.0/LiquidMenu-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidMenu-1.6.0.tar.gz",
+    "size_bytes": 4909113,
+    "sha256": "9a973d9a1f5852cc91387e4a7a2b2278660d557a36e6a15331deac8d7984ca98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vase7u/library/LiquidMenu/1.6.0/LiquidMenu-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vase7u/library/LiquidMenu/1.6.0/LiquidMenu-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vase7u/library/LiquidMenu/1.6.3/LiquidMenu-1.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidMenu-1.6.3.tar.gz",
+    "size_bytes": 212077,
+    "sha256": "7ed123e6c41c3cbd507a42607aef2fc0b4a53f2994792b887e1cee752ce8f35e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vase7u/library/LiquidMenu/1.6.3/LiquidMenu-1.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vase7u/library/LiquidMenu/1.6.3/LiquidMenu-1.6.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

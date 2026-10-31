@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arduboy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arduboy/library/Arduboy/1.1.1/Arduboy-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduboy-1.1.1.tar.gz",
+    "size_bytes": 30941,
+    "sha256": "735915e16b2e5410ec3a1a1e2cc74258fda41b7c2d35653fdc174833f95f7887",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduboy/library/Arduboy/1.1.1/Arduboy-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduboy/library/Arduboy/1.1.1/Arduboy-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduboy/library/ArduboyPlaytune/1.0.4/ArduboyPlaytune-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduboyPlaytune-1.0.4.tar.gz",
+    "size_bytes": 9429,
+    "sha256": "8a8c1544c84fb1151e5786d1709da08607056066668d85d41586fd68a3a76888",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduboy/library/ArduboyPlaytune/1.0.4/ArduboyPlaytune-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/arduboy/library/ArduboyPlaytune/1.0.4/ArduboyPlaytune-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

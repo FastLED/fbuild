@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bgo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bgo/library/Oled%20UI%20Components/1.0.2/OledUIComponents-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OledUIComponents-1.0.2.tar.gz",
+    "size_bytes": 11153,
+    "sha256": "9d03ba735a1a4926684b00d3853a7557a6d34a4e9f8234733beb010d1445d1c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bgo/library/Oled%2520UI%2520Components/1.0.2/OledUIComponents-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bgo/library/Oled%20UI%20Components/1.0.2/OledUIComponents-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

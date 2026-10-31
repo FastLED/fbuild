@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/twystneko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "twystneko/library/Object3d/0.0.0-alpha+sha.1/Object3d-0.0.0-alphasha.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Object3d-0.0.0-alphasha.1.tar.gz",
+    "size_bytes": 5059,
+    "sha256": "b38c9b5aeac62e80427771c30e3eaa7940868c1d2e99256d8538ad64a28bb46d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/twystneko/library/Object3d/0.0.0-alpha%2Bsha.1/Object3d-0.0.0-alphasha.1.tar.gz",
+     "https://dl.registry.platformio.org/download/twystneko/library/Object3d/0.0.0-alpha%2Bsha.1/Object3d-0.0.0-alphasha.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

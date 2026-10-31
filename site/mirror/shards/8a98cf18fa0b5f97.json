@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fmgambino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fmgambino/library/PowerMeter/1.0.0/PowerMeter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowerMeter-1.0.0.tar.gz",
+    "size_bytes": 3606,
+    "sha256": "bb54ea33c3757952a5471a061e30e45be6dc104aa01e11012a285dc402853768",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmgambino/library/PowerMeter/1.0.0/PowerMeter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fmgambino/library/PowerMeter/1.0.0/PowerMeter-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmgambino/library/ZMPT101B/1.0.3/ZMPT101B-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZMPT101B-1.0.3.tar.gz",
+    "size_bytes": 2428,
+    "sha256": "12b8cad25c90e56630bc7aa21d197e96512df85d43a90e230c197d790e2156cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmgambino/library/ZMPT101B/1.0.3/ZMPT101B-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/fmgambino/library/ZMPT101B/1.0.3/ZMPT101B-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

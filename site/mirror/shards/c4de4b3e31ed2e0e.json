@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tttapa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tttapa/library/Arduino%20Filters/1.0.0/ArduinoFilters-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoFilters-1.0.0.tar.gz",
+    "size_bytes": 442838,
+    "sha256": "40e614327914fa04532762f9fb1f4c3689027a4cd65efb51feb693af81d9ded4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tttapa/library/Arduino%2520Filters/1.0.0/ArduinoFilters-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tttapa/library/Arduino%20Filters/1.0.0/ArduinoFilters-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tttapa/library/Control%20Surface/2.1.0/ControlSurface-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ControlSurface-2.1.0.tar.gz",
+    "size_bytes": 595703,
+    "sha256": "9157b33c5d9a016ea76522848d26d8f254acda53b6d52e5d753071e122070629",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tttapa/library/Control%2520Surface/2.1.0/ControlSurface-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tttapa/library/Control%20Surface/2.1.0/ControlSurface-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tttapa/library/Control%20Surface/2.1.1/ControlSurface-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ControlSurface-2.1.1.tar.gz",
+    "size_bytes": 596352,
+    "sha256": "42c427f5ffdf2f0a34a75f2f1933539178540798c1010811b5bce695d3763c3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tttapa/library/Control%2520Surface/2.1.1/ControlSurface-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tttapa/library/Control%20Surface/2.1.1/ControlSurface-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tttapa/library/Control%20Surface/2.1.2/ControlSurface-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ControlSurface-2.1.2.tar.gz",
+    "size_bytes": 596984,
+    "sha256": "116e1163f66b99f54f7684aba739ba9f1b79544677f3e8f6b30dbd7294c31168",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tttapa/library/Control%2520Surface/2.1.2/ControlSurface-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tttapa/library/Control%20Surface/2.1.2/ControlSurface-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tttapa/library/Control%20Surface/2.1.3/ControlSurface-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ControlSurface-2.1.3.tar.gz",
+    "size_bytes": 597051,
+    "sha256": "22b4fa4c4152ccd5b7f747eb91969db83706750ce234186b2e0c1592c130f413",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tttapa/library/Control%2520Surface/2.1.3/ControlSurface-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tttapa/library/Control%20Surface/2.1.3/ControlSurface-2.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

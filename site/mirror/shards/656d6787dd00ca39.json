@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/petteriaimonen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "petteriaimonen/library/libfixmath/0.0.0-alpha+sha.66365d5888/libfixmath-0.0.0-alphasha.66365d5888.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libfixmath-0.0.0-alphasha.66365d5888.tar.gz",
+    "size_bytes": 323484,
+    "sha256": "009fcd36787c19f31e1dcb8e7ba0e576ca8970632da39f6160c42988b5b498c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/petteriaimonen/library/libfixmath/0.0.0-alpha%2Bsha.66365d5888/libfixmath-0.0.0-alphasha.66365d5888.tar.gz",
+     "https://dl.registry.platformio.org/download/petteriaimonen/library/libfixmath/0.0.0-alpha%2Bsha.66365d5888/libfixmath-0.0.0-alphasha.66365d5888.tar.gz"
+    ]
+   }
+  }
+ ]
+}

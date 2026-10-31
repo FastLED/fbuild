@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lorevee",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lorevee/library/x-nucleo-idb0xa1/2.2.0/x-nucleo-idb0xa1-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "x-nucleo-idb0xa1-2.2.0.tar.gz",
+    "size_bytes": 115657,
+    "sha256": "35f7a4c87e73edaa09d2c0ee70826d39f801917b1f292f70690167635a12a6b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lorevee/library/x-nucleo-idb0xa1/2.2.0/x-nucleo-idb0xa1-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lorevee/library/x-nucleo-idb0xa1/2.2.0/x-nucleo-idb0xa1-2.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

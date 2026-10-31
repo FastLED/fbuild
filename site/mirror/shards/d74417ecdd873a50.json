@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/itkindaworks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "itkindaworks/library/ESPHelper/2.0.4/ESPHelper-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPHelper-2.0.4.tar.gz",
+    "size_bytes": 42937,
+    "sha256": "f4a73b3109fbfe7893125bfeece9028331c9d14e777404111fc05f445ec98a69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/itkindaworks/library/ESPHelper/2.0.4/ESPHelper-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/itkindaworks/library/ESPHelper/2.0.4/ESPHelper-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "itkindaworks/library/ESPHelper32/0.9.1/ESPHelper32-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPHelper32-0.9.1.tar.gz",
+    "size_bytes": 33741,
+    "sha256": "efb8603e8fd52bca07925f55c5a89b1550a59240a39e050db6111ed95269f8a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/itkindaworks/library/ESPHelper32/0.9.1/ESPHelper32-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/itkindaworks/library/ESPHelper32/0.9.1/ESPHelper32-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "itkindaworks/library/Metro/1.0.1/Metro-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Metro-1.0.1.tar.gz",
+    "size_bytes": 4326,
+    "sha256": "d7840eba379f96134a5eeff869185b344935bfd96c7b4efa84346f6bac285ea2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/itkindaworks/library/Metro/1.0.1/Metro-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/itkindaworks/library/Metro/1.0.1/Metro-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

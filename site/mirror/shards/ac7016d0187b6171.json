@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-campbell-scientific-australia",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-campbell-scientific-australia/library/LoRaWAN-lib_Australia915Mhz/0.0.0+sha.d0d80f31651f/LoRaWAN-lib_Australia915Mhz-0.0.0+sha.d0d80f31651f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaWAN-lib_Australia915Mhz-0.0.0+sha.d0d80f31651f.tar.gz",
+    "size_bytes": 37467,
+    "sha256": "7e5d589665f5d4b62ff8555de03804d15ea4554f16689946753cd410544de602",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-campbell-scientific-australia/library/LoRaWAN-lib_Australia915Mhz/0.0.0%2Bsha.d0d80f31651f/LoRaWAN-lib_Australia915Mhz-0.0.0%2Bsha.d0d80f31651f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-campbell-scientific-australia/library/LoRaWAN-lib_Australia915Mhz/0.0.0%2Bsha.d0d80f31651f/LoRaWAN-lib_Australia915Mhz-0.0.0%2Bsha.d0d80f31651f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

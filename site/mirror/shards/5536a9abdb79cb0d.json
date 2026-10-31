@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-d-worrall",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-d-worrall/library/I2SSlave/0.0.0+sha.aa3e863920d2/I2SSlave-0.0.0+sha.aa3e863920d2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2SSlave-0.0.0+sha.aa3e863920d2.tar.gz",
+    "size_bytes": 4592,
+    "sha256": "25315e5f88de3deda4af4b8ae1937bd951c71093b32d29be3468f7896a4abd39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-d-worrall/library/I2SSlave/0.0.0%2Bsha.aa3e863920d2/I2SSlave-0.0.0%2Bsha.aa3e863920d2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-d-worrall/library/I2SSlave/0.0.0%2Bsha.aa3e863920d2/I2SSlave-0.0.0%2Bsha.aa3e863920d2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-d-worrall/library/PCA9635/0.0.0+sha.16f968749855/PCA9635-0.0.0+sha.16f968749855.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9635-0.0.0+sha.16f968749855.tar.gz",
+    "size_bytes": 2484,
+    "sha256": "cb070cc00a2fd99d4aa0a824f13b83b6522045b24364c50778be9cbf9ca2c038",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-d-worrall/library/PCA9635/0.0.0%2Bsha.16f968749855/PCA9635-0.0.0%2Bsha.16f968749855.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-d-worrall/library/PCA9635/0.0.0%2Bsha.16f968749855/PCA9635-0.0.0%2Bsha.16f968749855.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-d-worrall/library/TLV320/0.0.0+sha.7e76c6f56169/TLV320-0.0.0+sha.7e76c6f56169.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLV320-0.0.0+sha.7e76c6f56169.tar.gz",
+    "size_bytes": 5539,
+    "sha256": "e74a0a9f0a5e94f3f657ff63fc0bd8ebe36b32eddb84e07bb17460176cb3353c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-d-worrall/library/TLV320/0.0.0%2Bsha.7e76c6f56169/TLV320-0.0.0%2Bsha.7e76c6f56169.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-d-worrall/library/TLV320/0.0.0%2Bsha.7e76c6f56169/TLV320-0.0.0%2Bsha.7e76c6f56169.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-d-worrall/library/dispBoB/0.0.0+sha.a9abac3696b0/dispBoB-0.0.0+sha.a9abac3696b0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dispBoB-0.0.0+sha.a9abac3696b0.tar.gz",
+    "size_bytes": 3259,
+    "sha256": "659883ef58ec433110888085d50c9197620bc5b8855da2e3335eb26a8080df08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-d-worrall/library/dispBoB/0.0.0%2Bsha.a9abac3696b0/dispBoB-0.0.0%2Bsha.a9abac3696b0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-d-worrall/library/dispBoB/0.0.0%2Bsha.a9abac3696b0/dispBoB-0.0.0%2Bsha.a9abac3696b0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

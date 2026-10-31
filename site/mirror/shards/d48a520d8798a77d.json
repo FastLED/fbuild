@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dkaukov",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dkaukov/library/esp32-afsk/0.1.0/esp32-afsk-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-afsk-0.1.0.tar.gz",
+    "size_bytes": 19899,
+    "sha256": "2b7f98e4a7be20962f5b4b3358513d9733757460a5e71fd98b8c4c6acc9b3eb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dkaukov/library/esp32-afsk/0.1.0/esp32-afsk-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dkaukov/library/esp32-afsk/0.1.0/esp32-afsk-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dkaukov/library/esp32-afsk/0.1.1/esp32-afsk-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-afsk-0.1.1.tar.gz",
+    "size_bytes": 32239,
+    "sha256": "b2d71e00e5ba37966bc4392cbcb9fcf8ad89c363e1e00963dff67856c305cb2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dkaukov/library/esp32-afsk/0.1.1/esp32-afsk-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dkaukov/library/esp32-afsk/0.1.1/esp32-afsk-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dkaukov/library/esp32-afsk/0.1.2/esp32-afsk-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-afsk-0.1.2.tar.gz",
+    "size_bytes": 32300,
+    "sha256": "6e55895821e91039ec9262d9b6783535c7bdb6c0a3cdb5512ce1292c0d980da3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dkaukov/library/esp32-afsk/0.1.2/esp32-afsk-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dkaukov/library/esp32-afsk/0.1.2/esp32-afsk-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dkaukov/library/esp32-afsk/0.1.3/esp32-afsk-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-afsk-0.1.3.tar.gz",
+    "size_bytes": 26431,
+    "sha256": "fa06684ab2d0928ecf12f8162747cd4f9f38d5af88556b7428e92348bacdb3d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dkaukov/library/esp32-afsk/0.1.3/esp32-afsk-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dkaukov/library/esp32-afsk/0.1.3/esp32-afsk-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dkaukov/library/esp32-afsk/0.1.4/esp32-afsk-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-afsk-0.1.4.tar.gz",
+    "size_bytes": 28111,
+    "sha256": "a1fab49d3d1079f139f668d3ed5c5f13137d0cfd26dc8f5b3bb5cd495010f20e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dkaukov/library/esp32-afsk/0.1.4/esp32-afsk-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dkaukov/library/esp32-afsk/0.1.4/esp32-afsk-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dkaukov/library/esp32-freedv2400b/1.2.0/esp32-freedv2400b-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-freedv2400b-1.2.0.tar.gz",
+    "size_bytes": 22691,
+    "sha256": "5e3c35f036110492499ffbfbd8986df408e9f533a66e1687e928ec8847b18e8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dkaukov/library/esp32-freedv2400b/1.2.0/esp32-freedv2400b-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dkaukov/library/esp32-freedv2400b/1.2.0/esp32-freedv2400b-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dkaukov/library/esp32-freedv2400b/1.3.0/esp32-freedv2400b-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-freedv2400b-1.3.0.tar.gz",
+    "size_bytes": 23076,
+    "sha256": "0540818c2b549f3005e6f4dfd02b73a92360a0bb5d03f685511b78a26f53b796",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dkaukov/library/esp32-freedv2400b/1.3.0/esp32-freedv2400b-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dkaukov/library/esp32-freedv2400b/1.3.0/esp32-freedv2400b-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

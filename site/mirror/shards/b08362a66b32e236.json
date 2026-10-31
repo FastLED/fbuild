@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alderrhodes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alderrhodes/library/pystring/1.1.4/pystring-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pystring-1.1.4.tar.gz",
+    "size_bytes": 21363,
+    "sha256": "fd11626b24b753c1b70baa3102ca8f98583272f6a5b04329d8c92f40f570cf0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alderrhodes/library/pystring/1.1.4/pystring-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/alderrhodes/library/pystring/1.1.4/pystring-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

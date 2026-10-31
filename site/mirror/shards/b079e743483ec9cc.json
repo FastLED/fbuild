@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fischer-simon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fischer-simon/library/ArduinoMultiWiFi/1.0.0/ArduinoMultiWiFi-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMultiWiFi-1.0.0.tar.gz",
+    "size_bytes": 2105,
+    "sha256": "96929802c0cb517d61896fa4be0a67325276011595cf8702280995b101d24f0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fischer-simon/library/ArduinoMultiWiFi/1.0.0/ArduinoMultiWiFi-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fischer-simon/library/ArduinoMultiWiFi/1.0.0/ArduinoMultiWiFi-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fischer-simon/library/ArduinoTelnet/1.1.1/ArduinoTelnet-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoTelnet-1.1.1.tar.gz",
+    "size_bytes": 10456,
+    "sha256": "e68da81d648b86b099e5ce29d15f3a61f6d262e55e0c257adbf2b846cca19739",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fischer-simon/library/ArduinoTelnet/1.1.1/ArduinoTelnet-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fischer-simon/library/ArduinoTelnet/1.1.1/ArduinoTelnet-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fischer-simon/library/Esp32EncryptedOta/1.0.0/Esp32EncryptedOta-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Esp32EncryptedOta-1.0.0.tar.gz",
+    "size_bytes": 5943,
+    "sha256": "9ab89389f88ca6ef7af03e5374818f9317df1380b2ff58278b13a8f129039041",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fischer-simon/library/Esp32EncryptedOta/1.0.0/Esp32EncryptedOta-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fischer-simon/library/Esp32EncryptedOta/1.0.0/Esp32EncryptedOta-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fischer-simon/library/Esp32Lua/5.4.7/Esp32Lua-5.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Esp32Lua-5.4.7.tar.gz",
+    "size_bytes": 245220,
+    "sha256": "6fa1cde0e5332ea29ff63562455a3c88c1c0e1f83f9a89c59fe6a1a10707ac71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fischer-simon/library/Esp32Lua/5.4.7/Esp32Lua-5.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/fischer-simon/library/Esp32Lua/5.4.7/Esp32Lua-5.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fischer-simon/library/LightweightMap/0.0.1/LightweightMap-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightMap-0.0.1.tar.gz",
+    "size_bytes": 1507,
+    "sha256": "c91c6d33a0c867bce987972f8c1360f0a52bc1dbf40a0432ecc3bf7a4de49b27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fischer-simon/library/LightweightMap/0.0.1/LightweightMap-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fischer-simon/library/LightweightMap/0.0.1/LightweightMap-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

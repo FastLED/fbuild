@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mbed-official",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mbed-official/library/USBHost/0.0.0+sha.7c3b59bb364e/USBHost-0.0.0+sha.7c3b59bb364e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBHost-0.0.0+sha.7c3b59bb364e.tar.gz",
+    "size_bytes": 226975,
+    "sha256": "504a70daed9736f811df4457cbd339b9070dde1de3d89af501368ca82d2e040d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed-official/library/USBHost/0.0.0%2Bsha.7c3b59bb364e/USBHost-0.0.0%2Bsha.7c3b59bb364e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed-official/library/USBHost/0.0.0%2Bsha.7c3b59bb364e/USBHost-0.0.0%2Bsha.7c3b59bb364e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mbed-official/library/WiflyInterface/0.0.0+sha.c77799a03294/WiflyInterface-0.0.0+sha.c77799a03294.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiflyInterface-0.0.0+sha.c77799a03294.tar.gz",
+    "size_bytes": 10531,
+    "sha256": "2209c44fd01eca4bb7049399ada687b79886cb70180641d5462bde1bddea494f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed-official/library/WiflyInterface/0.0.0%2Bsha.c77799a03294/WiflyInterface-0.0.0%2Bsha.c77799a03294.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed-official/library/WiflyInterface/0.0.0%2Bsha.c77799a03294/WiflyInterface-0.0.0%2Bsha.c77799a03294.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mbed-official/library/mbed-dsp/0.0.0+sha.7a284390b0ce/mbed-dsp-0.0.0+sha.7a284390b0ce.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-dsp-0.0.0+sha.7a284390b0ce.tar.gz",
+    "size_bytes": 1234169,
+    "sha256": "6963aee605e7b28cde04d347c5a136535ac86bb33069ebdc367c732f00e36580",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed-official/library/mbed-dsp/0.0.0%2Bsha.7a284390b0ce/mbed-dsp-0.0.0%2Bsha.7a284390b0ce.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed-official/library/mbed-dsp/0.0.0%2Bsha.7a284390b0ce/mbed-dsp-0.0.0%2Bsha.7a284390b0ce.tar.gz"
+    ]
+   }
+  }
+ ]
+}

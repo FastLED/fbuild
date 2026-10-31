@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/taleroangel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "taleroangel/library/ArduinoLogger/1.0.0/ArduinoLogger-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoLogger-1.0.0.tar.gz",
+    "size_bytes": 4051,
+    "sha256": "96c9217d41c9a7d4c6a1c36858aa4ec4375b5bf382ca763aa67e397f0143c0e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/taleroangel/library/ArduinoLogger/1.0.0/ArduinoLogger-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/taleroangel/library/ArduinoLogger/1.0.0/ArduinoLogger-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "taleroangel/library/ESPNetworkSetup/1.0.0/ESPNetworkSetup-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPNetworkSetup-1.0.0.tar.gz",
+    "size_bytes": 6110141,
+    "sha256": "fa503c84c3541398b7a4672103083b6c698592d6c07b221848d78036032a9ea3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/taleroangel/library/ESPNetworkSetup/1.0.0/ESPNetworkSetup-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/taleroangel/library/ESPNetworkSetup/1.0.0/ESPNetworkSetup-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

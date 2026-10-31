@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dushyantahuja",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dushyantahuja/library/IPGeolocation/3.0.0/IPGeolocation-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IPGeolocation-3.0.0.tar.gz",
+    "size_bytes": 15479,
+    "sha256": "a45cacdb272f535dcb14ab6df4c551abd85fbf25e9086c567e8902548834fa07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dushyantahuja/library/IPGeolocation/3.0.0/IPGeolocation-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dushyantahuja/library/IPGeolocation/3.0.0/IPGeolocation-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dushyantahuja/library/SimpleWeather/1.0.2/SimpleWeather-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleWeather-1.0.2.tar.gz",
+    "size_bytes": 4458,
+    "sha256": "2d91a00998e1d3161c708d0082292c9d52db9ac2c062a79b54a87c90cacf5f27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dushyantahuja/library/SimpleWeather/1.0.2/SimpleWeather-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dushyantahuja/library/SimpleWeather/1.0.2/SimpleWeather-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dushyantahuja/library/TFLStatus/1.1.2/TFLStatus-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFLStatus-1.1.2.tar.gz",
+    "size_bytes": 15365,
+    "sha256": "5d03ab34ab7d09a29378d0539294f5293f72ee214ea3de07e209e038972fece9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dushyantahuja/library/TFLStatus/1.1.2/TFLStatus-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dushyantahuja/library/TFLStatus/1.1.2/TFLStatus-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

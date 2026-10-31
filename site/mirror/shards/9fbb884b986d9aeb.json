@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/loginov-rocks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "loginov-rocks/library/AwsIotWiFiClient/0.2.2/AwsIotWiFiClient-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AwsIotWiFiClient-0.2.2.tar.gz",
+    "size_bytes": 9097,
+    "sha256": "8b8d2549df5c94c3ac11346fda8d914b17e51fdb02f03cc4f76e4b2c3bc1ee10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/loginov-rocks/library/AwsIotWiFiClient/0.2.2/AwsIotWiFiClient-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/loginov-rocks/library/AwsIotWiFiClient/0.2.2/AwsIotWiFiClient-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "loginov-rocks/library/BluetoothTerminal/0.3.0/BluetoothTerminal-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BluetoothTerminal-0.3.0.tar.gz",
+    "size_bytes": 8982,
+    "sha256": "183fcf70954eb2b121b69c4729aa1206edca3169f4b71ed39d980b1693fff663",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/loginov-rocks/library/BluetoothTerminal/0.3.0/BluetoothTerminal-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/loginov-rocks/library/BluetoothTerminal/0.3.0/BluetoothTerminal-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "loginov-rocks/library/Log/0.1.2/Log-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Log-0.1.2.tar.gz",
+    "size_bytes": 4628,
+    "sha256": "e8d62a3d414c2e4ae1d30b7a131ad2f3fe65546b56dd9b3aece1aad6b38a9cff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/loginov-rocks/library/Log/0.1.2/Log-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/loginov-rocks/library/Log/0.1.2/Log-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "loginov-rocks/library/UbxGps/1.5.2/UbxGps-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UbxGps-1.5.2.tar.gz",
+    "size_bytes": 13218,
+    "sha256": "8dc9c8fe946a6686118d093b1f1297c08f4757d4598dc4ca023a6feb31131048",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/loginov-rocks/library/UbxGps/1.5.2/UbxGps-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/loginov-rocks/library/UbxGps/1.5.2/UbxGps-1.5.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

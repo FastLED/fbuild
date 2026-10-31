@@ -1,0 +1,269 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jueff",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jueff/library/AddressLearnMLX/0.0.1/AddressLearnMLX-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AddressLearnMLX-0.0.1.tar.gz",
+    "size_bytes": 11466,
+    "sha256": "2f75ce57e3aa8b810908a09a77a265d91d46de565246601966602acfd0dff6a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/AddressLearnMLX/0.0.1/AddressLearnMLX-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/AddressLearnMLX/0.0.1/AddressLearnMLX-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/FireplaceMLX/0.0.1/FireplaceMLX-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FireplaceMLX-0.0.1.tar.gz",
+    "size_bytes": 10916,
+    "sha256": "5d2c2264a86034d6ecbdbe3e5ed9447609bddb00c1baea74b7dc999852bf0e04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/FireplaceMLX/0.0.1/FireplaceMLX-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/FireplaceMLX/0.0.1/FireplaceMLX-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/InfraredMLX/0.0.2/InfraredMLX-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InfraredMLX-0.0.2.tar.gz",
+    "size_bytes": 12132,
+    "sha256": "375111ff3a5149e27ff12afcc3d046a287ea48f9d6621f87ba243fe432842755",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/InfraredMLX/0.0.2/InfraredMLX-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/InfraredMLX/0.0.2/InfraredMLX-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/MLLServoConfigurator/0.1.0/MLLServoConfigurator-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLLServoConfigurator-0.1.0.tar.gz",
+    "size_bytes": 20451,
+    "sha256": "78dd6f04fec403b6a97cbc6e45892c396812c9466b972803637c2551c9a8c4f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/MLLServoConfigurator/0.1.0/MLLServoConfigurator-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/MLLServoConfigurator/0.1.0/MLLServoConfigurator-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/MLLServoConfigurator/1.0.0/MLLServoConfigurator-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLLServoConfigurator-1.0.0.tar.gz",
+    "size_bytes": 20251,
+    "sha256": "a33dde45340f215aafa17bd79118f2bbf1e6f12798111614c2a9f12f9f051123",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/MLLServoConfigurator/1.0.0/MLLServoConfigurator-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/MLLServoConfigurator/1.0.0/MLLServoConfigurator-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/MLLServoConfigurator/1.1.0/MLLServoConfigurator-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLLServoConfigurator-1.1.0.tar.gz",
+    "size_bytes": 21060,
+    "sha256": "b4041bc934e306388fc816a09b5f467925e907a8e48e66191a7409d0982aafa8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/MLLServoConfigurator/1.1.0/MLLServoConfigurator-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/MLLServoConfigurator/1.1.0/MLLServoConfigurator-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/MLLServoConfigurator/1.2.0/MLLServoConfigurator-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLLServoConfigurator-1.2.0.tar.gz",
+    "size_bytes": 21822,
+    "sha256": "e92b655e66cbd2371296f24ec9c2f4f45760b20f640e120df47759d016716d12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/MLLServoConfigurator/1.2.0/MLLServoConfigurator-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/MLLServoConfigurator/1.2.0/MLLServoConfigurator-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/MLLSoundTiny/0.1.0/MLLSoundTiny-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLLSoundTiny-0.1.0.tar.gz",
+    "size_bytes": 17002,
+    "sha256": "ddceca4fec6f2fec4c3ee2ff88a1579f31f6c4ea996aba9e591225f14dd09909",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/MLLSoundTiny/0.1.0/MLLSoundTiny-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/MLLSoundTiny/0.1.0/MLLSoundTiny-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/MLLSoundTiny/1.0.0/MLLSoundTiny-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLLSoundTiny-1.0.0.tar.gz",
+    "size_bytes": 17856,
+    "sha256": "c79065ff8a8af13bfedf467bad50ae220f5ec683741900b6fae2b714c16f7093",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/MLLSoundTiny/1.0.0/MLLSoundTiny-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/MLLSoundTiny/1.0.0/MLLSoundTiny-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/PicoFlashStorage/1.0.0/PicoFlashStorage-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoFlashStorage-1.0.0.tar.gz",
+    "size_bytes": 22887,
+    "sha256": "0320c75d7323cdbaa3480c8084cbf7603793644c27ff299f4cb2c07a13fe2b4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/PicoFlashStorage/1.0.0/PicoFlashStorage-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/PicoFlashStorage/1.0.0/PicoFlashStorage-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/PicoFlashStorage/1.0.1/PicoFlashStorage-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoFlashStorage-1.0.1.tar.gz",
+    "size_bytes": 23091,
+    "sha256": "c1f7c3df599e4b2319da5e49d6d197694d01342dea9ab6b941030e78b860cd00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/PicoFlashStorage/1.0.1/PicoFlashStorage-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/PicoFlashStorage/1.0.1/PicoFlashStorage-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/PicoFlashStorage/1.1.0/PicoFlashStorage-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoFlashStorage-1.1.0.tar.gz",
+    "size_bytes": 23130,
+    "sha256": "5c2f46292a924266645574f6dc53781f2657e5dcbd59df0ab71fb40916b4c9ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/PicoFlashStorage/1.1.0/PicoFlashStorage-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/PicoFlashStorage/1.1.0/PicoFlashStorage-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/PicoFlashStorage/1.2.0/PicoFlashStorage-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoFlashStorage-1.2.0.tar.gz",
+    "size_bytes": 28059,
+    "sha256": "c329c406278d3601c39a401efd598701a5344b6303ab640d1aae957962def5bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/PicoFlashStorage/1.2.0/PicoFlashStorage-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/PicoFlashStorage/1.2.0/PicoFlashStorage-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/SoftwareSerialTX/0.1/SoftwareSerialTX-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftwareSerialTX-0.1.tar.gz",
+    "size_bytes": 12299,
+    "sha256": "71ae38479f4bbbb6d3af088c303befc68821924d9291bd90fbf177a3e12fa73c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/SoftwareSerialTX/0.1/SoftwareSerialTX-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/SoftwareSerialTX/0.1/SoftwareSerialTX-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/WS281xProcessor/0.1.0/WS281xProcessor-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS281xProcessor-0.1.0.tar.gz",
+    "size_bytes": 23733552,
+    "sha256": "1f38dcef3522475c11af40f6e253352ed8566b397cf6ba9ce357f281c0c02e1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/WS281xProcessor/0.1.0/WS281xProcessor-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/WS281xProcessor/0.1.0/WS281xProcessor-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/WS281xProcessor/0.1.1/WS281xProcessor-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS281xProcessor-0.1.1.tar.gz",
+    "size_bytes": 14596,
+    "sha256": "0956ef395c2db3c0fcf0cd867b40b962b58a927fc152bb648cf0270dca97570b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/WS281xProcessor/0.1.1/WS281xProcessor-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/WS281xProcessor/0.1.1/WS281xProcessor-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/WS281xProcessor/1.0.0/WS281xProcessor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS281xProcessor-1.0.0.tar.gz",
+    "size_bytes": 14591,
+    "sha256": "e1d0932260a363fedd3e62c5f5c59725baaae6bf7169c3694037436c41ef15b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/WS281xProcessor/1.0.0/WS281xProcessor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/WS281xProcessor/1.0.0/WS281xProcessor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/WS281xProcessor/1.0.1/WS281xProcessor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS281xProcessor-1.0.1.tar.gz",
+    "size_bytes": 14688,
+    "sha256": "b3c2ed121b3f50b9d0bb4a5e4ff0ebbbbca0142c602f352e650a4950db58319d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/WS281xProcessor/1.0.1/WS281xProcessor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/WS281xProcessor/1.0.1/WS281xProcessor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/WS281xProcessor/1.0.2/WS281xProcessor-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS281xProcessor-1.0.2.tar.gz",
+    "size_bytes": 14267,
+    "sha256": "e7b7cf31341dc1b4d8a3cc4f0f7aeeeb3fbd9497179985351595771f37be1166",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/WS281xProcessor/1.0.2/WS281xProcessor-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/WS281xProcessor/1.0.2/WS281xProcessor-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jueff/library/WS281xProcessor/1.1.0/WS281xProcessor-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS281xProcessor-1.1.0.tar.gz",
+    "size_bytes": 14197,
+    "sha256": "057e56a4715786ab57fa760696b6ec2c5057eb5334ec26a13759be2a4ef533fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jueff/library/WS281xProcessor/1.1.0/WS281xProcessor-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jueff/library/WS281xProcessor/1.1.0/WS281xProcessor-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jeroenvermeulen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jeroenvermeulen/library/EasyOTA/3.0.0/EasyOTA-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyOTA-3.0.0.tar.gz",
+    "size_bytes": 21207,
+    "sha256": "29f0557a69f642c1c236d26a11e2d77c032586261100ed8d58edab96b61ffed9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeroenvermeulen/library/EasyOTA/3.0.0/EasyOTA-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jeroenvermeulen/library/EasyOTA/3.0.0/EasyOTA-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

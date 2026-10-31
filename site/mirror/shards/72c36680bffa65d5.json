@@ -1,0 +1,451 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sauloverissimo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sauloverissimo/library/ESP32_Host_MIDI/2.1.0/ESP32_Host_MIDI-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Host_MIDI-2.1.0.tar.gz",
+    "size_bytes": 22400,
+    "sha256": "e385a5d1de3a2feea15ccf7594e39e7cb50a455b6c0d7d22c7cf6935bcbd6bdc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/ESP32_Host_MIDI/2.1.0/ESP32_Host_MIDI-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/ESP32_Host_MIDI/2.1.0/ESP32_Host_MIDI-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/ESP32_Host_MIDI/3.0.0/ESP32_Host_MIDI-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Host_MIDI-3.0.0.tar.gz",
+    "size_bytes": 33346,
+    "sha256": "ce5c4cab1f16951f0100c9b8ae0559ef7204fc5efbc9c77e94dbd729d8a83084",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/ESP32_Host_MIDI/3.0.0/ESP32_Host_MIDI-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/ESP32_Host_MIDI/3.0.0/ESP32_Host_MIDI-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/ESP32_Host_MIDI/3.1.0/ESP32_Host_MIDI-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Host_MIDI-3.1.0.tar.gz",
+    "size_bytes": 46611,
+    "sha256": "03eff41900cb1ccb65782f435f8792d1ce43f49de7f7ede20bd9bc9303da1c57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/ESP32_Host_MIDI/3.1.0/ESP32_Host_MIDI-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/ESP32_Host_MIDI/3.1.0/ESP32_Host_MIDI-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/ESP32_Host_MIDI/4.0.0/ESP32_Host_MIDI-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Host_MIDI-4.0.0.tar.gz",
+    "size_bytes": 51748,
+    "sha256": "6b324225a1a61488a79c1be4c750bab0bab2acfbce22d1d553c0f4b174e85c8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/ESP32_Host_MIDI/4.0.0/ESP32_Host_MIDI-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/ESP32_Host_MIDI/4.0.0/ESP32_Host_MIDI-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/ESP32_Host_MIDI/5.0.0/ESP32_Host_MIDI-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Host_MIDI-5.0.0.tar.gz",
+    "size_bytes": 121338,
+    "sha256": "9b6378031fa7f1d5c1a061627139ff08a3d2f1c95da86fdd074d17541a00c732",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/ESP32_Host_MIDI/5.0.0/ESP32_Host_MIDI-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/ESP32_Host_MIDI/5.0.0/ESP32_Host_MIDI-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/ESP32_Host_MIDI/5.1.0/ESP32_Host_MIDI-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Host_MIDI-5.1.0.tar.gz",
+    "size_bytes": 487692,
+    "sha256": "e3338b05a217d357b4f9631288a878fbca54bfaa412907dbc447763f99f178f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/ESP32_Host_MIDI/5.1.0/ESP32_Host_MIDI-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/ESP32_Host_MIDI/5.1.0/ESP32_Host_MIDI-5.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/ESP32_Host_MIDI/5.2.0/ESP32_Host_MIDI-5.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Host_MIDI-5.2.0.tar.gz",
+    "size_bytes": 508259,
+    "sha256": "b8aa692aeb7cb9950d639f743dd265abfd7852c231154714dfb53dd55fde069b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/ESP32_Host_MIDI/5.2.0/ESP32_Host_MIDI-5.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/ESP32_Host_MIDI/5.2.0/ESP32_Host_MIDI-5.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/ESP32_Host_MIDI/6.0.0/ESP32_Host_MIDI-6.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Host_MIDI-6.0.0.tar.gz",
+    "size_bytes": 501101,
+    "sha256": "cedc71deade2e53c376c0ca50acb5c6e60e52f96c1a4a5de804e30355ea4c865",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/ESP32_Host_MIDI/6.0.0/ESP32_Host_MIDI-6.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/ESP32_Host_MIDI/6.0.0/ESP32_Host_MIDI-6.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/ESP32_Host_MIDI/6.0.1/ESP32_Host_MIDI-6.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Host_MIDI-6.0.1.tar.gz",
+    "size_bytes": 501490,
+    "sha256": "9350a4bc62bb3a491596c8492dbb34dc57a9761c3d2b0efb072ca3c8e875f228",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/ESP32_Host_MIDI/6.0.1/ESP32_Host_MIDI-6.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/ESP32_Host_MIDI/6.0.1/ESP32_Host_MIDI-6.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/ESP32_Host_MIDI/7.0.0/ESP32_Host_MIDI-7.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Host_MIDI-7.0.0.tar.gz",
+    "size_bytes": 203780,
+    "sha256": "b97ca46326afb43dad231dc25663fa2d7a36ab36191fdcf45269228e814513e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/ESP32_Host_MIDI/7.0.0/ESP32_Host_MIDI-7.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/ESP32_Host_MIDI/7.0.0/ESP32_Host_MIDI-7.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/ESP32_Host_MIDI/7.1.0/ESP32_Host_MIDI-7.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Host_MIDI-7.1.0.tar.gz",
+    "size_bytes": 213975,
+    "sha256": "c91813280a3cfad949bc1aa5f67a7756415676a34c5bbf049b7e8c97d3264a62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/ESP32_Host_MIDI/7.1.0/ESP32_Host_MIDI-7.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/ESP32_Host_MIDI/7.1.0/ESP32_Host_MIDI-7.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/ESP32_Host_MIDI/7.2.0/ESP32_Host_MIDI-7.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Host_MIDI-7.2.0.tar.gz",
+    "size_bytes": 216356,
+    "sha256": "56e7a94a30b59b37c50ab3d65887a09898a1004626c7f55fe523281475e51772",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/ESP32_Host_MIDI/7.2.0/ESP32_Host_MIDI-7.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/ESP32_Host_MIDI/7.2.0/ESP32_Host_MIDI-7.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/ESP32_Host_MIDI/7.3.0/ESP32_Host_MIDI-7.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Host_MIDI-7.3.0.tar.gz",
+    "size_bytes": 217825,
+    "sha256": "2d089847cc3d1d21eb8045853fd547978d8851a54130874a72b63de601dd8059",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/ESP32_Host_MIDI/7.3.0/ESP32_Host_MIDI-7.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/ESP32_Host_MIDI/7.3.0/ESP32_Host_MIDI-7.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/Gingoduino/0.2.1/Gingoduino-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gingoduino-0.2.1.tar.gz",
+    "size_bytes": 61553,
+    "sha256": "52fae14f37039c5b3cbfcf54e90480a87876297f970a7c3208d588f1e1c1dbce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/Gingoduino/0.2.1/Gingoduino-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/Gingoduino/0.2.1/Gingoduino-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/Gingoduino/0.3.0/Gingoduino-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gingoduino-0.3.0.tar.gz",
+    "size_bytes": 174471,
+    "sha256": "970d3debedf180a63cefd71d28b0dbc56f36f323a3c70f08a5ff3b94e65a9d38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/Gingoduino/0.3.0/Gingoduino-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/Gingoduino/0.3.0/Gingoduino-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/Gingoduino/0.4.0/Gingoduino-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gingoduino-0.4.0.tar.gz",
+    "size_bytes": 196249,
+    "sha256": "d7af17470e9a828a27c7a21732d725c5a276a8068d285c97bf9aad6873a996ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/Gingoduino/0.4.0/Gingoduino-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/Gingoduino/0.4.0/Gingoduino-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/Gingoduino/0.4.1/Gingoduino-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gingoduino-0.4.1.tar.gz",
+    "size_bytes": 196885,
+    "sha256": "a9114c01cc04dcdc1e7f87375cef0437462688ee98e8bf5104cfc5eed994e415",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/Gingoduino/0.4.1/Gingoduino-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/Gingoduino/0.4.1/Gingoduino-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/Gingoduino/0.6.0/Gingoduino-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gingoduino-0.6.0.tar.gz",
+    "size_bytes": 175625,
+    "sha256": "30b5efcf9c5fc1a43e75dbae05e4a9167b7207690c61aab6a555c545676763f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/Gingoduino/0.6.0/Gingoduino-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/Gingoduino/0.6.0/Gingoduino-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/datahandler/1.0.0/datahandler-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "datahandler-1.0.0.tar.gz",
+    "size_bytes": 14988,
+    "sha256": "4a3598c49ac600d779db1974cf77b3ea341fd873d9972b1395a631102d1cb12a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/datahandler/1.0.0/datahandler-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/datahandler/1.0.0/datahandler-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/midi2/0.3.1/midi2-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "midi2-0.3.1.tar.gz",
+    "size_bytes": 99717,
+    "sha256": "556bbd4ec86f241820ede2a1d74a3b1d918378cfed49224fbc8dabfd23ef4495",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/midi2/0.3.1/midi2-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/midi2/0.3.1/midi2-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/midi2/0.3.4/midi2-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "midi2-0.3.4.tar.gz",
+    "size_bytes": 104134,
+    "sha256": "e473fd84b917632f2ccdf881038c424d199a500cb7f94e338dad893fc2e06b0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/midi2/0.3.4/midi2-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/midi2/0.3.4/midi2-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/midi2/0.4.0/midi2-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "midi2-0.4.0.tar.gz",
+    "size_bytes": 109519,
+    "sha256": "8841cdab1f232ebe23ce2b14215edcbdd8c399d8b4de815a341082d6dc373bba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/midi2/0.4.0/midi2-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/midi2/0.4.0/midi2-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/midi2/0.5.0/midi2-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "midi2-0.5.0.tar.gz",
+    "size_bytes": 128826,
+    "sha256": "5c56629ce60ef3e95edbf5059f5d3d6d60d5e657f91a9f4316cb251263a57039",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/midi2/0.5.0/midi2-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/midi2/0.5.0/midi2-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/midi2/0.6.0/midi2-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "midi2-0.6.0.tar.gz",
+    "size_bytes": 130348,
+    "sha256": "8d27455535f5c4bccfba841bab865149f873cb975987d99115c9a29873e9ec28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/midi2/0.6.0/midi2-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/midi2/0.6.0/midi2-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/midi2/0.7.0/midi2-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "midi2-0.7.0.tar.gz",
+    "size_bytes": 149691,
+    "sha256": "db5a5797367f56ea4fddd9954ef9eaceaaf45d5f3141532cc2c66c9cd5e21ca8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/midi2/0.7.0/midi2-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/midi2/0.7.0/midi2-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/midi2/0.8.0/midi2-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "midi2-0.8.0.tar.gz",
+    "size_bytes": 174789,
+    "sha256": "b52aca2f10017296f6b59ee62dd4fc782d4ae67c1093d2b1417293d600b6a184",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/midi2/0.8.0/midi2-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/midi2/0.8.0/midi2-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/midi2cpp/0.2.0/midi2_cpp-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "midi2_cpp-0.2.0.tar.gz",
+    "size_bytes": 51510486,
+    "sha256": "e55dc77ff09c665a4fe23dde03b5f52b485b4e53e58ed6dac3931234257e558a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/midi2cpp/0.2.0/midi2_cpp-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/midi2cpp/0.2.0/midi2_cpp-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/midi2cpp/0.4.0/midi2cpp-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "midi2cpp-0.4.0.tar.gz",
+    "size_bytes": 51505092,
+    "sha256": "9799ed51e393ec832540c1ecdf8cfcbc93d106ebf856c8c988dbe0c58327ddc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/midi2cpp/0.4.0/midi2cpp-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/midi2cpp/0.4.0/midi2cpp-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/midi2cpp/0.4.1/midi2cpp-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "midi2cpp-0.4.1.tar.gz",
+    "size_bytes": 61896084,
+    "sha256": "10aa55560aac9a491ffa33703106e5b6a1fbc4d44e5e0d30e922d21fe131843b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/midi2cpp/0.4.1/midi2cpp-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/midi2cpp/0.4.1/midi2cpp-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/midi2cpp/0.5.0/midi2cpp-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "midi2cpp-0.5.0.tar.gz",
+    "size_bytes": 67548235,
+    "sha256": "140694209c1652d2cea91e1a938c9da2fa9aeef1b746eefeaf6acf8a34edb2e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/midi2cpp/0.5.0/midi2cpp-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/midi2cpp/0.5.0/midi2cpp-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/midi2cpp/0.6.0/midi2cpp-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "midi2cpp-0.6.0.tar.gz",
+    "size_bytes": 67665286,
+    "sha256": "8b952d566e5b9aca0f017b54533fce9d6bf572cac34c3bb309cb483985f565a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/midi2cpp/0.6.0/midi2cpp-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/midi2cpp/0.6.0/midi2cpp-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/midi2cpp/0.6.1/midi2cpp-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "midi2cpp-0.6.1.tar.gz",
+    "size_bytes": 75738835,
+    "sha256": "2442266ee2b32ad765669b69844d86dd94ce0a4e7a908dd409e5a8eb92197102",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/midi2cpp/0.6.1/midi2cpp-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/midi2cpp/0.6.1/midi2cpp-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/midi2cpp/0.7.0/midi2cpp-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "midi2cpp-0.7.0.tar.gz",
+    "size_bytes": 1093393,
+    "sha256": "64099623e327d988bcc9ad9227a7648f4789febf177b2653fbfa4135f433bb1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/midi2cpp/0.7.0/midi2cpp-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/midi2cpp/0.7.0/midi2cpp-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sauloverissimo/library/midi2duino/0.1.0/midi2duino-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "midi2duino-0.1.0.tar.gz",
+    "size_bytes": 10962,
+    "sha256": "35f875c874c1aaae76478b0fd86f0fc092d09c606098f415118a0da9cf4e4ed0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauloverissimo/library/midi2duino/0.1.0/midi2duino-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sauloverissimo/library/midi2duino/0.1.0/midi2duino-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

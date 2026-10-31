@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-aaronmueller",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-aaronmueller/library/Fnordlicht/0.0.0+sha.07da608a4ea3/Fnordlicht-0.0.0+sha.07da608a4ea3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Fnordlicht-0.0.0+sha.07da608a4ea3.tar.gz",
+    "size_bytes": 1989,
+    "sha256": "01dc9d1690f4885a9ada0a4b495d5602e4cb8ab80b6dcb7f3e18775eba1d1118",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aaronmueller/library/Fnordlicht/0.0.0%2Bsha.07da608a4ea3/Fnordlicht-0.0.0%2Bsha.07da608a4ea3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aaronmueller/library/Fnordlicht/0.0.0%2Bsha.07da608a4ea3/Fnordlicht-0.0.0%2Bsha.07da608a4ea3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

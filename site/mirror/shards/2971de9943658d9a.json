@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-beelin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-beelin/library/SerLCDv25/0.0.0+sha.497632f57657/SerLCDv25-0.0.0+sha.497632f57657.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerLCDv25-0.0.0+sha.497632f57657.tar.gz",
+    "size_bytes": 1113,
+    "sha256": "7e2306064b8e38469449c9a7ec227872e223488d2aaf0a3954528182d511adee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-beelin/library/SerLCDv25/0.0.0%2Bsha.497632f57657/SerLCDv25-0.0.0%2Bsha.497632f57657.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-beelin/library/SerLCDv25/0.0.0%2Bsha.497632f57657/SerLCDv25-0.0.0%2Bsha.497632f57657.tar.gz"
+    ]
+   }
+  }
+ ]
+}

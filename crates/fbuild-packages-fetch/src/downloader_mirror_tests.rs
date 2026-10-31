@@ -262,24 +262,17 @@ fn candidate_urls_path_falls_back_to_the_file_name_off_registry() {
     );
 }
 
-/// GitHub URLs keep owner and repo under a `github.com/` prefix, so two repos
-/// shipping `1.8.6.tar.gz` never share a bucket key (FastLED/fbuild#1806).
+/// The bucket mirrors only the registry layout: a GitHub URL has no mirror
+/// path, so `{path}` degrades to the file name (FastLED/fbuild#1815).
 #[test]
-fn candidate_urls_path_keeps_github_owner_and_repo() {
+fn candidate_urls_path_does_not_map_github() {
     let mirrors = vec!["https://mirror.example/{path}".to_string()];
     assert_eq!(
         candidate_urls(
             "https://github.com/arduino/ArduinoCore-avr/archive/refs/tags/1.8.6.tar.gz",
             &mirrors
         )[1],
-        "https://mirror.example/github.com/arduino/ArduinoCore-avr/archive/refs/tags/1.8.6.tar.gz"
-    );
-    assert_eq!(
-        candidate_urls(
-            "https://github.com/o/r/releases/download/v1.2.3/pkg.tar.gz",
-            &mirrors
-        )[1],
-        "https://mirror.example/github.com/o/r/releases/download/v1.2.3/pkg.tar.gz"
+        "https://mirror.example/1.8.6.tar.gz"
     );
 }
 
@@ -305,23 +298,16 @@ async fn unset_env_prefers_the_built_in_bucket_for_mirrored_hosts() {
         )
     );
 
-    let github = "https://github.com/o/r/archive/refs/tags/1.0.tar.gz";
-    assert_eq!(
-        resolve_with(github, None),
-        Candidates::new(
-            vec![
-                github.to_string(),
-                format!("{bucket}github.com/o/r/archive/refs/tags/1.0.tar.gz"),
-            ],
-            true
-        )
-    );
-
-    let other = "https://vendor.example/files/pkg.zip";
-    assert_eq!(
-        resolve_with(other, None),
-        Candidates::new(vec![other.to_string()], false)
-    );
+    for other in [
+        "https://github.com/o/r/archive/refs/tags/1.0.tar.gz",
+        "https://vendor.example/files/pkg.zip",
+    ] {
+        assert_eq!(
+            resolve_with(other, None),
+            Candidates::new(vec![other.to_string()], false),
+            "{other} is not mirrored"
+        );
+    }
 }
 
 /// `FBUILD_DOWNLOAD_MIRROR_FIRST=0` keeps the built-in bucket but puts the

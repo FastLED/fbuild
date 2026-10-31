@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nim65s",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nim65s/library/AV_MQTT/0.0.0+sha.da5d90052cec/AV_MQTT-0.0.0+sha.da5d90052cec.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AV_MQTT-0.0.0+sha.da5d90052cec.tar.gz",
+    "size_bytes": 1521,
+    "sha256": "c015925a1232e61317758297d7e26b195748589c1d24800a2a877ed02ac7e782",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nim65s/library/AV_MQTT/0.0.0%2Bsha.da5d90052cec/AV_MQTT-0.0.0%2Bsha.da5d90052cec.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nim65s/library/AV_MQTT/0.0.0%2Bsha.da5d90052cec/AV_MQTT-0.0.0%2Bsha.da5d90052cec.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nim65s/library/niMQTT/0.0.0+sha.438958bb9df3/niMQTT-0.0.0+sha.438958bb9df3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "niMQTT-0.0.0+sha.438958bb9df3.tar.gz",
+    "size_bytes": 4565,
+    "sha256": "3c31b33f8a910279036f40948f8031c8b322ed176ee9a8e313337640a8bdcff2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nim65s/library/niMQTT/0.0.0%2Bsha.438958bb9df3/niMQTT-0.0.0%2Bsha.438958bb9df3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nim65s/library/niMQTT/0.0.0%2Bsha.438958bb9df3/niMQTT-0.0.0%2Bsha.438958bb9df3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

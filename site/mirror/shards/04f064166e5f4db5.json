@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mandulaj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mandulaj/library/PZEM-004T-v30/1.1.2/PZEM-004T-v30-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PZEM-004T-v30-1.1.2.tar.gz",
+    "size_bytes": 13611,
+    "sha256": "c083e3f14949fcec2a52c25dc412cc8a1a4f4af98d9d1783ca3d1cc00643b440",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mandulaj/library/PZEM-004T-v30/1.1.2/PZEM-004T-v30-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mandulaj/library/PZEM-004T-v30/1.1.2/PZEM-004T-v30-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,256 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dac1e",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dac1e/library/AT24CxEeprom/1.0.1/AT24CxEeprom-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT24CxEeprom-1.0.1.tar.gz",
+    "size_bytes": 18123,
+    "sha256": "7792ba445eef27fbc36494bfa1fa3e46c964913eda69379476f65ef16abdacd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/AT24CxEeprom/1.0.1/AT24CxEeprom-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/AT24CxEeprom/1.0.1/AT24CxEeprom-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/AT24CxEeprom/1.0.3/AT24CxEeprom-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT24CxEeprom-1.0.3.tar.gz",
+    "size_bytes": 18079,
+    "sha256": "ba2b5bf797a84804dfd7466e4b77e636f73232051ce58138d8b99da03d4e11bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/AT24CxEeprom/1.0.3/AT24CxEeprom-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/AT24CxEeprom/1.0.3/AT24CxEeprom-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/AT24CxEeprom/1.1.0/AT24CxEeprom-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT24CxEeprom-1.1.0.tar.gz",
+    "size_bytes": 18256,
+    "sha256": "9565bed263d3b48641b32efb4a6dc8f1fbecdbf233ff472a5f563b72d3cb6922",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/AT24CxEeprom/1.1.0/AT24CxEeprom-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/AT24CxEeprom/1.1.0/AT24CxEeprom-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/AT24CxEeprom/1.1.1/AT24CxEeprom-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT24CxEeprom-1.1.1.tar.gz",
+    "size_bytes": 18470,
+    "sha256": "34b76bf01dcaadd227edc008f2000f53d24aabd4138376c062569d19968b80e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/AT24CxEeprom/1.1.1/AT24CxEeprom-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/AT24CxEeprom/1.1.1/AT24CxEeprom-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/DCF77RX/3.0.0/DCF77RX-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCF77RX-3.0.0.tar.gz",
+    "size_bytes": 22144,
+    "sha256": "3809f724bcdfae7b94f12c39ee5a9abd888a77f95d0cd556a2da195561c87a44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/DCF77RX/3.0.0/DCF77RX-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/DCF77RX/3.0.0/DCF77RX-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/DCF77RX/3.1.0/DCF77RX-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCF77RX-3.1.0.tar.gz",
+    "size_bytes": 22213,
+    "sha256": "83b847fbba457521c1f9428e3c1f846ea0ff324bf9e7d408f8ce1395c853020e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/DCF77RX/3.1.0/DCF77RX-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/DCF77RX/3.1.0/DCF77RX-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/FDC2x1x/1.0.0/FDC2x1x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FDC2x1x-1.0.0.tar.gz",
+    "size_bytes": 20903,
+    "sha256": "b7ddf16776ecf2bc2a3bbd97de98b93a149367dee1759fe5d3b38afab3bc2d08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/FDC2x1x/1.0.0/FDC2x1x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/FDC2x1x/1.0.0/FDC2x1x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/RcSwitchReceiver/0.6.6/RcSwitchReceiver-0.6.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RcSwitchReceiver-0.6.6.tar.gz",
+    "size_bytes": 49691,
+    "sha256": "5d0b0b1bb3ff5abb946a79cf5dab48895c7fb5be959300fd246ae2ff719ca5f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/RcSwitchReceiver/0.6.6/RcSwitchReceiver-0.6.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/RcSwitchReceiver/0.6.6/RcSwitchReceiver-0.6.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/RcSwitchReceiver/0.7.0/RcSwitchReceiver-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RcSwitchReceiver-0.7.0.tar.gz",
+    "size_bytes": 49680,
+    "sha256": "fc600e0f147b6223966abf787bbbc914cea302392e24df61d82ff1de57fd7276",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/RcSwitchReceiver/0.7.0/RcSwitchReceiver-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/RcSwitchReceiver/0.7.0/RcSwitchReceiver-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/RcSwitchReceiver/0.8.0/RcSwitchReceiver-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RcSwitchReceiver-0.8.0.tar.gz",
+    "size_bytes": 50116,
+    "sha256": "77cea991cf2055dd0d91343563ac8e3da36b248565036577acc5095dd7d77d9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/RcSwitchReceiver/0.8.0/RcSwitchReceiver-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/RcSwitchReceiver/0.8.0/RcSwitchReceiver-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/RcSwitchReceiver/0.8.1/RcSwitchReceiver-0.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RcSwitchReceiver-0.8.1.tar.gz",
+    "size_bytes": 50214,
+    "sha256": "9ef6c172aeab168219670c0701b09dbba3478dfb5ad2bdec8a97fc8d537d7b06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/RcSwitchReceiver/0.8.1/RcSwitchReceiver-0.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/RcSwitchReceiver/0.8.1/RcSwitchReceiver-0.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/RcSwitchReceiver/0.8.2/RcSwitchReceiver-0.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RcSwitchReceiver-0.8.2.tar.gz",
+    "size_bytes": 50451,
+    "sha256": "06d2d6cf49f617c4f50ed7562c329e0ea4dcf4083c46888cccc5e5306c201ace",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/RcSwitchReceiver/0.8.2/RcSwitchReceiver-0.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/RcSwitchReceiver/0.8.2/RcSwitchReceiver-0.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/RcSwitchTransmitter/0.1.1/RcSwitchTransmitter-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RcSwitchTransmitter-0.1.1.tar.gz",
+    "size_bytes": 20267,
+    "sha256": "f9a9580c8bb8f250c8b8a34db41868e34e622b5f7fd6730b1fe38a7bf394f0c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/RcSwitchTransmitter/0.1.1/RcSwitchTransmitter-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/RcSwitchTransmitter/0.1.1/RcSwitchTransmitter-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/RcSwitchTransmitter/0.2.0/RcSwitchTransmitter-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RcSwitchTransmitter-0.2.0.tar.gz",
+    "size_bytes": 20969,
+    "sha256": "d3ce2f0c347f3d67f56e8b08fdb643380d6578ea95461733ba9b6e72006c47dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/RcSwitchTransmitter/0.2.0/RcSwitchTransmitter-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/RcSwitchTransmitter/0.2.0/RcSwitchTransmitter-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/RcSwitchTransmitter/0.2.1/RcSwitchTransmitter-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RcSwitchTransmitter-0.2.1.tar.gz",
+    "size_bytes": 21239,
+    "sha256": "5154bfcda4639e0e3a3492afd7859b6631f56a3c6d7862b3dcbc9ff4a081ac9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/RcSwitchTransmitter/0.2.1/RcSwitchTransmitter-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/RcSwitchTransmitter/0.2.1/RcSwitchTransmitter-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/RcSwitchTransmitter/0.2.2/RcSwitchTransmitter-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RcSwitchTransmitter-0.2.2.tar.gz",
+    "size_bytes": 21685,
+    "sha256": "f466113aeee0b3b93eae6acce6883b64c4d3584171f4b7f644179cb96574efb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/RcSwitchTransmitter/0.2.2/RcSwitchTransmitter-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/RcSwitchTransmitter/0.2.2/RcSwitchTransmitter-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/RtcDueRcf/2.1.1/RtcDueRcf-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RtcDueRcf-2.1.1.tar.gz",
+    "size_bytes": 39131,
+    "sha256": "5cc40b8f0e372e4199e3acf1bae24db11fd46b50550c883dabf139668c80190f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/RtcDueRcf/2.1.1/RtcDueRcf-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/RtcDueRcf/2.1.1/RtcDueRcf-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/Somo1ELV/1.0.1/Somo1ELV-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Somo1ELV-1.0.1.tar.gz",
+    "size_bytes": 16364,
+    "sha256": "d4006f59bb6a723ac9011211db286aee2dcd324a59966d7fca7c269ac45cade3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/Somo1ELV/1.0.1/Somo1ELV-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/Somo1ELV/1.0.1/Somo1ELV-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dac1e/library/Somo1ELV/2.0.0/Somo1ELV-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Somo1ELV-2.0.0.tar.gz",
+    "size_bytes": 16279,
+    "sha256": "744006eb53d18d36eb90c06a99c183c555ec60eb73cbe6087291794590632e62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dac1e/library/Somo1ELV/2.0.0/Somo1ELV-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dac1e/library/Somo1ELV/2.0.0/Somo1ELV-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

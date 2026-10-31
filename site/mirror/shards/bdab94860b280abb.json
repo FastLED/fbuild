@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stevebenz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stevebenz/library/Ps2KeyboardHost/1.0.1/Ps2KeyboardHost-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ps2KeyboardHost-1.0.1.tar.gz",
+    "size_bytes": 46938,
+    "sha256": "1fe4e4f17e8742e7b68abba66483893d5877b47705043098f6f1681468f09ac2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stevebenz/library/Ps2KeyboardHost/1.0.1/Ps2KeyboardHost-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stevebenz/library/Ps2KeyboardHost/1.0.1/Ps2KeyboardHost-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

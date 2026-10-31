@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ghassanyusuf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ghassanyusuf/library/NewServo/0.1.0/NewServo-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NewServo-0.1.0.tar.gz",
+    "size_bytes": 15900,
+    "sha256": "3ebc686d56761e698e068397568fae494fe7391c8e6f5237dfd7cea1e9ee1490",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ghassanyusuf/library/NewServo/0.1.0/NewServo-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ghassanyusuf/library/NewServo/0.1.0/NewServo-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

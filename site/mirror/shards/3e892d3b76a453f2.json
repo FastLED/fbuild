@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/me-rk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "me-rk/library/MAX7219_CH32/1.0.0/MAX7219_CH32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX7219_CH32-1.0.0.tar.gz",
+    "size_bytes": 19245,
+    "sha256": "7770d79bc9608df156801688ae86a9e21cec4e8c703a6f03fd6c4acac2d7c5e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/me-rk/library/MAX7219_CH32/1.0.0/MAX7219_CH32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/me-rk/library/MAX7219_CH32/1.0.0/MAX7219_CH32-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "me-rk/library/WiFiCreds/1.0.4/WiFiCreds-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiCreds-1.0.4.tar.gz",
+    "size_bytes": 15640,
+    "sha256": "d0feeae47fd5b09e4d543bfd9f599c88ce92d9677ea711bf80b6390de70c570b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/me-rk/library/WiFiCreds/1.0.4/WiFiCreds-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/me-rk/library/WiFiCreds/1.0.4/WiFiCreds-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

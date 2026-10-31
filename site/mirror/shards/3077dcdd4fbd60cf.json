@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bill-richards",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bill-richards/library/Gsdc%20Non-Volatile%20Memory%20API/1.0.3/GsdcNon-VolatileMemoryAPI-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GsdcNon-VolatileMemoryAPI-1.0.3.tar.gz",
+    "size_bytes": 12420,
+    "sha256": "c38bbff1c1dc783a957c0647f224a4372a79c45af4ff6ba6b2bf60348063d694",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bill-richards/library/Gsdc%2520Non-Volatile%2520Memory%2520API/1.0.3/GsdcNon-VolatileMemoryAPI-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bill-richards/library/Gsdc%20Non-Volatile%20Memory%20API/1.0.3/GsdcNon-VolatileMemoryAPI-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bill-richards/library/Gsdc%20Potentiometer%20Library/2.0.0/GsdcPotentiometerLibrary-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GsdcPotentiometerLibrary-2.0.0.tar.gz",
+    "size_bytes": 3735,
+    "sha256": "878ef38c07ef057074ad46112f13a9e33d672cd714ebb769161ab338f8f680ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bill-richards/library/Gsdc%2520Potentiometer%2520Library/2.0.0/GsdcPotentiometerLibrary-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bill-richards/library/Gsdc%20Potentiometer%20Library/2.0.0/GsdcPotentiometerLibrary-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

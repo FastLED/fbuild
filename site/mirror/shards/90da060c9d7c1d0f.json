@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jkingsman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jkingsman/library/Z80/1.0.2/Z80-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Z80-1.0.2.tar.gz",
+    "size_bytes": 23049,
+    "sha256": "c4ff360538b219f85efc46b628747891668b37a62923b9cb286ab2376e12876a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jkingsman/library/Z80/1.0.2/Z80-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jkingsman/library/Z80/1.0.2/Z80-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

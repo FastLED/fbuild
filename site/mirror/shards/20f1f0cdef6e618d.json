@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cniweb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cniweb/library/GSM-Playground/1.1.1/GSM-Playground-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSM-Playground-1.1.1.tar.gz",
+    "size_bytes": 45065,
+    "sha256": "697cc1c242541d4b09e13172c085a3fe15c8b74f36d898ea1325e8eb7e81bb21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cniweb/library/GSM-Playground/1.1.1/GSM-Playground-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cniweb/library/GSM-Playground/1.1.1/GSM-Playground-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

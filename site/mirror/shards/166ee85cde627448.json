@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/simonvonschmude",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "simonvonschmude/library/Cabluino/0.0.5/Cabluino-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Cabluino-0.0.5.tar.gz",
+    "size_bytes": 5481,
+    "sha256": "e84b12980b66fe0ac9f7b31e23f0a59fc50f718d6e48f62d3783faa652e0faad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonvonschmude/library/Cabluino/0.0.5/Cabluino-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/simonvonschmude/library/Cabluino/0.0.5/Cabluino-0.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

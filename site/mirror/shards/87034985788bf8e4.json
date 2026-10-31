@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nhbsystems",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nhbsystems/library/NHB_AD7124/1.1.0/NHB_AD7124-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NHB_AD7124-1.1.0.tar.gz",
+    "size_bytes": 23910,
+    "sha256": "83f4b4b3d6e1cd1408e8e21cb9796df56f2e6e8b3ce6e434f04374c7c1463150",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nhbsystems/library/NHB_AD7124/1.1.0/NHB_AD7124-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nhbsystems/library/NHB_AD7124/1.1.0/NHB_AD7124-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nhbsystems/library/NHB_AD7794/1.2.1/NHB_AD7794-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NHB_AD7794-1.2.1.tar.gz",
+    "size_bytes": 11807,
+    "sha256": "5aedd9804774d4031fd6415a4a93a8e665bb2676a503551aea271db7060faa0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nhbsystems/library/NHB_AD7794/1.2.1/NHB_AD7794-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nhbsystems/library/NHB_AD7794/1.2.1/NHB_AD7794-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ttodorov",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ttodorov/library/TFTLCD/0.0.0+sha.26491d710e72/TFTLCD-0.0.0+sha.26491d710e72.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFTLCD-0.0.0+sha.26491d710e72.tar.gz",
+    "size_bytes": 28690,
+    "sha256": "25e0577c48cf48ba0574b201c60bd9a0e0f99cb05a2f545c19e8b4deb9b1ec30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ttodorov/library/TFTLCD/0.0.0%2Bsha.26491d710e72/TFTLCD-0.0.0%2Bsha.26491d710e72.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ttodorov/library/TFTLCD/0.0.0%2Bsha.26491d710e72/TFTLCD-0.0.0%2Bsha.26491d710e72.tar.gz"
+    ]
+   }
+  }
+ ]
+}

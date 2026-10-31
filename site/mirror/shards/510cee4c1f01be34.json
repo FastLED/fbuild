@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jackrobotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jackrobotics/library/iSYNC/0.2.4/iSYNC-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iSYNC-0.2.4.tar.gz",
+    "size_bytes": 50275,
+    "sha256": "be76609417f27c26ba1861ba6faaf367593c2b871f3c1fd50c90ff8861539130",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jackrobotics/library/iSYNC/0.2.4/iSYNC-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/jackrobotics/library/iSYNC/0.2.4/iSYNC-0.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jackrobotics/library/iSYNC_BC95_Arduino/0.8.4/iSYNC_BC95_Arduino-0.8.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iSYNC_BC95_Arduino-0.8.4.tar.gz",
+    "size_bytes": 18160,
+    "sha256": "fc7e5b72e750f15ac519612e1576117889d49d0bca8c1e5bbbe012c03eb9d2da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jackrobotics/library/iSYNC_BC95_Arduino/0.8.4/iSYNC_BC95_Arduino-0.8.4.tar.gz",
+     "https://dl.registry.platformio.org/download/jackrobotics/library/iSYNC_BC95_Arduino/0.8.4/iSYNC_BC95_Arduino-0.8.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

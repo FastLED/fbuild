@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-generic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-generic/library/AS5045Controller/0.0.0+sha.02ea2289edb2/AS5045Controller-0.0.0+sha.02ea2289edb2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS5045Controller-0.0.0+sha.02ea2289edb2.tar.gz",
+    "size_bytes": 1077,
+    "sha256": "f3b60adb858ac12e429d08d001bccde688271a64175f5be91c9a13775d4f73e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-generic/library/AS5045Controller/0.0.0%2Bsha.02ea2289edb2/AS5045Controller-0.0.0%2Bsha.02ea2289edb2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-generic/library/AS5045Controller/0.0.0%2Bsha.02ea2289edb2/AS5045Controller-0.0.0%2Bsha.02ea2289edb2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-generic/library/Map/0.0.0+sha.dad975e2e150/Map-0.0.0+sha.dad975e2e150.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Map-0.0.0+sha.dad975e2e150.tar.gz",
+    "size_bytes": 1291,
+    "sha256": "04cf232773b1164fc497ef7a8f11cd2361c0c3db6efd3318211052a4f649777b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-generic/library/Map/0.0.0%2Bsha.dad975e2e150/Map-0.0.0%2Bsha.dad975e2e150.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-generic/library/Map/0.0.0%2Bsha.dad975e2e150/Map-0.0.0%2Bsha.dad975e2e150.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-generic/library/MedianFilter/0.0.0+sha.9083665c67d8/MedianFilter-0.0.0+sha.9083665c67d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MedianFilter-0.0.0+sha.9083665c67d8.tar.gz",
+    "size_bytes": 1013,
+    "sha256": "52211c76a3f6c5dea1291527205077550200a105c69491d80041f704321ac5f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-generic/library/MedianFilter/0.0.0%2Bsha.9083665c67d8/MedianFilter-0.0.0%2Bsha.9083665c67d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-generic/library/MedianFilter/0.0.0%2Bsha.9083665c67d8/MedianFilter-0.0.0%2Bsha.9083665c67d8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-generic/library/ServoController/0.0.0+sha.92d4dc70d591/ServoController-0.0.0+sha.92d4dc70d591.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoController-0.0.0+sha.92d4dc70d591.tar.gz",
+    "size_bytes": 1229,
+    "sha256": "9f39840bb7586faa58e01b897bd3549cb547a99a01e302976ca91c6e6b7e373d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-generic/library/ServoController/0.0.0%2Bsha.92d4dc70d591/ServoController-0.0.0%2Bsha.92d4dc70d591.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-generic/library/ServoController/0.0.0%2Bsha.92d4dc70d591/ServoController-0.0.0%2Bsha.92d4dc70d591.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-generic/library/TouchController/0.0.0+sha.519187025bb4/TouchController-0.0.0+sha.519187025bb4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchController-0.0.0+sha.519187025bb4.tar.gz",
+    "size_bytes": 1803,
+    "sha256": "02e29eba1a552fe8fc44332b6ac0f23278368ad5b94aa39d8ac26d8b67b587e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-generic/library/TouchController/0.0.0%2Bsha.519187025bb4/TouchController-0.0.0%2Bsha.519187025bb4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-generic/library/TouchController/0.0.0%2Bsha.519187025bb4/TouchController-0.0.0%2Bsha.519187025bb4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

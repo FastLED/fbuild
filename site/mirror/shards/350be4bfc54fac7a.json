@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fblanc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fblanc/library/AD8556/0.0.0+sha.05eaa16f3327/AD8556-0.0.0+sha.05eaa16f3327.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD8556-0.0.0+sha.05eaa16f3327.tar.gz",
+    "size_bytes": 2334,
+    "sha256": "9d2fe77b67d83e6ddf9a8504f6cc55594f17cf455ff1ec4cc19c83138745f346",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fblanc/library/AD8556/0.0.0%2Bsha.05eaa16f3327/AD8556-0.0.0%2Bsha.05eaa16f3327.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fblanc/library/AD8556/0.0.0%2Bsha.05eaa16f3327/AD8556-0.0.0%2Bsha.05eaa16f3327.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fblanc/library/ADC128D818/0.0.0+sha.816284ff2a09/ADC128D818-0.0.0+sha.816284ff2a09.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADC128D818-0.0.0+sha.816284ff2a09.tar.gz",
+    "size_bytes": 3519,
+    "sha256": "8f55729d811ebd315dbba57e254bf478a282cc253aac14b156c997cfede68e90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fblanc/library/ADC128D818/0.0.0%2Bsha.816284ff2a09/ADC128D818-0.0.0%2Bsha.816284ff2a09.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fblanc/library/ADC128D818/0.0.0%2Bsha.816284ff2a09/ADC128D818-0.0.0%2Bsha.816284ff2a09.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fblanc/library/AnalogIn_Diff/0.0.0+sha.ea5a4c22bd53/AnalogIn_Diff-0.0.0+sha.ea5a4c22bd53.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogIn_Diff-0.0.0+sha.ea5a4c22bd53.tar.gz",
+    "size_bytes": 2789,
+    "sha256": "5bda31e1292cb530f3ce4603a6787549bad6a2921cac8c160e8e03a0c78256f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fblanc/library/AnalogIn_Diff/0.0.0%2Bsha.ea5a4c22bd53/AnalogIn_Diff-0.0.0%2Bsha.ea5a4c22bd53.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fblanc/library/AnalogIn_Diff/0.0.0%2Bsha.ea5a4c22bd53/AnalogIn_Diff-0.0.0%2Bsha.ea5a4c22bd53.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fblanc/library/GLCD_MCB1700/0.0.0+sha.0ae206eb6e55/GLCD_MCB1700-0.0.0+sha.0ae206eb6e55.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GLCD_MCB1700-0.0.0+sha.0ae206eb6e55.tar.gz",
+    "size_bytes": 11124,
+    "sha256": "7c3e2a3b1b402a629a764585d6ab6b491764ab1267354efdde69735c951d2216",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fblanc/library/GLCD_MCB1700/0.0.0%2Bsha.0ae206eb6e55/GLCD_MCB1700-0.0.0%2Bsha.0ae206eb6e55.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fblanc/library/GLCD_MCB1700/0.0.0%2Bsha.0ae206eb6e55/GLCD_MCB1700-0.0.0%2Bsha.0ae206eb6e55.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fblanc/library/MFRC522/0.0.0+sha.ffb53e78f40f/MFRC522-0.0.0+sha.ffb53e78f40f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MFRC522-0.0.0+sha.ffb53e78f40f.tar.gz",
+    "size_bytes": 20024,
+    "sha256": "1622e60c2e153a4be318bc640625b2628d648ee667922a79e9851bcd3b9b8bf8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fblanc/library/MFRC522/0.0.0%2Bsha.ffb53e78f40f/MFRC522-0.0.0%2Bsha.ffb53e78f40f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fblanc/library/MFRC522/0.0.0%2Bsha.ffb53e78f40f/MFRC522-0.0.0%2Bsha.ffb53e78f40f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fblanc/library/MovingAverage/0.0.0+sha.ad69440a9bef/MovingAverage-0.0.0+sha.ad69440a9bef.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MovingAverage-0.0.0+sha.ad69440a9bef.tar.gz",
+    "size_bytes": 1772,
+    "sha256": "af64aafacdd75517b2374887424b09a97226c73feb8c32d07fb8b33de1ec4821",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fblanc/library/MovingAverage/0.0.0%2Bsha.ad69440a9bef/MovingAverage-0.0.0%2Bsha.ad69440a9bef.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fblanc/library/MovingAverage/0.0.0%2Bsha.ad69440a9bef/MovingAverage-0.0.0%2Bsha.ad69440a9bef.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fblanc/library/OneWireFB/0.0.0+sha.9acbbb021a43/OneWireFB-0.0.0+sha.9acbbb021a43.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneWireFB-0.0.0+sha.9acbbb021a43.tar.gz",
+    "size_bytes": 11335,
+    "sha256": "05fbcbb542681d3725ae9629c77a1a554b736d38a62a52a89ff542fa84fbbd77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fblanc/library/OneWireFB/0.0.0%2Bsha.9acbbb021a43/OneWireFB-0.0.0%2Bsha.9acbbb021a43.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fblanc/library/OneWireFB/0.0.0%2Bsha.9acbbb021a43/OneWireFB-0.0.0%2Bsha.9acbbb021a43.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fblanc/library/OneWire_II/0.0.0+sha.5d39f2521173/OneWire_II-0.0.0+sha.5d39f2521173.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneWire_II-0.0.0+sha.5d39f2521173.tar.gz",
+    "size_bytes": 11314,
+    "sha256": "bdad079184286b2421da10b759af89375daa2acd35db37faa64fabc3d205a2a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fblanc/library/OneWire_II/0.0.0%2Bsha.5d39f2521173/OneWire_II-0.0.0%2Bsha.5d39f2521173.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fblanc/library/OneWire_II/0.0.0%2Bsha.5d39f2521173/OneWire_II-0.0.0%2Bsha.5d39f2521173.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fblanc/library/QEI_hw_m/0.0.0+sha.37964304d479/QEI_hw_m-0.0.0+sha.37964304d479.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QEI_hw_m-0.0.0+sha.37964304d479.tar.gz",
+    "size_bytes": 8155,
+    "sha256": "f4d6b0a4155f8dc7b2951a81bdda85fe103b65c170675c97e0051e92849082cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fblanc/library/QEI_hw_m/0.0.0%2Bsha.37964304d479/QEI_hw_m-0.0.0%2Bsha.37964304d479.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fblanc/library/QEI_hw_m/0.0.0%2Bsha.37964304d479/QEI_hw_m-0.0.0%2Bsha.37964304d479.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fblanc/library/TS_STMPE811/0.0.0+sha.004e29745d5e/TS_STMPE811-0.0.0+sha.004e29745d5e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TS_STMPE811-0.0.0+sha.004e29745d5e.tar.gz",
+    "size_bytes": 2655,
+    "sha256": "4efde1af118ba64985c705786b508eecc11c15fb1d4d4b806d40ff4c3d5fdb79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fblanc/library/TS_STMPE811/0.0.0%2Bsha.004e29745d5e/TS_STMPE811-0.0.0%2Bsha.004e29745d5e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fblanc/library/TS_STMPE811/0.0.0%2Bsha.004e29745d5e/TS_STMPE811-0.0.0%2Bsha.004e29745d5e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fblanc/library/sp5fx1/0.0.0+sha.582c20f27326/sp5fx1-0.0.0+sha.582c20f27326.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sp5fx1-0.0.0+sha.582c20f27326.tar.gz",
+    "size_bytes": 7573,
+    "sha256": "447260e2592162e5586ed4e46c50391f56bdbbc6c9f2ae43e2ba0ab7ab817759",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fblanc/library/sp5fx1/0.0.0%2Bsha.582c20f27326/sp5fx1-0.0.0%2Bsha.582c20f27326.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fblanc/library/sp5fx1/0.0.0%2Bsha.582c20f27326/sp5fx1-0.0.0%2Bsha.582c20f27326.tar.gz"
+    ]
+   }
+  }
+ ]
+}

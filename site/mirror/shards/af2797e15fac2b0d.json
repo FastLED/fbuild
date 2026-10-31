@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gustavsvik",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gustavsvik/library/LogSerial/0.1.0/LogSerial-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LogSerial-0.1.0.tar.gz",
+    "size_bytes": 2755,
+    "sha256": "1013bb1005552e70f9d05de4b855b0cde559aa0988a0c75d2df7bf8da984a85b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gustavsvik/library/LogSerial/0.1.0/LogSerial-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gustavsvik/library/LogSerial/0.1.0/LogSerial-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

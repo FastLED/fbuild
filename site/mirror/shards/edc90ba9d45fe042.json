@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rs27",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rs27/library/DS2482/0.0.0+sha.d94037eb31ed/DS2482-0.0.0+sha.d94037eb31ed.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS2482-0.0.0+sha.d94037eb31ed.tar.gz",
+    "size_bytes": 11247,
+    "sha256": "be6d9d8756986cdee14b2dafe43287a47491051267981d16a1f3fb3965bd2248",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rs27/library/DS2482/0.0.0%2Bsha.d94037eb31ed/DS2482-0.0.0%2Bsha.d94037eb31ed.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rs27/library/DS2482/0.0.0%2Bsha.d94037eb31ed/DS2482-0.0.0%2Bsha.d94037eb31ed.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rs27/library/monitor/0.0.0+sha.19313470f629/monitor-0.0.0+sha.19313470f629.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "monitor-0.0.0+sha.19313470f629.tar.gz",
+    "size_bytes": 4269,
+    "sha256": "d46851014b9df2a77a7c220fc11dd9f4ca66b3978c5fd775b6e138ac6d26e6cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rs27/library/monitor/0.0.0%2Bsha.19313470f629/monitor-0.0.0%2Bsha.19313470f629.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rs27/library/monitor/0.0.0%2Bsha.19313470f629/monitor-0.0.0%2Bsha.19313470f629.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rs27/library/timer0/0.0.0+sha.d8e4c9bfd51d/timer0-0.0.0+sha.d8e4c9bfd51d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "timer0-0.0.0+sha.d8e4c9bfd51d.tar.gz",
+    "size_bytes": 1812,
+    "sha256": "5e594e917e1682b4ac96d05443b568e6412e93c83d6fb9192a3839c313cd7cfe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rs27/library/timer0/0.0.0%2Bsha.d8e4c9bfd51d/timer0-0.0.0%2Bsha.d8e4c9bfd51d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rs27/library/timer0/0.0.0%2Bsha.d8e4c9bfd51d/timer0-0.0.0%2Bsha.d8e4c9bfd51d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cafxx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cafxx/library/gmp-ino/0.1.0/gmp-ino-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gmp-ino-0.1.0.tar.gz",
+    "size_bytes": 29891,
+    "sha256": "fa65c469a10380ae367f2fd450d5cea1c5f367682cd205385ee4ea5cf7232821",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cafxx/library/gmp-ino/0.1.0/gmp-ino-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cafxx/library/gmp-ino/0.1.0/gmp-ino-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

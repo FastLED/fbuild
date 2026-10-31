@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/datacentricdesign",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "datacentricdesign/library/DCD%20SDK%20for%20Arduino/0.0.4/DCDSDKforArduino-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCDSDKforArduino-0.0.4.tar.gz",
+    "size_bytes": 29825,
+    "sha256": "4fcc8a739c5386d487f806f99d10798611495747f85edefcbc758c5c1a3820e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/datacentricdesign/library/DCD%2520SDK%2520for%2520Arduino/0.0.4/DCDSDKforArduino-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/datacentricdesign/library/DCD%20SDK%20for%20Arduino/0.0.4/DCDSDKforArduino-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

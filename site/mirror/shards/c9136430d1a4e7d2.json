@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/code-hoysala",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "code-hoysala/library/Bridge555/1.0.2/Bridge555-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bridge555-1.0.2.tar.gz",
+    "size_bytes": 3066,
+    "sha256": "1f2fcc0730abad7089e1514c2939b3372826ae8cfcc92bc65566440f5d3de1ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/code-hoysala/library/Bridge555/1.0.2/Bridge555-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/code-hoysala/library/Bridge555/1.0.2/Bridge555-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "code-hoysala/library/MeshLink/1.0.1/MeshLink-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeshLink-1.0.1.tar.gz",
+    "size_bytes": 2241,
+    "sha256": "f405d9390e3d1c48536c4ef3ad500cad6462122b2f90ab760cca3282eb774beb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/code-hoysala/library/MeshLink/1.0.1/MeshLink-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/code-hoysala/library/MeshLink/1.0.1/MeshLink-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "code-hoysala/library/MotorShield/1.0.1/MotorShield-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorShield-1.0.1.tar.gz",
+    "size_bytes": 2602,
+    "sha256": "aafa113051f5fdc2070ba9dee43e13cc8cc7eb800091092e53af8decc4b35777",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/code-hoysala/library/MotorShield/1.0.1/MotorShield-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/code-hoysala/library/MotorShield/1.0.1/MotorShield-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "code-hoysala/library/ToneTransceiver/1.0.0/ToneTransceiver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ToneTransceiver-1.0.0.tar.gz",
+    "size_bytes": 2208,
+    "sha256": "9e0838fcc0bb84427d896ce10445a25455b1d832ec8d5a01cd24f40c1d054a2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/code-hoysala/library/ToneTransceiver/1.0.0/ToneTransceiver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/code-hoysala/library/ToneTransceiver/1.0.0/ToneTransceiver-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "code-hoysala/library/sysmon/1.0.0/sysmon-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sysmon-1.0.0.tar.gz",
+    "size_bytes": 2784,
+    "sha256": "ea6208902ba85ad3833427c9b7212ba4e7e8c446c0fc3d872f6906abba5506c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/code-hoysala/library/sysmon/1.0.0/sysmon-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/code-hoysala/library/sysmon/1.0.0/sysmon-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

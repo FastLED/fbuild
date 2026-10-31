@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kokofixcomputers",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kokofixcomputers/library/BitBang_LiquidCrystal_I2C/1.1.0/BitBang_LiquidCrystal_I2C-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BitBang_LiquidCrystal_I2C-1.1.0.tar.gz",
+    "size_bytes": 5742,
+    "sha256": "9bac76952e4d39d096369d9198e6e2fea45ed5e236a2137639119cfe697e8ea4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kokofixcomputers/library/BitBang_LiquidCrystal_I2C/1.1.0/BitBang_LiquidCrystal_I2C-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kokofixcomputers/library/BitBang_LiquidCrystal_I2C/1.1.0/BitBang_LiquidCrystal_I2C-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kokofixcomputers/library/ESP32BLECombo/0.1.0/ESP32BLECombo-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BLECombo-0.1.0.tar.gz",
+    "size_bytes": 8618,
+    "sha256": "98e88c01e005f607519ad05fe4f868bf66e7b5100fc74156fd1a0699721e3927",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kokofixcomputers/library/ESP32BLECombo/0.1.0/ESP32BLECombo-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kokofixcomputers/library/ESP32BLECombo/0.1.0/ESP32BLECombo-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

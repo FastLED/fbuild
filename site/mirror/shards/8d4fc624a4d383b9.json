@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-francxk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-francxk/library/CmdMessenger/0.0.0+sha.798b310a5240/CmdMessenger-0.0.0+sha.798b310a5240.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CmdMessenger-0.0.0+sha.798b310a5240.tar.gz",
+    "size_bytes": 7795,
+    "sha256": "bd31e1d9528dd969b3ee3dc98d7aac8cc16647dcf9fd26ddf3e9e7532a799db8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-francxk/library/CmdMessenger/0.0.0%2Bsha.798b310a5240/CmdMessenger-0.0.0%2Bsha.798b310a5240.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-francxk/library/CmdMessenger/0.0.0%2Bsha.798b310a5240/CmdMessenger-0.0.0%2Bsha.798b310a5240.tar.gz"
+    ]
+   }
+  }
+ ]
+}

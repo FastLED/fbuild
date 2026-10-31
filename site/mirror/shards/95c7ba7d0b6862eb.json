@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bacon8tor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bacon8tor/library/FalconBMSArduinoConnector/0.3.9/FalconBMSArduinoConnector-0.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FalconBMSArduinoConnector-0.3.9.tar.gz",
+    "size_bytes": 18447,
+    "sha256": "4db4b00f64dd95c2461483e6f0af12f8050ba4f611c233277f4e2ee471c9d66a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bacon8tor/library/FalconBMSArduinoConnector/0.3.9/FalconBMSArduinoConnector-0.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/bacon8tor/library/FalconBMSArduinoConnector/0.3.9/FalconBMSArduinoConnector-0.3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bacon8tor/library/FalconBMSArduinoConnector/0.4.0/FalconBMSArduinoConnector-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FalconBMSArduinoConnector-0.4.0.tar.gz",
+    "size_bytes": 18707,
+    "sha256": "ea312fe2a4ce01d83780297bf4c5d0836c4bf8f278d2b5bf8b5850ed5bbd8d81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bacon8tor/library/FalconBMSArduinoConnector/0.4.0/FalconBMSArduinoConnector-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bacon8tor/library/FalconBMSArduinoConnector/0.4.0/FalconBMSArduinoConnector-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bacon8tor/library/FalconBMSArduinoConnector/0.5.0/FalconBMSArduinoConnector-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FalconBMSArduinoConnector-0.5.0.tar.gz",
+    "size_bytes": 18778,
+    "sha256": "a7662a8a8e941c18c3d88c83540c602d0898eb0e0f33dcbb2ab0aaac7679c4be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bacon8tor/library/FalconBMSArduinoConnector/0.5.0/FalconBMSArduinoConnector-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bacon8tor/library/FalconBMSArduinoConnector/0.5.0/FalconBMSArduinoConnector-0.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

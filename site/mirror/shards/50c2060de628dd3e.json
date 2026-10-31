@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jackb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jackb/library/EEPROM/0.0.0+sha.b90c5754d8db/EEPROM-0.0.0+sha.b90c5754d8db.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM-0.0.0+sha.b90c5754d8db.tar.gz",
+    "size_bytes": 7969,
+    "sha256": "af02ea7732417dada53bf803b4600324cb516bc5b0cdae904af08a452e4cc1c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackb/library/EEPROM/0.0.0%2Bsha.b90c5754d8db/EEPROM-0.0.0%2Bsha.b90c5754d8db.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackb/library/EEPROM/0.0.0%2Bsha.b90c5754d8db/EEPROM-0.0.0%2Bsha.b90c5754d8db.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackb/library/FT5206/0.0.0+sha.5ebf8736e4b2/FT5206-0.0.0+sha.5ebf8736e4b2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FT5206-0.0.0+sha.5ebf8736e4b2.tar.gz",
+    "size_bytes": 3125,
+    "sha256": "bac3d887f1e97c22f5ee62bf7cb9efdb78177956cb22828f9a57531e2183b22a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackb/library/FT5206/0.0.0%2Bsha.5ebf8736e4b2/FT5206-0.0.0%2Bsha.5ebf8736e4b2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackb/library/FT5206/0.0.0%2Bsha.5ebf8736e4b2/FT5206-0.0.0%2Bsha.5ebf8736e4b2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackb/library/FT6206/0.0.0+sha.9e1fc2233b0e/FT6206-0.0.0+sha.9e1fc2233b0e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FT6206-0.0.0+sha.9e1fc2233b0e.tar.gz",
+    "size_bytes": 4322,
+    "sha256": "9454fd32120a729f4428268b58bc26a88a74424811d1ce72f4e3368fcae8829f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackb/library/FT6206/0.0.0%2Bsha.9e1fc2233b0e/FT6206-0.0.0%2Bsha.9e1fc2233b0e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackb/library/FT6206/0.0.0%2Bsha.9e1fc2233b0e/FT6206-0.0.0%2Bsha.9e1fc2233b0e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackb/library/HSV/0.0.0+sha.a06dfdf279e2/HSV-0.0.0+sha.a06dfdf279e2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HSV-0.0.0+sha.a06dfdf279e2.tar.gz",
+    "size_bytes": 3349,
+    "sha256": "c1174364968dfbd740a29330bbc8965c275191c081af23e36b47108524dd8f1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackb/library/HSV/0.0.0%2Bsha.a06dfdf279e2/HSV-0.0.0%2Bsha.a06dfdf279e2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackb/library/HSV/0.0.0%2Bsha.a06dfdf279e2/HSV-0.0.0%2Bsha.a06dfdf279e2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackb/library/MCP79412/0.0.0+sha.04311b121ac4/MCP79412-0.0.0+sha.04311b121ac4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP79412-0.0.0+sha.04311b121ac4.tar.gz",
+    "size_bytes": 20787,
+    "sha256": "7b638a92c5dd37c40f21260bf65d8db2c101f9caa7b9621ad22bdcb12d7a5e0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackb/library/MCP79412/0.0.0%2Bsha.04311b121ac4/MCP79412-0.0.0%2Bsha.04311b121ac4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackb/library/MCP79412/0.0.0%2Bsha.04311b121ac4/MCP79412-0.0.0%2Bsha.04311b121ac4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackb/library/NHD_0420DZW_OLED/0.0.0+sha.91420dff6791/NHD_0420DZW_OLED-0.0.0+sha.91420dff6791.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NHD_0420DZW_OLED-0.0.0+sha.91420dff6791.tar.gz",
+    "size_bytes": 3853,
+    "sha256": "48aef6bc2b2b3fd4db9798c342359647476ab648ff47bce2d20fd68da05a5697",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackb/library/NHD_0420DZW_OLED/0.0.0%2Bsha.91420dff6791/NHD_0420DZW_OLED-0.0.0%2Bsha.91420dff6791.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackb/library/NHD_0420DZW_OLED/0.0.0%2Bsha.91420dff6791/NHD_0420DZW_OLED-0.0.0%2Bsha.91420dff6791.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackb/library/RGB_Matrix/0.0.0+sha.04691de55153/RGB_Matrix-0.0.0+sha.04691de55153.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RGB_Matrix-0.0.0+sha.04691de55153.tar.gz",
+    "size_bytes": 6535,
+    "sha256": "dc17a3f5abc1b479547ba89df5514b2bf509c56d417c3be8f04881508cfd3af9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackb/library/RGB_Matrix/0.0.0%2Bsha.04691de55153/RGB_Matrix-0.0.0%2Bsha.04691de55153.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackb/library/RGB_Matrix/0.0.0%2Bsha.04691de55153/RGB_Matrix-0.0.0%2Bsha.04691de55153.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackb/library/SDBlockDevice/0.0.0+sha.6c7012898e59/SDBlockDevice-0.0.0+sha.6c7012898e59.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDBlockDevice-0.0.0+sha.6c7012898e59.tar.gz",
+    "size_bytes": 13477,
+    "sha256": "42434dc6fe2b28b38e7c69c1cc137bc216dcbe097bed091cae001337c81f6663",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackb/library/SDBlockDevice/0.0.0%2Bsha.6c7012898e59/SDBlockDevice-0.0.0%2Bsha.6c7012898e59.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackb/library/SDBlockDevice/0.0.0%2Bsha.6c7012898e59/SDBlockDevice-0.0.0%2Bsha.6c7012898e59.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackb/library/SPIFBlockDevice/0.0.0+sha.b4f61c49c866/SPIFBlockDevice-0.0.0+sha.b4f61c49c866.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPIFBlockDevice-0.0.0+sha.b4f61c49c866.tar.gz",
+    "size_bytes": 4641,
+    "sha256": "dafc772a807b799312694f867ce03180ac522ca8628b559969f35420120d8035",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackb/library/SPIFBlockDevice/0.0.0%2Bsha.b4f61c49c866/SPIFBlockDevice-0.0.0%2Bsha.b4f61c49c866.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackb/library/SPIFBlockDevice/0.0.0%2Bsha.b4f61c49c866/SPIFBlockDevice-0.0.0%2Bsha.b4f61c49c866.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackb/library/SPI_TFT_ILI9225/0.0.0+sha.b120858d05ff/SPI_TFT_ILI9225-0.0.0+sha.b120858d05ff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_TFT_ILI9225-0.0.0+sha.b120858d05ff.tar.gz",
+    "size_bytes": 10029,
+    "sha256": "2ac87f137e5ce58c66168af3e437a735768b777cc11ad5ea07d56ed31deba2ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackb/library/SPI_TFT_ILI9225/0.0.0%2Bsha.b120858d05ff/SPI_TFT_ILI9225-0.0.0%2Bsha.b120858d05ff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackb/library/SPI_TFT_ILI9225/0.0.0%2Bsha.b120858d05ff/SPI_TFT_ILI9225-0.0.0%2Bsha.b120858d05ff.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackb/library/SystemClock/0.0.0+sha.86b437ce0d0f/SystemClock-0.0.0+sha.86b437ce0d0f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SystemClock-0.0.0+sha.86b437ce0d0f.tar.gz",
+    "size_bytes": 2182,
+    "sha256": "7e6c9b8167486c5318dd3d16aeb2910a8953d7dea7c8ada90c6ca15d6e83934b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackb/library/SystemClock/0.0.0%2Bsha.86b437ce0d0f/SystemClock-0.0.0%2Bsha.86b437ce0d0f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackb/library/SystemClock/0.0.0%2Bsha.86b437ce0d0f/SystemClock-0.0.0%2Bsha.86b437ce0d0f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackb/library/TFT_fonts/0.0.0+sha.9430a7f2f602/TFT_fonts-0.0.0+sha.9430a7f2f602.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_fonts-0.0.0+sha.9430a7f2f602.tar.gz",
+    "size_bytes": 231137,
+    "sha256": "5f75eb5e9c4b50bf0421a780f0e79ec78d6afc5831a62abafe0a299013761971",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackb/library/TFT_fonts/0.0.0%2Bsha.9430a7f2f602/TFT_fonts-0.0.0%2Bsha.9430a7f2f602.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackb/library/TFT_fonts/0.0.0%2Bsha.9430a7f2f602/TFT_fonts-0.0.0%2Bsha.9430a7f2f602.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackb/library/TTF_fonts/0.0.0+sha.53055c20e5e3/TTF_fonts-0.0.0+sha.53055c20e5e3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTF_fonts-0.0.0+sha.53055c20e5e3.tar.gz",
+    "size_bytes": 5252,
+    "sha256": "18da5b232f2cfb7e6ae5f4a999f1a1ef951bff4c7f85da864194152640a62800",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackb/library/TTF_fonts/0.0.0%2Bsha.53055c20e5e3/TTF_fonts-0.0.0%2Bsha.53055c20e5e3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackb/library/TTF_fonts/0.0.0%2Bsha.53055c20e5e3/TTF_fonts-0.0.0%2Bsha.53055c20e5e3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackb/library/WDT/0.0.0+sha.aae68a400cf2/WDT-0.0.0+sha.aae68a400cf2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WDT-0.0.0+sha.aae68a400cf2.tar.gz",
+    "size_bytes": 1825,
+    "sha256": "db91c89137f4ebeb79ec7b822125e216b542de19e82edee41f8fc149fbc80717",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackb/library/WDT/0.0.0%2Bsha.aae68a400cf2/WDT-0.0.0%2Bsha.aae68a400cf2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackb/library/WDT/0.0.0%2Bsha.aae68a400cf2/WDT-0.0.0%2Bsha.aae68a400cf2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

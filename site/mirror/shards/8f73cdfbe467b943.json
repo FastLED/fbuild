@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/boxtec",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "boxtec/library/Witty/1.0.1/Witty-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Witty-1.0.1.tar.gz",
+    "size_bytes": 11724,
+    "sha256": "08a26aa6c1db44f3e3afc9e3ef1d1e9762bebe825f145a8b6871fc753db65197",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boxtec/library/Witty/1.0.1/Witty-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/boxtec/library/Witty/1.0.1/Witty-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

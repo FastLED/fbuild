@@ -1,0 +1,2115 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stm32duino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stm32duino/library/FatFs/2.0.3/FatFs-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FatFs-2.0.3.tar.gz",
+    "size_bytes": 691543,
+    "sha256": "a26046fa73ced6d5f37c1a376c57c47fd9fc1673572da230b8d80ad850a04069",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/FatFs/2.0.3/FatFs-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/FatFs/2.0.3/FatFs-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32Ethernet/1.4.0/STM32Ethernet-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32Ethernet-1.4.0.tar.gz",
+    "size_bytes": 39162,
+    "sha256": "f175d4ea9cea74a8d4d017e1ea0ca945ea7029be07e99eb0d11b93a4dc924356",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32Ethernet/1.4.0/STM32Ethernet-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32Ethernet/1.4.0/STM32Ethernet-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32Ethernet/1.6.0/STM32Ethernet-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32Ethernet-1.6.0.tar.gz",
+    "size_bytes": 47845,
+    "sha256": "2e1ea64d43352c5de453c8f273eac54c00b4eaba6fdd440e35d67b51da9feb94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32Ethernet/1.6.0/STM32Ethernet-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32Ethernet/1.6.0/STM32Ethernet-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ASM330LHH/2.0.1/STM32duinoASM330LHH-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoASM330LHH-2.0.1.tar.gz",
+    "size_bytes": 25453,
+    "sha256": "d956299c69c8f5cff3875d449a7620b52c89fa5fedcc8fac12da492663d659ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ASM330LHH/2.0.1/STM32duinoASM330LHH-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ASM330LHH/2.0.1/STM32duinoASM330LHH-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20Examples/1.2.7/STM32duinoExamples-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoExamples-1.2.7.tar.gz",
+    "size_bytes": 46372,
+    "sha256": "bb34405562a31174ecd376651e7af8efc083a40fc87612e969add96e193dd35b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520Examples/1.2.7/STM32duinoExamples-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20Examples/1.2.7/STM32duinoExamples-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20Examples/1.2.8/STM32duinoExamples-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoExamples-1.2.8.tar.gz",
+    "size_bytes": 46405,
+    "sha256": "f2460a6971fc8379e9cfb26f03767747ee67da7a15defeef5974f0cca00537c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520Examples/1.2.8/STM32duinoExamples-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20Examples/1.2.8/STM32duinoExamples-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20FP_Examples/1.8.0/STM32duinoFP_Examples-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoFP_Examples-1.8.0.tar.gz",
+    "size_bytes": 38626,
+    "sha256": "ae234570af84813fe5f76fa683aa385565eca8c350239af272ffaa39b4ec03cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520FP_Examples/1.8.0/STM32duinoFP_Examples-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20FP_Examples/1.8.0/STM32duinoFP_Examples-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20FreeRTOS/10.3.2/STM32duinoFreeRTOS-10.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoFreeRTOS-10.3.2.tar.gz",
+    "size_bytes": 457017,
+    "sha256": "f704e0010a484eb34f42d98f68b8cbce85988cb4e2e86f437c6ba30f72be4064",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520FreeRTOS/10.3.2/STM32duinoFreeRTOS-10.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20FreeRTOS/10.3.2/STM32duinoFreeRTOS-10.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20FreeRTOS/10.3.3/STM32duinoFreeRTOS-10.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoFreeRTOS-10.3.3.tar.gz",
+    "size_bytes": 457182,
+    "sha256": "ecc3b9df91bdf83a84c873d015cf98176a0d706c434219eaa8a8fbf08fd02fca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520FreeRTOS/10.3.3/STM32duinoFreeRTOS-10.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20FreeRTOS/10.3.3/STM32duinoFreeRTOS-10.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20HTS221/2.0.1/STM32duinoHTS221-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoHTS221-2.0.1.tar.gz",
+    "size_bytes": 11189,
+    "sha256": "75f98d5c6e62d6a155bb49d2af6b96907ada8deb38d76f56d74a36c0fce078f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520HTS221/2.0.1/STM32duinoHTS221-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20HTS221/2.0.1/STM32duinoHTS221-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20HTS221/2.0.2/STM32duinoHTS221-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoHTS221-2.0.2.tar.gz",
+    "size_bytes": 13043,
+    "sha256": "ba97a1043ec3fed07448d2bb43d7e77bd6fa922480a25b4061313ed7728890a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520HTS221/2.0.2/STM32duinoHTS221-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20HTS221/2.0.2/STM32duinoHTS221-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20I-NUCLEO-LRWAN1/1.0.3/STM32duinoI-NUCLEO-LRWAN1-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoI-NUCLEO-LRWAN1-1.0.3.tar.gz",
+    "size_bytes": 43391,
+    "sha256": "d3aac92e1469df536b9f7fae074119b76595935c5be770a53b07441c69c2c98d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520I-NUCLEO-LRWAN1/1.0.3/STM32duinoI-NUCLEO-LRWAN1-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20I-NUCLEO-LRWAN1/1.0.3/STM32duinoI-NUCLEO-LRWAN1-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20IIS2DLPC/2.0.0/STM32duinoIIS2DLPC-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoIIS2DLPC-2.0.0.tar.gz",
+    "size_bytes": 20875,
+    "sha256": "09502768ed4e09e81535196aab418119ed8205e5be3775a9e5c47383d7e5e54b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520IIS2DLPC/2.0.0/STM32duinoIIS2DLPC-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20IIS2DLPC/2.0.0/STM32duinoIIS2DLPC-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20IIS2DULPX/1.0.0/STM32duinoIIS2DULPX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoIIS2DULPX-1.0.0.tar.gz",
+    "size_bytes": 37428,
+    "sha256": "f627c3abb70292b0de60f7ed65a7384d6d37a88018f494946b03a1c3c58f0a42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520IIS2DULPX/1.0.0/STM32duinoIIS2DULPX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20IIS2DULPX/1.0.0/STM32duinoIIS2DULPX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20IIS2DULPX/1.0.1/STM32duinoIIS2DULPX-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoIIS2DULPX-1.0.1.tar.gz",
+    "size_bytes": 37418,
+    "sha256": "277eab26a3003aae26a84107af6be257de613515fd6136653cb6b234912d0f6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520IIS2DULPX/1.0.1/STM32duinoIIS2DULPX-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20IIS2DULPX/1.0.1/STM32duinoIIS2DULPX-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20IIS2DULPX/1.1.1/STM32duinoIIS2DULPX-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoIIS2DULPX-1.1.1.tar.gz",
+    "size_bytes": 39548,
+    "sha256": "8efcd47738005280f865d914b4e285fccf63beed65a50dfd23651295e5b397a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520IIS2DULPX/1.1.1/STM32duinoIIS2DULPX-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20IIS2DULPX/1.1.1/STM32duinoIIS2DULPX-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20IIS2MDC/2.0.2/STM32duinoIIS2MDC-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoIIS2MDC-2.0.2.tar.gz",
+    "size_bytes": 11098,
+    "sha256": "d14bd10427cae5d1e5ae721f04385a52bb5e0003c4f4d360853d47b66b11b966",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520IIS2MDC/2.0.2/STM32duinoIIS2MDC-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20IIS2MDC/2.0.2/STM32duinoIIS2MDC-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ILPS22QS/1.0.0/STM32duinoILPS22QS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoILPS22QS-1.0.0.tar.gz",
+    "size_bytes": 15984,
+    "sha256": "07d8b2dff055759badede892ec5699c9b054b6b26f6c9d00ed6593226f62597d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ILPS22QS/1.0.0/STM32duinoILPS22QS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ILPS22QS/1.0.0/STM32duinoILPS22QS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ILPS22QS/1.0.1/STM32duinoILPS22QS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoILPS22QS-1.0.1.tar.gz",
+    "size_bytes": 15990,
+    "sha256": "d929a54fc5b5b2a5db908c8dd7c446342fcac274276d947527817abd723202b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ILPS22QS/1.0.1/STM32duinoILPS22QS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ILPS22QS/1.0.1/STM32duinoILPS22QS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ILPS22QS/1.1.1/STM32duinoILPS22QS-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoILPS22QS-1.1.1.tar.gz",
+    "size_bytes": 17339,
+    "sha256": "207d5240a4ddfe86629be089ee1c0543c32796d81b4a9c1659fc95c90de498da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ILPS22QS/1.1.1/STM32duinoILPS22QS-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ILPS22QS/1.1.1/STM32duinoILPS22QS-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ISM330DHCX/2.1.1/STM32duinoISM330DHCX-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoISM330DHCX-2.1.1.tar.gz",
+    "size_bytes": 51124,
+    "sha256": "78e3e0c1ca451c73a8605a7d49f777aabe03b168152f934e9c035b030b020b73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ISM330DHCX/2.1.1/STM32duinoISM330DHCX-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ISM330DHCX/2.1.1/STM32duinoISM330DHCX-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ISM330DHCX/2.2.0/STM32duinoISM330DHCX-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoISM330DHCX-2.2.0.tar.gz",
+    "size_bytes": 51328,
+    "sha256": "47550a0680bb1f28b945e2a43c21242de5b2dba4773e65a5e5a7004751862480",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ISM330DHCX/2.2.0/STM32duinoISM330DHCX-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ISM330DHCX/2.2.0/STM32duinoISM330DHCX-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ISM330DLC/2.0.1/STM32duinoISM330DLC-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoISM330DLC-2.0.1.tar.gz",
+    "size_bytes": 35024,
+    "sha256": "6b6b8b16bd38f199bb57fa8ca31663b2998d22f4decc06a32ea3298d72d093a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ISM330DLC/2.0.1/STM32duinoISM330DLC-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ISM330DLC/2.0.1/STM32duinoISM330DLC-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ISM330IS/1.0.0/STM32duinoISM330IS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoISM330IS-1.0.0.tar.gz",
+    "size_bytes": 63918,
+    "sha256": "7b3af445ab64436775e1a2b06c026c529c97b164ef59f632f16bb5ed9d295fc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ISM330IS/1.0.0/STM32duinoISM330IS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ISM330IS/1.0.0/STM32duinoISM330IS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ISM330IS/1.0.1/STM32duinoISM330IS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoISM330IS-1.0.1.tar.gz",
+    "size_bytes": 63918,
+    "sha256": "90f05b6a994d33d3c0ba080658c75a1d78eb10cf5ca616ef43f262a79f54f1a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ISM330IS/1.0.1/STM32duinoISM330IS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ISM330IS/1.0.1/STM32duinoISM330IS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ISM43362-M3G-L44/1.2.0/STM32duinoISM43362-M3G-L44-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoISM43362-M3G-L44-1.2.0.tar.gz",
+    "size_bytes": 35437,
+    "sha256": "10974b4b7e1965db0c0edb594c8a968d4a17311f8a6ff6b2862f2539394486b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ISM43362-M3G-L44/1.2.0/STM32duinoISM43362-M3G-L44-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ISM43362-M3G-L44/1.2.0/STM32duinoISM43362-M3G-L44-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ISM6HG256X/1.0.0/STM32duinoISM6HG256X-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoISM6HG256X-1.0.0.tar.gz",
+    "size_bytes": 71007,
+    "sha256": "fc8a56b0a86ab5b63f52f0dbbf0dd45ea2ce912dedf6eb7b306b0396277132d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ISM6HG256X/1.0.0/STM32duinoISM6HG256X-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ISM6HG256X/1.0.0/STM32duinoISM6HG256X-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ISM6HG256X/1.0.1/STM32duinoISM6HG256X-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoISM6HG256X-1.0.1.tar.gz",
+    "size_bytes": 70989,
+    "sha256": "d962d37ee5ef4c1daf0b157ad5ff1eeb57064cf6962413a6605a271745e12a77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ISM6HG256X/1.0.1/STM32duinoISM6HG256X-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ISM6HG256X/1.0.1/STM32duinoISM6HG256X-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ISM6HG256X/2.0.0/STM32duinoISM6HG256X-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoISM6HG256X-2.0.0.tar.gz",
+    "size_bytes": 71003,
+    "sha256": "5e14277b738d90eb10dd700b4e26affb9b47a9a2534d7ba234ed7426166d2d80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ISM6HG256X/2.0.0/STM32duinoISM6HG256X-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ISM6HG256X/2.0.0/STM32duinoISM6HG256X-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ISM6HG256X/2.1.0/STM32duinoISM6HG256X-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoISM6HG256X-2.1.0.tar.gz",
+    "size_bytes": 72445,
+    "sha256": "4efdeaab946adc6318289099dbee4e8d621f08cf29e7dac3bfbf093c964dcd87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ISM6HG256X/2.1.0/STM32duinoISM6HG256X-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ISM6HG256X/2.1.0/STM32duinoISM6HG256X-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LIS2DU12/1.0.1/STM32duinoLIS2DU12-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLIS2DU12-1.0.1.tar.gz",
+    "size_bytes": 18867,
+    "sha256": "95e16445dab279eba6cc3917be01776d8bba9b43604998eb98d886fc83e0cb9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LIS2DU12/1.0.1/STM32duinoLIS2DU12-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LIS2DU12/1.0.1/STM32duinoLIS2DU12-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LIS2DU12/1.1.0/STM32duinoLIS2DU12-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLIS2DU12-1.1.0.tar.gz",
+    "size_bytes": 20082,
+    "sha256": "23fa74911a92b934b67fcc300ced004a1903f87c6b3e2cb1d7eec041d6e3bd40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LIS2DU12/1.1.0/STM32duinoLIS2DU12-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LIS2DU12/1.1.0/STM32duinoLIS2DU12-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LIS2DUXS12/1.0.2/STM32duinoLIS2DUXS12-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLIS2DUXS12-1.0.2.tar.gz",
+    "size_bytes": 46842,
+    "sha256": "e318e2fe0bab76520ab8e1b26026bf1d9b7cc13f98bac5f9fe937ec4f75c2822",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LIS2DUXS12/1.0.2/STM32duinoLIS2DUXS12-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LIS2DUXS12/1.0.2/STM32duinoLIS2DUXS12-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LIS2DUXS12/1.1.0/STM32duinoLIS2DUXS12-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLIS2DUXS12-1.1.0.tar.gz",
+    "size_bytes": 48416,
+    "sha256": "cdbf74c6909976b366d7f2807a5b76ac09632ff384cae8fdb1328816312f5337",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LIS2DUXS12/1.1.0/STM32duinoLIS2DUXS12-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LIS2DUXS12/1.1.0/STM32duinoLIS2DUXS12-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LIS2DUXS12/1.1.2/STM32duinoLIS2DUXS12-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLIS2DUXS12-1.1.2.tar.gz",
+    "size_bytes": 48439,
+    "sha256": "b2b2f3f050ad022c4ad232333545c956c8814a6ea89b8d461edc68eeed8707bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LIS2DUXS12/1.1.2/STM32duinoLIS2DUXS12-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LIS2DUXS12/1.1.2/STM32duinoLIS2DUXS12-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LIS2DW12/2.1.1/STM32duinoLIS2DW12-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLIS2DW12-2.1.1.tar.gz",
+    "size_bytes": 22103,
+    "sha256": "5e556a1d5f91510d54e8f2bd72644c89cdd9b98f1e9ae9d273151ae4c7433d9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LIS2DW12/2.1.1/STM32duinoLIS2DW12-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LIS2DW12/2.1.1/STM32duinoLIS2DW12-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LIS2MDL/2.0.1/STM32duinoLIS2MDL-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLIS2MDL-2.0.1.tar.gz",
+    "size_bytes": 11228,
+    "sha256": "4c004e2aacd6fcc1993ae5291ef59a93d1302b2a6214fae48b261a6c87c13b6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LIS2MDL/2.0.1/STM32duinoLIS2MDL-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LIS2MDL/2.0.1/STM32duinoLIS2MDL-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LIS3MDL/2.0.0/STM32duinoLIS3MDL-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLIS3MDL-2.0.0.tar.gz",
+    "size_bytes": 12998,
+    "sha256": "454f64e5911196590f6298adf824f447277a70d8338d53c970f566862c3465ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LIS3MDL/2.0.0/STM32duinoLIS3MDL-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LIS3MDL/2.0.0/STM32duinoLIS3MDL-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LPS22DF/1.0.4/STM32duinoLPS22DF-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLPS22DF-1.0.4.tar.gz",
+    "size_bytes": 14267,
+    "sha256": "9f9bc51f5b3b76e1b1ab6b4f8b450772c9ee566de5398bddf895e3d5a08e0f21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LPS22DF/1.0.4/STM32duinoLPS22DF-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LPS22DF/1.0.4/STM32duinoLPS22DF-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LPS22DF/1.1.0/STM32duinoLPS22DF-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLPS22DF-1.1.0.tar.gz",
+    "size_bytes": 16021,
+    "sha256": "8d9e6f4ecc7f7738f7b38010bb148637d6a6a6bb30d5decd09d862bc04c7613d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LPS22DF/1.1.0/STM32duinoLPS22DF-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LPS22DF/1.1.0/STM32duinoLPS22DF-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LPS22HB/2.0.0/STM32duinoLPS22HB-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLPS22HB-2.0.0.tar.gz",
+    "size_bytes": 21639,
+    "sha256": "526cf68a37359ab03132e5cf57a9d1f94db745799351248ed35d74b4cd61a9d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LPS22HB/2.0.0/STM32duinoLPS22HB-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LPS22HB/2.0.0/STM32duinoLPS22HB-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LPS22HH/2.0.4/STM32duinoLPS22HH-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLPS22HH-2.0.4.tar.gz",
+    "size_bytes": 15903,
+    "sha256": "9cab11b632421cb4faed8594bd36f6deadc2c936e2ccbd044f3596a23df57938",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LPS22HH/2.0.4/STM32duinoLPS22HH-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LPS22HH/2.0.4/STM32duinoLPS22HH-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LPS22HH/2.1.0/STM32duinoLPS22HH-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLPS22HH-2.1.0.tar.gz",
+    "size_bytes": 16896,
+    "sha256": "1a785bd6b259ef9fa84068c43fd8832cdd0c9d13fbdd7dfa0014226f1da6a2bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LPS22HH/2.1.0/STM32duinoLPS22HH-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LPS22HH/2.1.0/STM32duinoLPS22HH-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LPS25HB/2.0.0/STM32duinoLPS25HB-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLPS25HB-2.0.0.tar.gz",
+    "size_bytes": 19156,
+    "sha256": "e79fcf10d0e6adbd9326cec773c0c2ab700f0679f40dbbf8709493deac49d7cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LPS25HB/2.0.0/STM32duinoLPS25HB-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LPS25HB/2.0.0/STM32duinoLPS25HB-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM303AGR/2.0.2/STM32duinoLSM303AGR-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM303AGR-2.0.2.tar.gz",
+    "size_bytes": 31994,
+    "sha256": "d57f5a4e7b972568fb8013ce772a6b56d1f3ea5ff86a6da7741eba15358fce8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM303AGR/2.0.2/STM32duinoLSM303AGR-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM303AGR/2.0.2/STM32duinoLSM303AGR-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DS0/2.0.0/STM32duinoLSM6DS0-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DS0-2.0.0.tar.gz",
+    "size_bytes": 23291,
+    "sha256": "c99b5c9d9d46747c9ed81dde5c3d0a1ce3cc54dec1e49d92dd73b67ced25734e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DS0/2.0.0/STM32duinoLSM6DS0-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DS0/2.0.0/STM32duinoLSM6DS0-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DS3/2.0.0/STM32duinoLSM6DS3-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DS3-2.0.0.tar.gz",
+    "size_bytes": 38454,
+    "sha256": "04a44241f28e4f2b6b542f86ee6ae7d28be609e4246e80930abce6d5ab235dfe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DS3/2.0.0/STM32duinoLSM6DS3-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DS3/2.0.0/STM32duinoLSM6DS3-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSL/2.0.0/STM32duinoLSM6DSL-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSL-2.0.0.tar.gz",
+    "size_bytes": 38780,
+    "sha256": "775afe0e410e25e818962ac5512eb39f0c826c72355315fcfb95439a3574cbc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSL/2.0.0/STM32duinoLSM6DSL-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSL/2.0.0/STM32duinoLSM6DSL-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSO/2.2.0/STM32duinoLSM6DSO-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSO-2.2.0.tar.gz",
+    "size_bytes": 60773,
+    "sha256": "1bf0dc7106a596b3618375fe490e5cd09009117edc38a41cae27d438cb4ded72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSO/2.2.0/STM32duinoLSM6DSO-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSO/2.2.0/STM32duinoLSM6DSO-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSO/2.3.0/STM32duinoLSM6DSO-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSO-2.3.0.tar.gz",
+    "size_bytes": 63017,
+    "sha256": "a2e9b84ad6ab7f8bcbdd385eae4e446287e0e08d7870118624664ba0f4a1c0fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSO/2.3.0/STM32duinoLSM6DSO-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSO/2.3.0/STM32duinoLSM6DSO-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSO16IS/1.1.3/STM32duinoLSM6DSO16IS-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSO16IS-1.1.3.tar.gz",
+    "size_bytes": 62135,
+    "sha256": "5fa01720f6d7b73a118a65c3c83490cca111c7d1e9134d5ad40c92a532bc70ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSO16IS/1.1.3/STM32duinoLSM6DSO16IS-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSO16IS/1.1.3/STM32duinoLSM6DSO16IS-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSO32/1.0.0/STM32duinoLSM6DSO32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSO32-1.0.0.tar.gz",
+    "size_bytes": 49827,
+    "sha256": "6857a0194e5a4094cbd2d2ea7afe67d09e678bc0921eaf8f149cf40ca3c9e739",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSO32/1.0.0/STM32duinoLSM6DSO32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSO32/1.0.0/STM32duinoLSM6DSO32-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSO32/1.1.0/STM32duinoLSM6DSO32-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSO32-1.1.0.tar.gz",
+    "size_bytes": 51641,
+    "sha256": "dbf3a47e34af7479bfcde905d97a24c199933cd67664d8807a8a2bd6fe628c2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSO32/1.1.0/STM32duinoLSM6DSO32-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSO32/1.1.0/STM32duinoLSM6DSO32-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSOX/2.3.4/STM32duinoLSM6DSOX-2.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSOX-2.3.4.tar.gz",
+    "size_bytes": 66482,
+    "sha256": "5a5e4a499aa04b27cd2539aadcd46ed6132eb88f56ee2a7f4261421ea6cb9e6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSOX/2.3.4/STM32duinoLSM6DSOX-2.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSOX/2.3.4/STM32duinoLSM6DSOX-2.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSOX/2.4.0/STM32duinoLSM6DSOX-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSOX-2.4.0.tar.gz",
+    "size_bytes": 68572,
+    "sha256": "803bbe0da0dae591ace32ee61bfbe0cd9a1ea61e0230e40d93c5004d97a5270c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSOX/2.4.0/STM32duinoLSM6DSOX-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSOX/2.4.0/STM32duinoLSM6DSOX-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSR/2.2.0/STM32duinoLSM6DSR-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSR-2.2.0.tar.gz",
+    "size_bytes": 44962,
+    "sha256": "0b3ccc4045c9d5856b7a517f05d97301a0fa037c7c1d49fe9ea29c56c5a48a77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSR/2.2.0/STM32duinoLSM6DSR-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSR/2.2.0/STM32duinoLSM6DSR-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSR/2.3.0/STM32duinoLSM6DSR-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSR-2.3.0.tar.gz",
+    "size_bytes": 48092,
+    "sha256": "117fd55a66da42c5f2eea47f589566c9a47a8d49e972e8125e9baa73cd450712",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSR/2.3.0/STM32duinoLSM6DSR-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSR/2.3.0/STM32duinoLSM6DSR-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSV16BX%20TDM/1.0.0/STM32duinoLSM6DSV16BXTDM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSV16BXTDM-1.0.0.tar.gz",
+    "size_bytes": 9708,
+    "sha256": "3b0d87fe2696b88dbe3c2affc7cf4c9baad89ea5336c8edf239c12a6779ffb2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSV16BX%2520TDM/1.0.0/STM32duinoLSM6DSV16BXTDM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSV16BX%20TDM/1.0.0/STM32duinoLSM6DSV16BXTDM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSV16BX/1.0.0/STM32duinoLSM6DSV16BX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSV16BX-1.0.0.tar.gz",
+    "size_bytes": 68149,
+    "sha256": "85eaaed11acf579d57ff7aff862834558e712f68db2811ecc532b4b870c03689",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSV16BX/1.0.0/STM32duinoLSM6DSV16BX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSV16BX/1.0.0/STM32duinoLSM6DSV16BX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSV16BX/1.1.0/STM32duinoLSM6DSV16BX-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSV16BX-1.1.0.tar.gz",
+    "size_bytes": 69874,
+    "sha256": "f3920b7415db9ec181568549d8842fa19495a3d29118dc21f6d3a71ea93464c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSV16BX/1.1.0/STM32duinoLSM6DSV16BX-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSV16BX/1.1.0/STM32duinoLSM6DSV16BX-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSV16X/2.0.3/STM32duinoLSM6DSV16X-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSV16X-2.0.3.tar.gz",
+    "size_bytes": 76321,
+    "sha256": "f001f163ccedefda8809f954f7d7ae0aaeb9028d9c44cf93c9000a5c13928a62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSV16X/2.0.3/STM32duinoLSM6DSV16X-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSV16X/2.0.3/STM32duinoLSM6DSV16X-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSV16X/2.1.0/STM32duinoLSM6DSV16X-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSV16X-2.1.0.tar.gz",
+    "size_bytes": 78066,
+    "sha256": "7e7c8cd02cde5c4dd890c528b071822283bb584dd5baad9feaa01e04c174535d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSV16X/2.1.0/STM32duinoLSM6DSV16X-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSV16X/2.1.0/STM32duinoLSM6DSV16X-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LSM6DSV16X/2.1.1/STM32duinoLSM6DSV16X-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLSM6DSV16X-2.1.1.tar.gz",
+    "size_bytes": 78073,
+    "sha256": "13969f8be6d80a855ab4cad471624ea426f40bdab70ea5c854fbb9f5a3f196d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LSM6DSV16X/2.1.1/STM32duinoLSM6DSV16X-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LSM6DSV16X/2.1.1/STM32duinoLSM6DSV16X-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20Low%20Power/1.5.0/STM32duinoLowPower-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLowPower-1.5.0.tar.gz",
+    "size_bytes": 15717,
+    "sha256": "d711e84a1ad321ac54e31b8a3a2abaf9bbc43c7fab59dd70c47fdaf38dca0ec3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520Low%2520Power/1.5.0/STM32duinoLowPower-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20Low%20Power/1.5.0/STM32duinoLowPower-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20Low%20Power/2.0.0/STM32duinoLowPower-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLowPower-2.0.0.tar.gz",
+    "size_bytes": 16656,
+    "sha256": "8d47a6b69306776a4726da56fc22787ae6c9f90b50d7d05873e3c7f797393927",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520Low%2520Power/2.0.0/STM32duinoLowPower-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20Low%20Power/2.0.0/STM32duinoLowPower-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LwIP/2.1.3/STM32duinoLwIP-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLwIP-2.1.3.tar.gz",
+    "size_bytes": 823760,
+    "sha256": "ec71ff284b2b0f6654e9e0893375b58cf5bd5f739c7d8d4dcca7b1ad517c670c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LwIP/2.1.3/STM32duinoLwIP-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LwIP/2.1.3/STM32duinoLwIP-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20LwIP/2.2.1/STM32duinoLwIP-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLwIP-2.2.1.tar.gz",
+    "size_bytes": 843639,
+    "sha256": "419f0de05239af7517069f8cdcee0830294469b9f6bea95170830fcf819e2390",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520LwIP/2.2.1/STM32duinoLwIP-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20LwIP/2.2.1/STM32duinoLwIP-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20M24SR64-Y/1.1.0/STM32duinoM24SR64-Y-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoM24SR64-Y-1.1.0.tar.gz",
+    "size_bytes": 49530,
+    "sha256": "f80c79f23f34860fc2e37560f2a502b4cac2a1e227352ff5f596685ca2c54fd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520M24SR64-Y/1.1.0/STM32duinoM24SR64-Y-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20M24SR64-Y/1.1.0/STM32duinoM24SR64-Y-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20M95640-R/1.0.0/STM32duinoM95640-R-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoM95640-R-1.0.0.tar.gz",
+    "size_bytes": 3769,
+    "sha256": "1ea608b853f7a350cdc6934281bb3713f841a081f042049ace0c2cb1e9dbd7ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520M95640-R/1.0.0/STM32duinoM95640-R-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20M95640-R/1.0.0/STM32duinoM95640-R-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20MX25R6435F/2.0.0/STM32duinoMX25R6435F-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoMX25R6435F-2.0.0.tar.gz",
+    "size_bytes": 13351,
+    "sha256": "e14a80fb773b517aa8b33d7e4d231f3c21a31499f67fe4109a67344ee4482d3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520MX25R6435F/2.0.0/STM32duinoMX25R6435F-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20MX25R6435F/2.0.0/STM32duinoMX25R6435F-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20MX25R6435F/2.0.1/STM32duinoMX25R6435F-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoMX25R6435F-2.0.1.tar.gz",
+    "size_bytes": 13411,
+    "sha256": "bcafe6c86a86c1e080afd5844b0dccf58a2bfb3eb992c65ca82f7518407a6cf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520MX25R6435F/2.0.1/STM32duinoMX25R6435F-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20MX25R6435F/2.0.1/STM32duinoMX25R6435F-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20MotionFX/1.1.0/STM32duinoMotionFX-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoMotionFX-1.1.0.tar.gz",
+    "size_bytes": 352465,
+    "sha256": "de2e073d153915824c5fc2dfbb58df426bb8976cb6c21824e0549a3f9ec69c4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520MotionFX/1.1.0/STM32duinoMotionFX-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20MotionFX/1.1.0/STM32duinoMotionFX-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20NFC-RFAL/2.0.2/STM32duinoNFC-RFAL-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoNFC-RFAL-2.0.2.tar.gz",
+    "size_bytes": 249752,
+    "sha256": "b1b6b33e57c6eadd03f1639eb229902f2d0288f6818167d392c994f7d16827cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520NFC-RFAL/2.0.2/STM32duinoNFC-RFAL-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20NFC-RFAL/2.0.2/STM32duinoNFC-RFAL-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20Proximity%20Gesture/1.0.5/STM32duinoProximityGesture-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoProximityGesture-1.0.5.tar.gz",
+    "size_bytes": 10288,
+    "sha256": "1e255a1727db46ca6d64aa77b5a6a9eb6b8220f417bed00c1973ff59c07ac677",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520Proximity%2520Gesture/1.0.5/STM32duinoProximityGesture-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20Proximity%20Gesture/1.0.5/STM32duinoProximityGesture-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20RTC/1.2.0/STM32duinoRTC-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoRTC-1.2.0.tar.gz",
+    "size_bytes": 19928,
+    "sha256": "013ce60b270e1010865d752fbbefaab346350128dcfacff6a751230127978ef1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520RTC/1.2.0/STM32duinoRTC-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20RTC/1.2.0/STM32duinoRTC-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20RTC/1.8.0/STM32duinoRTC-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoRTC-1.8.0.tar.gz",
+    "size_bytes": 31500,
+    "sha256": "b1eb045c67babae85929a9a613c46cb928767921030d5efee0b18e70ca122698",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520RTC/1.8.0/STM32duinoRTC-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20RTC/1.8.0/STM32duinoRTC-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20RTC/1.9.0/STM32duinoRTC-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoRTC-1.9.0.tar.gz",
+    "size_bytes": 31680,
+    "sha256": "8faea45dfb5241cc53016a261b98d27169599994673864d31e50fdbeb25ad7bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520RTC/1.9.0/STM32duinoRTC-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20RTC/1.9.0/STM32duinoRTC-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20RTC/2.0.0/STM32duinoRTC-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoRTC-2.0.0.tar.gz",
+    "size_bytes": 32057,
+    "sha256": "16b90b2dc64f76fa1f728cd0bb27570a37cc6e531aefe26bf91f3cebd2f898b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520RTC/2.0.0/STM32duinoRTC-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20RTC/2.0.0/STM32duinoRTC-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20S2-LP/1.1.4/STM32duinoS2-LP-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoS2-LP-1.1.4.tar.gz",
+    "size_bytes": 63015,
+    "sha256": "cb7f3cff9114036ac79da9e0971c78a046dc0960f9c1968c1dae3066b2589b55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520S2-LP/1.1.4/STM32duinoS2-LP-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20S2-LP/1.1.4/STM32duinoS2-LP-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20SHT40-AD1B/1.0.0/STM32duinoSHT40-AD1B-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoSHT40-AD1B-1.0.0.tar.gz",
+    "size_bytes": 4725,
+    "sha256": "ac3d465c9e6d44f15c352a608b3e59c574abdb1ea7632ed6110730e64ad34187",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520SHT40-AD1B/1.0.0/STM32duinoSHT40-AD1B-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20SHT40-AD1B/1.0.0/STM32duinoSHT40-AD1B-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20SPBTLE-RF/1.0.3/STM32duinoSPBTLE-RF-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoSPBTLE-RF-1.0.3.tar.gz",
+    "size_bytes": 94288,
+    "sha256": "f93072d2e43a016dbfb0f1cb45880c742b6d365618189cabb3619d6de92c4e4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520SPBTLE-RF/1.0.3/STM32duinoSPBTLE-RF-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20SPBTLE-RF/1.0.3/STM32duinoSPBTLE-RF-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ST25DV/2.2.0/STM32duinoST25DV-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoST25DV-2.2.0.tar.gz",
+    "size_bytes": 65306,
+    "sha256": "31822a336cd670bfb08b418a787e355635baf3c9c8e2324d325d41d7f1ceefd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ST25DV/2.2.0/STM32duinoST25DV-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ST25DV/2.2.0/STM32duinoST25DV-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ST25R200/1.0.0/STM32duinoST25R200-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoST25R200-1.0.0.tar.gz",
+    "size_bytes": 73838,
+    "sha256": "6ca6e172b47af3f0d5fcad56e3b939ed346ffa793c0cbbef0cbf589cb871da8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ST25R200/1.0.0/STM32duinoST25R200-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ST25R200/1.0.0/STM32duinoST25R200-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ST25R3911B/2.0.1/STM32duinoST25R3911B-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoST25R3911B-2.0.1.tar.gz",
+    "size_bytes": 72162,
+    "sha256": "dc5df3717f901aa0853fa492e42e35751a5d97edbf8d708cedf7d0f1ed91979e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ST25R3911B/2.0.1/STM32duinoST25R3911B-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ST25R3911B/2.0.1/STM32duinoST25R3911B-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ST25R3916/2.0.2/STM32duinoST25R3916-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoST25R3916-2.0.2.tar.gz",
+    "size_bytes": 97210,
+    "sha256": "59cb8effe1f078c5356d40b9973b33a2508002ed461aaa70179548b1d2fd0215",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ST25R3916/2.0.2/STM32duinoST25R3916-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ST25R3916/2.0.2/STM32duinoST25R3916-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ST25R3916/2.1.0/STM32duinoST25R3916-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoST25R3916-2.1.0.tar.gz",
+    "size_bytes": 98334,
+    "sha256": "21003b104ba30178eae0e02bbd6d0cc7f82b1c0b30018471187b0ab7e080c5ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ST25R3916/2.1.0/STM32duinoST25R3916-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ST25R3916/2.1.0/STM32duinoST25R3916-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ST25R500/1.0.0/STM32duinoST25R500-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoST25R500-1.0.0.tar.gz",
+    "size_bytes": 95619,
+    "sha256": "55bdde2b91d2134e704952be0f39a623b8d36190a9abce81b08a6d9cfa5ad5d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ST25R500/1.0.0/STM32duinoST25R500-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ST25R500/1.0.0/STM32duinoST25R500-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20ST25R95/2.0.0/STM32duinoST25R95-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoST25R95-2.0.0.tar.gz",
+    "size_bytes": 44262,
+    "sha256": "aa6eaed4fe298146f00515606c051561aae518617070f9064c714720809523f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520ST25R95/2.0.0/STM32duinoST25R95-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20ST25R95/2.0.0/STM32duinoST25R95-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20STEVAL-MKBOXPRO-Audio/1.0.0/STM32duinoSTEVAL-MKBOXPRO-Audio-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoSTEVAL-MKBOXPRO-Audio-1.0.0.tar.gz",
+    "size_bytes": 7865,
+    "sha256": "112c95afd83f1b502e1703ac8576dca723a1e4d2f447e08cc137409c88bdd2ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520STEVAL-MKBOXPRO-Audio/1.0.0/STM32duinoSTEVAL-MKBOXPRO-Audio-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20STEVAL-MKBOXPRO-Audio/1.0.0/STM32duinoSTEVAL-MKBOXPRO-Audio-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20STEVAL-MKBOXPRO-Examples/1.1.0/STM32duinoSTEVAL-MKBOXPRO-Examples-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoSTEVAL-MKBOXPRO-Examples-1.1.0.tar.gz",
+    "size_bytes": 8762,
+    "sha256": "e823386da1cd849e238035ebd0a34ca95eed89002df6f8fa69cc62fe2f8a65a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520STEVAL-MKBOXPRO-Examples/1.1.0/STM32duinoSTEVAL-MKBOXPRO-Examples-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20STEVAL-MKBOXPRO-Examples/1.1.0/STM32duinoSTEVAL-MKBOXPRO-Examples-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20STM32SD/1.4.0/STM32duinoSTM32SD-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoSTM32SD-1.4.0.tar.gz",
+    "size_bytes": 28702,
+    "sha256": "09cd988205629cce175f7fca2e8ed55d038bd7d0043dfad12a1f622354ddea36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520STM32SD/1.4.0/STM32duinoSTM32SD-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20STM32SD/1.4.0/STM32duinoSTM32SD-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20STM32SD/1.5.0/STM32duinoSTM32SD-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoSTM32SD-1.5.0.tar.gz",
+    "size_bytes": 29951,
+    "sha256": "72616ed056bdb3786a94e64ffd822a3c1cabc0dd245cd6cb1591c4c9b68db6a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520STM32SD/1.5.0/STM32duinoSTM32SD-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20STM32SD/1.5.0/STM32duinoSTM32SD-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20STTS22H/2.0.2/STM32duinoSTTS22H-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoSTTS22H-2.0.2.tar.gz",
+    "size_bytes": 9196,
+    "sha256": "6c4646ee5f5567665fce9f5f7caa4f0915cfad2c747609bd3122ecd50fc4801a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520STTS22H/2.0.2/STM32duinoSTTS22H-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20STTS22H/2.0.2/STM32duinoSTTS22H-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20STTS751/2.0.1/STM32duinoSTTS751-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoSTTS751-2.0.1.tar.gz",
+    "size_bytes": 9008,
+    "sha256": "9c3593a592430eb0755a6349196ede9c435e01c05ac338b1ec67824dbda91bd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520STTS751/2.0.1/STM32duinoSTTS751-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20STTS751/2.0.1/STM32duinoSTTS751-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL53L0X/2.0.1/STM32duinoVL53L0X-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL53L0X-2.0.1.tar.gz",
+    "size_bytes": 53836,
+    "sha256": "d0d0dee93f015f79101c77e0b3dc78508def2bac41093dd291cf56d187bd942c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL53L0X/2.0.1/STM32duinoVL53L0X-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL53L0X/2.0.1/STM32duinoVL53L0X-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL53L1/2.1.0/STM32duinoVL53L1-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL53L1-2.1.0.tar.gz",
+    "size_bytes": 188172,
+    "sha256": "01d802d5c01c31909192d96f0214911118c0ed8170dff6c16007ac3142d23f3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL53L1/2.1.0/STM32duinoVL53L1-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL53L1/2.1.0/STM32duinoVL53L1-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL53L1X/2.0.1/STM32duinoVL53L1X-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL53L1X-2.0.1.tar.gz",
+    "size_bytes": 17960,
+    "sha256": "b7a5e7b9da39582256bcd3063d58b2819b1c6028c1a9d4508240489ca672f772",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL53L1X/2.0.1/STM32duinoVL53L1X-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL53L1X/2.0.1/STM32duinoVL53L1X-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL53L3CX/2.0.0/STM32duinoVL53L3CX-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL53L3CX-2.0.0.tar.gz",
+    "size_bytes": 159716,
+    "sha256": "d44d0c99a9017d18436483e0d04ecd8537400801e4ff8bdc38fde128715067b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL53L3CX/2.0.0/STM32duinoVL53L3CX-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL53L3CX/2.0.0/STM32duinoVL53L3CX-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL53L4CD/1.0.5/STM32duinoVL53L4CD-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL53L4CD-1.0.5.tar.gz",
+    "size_bytes": 14119,
+    "sha256": "aaa5875f43f19dc9a53c80abdb6571174ed645d3cad141b51cb3be34d55a04ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL53L4CD/1.0.5/STM32duinoVL53L4CD-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL53L4CD/1.0.5/STM32duinoVL53L4CD-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL53L4CX/1.1.0/STM32duinoVL53L4CX-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL53L4CX-1.1.0.tar.gz",
+    "size_bytes": 157515,
+    "sha256": "89cc87c83e9c43e9a7a4a9bb0441440a27accd273b9049ce7ffdbfcb888b2dd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL53L4CX/1.1.0/STM32duinoVL53L4CX-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL53L4CX/1.1.0/STM32duinoVL53L4CX-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL53L4ED/1.0.1/STM32duinoVL53L4ED-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL53L4ED-1.0.1.tar.gz",
+    "size_bytes": 15174,
+    "sha256": "f8b960e429cd1a939587ff3a99ad0cfa04a084b65191de645ba3ad28fbb1ea2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL53L4ED/1.0.1/STM32duinoVL53L4ED-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL53L4ED/1.0.1/STM32duinoVL53L4ED-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL53L5CX/1.2.3/STM32duinoVL53L5CX-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL53L5CX-1.2.3.tar.gz",
+    "size_bytes": 135537,
+    "sha256": "3738836dc858af9a7c8dd20add33664bc9fc892520a50bc1c201dc6d33dd07ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL53L5CX/1.2.3/STM32duinoVL53L5CX-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL53L5CX/1.2.3/STM32duinoVL53L5CX-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL53L7CH/1.0.0/STM32duinoVL53L7CH-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL53L7CH-1.0.0.tar.gz",
+    "size_bytes": 148324,
+    "sha256": "543a94b5e6cb1048e14c566c3dc3b8de77ff7eaf6891a4780274f53e0737e8c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL53L7CH/1.0.0/STM32duinoVL53L7CH-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL53L7CH/1.0.0/STM32duinoVL53L7CH-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL53L7CX/1.0.3/STM32duinoVL53L7CX-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL53L7CX-1.0.3.tar.gz",
+    "size_bytes": 132763,
+    "sha256": "e71ec3340e513ffe7872ef08de07a2182a6947e773ff9b528ff130100bfc9de9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL53L7CX/1.0.3/STM32duinoVL53L7CX-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL53L7CX/1.0.3/STM32duinoVL53L7CX-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL53L8CH/1.1.0/STM32duinoVL53L8CH-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL53L8CH-1.1.0.tar.gz",
+    "size_bytes": 152537,
+    "sha256": "3a998e61d4540b56328304930c5da63acae855a78aae05e2eb12663137271274",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL53L8CH/1.1.0/STM32duinoVL53L8CH-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL53L8CH/1.1.0/STM32duinoVL53L8CH-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL53L8CX/2.0.3/STM32duinoVL53L8CX-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL53L8CX-2.0.3.tar.gz",
+    "size_bytes": 140300,
+    "sha256": "6443a004e4f15bb7666e744bc21a945a8b3047f9e64bd8c1066cef2dca571711",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL53L8CX/2.0.3/STM32duinoVL53L8CX-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL53L8CX/2.0.3/STM32duinoVL53L8CX-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL53L8CX/2.0.4/STM32duinoVL53L8CX-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL53L8CX-2.0.4.tar.gz",
+    "size_bytes": 140306,
+    "sha256": "dfe412782b3de23f410d84290a6f083c26dc26c0f90bf833dde8171471835ed9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL53L8CX/2.0.4/STM32duinoVL53L8CX-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL53L8CX/2.0.4/STM32duinoVL53L8CX-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL53L8CX/2.1.0/STM32duinoVL53L8CX-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL53L8CX-2.1.0.tar.gz",
+    "size_bytes": 140336,
+    "sha256": "862eb70b546af42962f9f8b054426ca0dd4333e2541a961786adab12d5ae2b62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL53L8CX/2.1.0/STM32duinoVL53L8CX-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL53L8CX/2.1.0/STM32duinoVL53L8CX-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL6180/1.0.0/STM32duinoVL6180-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL6180-1.0.0.tar.gz",
+    "size_bytes": 38914,
+    "sha256": "2cb37d09432b8999882c278739338fa4454d7a7c21d771d6a02efdc66e5541b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL6180/1.0.0/STM32duinoVL6180-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL6180/1.0.0/STM32duinoVL6180-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20VL6180X/2.0.0/STM32duinoVL6180X-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoVL6180X-2.0.0.tar.gz",
+    "size_bytes": 47552,
+    "sha256": "98ffd0532ea6dc285d0c078e337b3f9f4ff7493dfe3f9bd743a088b3e65900c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520VL6180X/2.0.0/STM32duinoVL6180X-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20VL6180X/2.0.0/STM32duinoVL6180X-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-53L0A1/2.0.0/STM32duinoX-NUCLEO-53L0A1-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-53L0A1-2.0.0.tar.gz",
+    "size_bytes": 6902,
+    "sha256": "9ff301d8fc360187ad577b0b0badaa75b82d11611b65931667b69bf88a2c2ba0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-53L0A1/2.0.0/STM32duinoX-NUCLEO-53L0A1-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-53L0A1/2.0.0/STM32duinoX-NUCLEO-53L0A1-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-53L1A1/2.0.0/STM32duinoX-NUCLEO-53L1A1-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-53L1A1-2.0.0.tar.gz",
+    "size_bytes": 10384,
+    "sha256": "21b7898be35f05f0953abaab2d47e4c55061c85f8552fb8b29b3f688e8f743f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-53L1A1/2.0.0/STM32duinoX-NUCLEO-53L1A1-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-53L1A1/2.0.0/STM32duinoX-NUCLEO-53L1A1-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-53L1A2/2.0.0/STM32duinoX-NUCLEO-53L1A2-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-53L1A2-2.0.0.tar.gz",
+    "size_bytes": 6349,
+    "sha256": "1d7e1bdc88b8c28cced8ea1be3d43bc79f974bc10328e87e899f21330274ca22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-53L1A2/2.0.0/STM32duinoX-NUCLEO-53L1A2-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-53L1A2/2.0.0/STM32duinoX-NUCLEO-53L1A2-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-53L4A1/1.0.0/STM32duinoX-NUCLEO-53L4A1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-53L4A1-1.0.0.tar.gz",
+    "size_bytes": 4001,
+    "sha256": "579696e82c6f28c2463b9d8598ed712502453a83e7dc646011bb359df48a38ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-53L4A1/1.0.0/STM32duinoX-NUCLEO-53L4A1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-53L4A1/1.0.0/STM32duinoX-NUCLEO-53L4A1-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-53L4A2/1.0.0/STM32duinoX-NUCLEO-53L4A2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-53L4A2-1.0.0.tar.gz",
+    "size_bytes": 4227,
+    "sha256": "c7d8ca81a2065598590349d7eaac5ae8ff40a8406c55d70edf2e6dc253518540",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-53L4A2/1.0.0/STM32duinoX-NUCLEO-53L4A2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-53L4A2/1.0.0/STM32duinoX-NUCLEO-53L4A2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-53L4A3/1.0.0/STM32duinoX-NUCLEO-53L4A3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-53L4A3-1.0.0.tar.gz",
+    "size_bytes": 4405,
+    "sha256": "fb99557728558008ca20fd679cde93925e8f29ffe7ea382ebfe7d3d8743f2fea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-53L4A3/1.0.0/STM32duinoX-NUCLEO-53L4A3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-53L4A3/1.0.0/STM32duinoX-NUCLEO-53L4A3-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-53L5A1/1.1.1/STM32duinoX-NUCLEO-53L5A1-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-53L5A1-1.1.1.tar.gz",
+    "size_bytes": 9744,
+    "sha256": "8d6daf37b2f1ada9a2b7be37cdb9f22e6b1656dc5fb3e2f3adf1d8d50f50ec34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-53L5A1/1.1.1/STM32duinoX-NUCLEO-53L5A1-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-53L5A1/1.1.1/STM32duinoX-NUCLEO-53L5A1-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-53L7A1/1.0.2/STM32duinoX-NUCLEO-53L7A1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-53L7A1-1.0.2.tar.gz",
+    "size_bytes": 5621,
+    "sha256": "8b9c8271d8efc737f07414059a854e4775f261d31a8c2cb09c07f15faba63577",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-53L7A1/1.0.2/STM32duinoX-NUCLEO-53L7A1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-53L7A1/1.0.2/STM32duinoX-NUCLEO-53L7A1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-53L7A1/1.0.3/STM32duinoX-NUCLEO-53L7A1-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-53L7A1-1.0.3.tar.gz",
+    "size_bytes": 5615,
+    "sha256": "33fd33dcf3d6ac97e9fa062a782c72d5af0282baffe488f4b8f7065d41595034",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-53L7A1/1.0.3/STM32duinoX-NUCLEO-53L7A1-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-53L7A1/1.0.3/STM32duinoX-NUCLEO-53L7A1-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-53L8A1/2.0.1/STM32duinoX-NUCLEO-53L8A1-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-53L8A1-2.0.1.tar.gz",
+    "size_bytes": 6271,
+    "sha256": "fb593bce8fed0de0e2c711632e246825fcf35130792101b72f5378ba0845e46c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-53L8A1/2.0.1/STM32duinoX-NUCLEO-53L8A1-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-53L8A1/2.0.1/STM32duinoX-NUCLEO-53L8A1-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-6180A1/1.0.1/STM32duinoX-NUCLEO-6180A1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-6180A1-1.0.1.tar.gz",
+    "size_bytes": 6578,
+    "sha256": "65f636903df9a4cfd53b21be5fdb89a6c6b197c27a49e0fff3c39b1effbf0f3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-6180A1/1.0.1/STM32duinoX-NUCLEO-6180A1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-6180A1/1.0.1/STM32duinoX-NUCLEO-6180A1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-6180XA1/2.0.0/STM32duinoX-NUCLEO-6180XA1-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-6180XA1-2.0.0.tar.gz",
+    "size_bytes": 6097,
+    "sha256": "03e467b802812613ef660914007380d6ce237bb3be39ab5707e09393db41c599",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-6180XA1/2.0.0/STM32duinoX-NUCLEO-6180XA1-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-6180XA1/2.0.0/STM32duinoX-NUCLEO-6180XA1-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-GNSS1A1/1.0.5/STM32duinoX-NUCLEO-GNSS1A1-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-GNSS1A1-1.0.5.tar.gz",
+    "size_bytes": 32572,
+    "sha256": "25150f1d7c2be2aafb4ec78d5bf74a21cd8eac85041b616fe16f6bb7792794b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-GNSS1A1/1.0.5/STM32duinoX-NUCLEO-GNSS1A1-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-GNSS1A1/1.0.5/STM32duinoX-NUCLEO-GNSS1A1-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IDB05A1/1.0.2/STM32duinoX-NUCLEO-IDB05A1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IDB05A1-1.0.2.tar.gz",
+    "size_bytes": 3981,
+    "sha256": "8aea42bcad31138a0ee5c23d973426af5dc9421497eeeb092054a499e8f54e4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IDB05A1/1.0.2/STM32duinoX-NUCLEO-IDB05A1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IDB05A1/1.0.2/STM32duinoX-NUCLEO-IDB05A1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IHM01A1/1.0.1/STM32duinoX-NUCLEO-IHM01A1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IHM01A1-1.0.1.tar.gz",
+    "size_bytes": 29093,
+    "sha256": "7869fd1cd2878fdcaa214ae31c1f578f8683154746a8c5908fca7199eb424d2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IHM01A1/1.0.1/STM32duinoX-NUCLEO-IHM01A1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IHM01A1/1.0.1/STM32duinoX-NUCLEO-IHM01A1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IHM02A1/1.0.2/STM32duinoX-NUCLEO-IHM02A1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IHM02A1-1.0.2.tar.gz",
+    "size_bytes": 33527,
+    "sha256": "919bf2304724cc035035f5ac6c4cb09c3c4e0a64ffcb7a9583142b3f824437d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IHM02A1/1.0.2/STM32duinoX-NUCLEO-IHM02A1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IHM02A1/1.0.2/STM32duinoX-NUCLEO-IHM02A1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IHM04A1/1.0.0/STM32duinoX-NUCLEO-IHM04A1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IHM04A1-1.0.0.tar.gz",
+    "size_bytes": 19216,
+    "sha256": "8ae8480feb930e701ec24cbd88237fbee2443c829dd41da4f4d57a32f883d3a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IHM04A1/1.0.0/STM32duinoX-NUCLEO-IHM04A1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IHM04A1/1.0.0/STM32duinoX-NUCLEO-IHM04A1-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IHM05A1/1.0.0/STM32duinoX-NUCLEO-IHM05A1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IHM05A1-1.0.0.tar.gz",
+    "size_bytes": 29905,
+    "sha256": "c03aed042eef6cd89c17658dbcc576335e1f8f59493544710391024e56db67a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IHM05A1/1.0.0/STM32duinoX-NUCLEO-IHM05A1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IHM05A1/1.0.0/STM32duinoX-NUCLEO-IHM05A1-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IHM12A1/1.0.0/STM32duinoX-NUCLEO-IHM12A1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IHM12A1-1.0.0.tar.gz",
+    "size_bytes": 17410,
+    "sha256": "cd4406465313e427ddb9a13d3bd2b266713ac8931c821989dc7304642c21a2fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IHM12A1/1.0.0/STM32duinoX-NUCLEO-IHM12A1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IHM12A1/1.0.0/STM32duinoX-NUCLEO-IHM12A1-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IHM15A1/1.0.0/STM32duinoX-NUCLEO-IHM15A1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IHM15A1-1.0.0.tar.gz",
+    "size_bytes": 16982,
+    "sha256": "777de4a77210698db813e160a5f9163d7f9fdbfc64b7f5238474703408eaee94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IHM15A1/1.0.0/STM32duinoX-NUCLEO-IHM15A1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IHM15A1/1.0.0/STM32duinoX-NUCLEO-IHM15A1-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IKA01A1/1.0.0/STM32duinoX-NUCLEO-IKA01A1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IKA01A1-1.0.0.tar.gz",
+    "size_bytes": 13364,
+    "sha256": "7829878a7ab74701e52d2f0ca03e148fdeda77238577725780589cd8f808f234",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IKA01A1/1.0.0/STM32duinoX-NUCLEO-IKA01A1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IKA01A1/1.0.0/STM32duinoX-NUCLEO-IKA01A1-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IKS01A1/1.1.0/STM32duinoX-NUCLEO-IKS01A1-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IKS01A1-1.1.0.tar.gz",
+    "size_bytes": 5522,
+    "sha256": "d69e767d5c0db073f3030e7cf0eaf9e598062dbb795004fd5e56f03d93760131",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IKS01A1/1.1.0/STM32duinoX-NUCLEO-IKS01A1-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IKS01A1/1.1.0/STM32duinoX-NUCLEO-IKS01A1-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IKS01A2/1.1.0/STM32duinoX-NUCLEO-IKS01A2-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IKS01A2-1.1.0.tar.gz",
+    "size_bytes": 4841,
+    "sha256": "4fcc90745bde465a63976e464ef2cabc2f0be9bd93af7ebb0439d3fdbd55c814",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IKS01A2/1.1.0/STM32duinoX-NUCLEO-IKS01A2-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IKS01A2/1.1.0/STM32duinoX-NUCLEO-IKS01A2-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IKS01A3/1.2.1/STM32duinoX-NUCLEO-IKS01A3-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IKS01A3-1.2.1.tar.gz",
+    "size_bytes": 12765,
+    "sha256": "da2ab4f903852bc2d00418a6dcdecba8a07af4c0a4542edfddc25720eccb5ac1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IKS01A3/1.2.1/STM32duinoX-NUCLEO-IKS01A3-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IKS01A3/1.2.1/STM32duinoX-NUCLEO-IKS01A3-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IKS02A1%20Audio/1.1.1/STM32duinoX-NUCLEO-IKS02A1Audio-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IKS02A1Audio-1.1.1.tar.gz",
+    "size_bytes": 14888,
+    "sha256": "1639f1ff74cc9f7795d242c4304f8ffbf5cdf7571d1cb72caa4bc0d731d3383a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IKS02A1%2520Audio/1.1.1/STM32duinoX-NUCLEO-IKS02A1Audio-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IKS02A1%20Audio/1.1.1/STM32duinoX-NUCLEO-IKS02A1Audio-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IKS02A1/1.2.0/STM32duinoX-NUCLEO-IKS02A1-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IKS02A1-1.2.0.tar.gz",
+    "size_bytes": 6184,
+    "sha256": "21495e3f0d7ed4e780fd66d18c4d2cd544614f65bdc8231eb7ee337d27e7cccd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IKS02A1/1.2.0/STM32duinoX-NUCLEO-IKS02A1-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IKS02A1/1.2.0/STM32duinoX-NUCLEO-IKS02A1-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IKS4A1/1.0.2/STM32duinoX-NUCLEO-IKS4A1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IKS4A1-1.0.2.tar.gz",
+    "size_bytes": 38980,
+    "sha256": "84bcd37b1c9782dbdbddc8cd24d11576262d17c8b7f4eea7be48b8115138f4f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IKS4A1/1.0.2/STM32duinoX-NUCLEO-IKS4A1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IKS4A1/1.0.2/STM32duinoX-NUCLEO-IKS4A1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IKS4A1/1.1.0/STM32duinoX-NUCLEO-IKS4A1-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IKS4A1-1.1.0.tar.gz",
+    "size_bytes": 40567,
+    "sha256": "3b2a4705fd277fb98410970cdfaeb8e3e6919967a92f2d41504434e62581f976",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IKS4A1/1.1.0/STM32duinoX-NUCLEO-IKS4A1-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IKS4A1/1.1.0/STM32duinoX-NUCLEO-IKS4A1-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IKS4A1/1.1.1/STM32duinoX-NUCLEO-IKS4A1-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IKS4A1-1.1.1.tar.gz",
+    "size_bytes": 40575,
+    "sha256": "d95f3ca9c62110deba2ebf0167e89efbbf67be0d5e9dcc491f66639e099e5d41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IKS4A1/1.1.1/STM32duinoX-NUCLEO-IKS4A1-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IKS4A1/1.1.1/STM32duinoX-NUCLEO-IKS4A1-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IKS5A1/1.0.0/STM32duinoX-NUCLEO-IKS5A1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IKS5A1-1.0.0.tar.gz",
+    "size_bytes": 42494,
+    "sha256": "ceb62b9f4bd94a3c5bac1f6ebca1deaff66629124e9cc8c58ba97e520e2b9cfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IKS5A1/1.0.0/STM32duinoX-NUCLEO-IKS5A1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IKS5A1/1.0.0/STM32duinoX-NUCLEO-IKS5A1-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IKS5A1/1.1.0/STM32duinoX-NUCLEO-IKS5A1-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IKS5A1-1.1.0.tar.gz",
+    "size_bytes": 43877,
+    "sha256": "8d616419cddd7e2ebf124db41d446af930ac2946ec4941b16c31825fa7ca3dba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IKS5A1/1.1.0/STM32duinoX-NUCLEO-IKS5A1-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IKS5A1/1.1.0/STM32duinoX-NUCLEO-IKS5A1-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-IKS5A1/1.1.1/STM32duinoX-NUCLEO-IKS5A1-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-IKS5A1-1.1.1.tar.gz",
+    "size_bytes": 43959,
+    "sha256": "2115d088cdb3b862e06e62c839bad50553b10386bb013e6e2277e65183ec9b3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-IKS5A1/1.1.1/STM32duinoX-NUCLEO-IKS5A1-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-IKS5A1/1.1.1/STM32duinoX-NUCLEO-IKS5A1-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-LED61A1/1.0.0/STM32duinoX-NUCLEO-LED61A1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-LED61A1-1.0.0.tar.gz",
+    "size_bytes": 7065,
+    "sha256": "6dd555a2479aa24641bcc6e64d9410fc8ca94a5bbc8b3339b5386a32370b600c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-LED61A1/1.0.0/STM32duinoX-NUCLEO-LED61A1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-LED61A1/1.0.0/STM32duinoX-NUCLEO-LED61A1-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-NFC01A1/1.0.2/STM32duinoX-NUCLEO-NFC01A1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-NFC01A1-1.0.2.tar.gz",
+    "size_bytes": 6337,
+    "sha256": "cb96fdd10dbbad9c2d940ed0cfc127f5d29aefc5aebaac38bf524b7909038983",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-NFC01A1/1.0.2/STM32duinoX-NUCLEO-NFC01A1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-NFC01A1/1.0.2/STM32duinoX-NUCLEO-NFC01A1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-NFC03A1/3.0.0/STM32duinoX-NUCLEO-NFC03A1-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-NFC03A1-3.0.0.tar.gz",
+    "size_bytes": 19440,
+    "sha256": "02832e35876c668cf17f7b448a13ec6e3aa24af78f90b7bccdb834b8cb1f7e78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-NFC03A1/3.0.0/STM32duinoX-NUCLEO-NFC03A1-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-NFC03A1/3.0.0/STM32duinoX-NUCLEO-NFC03A1-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-NFC04A1/2.0.1/STM32duinoX-NUCLEO-NFC04A1-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-NFC04A1-2.0.1.tar.gz",
+    "size_bytes": 4714,
+    "sha256": "d2fd063f40c07559ea211b4359fc164596228368697e0774c9aaf73c97396cdb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-NFC04A1/2.0.1/STM32duinoX-NUCLEO-NFC04A1-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-NFC04A1/2.0.1/STM32duinoX-NUCLEO-NFC04A1-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-NFC05A1/2.0.0/STM32duinoX-NUCLEO-NFC05A1-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-NFC05A1-2.0.0.tar.gz",
+    "size_bytes": 19776,
+    "sha256": "d9af2de506499c9ceb04ce0dd7c058b8ab93b4d6431d64c09ff817eeada38d71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-NFC05A1/2.0.0/STM32duinoX-NUCLEO-NFC05A1-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-NFC05A1/2.0.0/STM32duinoX-NUCLEO-NFC05A1-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-NFC06A1/2.0.0/STM32duinoX-NUCLEO-NFC06A1-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-NFC06A1-2.0.0.tar.gz",
+    "size_bytes": 23223,
+    "sha256": "44fc8945e6f79d93bb66a786a3c9e3099f7d47379be518a444227f16da49f6fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-NFC06A1/2.0.0/STM32duinoX-NUCLEO-NFC06A1-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-NFC06A1/2.0.0/STM32duinoX-NUCLEO-NFC06A1-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-NFC07A1/1.0.1/STM32duinoX-NUCLEO-NFC07A1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-NFC07A1-1.0.1.tar.gz",
+    "size_bytes": 4719,
+    "sha256": "4d9b1b6611675ba8b66455f610d978a90d168bb2aa7b0d504d77040a6b8b75d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-NFC07A1/1.0.1/STM32duinoX-NUCLEO-NFC07A1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-NFC07A1/1.0.1/STM32duinoX-NUCLEO-NFC07A1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-NFC08A1/2.0.0/STM32duinoX-NUCLEO-NFC08A1-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-NFC08A1-2.0.0.tar.gz",
+    "size_bytes": 23398,
+    "sha256": "b2d8c243fa0b3f61e0054b4ae57e7e27799e5c9e305bdd9eb213c1d78d607454",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-NFC08A1/2.0.0/STM32duinoX-NUCLEO-NFC08A1-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-NFC08A1/2.0.0/STM32duinoX-NUCLEO-NFC08A1-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-NFC09A1/1.0.1/STM32duinoX-NUCLEO-NFC09A1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-NFC09A1-1.0.1.tar.gz",
+    "size_bytes": 23030,
+    "sha256": "495088d503cc11736e9ce5d2b6d179b3f8f5c9f3f80534f2430c9b1507048834",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-NFC09A1/1.0.1/STM32duinoX-NUCLEO-NFC09A1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-NFC09A1/1.0.1/STM32duinoX-NUCLEO-NFC09A1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-NFC10A1/1.0.0/STM32duinoX-NUCLEO-NFC10A1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-NFC10A1-1.0.0.tar.gz",
+    "size_bytes": 23040,
+    "sha256": "10433bc493ee745b099d3e67b3943909efe379245aa591e108189a41ea29e611",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-NFC10A1/1.0.0/STM32duinoX-NUCLEO-NFC10A1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-NFC10A1/1.0.0/STM32duinoX-NUCLEO-NFC10A1-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-NFC12A1/1.0.0/STM32duinoX-NUCLEO-NFC12A1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-NFC12A1-1.0.0.tar.gz",
+    "size_bytes": 23038,
+    "sha256": "5449b8fd11a1b4086938bbdad2b225882552a960d5906ef10b10e147e8abccd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-NFC12A1/1.0.0/STM32duinoX-NUCLEO-NFC12A1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-NFC12A1/1.0.0/STM32duinoX-NUCLEO-NFC12A1-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-NFC12A1/1.0.1/STM32duinoX-NUCLEO-NFC12A1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-NFC12A1-1.0.1.tar.gz",
+    "size_bytes": 23040,
+    "sha256": "226f31901283d081076e521001ae506368e1b4d219c0457ddae24145649f520b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-NFC12A1/1.0.1/STM32duinoX-NUCLEO-NFC12A1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-NFC12A1/1.0.1/STM32duinoX-NUCLEO-NFC12A1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-S2868A1/1.0.1/STM32duinoX-NUCLEO-S2868A1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-S2868A1-1.0.1.tar.gz",
+    "size_bytes": 4201,
+    "sha256": "c64ebda393a2eb644d986a772594bf56d8487776fcb4c10fc40b54a9bf05b71b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-S2868A1/1.0.1/STM32duinoX-NUCLEO-S2868A1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-S2868A1/1.0.1/STM32duinoX-NUCLEO-S2868A1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duino%20X-NUCLEO-S2868A2/1.0.1/STM32duinoX-NUCLEO-S2868A2-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoX-NUCLEO-S2868A2-1.0.1.tar.gz",
+    "size_bytes": 4199,
+    "sha256": "53b4bb3009bad4e490e1194de5859eaa20427e16349510c04ba9fc2ad8be0a2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duino%2520X-NUCLEO-S2868A2/1.0.1/STM32duinoX-NUCLEO-S2868A2-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duino%20X-NUCLEO-S2868A2/1.0.1/STM32duinoX-NUCLEO-S2868A2-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duinoBLE/1.4.0/STM32duinoBLE-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoBLE-1.4.0.tar.gz",
+    "size_bytes": 127750,
+    "sha256": "7d8df7c7133fe8de4fac6171f9257521e38ce1f9bad920fa0cfe487cba049177",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duinoBLE/1.4.0/STM32duinoBLE-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duinoBLE/1.4.0/STM32duinoBLE-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duinoBLE/1.4.1/STM32duinoBLE-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoBLE-1.4.1.tar.gz",
+    "size_bytes": 128846,
+    "sha256": "5c7d7349602714eec687aae327255fb58e3b7d64f9a28454e0ba552c9015c75a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duinoBLE/1.4.1/STM32duinoBLE-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duinoBLE/1.4.1/STM32duinoBLE-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duinoBLE/1.4.2/STM32duinoBLE-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoBLE-1.4.2.tar.gz",
+    "size_bytes": 129323,
+    "sha256": "260d36a5af5e1536433b9bd27dea7bdeeab9a96710cbeb650f099e78596082b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duinoBLE/1.4.2/STM32duinoBLE-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duinoBLE/1.4.2/STM32duinoBLE-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duinoBLE/1.5.0/STM32duinoBLE-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoBLE-1.5.0.tar.gz",
+    "size_bytes": 131711,
+    "sha256": "339d893e6662ccaa3e7d48e87f5a764fc18809d228f4df9545dea1d00f26187c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duinoBLE/1.5.0/STM32duinoBLE-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duinoBLE/1.5.0/STM32duinoBLE-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duinoLoRaWAN/0.5.0/STM32duinoLoRaWAN-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLoRaWAN-0.5.0.tar.gz",
+    "size_bytes": 415703,
+    "sha256": "9de9f7f1a9e3c8379b9496d0860f279efdbee07237d32c7ab01ca7405993e745",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duinoLoRaWAN/0.5.0/STM32duinoLoRaWAN-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duinoLoRaWAN/0.5.0/STM32duinoLoRaWAN-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stm32duino/library/STM32duinoLoRaWAN/0.5.1/STM32duinoLoRaWAN-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoLoRaWAN-0.5.1.tar.gz",
+    "size_bytes": 416615,
+    "sha256": "143668ea76e4f930417b761ef7b654c3d801de28edb8d05b3cfd09c97c685178",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stm32duino/library/STM32duinoLoRaWAN/0.5.1/STM32duinoLoRaWAN-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stm32duino/library/STM32duinoLoRaWAN/0.5.1/STM32duinoLoRaWAN-0.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

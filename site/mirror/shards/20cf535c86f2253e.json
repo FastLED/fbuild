@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-zherjer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-zherjer/library/TLC59711/0.0.0+sha.a186ae759c61/TLC59711-0.0.0+sha.a186ae759c61.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLC59711-0.0.0+sha.a186ae759c61.tar.gz",
+    "size_bytes": 1710,
+    "sha256": "e5d930f698fa8651a176cea78296a33916eb2b47628d2379f72c69803c7f93dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-zherjer/library/TLC59711/0.0.0%2Bsha.a186ae759c61/TLC59711-0.0.0%2Bsha.a186ae759c61.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-zherjer/library/TLC59711/0.0.0%2Bsha.a186ae759c61/TLC59711-0.0.0%2Bsha.a186ae759c61.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/snmetamorph",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "snmetamorph/library/FutabaVfdM202MD10C/2.2.2/FutabaVfdM202MD10C-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FutabaVfdM202MD10C-2.2.2.tar.gz",
+    "size_bytes": 5772,
+    "sha256": "93ecbf1027edff814788717981f8ebaa9c6a20af88f5e5d6383a9c47ab62a6df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snmetamorph/library/FutabaVfdM202MD10C/2.2.2/FutabaVfdM202MD10C-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/snmetamorph/library/FutabaVfdM202MD10C/2.2.2/FutabaVfdM202MD10C-2.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/myyerrol",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "myyerrol/library/RVStarArduino/1.1.1/RVStarArduino-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RVStarArduino-1.1.1.tar.gz",
+    "size_bytes": 17914,
+    "sha256": "9d95d7c7984e76e472c50b458ffa2fff56c309f753d3c1002e9ac24bc2b12004",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/myyerrol/library/RVStarArduino/1.1.1/RVStarArduino-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/myyerrol/library/RVStarArduino/1.1.1/RVStarArduino-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

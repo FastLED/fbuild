@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pensactius",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pensactius/library/Sound%20Chip%20Library/0.2.0/SoundChipLibrary-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoundChipLibrary-0.2.0.tar.gz",
+    "size_bytes": 4784,
+    "sha256": "658cd1017715b946cc13ea1d638c32ed49edcbb098328eac65287b0b00584b2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pensactius/library/Sound%2520Chip%2520Library/0.2.0/SoundChipLibrary-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pensactius/library/Sound%20Chip%20Library/0.2.0/SoundChipLibrary-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pensactius/library/Video%20Game%20Music%20Library/0.1.0/VideoGameMusicLibrary-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VideoGameMusicLibrary-0.1.0.tar.gz",
+    "size_bytes": 42863,
+    "sha256": "2859a9600c70c119d14bbe98ef14bab12008c92c7c254b0aff112ad3ff81a331",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pensactius/library/Video%2520Game%2520Music%2520Library/0.1.0/VideoGameMusicLibrary-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pensactius/library/Video%20Game%20Music%20Library/0.1.0/VideoGameMusicLibrary-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

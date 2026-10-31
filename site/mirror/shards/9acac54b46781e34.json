@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-display",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-display/library/VEGA_ChainableLED/1.0.0/VEGA_ChainableLED-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEGA_ChainableLED-1.0.0.tar.gz",
+    "size_bytes": 3910,
+    "sha256": "c4a04fda065d94294a215164808fca01a1d3d2f771541b990b3414cef119399b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-display/library/VEGA_ChainableLED/1.0.0/VEGA_ChainableLED-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-display/library/VEGA_ChainableLED/1.0.0/VEGA_ChainableLED-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-display/library/VEGA_SH1106/1.0.0/VEGA_SH1106-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEGA_SH1106-1.0.0.tar.gz",
+    "size_bytes": 10818,
+    "sha256": "27339ae73dcdabf86709686e5c985d2bcca16c967dba424bd394cd37b788834a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-display/library/VEGA_SH1106/1.0.0/VEGA_SH1106-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-display/library/VEGA_SH1106/1.0.0/VEGA_SH1106-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-display/library/VEGA_ST7735_and_ST7789/1.0.0/VEGA_ST7735_and_ST7789-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEGA_ST7735_and_ST7789-1.0.0.tar.gz",
+    "size_bytes": 11039,
+    "sha256": "d384bb6aa93080ad54fc1940b93233c830759eb25c1a20a37287c123a9bfc893",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-display/library/VEGA_ST7735_and_ST7789/1.0.0/VEGA_ST7735_and_ST7789-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-display/library/VEGA_ST7735_and_ST7789/1.0.0/VEGA_ST7735_and_ST7789-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-asy-paris90",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-asy-paris90/library/accelerometer/0.0.0+sha.f37d59175b91/accelerometer-0.0.0+sha.f37d59175b91.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "accelerometer-0.0.0+sha.f37d59175b91.tar.gz",
+    "size_bytes": 1464,
+    "sha256": "37bfb4c4b134e6a4f55cc518ec46561afb2f426f6f73957f7679f08ce37d31d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-asy-paris90/library/accelerometer/0.0.0%2Bsha.f37d59175b91/accelerometer-0.0.0%2Bsha.f37d59175b91.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-asy-paris90/library/accelerometer/0.0.0%2Bsha.f37d59175b91/accelerometer-0.0.0%2Bsha.f37d59175b91.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alenkrishna2012",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alenkrishna2012/library/EEPROM24CXX/1.0.0/EEPROM24CXX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM24CXX-1.0.0.tar.gz",
+    "size_bytes": 7692,
+    "sha256": "8802f3bd3a465b59b35bb330c63e899201ea12a6e6f6f5ddad48d823e89073b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alenkrishna2012/library/EEPROM24CXX/1.0.0/EEPROM24CXX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alenkrishna2012/library/EEPROM24CXX/1.0.0/EEPROM24CXX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alenkrishna2012/library/EEPROM24CXX/1.0.5/EEPROM24CXX-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM24CXX-1.0.5.tar.gz",
+    "size_bytes": 8985,
+    "sha256": "a1239fd062d21df772b065fb4fb10b2d9b073376adb84e6839f62db5b2e22c32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alenkrishna2012/library/EEPROM24CXX/1.0.5/EEPROM24CXX-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/alenkrishna2012/library/EEPROM24CXX/1.0.5/EEPROM24CXX-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alenkrishna2012/library/EEPROM24CXX/1.0.6/EEPROM24CXX-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM24CXX-1.0.6.tar.gz",
+    "size_bytes": 8982,
+    "sha256": "b54ec2609b773b59978b3bec97aed4819036c28fda96e55d02861cb885b7cfb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alenkrishna2012/library/EEPROM24CXX/1.0.6/EEPROM24CXX-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/alenkrishna2012/library/EEPROM24CXX/1.0.6/EEPROM24CXX-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alenkrishna2012/library/EEPROM24CXX/1.0.7/EEPROM24CXX-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM24CXX-1.0.7.tar.gz",
+    "size_bytes": 8985,
+    "sha256": "e283dcd600eb53c184000b34e19694c6d7266af74c2ef4a44c4d8fcfd041acac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alenkrishna2012/library/EEPROM24CXX/1.0.7/EEPROM24CXX-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/alenkrishna2012/library/EEPROM24CXX/1.0.7/EEPROM24CXX-1.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

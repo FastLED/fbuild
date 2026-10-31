@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-zelmic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-zelmic/library/EncoderAli/0.0.0+sha.e1a3b380b0d6/EncoderAli-0.0.0+sha.e1a3b380b0d6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EncoderAli-0.0.0+sha.e1a3b380b0d6.tar.gz",
+    "size_bytes": 2588,
+    "sha256": "394b05d9aac1c417dfce8557b01444fe4b48c2694366919017c56b4a9d39f19f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-zelmic/library/EncoderAli/0.0.0%2Bsha.e1a3b380b0d6/EncoderAli-0.0.0%2Bsha.e1a3b380b0d6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-zelmic/library/EncoderAli/0.0.0%2Bsha.e1a3b380b0d6/EncoderAli-0.0.0%2Bsha.e1a3b380b0d6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

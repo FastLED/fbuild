@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tarcisio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tarcisio/library/air_temperature_sensor/0.2.0/air_temperature_sensor-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "air_temperature_sensor-0.2.0.tar.gz",
+    "size_bytes": 2709,
+    "sha256": "c4c1719ec3d06376a155c7ee788f939905724bd9ed5ef6b874bb9c772b7c6a70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tarcisio/library/air_temperature_sensor/0.2.0/air_temperature_sensor-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tarcisio/library/air_temperature_sensor/0.2.0/air_temperature_sensor-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tarcisio/library/co2_sensor/0.1.0/co2_sensor-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "co2_sensor-0.1.0.tar.gz",
+    "size_bytes": 2453,
+    "sha256": "69550b22748db0da00dd13e047b010e6c4705cb60d27ebfa6b57c933cbd3ac49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tarcisio/library/co2_sensor/0.1.0/co2_sensor-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tarcisio/library/co2_sensor/0.1.0/co2_sensor-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tarcisio/library/humidity_sensor/0.1.0/humidity_sensor-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "humidity_sensor-0.1.0.tar.gz",
+    "size_bytes": 2669,
+    "sha256": "9cc7c36f80d7f6cfe8779154a5c37f34ddf0b00f6f3aa56b06593e5f3ed36968",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tarcisio/library/humidity_sensor/0.1.0/humidity_sensor-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tarcisio/library/humidity_sensor/0.1.0/humidity_sensor-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tarcisio/library/onoff_device/0.1.0/onoff_device-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "onoff_device-0.1.0.tar.gz",
+    "size_bytes": 1817,
+    "sha256": "cb4c65b70408372049785cad9d10902d68ecc12f00c914c02d0000933456ebb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tarcisio/library/onoff_device/0.1.0/onoff_device-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tarcisio/library/onoff_device/0.1.0/onoff_device-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tarcisio/library/ph_sensor/0.3.0/ph_sensor-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ph_sensor-0.3.0.tar.gz",
+    "size_bytes": 1963,
+    "sha256": "0eb930b353d2881f7e276fb1a217bd9d6f54076394f3b1984c119493b3d43bb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tarcisio/library/ph_sensor/0.3.0/ph_sensor-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tarcisio/library/ph_sensor/0.3.0/ph_sensor-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tarcisio/library/tds_sensor/0.3.0/tds_sensor-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tds_sensor-0.3.0.tar.gz",
+    "size_bytes": 2232,
+    "sha256": "79a8c89bb87d46b4d4e1313a946f71ab4abeb5f9d7f6cc40cf2ea41bf618e623",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tarcisio/library/tds_sensor/0.3.0/tds_sensor-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tarcisio/library/tds_sensor/0.3.0/tds_sensor-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tarcisio/library/water_level_sensor/0.3.0/water_level_sensor-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "water_level_sensor-0.3.0.tar.gz",
+    "size_bytes": 2040,
+    "sha256": "80928a92d7d8532364286e2cb9de4cf1ab166650e0305c9575a95ff17ad7988a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tarcisio/library/water_level_sensor/0.3.0/water_level_sensor-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tarcisio/library/water_level_sensor/0.3.0/water_level_sensor-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tarcisio/library/water_temperature_sensor/0.3.0/water_temperature_sensor-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "water_temperature_sensor-0.3.0.tar.gz",
+    "size_bytes": 2199,
+    "sha256": "e09afab05acfebce67aab100346e5918ae7411b9a1c946d40bae077d2cfffedc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tarcisio/library/water_temperature_sensor/0.3.0/water_temperature_sensor-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tarcisio/library/water_temperature_sensor/0.3.0/water_temperature_sensor-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bitbucket-davidsuch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bitbucket-davidsuch/library/NexgenAHRS/1.1.0/NexgenAHRS-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NexgenAHRS-1.1.0.tar.gz",
+    "size_bytes": 35430,
+    "sha256": "78eae42bac84eef1c0d39702779fdb662a1d6723f97d94d58879cdce69fa6b6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-davidsuch/library/NexgenAHRS/1.1.0/NexgenAHRS-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-davidsuch/library/NexgenAHRS/1.1.0/NexgenAHRS-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-davidsuch/library/NexgenFilter/1.1.0/NexgenFilter-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NexgenFilter-1.1.0.tar.gz",
+    "size_bytes": 13505,
+    "sha256": "90c8fc5cde777c36d3a64d6bc01727e59523f89930d2fcbf104e6baba1cf695f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-davidsuch/library/NexgenFilter/1.1.0/NexgenFilter-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-davidsuch/library/NexgenFilter/1.1.0/NexgenFilter-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-davidsuch/library/NexgenMSP/1.0.9/NexgenMSP-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NexgenMSP-1.0.9.tar.gz",
+    "size_bytes": 36157,
+    "sha256": "06d73ea0c0331cfee2d22e2efbc0797b7da7d7a3e0356f2d72495381d89975b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-davidsuch/library/NexgenMSP/1.0.9/NexgenMSP-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-davidsuch/library/NexgenMSP/1.0.9/NexgenMSP-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-davidsuch/library/NexgenMotorShield/2.0.0/NexgenMotorShield-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NexgenMotorShield-2.0.0.tar.gz",
+    "size_bytes": 7316,
+    "sha256": "d566221c1bd928f62ecd161115b54cfbb2f006eb6cec3964be16a0ff24a240fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-davidsuch/library/NexgenMotorShield/2.0.0/NexgenMotorShield-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-davidsuch/library/NexgenMotorShield/2.0.0/NexgenMotorShield-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-davidsuch/library/NexgenSBUS/1.0.0/NexgenSBUS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NexgenSBUS-1.0.0.tar.gz",
+    "size_bytes": 9049,
+    "sha256": "c7daabaac2dd317828ac2cd1ecbb4cfe1de611b83a098a0be28e9c9a196d1a56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-davidsuch/library/NexgenSBUS/1.0.0/NexgenSBUS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-davidsuch/library/NexgenSBUS/1.0.0/NexgenSBUS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-davidsuch/library/NexgenTimer/1.0.1/NexgenTimer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NexgenTimer-1.0.1.tar.gz",
+    "size_bytes": 11894,
+    "sha256": "3ed7527a9e42f243cb03221b5feda77feb79f326b6dac49a08674451b6e31423",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-davidsuch/library/NexgenTimer/1.0.1/NexgenTimer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-davidsuch/library/NexgenTimer/1.0.1/NexgenTimer-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

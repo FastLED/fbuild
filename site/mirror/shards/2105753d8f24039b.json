@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leamhein",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leamhein/library/Seeed_GFX/2.0.3/Seeed_GFX-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Seeed_GFX-2.0.3.tar.gz",
+    "size_bytes": 4914302,
+    "sha256": "052dc6e470fe8f6d7d3e6ff8f4da57f75137656c2f5650c1bd17482779ca6b5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leamhein/library/Seeed_GFX/2.0.3/Seeed_GFX-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/leamhein/library/Seeed_GFX/2.0.3/Seeed_GFX-2.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

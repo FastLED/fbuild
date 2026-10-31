@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kigster",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kigster/library/BackSeatDriver/1.0.1/BackSeatDriver-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BackSeatDriver-1.0.1.tar.gz",
+    "size_bytes": 12952,
+    "sha256": "35d54bd7eff526b67e1c2a65cf628722b6ba70ac0d93090ec85fd7c9fc30d98d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kigster/library/BackSeatDriver/1.0.1/BackSeatDriver-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kigster/library/BackSeatDriver/1.0.1/BackSeatDriver-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

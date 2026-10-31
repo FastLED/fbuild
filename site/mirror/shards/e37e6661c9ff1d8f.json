@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/supla",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "supla/library/SuplaDevice/2.4.2/SuplaDevice-2.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SuplaDevice-2.4.2.tar.gz",
+    "size_bytes": 211754,
+    "sha256": "71b320e24346a1fa551d8580f0e44f414b4c9e345b6f5337e23e8afb6e9ca65a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/supla/library/SuplaDevice/2.4.2/SuplaDevice-2.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/supla/library/SuplaDevice/2.4.2/SuplaDevice-2.4.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

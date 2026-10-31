@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jrm1986",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jrm1986/library/ACS712/0.0.0+sha.c0c26e03d080/ACS712-0.0.0+sha.c0c26e03d080.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACS712-0.0.0+sha.c0c26e03d080.tar.gz",
+    "size_bytes": 1908,
+    "sha256": "c673e047b1b101bd2cdfbdb20cb96d53a2b1c7befdad9762100bcfdde0af6340",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jrm1986/library/ACS712/0.0.0%2Bsha.c0c26e03d080/ACS712-0.0.0%2Bsha.c0c26e03d080.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jrm1986/library/ACS712/0.0.0%2Bsha.c0c26e03d080/ACS712-0.0.0%2Bsha.c0c26e03d080.tar.gz"
+    ]
+   }
+  }
+ ]
+}

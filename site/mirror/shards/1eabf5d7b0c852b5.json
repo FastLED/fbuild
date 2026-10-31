@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mamunul",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mamunul/library/BanglaText/1.0.0/BanglaText-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BanglaText-1.0.0.tar.gz",
+    "size_bytes": 94290,
+    "sha256": "ffb612cfedfe640b635ee2c0597bff25de8b5bed256d9ffa75afd11b231dda58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mamunul/library/BanglaText/1.0.0/BanglaText-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mamunul/library/BanglaText/1.0.0/BanglaText-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

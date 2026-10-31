@@ -1,0 +1,269 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ottowinter",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ottowinter/library/ArduinoJson-esphomelib/5.13.3/ArduinoJson-esphomelib-5.13.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-esphomelib-5.13.3.tar.gz",
+    "size_bytes": 54659,
+    "sha256": "88e74dd868f0f16a191cbe29fe9f0f56e81d6b929046ee9f8ec661d29c1e9803",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/ArduinoJson-esphomelib/5.13.3/ArduinoJson-esphomelib-5.13.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/ArduinoJson-esphomelib/5.13.3/ArduinoJson-esphomelib-5.13.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/ArduinoJson-esphomelib/6.15.2/ArduinoJson-esphomelib-6.15.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoJson-esphomelib-6.15.2.tar.gz",
+    "size_bytes": 82972,
+    "sha256": "e682de1ddda26c065cf2ba4ae1618b7d755a7be837c30650ae77b5affd386d45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/ArduinoJson-esphomelib/6.15.2/ArduinoJson-esphomelib-6.15.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/ArduinoJson-esphomelib/6.15.2/ArduinoJson-esphomelib-6.15.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/AsyncMqttClient-esphome/0.8.6/AsyncMqttClient-esphome-0.8.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncMqttClient-esphome-0.8.6.tar.gz",
+    "size_bytes": 15516,
+    "sha256": "fd563fcde3f0085866445fabd63b78e62054bd5421804ced4627ecb29cb7e529",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/AsyncMqttClient-esphome/0.8.6/AsyncMqttClient-esphome-0.8.6.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/AsyncMqttClient-esphome/0.8.6/AsyncMqttClient-esphome-0.8.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/AsyncTCP-esphome/1.2.1/AsyncTCP-esphome-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-esphome-1.2.1.tar.gz",
+    "size_bytes": 17323,
+    "sha256": "2ae51e7c0b72085d7214b985a1a98a81ac1a6e7ec8372c47b1f77c9330ad601f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/AsyncTCP-esphome/1.2.1/AsyncTCP-esphome-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/AsyncTCP-esphome/1.2.1/AsyncTCP-esphome-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/ESPAsyncTCP-esphome/1.2.3/ESPAsyncTCP-esphome-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncTCP-esphome-1.2.3.tar.gz",
+    "size_bytes": 37393,
+    "sha256": "40a77d9ef2ad7ebb923a08168ef9fbc2c9f68ff30abda1fc4b16a3dc3e030c09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/ESPAsyncTCP-esphome/1.2.3/ESPAsyncTCP-esphome-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/ESPAsyncTCP-esphome/1.2.3/ESPAsyncTCP-esphome-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/ESPAsyncWebServer-esphome/1.2.7/ESPAsyncWebServer-esphome-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-1.2.7.tar.gz",
+    "size_bytes": 80885,
+    "sha256": "e91e6ad40588f3a64eabd5db0356f5b1ac3390b6397481144c065194e6a6e2e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/ESPAsyncWebServer-esphome/1.2.7/ESPAsyncWebServer-esphome-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/ESPAsyncWebServer-esphome/1.2.7/ESPAsyncWebServer-esphome-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/ESPAsyncWebServer-esphome/1.3.0/ESPAsyncWebServer-esphome-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-1.3.0.tar.gz",
+    "size_bytes": 80853,
+    "sha256": "6e13669263b74b8253450e2cea923e4c3aecf80688d9b477d834fc91a6406016",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/ESPAsyncWebServer-esphome/1.3.0/ESPAsyncWebServer-esphome-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/ESPAsyncWebServer-esphome/1.3.0/ESPAsyncWebServer-esphome-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/ESPAsyncWebServer-esphome/2.0.1/ESPAsyncWebServer-esphome-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-2.0.1.tar.gz",
+    "size_bytes": 60796,
+    "sha256": "7cf54f1aaea27f548282976b345fd48ac216d8c48533124efbd9472e682c71bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/ESPAsyncWebServer-esphome/2.0.1/ESPAsyncWebServer-esphome-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/ESPAsyncWebServer-esphome/2.0.1/ESPAsyncWebServer-esphome-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/ESPAsyncWebServer-esphome/2.1.0/ESPAsyncWebServer-esphome-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-2.1.0.tar.gz",
+    "size_bytes": 60786,
+    "sha256": "dff7dbdfc2058dd02af959312475fa027b4c54ae6a0f38d98cc638e820b91101",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/ESPAsyncWebServer-esphome/2.1.0/ESPAsyncWebServer-esphome-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/ESPAsyncWebServer-esphome/2.1.0/ESPAsyncWebServer-esphome-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/ESPAsyncWebServer-esphome/3.0.0/ESPAsyncWebServer-esphome-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-3.0.0.tar.gz",
+    "size_bytes": 60972,
+    "sha256": "5d591a0aa58c8e1ee3bf967a04e3c110c139d7cb79c62ddf90eb6b0e8affcbf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/ESPAsyncWebServer-esphome/3.0.0/ESPAsyncWebServer-esphome-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/ESPAsyncWebServer-esphome/3.0.0/ESPAsyncWebServer-esphome-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/ESPAsyncWebServer-esphome/3.1.0/ESPAsyncWebServer-esphome-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-3.1.0.tar.gz",
+    "size_bytes": 60999,
+    "sha256": "88f28615507e9c7ca3e2b0fd2874aa3db8602c603bb0ee11ef104bdb9e01a678",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/ESPAsyncWebServer-esphome/3.1.0/ESPAsyncWebServer-esphome-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/ESPAsyncWebServer-esphome/3.1.0/ESPAsyncWebServer-esphome-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/ESPAsyncWebServer-esphome/3.2.2/ESPAsyncWebServer-esphome-3.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-3.2.2.tar.gz",
+    "size_bytes": 61121,
+    "sha256": "eb27c1c7897ae5cd81919e7fde55608f42b04e2ff0eb87f09a3b556e5b3b52f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/ESPAsyncWebServer-esphome/3.2.2/ESPAsyncWebServer-esphome-3.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/ESPAsyncWebServer-esphome/3.2.2/ESPAsyncWebServer-esphome-3.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/ESPAsyncWebServer-esphome/3.3.0/ESPAsyncWebServer-esphome-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-3.3.0.tar.gz",
+    "size_bytes": 62309,
+    "sha256": "0dd65f73ac6561d92d1704076fdf81f72bd2ca764cd936dcb7ceb75121f4d792",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/ESPAsyncWebServer-esphome/3.3.0/ESPAsyncWebServer-esphome-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/ESPAsyncWebServer-esphome/3.3.0/ESPAsyncWebServer-esphome-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/ESPAsyncWebServer-esphome/3.4.0/ESPAsyncWebServer-esphome-3.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-3.4.0.tar.gz",
+    "size_bytes": 62362,
+    "sha256": "b248ec72a77d95a2b46f81b0253e0b7aa604d5f4435b700235af85559902d0af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/ESPAsyncWebServer-esphome/3.4.0/ESPAsyncWebServer-esphome-3.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/ESPAsyncWebServer-esphome/3.4.0/ESPAsyncWebServer-esphome-3.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/ESPAsyncWebServer-esphome/3.4.1/ESPAsyncWebServer-esphome-3.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-esphome-3.4.1.tar.gz",
+    "size_bytes": 62569,
+    "sha256": "5223533db91a543ac3fd3816522f52eab9856b9df6f796ecfd2e8d27b72ea955",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/ESPAsyncWebServer-esphome/3.4.1/ESPAsyncWebServer-esphome-3.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/ESPAsyncWebServer-esphome/3.4.1/ESPAsyncWebServer-esphome-3.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/I2Cdevlib-esphomelib/1.1.0/I2Cdevlib-esphomelib-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdevlib-esphomelib-1.1.0.tar.gz",
+    "size_bytes": 34657,
+    "sha256": "64f5d8a0b1d7858ef1c7a14563d1190012ccbfeb943481a3de52eeacc5f54317",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/I2Cdevlib-esphomelib/1.1.0/I2Cdevlib-esphomelib-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/I2Cdevlib-esphomelib/1.1.0/I2Cdevlib-esphomelib-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/NeoPixelBus-esphome/2.6.2/NeoPixelBus-esphome-2.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBus-esphome-2.6.2.tar.gz",
+    "size_bytes": 130255,
+    "sha256": "1db407592760a0b1bcc263f652e2800eb77155c513ef272e22681b31daa0abfa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/NeoPixelBus-esphome/2.6.2/NeoPixelBus-esphome-2.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/NeoPixelBus-esphome/2.6.2/NeoPixelBus-esphome-2.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/PCA9685%2016-Channel%20PWM%20Driver%20Module%20Library/1.2.9/PCA968516-ChannelPWMDriverModuleLibrary-1.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA968516-ChannelPWMDriverModuleLibrary-1.2.9.tar.gz",
+    "size_bytes": 24435,
+    "sha256": "15fd6928837792652b74a21682260f31468e70fee29f87225e5feaaad57a1f95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/PCA9685%252016-Channel%2520PWM%2520Driver%2520Module%2520Library/1.2.9/PCA968516-ChannelPWMDriverModuleLibrary-1.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/PCA9685%2016-Channel%20PWM%20Driver%20Module%20Library/1.2.9/PCA968516-ChannelPWMDriverModuleLibrary-1.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/PubSubClient-esphomelib/2.7.1/PubSubClient-esphomelib-2.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PubSubClient-esphomelib-2.7.1.tar.gz",
+    "size_bytes": 10835,
+    "sha256": "13a1a3678fa88f5303d32a441daa2f68c19afd0f94f744b7afce7547c1f43564",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/PubSubClient-esphomelib/2.7.1/PubSubClient-esphomelib-2.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/PubSubClient-esphomelib/2.7.1/PubSubClient-esphomelib-2.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ottowinter/library/esphome-core/1.12.2/esphome-core-1.12.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esphome-core-1.12.2.tar.gz",
+    "size_bytes": 337196,
+    "sha256": "30df5afa464fe40c6ff0fb744bbc5d5d424cd2c3cb90db9137712bd5739c5d25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ottowinter/library/esphome-core/1.12.2/esphome-core-1.12.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ottowinter/library/esphome-core/1.12.2/esphome-core-1.12.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/boeserfrosch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "boeserfrosch/library/EmbeddedTerminal/0.2.1/EmbeddedTerminal-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedTerminal-0.2.1.tar.gz",
+    "size_bytes": 60120,
+    "sha256": "4f753f04c4bd768dd894adc40fddf13e21ec79c461a2a233f247fde6c39bae53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boeserfrosch/library/EmbeddedTerminal/0.2.1/EmbeddedTerminal-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/boeserfrosch/library/EmbeddedTerminal/0.2.1/EmbeddedTerminal-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boeserfrosch/library/GuL_NovaFitness/1.2.0/GuL_NovaFitness-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GuL_NovaFitness-1.2.0.tar.gz",
+    "size_bytes": 17600,
+    "sha256": "8a168eec4b10e2eb9d1c211a2bbc5237e2bd5749668d58820ed739344329e7cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boeserfrosch/library/GuL_NovaFitness/1.2.0/GuL_NovaFitness-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/boeserfrosch/library/GuL_NovaFitness/1.2.0/GuL_NovaFitness-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boeserfrosch/library/GuL_NovaFitness/1.4.0/GuL_NovaFitness-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GuL_NovaFitness-1.4.0.tar.gz",
+    "size_bytes": 19487,
+    "sha256": "f4c403af55f3c2171941489f5de6527502b918745d90fd2b31a08da090ef1e57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boeserfrosch/library/GuL_NovaFitness/1.4.0/GuL_NovaFitness-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/boeserfrosch/library/GuL_NovaFitness/1.4.0/GuL_NovaFitness-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boeserfrosch/library/GuL_Plantower/1.2.0/GuL_Plantower-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GuL_Plantower-1.2.0.tar.gz",
+    "size_bytes": 18849,
+    "sha256": "3b8cc93d4606b72cb1acfe4d9aa4e06dd07b796f769feea60b74a6d0f7a670ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boeserfrosch/library/GuL_Plantower/1.2.0/GuL_Plantower-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/boeserfrosch/library/GuL_Plantower/1.2.0/GuL_Plantower-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boeserfrosch/library/GuL_TI_Humidity_HDC10XX/1.1.3/GuL_TI_Humidity_HDC10XX-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GuL_TI_Humidity_HDC10XX-1.1.3.tar.gz",
+    "size_bytes": 17534,
+    "sha256": "6ce192688c44c9b429d4fe397af7c739772c0cf5004fbcc405ba6524940afd98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boeserfrosch/library/GuL_TI_Humidity_HDC10XX/1.1.3/GuL_TI_Humidity_HDC10XX-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/boeserfrosch/library/GuL_TI_Humidity_HDC10XX/1.1.3/GuL_TI_Humidity_HDC10XX-1.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

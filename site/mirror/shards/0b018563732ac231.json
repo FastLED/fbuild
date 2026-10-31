@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/energizelab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "energizelab/library/Energize%20Lab%20Servo/1.0.0/EnergizeLabServo-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EnergizeLabServo-1.0.0.tar.gz",
+    "size_bytes": 19454,
+    "sha256": "02a9b08c4bd475b499d035596ced71a2841d516ffb05af8a95ba3171e8f28394",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/energizelab/library/Energize%2520Lab%2520Servo/1.0.0/EnergizeLabServo-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/energizelab/library/Energize%20Lab%20Servo/1.0.0/EnergizeLabServo-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

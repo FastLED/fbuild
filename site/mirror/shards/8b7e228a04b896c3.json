@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/frankbregulla1111",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "frankbregulla1111/library/SonosUPnPWifi/1.1/SonosUPnPWifi-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SonosUPnPWifi-1.1.tar.gz",
+    "size_bytes": 25725,
+    "sha256": "9d20503fde8c5e6dd6781024179767fa271ce802884e39381e121f99177581f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/frankbregulla1111/library/SonosUPnPWifi/1.1/SonosUPnPWifi-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/frankbregulla1111/library/SonosUPnPWifi/1.1/SonosUPnPWifi-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sunsetdever",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sunsetdever/library/3DM_Xrenderer/1.0.0/3DM_Xrenderer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "3DM_Xrenderer-1.0.0.tar.gz",
+    "size_bytes": 29514,
+    "sha256": "bbc1a7a3b2eaf4c2e2476f1bf64c4c03fa520a00a086bc6504989ae14e23378a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunsetdever/library/3DM_Xrenderer/1.0.0/3DM_Xrenderer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sunsetdever/library/3DM_Xrenderer/1.0.0/3DM_Xrenderer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunsetdever/library/3DM_Xrenderer/1.0.3/3DM_Xrenderer-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "3DM_Xrenderer-1.0.3.tar.gz",
+    "size_bytes": 32670,
+    "sha256": "2996d69adcd946a57e5f87c976db97d20c06f92ebc9eb2e16dd649e39045410a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunsetdever/library/3DM_Xrenderer/1.0.3/3DM_Xrenderer-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sunsetdever/library/3DM_Xrenderer/1.0.3/3DM_Xrenderer-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunsetdever/library/AVR%20Task%20Scheduler/1.0.1/AVRTaskScheduler-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AVRTaskScheduler-1.0.1.tar.gz",
+    "size_bytes": 12053,
+    "sha256": "d4b74c3159a4037f939f32d80a98b3c53141c297fbcde1a3bb84ca55c9298af0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunsetdever/library/AVR%2520Task%2520Scheduler/1.0.1/AVRTaskScheduler-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sunsetdever/library/AVR%20Task%20Scheduler/1.0.1/AVRTaskScheduler-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunsetdever/library/AVR%20Task%20Scheduler/1.0.4/AVRTaskScheduler-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AVRTaskScheduler-1.0.4.tar.gz",
+    "size_bytes": 12263,
+    "sha256": "7ad419d1c7018717acda00819fc44478b3e9b9cc8e5bf3b5e97fc0468d6e9f95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunsetdever/library/AVR%2520Task%2520Scheduler/1.0.4/AVRTaskScheduler-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sunsetdever/library/AVR%20Task%20Scheduler/1.0.4/AVRTaskScheduler-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunsetdever/library/AVR%20Task%20Scheduler/2.0.0/AVRTaskScheduler-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AVRTaskScheduler-2.0.0.tar.gz",
+    "size_bytes": 14735,
+    "sha256": "7e3bde055b3c1328b289c74f13aecd43e41d54146911b04d50df2dbc1552144b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunsetdever/library/AVR%2520Task%2520Scheduler/2.0.0/AVRTaskScheduler-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sunsetdever/library/AVR%20Task%20Scheduler/2.0.0/AVRTaskScheduler-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunsetdever/library/CMScript/1.0.0/CMScript-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMScript-1.0.0.tar.gz",
+    "size_bytes": 44907,
+    "sha256": "490b8d2c82f236a6371b1ff7d7422fc885814bec9bb8f1b3cf1628f9675f5269",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunsetdever/library/CMScript/1.0.0/CMScript-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sunsetdever/library/CMScript/1.0.0/CMScript-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sunsetdever/library/CMScript/1.0.2/CMScript-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMScript-1.0.2.tar.gz",
+    "size_bytes": 54811,
+    "sha256": "a23e27b5559bb650a51863407dfd34191eff803a1dec4cd3dfa69b7b90e01529",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sunsetdever/library/CMScript/1.0.2/CMScript-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sunsetdever/library/CMScript/1.0.2/CMScript-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

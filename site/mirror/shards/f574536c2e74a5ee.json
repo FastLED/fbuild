@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wclin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wclin/library/Modbus/0.0.0+sha.be466464a18c/Modbus-0.0.0+sha.be466464a18c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modbus-0.0.0+sha.be466464a18c.tar.gz",
+    "size_bytes": 22424,
+    "sha256": "842ab49d7da9ca1a9c001b045d8808de987897e7861a5bfb526e73df473c13e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wclin/library/Modbus/0.0.0%2Bsha.be466464a18c/Modbus-0.0.0%2Bsha.be466464a18c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wclin/library/Modbus/0.0.0%2Bsha.be466464a18c/Modbus-0.0.0%2Bsha.be466464a18c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wclin/library/nvt_rs485/0.0.0+sha.4c9d65e9275c/nvt_rs485-0.0.0+sha.4c9d65e9275c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nvt_rs485-0.0.0+sha.4c9d65e9275c.tar.gz",
+    "size_bytes": 1723,
+    "sha256": "213e83320f82c80ad79033df8b097025c48f38ab4c306234464b0c038aab2715",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wclin/library/nvt_rs485/0.0.0%2Bsha.4c9d65e9275c/nvt_rs485-0.0.0%2Bsha.4c9d65e9275c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wclin/library/nvt_rs485/0.0.0%2Bsha.4c9d65e9275c/nvt_rs485-0.0.0%2Bsha.4c9d65e9275c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

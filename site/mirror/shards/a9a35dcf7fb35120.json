@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nhthai173",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nhthai173/library/DeviceLib/1.2.0/DeviceLib-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeviceLib-1.2.0.tar.gz",
+    "size_bytes": 32110,
+    "sha256": "61dd3cf7c8d66f5fe3d72ff9ca06fe8192c7eed4d9fbc43d4bd276e176fd1779",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nhthai173/library/DeviceLib/1.2.0/DeviceLib-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nhthai173/library/DeviceLib/1.2.0/DeviceLib-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nhthai173/library/ENVFile/1.0.0/ENVFile-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ENVFile-1.0.0.tar.gz",
+    "size_bytes": 7367,
+    "sha256": "b826a598edb27359617ae948a57c88df05231f3946b3070a5ab1ee803c0f63d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nhthai173/library/ENVFile/1.0.0/ENVFile-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nhthai173/library/ENVFile/1.0.0/ENVFile-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nhthai173/library/FirebaseHelper/1.0.0/FirebaseHelper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseHelper-1.0.0.tar.gz",
+    "size_bytes": 5738,
+    "sha256": "1c58d44ff124eda525cd6f63bb224a872e4047104682c1a1deafc0716840d3cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nhthai173/library/FirebaseHelper/1.0.0/FirebaseHelper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nhthai173/library/FirebaseHelper/1.0.0/FirebaseHelper-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nhthai173/library/WebOTA/1.1.0/WebOTA-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebOTA-1.1.0.tar.gz",
+    "size_bytes": 14027,
+    "sha256": "935f8d9460d4b4c374cbd4003287487c3a8f70dad2efe55df3bcef20001b6c69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nhthai173/library/WebOTA/1.1.0/WebOTA-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nhthai173/library/WebOTA/1.1.0/WebOTA-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nhthai173/library/WebOTA/1.1.1/WebOTA-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebOTA-1.1.1.tar.gz",
+    "size_bytes": 14370,
+    "sha256": "6be5cd47f858bed3c288512eacb1f44ba2c9d2f52ba8f22b063c04dca846d28e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nhthai173/library/WebOTA/1.1.1/WebOTA-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nhthai173/library/WebOTA/1.1.1/WebOTA-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

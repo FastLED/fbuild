@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-quevedo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-quevedo/library/ESP8266/0.0.0+sha.77388e8f0697/ESP8266-0.0.0+sha.77388e8f0697.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266-0.0.0+sha.77388e8f0697.tar.gz",
+    "size_bytes": 3037,
+    "sha256": "213e0c731457ec671a152e7df5fec7f7d504e0052778566969671065bf5f8eac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-quevedo/library/ESP8266/0.0.0%2Bsha.77388e8f0697/ESP8266-0.0.0%2Bsha.77388e8f0697.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-quevedo/library/ESP8266/0.0.0%2Bsha.77388e8f0697/ESP8266-0.0.0%2Bsha.77388e8f0697.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-quevedo/library/MMA8451Q/0.0.0+sha.7c9ab58f6af3/MMA8451Q-0.0.0+sha.7c9ab58f6af3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8451Q-0.0.0+sha.7c9ab58f6af3.tar.gz",
+    "size_bytes": 2621,
+    "sha256": "535727e96d1b75a951754d7592190faf36247aa46cdfc618b3b9e3b9559d3c95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-quevedo/library/MMA8451Q/0.0.0%2Bsha.7c9ab58f6af3/MMA8451Q-0.0.0%2Bsha.7c9ab58f6af3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-quevedo/library/MMA8451Q/0.0.0%2Bsha.7c9ab58f6af3/MMA8451Q-0.0.0%2Bsha.7c9ab58f6af3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-quevedo/library/TSIHW/0.0.0+sha.532aa572220b/TSIHW-0.0.0+sha.532aa572220b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSIHW-0.0.0+sha.532aa572220b.tar.gz",
+    "size_bytes": 3017,
+    "sha256": "75be172659530d6daf60d551d9dd76e88f760d6b80c48bc14dd796b0caeb8529",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-quevedo/library/TSIHW/0.0.0%2Bsha.532aa572220b/TSIHW-0.0.0%2Bsha.532aa572220b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-quevedo/library/TSIHW/0.0.0%2Bsha.532aa572220b/TSIHW-0.0.0%2Bsha.532aa572220b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-quevedo/library/WebSocketClient/0.0.0+sha.0277fee23572/WebSocketClient-0.0.0+sha.0277fee23572.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSocketClient-0.0.0+sha.0277fee23572.tar.gz",
+    "size_bytes": 4745,
+    "sha256": "07954e0104eb6f782d7c0f19b6a2cfc9e12bca37b91828fe8dfbf34235ccd833",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-quevedo/library/WebSocketClient/0.0.0%2Bsha.0277fee23572/WebSocketClient-0.0.0%2Bsha.0277fee23572.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-quevedo/library/WebSocketClient/0.0.0%2Bsha.0277fee23572/WebSocketClient-0.0.0%2Bsha.0277fee23572.tar.gz"
+    ]
+   }
+  }
+ ]
+}

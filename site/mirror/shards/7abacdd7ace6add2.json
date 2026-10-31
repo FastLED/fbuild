@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/anlcraw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "anlcraw/library/MBI5043%20ESP32/1.1.2/MBI5043ESP32-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MBI5043ESP32-1.1.2.tar.gz",
+    "size_bytes": 7657,
+    "sha256": "bec468087d1892249c6b4bfe170c875f2c77ef2b06bd6774910e37729eed893b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anlcraw/library/MBI5043%2520ESP32/1.1.2/MBI5043ESP32-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/anlcraw/library/MBI5043%20ESP32/1.1.2/MBI5043ESP32-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anlcraw/library/TM1637%20Menu%20Manager/1.0.2/TM1637MenuManager-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1637MenuManager-1.0.2.tar.gz",
+    "size_bytes": 6828,
+    "sha256": "a2d732192c2205841a07b5b0ef064be42a6282627262fc7215fc27c026b9a702",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anlcraw/library/TM1637%2520Menu%2520Manager/1.0.2/TM1637MenuManager-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/anlcraw/library/TM1637%20Menu%20Manager/1.0.2/TM1637MenuManager-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

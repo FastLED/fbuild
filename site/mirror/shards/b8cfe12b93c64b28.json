@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chuckbell",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chuckbell/library/MySQL%20Connector%20Arduino/1.2.0/MySQLConnectorArduino-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MySQLConnectorArduino-1.2.0.tar.gz",
+    "size_bytes": 20127,
+    "sha256": "e9399465741e7aa5b3a0532c74832d32e1e05a4e0a4ad8e68475d842a145571d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chuckbell/library/MySQL%2520Connector%2520Arduino/1.2.0/MySQLConnectorArduino-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chuckbell/library/MySQL%20Connector%20Arduino/1.2.0/MySQLConnectorArduino-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-avnet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-avnet/library/WNCInterface/0.0.0+sha.b278b745fb4f/WNCInterface-0.0.0+sha.b278b745fb4f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WNCInterface-0.0.0+sha.b278b745fb4f.tar.gz",
+    "size_bytes": 504925,
+    "sha256": "eeb64c7d346e0577f328da8efc2446b24a0bc3f86c58896c708148621bf54996",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-avnet/library/WNCInterface/0.0.0%2Bsha.b278b745fb4f/WNCInterface-0.0.0%2Bsha.b278b745fb4f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-avnet/library/WNCInterface/0.0.0%2Bsha.b278b745fb4f/WNCInterface-0.0.0%2Bsha.b278b745fb4f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-avnet/library/WncControllerK64F/0.0.0+sha.0ec8be33d86d/WncControllerK64F-0.0.0+sha.0ec8be33d86d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WncControllerK64F-0.0.0+sha.0ec8be33d86d.tar.gz",
+    "size_bytes": 4521,
+    "sha256": "38808563a6e35f259a8e619d28b42ba058f812b612edffe095968a30f9d85ec1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-avnet/library/WncControllerK64F/0.0.0%2Bsha.0ec8be33d86d/WncControllerK64F-0.0.0%2Bsha.0ec8be33d86d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-avnet/library/WncControllerK64F/0.0.0%2Bsha.0ec8be33d86d/WncControllerK64F-0.0.0%2Bsha.0ec8be33d86d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bluejunimo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bluejunimo/library/YX5300%20for%20ESP32/1.1.0/YX5300forESP32-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YX5300forESP32-1.1.0.tar.gz",
+    "size_bytes": 9125,
+    "sha256": "999c9fb3109e362c173278371d4032a6e23db77e898ede9914b1bd8e296ea55e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bluejunimo/library/YX5300%2520for%2520ESP32/1.1.0/YX5300forESP32-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bluejunimo/library/YX5300%20for%20ESP32/1.1.0/YX5300forESP32-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-padman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-padman/library/PPMout/0.0.0+sha.4570e00696b9/PPMout-0.0.0+sha.4570e00696b9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PPMout-0.0.0+sha.4570e00696b9.tar.gz",
+    "size_bytes": 2631,
+    "sha256": "e80e1cdcea8ac77a031170fe678272461f68d5bcbee1463d6a76b49281ef874c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-padman/library/PPMout/0.0.0%2Bsha.4570e00696b9/PPMout-0.0.0%2Bsha.4570e00696b9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-padman/library/PPMout/0.0.0%2Bsha.4570e00696b9/PPMout-0.0.0%2Bsha.4570e00696b9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-padman/library/ParametricEQ/0.0.0+sha.407aa8a0a5c2/ParametricEQ-0.0.0+sha.407aa8a0a5c2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ParametricEQ-0.0.0+sha.407aa8a0a5c2.tar.gz",
+    "size_bytes": 3985,
+    "sha256": "af277cc58576c8d4256f714bd61b55429644adf120e22d39de955d907141dacc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-padman/library/ParametricEQ/0.0.0%2Bsha.407aa8a0a5c2/ParametricEQ-0.0.0%2Bsha.407aa8a0a5c2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-padman/library/ParametricEQ/0.0.0%2Bsha.407aa8a0a5c2/ParametricEQ-0.0.0%2Bsha.407aa8a0a5c2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

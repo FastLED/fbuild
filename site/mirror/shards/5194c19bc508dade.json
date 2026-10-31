@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jcady92",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jcady92/library/WatchdogTimer/0.0.0+sha.10fdcb411fbd/WatchdogTimer-0.0.0+sha.10fdcb411fbd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WatchdogTimer-0.0.0+sha.10fdcb411fbd.tar.gz",
+    "size_bytes": 1253,
+    "sha256": "ceea2e63ebd06e526b7a17359adda753efb018d2f1d4aba61bf73a9a02e3d9e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jcady92/library/WatchdogTimer/0.0.0%2Bsha.10fdcb411fbd/WatchdogTimer-0.0.0%2Bsha.10fdcb411fbd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jcady92/library/WatchdogTimer/0.0.0%2Bsha.10fdcb411fbd/WatchdogTimer-0.0.0%2Bsha.10fdcb411fbd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/siroshy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "siroshy/library/MovingPlatform/0.4.0/MovingPlatform-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MovingPlatform-0.4.0.tar.gz",
+    "size_bytes": 7302,
+    "sha256": "a106d5f869e8e29f1ecc52c825a2df9f1839f3caa632bfb5867792bc7fce25c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siroshy/library/MovingPlatform/0.4.0/MovingPlatform-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/siroshy/library/MovingPlatform/0.4.0/MovingPlatform-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siroshy/library/sharpIRSensor/0.0.2/sharpIRSensor-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sharpIRSensor-0.0.2.tar.gz",
+    "size_bytes": 1686,
+    "sha256": "8f64557cf8645908cd9d6e21b38527b818b95564bc098c0d089a3b2bb92b6924",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siroshy/library/sharpIRSensor/0.0.2/sharpIRSensor-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/siroshy/library/sharpIRSensor/0.0.2/sharpIRSensor-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

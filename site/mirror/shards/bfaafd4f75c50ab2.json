@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iamfaraz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iamfaraz/library/Waveshare_ST7262_LVGL/0.1/Waveshare_ST7262_LVGL-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Waveshare_ST7262_LVGL-0.1.tar.gz",
+    "size_bytes": 19833,
+    "sha256": "0cd592601d6e15c33977682b0ec568cb4e70b326a38328217448136161b53876",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iamfaraz/library/Waveshare_ST7262_LVGL/0.1/Waveshare_ST7262_LVGL-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iamfaraz/library/Waveshare_ST7262_LVGL/0.1/Waveshare_ST7262_LVGL-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

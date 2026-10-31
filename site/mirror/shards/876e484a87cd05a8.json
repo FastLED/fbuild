@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bastatdoreau",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bastatdoreau/library/MoveYourTetris/0.0.0+sha.08490d120ec4/MoveYourTetris-0.0.0+sha.08490d120ec4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MoveYourTetris-0.0.0+sha.08490d120ec4.tar.gz",
+    "size_bytes": 12722,
+    "sha256": "a95e50f911a68329142f921b452e9a4a23b419180984ad780401859c7c8ff629",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bastatdoreau/library/MoveYourTetris/0.0.0%2Bsha.08490d120ec4/MoveYourTetris-0.0.0%2Bsha.08490d120ec4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bastatdoreau/library/MoveYourTetris/0.0.0%2Bsha.08490d120ec4/MoveYourTetris-0.0.0%2Bsha.08490d120ec4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

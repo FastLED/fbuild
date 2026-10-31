@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aryan-git-byte",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aryan-git-byte/library/Devatext/1.0.0/Devatext-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Devatext-1.0.0.tar.gz",
+    "size_bytes": 17015,
+    "sha256": "fe75888caecf3e674951763bcba6dd067e61c7b631c342efd00417208d74fabc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aryan-git-byte/library/Devatext/1.0.0/Devatext-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aryan-git-byte/library/Devatext/1.0.0/Devatext-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

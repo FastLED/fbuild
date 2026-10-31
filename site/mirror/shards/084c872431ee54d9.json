@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-davestyles",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-davestyles/library/MCP3221/0.0.0+sha.db4e3d0374fe/MCP3221-0.0.0+sha.db4e3d0374fe.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP3221-0.0.0+sha.db4e3d0374fe.tar.gz",
+    "size_bytes": 2942,
+    "sha256": "8ed979dbb5c7e430d1d39590eccf7b629b93164592bc40ba2c3f0716718c6380",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davestyles/library/MCP3221/0.0.0%2Bsha.db4e3d0374fe/MCP3221-0.0.0%2Bsha.db4e3d0374fe.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davestyles/library/MCP3221/0.0.0%2Bsha.db4e3d0374fe/MCP3221-0.0.0%2Bsha.db4e3d0374fe.tar.gz"
+    ]
+   }
+  }
+ ]
+}

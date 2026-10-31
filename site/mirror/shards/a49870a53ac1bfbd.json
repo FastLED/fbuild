@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/toxnico",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "toxnico/library/DMOscillator/1.0/DMOscillator-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMOscillator-1.0.tar.gz",
+    "size_bytes": 18100,
+    "sha256": "bb3a485bc4877de2d73fdc6b5cea2f6686ab6bb468b11b3b8b8fd8a1132702d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toxnico/library/DMOscillator/1.0/DMOscillator-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/toxnico/library/DMOscillator/1.0/DMOscillator-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "toxnico/library/DMStepper/1.0.1/DMStepper-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMStepper-1.0.1.tar.gz",
+    "size_bytes": 16317,
+    "sha256": "34dfea91ab7e587e9756cb8785ad534090a3e113be6b3992ea8345deee54be6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toxnico/library/DMStepper/1.0.1/DMStepper-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/toxnico/library/DMStepper/1.0.1/DMStepper-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "toxnico/library/DMTimer/1.3/DMTimer-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMTimer-1.3.tar.gz",
+    "size_bytes": 17950,
+    "sha256": "5e0c3ff1c709f6b1209554182a19413170afdc66b8dd887a4a04d3b0a2073795",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toxnico/library/DMTimer/1.3/DMTimer-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/toxnico/library/DMTimer/1.3/DMTimer-1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

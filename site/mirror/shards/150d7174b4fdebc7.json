@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wilou94",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wilou94/library/uOled96G1/0.0.0+sha.a39d50af81c2/uOled96G1-0.0.0+sha.a39d50af81c2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uOled96G1-0.0.0+sha.a39d50af81c2.tar.gz",
+    "size_bytes": 5179,
+    "sha256": "42bf0d30809e393ba8a3a638ada01bf1c82ee563e932a3919f4b385ded376dd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wilou94/library/uOled96G1/0.0.0%2Bsha.a39d50af81c2/uOled96G1-0.0.0%2Bsha.a39d50af81c2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wilou94/library/uOled96G1/0.0.0%2Bsha.a39d50af81c2/uOled96G1-0.0.0%2Bsha.a39d50af81c2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

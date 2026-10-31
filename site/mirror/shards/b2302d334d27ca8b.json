@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/simpit-team",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "simpit-team/library/KerbalSimpit/2.4.0/KerbalSimpit-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KerbalSimpit-2.4.0.tar.gz",
+    "size_bytes": 45232,
+    "sha256": "0807e934486ebd1511c72ecf9e92653ccff61597df98de0a8f6ffb5776db9f98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simpit-team/library/KerbalSimpit/2.4.0/KerbalSimpit-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simpit-team/library/KerbalSimpit/2.4.0/KerbalSimpit-2.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

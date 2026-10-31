@@ -1,0 +1,230 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/plgdevo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "plgdevo/library/CKC/1.0/CKC-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.0.tar.gz",
+    "size_bytes": 2231,
+    "sha256": "f86806d0dc446483479ea28281eb164c6570e6a2ef448300a1cb0c83691d7f09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.0/CKC-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.0/CKC-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.1/CKC-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.1.tar.gz",
+    "size_bytes": 2471,
+    "sha256": "6e8e4eeeea595eb29521a440986b4f3975b8870415c23528af0222548e79a3be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.1/CKC-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.1/CKC-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.2.1/CKC-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.2.1.tar.gz",
+    "size_bytes": 4017474,
+    "sha256": "4a957e6594ac10fbfe51ce59b4fffaf0d541d461d086c2247624d3d6430073f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.2.1/CKC-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.2.1/CKC-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.2.2/CKC-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.2.2.tar.gz",
+    "size_bytes": 4020017,
+    "sha256": "0a507893fe04bcd5883027fab1f5f02e3c9d19299414dc9853c5883edaaac33f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.2.2/CKC-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.2.2/CKC-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.2.3/CKC-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.2.3.tar.gz",
+    "size_bytes": 4034514,
+    "sha256": "bee5ca4f99220e549aeff99a3d9ee7647a31fed90ac014cfa7eaed8935c0c077",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.2.3/CKC-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.2.3/CKC-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.2.4/CKC-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.2.4.tar.gz",
+    "size_bytes": 4054912,
+    "sha256": "61b84ffa0ec0afeeb8f30fe2bfae437f9c2b62c5afa343fb228656823ca855d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.2.4/CKC-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.2.4/CKC-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.2.5/CKC-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.2.5.tar.gz",
+    "size_bytes": 4054914,
+    "sha256": "879084ace83482e0cf4732b97d003ec26016b40ffb5cba56e582e11c709138e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.2.5/CKC-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.2.5/CKC-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.2.7/CKC-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.2.7.tar.gz",
+    "size_bytes": 4059745,
+    "sha256": "d0f5262a4f4920a213ee77d8e6fe421234b766059bbdb046aa4ad2870ee668bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.2.7/CKC-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.2.7/CKC-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.2.8/CKC-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.2.8.tar.gz",
+    "size_bytes": 4059760,
+    "sha256": "68a093aa5ae60bbacef70ca577a7866987edef5af3c0c15989054583ddbaa9fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.2.8/CKC-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.2.8/CKC-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.2.9/CKC-1.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.2.9.tar.gz",
+    "size_bytes": 4059868,
+    "sha256": "002ced869f4eec583fbea01ba47da35f12a69d1735062e37273b913938006540",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.2.9/CKC-1.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.2.9/CKC-1.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.2/CKC-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.2.tar.gz",
+    "size_bytes": 4016311,
+    "sha256": "95a7b286c153cb68dbc221fd1a26f17085f45f94c6ceb9533c1d07c3123f0b06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.2/CKC-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.2/CKC-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.3.0/CKC-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.3.0.tar.gz",
+    "size_bytes": 4060633,
+    "sha256": "4d20acecca3874ef0192082e7c1e10cf9bc2822a444a84ecb18238f81a1978a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.3.0/CKC-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.3.0/CKC-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.3.1/CKC-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.3.1.tar.gz",
+    "size_bytes": 4060533,
+    "sha256": "3235641dd56082b278d29a6a897de286178f9e86ff935799acc615ac12b4da07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.3.1/CKC-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.3.1/CKC-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.3.2/CKC-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.3.2.tar.gz",
+    "size_bytes": 4063884,
+    "sha256": "8ffe53be8b9181b6789a7e4a0c94f385683d112ce7291a9cafabe1962d42341d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.3.2/CKC-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.3.2/CKC-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.3.5/CKC-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.3.5.tar.gz",
+    "size_bytes": 4069070,
+    "sha256": "6cf0c5244db1fc1ee4667b434b09307b3d28a22e2c5d2dcdb074ea59ae432eb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.3.5/CKC-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.3.5/CKC-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.3.9/CKC-1.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.3.9.tar.gz",
+    "size_bytes": 4074028,
+    "sha256": "25286d664bf9bb2f99977bad5041c592280b96c6c8481b42236be42ca00c184f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.3.9/CKC-1.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.3.9/CKC-1.3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plgdevo/library/CKC/1.4.0/CKC-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CKC-1.4.0.tar.gz",
+    "size_bytes": 4075381,
+    "sha256": "9341f769f6849b8801e4df0018df1ff4aff57326e4f4f118c915ee85e02f59ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plgdevo/library/CKC/1.4.0/CKC-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/plgdevo/library/CKC/1.4.0/CKC-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

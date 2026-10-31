@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/circuit-digest",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "circuit-digest/library/CircuitDigestCloud/1.0.1/CircuitDigestCloud-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircuitDigestCloud-1.0.1.tar.gz",
+    "size_bytes": 15367,
+    "sha256": "3ca9190565dce62074460ba871be9c53c4279d7fa5d6a0a9da400bb0694e5aac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuit-digest/library/CircuitDigestCloud/1.0.1/CircuitDigestCloud-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/circuit-digest/library/CircuitDigestCloud/1.0.1/CircuitDigestCloud-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuit-digest/library/CircuitDigestCloud/1.0.2/CircuitDigestCloud-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircuitDigestCloud-1.0.2.tar.gz",
+    "size_bytes": 13710,
+    "sha256": "564d1092a154fc93be5245a27dec2b6b91edc82829c318a04aaa542b21535552",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuit-digest/library/CircuitDigestCloud/1.0.2/CircuitDigestCloud-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/circuit-digest/library/CircuitDigestCloud/1.0.2/CircuitDigestCloud-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuit-digest/library/CircuitDigestCloud/1.0.4/CircuitDigestCloud-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircuitDigestCloud-1.0.4.tar.gz",
+    "size_bytes": 13730,
+    "sha256": "c3679ebe6f80509cdac1cc3aba6d2c02f8508d2f7e639ca230fae4dc40330f9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuit-digest/library/CircuitDigestCloud/1.0.4/CircuitDigestCloud-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/circuit-digest/library/CircuitDigestCloud/1.0.4/CircuitDigestCloud-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuit-digest/library/CircuitDigestCloud/1.1.0/CircuitDigestCloud-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircuitDigestCloud-1.1.0.tar.gz",
+    "size_bytes": 16701,
+    "sha256": "0af21153c7d542ef679e601369ad8d2002e557a26ca1c18b88163c74bf69583c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuit-digest/library/CircuitDigestCloud/1.1.0/CircuitDigestCloud-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/circuit-digest/library/CircuitDigestCloud/1.1.0/CircuitDigestCloud-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuit-digest/library/CircuitDigestCloud/1.2.0/CircuitDigestCloud-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircuitDigestCloud-1.2.0.tar.gz",
+    "size_bytes": 23388,
+    "sha256": "60ce66feaa5b9496a7139fc7be237ecc698c5fa4401073486ea1b2526c9c9736",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuit-digest/library/CircuitDigestCloud/1.2.0/CircuitDigestCloud-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/circuit-digest/library/CircuitDigestCloud/1.2.0/CircuitDigestCloud-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuit-digest/library/CircuitDigestCloud/2.0.0/CircuitDigestCloud-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircuitDigestCloud-2.0.0.tar.gz",
+    "size_bytes": 18946,
+    "sha256": "2c074d7b86f37ac3a21567dbf00ada41dfcfd52e8f105e5262a0281ff12813c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuit-digest/library/CircuitDigestCloud/2.0.0/CircuitDigestCloud-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/circuit-digest/library/CircuitDigestCloud/2.0.0/CircuitDigestCloud-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuit-digest/library/CircuitDigestCloud/2.1.0/CircuitDigestCloud-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircuitDigestCloud-2.1.0.tar.gz",
+    "size_bytes": 19512,
+    "sha256": "9f5c2342b255c578b5c8a1f7d0f6d77803a63dc537d4d2070dbd210df1e05ef6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuit-digest/library/CircuitDigestCloud/2.1.0/CircuitDigestCloud-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/circuit-digest/library/CircuitDigestCloud/2.1.0/CircuitDigestCloud-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuit-digest/library/CircuitDigestCloud/2.1.1/CircuitDigestCloud-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircuitDigestCloud-2.1.1.tar.gz",
+    "size_bytes": 20672,
+    "sha256": "afcebd6f1d292349ab34de599dc857a43e61bd4de6f0001b817f47cfdf8055ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuit-digest/library/CircuitDigestCloud/2.1.1/CircuitDigestCloud-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/circuit-digest/library/CircuitDigestCloud/2.1.1/CircuitDigestCloud-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuit-digest/library/GL868_ESP32/1.0.1/GL868_ESP32-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GL868_ESP32-1.0.1.tar.gz",
+    "size_bytes": 86535,
+    "sha256": "70b8351692761dd349378bf66514ec517024f709d41964c4caec786a0f28a814",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuit-digest/library/GL868_ESP32/1.0.1/GL868_ESP32-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/circuit-digest/library/GL868_ESP32/1.0.1/GL868_ESP32-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "circuit-digest/library/GeoLinker%20Lite/1.0.0/GeoLinkerLite-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeoLinkerLite-1.0.0.tar.gz",
+    "size_bytes": 11307,
+    "sha256": "a806e5d657572f20bfa74e4aa7e0c5bdb4d7c9706b9e6d462317a8e4aa3482e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/circuit-digest/library/GeoLinker%2520Lite/1.0.0/GeoLinkerLite-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/circuit-digest/library/GeoLinker%20Lite/1.0.0/GeoLinkerLite-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

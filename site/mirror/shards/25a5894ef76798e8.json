@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jagustinotero",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jagustinotero/library/AD9833/0.0.0+sha.1bc0260fa422/AD9833-0.0.0+sha.1bc0260fa422.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD9833-0.0.0+sha.1bc0260fa422.tar.gz",
+    "size_bytes": 1928,
+    "sha256": "4a5507ce182b6c87190459f1ecae433904d2a820c54ca4cf6488fbe6fc2874ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jagustinotero/library/AD9833/0.0.0%2Bsha.1bc0260fa422/AD9833-0.0.0%2Bsha.1bc0260fa422.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jagustinotero/library/AD9833/0.0.0%2Bsha.1bc0260fa422/AD9833-0.0.0%2Bsha.1bc0260fa422.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jagustinotero/library/ST7920/0.0.0+sha.c7d041bdb718/ST7920-0.0.0+sha.c7d041bdb718.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7920-0.0.0+sha.c7d041bdb718.tar.gz",
+    "size_bytes": 4483,
+    "sha256": "4cd52e7278178b1045f729d4099404586dfb465dc005430f73f69c1f988ad8c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jagustinotero/library/ST7920/0.0.0%2Bsha.c7d041bdb718/ST7920-0.0.0%2Bsha.c7d041bdb718.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jagustinotero/library/ST7920/0.0.0%2Bsha.c7d041bdb718/ST7920-0.0.0%2Bsha.c7d041bdb718.tar.gz"
+    ]
+   }
+  }
+ ]
+}

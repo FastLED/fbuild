@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kubafilinger",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kubafilinger/library/AsyncTCP/1.1.1/AsyncTCP-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-1.1.1.tar.gz",
+    "size_bytes": 17136,
+    "sha256": "9ce94893dc390ed42ba73d8e7d29e328751ab25455c901fe97b1368339424b28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kubafilinger/library/AsyncTCP/1.1.1/AsyncTCP-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kubafilinger/library/AsyncTCP/1.1.1/AsyncTCP-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kubafilinger/library/EepromRepositoryLibrary/1.0.7/EepromRepositoryLibrary-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EepromRepositoryLibrary-1.0.7.tar.gz",
+    "size_bytes": 1687,
+    "sha256": "da839668a4102f6a373286c7ffaf3f7fd6af75a1cac5c59a2796243d225801a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kubafilinger/library/EepromRepositoryLibrary/1.0.7/EepromRepositoryLibrary-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/kubafilinger/library/EepromRepositoryLibrary/1.0.7/EepromRepositoryLibrary-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kubafilinger/library/LoggerLibrary/1.0.3/LoggerLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoggerLibrary-1.0.3.tar.gz",
+    "size_bytes": 4102,
+    "sha256": "62e1b6768e36a8bfadc90188fef2cd86fa982dd549ea19c04f0a51dae8bc82ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kubafilinger/library/LoggerLibrary/1.0.3/LoggerLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kubafilinger/library/LoggerLibrary/1.0.3/LoggerLibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kubafilinger/library/WiFiManagerLibrary/1.2.1/WiFiManagerLibrary-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiManagerLibrary-1.2.1.tar.gz",
+    "size_bytes": 3730,
+    "sha256": "3a556cb061f0b04ca1b04b7a730e3989e13d2f45b09ceef391fdca7d3b0877a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kubafilinger/library/WiFiManagerLibrary/1.2.1/WiFiManagerLibrary-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kubafilinger/library/WiFiManagerLibrary/1.2.1/WiFiManagerLibrary-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

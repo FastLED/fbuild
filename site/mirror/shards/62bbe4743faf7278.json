@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-veino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-veino/library/SCA61T/0.0.0+sha.b0d8ca64cb0f/SCA61T-0.0.0+sha.b0d8ca64cb0f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCA61T-0.0.0+sha.b0d8ca64cb0f.tar.gz",
+    "size_bytes": 2605,
+    "sha256": "40187803fcb68eae6cefdcce87f92a271f159a8707bb0470828eb90a8be10c74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-veino/library/SCA61T/0.0.0%2Bsha.b0d8ca64cb0f/SCA61T-0.0.0%2Bsha.b0d8ca64cb0f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-veino/library/SCA61T/0.0.0%2Bsha.b0d8ca64cb0f/SCA61T-0.0.0%2Bsha.b0d8ca64cb0f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

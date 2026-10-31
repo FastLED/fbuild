@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-future-electronics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-future-electronics/library/hs3001-temp-sensor/0.0.0+sha.b99360c421a7/hs3001-temp-sensor-0.0.0+sha.b99360c421a7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hs3001-temp-sensor-0.0.0+sha.b99360c421a7.tar.gz",
+    "size_bytes": 2230,
+    "sha256": "2e54cd46161b4c45ac916765b2f64cbaa2cc9c101ae43e3e9b96bcea5833cc76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-future-electronics/library/hs3001-temp-sensor/0.0.0%2Bsha.b99360c421a7/hs3001-temp-sensor-0.0.0%2Bsha.b99360c421a7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-future-electronics/library/hs3001-temp-sensor/0.0.0%2Bsha.b99360c421a7/hs3001-temp-sensor-0.0.0%2Bsha.b99360c421a7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

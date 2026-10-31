@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hendreh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hendreh/library/storage_on_flash/0.0.0+sha.4cb438b58dc2/storage_on_flash-0.0.0+sha.4cb438b58dc2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "storage_on_flash-0.0.0+sha.4cb438b58dc2.tar.gz",
+    "size_bytes": 7491,
+    "sha256": "ebbaebbfb6370e71fa646ca6495962362fbcf89023413857d5cb234082d68c55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hendreh/library/storage_on_flash/0.0.0%2Bsha.4cb438b58dc2/storage_on_flash-0.0.0%2Bsha.4cb438b58dc2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hendreh/library/storage_on_flash/0.0.0%2Bsha.4cb438b58dc2/storage_on_flash-0.0.0%2Bsha.4cb438b58dc2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

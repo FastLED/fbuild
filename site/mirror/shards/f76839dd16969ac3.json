@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-taillepierret",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-taillepierret/library/HC-SR04/0.0.0+sha.d42e0cf70fd2/HC-SR04-0.0.0+sha.d42e0cf70fd2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HC-SR04-0.0.0+sha.d42e0cf70fd2.tar.gz",
+    "size_bytes": 1535,
+    "sha256": "805a9d7df8616355a45ae8ead22362b2f4268b7962f7ed735a20d0c06c383be4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-taillepierret/library/HC-SR04/0.0.0%2Bsha.d42e0cf70fd2/HC-SR04-0.0.0%2Bsha.d42e0cf70fd2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-taillepierret/library/HC-SR04/0.0.0%2Bsha.d42e0cf70fd2/HC-SR04-0.0.0%2Bsha.d42e0cf70fd2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mikolajmikolajczyk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mikolajmikolajczyk/library/ez80zdi/1.0.0/ez80zdi-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ez80zdi-1.0.0.tar.gz",
+    "size_bytes": 5924,
+    "sha256": "558708a9dc487148fb6819e22c6a584596c1a0d3b4e08e5c2a0d12a0455c59d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mikolajmikolajczyk/library/ez80zdi/1.0.0/ez80zdi-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mikolajmikolajczyk/library/ez80zdi/1.0.0/ez80zdi-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

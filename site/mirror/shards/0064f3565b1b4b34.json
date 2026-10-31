@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kleberkruger",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kleberkruger/library/FaultInjector/0.0.0+sha.ef0a1a6d4a40/FaultInjector-0.0.0+sha.ef0a1a6d4a40.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaultInjector-0.0.0+sha.ef0a1a6d4a40.tar.gz",
+    "size_bytes": 3313,
+    "sha256": "f3f6e9c9cb1b16b5edf2e7fdc39c84cd4ad2260e27f095f7de64c19fba4cd9a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kleberkruger/library/FaultInjector/0.0.0%2Bsha.ef0a1a6d4a40/FaultInjector-0.0.0%2Bsha.ef0a1a6d4a40.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kleberkruger/library/FaultInjector/0.0.0%2Bsha.ef0a1a6d4a40/FaultInjector-0.0.0%2Bsha.ef0a1a6d4a40.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kleberkruger/library/FaultRecovery/0.0.0+sha.37cd60799c4f/FaultRecovery-0.0.0+sha.37cd60799c4f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaultRecovery-0.0.0+sha.37cd60799c4f.tar.gz",
+    "size_bytes": 728,
+    "sha256": "2986b8d29d2a39e625374be3ecd449619d93d52ff8b499f3a17dbb610da93577",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kleberkruger/library/FaultRecovery/0.0.0%2Bsha.37cd60799c4f/FaultRecovery-0.0.0%2Bsha.37cd60799c4f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kleberkruger/library/FaultRecovery/0.0.0%2Bsha.37cd60799c4f/FaultRecovery-0.0.0%2Bsha.37cd60799c4f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

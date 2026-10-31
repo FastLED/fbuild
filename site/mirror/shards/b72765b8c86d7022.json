@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/openppg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "openppg/library/OpenPPG_SP140_ESC/0.0.1/OpenPPG_SP140_ESC-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenPPG_SP140_ESC-0.0.1.tar.gz",
+    "size_bytes": 4630,
+    "sha256": "e1bf4e88be95606f986fbd465069a80390baa321c3ff7865f456894e852c9418",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openppg/library/OpenPPG_SP140_ESC/0.0.1/OpenPPG_SP140_ESC-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/openppg/library/OpenPPG_SP140_ESC/0.0.1/OpenPPG_SP140_ESC-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

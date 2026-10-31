@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-citrusbyte",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-citrusbyte/library/M2XMQTTClient/0.0.0+sha.c4d41ff3c58e/M2XMQTTClient-0.0.0+sha.c4d41ff3c58e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M2XMQTTClient-0.0.0+sha.c4d41ff3c58e.tar.gz",
+    "size_bytes": 8455,
+    "sha256": "f497a20ad762868faa540fdc361679e9cdfcbe9f0769c41fb4bc3404cdd6e743",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-citrusbyte/library/M2XMQTTClient/0.0.0%2Bsha.c4d41ff3c58e/M2XMQTTClient-0.0.0%2Bsha.c4d41ff3c58e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-citrusbyte/library/M2XMQTTClient/0.0.0%2Bsha.c4d41ff3c58e/M2XMQTTClient-0.0.0%2Bsha.c4d41ff3c58e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-citrusbyte/library/jsonlite/0.0.0+sha.807034181e02/jsonlite-0.0.0+sha.807034181e02.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jsonlite-0.0.0+sha.807034181e02.tar.gz",
+    "size_bytes": 14800,
+    "sha256": "80db715d3e4c62f357bb9447cd4bf688224eba7f1b556b6a54b0b7fc070b7229",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-citrusbyte/library/jsonlite/0.0.0%2Bsha.807034181e02/jsonlite-0.0.0%2Bsha.807034181e02.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-citrusbyte/library/jsonlite/0.0.0%2Bsha.807034181e02/jsonlite-0.0.0%2Bsha.807034181e02.tar.gz"
+    ]
+   }
+  }
+ ]
+}

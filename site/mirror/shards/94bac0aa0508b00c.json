@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/codinghusi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "codinghusi/library/KnockPatternDetector/1.0.1/KnockPatternDetector-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KnockPatternDetector-1.0.1.tar.gz",
+    "size_bytes": 14355,
+    "sha256": "004693ba0494ee88f84271cac873b7daedd207383565c705b5350141778418c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codinghusi/library/KnockPatternDetector/1.0.1/KnockPatternDetector-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codinghusi/library/KnockPatternDetector/1.0.1/KnockPatternDetector-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

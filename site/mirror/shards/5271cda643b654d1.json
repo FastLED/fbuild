@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shuai132",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shuai132/library/RpcCore/1.0.3/RpcCore-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RpcCore-1.0.3.tar.gz",
+    "size_bytes": 13532,
+    "sha256": "a3969c23bdce0a12c6c96c1e237c23e5e5d1785a5ab6939e6f0413b07912daf9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shuai132/library/RpcCore/1.0.3/RpcCore-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/shuai132/library/RpcCore/1.0.3/RpcCore-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shuai132/library/asio_net/1.0.3/asio_net-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "asio_net-1.0.3.tar.gz",
+    "size_bytes": 23923,
+    "sha256": "7064611c61cfb07d6ecb5085992c736d4ab8d5c834f695c7e9bf975f4dbd537c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shuai132/library/asio_net/1.0.3/asio_net-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/shuai132/library/asio_net/1.0.3/asio_net-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shuai132/library/esp_rpc/1.1.4/esp_rpc-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_rpc-1.1.4.tar.gz",
+    "size_bytes": 20598,
+    "sha256": "53dd290cdeea9a0f5086593cccd8e81341cb82aa40e45063b0ff03e4cfd6e66a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shuai132/library/esp_rpc/1.1.4/esp_rpc-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/shuai132/library/esp_rpc/1.1.4/esp_rpc-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

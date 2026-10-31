@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mkhuthir",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mkhuthir/library/Si4703/1.4.1/Si4703-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Si4703-1.4.1.tar.gz",
+    "size_bytes": 21983,
+    "sha256": "d6b80febf3d9a515c0ed9f079fdbd0c36bbc045571f588c11645609fba94951f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mkhuthir/library/Si4703/1.4.1/Si4703-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mkhuthir/library/Si4703/1.4.1/Si4703-1.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

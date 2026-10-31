@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/srgdamia1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "srgdamia1/library/EnviroDIY_DS3231/1.3.5/EnviroDIY_DS3231-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EnviroDIY_DS3231-1.3.5.tar.gz",
+    "size_bytes": 11642,
+    "sha256": "de3df1ef9a9d46ae0ce2fff8b1d6b8741d1d6cc42aeed64008b90895e8d1dc01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/srgdamia1/library/EnviroDIY_DS3231/1.3.5/EnviroDIY_DS3231-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/srgdamia1/library/EnviroDIY_DS3231/1.3.5/EnviroDIY_DS3231-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "srgdamia1/library/EnviroDIY_ModularSensors/0.30.0/EnviroDIY_ModularSensors-0.30.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EnviroDIY_ModularSensors-0.30.0.tar.gz",
+    "size_bytes": 332078,
+    "sha256": "5c2da7c87f9eb03d8b3ca5137c005ab4ad4377629c968ecbab99b72b107e466d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/srgdamia1/library/EnviroDIY_ModularSensors/0.30.0/EnviroDIY_ModularSensors-0.30.0.tar.gz",
+     "https://dl.registry.platformio.org/download/srgdamia1/library/EnviroDIY_ModularSensors/0.30.0/EnviroDIY_ModularSensors-0.30.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "srgdamia1/library/SDI-12/2.1.4/SDI-12-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDI-12-2.1.4.tar.gz",
+    "size_bytes": 3167420,
+    "sha256": "49bed6ba8922f9ab37d73f96734c47a424a207228514d849703b2f1c7dcf2f05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/srgdamia1/library/SDI-12/2.1.4/SDI-12-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/srgdamia1/library/SDI-12/2.1.4/SDI-12-2.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

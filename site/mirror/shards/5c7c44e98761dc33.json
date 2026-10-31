@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arduino279",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arduino279/library/AISwitch/0.3.2/AISwitch-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AISwitch-0.3.2.tar.gz",
+    "size_bytes": 10493,
+    "sha256": "ce2025ad03d93b4154d5638d7e3d48b2061142e618cb83ae4f2f1a82da71426e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino279/library/AISwitch/0.3.2/AISwitch-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino279/library/AISwitch/0.3.2/AISwitch-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino279/library/DirectCurrent_Motor_Module/0.4.9/DirectCurrent_Motor_Module-0.4.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DirectCurrent_Motor_Module-0.4.9.tar.gz",
+    "size_bytes": 11181,
+    "sha256": "2a16b52a6025f3f6ee9af7b37cf036e7d18ff6385b925a8a286fe543249578ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino279/library/DirectCurrent_Motor_Module/0.4.9/DirectCurrent_Motor_Module-0.4.9.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino279/library/DirectCurrent_Motor_Module/0.4.9/DirectCurrent_Motor_Module-0.4.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino279/library/Serial_Monitor/4.0.8/Serial_Monitor-4.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Serial_Monitor-4.0.8.tar.gz",
+    "size_bytes": 11548,
+    "sha256": "927c80c54e1faed0c2b7bfccc09d4a01a6882db5884f1b6b516cf28a7e1237ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino279/library/Serial_Monitor/4.0.8/Serial_Monitor-4.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino279/library/Serial_Monitor/4.0.8/Serial_Monitor-4.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino279/library/Servo_Motor_Module/0.5.4/Servo_Motor_Module-0.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Servo_Motor_Module-0.5.4.tar.gz",
+    "size_bytes": 10798,
+    "sha256": "adb8944825a160434642287cbaaa65c75dac193ae4719663510d2f3004487d34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino279/library/Servo_Motor_Module/0.5.4/Servo_Motor_Module-0.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino279/library/Servo_Motor_Module/0.5.4/Servo_Motor_Module-0.5.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

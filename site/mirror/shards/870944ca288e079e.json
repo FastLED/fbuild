@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-intrinseca",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-intrinseca/library/Nanopb/0.0.0+sha.e08406101222/Nanopb-0.0.0+sha.e08406101222.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nanopb-0.0.0+sha.e08406101222.tar.gz",
+    "size_bytes": 11880,
+    "sha256": "eaee9f65d1eb4a79faed1827b2b29c7fec0dd40da78384bcc963284215745c31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-intrinseca/library/Nanopb/0.0.0%2Bsha.e08406101222/Nanopb-0.0.0%2Bsha.e08406101222.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-intrinseca/library/Nanopb/0.0.0%2Bsha.e08406101222/Nanopb-0.0.0%2Bsha.e08406101222.tar.gz"
+    ]
+   }
+  }
+ ]
+}

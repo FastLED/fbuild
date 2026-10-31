@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-takahashim",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-takahashim/library/OAuth4Tw/0.0.0+sha.0048b264a3ad/OAuth4Tw-0.0.0+sha.0048b264a3ad.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OAuth4Tw-0.0.0+sha.0048b264a3ad.tar.gz",
+    "size_bytes": 14187,
+    "sha256": "ba89e7403cca42ca556b1022152e5acf9815e7e55bcd4a56493dc44f4ab3b02e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-takahashim/library/OAuth4Tw/0.0.0%2Bsha.0048b264a3ad/OAuth4Tw-0.0.0%2Bsha.0048b264a3ad.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-takahashim/library/OAuth4Tw/0.0.0%2Bsha.0048b264a3ad/OAuth4Tw-0.0.0%2Bsha.0048b264a3ad.tar.gz"
+    ]
+   }
+  }
+ ]
+}

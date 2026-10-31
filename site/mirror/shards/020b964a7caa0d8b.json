@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/padsoft",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "padsoft/library/PAD%20Soft%20Classes/1.0.0/PADSoftClasses-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PADSoftClasses-1.0.0.tar.gz",
+    "size_bytes": 19980,
+    "sha256": "cfe37da22ffc731935da31dde3e92209d11f0538a7de0ca84fd1afe40f359924",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/padsoft/library/PAD%2520Soft%2520Classes/1.0.0/PADSoftClasses-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/padsoft/library/PAD%20Soft%20Classes/1.0.0/PADSoftClasses-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

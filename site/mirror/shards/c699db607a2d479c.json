@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/david-vandensteen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "david-vandensteen/library/dv_average_accumulator8/1.0.0/dv_average_accumulator8-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dv_average_accumulator8-1.0.0.tar.gz",
+    "size_bytes": 3029,
+    "sha256": "b6aa133cd4f989f598d468552b2df7967c6f0e3330cfcafaa697ba1045a10ae0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/david-vandensteen/library/dv_average_accumulator8/1.0.0/dv_average_accumulator8-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/david-vandensteen/library/dv_average_accumulator8/1.0.0/dv_average_accumulator8-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "david-vandensteen/library/dv_dual_hold_state/1.0.0/dv_dual_hold_state-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dv_dual_hold_state-1.0.0.tar.gz",
+    "size_bytes": 4318,
+    "sha256": "e65c820f15f17b061d3841e1a740b51a63fd546f89c9fc5cbe2339c1b841520e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/david-vandensteen/library/dv_dual_hold_state/1.0.0/dv_dual_hold_state-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/david-vandensteen/library/dv_dual_hold_state/1.0.0/dv_dual_hold_state-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "david-vandensteen/library/dv_every_interval/1.0.1/dv_every_interval-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dv_every_interval-1.0.1.tar.gz",
+    "size_bytes": 3516,
+    "sha256": "3910d78626f0ecfcc49449055ceb47f0a06c3258671e3896123506f66f302052",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/david-vandensteen/library/dv_every_interval/1.0.1/dv_every_interval-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/david-vandensteen/library/dv_every_interval/1.0.1/dv_every_interval-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "david-vandensteen/library/dv_every_interval/1.1.0/dv_every_interval-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dv_every_interval-1.1.0.tar.gz",
+    "size_bytes": 4199,
+    "sha256": "2905d633ba4b406b9df19afda55fb1cc395802a5e9192d5745c3657df4b5ca5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/david-vandensteen/library/dv_every_interval/1.1.0/dv_every_interval-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/david-vandensteen/library/dv_every_interval/1.1.0/dv_every_interval-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "david-vandensteen/library/dv_iir_filter8/1.0.2/dv_iir_filter8-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dv_iir_filter8-1.0.2.tar.gz",
+    "size_bytes": 3713,
+    "sha256": "29779b7b712cf5ad7f0a092e68bbf21309c1ad2eb8a9442407e57f61b0dc6f8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/david-vandensteen/library/dv_iir_filter8/1.0.2/dv_iir_filter8-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/david-vandensteen/library/dv_iir_filter8/1.0.2/dv_iir_filter8-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "david-vandensteen/library/dv_led_blink/1.0.1/dv_led_blink-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dv_led_blink-1.0.1.tar.gz",
+    "size_bytes": 2645,
+    "sha256": "9475b94cc32f095fdd8f5f1db183320edc87f4b4dcd0e36892687c0c6a5b279a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/david-vandensteen/library/dv_led_blink/1.0.1/dv_led_blink-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/david-vandensteen/library/dv_led_blink/1.0.1/dv_led_blink-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "david-vandensteen/library/dv_led_blink/1.2.0/dv_led_blink-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dv_led_blink-1.2.0.tar.gz",
+    "size_bytes": 3783,
+    "sha256": "8e84b4f8544eae444baf3c0dae4f0206658977140876410b9ca389c750f6c56b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/david-vandensteen/library/dv_led_blink/1.2.0/dv_led_blink-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/david-vandensteen/library/dv_led_blink/1.2.0/dv_led_blink-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

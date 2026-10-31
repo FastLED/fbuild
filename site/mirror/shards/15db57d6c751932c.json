@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/winner10920",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "winner10920/library/ESPSerialFlasher/0.1.7/ESPSerialFlasher-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPSerialFlasher-0.1.7.tar.gz",
+    "size_bytes": 60012,
+    "sha256": "798c04bf75b728279d25826c5435fbdb03eb9d64ae554ea3d9e93b8d7537ff89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/winner10920/library/ESPSerialFlasher/0.1.7/ESPSerialFlasher-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/winner10920/library/ESPSerialFlasher/0.1.7/ESPSerialFlasher-0.1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

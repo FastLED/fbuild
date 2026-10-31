@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jabielawski",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jabielawski/library/FXL6408/1.0.1/FXL6408-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXL6408-1.0.1.tar.gz",
+    "size_bytes": 3681,
+    "sha256": "a32ab21758cc1a6047f111ca1c96f365e4412b0716fb9521b4cc9c2877e136e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jabielawski/library/FXL6408/1.0.1/FXL6408-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jabielawski/library/FXL6408/1.0.1/FXL6408-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

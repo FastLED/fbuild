@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rpolitex",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rpolitex/library/ArduinoNvs/2.10/ArduinoNvs-2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoNvs-2.10.tar.gz",
+    "size_bytes": 7761,
+    "sha256": "1c9f79472e4e467acd53285f34a6f8a7332d142d2fc2b719ccd24d9bf63b548f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rpolitex/library/ArduinoNvs/2.10/ArduinoNvs-2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/rpolitex/library/ArduinoNvs/2.10/ArduinoNvs-2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rpolitex/library/SimpleAssert/4.4/SimpleAssert-4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleAssert-4.4.tar.gz",
+    "size_bytes": 5013,
+    "sha256": "d0aebc289d773feb2b0d7af179fc9d380509da28c02d8fefdc3ed160f04328aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rpolitex/library/SimpleAssert/4.4/SimpleAssert-4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rpolitex/library/SimpleAssert/4.4/SimpleAssert-4.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/firmngin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "firmngin/library/firmngin/0.1.0/firmngin-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "firmngin-0.1.0.tar.gz",
+    "size_bytes": 7618,
+    "sha256": "81fc614525d7fbbb613853d0e001ebfc88da408192158027c85195f2eb972a57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/firmngin/library/firmngin/0.1.0/firmngin-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/firmngin/library/firmngin/0.1.0/firmngin-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "firmngin/library/firmngin/1.0.1/firmngin-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "firmngin-1.0.1.tar.gz",
+    "size_bytes": 10853,
+    "sha256": "9a371c46a12d75b9a33a9af1969d79d78183013ddbafd09171dbab9fc98f0428",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/firmngin/library/firmngin/1.0.1/firmngin-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/firmngin/library/firmngin/1.0.1/firmngin-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "firmngin/library/firmngin/1.0.2/firmngin-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "firmngin-1.0.2.tar.gz",
+    "size_bytes": 10896,
+    "sha256": "b14a37ebf4926c3531e66a92c75eaf5aa2b7e2771180bc664cc2c8708224ec4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/firmngin/library/firmngin/1.0.2/firmngin-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/firmngin/library/firmngin/1.0.2/firmngin-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "firmngin/library/firmngin/1.1.0/firmngin-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "firmngin-1.1.0.tar.gz",
+    "size_bytes": 11819,
+    "sha256": "350029211067632abad8150bd3be87dc591a97a2a7d94532989da53042fde25a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/firmngin/library/firmngin/1.1.0/firmngin-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/firmngin/library/firmngin/1.1.0/firmngin-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "firmngin/library/firmngin/1.2.0/firmngin-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "firmngin-1.2.0.tar.gz",
+    "size_bytes": 12312,
+    "sha256": "737501aa7160f768c7040262792edc80f7e236acf4c29a0e13f737d79468b5b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/firmngin/library/firmngin/1.2.0/firmngin-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/firmngin/library/firmngin/1.2.0/firmngin-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "firmngin/library/firmngin/1.3.0/firmngin-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "firmngin-1.3.0.tar.gz",
+    "size_bytes": 16915,
+    "sha256": "baaa326fe486f535316137be01ff188565291a6f933a45eb65c9aeecf2d8e9fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/firmngin/library/firmngin/1.3.0/firmngin-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/firmngin/library/firmngin/1.3.0/firmngin-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

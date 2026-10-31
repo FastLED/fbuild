@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lequan81",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lequan81/library/solar2lunar/1.0.0/solar2lunar-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "solar2lunar-1.0.0.tar.gz",
+    "size_bytes": 4237,
+    "sha256": "ca281efc2d602a347cae8f95cd8081d78ae8a2936214b8a74ec9a975cb2d6e87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lequan81/library/solar2lunar/1.0.0/solar2lunar-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lequan81/library/solar2lunar/1.0.0/solar2lunar-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lequan81/library/vn_lunar/1.0.0/vn_lunar-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vn_lunar-1.0.0.tar.gz",
+    "size_bytes": 4272,
+    "sha256": "fff475225a7b4a98ae21146780238d4f5a216a88523a0210e93a311a64d537f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lequan81/library/vn_lunar/1.0.0/vn_lunar-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lequan81/library/vn_lunar/1.0.0/vn_lunar-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

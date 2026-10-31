@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ttww",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ttww/library/ESP32PingMs/2.0/ESP32PingMs-2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32PingMs-2.0.tar.gz",
+    "size_bytes": 16871,
+    "sha256": "5af81dc073adaa9ef8c82b2fe68d7bfd9866f2730b0f8b84b90961613835c09c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ttww/library/ESP32PingMs/2.0/ESP32PingMs-2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ttww/library/ESP32PingMs/2.0/ESP32PingMs-2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

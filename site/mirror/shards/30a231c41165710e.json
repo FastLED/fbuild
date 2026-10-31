@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ticktock",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ticktock/library/SDHCFileSystem/0.0.0+sha.243ee5f47c25/SDHCFileSystem-0.0.0+sha.243ee5f47c25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDHCFileSystem-0.0.0+sha.243ee5f47c25.tar.gz",
+    "size_bytes": 46550,
+    "sha256": "c1318822956d6c9b128c292dc70609e5b04fde8731a19af61e3802c245d3976d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ticktock/library/SDHCFileSystem/0.0.0%2Bsha.243ee5f47c25/SDHCFileSystem-0.0.0%2Bsha.243ee5f47c25.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ticktock/library/SDHCFileSystem/0.0.0%2Bsha.243ee5f47c25/SDHCFileSystem-0.0.0%2Bsha.243ee5f47c25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ticktock/library/TFT_fonts/0.0.0+sha.af72b26394d8/TFT_fonts-0.0.0+sha.af72b26394d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_fonts-0.0.0+sha.af72b26394d8.tar.gz",
+    "size_bytes": 31118,
+    "sha256": "ad9912bb690a9efa0b529ec93ff7dfdb1e3422a5a713799dffd15e17b19185b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ticktock/library/TFT_fonts/0.0.0%2Bsha.af72b26394d8/TFT_fonts-0.0.0%2Bsha.af72b26394d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ticktock/library/TFT_fonts/0.0.0%2Bsha.af72b26394d8/TFT_fonts-0.0.0%2Bsha.af72b26394d8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

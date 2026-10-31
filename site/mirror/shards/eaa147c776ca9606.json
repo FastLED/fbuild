@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mostafahk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mostafahk/library/OTAdrive/1.1.33/OTAdrive-1.1.33.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OTAdrive-1.1.33.tar.gz",
+    "size_bytes": 1504621,
+    "sha256": "ec5d04981c9e5fac04c887233a9b281478936325866c92c0b14299701e959ba4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mostafahk/library/OTAdrive/1.1.33/OTAdrive-1.1.33.tar.gz",
+     "https://dl.registry.platformio.org/download/mostafahk/library/OTAdrive/1.1.33/OTAdrive-1.1.33.tar.gz"
+    ]
+   }
+  }
+ ]
+}

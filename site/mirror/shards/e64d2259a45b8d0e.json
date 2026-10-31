@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nguyenmanhthao996tn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nguyenmanhthao996tn/library/Kionix_KX023/2.0.1/Kionix_KX023-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Kionix_KX023-2.0.1.tar.gz",
+    "size_bytes": 12844,
+    "sha256": "6da7276d26c5c3ae052394e279e87cc393f236b972b5f27355901be3d4c473fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nguyenmanhthao996tn/library/Kionix_KX023/2.0.1/Kionix_KX023-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nguyenmanhthao996tn/library/Kionix_KX023/2.0.1/Kionix_KX023-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

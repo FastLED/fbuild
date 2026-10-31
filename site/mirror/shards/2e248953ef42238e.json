@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adamczuk-piotr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adamczuk-piotr/library/AP-Buttons/0.6.0/AP-Buttons-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AP-Buttons-0.6.0.tar.gz",
+    "size_bytes": 6922,
+    "sha256": "b7936254f55fc8310ddd6ea564a1d8fd40908ef01d7626f3901d3d510f117649",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adamczuk-piotr/library/AP-Buttons/0.6.0/AP-Buttons-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adamczuk-piotr/library/AP-Buttons/0.6.0/AP-Buttons-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adamczuk-piotr/library/AP_TFT_eSPI/3.0.8/AP_TFT_eSPI-3.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AP_TFT_eSPI-3.0.8.tar.gz",
+    "size_bytes": 1906970,
+    "sha256": "e9aa5e4968677fce5051fd598df014b75b8381d51a79a7e5aec0609651b3d857",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adamczuk-piotr/library/AP_TFT_eSPI/3.0.8/AP_TFT_eSPI-3.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/adamczuk-piotr/library/AP_TFT_eSPI/3.0.8/AP_TFT_eSPI-3.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

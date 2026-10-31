@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nyanyan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nyanyan/library/FastCapacitiveSensor/1.0.6/FastCapacitiveSensor-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastCapacitiveSensor-1.0.6.tar.gz",
+    "size_bytes": 2985,
+    "sha256": "e30cd7b3d7ac814011b3747f3f3a4c9be95ba9d40b1d87b1ad0d705455acb49a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nyanyan/library/FastCapacitiveSensor/1.0.6/FastCapacitiveSensor-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nyanyan/library/FastCapacitiveSensor/1.0.6/FastCapacitiveSensor-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

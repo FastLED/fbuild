@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-suupen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-suupen/library/DcMotorDirectDrive/0.0.0+sha.ade473623320/DcMotorDirectDrive-0.0.0+sha.ade473623320.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DcMotorDirectDrive-0.0.0+sha.ade473623320.tar.gz",
+    "size_bytes": 3969,
+    "sha256": "e638207aa5f70255062c8ad8c4aa6e107dc8f13e264d3b07e7ec99691b75fb4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suupen/library/DcMotorDirectDrive/0.0.0%2Bsha.ade473623320/DcMotorDirectDrive-0.0.0%2Bsha.ade473623320.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suupen/library/DcMotorDirectDrive/0.0.0%2Bsha.ade473623320/DcMotorDirectDrive-0.0.0%2Bsha.ade473623320.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suupen/library/DigitalSw/0.0.0+sha.9198c5c0afcb/DigitalSw-0.0.0+sha.9198c5c0afcb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalSw-0.0.0+sha.9198c5c0afcb.tar.gz",
+    "size_bytes": 1942,
+    "sha256": "2b4e1850b125012a929e6c5cb6ebd2e061376a53e6bb52dfa5ec9805ac52585a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suupen/library/DigitalSw/0.0.0%2Bsha.9198c5c0afcb/DigitalSw-0.0.0%2Bsha.9198c5c0afcb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suupen/library/DigitalSw/0.0.0%2Bsha.9198c5c0afcb/DigitalSw-0.0.0%2Bsha.9198c5c0afcb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suupen/library/EightDotMatrixLed/0.0.0+sha.3df409a1aa42/EightDotMatrixLed-0.0.0+sha.3df409a1aa42.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EightDotMatrixLed-0.0.0+sha.3df409a1aa42.tar.gz",
+    "size_bytes": 6272,
+    "sha256": "b53ccd85c76c4ec433fc73e64a01fa4f992e2664a6c1ce9ddfba0fd5fcad0c48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suupen/library/EightDotMatrixLed/0.0.0%2Bsha.3df409a1aa42/EightDotMatrixLed-0.0.0%2Bsha.3df409a1aa42.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suupen/library/EightDotMatrixLed/0.0.0%2Bsha.3df409a1aa42/EightDotMatrixLed-0.0.0%2Bsha.3df409a1aa42.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suupen/library/MY9221/0.0.0+sha.2131a24e5489/MY9221-0.0.0+sha.2131a24e5489.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MY9221-0.0.0+sha.2131a24e5489.tar.gz",
+    "size_bytes": 3913,
+    "sha256": "856bc8f5c71c94e50628ec2935d436ffd5f3b156ef9e2c6daf4b52004a3142d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suupen/library/MY9221/0.0.0%2Bsha.2131a24e5489/MY9221-0.0.0%2Bsha.2131a24e5489.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suupen/library/MY9221/0.0.0%2Bsha.2131a24e5489/MY9221-0.0.0%2Bsha.2131a24e5489.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suupen/library/RotationalEncoder/0.0.0+sha.0102de0ec7a7/RotationalEncoder-0.0.0+sha.0102de0ec7a7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotationalEncoder-0.0.0+sha.0102de0ec7a7.tar.gz",
+    "size_bytes": 2404,
+    "sha256": "d7f6693a158588ae6177b5cb505b8b27d0c86242c56b495f6ba7c02483eb1cb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suupen/library/RotationalEncoder/0.0.0%2Bsha.0102de0ec7a7/RotationalEncoder-0.0.0%2Bsha.0102de0ec7a7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suupen/library/RotationalEncoder/0.0.0%2Bsha.0102de0ec7a7/RotationalEncoder-0.0.0%2Bsha.0102de0ec7a7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suupen/library/SevenSegLed/0.0.0+sha.a1eb5de4146f/SevenSegLed-0.0.0+sha.a1eb5de4146f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSegLed-0.0.0+sha.a1eb5de4146f.tar.gz",
+    "size_bytes": 7317,
+    "sha256": "1256b6f024ea3a93f9af7621eb15f31b470879a96473eb1bedddd11886602651",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suupen/library/SevenSegLed/0.0.0%2Bsha.a1eb5de4146f/SevenSegLed-0.0.0%2Bsha.a1eb5de4146f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suupen/library/SevenSegLed/0.0.0%2Bsha.a1eb5de4146f/SevenSegLed-0.0.0%2Bsha.a1eb5de4146f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suupen/library/Sound/0.0.0+sha.d526205994e9/Sound-0.0.0+sha.d526205994e9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sound-0.0.0+sha.d526205994e9.tar.gz",
+    "size_bytes": 7536,
+    "sha256": "bd29fb296d2d22368b48b45ed1ccee3b320bd6d8d82093bbdbc963cd7fdb889e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suupen/library/Sound/0.0.0%2Bsha.d526205994e9/Sound-0.0.0%2Bsha.d526205994e9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suupen/library/Sound/0.0.0%2Bsha.d526205994e9/Sound-0.0.0%2Bsha.d526205994e9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suupen/library/SoundSPI/0.0.0+sha.a53877d0ea3d/SoundSPI-0.0.0+sha.a53877d0ea3d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoundSPI-0.0.0+sha.a53877d0ea3d.tar.gz",
+    "size_bytes": 6941,
+    "sha256": "831f1d25ed0d1bf9e605983075f78d7395466acf9ca09779b963d395cbbf9fb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suupen/library/SoundSPI/0.0.0%2Bsha.a53877d0ea3d/SoundSPI-0.0.0%2Bsha.a53877d0ea3d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suupen/library/SoundSPI/0.0.0%2Bsha.a53877d0ea3d/SoundSPI-0.0.0%2Bsha.a53877d0ea3d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suupen/library/Sound_pwmToDig/0.0.0+sha.7e1945a135d7/Sound_pwmToDig-0.0.0+sha.7e1945a135d7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sound_pwmToDig-0.0.0+sha.7e1945a135d7.tar.gz",
+    "size_bytes": 7370,
+    "sha256": "d2a964d0b5ccd2537ba682dbc518e4e86c869a8dee0ac5a42adaa6d4adbc995b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suupen/library/Sound_pwmToDig/0.0.0%2Bsha.7e1945a135d7/Sound_pwmToDig-0.0.0%2Bsha.7e1945a135d7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suupen/library/Sound_pwmToDig/0.0.0%2Bsha.7e1945a135d7/Sound_pwmToDig-0.0.0%2Bsha.7e1945a135d7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suupen/library/SwAnalog/0.0.0+sha.ebaa87e67cef/SwAnalog-0.0.0+sha.ebaa87e67cef.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwAnalog-0.0.0+sha.ebaa87e67cef.tar.gz",
+    "size_bytes": 5495,
+    "sha256": "5458c466731952390409a5e6bbdee58b071a1d49bf2130a8105ea935b8f1a891",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suupen/library/SwAnalog/0.0.0%2Bsha.ebaa87e67cef/SwAnalog-0.0.0%2Bsha.ebaa87e67cef.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suupen/library/SwAnalog/0.0.0%2Bsha.ebaa87e67cef/SwAnalog-0.0.0%2Bsha.ebaa87e67cef.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suupen/library/SwAnalog_LPC1768/0.0.0+sha.3cdb536ed157/SwAnalog_LPC1768-0.0.0+sha.3cdb536ed157.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwAnalog_LPC1768-0.0.0+sha.3cdb536ed157.tar.gz",
+    "size_bytes": 5343,
+    "sha256": "68e1d3742b731925588e68ba89334f198bfb4907f1c07a2cf88a8a034f33ec09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suupen/library/SwAnalog_LPC1768/0.0.0%2Bsha.3cdb536ed157/SwAnalog_LPC1768-0.0.0%2Bsha.3cdb536ed157.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suupen/library/SwAnalog_LPC1768/0.0.0%2Bsha.3cdb536ed157/SwAnalog_LPC1768-0.0.0%2Bsha.3cdb536ed157.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suupen/library/SwDigital/0.0.0+sha.af5fbc75b7bf/SwDigital-0.0.0+sha.af5fbc75b7bf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwDigital-0.0.0+sha.af5fbc75b7bf.tar.gz",
+    "size_bytes": 4544,
+    "sha256": "fd09f71f998b74bdc709163d3cb42cba1f07b4f9305bf0a7d185aae7a6116cf5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suupen/library/SwDigital/0.0.0%2Bsha.af5fbc75b7bf/SwDigital-0.0.0%2Bsha.af5fbc75b7bf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suupen/library/SwDigital/0.0.0%2Bsha.af5fbc75b7bf/SwDigital-0.0.0%2Bsha.af5fbc75b7bf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suupen/library/TLC5940/0.0.0+sha.ead2ebe1dc77/TLC5940-0.0.0+sha.ead2ebe1dc77.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLC5940-0.0.0+sha.ead2ebe1dc77.tar.gz",
+    "size_bytes": 3813,
+    "sha256": "f27aa8c9a7a96b2da84a9ee330a63f7f50d34524592dbd3dbe62570f1c235de2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suupen/library/TLC5940/0.0.0%2Bsha.ead2ebe1dc77/TLC5940-0.0.0%2Bsha.ead2ebe1dc77.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suupen/library/TLC5940/0.0.0%2Bsha.ead2ebe1dc77/TLC5940-0.0.0%2Bsha.ead2ebe1dc77.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suupen/library/testTicker/0.0.0+sha.12128a5849c8/testTicker-0.0.0+sha.12128a5849c8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "testTicker-0.0.0+sha.12128a5849c8.tar.gz",
+    "size_bytes": 910,
+    "sha256": "d2c8baa5ba1e3cfc8f74fcbd534df6d40f74ae26dd9587cd320d8e2b2707d54c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suupen/library/testTicker/0.0.0%2Bsha.12128a5849c8/testTicker-0.0.0%2Bsha.12128a5849c8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suupen/library/testTicker/0.0.0%2Bsha.12128a5849c8/testTicker-0.0.0%2Bsha.12128a5849c8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

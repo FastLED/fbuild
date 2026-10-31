@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/d-314",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "d-314/library/IP2366/1.1.2/IP2366-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IP2366-1.1.2.tar.gz",
+    "size_bytes": 10245,
+    "sha256": "b10f26c966769568212128b5c4e6c9fdc0e15bf16db7e0c090234fd4c894068c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/d-314/library/IP2366/1.1.2/IP2366-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/d-314/library/IP2366/1.1.2/IP2366-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "d-314/library/IP236x/1.2.3/IP236x-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IP236x-1.2.3.tar.gz",
+    "size_bytes": 14899,
+    "sha256": "ffc41fd8067dc95b3c18e68dbbd7a1f661ebc9ba8820dff9686b6af5265a86dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/d-314/library/IP236x/1.2.3/IP236x-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/d-314/library/IP236x/1.2.3/IP236x-1.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

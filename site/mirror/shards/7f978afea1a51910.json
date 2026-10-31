@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-joseortega",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-joseortega/library/ortega/0.0.0+sha.6b745845bbff/ortega-0.0.0+sha.6b745845bbff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ortega-0.0.0+sha.6b745845bbff.tar.gz",
+    "size_bytes": 781,
+    "sha256": "e6753384ceb43d80d8e6e8ef39df731c12f3de5a8d943ae9db401047adf6dc22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joseortega/library/ortega/0.0.0%2Bsha.6b745845bbff/ortega-0.0.0%2Bsha.6b745845bbff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joseortega/library/ortega/0.0.0%2Bsha.6b745845bbff/ortega-0.0.0%2Bsha.6b745845bbff.tar.gz"
+    ]
+   }
+  }
+ ]
+}

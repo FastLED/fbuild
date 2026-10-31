@@ -1,0 +1,321 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arminjo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arminjo/library/ATtinySerialOut/2.3.1/ATtinySerialOut-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATtinySerialOut-2.3.1.tar.gz",
+    "size_bytes": 36821,
+    "sha256": "7f16bfddbb6d667965a4fcae4bfa3a16bea2c9f6df4ee25c5bd21c33257f6d06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/ATtinySerialOut/2.3.1/ATtinySerialOut-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/ATtinySerialOut/2.3.1/ATtinySerialOut-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/AvrTracing/1.1.0/AvrTracing-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AvrTracing-1.1.0.tar.gz",
+    "size_bytes": 29536,
+    "sha256": "6ec55e58b19abb54e8f565618908a6e6486f2c23c7d02aedafe622366ffb8ae8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/AvrTracing/1.1.0/AvrTracing-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/AvrTracing/1.1.0/AvrTracing-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/BlueDisplay/5.1.0/BlueDisplay-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlueDisplay-5.1.0.tar.gz",
+    "size_bytes": 1528676,
+    "sha256": "80239e2fc0329021ba5de851c9c66295e834ed959f94c139db3cec8a61ff92fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/BlueDisplay/5.1.0/BlueDisplay-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/BlueDisplay/5.1.0/BlueDisplay-5.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/EasyButtonAtInt01/3.4.1/EasyButtonAtInt01-3.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyButtonAtInt01-3.4.1.tar.gz",
+    "size_bytes": 43663,
+    "sha256": "329ea83082920c51b1b9e02699937dc25ba04bd905b90731b9838cec8e4a2464",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/EasyButtonAtInt01/3.4.1/EasyButtonAtInt01-3.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/EasyButtonAtInt01/3.4.1/EasyButtonAtInt01-3.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/FrequencyDetector/2.0.2/FrequencyDetector-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FrequencyDetector-2.0.2.tar.gz",
+    "size_bytes": 387121,
+    "sha256": "7be30f028e47cfe0739b26084670ee0fe0bed7a4803fe8bd8f1df519a36d0737",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/FrequencyDetector/2.0.2/FrequencyDetector-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/FrequencyDetector/2.0.2/FrequencyDetector-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/IRremote/4.4.1/IRremote-4.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.4.1.tar.gz",
+    "size_bytes": 338121,
+    "sha256": "146f04b85b0ac7b874f76584059ef7e4499ef42c57fadae18564546b65338b6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/IRremote/4.4.1/IRremote-4.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/IRremote/4.4.1/IRremote-4.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/LCDBigNumbers/1.2.3/LCDBigNumbers-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCDBigNumbers-1.2.3.tar.gz",
+    "size_bytes": 45412,
+    "sha256": "e2c69b1d31c523c501d0b326d917892f0ebc544b4f750519bc605b67bf7e8f21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/LCDBigNumbers/1.2.3/LCDBigNumbers-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/LCDBigNumbers/1.2.3/LCDBigNumbers-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/NeoPatterns/3.3.0/NeoPatterns-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPatterns-3.3.0.tar.gz",
+    "size_bytes": 244577,
+    "sha256": "07d4124b7ddc2ea8f1b391d75538b9ecc7eb231a5613f9a53339e953fad33761",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/NeoPatterns/3.3.0/NeoPatterns-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/NeoPatterns/3.3.0/NeoPatterns-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/NeoPatterns/3.3.1/NeoPatterns-3.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPatterns-3.3.1.tar.gz",
+    "size_bytes": 244790,
+    "sha256": "58111167fa5c06ddc9f4da2ab3d0ed277c5ecddc6851c105e5116a5912f0ecc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/NeoPatterns/3.3.1/NeoPatterns-3.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/NeoPatterns/3.3.1/NeoPatterns-3.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/NeoPatterns/3.4.0/NeoPatterns-3.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPatterns-3.4.0.tar.gz",
+    "size_bytes": 247066,
+    "sha256": "34eff6b9991990fa8dd8d58c8b61e3bf8f950c7e06c1604cea3b840ec4c78469",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/NeoPatterns/3.4.0/NeoPatterns-3.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/NeoPatterns/3.4.0/NeoPatterns-3.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/NeoPatterns/3.5.0/NeoPatterns-3.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPatterns-3.5.0.tar.gz",
+    "size_bytes": 263674,
+    "sha256": "e24bad80a362f99274277522620c01307e0ad9dade46adc62342127f11138faf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/NeoPatterns/3.5.0/NeoPatterns-3.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/NeoPatterns/3.5.0/NeoPatterns-3.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/PWMMotorControl/2.2.0/PWMMotorControl-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWMMotorControl-2.2.0.tar.gz",
+    "size_bytes": 854917,
+    "sha256": "caf1bc2cf1e90adc49edcbd24c666cb5a7debbe6991492b24094d7ad9767e9e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/PWMMotorControl/2.2.0/PWMMotorControl-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/PWMMotorControl/2.2.0/PWMMotorControl-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/PWMMotorControl/2.2.1/PWMMotorControl-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWMMotorControl-2.2.1.tar.gz",
+    "size_bytes": 869541,
+    "sha256": "ac61898d39441cd508b07c3e17bc24ddff45e09bf34c0dedf58953f45f33367e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/PWMMotorControl/2.2.1/PWMMotorControl-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/PWMMotorControl/2.2.1/PWMMotorControl-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/PlayRtttl/2.1.0/PlayRtttl-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlayRtttl-2.1.0.tar.gz",
+    "size_bytes": 71237,
+    "sha256": "feab9c8d72fa47e58019a2b8dc80d29f45b6cd753df63ceba229411f2f996a9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/PlayRtttl/2.1.0/PlayRtttl-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/PlayRtttl/2.1.0/PlayRtttl-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/PlayRtttl/2.2.0/PlayRtttl-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlayRtttl-2.2.0.tar.gz",
+    "size_bytes": 72084,
+    "sha256": "ceac01a100d97a5ee364fb7ad8640e2c929612cc324c017ceafc638fc9bd4015",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/PlayRtttl/2.2.0/PlayRtttl-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/PlayRtttl/2.2.0/PlayRtttl-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/QuadrupedControl/1.2.0/QuadrupedControl-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuadrupedControl-1.2.0.tar.gz",
+    "size_bytes": 58353,
+    "sha256": "c822dafbc6f827dfdd2518f956f3e2f2391123a725d874cbbfb42c81bc8e486a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/QuadrupedControl/1.2.0/QuadrupedControl-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/QuadrupedControl/1.2.0/QuadrupedControl-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/ServoEasing/2.4.1/ServoEasing-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoEasing-2.4.1.tar.gz",
+    "size_bytes": 292657,
+    "sha256": "f432feb540f95fefa2700e64b696d48768a4fa3f369419570036bd8802d08995",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/ServoEasing/2.4.1/ServoEasing-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/ServoEasing/2.4.1/ServoEasing-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/ServoEasing/3.1.0/ServoEasing-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoEasing-3.1.0.tar.gz",
+    "size_bytes": 203675,
+    "sha256": "9becd7e265759bbce985e3bdbb323bffdf24d1d915fd5733554052f460ed275c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/ServoEasing/3.1.0/ServoEasing-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/ServoEasing/3.1.0/ServoEasing-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/ServoEasing/3.4.0/ServoEasing-3.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoEasing-3.4.0.tar.gz",
+    "size_bytes": 289305,
+    "sha256": "9b7b8e0675af898cb4c8068d214fa648db5871a0ae6a29660f35f13b2d297252",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/ServoEasing/3.4.0/ServoEasing-3.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/ServoEasing/3.4.0/ServoEasing-3.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/ServoEasing/3.5.0/ServoEasing-3.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoEasing-3.5.0.tar.gz",
+    "size_bytes": 289525,
+    "sha256": "12178d3d9c470c9961b62c5649e3f78bad59ffdb83d6aae59377d02e897a94e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/ServoEasing/3.5.0/ServoEasing-3.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/ServoEasing/3.5.0/ServoEasing-3.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/ServoEasing/3.6.0/ServoEasing-3.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoEasing-3.6.0.tar.gz",
+    "size_bytes": 313835,
+    "sha256": "093e583943d38d6fb3029f83eb1a7b568a44f9394382f634bf63159737373a8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/ServoEasing/3.6.0/ServoEasing-3.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/ServoEasing/3.6.0/ServoEasing-3.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/Talkie/1.4.0/Talkie-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Talkie-1.4.0.tar.gz",
+    "size_bytes": 385611,
+    "sha256": "3ac3e6cf4f387f6d29d698697179f1faf98622d08045b4177a0a2fd799003a47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/Talkie/1.4.0/Talkie-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/Talkie/1.4.0/Talkie-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/digitalWriteFast/1.3.0/digitalWriteFast-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "digitalWriteFast-1.3.0.tar.gz",
+    "size_bytes": 8908,
+    "sha256": "47cead0b3b6c0e3b7007d0a12a99e7df8a2f6c7ff5a6c31d73d2c881ec8a7f34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/digitalWriteFast/1.3.0/digitalWriteFast-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/digitalWriteFast/1.3.0/digitalWriteFast-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arminjo/library/digitalWriteFast/1.3.1/digitalWriteFast-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "digitalWriteFast-1.3.1.tar.gz",
+    "size_bytes": 9090,
+    "sha256": "6388ffef58deb8392eaf4a059fd815b3870ea061e10f2a547d9bf0c39eaafa60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arminjo/library/digitalWriteFast/1.3.1/digitalWriteFast-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arminjo/library/digitalWriteFast/1.3.1/digitalWriteFast-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

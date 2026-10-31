@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/isantosruiz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "isantosruiz/library/iKY040/1.0.0/iKY040-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iKY040-1.0.0.tar.gz",
+    "size_bytes": 6389,
+    "sha256": "4a917423a23613976b8b652786368724755007590badc10075ca4c86ed71fa7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/isantosruiz/library/iKY040/1.0.0/iKY040-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/isantosruiz/library/iKY040/1.0.0/iKY040-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "isantosruiz/library/iKY040/1.0.1/iKY040-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iKY040-1.0.1.tar.gz",
+    "size_bytes": 6370,
+    "sha256": "c9aaf9d4c64d80d52a275d372b639ae6a936b91208f580197c048ce341147a04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/isantosruiz/library/iKY040/1.0.1/iKY040-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/isantosruiz/library/iKY040/1.0.1/iKY040-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

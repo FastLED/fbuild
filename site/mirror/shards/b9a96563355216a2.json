@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/h3pereu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "h3pereu/library/SchoolLib/1.0.1/SchoolLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SchoolLib-1.0.1.tar.gz",
+    "size_bytes": 5812,
+    "sha256": "66846c3e712e4f7f0ec841b23007563e8c18bfa1980561b56a4596656bd88c99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h3pereu/library/SchoolLib/1.0.1/SchoolLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/h3pereu/library/SchoolLib/1.0.1/SchoolLib-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

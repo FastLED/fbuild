@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nherriot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nherriot/library/MMA8452/0.0.0+sha.8aa5123d403f/MMA8452-0.0.0+sha.8aa5123d403f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8452-0.0.0+sha.8aa5123d403f.tar.gz",
+    "size_bytes": 6070,
+    "sha256": "8144a86a86508458ae2ede3652df402d2cfc37b8c1181e344215c74eb2e4dd6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nherriot/library/MMA8452/0.0.0%2Bsha.8aa5123d403f/MMA8452-0.0.0%2Bsha.8aa5123d403f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nherriot/library/MMA8452/0.0.0%2Bsha.8aa5123d403f/MMA8452-0.0.0%2Bsha.8aa5123d403f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nherriot/library/UbloxVodafoneGPS/0.0.0+sha.bcc48e322f84/UbloxVodafoneGPS-0.0.0+sha.bcc48e322f84.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UbloxVodafoneGPS-0.0.0+sha.bcc48e322f84.tar.gz",
+    "size_bytes": 1772,
+    "sha256": "74dfe5fe2846ba159ad7a14d5c70c4bd8d538970e1d5c08b6acb498d1f8a8379",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nherriot/library/UbloxVodafoneGPS/0.0.0%2Bsha.bcc48e322f84/UbloxVodafoneGPS-0.0.0%2Bsha.bcc48e322f84.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nherriot/library/UbloxVodafoneGPS/0.0.0%2Bsha.bcc48e322f84/UbloxVodafoneGPS-0.0.0%2Bsha.bcc48e322f84.tar.gz"
+    ]
+   }
+  }
+ ]
+}

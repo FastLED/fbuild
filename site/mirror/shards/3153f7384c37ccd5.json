@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hosseinhadi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hosseinhadi/library/ApplicationManager/0.1.0/ApplicationManager-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ApplicationManager-0.1.0.tar.gz",
+    "size_bytes": 24158,
+    "sha256": "df7cbd1896f7c14773cc4a0b50ab1fd7dae07e68eb2ea209419bc03ccb76ab7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hosseinhadi/library/ApplicationManager/0.1.0/ApplicationManager-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hosseinhadi/library/ApplicationManager/0.1.0/ApplicationManager-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hosseinhadi/library/EspS3Link/1.0.0/EspS3Link-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspS3Link-1.0.0.tar.gz",
+    "size_bytes": 13443,
+    "sha256": "abef091cdbfec0b6e3d22a97dd9547b7b7daa76c3af0daac2193eff6bff70c8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hosseinhadi/library/EspS3Link/1.0.0/EspS3Link-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hosseinhadi/library/EspS3Link/1.0.0/EspS3Link-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hosseinhadi/library/EspS3Link/1.0.1/EspS3Link-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspS3Link-1.0.1.tar.gz",
+    "size_bytes": 16697,
+    "sha256": "e73bcb36876320c784dc58cf17fa5f3f89f8398eb1f176356c7ec9f14bb663c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hosseinhadi/library/EspS3Link/1.0.1/EspS3Link-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hosseinhadi/library/EspS3Link/1.0.1/EspS3Link-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hosseinhadi/library/EspS3Link/1.0.2/EspS3Link-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspS3Link-1.0.2.tar.gz",
+    "size_bytes": 16800,
+    "sha256": "e5e33945a808f92d00e9ea306baac019b6c0d52765e636369ce7295ae748f497",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hosseinhadi/library/EspS3Link/1.0.2/EspS3Link-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hosseinhadi/library/EspS3Link/1.0.2/EspS3Link-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hosseinhadi/library/RotaryEncoder/1.0.0/RotaryEncoder-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotaryEncoder-1.0.0.tar.gz",
+    "size_bytes": 7185,
+    "sha256": "d15018559e2efd275396ea6d3f723e69a573fbc024396c58d441835ff8a05047",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hosseinhadi/library/RotaryEncoder/1.0.0/RotaryEncoder-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hosseinhadi/library/RotaryEncoder/1.0.0/RotaryEncoder-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hosseinhadi/library/StepperMotor/1.0.0/StepperMotor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperMotor-1.0.0.tar.gz",
+    "size_bytes": 8704,
+    "sha256": "b477f183934ff427d5ad2231a9a40ee6a96e9c7e4881f6a36407e188b359a78e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hosseinhadi/library/StepperMotor/1.0.0/StepperMotor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hosseinhadi/library/StepperMotor/1.0.0/StepperMotor-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

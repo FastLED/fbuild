@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bluedot-arduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bluedot-arduino/library/BlueDot%20BMA400%20Library/1.0.0/BlueDotBMA400Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlueDotBMA400Library-1.0.0.tar.gz",
+    "size_bytes": 3736,
+    "sha256": "13374de3624d2880a2eb254a38afd5848abfb17dc8a7e8fa8dc6b253b855ce4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bluedot-arduino/library/BlueDot%2520BMA400%2520Library/1.0.0/BlueDotBMA400Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bluedot-arduino/library/BlueDot%20BMA400%20Library/1.0.0/BlueDotBMA400Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bluedot-arduino/library/BlueDot%20BME280%20Library/1.0.9/BlueDotBME280Library-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlueDotBME280Library-1.0.9.tar.gz",
+    "size_bytes": 9979,
+    "sha256": "ef57a44601e55107495c5601f455261cc9d2b503a6e0a150f5b0753835ab2ae8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bluedot-arduino/library/BlueDot%2520BME280%2520Library/1.0.9/BlueDotBME280Library-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/bluedot-arduino/library/BlueDot%20BME280%20Library/1.0.9/BlueDotBME280Library-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bluedot-arduino/library/BlueDot%20BME280%20TSL2591/1.0.4/BlueDotBME280TSL2591-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlueDotBME280TSL2591-1.0.4.tar.gz",
+    "size_bytes": 8567,
+    "sha256": "9ae7ca53c2f5405cdb4492029056fa55e2c03d8feb22a690c68079a331dee216",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bluedot-arduino/library/BlueDot%2520BME280%2520TSL2591/1.0.4/BlueDotBME280TSL2591-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bluedot-arduino/library/BlueDot%20BME280%20TSL2591/1.0.4/BlueDotBME280TSL2591-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bluedot-arduino/library/BlueDot%20SGP40%20SHT40/1.0.2/BlueDotSGP40SHT40-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlueDotSGP40SHT40-1.0.2.tar.gz",
+    "size_bytes": 17440,
+    "sha256": "2941e21725264fb4cd87176e6c9fa7048fafc4986d6a1222c9d7672d9fad1ead",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bluedot-arduino/library/BlueDot%2520SGP40%2520SHT40/1.0.2/BlueDotSGP40SHT40-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bluedot-arduino/library/BlueDot%20SGP40%20SHT40/1.0.2/BlueDotSGP40SHT40-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

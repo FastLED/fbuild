@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/inflop",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "inflop/library/Countimer/1.0.0/Countimer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Countimer-1.0.0.tar.gz",
+    "size_bytes": 3128,
+    "sha256": "87b30154b2ee7c15a675ab1c81ddb0892485826a39e7e527a4a4a147a3ba2614",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inflop/library/Countimer/1.0.0/Countimer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inflop/library/Countimer/1.0.0/Countimer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inflop/library/Countimer/1.1.0/Countimer-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Countimer-1.1.0.tar.gz",
+    "size_bytes": 10751,
+    "sha256": "1bccb774ed36f6240a6736a73f8258958a48cae10439ea99254b02de5b1c336f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inflop/library/Countimer/1.1.0/Countimer-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inflop/library/Countimer/1.1.0/Countimer-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

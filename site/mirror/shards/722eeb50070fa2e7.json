@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/goodisplayshare",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "goodisplayshare/library/esp32_epd/1.0.8/esp32_epd-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_epd-1.0.8.tar.gz",
+    "size_bytes": 76660,
+    "sha256": "65989009fe864a659af1228454432dfe9ad4c7bec0b09b15bc43dcc2e3b59124",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/goodisplayshare/library/esp32_epd/1.0.8/esp32_epd-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/goodisplayshare/library/esp32_epd/1.0.8/esp32_epd-1.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

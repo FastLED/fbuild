@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/perpective2410",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "perpective2410/library/Tides/0.0.1/Tides-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tides-0.0.1.tar.gz",
+    "size_bytes": 17572,
+    "sha256": "83a37037cb79f9987399856775c564c0134b2a859e7d66e962e0d9cbd38fb3ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/perpective2410/library/Tides/0.0.1/Tides-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/perpective2410/library/Tides/0.0.1/Tides-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "perpective2410/library/Tides/0.0.7/Tides-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tides-0.0.7.tar.gz",
+    "size_bytes": 116473,
+    "sha256": "fcd7d97c1333da062cdb7831d8c63a6e408d30dec3d877a6563d38f44d423ace",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/perpective2410/library/Tides/0.0.7/Tides-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/perpective2410/library/Tides/0.0.7/Tides-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "perpective2410/library/Tides/0.0.8/Tides-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tides-0.0.8.tar.gz",
+    "size_bytes": 152739,
+    "sha256": "11d6307f0993ee37877ea6451a499c54997cbbb1081d1a4384e61587312c74d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/perpective2410/library/Tides/0.0.8/Tides-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/perpective2410/library/Tides/0.0.8/Tides-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "perpective2410/library/Tides/0.0.9/Tides-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tides-0.0.9.tar.gz",
+    "size_bytes": 153881,
+    "sha256": "e53ae7072b583082cae00cd5e3466055273d45ca404de9ec530884c99fea6dbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/perpective2410/library/Tides/0.0.9/Tides-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/perpective2410/library/Tides/0.0.9/Tides-0.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yuki-miyakoshi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yuki-miyakoshi/library/youkey_stepper/1.0.0/youkey_stepper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "youkey_stepper-1.0.0.tar.gz",
+    "size_bytes": 3621,
+    "sha256": "bf259fd34ae5a4b75210ffaf555404c971d0fe5497547f1d8c69ff09437bae17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yuki-miyakoshi/library/youkey_stepper/1.0.0/youkey_stepper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yuki-miyakoshi/library/youkey_stepper/1.0.0/youkey_stepper-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

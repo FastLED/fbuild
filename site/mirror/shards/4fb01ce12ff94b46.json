@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-el-pom10011",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-el-pom10011/library/SerialTerminal/0.0.0+sha.64e7d86dbac1/SerialTerminal-0.0.0+sha.64e7d86dbac1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialTerminal-0.0.0+sha.64e7d86dbac1.tar.gz",
+    "size_bytes": 1774,
+    "sha256": "2a9f7f86a191ae5359b59165bfe00cb38bc7250d3d5b1de7c6ad47a940fd6ab0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-el-pom10011/library/SerialTerminal/0.0.0%2Bsha.64e7d86dbac1/SerialTerminal-0.0.0%2Bsha.64e7d86dbac1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-el-pom10011/library/SerialTerminal/0.0.0%2Bsha.64e7d86dbac1/SerialTerminal-0.0.0%2Bsha.64e7d86dbac1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

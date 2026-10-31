@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dury",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dury/library/DuryServo/0.0.0+sha.88fd1c2402c9/DuryServo-0.0.0+sha.88fd1c2402c9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DuryServo-0.0.0+sha.88fd1c2402c9.tar.gz",
+    "size_bytes": 3053,
+    "sha256": "f97a25b628af9b3702ca7710d355223eec846324da1c5d71aa5391e69d1b2fc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dury/library/DuryServo/0.0.0%2Bsha.88fd1c2402c9/DuryServo-0.0.0%2Bsha.88fd1c2402c9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dury/library/DuryServo/0.0.0%2Bsha.88fd1c2402c9/DuryServo-0.0.0%2Bsha.88fd1c2402c9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dury/library/StepperMotor/0.0.0+sha.b96435078d4d/StepperMotor-0.0.0+sha.b96435078d4d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperMotor-0.0.0+sha.b96435078d4d.tar.gz",
+    "size_bytes": 4088,
+    "sha256": "5825d4865d249e21614f40cf7c453a29b16ead6790b90c8aa3dbf050a222f829",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dury/library/StepperMotor/0.0.0%2Bsha.b96435078d4d/StepperMotor-0.0.0%2Bsha.b96435078d4d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dury/library/StepperMotor/0.0.0%2Bsha.b96435078d4d/StepperMotor-0.0.0%2Bsha.b96435078d4d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

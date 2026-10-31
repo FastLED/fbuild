@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mengguang",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mengguang/library/atsha204_i2c/1.0.1/atsha204_i2c-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "atsha204_i2c-1.0.1.tar.gz",
+    "size_bytes": 12037,
+    "sha256": "6809d49ad4c76d090f69b8987df38370812e7ed665fbe9653c98a6118af709b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mengguang/library/atsha204_i2c/1.0.1/atsha204_i2c-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mengguang/library/atsha204_i2c/1.0.1/atsha204_i2c-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/koendv",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "koendv/library/CheckDS18B20/1.0.3/CheckDS18B20-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CheckDS18B20-1.0.3.tar.gz",
+    "size_bytes": 13507,
+    "sha256": "a09835bb91eccc05764652ab94e70b71691e73542a13ee55420b352a259bdaa4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koendv/library/CheckDS18B20/1.0.3/CheckDS18B20-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/koendv/library/CheckDS18B20/1.0.3/CheckDS18B20-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "koendv/library/FloatToAscii/1.0.4/FloatToAscii-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FloatToAscii-1.0.4.tar.gz",
+    "size_bytes": 7084,
+    "sha256": "bb87fa35c3d03f4d23d2ea8013d6bce0813aed8fbd3ebdec593d432a03b67f0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koendv/library/FloatToAscii/1.0.4/FloatToAscii-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/koendv/library/FloatToAscii/1.0.4/FloatToAscii-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "koendv/library/RTT%20Stream/1.4.1/RTTStream-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTTStream-1.4.1.tar.gz",
+    "size_bytes": 28222,
+    "sha256": "df49d08cec419fda937b2661c8e742089dd03bb6dbecd757cbf9c69e933f6031",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koendv/library/RTT%2520Stream/1.4.1/RTTStream-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/koendv/library/RTT%20Stream/1.4.1/RTTStream-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "koendv/library/STM32duino-Semihosting/1.0.5/STM32duino-Semihosting-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duino-Semihosting-1.0.5.tar.gz",
+    "size_bytes": 8946,
+    "sha256": "9d2f172434cc1d1919d0bc1242302d930326669287dce0c391a37a3e5a162c9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koendv/library/STM32duino-Semihosting/1.0.5/STM32duino-Semihosting-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/koendv/library/STM32duino-Semihosting/1.0.5/STM32duino-Semihosting-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "koendv/library/SerialWireOutput/1.0.6/SerialWireOutput-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWireOutput-1.0.6.tar.gz",
+    "size_bytes": 5957,
+    "sha256": "d9bbc51ac0d6617f72bc1eaa54e7b19fbe56d1d4a792d45eab6595a257f754d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koendv/library/SerialWireOutput/1.0.6/SerialWireOutput-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/koendv/library/SerialWireOutput/1.0.6/SerialWireOutput-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "koendv/library/cst816t/1.5.1/cst816t-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cst816t-1.5.1.tar.gz",
+    "size_bytes": 6409,
+    "sha256": "94251068d1ba7cd52a7e33ce28cd615a6197a6dac6d437325b5c96f9d16bb635",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koendv/library/cst816t/1.5.1/cst816t-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/koendv/library/cst816t/1.5.1/cst816t-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "koendv/library/xyc_als21c/1.0.4/xyc_als21c-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xyc_als21c-1.0.4.tar.gz",
+    "size_bytes": 10816,
+    "sha256": "bebc31d37c6c83495d572dd61099216f74b505396cc4bcd78b94b57616d8ddcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/koendv/library/xyc_als21c/1.0.4/xyc_als21c-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/koendv/library/xyc_als21c/1.0.4/xyc_als21c-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

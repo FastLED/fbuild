@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ninensei",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ninensei/library/libdev_si7021/0.0.0+sha.344923bddd4f/libdev_si7021-0.0.0+sha.344923bddd4f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libdev_si7021-0.0.0+sha.344923bddd4f.tar.gz",
+    "size_bytes": 2327,
+    "sha256": "abd26657fa0ac1f0ec3bc2c12d04eb1e02ea0c3fd7d5e1b1868b66a76f8d616e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ninensei/library/libdev_si7021/0.0.0%2Bsha.344923bddd4f/libdev_si7021-0.0.0%2Bsha.344923bddd4f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ninensei/library/libdev_si7021/0.0.0%2Bsha.344923bddd4f/libdev_si7021-0.0.0%2Bsha.344923bddd4f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ninensei/library/libdev_si7210/0.0.0+sha.beca2e65b1b0/libdev_si7210-0.0.0+sha.beca2e65b1b0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libdev_si7210-0.0.0+sha.beca2e65b1b0.tar.gz",
+    "size_bytes": 3202,
+    "sha256": "20dd75bd474eac8d1f8d57bb1fec9c3c960f20602eb20272207dfaeccc6c5479",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ninensei/library/libdev_si7210/0.0.0%2Bsha.beca2e65b1b0/libdev_si7210-0.0.0%2Bsha.beca2e65b1b0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ninensei/library/libdev_si7210/0.0.0%2Bsha.beca2e65b1b0/libdev_si7210-0.0.0%2Bsha.beca2e65b1b0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ninensei/library/libdrv_SoftI2C/0.0.0+sha.b174177b2bf2/libdrv_SoftI2C-0.0.0+sha.b174177b2bf2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libdrv_SoftI2C-0.0.0+sha.b174177b2bf2.tar.gz",
+    "size_bytes": 2489,
+    "sha256": "e7000efb354bcbcedd742cf4cbcfe2c3c2610478ed19023109f9b070cac9f7cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ninensei/library/libdrv_SoftI2C/0.0.0%2Bsha.b174177b2bf2/libdrv_SoftI2C-0.0.0%2Bsha.b174177b2bf2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ninensei/library/libdrv_SoftI2C/0.0.0%2Bsha.b174177b2bf2/libdrv_SoftI2C-0.0.0%2Bsha.b174177b2bf2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

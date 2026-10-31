@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/melopero",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "melopero/library/Melopero%20AMG8833/1.1.0/MeloperoAMG8833-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeloperoAMG8833-1.1.0.tar.gz",
+    "size_bytes": 5526,
+    "sha256": "6362dd3dca88a6e3b15b4c6911e5b45aa0f41498c588de0eaa70a9e1e707b549",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/melopero/library/Melopero%2520AMG8833/1.1.0/MeloperoAMG8833-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/melopero/library/Melopero%20AMG8833/1.1.0/MeloperoAMG8833-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "melopero/library/Melopero%20APDS9960/1.2.1/MeloperoAPDS9960-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeloperoAPDS9960-1.2.1.tar.gz",
+    "size_bytes": 17488,
+    "sha256": "bc9297ee92aca7e5cb174e033dc6758417f6a62110ede239beb1780d33d21871",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/melopero/library/Melopero%2520APDS9960/1.2.1/MeloperoAPDS9960-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/melopero/library/Melopero%20APDS9960/1.2.1/MeloperoAPDS9960-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "melopero/library/Melopero%20BME280/1.1.0/MeloperoBME280-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeloperoBME280-1.1.0.tar.gz",
+    "size_bytes": 20253,
+    "sha256": "30facdc89c299aec8ed2826bbc9561187546720afde66401443979f0f259ba25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/melopero/library/Melopero%2520BME280/1.1.0/MeloperoBME280-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/melopero/library/Melopero%20BME280/1.1.0/MeloperoBME280-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "melopero/library/Melopero%20Cookie%20RP2040/1.0.1/MeloperoCookieRP2040-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeloperoCookieRP2040-1.0.1.tar.gz",
+    "size_bytes": 8513,
+    "sha256": "302ab18c1cd0d0923eb8ab099c96e153fc223530d9981ee53f36e52ac215aa9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/melopero/library/Melopero%2520Cookie%2520RP2040/1.0.1/MeloperoCookieRP2040-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/melopero/library/Melopero%20Cookie%20RP2040/1.0.1/MeloperoCookieRP2040-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "melopero/library/Melopero%20LSM9DS1/1.1.0/MeloperoLSM9DS1-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeloperoLSM9DS1-1.1.0.tar.gz",
+    "size_bytes": 12210,
+    "sha256": "546f124c4d1361596042acca29b61394974534cca03686cb64abecde9a16add8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/melopero/library/Melopero%2520LSM9DS1/1.1.0/MeloperoLSM9DS1-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/melopero/library/Melopero%20LSM9DS1/1.1.0/MeloperoLSM9DS1-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "melopero/library/Melopero%20RV3028/1.2.0/MeloperoRV3028-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeloperoRV3028-1.2.0.tar.gz",
+    "size_bytes": 8767,
+    "sha256": "ca7784016fee8d451274890c471f3652d73e852c2af89942cf60183e12d7f7d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/melopero/library/Melopero%2520RV3028/1.2.0/MeloperoRV3028-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/melopero/library/Melopero%20RV3028/1.2.0/MeloperoRV3028-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "melopero/library/Melopero%20SAM-M8Q/1.1.2/MeloperoSAM-M8Q-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeloperoSAM-M8Q-1.1.2.tar.gz",
+    "size_bytes": 8302,
+    "sha256": "e0e681d26b951cfd7679be5543963dd30d0a254ced680d424762e77597febb60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/melopero/library/Melopero%2520SAM-M8Q/1.1.2/MeloperoSAM-M8Q-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/melopero/library/Melopero%20SAM-M8Q/1.1.2/MeloperoSAM-M8Q-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "melopero/library/Melopero%20UBX%20Protocol/1.0.1/MeloperoUBXProtocol-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeloperoUBXProtocol-1.0.1.tar.gz",
+    "size_bytes": 4075,
+    "sha256": "7f6b9cc14f782539b44545b5afd62f21dd55a938e0e97b467ded6cc78c9c1c77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/melopero/library/Melopero%2520UBX%2520Protocol/1.0.1/MeloperoUBXProtocol-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/melopero/library/Melopero%20UBX%20Protocol/1.0.1/MeloperoUBXProtocol-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "melopero/library/Melopero%20VL53L1X/1.1.0/MeloperoVL53L1X-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeloperoVL53L1X-1.1.0.tar.gz",
+    "size_bytes": 180157,
+    "sha256": "5fe286b688a10d2aca43b44f3339fb7740690ebe65e7d0dd7c95f413b1f64a3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/melopero/library/Melopero%2520VL53L1X/1.1.0/MeloperoVL53L1X-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/melopero/library/Melopero%20VL53L1X/1.1.0/MeloperoVL53L1X-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

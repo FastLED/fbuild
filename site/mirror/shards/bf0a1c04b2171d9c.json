@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marcotinner",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marcotinner/library/MTkbd/0.1.0/MTkbd-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTkbd-0.1.0.tar.gz",
+    "size_bytes": 5901,
+    "sha256": "9fec28b326298aa046de5d3b1d2494aedab8b7be34e04a480cc337732b8c8fd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcotinner/library/MTkbd/0.1.0/MTkbd-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marcotinner/library/MTkbd/0.1.0/MTkbd-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marcotinner/library/MTkbd/0.1.1/MTkbd-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTkbd-0.1.1.tar.gz",
+    "size_bytes": 6168,
+    "sha256": "da3bbb911434af43c6f157ec5fdcf580affc8be5b272ea414184c8fa42747635",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcotinner/library/MTkbd/0.1.1/MTkbd-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/marcotinner/library/MTkbd/0.1.1/MTkbd-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marcotinner/library/MTkbd/0.1.2/MTkbd-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTkbd-0.1.2.tar.gz",
+    "size_bytes": 6519,
+    "sha256": "3ade221283b7a4ad423ce41a61a2c41e6cd95297bcc7b2fd8c10a6319df19f4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcotinner/library/MTkbd/0.1.2/MTkbd-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/marcotinner/library/MTkbd/0.1.2/MTkbd-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marcotinner/library/MTkbd/0.1.3/MTkbd-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTkbd-0.1.3.tar.gz",
+    "size_bytes": 7642,
+    "sha256": "717623dc3047fd4fc7ab68c05f909a08410407ea1df569f075e63ef4f6975e45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcotinner/library/MTkbd/0.1.3/MTkbd-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/marcotinner/library/MTkbd/0.1.3/MTkbd-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marcotinner/library/MTkbd/0.1.4/MTkbd-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTkbd-0.1.4.tar.gz",
+    "size_bytes": 7647,
+    "sha256": "50f167530017f0ef582735b1c55094bffe7d54d7b2469a110dbb1d23be79b0db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcotinner/library/MTkbd/0.1.4/MTkbd-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/marcotinner/library/MTkbd/0.1.4/MTkbd-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marcotinner/library/MTkbd/0.1.5/MTkbd-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTkbd-0.1.5.tar.gz",
+    "size_bytes": 7645,
+    "sha256": "54426b875c951b4b95b3105fe789d597da3928b71d99c4728ac0411c2ae8973a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcotinner/library/MTkbd/0.1.5/MTkbd-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/marcotinner/library/MTkbd/0.1.5/MTkbd-0.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

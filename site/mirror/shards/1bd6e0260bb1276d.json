@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/barisdinc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "barisdinc/library/LibAPRS_Tracker/0.6/LibAPRS_Tracker-0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibAPRS_Tracker-0.6.tar.gz",
+    "size_bytes": 22676,
+    "sha256": "bd230b5c63cdc25ed59b1f134282ea91c2f07f8e86c3ae457b64789fbe679430",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/barisdinc/library/LibAPRS_Tracker/0.6/LibAPRS_Tracker-0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/barisdinc/library/LibAPRS_Tracker/0.6/LibAPRS_Tracker-0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

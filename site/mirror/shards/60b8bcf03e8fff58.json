@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/septillion-git",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "septillion-git/library/FadeLed/1.6.0/FadeLed-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FadeLed-1.6.0.tar.gz",
+    "size_bytes": 249283,
+    "sha256": "bb0f508def9c4c1ab8840b2ccde7b6fc78b7c4d2101d2f7e6da348290272bb1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/septillion-git/library/FadeLed/1.6.0/FadeLed-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/septillion-git/library/FadeLed/1.6.0/FadeLed-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "septillion-git/library/QC2Control/1.1.0/QC2Control-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QC2Control-1.1.0.tar.gz",
+    "size_bytes": 32461,
+    "sha256": "033fee0534a14ee28c5a99d62428e4c2956e0808961d9824a1af549d9f78872b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/septillion-git/library/QC2Control/1.1.0/QC2Control-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/septillion-git/library/QC2Control/1.1.0/QC2Control-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/duckle29",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "duckle29/library/ESP%20Wunderground%20PWS/0.1.3/ESPWundergroundPWS-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPWundergroundPWS-0.1.3.tar.gz",
+    "size_bytes": 4070,
+    "sha256": "2f4db1f01f72e42d373486ee48089ffe0c64886b8bcf2e51ba64305632f265a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duckle29/library/ESP%2520Wunderground%2520PWS/0.1.3/ESPWundergroundPWS-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/duckle29/library/ESP%20Wunderground%20PWS/0.1.3/ESPWundergroundPWS-0.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

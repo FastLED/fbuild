@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/strid3r21",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "strid3r21/library/BeeDataLogger/3.0.3/BeeDataLogger-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeeDataLogger-3.0.3.tar.gz",
+    "size_bytes": 12450,
+    "sha256": "59f5545420973080a781a4c69d26678c4c20f23dd7c3984e4c8f1e66d893affd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/strid3r21/library/BeeDataLogger/3.0.3/BeeDataLogger-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/strid3r21/library/BeeDataLogger/3.0.3/BeeDataLogger-3.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "strid3r21/library/BeeMotionS3/3.0.0/BeeMotionS3-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeeMotionS3-3.0.0.tar.gz",
+    "size_bytes": 6038,
+    "sha256": "19d9c9a2d96d28e5c82d25d5658817496c17fbefb751ac8bb1445c69ed0021d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/strid3r21/library/BeeMotionS3/3.0.0/BeeMotionS3-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/strid3r21/library/BeeMotionS3/3.0.0/BeeMotionS3-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "strid3r21/library/BeeS3/3.0.0/BeeS3-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeeS3-3.0.0.tar.gz",
+    "size_bytes": 4031,
+    "sha256": "788c3efe84eb5b940977eefa84966933a0be717de193046d3531a5df83301137",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/strid3r21/library/BeeS3/3.0.0/BeeS3-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/strid3r21/library/BeeS3/3.0.0/BeeS3-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

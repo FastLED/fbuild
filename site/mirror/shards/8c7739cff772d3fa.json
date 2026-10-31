@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-reedas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-reedas/library/PinDetect/0.0.0+sha.d552d2899765/PinDetect-0.0.0+sha.d552d2899765.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinDetect-0.0.0+sha.d552d2899765.tar.gz",
+    "size_bytes": 5047,
+    "sha256": "457500d9ccd9e34911f59148fbfd2155890242647ad9e71271eb82891cd9e14a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-reedas/library/PinDetect/0.0.0%2Bsha.d552d2899765/PinDetect-0.0.0%2Bsha.d552d2899765.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-reedas/library/PinDetect/0.0.0%2Bsha.d552d2899765/PinDetect-0.0.0%2Bsha.d552d2899765.tar.gz"
+    ]
+   }
+  }
+ ]
+}

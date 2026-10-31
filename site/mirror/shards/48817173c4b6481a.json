@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tomozh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tomozh/library/ST7032/0.0.0-alpha+sha.501bf64fe6/ST7032-0.0.0-alphasha.501bf64fe6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7032-0.0.0-alphasha.501bf64fe6.tar.gz",
+    "size_bytes": 9819,
+    "sha256": "ad1ce6945aa29d07444c4fb9c4f31e38a0c3080b10e6cdee8904f83eb27bdac9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tomozh/library/ST7032/0.0.0-alpha%2Bsha.501bf64fe6/ST7032-0.0.0-alphasha.501bf64fe6.tar.gz",
+     "https://dl.registry.platformio.org/download/tomozh/library/ST7032/0.0.0-alpha%2Bsha.501bf64fe6/ST7032-0.0.0-alphasha.501bf64fe6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

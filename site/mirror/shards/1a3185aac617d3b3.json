@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ustepper",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ustepper/library/egoShieldS/1.1.1/egoShieldS-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "egoShieldS-1.1.1.tar.gz",
+    "size_bytes": 16084,
+    "sha256": "c04eb2b24326ed3a630b6d7df7a91ae7d36d555122075e3d33ba25165792ccc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ustepper/library/egoShieldS/1.1.1/egoShieldS-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ustepper/library/egoShieldS/1.1.1/egoShieldS-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ustepper/library/egoShieldTeach/1.1.0/egoShieldTeach-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "egoShieldTeach-1.1.0.tar.gz",
+    "size_bytes": 11050,
+    "sha256": "d3d44eed7e0267c80c091a4d3991e740fba6fc14036c1b4ffde04766072fc3d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ustepper/library/egoShieldTeach/1.1.0/egoShieldTeach-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ustepper/library/egoShieldTeach/1.1.0/egoShieldTeach-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ustepper/library/egoShieldTimeLapse/1.1.0/egoShieldTimeLapse-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "egoShieldTimeLapse-1.1.0.tar.gz",
+    "size_bytes": 11339,
+    "sha256": "058d7670ac58bbdfb507cc47b1255f754e8bb9305ce8818b30bd26b1859c4a69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ustepper/library/egoShieldTimeLapse/1.1.0/egoShieldTimeLapse-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ustepper/library/egoShieldTimeLapse/1.1.0/egoShieldTimeLapse-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ustepper/library/uStepper%208b/1.0.0/uStepper8b-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uStepper8b-1.0.0.tar.gz",
+    "size_bytes": 38045,
+    "sha256": "d4c2ec43317c2b4cbd1127509e75bd322fb30df2aa32c931d04859e6e815af30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ustepper/library/uStepper%25208b/1.0.0/uStepper8b-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ustepper/library/uStepper%208b/1.0.0/uStepper8b-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ustepper/library/uStepper%20S-lite/1.2.0/uStepperS-lite-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uStepperS-lite-1.2.0.tar.gz",
+    "size_bytes": 5732491,
+    "sha256": "36bb8413c7a237f6003fb21148db14c661ba6cbc9a09b3ac4a28c5c89d8bacbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ustepper/library/uStepper%2520S-lite/1.2.0/uStepperS-lite-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ustepper/library/uStepper%20S-lite/1.2.0/uStepperS-lite-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ustepper/library/uStepper%20S/2.3.2/uStepperS-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uStepperS-2.3.2.tar.gz",
+    "size_bytes": 5674491,
+    "sha256": "4c664274df56be45cb614205bfe5d00f2815c5d192313836ba3bfdc8e7c31b21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ustepper/library/uStepper%2520S/2.3.2/uStepperS-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ustepper/library/uStepper%20S/2.3.2/uStepperS-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ustepper/library/uStepper/1.3.0/uStepper-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uStepper-1.3.0.tar.gz",
+    "size_bytes": 43168,
+    "sha256": "12060976b19917af4b1559ea892f43fcc9d419b5fbe3d10c06893b7e84742b08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ustepper/library/uStepper/1.3.0/uStepper-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ustepper/library/uStepper/1.3.0/uStepper-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ustepper/library/uStepperS32/1.1.0/uStepperS32-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uStepperS32-1.1.0.tar.gz",
+    "size_bytes": 874163,
+    "sha256": "5529c076aeb9ceeee030765324025c1fb247c3702d7191d8dc504be7ec6f4f77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ustepper/library/uStepperS32/1.1.0/uStepperS32-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ustepper/library/uStepperS32/1.1.0/uStepperS32-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

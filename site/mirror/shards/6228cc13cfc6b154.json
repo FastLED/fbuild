@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cheerlights",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cheerlights/library/CheerLights/1.0.4/CheerLights-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CheerLights-1.0.4.tar.gz",
+    "size_bytes": 5599,
+    "sha256": "5db04f35ce0db8062f093fdfef4bbdb9b41ccb597d2fd16b5e5cd79815916328",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cheerlights/library/CheerLights/1.0.4/CheerLights-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/cheerlights/library/CheerLights/1.0.4/CheerLights-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

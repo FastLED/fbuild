@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sfera-labs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sfera-labs/library/Iono%20MKR%20LoRaNet/3.0.1/IonoMKRLoRaNet-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IonoMKRLoRaNet-3.0.1.tar.gz",
+    "size_bytes": 5033,
+    "sha256": "f75866090de2362aecb0540445bd08e6f8e72947829a60a8c7a7b787d1d11b68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sfera-labs/library/Iono%2520MKR%2520LoRaNet/3.0.1/IonoMKRLoRaNet-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sfera-labs/library/Iono%20MKR%20LoRaNet/3.0.1/IonoMKRLoRaNet-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sfera-labs/library/Iono%20RP%20D16/1.1.4/IonoRPD16-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IonoRPD16-1.1.4.tar.gz",
+    "size_bytes": 27063,
+    "sha256": "f3be4425a73e444b674e4c07eba8dc79508ca5c0f7c8433003ede65c86443926",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sfera-labs/library/Iono%2520RP%2520D16/1.1.4/IonoRPD16-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sfera-labs/library/Iono%20RP%20D16/1.1.4/IonoRPD16-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sfera-labs/library/Iono%20Uno-MKR-RP/3.2.2/IonoUno-MKR-RP-3.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IonoUno-MKR-RP-3.2.2.tar.gz",
+    "size_bytes": 68117,
+    "sha256": "b6e6cf28bfdcece074b33e11e728466ddeb5108f3d3943e83d97e80ace060b44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sfera-labs/library/Iono%2520Uno-MKR-RP/3.2.2/IonoUno-MKR-RP-3.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sfera-labs/library/Iono%20Uno-MKR-RP/3.2.2/IonoUno-MKR-RP-3.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sfera-labs/library/LoRaNet/1.1.0/LoRaNet-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaNet-1.1.0.tar.gz",
+    "size_bytes": 16678,
+    "sha256": "b597840d31a03062ef961374d9ff28c4793fe4e617f4cd96fdc21105b6b41da9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sfera-labs/library/LoRaNet/1.1.0/LoRaNet-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sfera-labs/library/LoRaNet/1.1.0/LoRaNet-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sfera-labs/library/Modbus%20RTU%20Slave/1.4.1/ModbusRTUSlave-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusRTUSlave-1.4.1.tar.gz",
+    "size_bytes": 13186,
+    "sha256": "668d9329d7c7e5844f8955e8ae2971d2e2dfefdea6b82bbc876ad39d3f967da3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sfera-labs/library/Modbus%2520RTU%2520Slave/1.4.1/ModbusRTUSlave-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sfera-labs/library/Modbus%20RTU%20Slave/1.4.1/ModbusRTUSlave-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sfera-labs/library/Wiegand/1.2.2/Wiegand-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Wiegand-1.2.2.tar.gz",
+    "size_bytes": 19792,
+    "sha256": "058edb7edff16c5ccb537e95a7fe1b16c8bfb6d1a8b9d68c728600ad2c524ca1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sfera-labs/library/Wiegand/1.2.2/Wiegand-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sfera-labs/library/Wiegand/1.2.2/Wiegand-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

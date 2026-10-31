@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/morethanrobotsfr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "morethanrobotsfr/library/MTR_ADS7830/1.0.1/MTR_ADS7830-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTR_ADS7830-1.0.1.tar.gz",
+    "size_bytes": 3966,
+    "sha256": "da99bca8dff81d4c1e393cfed162c6fcebf8bdfa1402024ddeef5f2d8abc9144",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/morethanrobotsfr/library/MTR_ADS7830/1.0.1/MTR_ADS7830-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/morethanrobotsfr/library/MTR_ADS7830/1.0.1/MTR_ADS7830-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "morethanrobotsfr/library/MTR_STUSB4500/1.0.9/MTR_STUSB4500-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTR_STUSB4500-1.0.9.tar.gz",
+    "size_bytes": 4494,
+    "sha256": "4c6c2dae71a4d58d7f2b98a372f1bf588b147b2f09d88b9471d682b499586d4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/morethanrobotsfr/library/MTR_STUSB4500/1.0.9/MTR_STUSB4500-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/morethanrobotsfr/library/MTR_STUSB4500/1.0.9/MTR_STUSB4500-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

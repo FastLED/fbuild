@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/brxn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "brxn/library/UNO%20HIDKeyboard/1.0.0/UNOHIDKeyboard-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UNOHIDKeyboard-1.0.0.tar.gz",
+    "size_bytes": 5615,
+    "sha256": "ec154d7c914ee7b0cb6cdc409840e8a75db91c6c05a04c520e09502f1af058af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brxn/library/UNO%2520HIDKeyboard/1.0.0/UNOHIDKeyboard-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/brxn/library/UNO%20HIDKeyboard/1.0.0/UNOHIDKeyboard-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

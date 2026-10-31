@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rlogiacco",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rlogiacco/library/Analog%20Buttons/1.2.1/AnalogButtons-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogButtons-1.2.1.tar.gz",
+    "size_bytes": 26456,
+    "sha256": "3ca556fdeffde2ee8920172fe0be48de30a132064521116aa6b643d42af0b617",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rlogiacco/library/Analog%2520Buttons/1.2.1/AnalogButtons-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rlogiacco/library/Analog%20Buttons/1.2.1/AnalogButtons-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rlogiacco/library/Battery%20Sense/1.2.0/BatterySense-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BatterySense-1.2.0.tar.gz",
+    "size_bytes": 15863,
+    "sha256": "99b1cd53a8d5b8a91f77ac2ba86cdaac4d71fe73a595656f9398f01d951278b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rlogiacco/library/Battery%2520Sense/1.2.0/BatterySense-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rlogiacco/library/Battery%20Sense/1.2.0/BatterySense-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rlogiacco/library/CircularBuffer/1.2.0/CircularBuffer-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircularBuffer-1.2.0.tar.gz",
+    "size_bytes": 9561,
+    "sha256": "c6b7392a9dbfdbed2c2d608f31a41a8c1528a6247c48f9ce23c41ccbda97067a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rlogiacco/library/CircularBuffer/1.2.0/CircularBuffer-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rlogiacco/library/CircularBuffer/1.2.0/CircularBuffer-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rlogiacco/library/CircularBuffer/1.3.3/CircularBuffer-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircularBuffer-1.3.3.tar.gz",
+    "size_bytes": 12443,
+    "sha256": "4abe70dd10e171c2837514f971072f8c844d57e511094e0e8e77006d5c58116e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rlogiacco/library/CircularBuffer/1.3.3/CircularBuffer-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rlogiacco/library/CircularBuffer/1.3.3/CircularBuffer-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rlogiacco/library/CircularBuffer/1.4.0/CircularBuffer-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircularBuffer-1.4.0.tar.gz",
+    "size_bytes": 46441,
+    "sha256": "57cdd36d3ebc34a50b795faeb59ce9beeef3cf122814f8ca6e4c7c4361f3280f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rlogiacco/library/CircularBuffer/1.4.0/CircularBuffer-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rlogiacco/library/CircularBuffer/1.4.0/CircularBuffer-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rlogiacco/library/MicroDebug/1.2.2/MicroDebug-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroDebug-1.2.2.tar.gz",
+    "size_bytes": 11971,
+    "sha256": "b0236f70e2813406f70a1fffaaf61f54cf210717e36edd6351bc0b40e7be1dc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rlogiacco/library/MicroDebug/1.2.2/MicroDebug-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rlogiacco/library/MicroDebug/1.2.2/MicroDebug-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rlogiacco/library/PlotPlus/1.0.1/PlotPlus-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlotPlus-1.0.1.tar.gz",
+    "size_bytes": 8345,
+    "sha256": "d337fbb5772a4bf25d0700ca1e0000f5e063fa3e3e585fac47968a794e491c90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rlogiacco/library/PlotPlus/1.0.1/PlotPlus-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rlogiacco/library/PlotPlus/1.0.1/PlotPlus-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rlogiacco/library/Voltage%20Reference/1.2.3/VoltageReference-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VoltageReference-1.2.3.tar.gz",
+    "size_bytes": 13335,
+    "sha256": "7054a3ec49a73763bffc89cf4e838b859ed89c5e250f9207ad6b277b1b436a75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rlogiacco/library/Voltage%2520Reference/1.2.3/VoltageReference-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rlogiacco/library/Voltage%20Reference/1.2.3/VoltageReference-1.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

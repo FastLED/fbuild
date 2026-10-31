@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fttechbrasil",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fttechbrasil/library/FTTech%20Aqualabo%20Sensors/1.0.2/FTTechAqualaboSensors-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FTTechAqualaboSensors-1.0.2.tar.gz",
+    "size_bytes": 6172,
+    "sha256": "5bd38e667f574ada756fa362b618c38af0cb80f912259f5a5f3b842d8025c704",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fttechbrasil/library/FTTech%2520Aqualabo%2520Sensors/1.0.2/FTTechAqualaboSensors-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fttechbrasil/library/FTTech%20Aqualabo%20Sensors/1.0.2/FTTechAqualaboSensors-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fttechbrasil/library/FTTech%20LoRaWAN/0.2.0/FTTechLoRaWAN-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FTTechLoRaWAN-0.2.0.tar.gz",
+    "size_bytes": 3440,
+    "sha256": "20f413177400abb888db0b8cb44a8996ae6948409b9448c662abeb23cec0d6eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fttechbrasil/library/FTTech%2520LoRaWAN/0.2.0/FTTechLoRaWAN-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fttechbrasil/library/FTTech%20LoRaWAN/0.2.0/FTTechLoRaWAN-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fttechbrasil/library/FTTech%20SAMD51%20Clicks/1.3.4/FTTechSAMD51Clicks-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FTTechSAMD51Clicks-1.3.4.tar.gz",
+    "size_bytes": 11495,
+    "sha256": "58de929d15422e1be740412786b483729348ac9c3fa801e0c39150f06b83e0f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fttechbrasil/library/FTTech%2520SAMD51%2520Clicks/1.3.4/FTTechSAMD51Clicks-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/fttechbrasil/library/FTTech%20SAMD51%20Clicks/1.3.4/FTTechSAMD51Clicks-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fttechbrasil/library/FTTech%20SAMD51%20XBee/1.5.0/FTTechSAMD51XBee-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FTTechSAMD51XBee-1.5.0.tar.gz",
+    "size_bytes": 7237,
+    "sha256": "5123d038c75d50e6cf0e888e50e40bf02462661b67b6b24d55edd1ee3fee29d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fttechbrasil/library/FTTech%2520SAMD51%2520XBee/1.5.0/FTTechSAMD51XBee-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fttechbrasil/library/FTTech%20SAMD51%20XBee/1.5.0/FTTechSAMD51XBee-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fttechbrasil/library/FTTech%20Swarm/0.1.1/FTTechSwarm-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FTTechSwarm-0.1.1.tar.gz",
+    "size_bytes": 4362,
+    "sha256": "4c4aefd96f4fb8adbf50dcb43fd521743008186af4021a584cda774a6356d44c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fttechbrasil/library/FTTech%2520Swarm/0.1.1/FTTechSwarm-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fttechbrasil/library/FTTech%20Swarm/0.1.1/FTTechSwarm-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

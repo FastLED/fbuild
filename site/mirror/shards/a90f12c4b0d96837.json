@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nicohood",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nicohood/library/AnalogTouch/1.0.0/AnalogTouch-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogTouch-1.0.0.tar.gz",
+    "size_bytes": 3208,
+    "sha256": "0c93d16f79f822273b5f9394994fdf9ad2b9702fc69214ab063da15202e90574",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nicohood/library/AnalogTouch/1.0.0/AnalogTouch-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nicohood/library/AnalogTouch/1.0.0/AnalogTouch-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nicohood/library/HID-Project/2.8.4/HID-Project-2.8.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HID-Project-2.8.4.tar.gz",
+    "size_bytes": 76946,
+    "sha256": "9a8d1c0ce0ddde1978a5b10916e4918fff307d0e73eb05d9b763bfdd02870cf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nicohood/library/HID-Project/2.8.4/HID-Project-2.8.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nicohood/library/HID-Project/2.8.4/HID-Project-2.8.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nicohood/library/IRLremote/2.0.2/IRLremote-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRLremote-2.0.2.tar.gz",
+    "size_bytes": 47270,
+    "sha256": "54e97af95263cf8ad5a045e3999514b9401b066c540c2bfe1dbb4a7f6b7fee77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nicohood/library/IRLremote/2.0.2/IRLremote-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nicohood/library/IRLremote/2.0.2/IRLremote-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nicohood/library/MSGEQ7/1.2.2/MSGEQ7-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MSGEQ7-1.2.2.tar.gz",
+    "size_bytes": 23458,
+    "sha256": "9bbdea1976c9cfbc2f4543012167522780ae8839c70b706477c8d206be34a82b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nicohood/library/MSGEQ7/1.2.2/MSGEQ7-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nicohood/library/MSGEQ7/1.2.2/MSGEQ7-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nicohood/library/Nintendo/1.4.0/Nintendo-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nintendo-1.4.0.tar.gz",
+    "size_bytes": 115512,
+    "sha256": "4c608ff1e6ea7a35edcbd1320ae3a7510e2fc496160a4d62278b7db34469ece4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nicohood/library/Nintendo/1.4.0/Nintendo-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nicohood/library/Nintendo/1.4.0/Nintendo-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nicohood/library/PinChangeInterrupt/1.2.9/PinChangeInterrupt-1.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinChangeInterrupt-1.2.9.tar.gz",
+    "size_bytes": 45093,
+    "sha256": "13b1503ef210c9e54da635e8d0b9fd73a835308709ea30ab5895fb5aac614ceb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nicohood/library/PinChangeInterrupt/1.2.9/PinChangeInterrupt-1.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/nicohood/library/PinChangeInterrupt/1.2.9/PinChangeInterrupt-1.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nicohood/library/RCLSwitch/1.4/RCLSwitch-1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RCLSwitch-1.4.tar.gz",
+    "size_bytes": 2737,
+    "sha256": "8e6d6c4eed025c1d655d16e18b2f1a43bf82d165203bdd052904677026af70e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nicohood/library/RCLSwitch/1.4/RCLSwitch-1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nicohood/library/RCLSwitch/1.4/RCLSwitch-1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

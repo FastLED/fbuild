@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/siliconlabs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "siliconlabs/tool/framework-gecko-sdk/4.0.0/framework-gecko-sdk-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-gecko-sdk-4.0.0.tar.gz",
+    "size_bytes": 627264120,
+    "sha256": "6716fa471d03bfbc4278ba18f6c780eff26792a463243df2324cc09d57935415",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siliconlabs/tool/framework-gecko-sdk/4.0.0/framework-gecko-sdk-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/siliconlabs/tool/framework-gecko-sdk/4.0.0/framework-gecko-sdk-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siliconlabs/tool/tool-slc-cli/1.0.1/tool-slc-cli-darwin_x86_64-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-slc-cli-darwin_x86_64-1.0.1.tar.gz",
+    "size_bytes": 143407655,
+    "sha256": "3ddcde4c9198efc26b62740597974e2b1a278b74b0bc07473d780cc0fe45a2f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siliconlabs/tool/tool-slc-cli/1.0.1/tool-slc-cli-darwin_x86_64-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/siliconlabs/tool/tool-slc-cli/1.0.1/tool-slc-cli-darwin_x86_64-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siliconlabs/tool/tool-slc-cli/1.0.1/tool-slc-cli-linux_x86_64-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-slc-cli-linux_x86_64-1.0.1.tar.gz",
+    "size_bytes": 134497337,
+    "sha256": "f5afe4358d57db9df7c4a36f9eaae7097a3b074bc51ce91f6a353123923d17ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siliconlabs/tool/tool-slc-cli/1.0.1/tool-slc-cli-linux_x86_64-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/siliconlabs/tool/tool-slc-cli/1.0.1/tool-slc-cli-linux_x86_64-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siliconlabs/tool/tool-slc-cli/1.0.1/tool-slc-cli-windows_amd64-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-slc-cli-windows_amd64-1.0.1.tar.gz",
+    "size_bytes": 137004725,
+    "sha256": "4a789897a6b399fab10d433886ab3cd4d0ce1b3ce2b5e1fef5b11125904509bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siliconlabs/tool/tool-slc-cli/1.0.1/tool-slc-cli-windows_amd64-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/siliconlabs/tool/tool-slc-cli/1.0.1/tool-slc-cli-windows_amd64-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

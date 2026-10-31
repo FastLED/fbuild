@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kenwoodfox",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kenwoodfox/library/VS1003/0.9.1/VS1003-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VS1003-0.9.1.tar.gz",
+    "size_bytes": 11356,
+    "sha256": "f7b507dc1a71ea52afc001208ea01f968b2d296090ed0f9451ad814eb857674b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kenwoodfox/library/VS1003/0.9.1/VS1003-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kenwoodfox/library/VS1003/0.9.1/VS1003-0.9.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

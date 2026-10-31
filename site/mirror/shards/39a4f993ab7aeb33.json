@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/muhpuc40",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "muhpuc40/library/MacRandomizer/1.0.1/MacRandomizer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MacRandomizer-1.0.1.tar.gz",
+    "size_bytes": 3071,
+    "sha256": "f2724f59ba2b23e7057fa4d0df5d1e8365c9a79e292f1f5d3f070011bb461cdc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/muhpuc40/library/MacRandomizer/1.0.1/MacRandomizer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/muhpuc40/library/MacRandomizer/1.0.1/MacRandomizer-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

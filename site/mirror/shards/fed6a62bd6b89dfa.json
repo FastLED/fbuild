@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/georgychen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "georgychen/library/Fuzzy%20Spooder/1.1.1/FuzzySpooder-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FuzzySpooder-1.1.1.tar.gz",
+    "size_bytes": 187918,
+    "sha256": "b749bb691484bd47d396c932e198cfb00bcf9bd914f46da2cb157b903de9c34c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/georgychen/library/Fuzzy%2520Spooder/1.1.1/FuzzySpooder-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/georgychen/library/Fuzzy%20Spooder/1.1.1/FuzzySpooder-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aadilmallick",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aadilmallick/library/EzArduino/1.0.2/EzArduino-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EzArduino-1.0.2.tar.gz",
+    "size_bytes": 6604,
+    "sha256": "3c61e53c5fbf5e517991b3423084d50251666dd168b8d2eeb6b59cf524fe80f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aadilmallick/library/EzArduino/1.0.2/EzArduino-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/aadilmallick/library/EzArduino/1.0.2/EzArduino-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

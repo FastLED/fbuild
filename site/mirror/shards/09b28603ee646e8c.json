@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vindar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vindar/library/ILI9341_T4/1.6.2/ILI9341_T4-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341_T4-1.6.2.tar.gz",
+    "size_bytes": 437082,
+    "sha256": "8fd3c169ac862d52856abc784732340dd794f778db0563d4d00d2f4e56beb21e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vindar/library/ILI9341_T4/1.6.2/ILI9341_T4-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vindar/library/ILI9341_T4/1.6.2/ILI9341_T4-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vindar/library/ILI9341_T4/1.6.3/ILI9341_T4-1.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341_T4-1.6.3.tar.gz",
+    "size_bytes": 423810,
+    "sha256": "591eb42f4e74a0ec33d9a45a8abfb4d8286e97b3dd8da3f37b6e1eb6045dbed2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vindar/library/ILI9341_T4/1.6.3/ILI9341_T4-1.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vindar/library/ILI9341_T4/1.6.3/ILI9341_T4-1.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vindar/library/ILI9341_T4/1.6.4/ILI9341_T4-1.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341_T4-1.6.4.tar.gz",
+    "size_bytes": 424308,
+    "sha256": "21a1d9048ea2576450603c2011ef910de473d44f814b22a44c15f89006293999",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vindar/library/ILI9341_T4/1.6.4/ILI9341_T4-1.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vindar/library/ILI9341_T4/1.6.4/ILI9341_T4-1.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vindar/library/ILI9341_T4/1.7.0/ILI9341_T4-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341_T4-1.7.0.tar.gz",
+    "size_bytes": 434226,
+    "sha256": "9ca7ba13fb74720eed247dbc2b35803f977788e4eca3eafed192764c72cac8f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vindar/library/ILI9341_T4/1.7.0/ILI9341_T4-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vindar/library/ILI9341_T4/1.7.0/ILI9341_T4-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vindar/library/ILI9341_T4/1.7.1/ILI9341_T4-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341_T4-1.7.1.tar.gz",
+    "size_bytes": 434348,
+    "sha256": "f162e15a76606641ed56d461f86c3d6d45809996d44ad74d69e5d43d18f817c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vindar/library/ILI9341_T4/1.7.1/ILI9341_T4-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vindar/library/ILI9341_T4/1.7.1/ILI9341_T4-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vindar/library/ILI9342_T4/1.0.2/ILI9342_T4-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9342_T4-1.0.2.tar.gz",
+    "size_bytes": 430280,
+    "sha256": "c9cb6da4f76352481afbd0f202ef213b7262e1e25bc78eca9e0dc3d030b63c6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vindar/library/ILI9342_T4/1.0.2/ILI9342_T4-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vindar/library/ILI9342_T4/1.0.2/ILI9342_T4-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vindar/library/tgx/1.0.7/tgx-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tgx-1.0.7.tar.gz",
+    "size_bytes": 16077902,
+    "sha256": "c12d8a3cf71632527e5efd77a80b05eacb2ecde5dd6cdf68be9c1b879441765d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vindar/library/tgx/1.0.7/tgx-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/vindar/library/tgx/1.0.7/tgx-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vindar/library/tgx/1.0.8/tgx-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tgx-1.0.8.tar.gz",
+    "size_bytes": 16077905,
+    "sha256": "84fa7c0699d944f36e5a33f5256ca00c9522313193d56d87f8a10efbfdf738b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vindar/library/tgx/1.0.8/tgx-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/vindar/library/tgx/1.0.8/tgx-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vindar/library/tgx/1.1.0/tgx-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tgx-1.1.0.tar.gz",
+    "size_bytes": 24965542,
+    "sha256": "939452e95157602e35843c958b2fe49566603185e8272ec6795383939cc7d24c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vindar/library/tgx/1.1.0/tgx-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vindar/library/tgx/1.1.0/tgx-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vindar/library/tgx/1.1.1/tgx-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tgx-1.1.1.tar.gz",
+    "size_bytes": 25717372,
+    "sha256": "389b2e91d08cbb083f5235b08d13bc4021b6cda09dcf2c862c3d4ff67f1fbdf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vindar/library/tgx/1.1.1/tgx-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vindar/library/tgx/1.1.1/tgx-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vindar/library/tgx/1.1.2/tgx-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tgx-1.1.2.tar.gz",
+    "size_bytes": 30652928,
+    "sha256": "b27a6838ce0c198788cf3f828e65d9913e734fda9bbbc119c381f7d7343debc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vindar/library/tgx/1.1.2/tgx-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vindar/library/tgx/1.1.2/tgx-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vindar/library/tgx/1.1.4/tgx-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tgx-1.1.4.tar.gz",
+    "size_bytes": 20997993,
+    "sha256": "f90eb08d4327033177d256675c858fbb26d6987069c72e7bd118123e58016ceb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vindar/library/tgx/1.1.4/tgx-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vindar/library/tgx/1.1.4/tgx-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

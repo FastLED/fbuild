@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-robotique-fip",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-robotique-fip/library/VL6180x_lib/0.0.0+sha.84fb42fedc5b/VL6180x_lib-0.0.0+sha.84fb42fedc5b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL6180x_lib-0.0.0+sha.84fb42fedc5b.tar.gz",
+    "size_bytes": 5895,
+    "sha256": "25851a790aad3953bad549060d66062afa6f8524c0400ff1d94c3476e226e1ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-robotique-fip/library/VL6180x_lib/0.0.0%2Bsha.84fb42fedc5b/VL6180x_lib-0.0.0%2Bsha.84fb42fedc5b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-robotique-fip/library/VL6180x_lib/0.0.0%2Bsha.84fb42fedc5b/VL6180x_lib-0.0.0%2Bsha.84fb42fedc5b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

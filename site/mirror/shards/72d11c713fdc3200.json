@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/abread",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "abread/library/CJKit/1.0.8/CJKit-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CJKit-1.0.8.tar.gz",
+    "size_bytes": 10335,
+    "sha256": "6a5068ddf83d286e2e6054bf1d31e52bda824e718bbb7772c479599940938858",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abread/library/CJKit/1.0.8/CJKit-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/abread/library/CJKit/1.0.8/CJKit-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abread/library/CJKit/1.0.9/CJKit-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CJKit-1.0.9.tar.gz",
+    "size_bytes": 10295,
+    "sha256": "e8a97e5ff8f011bfff2f7e9cd46043caca1cfc98dac7fa993df2a424b1b66b33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abread/library/CJKit/1.0.9/CJKit-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/abread/library/CJKit/1.0.9/CJKit-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

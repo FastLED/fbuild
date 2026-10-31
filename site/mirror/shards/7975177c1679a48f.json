@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-martwerl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-martwerl/library/C12832/0.0.0+sha.54a8c9ae5155/C12832-0.0.0+sha.54a8c9ae5155.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C12832-0.0.0+sha.54a8c9ae5155.tar.gz",
+    "size_bytes": 10438,
+    "sha256": "1514c5dfcfdcdfa9214016fa54354021d0a96f89ea7054d3b24c5c5c277f9b71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-martwerl/library/C12832/0.0.0%2Bsha.54a8c9ae5155/C12832-0.0.0%2Bsha.54a8c9ae5155.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-martwerl/library/C12832/0.0.0%2Bsha.54a8c9ae5155/C12832-0.0.0%2Bsha.54a8c9ae5155.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-martwerl/library/C12832_1/0.0.0+sha.bb22887dec8a/C12832_1-0.0.0+sha.bb22887dec8a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C12832_1-0.0.0+sha.bb22887dec8a.tar.gz",
+    "size_bytes": 10448,
+    "sha256": "137c00141d64b827a3aadf1e56314e7320bc69a43bf77e396289c19054a6c061",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-martwerl/library/C12832_1/0.0.0%2Bsha.bb22887dec8a/C12832_1-0.0.0%2Bsha.bb22887dec8a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-martwerl/library/C12832_1/0.0.0%2Bsha.bb22887dec8a/C12832_1-0.0.0%2Bsha.bb22887dec8a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

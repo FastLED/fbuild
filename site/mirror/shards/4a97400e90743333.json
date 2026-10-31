@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-caeguser",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-caeguser/library/ULTRASONICO/0.0.0+sha.e322b577eafb/ULTRASONICO-0.0.0+sha.e322b577eafb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ULTRASONICO-0.0.0+sha.e322b577eafb.tar.gz",
+    "size_bytes": 1037,
+    "sha256": "00fb46be4b2cedd7ffb8ec0d7a8c216451068c2f426ab115c7cf9b5757e69f3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-caeguser/library/ULTRASONICO/0.0.0%2Bsha.e322b577eafb/ULTRASONICO-0.0.0%2Bsha.e322b577eafb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-caeguser/library/ULTRASONICO/0.0.0%2Bsha.e322b577eafb/ULTRASONICO-0.0.0%2Bsha.e322b577eafb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/remyar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "remyar/library/YauS-console/0.0.7/YauS-console-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YauS-console-0.0.7.tar.gz",
+    "size_bytes": 6215,
+    "sha256": "e10039a80974fc8cc6ceaadda9d392472791bf817c0bd958204a25f93348a7bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remyar/library/YauS-console/0.0.7/YauS-console-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/remyar/library/YauS-console/0.0.7/YauS-console-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remyar/library/YauS-core/0.0.29/YauS-core-0.0.29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YauS-core-0.0.29.tar.gz",
+    "size_bytes": 4050,
+    "sha256": "c10cfc97c29430ae65e4b8939d442cd11f011348c5d3d3b1860b3043eae5d3cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remyar/library/YauS-core/0.0.29/YauS-core-0.0.29.tar.gz",
+     "https://dl.registry.platformio.org/download/remyar/library/YauS-core/0.0.29/YauS-core-0.0.29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remyar/library/YauS-drivers/0.0.13/YauS-drivers-0.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YauS-drivers-0.0.13.tar.gz",
+    "size_bytes": 1997,
+    "sha256": "21ba48170cf05319ce4871945bc30451a4c51243d90ea98dd7f55bf6c43c0b5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remyar/library/YauS-drivers/0.0.13/YauS-drivers-0.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/remyar/library/YauS-drivers/0.0.13/YauS-drivers-0.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remyar/library/YauS-events/0.0.11/YauS-events-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YauS-events-0.0.11.tar.gz",
+    "size_bytes": 2359,
+    "sha256": "3762a5b4dcf77423683bce26d9deaed42910e84a361b7e6a6d04348a8afcef92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remyar/library/YauS-events/0.0.11/YauS-events-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/remyar/library/YauS-events/0.0.11/YauS-events-0.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remyar/library/YauS-queue/0.0.1/YauS-queue-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YauS-queue-0.0.1.tar.gz",
+    "size_bytes": 1817,
+    "sha256": "e86968d1e04db717a46984e4851a7a57caf7ca7279fe6aca65afe7a3111b1c36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remyar/library/YauS-queue/0.0.1/YauS-queue-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/remyar/library/YauS-queue/0.0.1/YauS-queue-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remyar/library/YauS-stm32f1xx/0.0.44/YauS-stm32f1xx-0.0.44.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YauS-stm32f1xx-0.0.44.tar.gz",
+    "size_bytes": 37817,
+    "sha256": "eb4ac63e4fcd1d87ea5a4bd794d567b71d54ab3270c903960fc1f1beccb7d5b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remyar/library/YauS-stm32f1xx/0.0.44/YauS-stm32f1xx-0.0.44.tar.gz",
+     "https://dl.registry.platformio.org/download/remyar/library/YauS-stm32f1xx/0.0.44/YauS-stm32f1xx-0.0.44.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remyar/library/YauS-stm32f4xx/0.0.1/YauS-stm32f4xx-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YauS-stm32f4xx-0.0.1.tar.gz",
+    "size_bytes": 29056,
+    "sha256": "8606d11e436045435e3d834d9ead4a68972c651ab53d82ec4b740057a232d83e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remyar/library/YauS-stm32f4xx/0.0.1/YauS-stm32f4xx-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/remyar/library/YauS-stm32f4xx/0.0.1/YauS-stm32f4xx-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

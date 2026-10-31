@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kb-sensor-mart",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kb-sensor-mart/library/iSYS4001/1.0.1/iSYS4001-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iSYS4001-1.0.1.tar.gz",
+    "size_bytes": 31379,
+    "sha256": "4f6115a3ca4cc175e8679c10346955d317a95b206fbb6d44013daf2af7125d4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kb-sensor-mart/library/iSYS4001/1.0.1/iSYS4001-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kb-sensor-mart/library/iSYS4001/1.0.1/iSYS4001-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kb-sensor-mart/library/iSYS4001/1.0.3/iSYS4001-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iSYS4001-1.0.3.tar.gz",
+    "size_bytes": 32112,
+    "sha256": "456f1e0c331b006096814055675756000bfbbf9fbfebd490cbb61532b4552ab6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kb-sensor-mart/library/iSYS4001/1.0.3/iSYS4001-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kb-sensor-mart/library/iSYS4001/1.0.3/iSYS4001-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

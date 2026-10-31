@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dautor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dautor/library/BMC150/0.0.0+sha.1d1123b3df76/BMC150-0.0.0+sha.1d1123b3df76.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMC150-0.0.0+sha.1d1123b3df76.tar.gz",
+    "size_bytes": 2090,
+    "sha256": "7e1533ae985dd3040b1c8cc9eb0a160cf48ea158de5fe2fe4044bfceea24bd83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dautor/library/BMC150/0.0.0%2Bsha.1d1123b3df76/BMC150-0.0.0%2Bsha.1d1123b3df76.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dautor/library/BMC150/0.0.0%2Bsha.1d1123b3df76/BMC150-0.0.0%2Bsha.1d1123b3df76.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dautor/library/acn_nrf52_saadc/0.0.0+sha.a11936e7e0af/acn_nrf52_saadc-0.0.0+sha.a11936e7e0af.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "acn_nrf52_saadc-0.0.0+sha.a11936e7e0af.tar.gz",
+    "size_bytes": 1646,
+    "sha256": "332b569e2d6d524a768e9310511ead838cf547af475ecdfb3fcff4710ad1369f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dautor/library/acn_nrf52_saadc/0.0.0%2Bsha.a11936e7e0af/acn_nrf52_saadc-0.0.0%2Bsha.a11936e7e0af.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dautor/library/acn_nrf52_saadc/0.0.0%2Bsha.a11936e7e0af/acn_nrf52_saadc-0.0.0%2Bsha.a11936e7e0af.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dautor/library/aconno_nrf52_crypt/0.0.0+sha.3a37637be467/aconno_nrf52_crypt-0.0.0+sha.3a37637be467.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "aconno_nrf52_crypt-0.0.0+sha.3a37637be467.tar.gz",
+    "size_bytes": 2807,
+    "sha256": "5da3426973931700a1d6d083c7c1e3ddd78855c9b94ace88612e578cb211b388",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dautor/library/aconno_nrf52_crypt/0.0.0%2Bsha.3a37637be467/aconno_nrf52_crypt-0.0.0%2Bsha.3a37637be467.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dautor/library/aconno_nrf52_crypt/0.0.0%2Bsha.3a37637be467/aconno_nrf52_crypt-0.0.0%2Bsha.3a37637be467.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dautor/library/aconno_nrf52_nfc/0.0.0+sha.80d07b6ad7bc/aconno_nrf52_nfc-0.0.0+sha.80d07b6ad7bc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "aconno_nrf52_nfc-0.0.0+sha.80d07b6ad7bc.tar.gz",
+    "size_bytes": 1021,
+    "sha256": "ea8899a562e3fd5f9b7168ca4b2a619410d23cb6fde7044923f52bf6585d9961",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dautor/library/aconno_nrf52_nfc/0.0.0%2Bsha.80d07b6ad7bc/aconno_nrf52_nfc-0.0.0%2Bsha.80d07b6ad7bc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dautor/library/aconno_nrf52_nfc/0.0.0%2Bsha.80d07b6ad7bc/aconno_nrf52_nfc-0.0.0%2Bsha.80d07b6ad7bc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

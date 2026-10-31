@@ -1,0 +1,646 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/envirodiy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "envirodiy/library/ANBSensorsModbus/0.1.0/ANBSensorsModbus-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ANBSensorsModbus-0.1.0.tar.gz",
+    "size_bytes": 23457,
+    "sha256": "206ef73115868e088b52b1b518c57e830a65a213591127e47ec68244204242c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/ANBSensorsModbus/0.1.0/ANBSensorsModbus-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/ANBSensorsModbus/0.1.0/ANBSensorsModbus-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/ANBSensorsModbus/0.1.1/ANBSensorsModbus-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ANBSensorsModbus-0.1.1.tar.gz",
+    "size_bytes": 23708,
+    "sha256": "9e4cc9d8a2ec2ec6dc76bea6b71d3ae2b5c5c1cd367cc8126c8664978c9c21da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/ANBSensorsModbus/0.1.1/ANBSensorsModbus-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/ANBSensorsModbus/0.1.1/ANBSensorsModbus-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/ANBSensorsModbus/0.2.0/ANBSensorsModbus-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ANBSensorsModbus-0.2.0.tar.gz",
+    "size_bytes": 23614,
+    "sha256": "775d80d69381ecd0907af3043e9bd5dec79444c1ddeed7a0ac5ae7a7c749bb3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/ANBSensorsModbus/0.2.0/ANBSensorsModbus-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/ANBSensorsModbus/0.2.0/ANBSensorsModbus-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/ANBSensorsModbus/0.2.1/ANBSensorsModbus-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ANBSensorsModbus-0.2.1.tar.gz",
+    "size_bytes": 24311,
+    "sha256": "23e660bea57cc17de1746dd89213c48a4ad3fe189f15c498123768599145dedd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/ANBSensorsModbus/0.2.1/ANBSensorsModbus-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/ANBSensorsModbus/0.2.1/ANBSensorsModbus-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/ANBSensorsModbus/0.2.3/ANBSensorsModbus-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ANBSensorsModbus-0.2.3.tar.gz",
+    "size_bytes": 25065,
+    "sha256": "462877f3ca984d861abfca89d5ea8425949c8dfcb61da97961bd8464927615b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/ANBSensorsModbus/0.2.3/ANBSensorsModbus-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/ANBSensorsModbus/0.2.3/ANBSensorsModbus-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/ANBSensorsModbus/0.2.4/ANBSensorsModbus-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ANBSensorsModbus-0.2.4.tar.gz",
+    "size_bytes": 25058,
+    "sha256": "d4931bfbf7509ed385a3e3400f788b33506322757102f64a10e853425a625418",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/ANBSensorsModbus/0.2.4/ANBSensorsModbus-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/ANBSensorsModbus/0.2.4/ANBSensorsModbus-0.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/ANBSensorsModbus/0.2.5/ANBSensorsModbus-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ANBSensorsModbus-0.2.5.tar.gz",
+    "size_bytes": 25860,
+    "sha256": "19fce7f025a3491b28acffa2fdc59c5ad5af501cde0b0b0ee754132de32a56c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/ANBSensorsModbus/0.2.5/ANBSensorsModbus-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/ANBSensorsModbus/0.2.5/ANBSensorsModbus-0.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/ANBSensorsModbus/0.2.6/ANBSensorsModbus-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ANBSensorsModbus-0.2.6.tar.gz",
+    "size_bytes": 25610,
+    "sha256": "8bf3e7b27d05894fec0c2465442e2c9a26b81f8b84c86ba591b0446c1ec763be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/ANBSensorsModbus/0.2.6/ANBSensorsModbus-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/ANBSensorsModbus/0.2.6/ANBSensorsModbus-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/ANBSensorsModbus/0.3.0/ANBSensorsModbus-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ANBSensorsModbus-0.3.0.tar.gz",
+    "size_bytes": 35698,
+    "sha256": "f1862e892bf90d5e6505bc3f42aab4eba30265ebff0f95d342171c3ab9b402d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/ANBSensorsModbus/0.3.0/ANBSensorsModbus-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/ANBSensorsModbus/0.3.0/ANBSensorsModbus-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/ANBSensorsModbus/0.4.1/ANBSensorsModbus-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ANBSensorsModbus-0.4.1.tar.gz",
+    "size_bytes": 36896,
+    "sha256": "9b92f307f173db22bb1357555a83d95de27f6e454936d806726f5094c1cf7863",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/ANBSensorsModbus/0.4.1/ANBSensorsModbus-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/ANBSensorsModbus/0.4.1/ANBSensorsModbus-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/ANBSensorsModbus/0.4.2/ANBSensorsModbus-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ANBSensorsModbus-0.4.2.tar.gz",
+    "size_bytes": 39565,
+    "sha256": "be339035872d98e211ccab7f9b3ce7eebed71c41dadaa8663d6f5cc62ba5fd3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/ANBSensorsModbus/0.4.2/ANBSensorsModbus-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/ANBSensorsModbus/0.4.2/ANBSensorsModbus-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/EnviroDIY_DS3231/1.3.6/EnviroDIY_DS3231-1.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EnviroDIY_DS3231-1.3.6.tar.gz",
+    "size_bytes": 12055,
+    "sha256": "3689b0e608e0362b227cda062306eb80efd1517e65fca0555e9abea906cd52e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/EnviroDIY_DS3231/1.3.6/EnviroDIY_DS3231-1.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/EnviroDIY_DS3231/1.3.6/EnviroDIY_DS3231-1.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/EnviroDIY_ModularSensors/0.37.0/EnviroDIY_ModularSensors-0.37.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EnviroDIY_ModularSensors-0.37.0.tar.gz",
+    "size_bytes": 497544,
+    "sha256": "2e3124202ca3aa6cac834d6b0138be62de8fd1c2ece7a10838da18cee82a5e5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/EnviroDIY_ModularSensors/0.37.0/EnviroDIY_ModularSensors-0.37.0.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/EnviroDIY_ModularSensors/0.37.0/EnviroDIY_ModularSensors-0.37.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/EpochTime/1.0.0/EpochTime-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpochTime-1.0.0.tar.gz",
+    "size_bytes": 13435,
+    "sha256": "ce11d1d33621ab6f21e073e7ec7b4df230e543bb105f35da224b202f2d977c88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/EpochTime/1.0.0/EpochTime-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/EpochTime/1.0.0/EpochTime-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/EpochTime/1.1.0/EpochTime-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpochTime-1.1.0.tar.gz",
+    "size_bytes": 15846,
+    "sha256": "d568ddbc52deecf0d4e40a21c1e14cff51c69139fd9eb6754d35917629d1d5b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/EpochTime/1.1.0/EpochTime-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/EpochTime/1.1.0/EpochTime-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/EpochTime/1.1.1/EpochTime-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpochTime-1.1.1.tar.gz",
+    "size_bytes": 16043,
+    "sha256": "72f0d1a9565d3bc67355a2f29d4e346e704892541d1ad8d405ffeac14b4ebaef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/EpochTime/1.1.1/EpochTime-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/EpochTime/1.1.1/EpochTime-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/GeoluxCamera/0.1.3/GeoluxCamera-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeoluxCamera-0.1.3.tar.gz",
+    "size_bytes": 66575,
+    "sha256": "d0c198d41fa1794685e8696dc2e3782702b6ff9c1a8ac595feb4c988250080cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/GeoluxCamera/0.1.3/GeoluxCamera-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/GeoluxCamera/0.1.3/GeoluxCamera-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/GroPointModbus/0.1.2/GroPointModbus-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroPointModbus-0.1.2.tar.gz",
+    "size_bytes": 60631,
+    "sha256": "def29cf131cf72853b6f4fd4302e8d13c18e68d58961ff14146286b8ffed0db6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/GroPointModbus/0.1.2/GroPointModbus-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/GroPointModbus/0.1.2/GroPointModbus-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/GroPointModbus/0.1.3/GroPointModbus-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroPointModbus-0.1.3.tar.gz",
+    "size_bytes": 60603,
+    "sha256": "7aa8003adca84c03f9bd0e7caa7ff0557de4a0aeb32802a1db42b103072a680f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/GroPointModbus/0.1.3/GroPointModbus-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/GroPointModbus/0.1.3/GroPointModbus-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/GroPointModbus/0.1.4/GroPointModbus-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroPointModbus-0.1.4.tar.gz",
+    "size_bytes": 60605,
+    "sha256": "4084e483ce2075c1354d5821adcffb21a4404f8561196ee2902e6a7d1183f3a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/GroPointModbus/0.1.4/GroPointModbus-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/GroPointModbus/0.1.4/GroPointModbus-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/GroPointModbus/0.1.5/GroPointModbus-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroPointModbus-0.1.5.tar.gz",
+    "size_bytes": 60630,
+    "sha256": "6475f0a8e36f43b5ba3e6afb4b9ee09066e313693e660a512189aba640389656",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/GroPointModbus/0.1.5/GroPointModbus-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/GroPointModbus/0.1.5/GroPointModbus-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/KellerModbus/0.2.4/KellerModbus-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KellerModbus-0.2.4.tar.gz",
+    "size_bytes": 55107,
+    "sha256": "7bbbaa6b32785700ca5ee287afa654e97cf613fc9840b7f89832e0c6cfd49fa2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/KellerModbus/0.2.4/KellerModbus-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/KellerModbus/0.2.4/KellerModbus-0.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/KellerModbus/0.2.5/KellerModbus-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KellerModbus-0.2.5.tar.gz",
+    "size_bytes": 55098,
+    "sha256": "7634cf7a7fe3f6eef9f6442a4ceb6d3a5d00092801934482bd77dc08ab16bb59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/KellerModbus/0.2.5/KellerModbus-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/KellerModbus/0.2.5/KellerModbus-0.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/KellerModbus/0.2.6/KellerModbus-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KellerModbus-0.2.6.tar.gz",
+    "size_bytes": 55115,
+    "sha256": "d2e763adb6b789890e6218b49962694fc07bc046536f7550d39462d040f518da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/KellerModbus/0.2.6/KellerModbus-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/KellerModbus/0.2.6/KellerModbus-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/KellerModbus/0.2.7/KellerModbus-0.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KellerModbus-0.2.7.tar.gz",
+    "size_bytes": 55125,
+    "sha256": "f3134a45119aa5587ec0f7292577943e132eccec9c004bacf09bffd8bee88806",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/KellerModbus/0.2.7/KellerModbus-0.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/KellerModbus/0.2.7/KellerModbus-0.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/LoRa_AT/0.4.3/LoRa_AT-0.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRa_AT-0.4.3.tar.gz",
+    "size_bytes": 45501,
+    "sha256": "167e53c89fa65c2ccc60427fd9df0fcecb201407cf72591977f3d9337c9a6701",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/LoRa_AT/0.4.3/LoRa_AT-0.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/LoRa_AT/0.4.3/LoRa_AT-0.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/RTC_I2C/0.7.0/RTC_I2C-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC_I2C-0.7.0.tar.gz",
+    "size_bytes": 41455,
+    "sha256": "f852fe46cc02049902c927aec8e850a492ea1e13aab44fe723b2c4862a5b0a2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/RTC_I2C/0.7.0/RTC_I2C-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/RTC_I2C/0.7.0/RTC_I2C-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SC16IS7XX/2.0.0/SC16IS7XX-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SC16IS7XX-2.0.0.tar.gz",
+    "size_bytes": 31356,
+    "sha256": "ecaf68dd61c6f955fff398c301397e63538b6795219bc27a72de747d92b61fde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SC16IS7XX/2.0.0/SC16IS7XX-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SC16IS7XX/2.0.0/SC16IS7XX-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SDI-12/2.3.1/SDI-12-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDI-12-2.3.1.tar.gz",
+    "size_bytes": 6388264,
+    "sha256": "009252f974b665918aefa0acc0cc5f801a10f103ae4bb50baf8e6fe9e4b999ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SDI-12/2.3.1/SDI-12-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SDI-12/2.3.1/SDI-12-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SDI-12/2.3.2/SDI-12-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDI-12-2.3.2.tar.gz",
+    "size_bytes": 6388287,
+    "sha256": "1c2e135d4f264c2445c9b1f7c521a5d04125ad604fe162155ee8b99139cfd76e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SDI-12/2.3.2/SDI-12-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SDI-12/2.3.2/SDI-12-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SDI-12/2.3.4/SDI-12-2.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDI-12-2.3.4.tar.gz",
+    "size_bytes": 6402950,
+    "sha256": "095e826363ccf177cb3f0c66b8c4b8d2745f334d7120fbad9d4837154794d47e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SDI-12/2.3.4/SDI-12-2.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SDI-12/2.3.4/SDI-12-2.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SDI-12/2.4.0/SDI-12-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDI-12-2.4.0.tar.gz",
+    "size_bytes": 3036261,
+    "sha256": "0bead0f264600e26b7b1dd6eb57602483cf45da4ef5eaa49799b2e3b7748e05a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SDI-12/2.4.0/SDI-12-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SDI-12/2.4.0/SDI-12-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SDI-12/2.5.0/SDI-12-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDI-12-2.5.0.tar.gz",
+    "size_bytes": 3037608,
+    "sha256": "b330faeb6555138c3a60323c50ddeeec378e2ffdc326b371f46fbff76211af33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SDI-12/2.5.0/SDI-12-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SDI-12/2.5.0/SDI-12-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SensorModbusMaster/0.6.8/SensorModbusMaster-0.6.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorModbusMaster-0.6.8.tar.gz",
+    "size_bytes": 107572,
+    "sha256": "ca18114c3d2c9a8ac8638446267c66908c9196d1c4942cdbb4212cf356ceae6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SensorModbusMaster/0.6.8/SensorModbusMaster-0.6.8.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SensorModbusMaster/0.6.8/SensorModbusMaster-0.6.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SensorModbusMaster/1.3.0/SensorModbusMaster-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorModbusMaster-1.3.0.tar.gz",
+    "size_bytes": 76243,
+    "sha256": "35215d82b03430b1c9ec1f188ab9851e0512d287157cbf4fcb855ae035154172",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SensorModbusMaster/1.3.0/SensorModbusMaster-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SensorModbusMaster/1.3.0/SensorModbusMaster-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SensorModbusMaster/1.4.0/SensorModbusMaster-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorModbusMaster-1.4.0.tar.gz",
+    "size_bytes": 76576,
+    "sha256": "71b512439bf42376f3e81b9ec23fa6851ffa379c4ffad95424c7200e859f83f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SensorModbusMaster/1.4.0/SensorModbusMaster-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SensorModbusMaster/1.4.0/SensorModbusMaster-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SensorModbusMaster/1.5.0/SensorModbusMaster-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorModbusMaster-1.5.0.tar.gz",
+    "size_bytes": 76895,
+    "sha256": "94834853910c140e4cb7688052e130384520c5ae764eac6c22d62e0ca659dfc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SensorModbusMaster/1.5.0/SensorModbusMaster-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SensorModbusMaster/1.5.0/SensorModbusMaster-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SensorModbusMaster/1.6.0/SensorModbusMaster-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorModbusMaster-1.6.0.tar.gz",
+    "size_bytes": 79540,
+    "sha256": "b884b2c9b70237492af3b31a9e6b17aa04a24e9e9b5ea7814e3bafc3e80dac32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SensorModbusMaster/1.6.0/SensorModbusMaster-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SensorModbusMaster/1.6.0/SensorModbusMaster-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SensorModbusMaster/1.6.1/SensorModbusMaster-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorModbusMaster-1.6.1.tar.gz",
+    "size_bytes": 79970,
+    "sha256": "2eb25b0be48e2aaa9a82563687d5d18c4be4807922292b2202eea728382688fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SensorModbusMaster/1.6.1/SensorModbusMaster-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SensorModbusMaster/1.6.1/SensorModbusMaster-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SensorModbusMaster/1.6.2/SensorModbusMaster-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorModbusMaster-1.6.2.tar.gz",
+    "size_bytes": 80079,
+    "sha256": "62424869fd002b248701a13bd2daa60542768cb145e3fb36d928fbef148502b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SensorModbusMaster/1.6.2/SensorModbusMaster-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SensorModbusMaster/1.6.2/SensorModbusMaster-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SensorModbusMaster/1.6.3/SensorModbusMaster-1.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorModbusMaster-1.6.3.tar.gz",
+    "size_bytes": 80187,
+    "sha256": "9e5fab86a5764cf91fee9f80ff080a38daa76ed6e14166f994c466e5b93082e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SensorModbusMaster/1.6.3/SensorModbusMaster-1.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SensorModbusMaster/1.6.3/SensorModbusMaster-1.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SensorModbusMaster/1.6.4/SensorModbusMaster-1.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorModbusMaster-1.6.4.tar.gz",
+    "size_bytes": 80216,
+    "sha256": "b3a3e88ca70061a2d4bd80011da3f76878214caadf38966827f3b95211bcf5d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SensorModbusMaster/1.6.4/SensorModbusMaster-1.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SensorModbusMaster/1.6.4/SensorModbusMaster-1.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SensorModbusMaster/1.6.5/SensorModbusMaster-1.6.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorModbusMaster-1.6.5.tar.gz",
+    "size_bytes": 80225,
+    "sha256": "010ca7a71ff3cb57f68cb843813210c0a97eef398b8fed7e0f345fac8aae957d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SensorModbusMaster/1.6.5/SensorModbusMaster-1.6.5.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SensorModbusMaster/1.6.5/SensorModbusMaster-1.6.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SensorModbusMaster/1.6.6/SensorModbusMaster-1.6.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorModbusMaster-1.6.6.tar.gz",
+    "size_bytes": 80383,
+    "sha256": "bff9b2a1bade4bc554be3e6d043a247678a6f9c5a00952aa405194d251b8db14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SensorModbusMaster/1.6.6/SensorModbusMaster-1.6.6.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SensorModbusMaster/1.6.6/SensorModbusMaster-1.6.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/SensorModbusMaster/1.7.0/SensorModbusMaster-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorModbusMaster-1.7.0.tar.gz",
+    "size_bytes": 80590,
+    "sha256": "da304cc3e7458d400bdd43189bbc1792b49459c77b9905ed3cf179d94373ecb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/SensorModbusMaster/1.7.0/SensorModbusMaster-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/SensorModbusMaster/1.7.0/SensorModbusMaster-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/YosemitechModbus/0.5.1/YosemitechModbus-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YosemitechModbus-0.5.1.tar.gz",
+    "size_bytes": 1919138,
+    "sha256": "3006d77d1df42e0ae069c3f7a2ad28e3af5ca81f7f9baca4758a19c4e79e7a36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/YosemitechModbus/0.5.1/YosemitechModbus-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/YosemitechModbus/0.5.1/YosemitechModbus-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/YosemitechModbus/0.5.2/YosemitechModbus-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YosemitechModbus-0.5.2.tar.gz",
+    "size_bytes": 1919135,
+    "sha256": "82a09fe4f58387180f134c4daa6e9d1564d70738f37cb5bdd70f7075fb308809",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/YosemitechModbus/0.5.2/YosemitechModbus-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/YosemitechModbus/0.5.2/YosemitechModbus-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/YosemitechModbus/0.5.3/YosemitechModbus-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YosemitechModbus-0.5.3.tar.gz",
+    "size_bytes": 1919157,
+    "sha256": "ec803da19681f5fb017442b8659d7eb1d892b2aedd37413fc49f17ab941b6fcd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/YosemitechModbus/0.5.3/YosemitechModbus-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/YosemitechModbus/0.5.3/YosemitechModbus-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "envirodiy/library/YosemitechModbus/0.5.4/YosemitechModbus-0.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YosemitechModbus-0.5.4.tar.gz",
+    "size_bytes": 1919164,
+    "sha256": "0d94c71d8471ca71e6c194efca699571a34d2e9385d8daeee78195d1cbc7cfd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envirodiy/library/YosemitechModbus/0.5.4/YosemitechModbus-0.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/envirodiy/library/YosemitechModbus/0.5.4/YosemitechModbus-0.5.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

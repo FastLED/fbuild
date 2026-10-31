@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fabriziog",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fabriziog/library/MIK32-HAL/0.1.1/MIK32-HAL-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MIK32-HAL-0.1.1.tar.gz",
+    "size_bytes": 50070,
+    "sha256": "a3074d1be3b8f56a90b6b8054006caa2fefcdd1f3bdcc2f85998476defb57df9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabriziog/library/MIK32-HAL/0.1.1/MIK32-HAL-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fabriziog/library/MIK32-HAL/0.1.1/MIK32-HAL-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

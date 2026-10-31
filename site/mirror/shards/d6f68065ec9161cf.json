@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nawotech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nawotech/library/Button/1.0.0/Button-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button-1.0.0.tar.gz",
+    "size_bytes": 1680,
+    "sha256": "67cefa3520b167ca2d025489fb2c5ceece669900545541c56213eb00b1319073",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nawotech/library/Button/1.0.0/Button-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nawotech/library/Button/1.0.0/Button-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nawotech/library/Timer/1.0.1/Timer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timer-1.0.1.tar.gz",
+    "size_bytes": 1991,
+    "sha256": "079e18ba1324d37425eda22352e949e32d13ead76748e73ab5fc3b72c9077c39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nawotech/library/Timer/1.0.1/Timer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nawotech/library/Timer/1.0.1/Timer-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

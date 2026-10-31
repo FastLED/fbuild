@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-makidia",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-makidia/library/BMX055/0.0.0+sha.43c83e461ea4/BMX055-0.0.0+sha.43c83e461ea4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMX055-0.0.0+sha.43c83e461ea4.tar.gz",
+    "size_bytes": 2356,
+    "sha256": "3870282a8b6d639ca80cb3a354f614993b7ea856542e64acff379b8b3d8160b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-makidia/library/BMX055/0.0.0%2Bsha.43c83e461ea4/BMX055-0.0.0%2Bsha.43c83e461ea4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-makidia/library/BMX055/0.0.0%2Bsha.43c83e461ea4/BMX055-0.0.0%2Bsha.43c83e461ea4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

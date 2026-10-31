@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-taktkaihatu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-taktkaihatu/library/AnalogInBaseClass/0.0.0+sha.e68befdcadc0/AnalogInBaseClass-0.0.0+sha.e68befdcadc0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogInBaseClass-0.0.0+sha.e68befdcadc0.tar.gz",
+    "size_bytes": 989,
+    "sha256": "a63941adc1a3fc235bd249bb5837f5a0b0d9a17e7ee4a5a7fb53e7fb5e9bf6b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-taktkaihatu/library/AnalogInBaseClass/0.0.0%2Bsha.e68befdcadc0/AnalogInBaseClass-0.0.0%2Bsha.e68befdcadc0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-taktkaihatu/library/AnalogInBaseClass/0.0.0%2Bsha.e68befdcadc0/AnalogInBaseClass-0.0.0%2Bsha.e68befdcadc0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

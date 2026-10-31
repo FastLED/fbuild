@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jflores88",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jflores88/library/SteerBot_TB6612/1.2.0/SteerBot_TB6612-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SteerBot_TB6612-1.2.0.tar.gz",
+    "size_bytes": 15541,
+    "sha256": "7a281e9a841fd8b7cbf3191d998e396aeb553eebd6f49001683d070346c82447",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jflores88/library/SteerBot_TB6612/1.2.0/SteerBot_TB6612-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jflores88/library/SteerBot_TB6612/1.2.0/SteerBot_TB6612-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-smartcrumbs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-smartcrumbs/library/MCP23017/0.0.0+sha.b64b4a7d97b0/MCP23017-0.0.0+sha.b64b4a7d97b0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017-0.0.0+sha.b64b4a7d97b0.tar.gz",
+    "size_bytes": 3273,
+    "sha256": "7107609883d078c7d71fce7fe89dba2331bd217c0fd39a2af3f803f45c3e584e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-smartcrumbs/library/MCP23017/0.0.0%2Bsha.b64b4a7d97b0/MCP23017-0.0.0%2Bsha.b64b4a7d97b0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-smartcrumbs/library/MCP23017/0.0.0%2Bsha.b64b4a7d97b0/MCP23017-0.0.0%2Bsha.b64b4a7d97b0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

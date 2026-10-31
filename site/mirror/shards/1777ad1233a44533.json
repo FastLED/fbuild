@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/negentropicdev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "negentropicdev/library/Negentropic%20Base/0.1.1/NegentropicBase-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NegentropicBase-0.1.1.tar.gz",
+    "size_bytes": 11727,
+    "sha256": "b4318e3ae3b69395ac1390f00ea95e96e5022b064f589b370af40efad10a6f82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/negentropicdev/library/Negentropic%2520Base/0.1.1/NegentropicBase-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/negentropicdev/library/Negentropic%20Base/0.1.1/NegentropicBase-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

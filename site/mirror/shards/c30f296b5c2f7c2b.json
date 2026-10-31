@@ -1,0 +1,256 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/solnera",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "solnera/library/BLEMCPServer/0.0.1/BLEMCPServer-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLEMCPServer-0.0.1.tar.gz",
+    "size_bytes": 12405,
+    "sha256": "c0a820ddcd4f769b33048e2a2f996c8d1ad23b22add86e8df39df4252ea223ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/BLEMCPServer/0.0.1/BLEMCPServer-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/BLEMCPServer/0.0.1/BLEMCPServer-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/BLEMCPServer/0.0.2/BLEMCPServer-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLEMCPServer-0.0.2.tar.gz",
+    "size_bytes": 12754,
+    "sha256": "14068de50cd0821c3bb3736f386fcf68ad7971285c57ba2ce34294c5fbf3739e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/BLEMCPServer/0.0.2/BLEMCPServer-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/BLEMCPServer/0.0.2/BLEMCPServer-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/BLEMCPServer/0.0.3/BLEMCPServer-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLEMCPServer-0.0.3.tar.gz",
+    "size_bytes": 12766,
+    "sha256": "addcf994db3a455ae49672634b344656933702ceb93e002a1a29143dfedc4588",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/BLEMCPServer/0.0.3/BLEMCPServer-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/BLEMCPServer/0.0.3/BLEMCPServer-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/BLEMCPServer/0.0.4/BLEMCPServer-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLEMCPServer-0.0.4.tar.gz",
+    "size_bytes": 12748,
+    "sha256": "4397fb24afb5221627f780e03a2799c0888f92ede3ab2a408124a035a311d0b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/BLEMCPServer/0.0.4/BLEMCPServer-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/BLEMCPServer/0.0.4/BLEMCPServer-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/ESP-MCP/0.0.1/ESP-MCP-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-MCP-0.0.1.tar.gz",
+    "size_bytes": 16382,
+    "sha256": "2a23899befe639931d2ea66e0543b45bef1a098e87aec130392dd2a5c68f7ce7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/ESP-MCP/0.0.1/ESP-MCP-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/ESP-MCP/0.0.1/ESP-MCP-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/ESP-MCP/0.0.2/ESP-MCP-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-MCP-0.0.2.tar.gz",
+    "size_bytes": 17175,
+    "sha256": "50204def9a270986c052e7056d8dbf52d623b9025410daa5e59150b737bbf19a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/ESP-MCP/0.0.2/ESP-MCP-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/ESP-MCP/0.0.2/ESP-MCP-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/ESP-MCP/0.0.3/ESP-MCP-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-MCP-0.0.3.tar.gz",
+    "size_bytes": 17333,
+    "sha256": "eee24f8da9d291ade35210035ad87692d7049284eeda15a01ea926c7929c76dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/ESP-MCP/0.0.3/ESP-MCP-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/ESP-MCP/0.0.3/ESP-MCP-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/ESP-MCP/0.0.5/ESP-MCP-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-MCP-0.0.5.tar.gz",
+    "size_bytes": 21070,
+    "sha256": "c526ab3bf68e98b7f354a469ef2b9a1455eb7d614bd298f864111e899307ddd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/ESP-MCP/0.0.5/ESP-MCP-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/ESP-MCP/0.0.5/ESP-MCP-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/ESP-MCP/0.1.0/ESP-MCP-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-MCP-0.1.0.tar.gz",
+    "size_bytes": 25866,
+    "sha256": "d65d3c134a9e0df98a1ac10f862ac8ec73e55c4507d0fdc868a1b119bf5c106c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/ESP-MCP/0.1.0/ESP-MCP-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/ESP-MCP/0.1.0/ESP-MCP-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/ESP-MCP/0.2.0/ESP-MCP-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-MCP-0.2.0.tar.gz",
+    "size_bytes": 26594,
+    "sha256": "4c4e71fdf4c5bc853408e15ceaf6a8fac227989ebd5ba087e44fac2a58744595",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/ESP-MCP/0.2.0/ESP-MCP-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/ESP-MCP/0.2.0/ESP-MCP-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/ESP-MCP/0.3.0/ESP-MCP-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-MCP-0.3.0.tar.gz",
+    "size_bytes": 30457,
+    "sha256": "10c4985f8469110c8f65f6c28cf2a45696cb1a795f38cca269426605854d06f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/ESP-MCP/0.3.0/ESP-MCP-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/ESP-MCP/0.3.0/ESP-MCP-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/ESP-MCP/0.4.0/ESP-MCP-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-MCP-0.4.0.tar.gz",
+    "size_bytes": 31639,
+    "sha256": "eed791befe546c141a7d1a6d580a129a3f9aff2928bc77537de4bf07a99fccf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/ESP-MCP/0.4.0/ESP-MCP-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/ESP-MCP/0.4.0/ESP-MCP-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/ESP-MCP/0.5.0/ESP-MCP-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-MCP-0.5.0.tar.gz",
+    "size_bytes": 39681,
+    "sha256": "be2ee35697b5549f6f80076e880967ede0c5251ccf98f81c083fd848c18fbb57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/ESP-MCP/0.5.0/ESP-MCP-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/ESP-MCP/0.5.0/ESP-MCP-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/ESP-MCP/0.5.1/ESP-MCP-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-MCP-0.5.1.tar.gz",
+    "size_bytes": 39796,
+    "sha256": "a9bd3e4717df28fbd30c96c75deb89ed4a8454e7b17eafea5d94c0ebf9fe4a92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/ESP-MCP/0.5.1/ESP-MCP-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/ESP-MCP/0.5.1/ESP-MCP-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/ESP32-MCPServer/0.0.1/ESP32-MCPServer-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-MCPServer-0.0.1.tar.gz",
+    "size_bytes": 9624,
+    "sha256": "2579e5a418355dc8c20772798c351d8c76ad5a8774826bf4b72073a4ad732e52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/ESP32-MCPServer/0.0.1/ESP32-MCPServer-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/ESP32-MCPServer/0.0.1/ESP32-MCPServer-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/ESP32-MCPServer/0.0.2/ESP32-MCPServer-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-MCPServer-0.0.2.tar.gz",
+    "size_bytes": 9663,
+    "sha256": "a903a03bc390d2b43019e64706c1a0fb027429865151fc20eb235d08b42f42d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/ESP32-MCPServer/0.0.2/ESP32-MCPServer-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/ESP32-MCPServer/0.0.2/ESP32-MCPServer-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/ESP32-MCPServer/0.1.0/ESP32-MCPServer-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-MCPServer-0.1.0.tar.gz",
+    "size_bytes": 9119,
+    "sha256": "2d239c21e50225aeafb3d0aa56b2dfac34c69609245af7d276aaad78d27e8a26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/ESP32-MCPServer/0.1.0/ESP32-MCPServer-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/ESP32-MCPServer/0.1.0/ESP32-MCPServer-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/ESP32-MCPServer/0.2.0/ESP32-MCPServer-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-MCPServer-0.2.0.tar.gz",
+    "size_bytes": 23624,
+    "sha256": "e941bf94e362b743289bbc62db89368e003e41bc3bdf5f6fa2f15ec91b87a179",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/ESP32-MCPServer/0.2.0/ESP32-MCPServer-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/ESP32-MCPServer/0.2.0/ESP32-MCPServer-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solnera/library/ESP32-MCPServer/0.2.1/ESP32-MCPServer-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-MCPServer-0.2.1.tar.gz",
+    "size_bytes": 27102,
+    "sha256": "b77bc778800f57a56d94f1b07f9b76c2f68f5270c4c42086306ec305004e0cd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solnera/library/ESP32-MCPServer/0.2.1/ESP32-MCPServer-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solnera/library/ESP32-MCPServer/0.2.1/ESP32-MCPServer-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

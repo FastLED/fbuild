@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-akhilpanayam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-akhilpanayam/library/AT93C56A/0.0.0+sha.37c4eb41af9c/AT93C56A-0.0.0+sha.37c4eb41af9c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT93C56A-0.0.0+sha.37c4eb41af9c.tar.gz",
+    "size_bytes": 1522,
+    "sha256": "79ad4976d9be5313adbf73a1c351efcd790a0ae71545dd83719e22ad856af0a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-akhilpanayam/library/AT93C56A/0.0.0%2Bsha.37c4eb41af9c/AT93C56A-0.0.0%2Bsha.37c4eb41af9c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-akhilpanayam/library/AT93C56A/0.0.0%2Bsha.37c4eb41af9c/AT93C56A-0.0.0%2Bsha.37c4eb41af9c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

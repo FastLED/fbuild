@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mmdonatti",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mmdonatti/library/HTTP_SERVER/0.0.0+sha.f21da0acc9f6/HTTP_SERVER-0.0.0+sha.f21da0acc9f6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTP_SERVER-0.0.0+sha.f21da0acc9f6.tar.gz",
+    "size_bytes": 3768,
+    "sha256": "6e458787e234ec30b5db3f095a1952c0546a5467e365f7d8048529c7fd3c386e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mmdonatti/library/HTTP_SERVER/0.0.0%2Bsha.f21da0acc9f6/HTTP_SERVER-0.0.0%2Bsha.f21da0acc9f6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mmdonatti/library/HTTP_SERVER/0.0.0%2Bsha.f21da0acc9f6/HTTP_SERVER-0.0.0%2Bsha.f21da0acc9f6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

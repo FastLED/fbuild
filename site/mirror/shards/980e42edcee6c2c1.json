@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-alibros",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-alibros/library/OBDII/0.0.0+sha.4b7c280d433d/OBDII-0.0.0+sha.4b7c280d433d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OBDII-0.0.0+sha.4b7c280d433d.tar.gz",
+    "size_bytes": 1990,
+    "sha256": "b911c00854bafd875d499c687116ac36a54737003be11df49e1487aaf516cdff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alibros/library/OBDII/0.0.0%2Bsha.4b7c280d433d/OBDII-0.0.0%2Bsha.4b7c280d433d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alibros/library/OBDII/0.0.0%2Bsha.4b7c280d433d/OBDII-0.0.0%2Bsha.4b7c280d433d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,438 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/k0i05",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "k0i05/library/esp_ahtxx/1.2.7/esp_ahtxx-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_ahtxx-1.2.7.tar.gz",
+    "size_bytes": 20145,
+    "sha256": "a77363736ca52fde004f864f212ca05462b269d7cba2c58f5ba50f687eb8c31d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_ahtxx/1.2.7/esp_ahtxx-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_ahtxx/1.2.7/esp_ahtxx-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_ak8975/1.2.7/esp_ak8975-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_ak8975-1.2.7.tar.gz",
+    "size_bytes": 14686,
+    "sha256": "bb2469b7ecaf4d7bf2af963c54777163a5716e14ae7afb210558117665761be3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_ak8975/1.2.7/esp_ak8975-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_ak8975/1.2.7/esp_ak8975-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_as3935/1.2.7/esp_as3935-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_as3935-1.2.7.tar.gz",
+    "size_bytes": 20369,
+    "sha256": "ec55a49d95068fa1cf56b7affa1091fae0b7e9d0e9e50aff781d3a0edf762ea4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_as3935/1.2.7/esp_as3935-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_as3935/1.2.7/esp_as3935-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_as7341/1.2.7/esp_as7341-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_as7341-1.2.7.tar.gz",
+    "size_bytes": 24433,
+    "sha256": "4dadbe9d21de1b6e32b47640df8cc833c5b2aa879d46eb4dac8c132ca2ee334b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_as7341/1.2.7/esp_as7341-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_as7341/1.2.7/esp_as7341-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_bh1750/1.2.7/esp_bh1750-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_bh1750-1.2.7.tar.gz",
+    "size_bytes": 12598,
+    "sha256": "3819c59efd48e47f14d59c720f8086a1635ff4a07d8267f61c62f0ddb54a2c8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_bh1750/1.2.7/esp_bh1750-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_bh1750/1.2.7/esp_bh1750-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_bme680/1.2.7/esp_bme680-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_bme680-1.2.7.tar.gz",
+    "size_bytes": 25980,
+    "sha256": "cfcd12c433ca2d1a2742156846c4ab6c695985aaf16ee6be776d2063cb057a45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_bme680/1.2.7/esp_bme680-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_bme680/1.2.7/esp_bme680-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_bmp280/1.2.7/esp_bmp280-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_bmp280-1.2.7.tar.gz",
+    "size_bytes": 17054,
+    "sha256": "3f2e11ccecd6f3fbaef46a9b5ac2fff5ff9de53f403eddb127c951d326a535ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_bmp280/1.2.7/esp_bmp280-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_bmp280/1.2.7/esp_bmp280-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_bmp390/1.2.7/esp_bmp390-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_bmp390-1.2.7.tar.gz",
+    "size_bytes": 18983,
+    "sha256": "66082762831054e696a7477f00b12f8e07083721f9509d48297fb1db941a66a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_bmp390/1.2.7/esp_bmp390-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_bmp390/1.2.7/esp_bmp390-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_ccs811/1.2.7/esp_ccs811-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_ccs811-1.2.7.tar.gz",
+    "size_bytes": 20370,
+    "sha256": "c9f3dac7151cb8437d7322db463c7b5d1d9e07b56ad242d07285acda61baf8a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_ccs811/1.2.7/esp_ccs811-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_ccs811/1.2.7/esp_ccs811-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_datalogger/1.2.7/esp_datalogger-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_datalogger-1.2.7.tar.gz",
+    "size_bytes": 31709,
+    "sha256": "9d35536f825c520853544deab5f26742ed6d5a3f35a4547d1fccf3ee6c6c4157",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_datalogger/1.2.7/esp_datalogger-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_datalogger/1.2.7/esp_datalogger-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_datatable/1.1.7/esp_datatable-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_datatable-1.1.7.tar.gz",
+    "size_bytes": 28992,
+    "sha256": "54b31d13ddadb29d50fb6c0012db69bba7af91d2cea64fa1822793b45bc7c5ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_datatable/1.1.7/esp_datatable-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_datatable/1.1.7/esp_datatable-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_driver_i2c_ext/1.1.8/esp_driver_i2c_ext-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_driver_i2c_ext-1.1.8.tar.gz",
+    "size_bytes": 7591,
+    "sha256": "5d31505971c5e3b89c8acc525b91b1f4b6dfc244eb7f7b85bbffbaf1ec88a8a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_driver_i2c_ext/1.1.8/esp_driver_i2c_ext-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_driver_i2c_ext/1.1.8/esp_driver_i2c_ext-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_ds18b20/1.2.7/esp_ds18b20-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_ds18b20-1.2.7.tar.gz",
+    "size_bytes": 14326,
+    "sha256": "5c5c5c492f7f3f325bd3520282254008e8fd4b009e924af65aafa8b508adff21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_ds18b20/1.2.7/esp_ds18b20-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_ds18b20/1.2.7/esp_ds18b20-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_ens160/1.2.7/esp_ens160-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_ens160-1.2.7.tar.gz",
+    "size_bytes": 19609,
+    "sha256": "f9374eb48722b458a148d0ea7f122f7ae0bf0e58aabe99b8fa72fc51ae2628d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_ens160/1.2.7/esp_ens160-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_ens160/1.2.7/esp_ens160-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_hdc1080/1.2.7/esp_hdc1080-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_hdc1080-1.2.7.tar.gz",
+    "size_bytes": 14892,
+    "sha256": "1ef1b08e9ab10a71d13856842651370a5fd965e535ac6132889a9a2c8323a702",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_hdc1080/1.2.7/esp_hdc1080-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_hdc1080/1.2.7/esp_hdc1080-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_ina226/1.2.7/esp_ina226-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_ina226-1.2.7.tar.gz",
+    "size_bytes": 14755,
+    "sha256": "065b93d5bcd0ca6b328d050a23425e6201e466a23c0f19bb45614bdb36a31090",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_ina226/1.2.7/esp_ina226-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_ina226/1.2.7/esp_ina226-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_ltr390uv/1.2.7/esp_ltr390uv-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_ltr390uv-1.2.7.tar.gz",
+    "size_bytes": 17218,
+    "sha256": "1c9565cc8d2f9529e778d280eb47e2e225061aa40e997d6a2f86ba11da0fc9ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_ltr390uv/1.2.7/esp_ltr390uv-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_ltr390uv/1.2.7/esp_ltr390uv-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_mlx90614/1.2.7/esp_mlx90614-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_mlx90614-1.2.7.tar.gz",
+    "size_bytes": 15358,
+    "sha256": "1c3382bf6d0d6cbfb5cb39abd4d3c9b30a7f79d19eebca4063b356eaf2656a51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_mlx90614/1.2.7/esp_mlx90614-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_mlx90614/1.2.7/esp_mlx90614-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_mmc56x3/1.2.7/esp_mmc56x3-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_mmc56x3-1.2.7.tar.gz",
+    "size_bytes": 16124,
+    "sha256": "e93faf7a338469d79649c7d6cdd3ca5110d0ec568fea04d8130daccddc922e17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_mmc56x3/1.2.7/esp_mmc56x3-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_mmc56x3/1.2.7/esp_mmc56x3-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_mpu6050/1.2.7/esp_mpu6050-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_mpu6050-1.2.7.tar.gz",
+    "size_bytes": 20379,
+    "sha256": "7b9429e12c5ab2642659c2a8e070d6e22be6a54f66362b164ccb38e2bcb982c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_mpu6050/1.2.7/esp_mpu6050-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_mpu6050/1.2.7/esp_mpu6050-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_mux4052a/1.2.7/esp_mux4052a-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_mux4052a-1.2.7.tar.gz",
+    "size_bytes": 13447,
+    "sha256": "a5ed25a06872a63b8aa2c5544ef47e6f7b1428daf4670f3c126eb103edc67a0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_mux4052a/1.2.7/esp_mux4052a-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_mux4052a/1.2.7/esp_mux4052a-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_nvs_ext/1.2.7/esp_nvs_ext-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_nvs_ext-1.2.7.tar.gz",
+    "size_bytes": 10983,
+    "sha256": "8f6779e513bc7389d0a26bd596456075ccf735f464ce623dfb0f50879684228d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_nvs_ext/1.2.7/esp_nvs_ext-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_nvs_ext/1.2.7/esp_nvs_ext-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_pct2075/1.2.7/esp_pct2075-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_pct2075-1.2.7.tar.gz",
+    "size_bytes": 14681,
+    "sha256": "5711e8140309ab45868dc8b8d72d1b218711ea76fbc6cfa8defe7f5e2ec1eba0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_pct2075/1.2.7/esp_pct2075-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_pct2075/1.2.7/esp_pct2075-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_pressure_tendency/1.2.7/esp_pressure_tendency-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_pressure_tendency-1.2.7.tar.gz",
+    "size_bytes": 10673,
+    "sha256": "5dbdf02877616ae9e1e916516c72ad1f6a5898050eea0177e2ea199bef747dfe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_pressure_tendency/1.2.7/esp_pressure_tendency-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_pressure_tendency/1.2.7/esp_pressure_tendency-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_s12sd/1.2.7/esp_s12sd-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_s12sd-1.2.7.tar.gz",
+    "size_bytes": 11363,
+    "sha256": "3aef0e2d709c377363f1622fb1c2abc4310bd2916c22307a5bd57cccad998dde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_s12sd/1.2.7/esp_s12sd-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_s12sd/1.2.7/esp_s12sd-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_sgp4x/1.2.7/esp_sgp4x-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_sgp4x-1.2.7.tar.gz",
+    "size_bytes": 12614,
+    "sha256": "46954d6403bcda51557b6fdc38904166df40f83b67d7bd31446002d7f8472f73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_sgp4x/1.2.7/esp_sgp4x-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_sgp4x/1.2.7/esp_sgp4x-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_sht4x/1.2.7/esp_sht4x-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_sht4x-1.2.7.tar.gz",
+    "size_bytes": 13994,
+    "sha256": "79cdf14f71d314d3f39b9a728ee1c6df778179805379a7a9e995700bcebff893",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_sht4x/1.2.7/esp_sht4x-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_sht4x/1.2.7/esp_sht4x-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_ssd1306/1.2.7/esp_ssd1306-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_ssd1306-1.2.7.tar.gz",
+    "size_bytes": 37241,
+    "sha256": "14248254b74507ecfff64387f15496760530fd559f4e109f6873cf5faaba3608",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_ssd1306/1.2.7/esp_ssd1306-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_ssd1306/1.2.7/esp_ssd1306-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_time_into_interval/1.2.7/esp_time_into_interval-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_time_into_interval-1.2.7.tar.gz",
+    "size_bytes": 13380,
+    "sha256": "1f57773f1d53fdeb300aeddfedc95fe0e03aae9a02eb14a3299c4549a11c6149",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_time_into_interval/1.2.7/esp_time_into_interval-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_time_into_interval/1.2.7/esp_time_into_interval-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_type_utils/1.2.7/esp_type_utils-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_type_utils-1.2.7.tar.gz",
+    "size_bytes": 11223,
+    "sha256": "cc21e7b1801c7f04580f1c708260d7024f4518011a0a211576f76e618b0e8aaf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_type_utils/1.2.7/esp_type_utils-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_type_utils/1.2.7/esp_type_utils-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_uuid/1.2.7/esp_uuid-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_uuid-1.2.7.tar.gz",
+    "size_bytes": 13330,
+    "sha256": "9dc5380e72960d4800859f76bc1452d613c598758cb44f9cdfd129766bdb4525",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_uuid/1.2.7/esp_uuid-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_uuid/1.2.7/esp_uuid-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_veml6040/1.2.7/esp_veml6040-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_veml6040-1.2.7.tar.gz",
+    "size_bytes": 13918,
+    "sha256": "038eae5859c6ee963448392104259c44b16369920373084443859f12458b2277",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_veml6040/1.2.7/esp_veml6040-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_veml6040/1.2.7/esp_veml6040-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "k0i05/library/esp_veml7700/1.2.7/esp_veml7700-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_veml7700-1.2.7.tar.gz",
+    "size_bytes": 18065,
+    "sha256": "3d70823a81e4c0b941bb9336eeb93c449016b53fa73cbd71acab2f8334f51d61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k0i05/library/esp_veml7700/1.2.7/esp_veml7700-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/k0i05/library/esp_veml7700/1.2.7/esp_veml7700-1.2.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-anything-connected",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-anything-connected/library/MPU9250/0.0.0+sha.264ee5acfe00/MPU9250-0.0.0+sha.264ee5acfe00.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9250-0.0.0+sha.264ee5acfe00.tar.gz",
+    "size_bytes": 11759,
+    "sha256": "6e9f20a84b14145e312f6ccf33ee2c1c58e63fcc0651c36f384781b30603c6f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-anything-connected/library/MPU9250/0.0.0%2Bsha.264ee5acfe00/MPU9250-0.0.0%2Bsha.264ee5acfe00.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-anything-connected/library/MPU9250/0.0.0%2Bsha.264ee5acfe00/MPU9250-0.0.0%2Bsha.264ee5acfe00.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-anything-connected/library/SEGGER_RTT/0.0.0+sha.7dcd871d726b/SEGGER_RTT-0.0.0+sha.7dcd871d726b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SEGGER_RTT-0.0.0+sha.7dcd871d726b.tar.gz",
+    "size_bytes": 8337,
+    "sha256": "df94a393ec0e27c5aa5be4ac4823963e40805cdeba69c1bd7c3e5460f427af68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-anything-connected/library/SEGGER_RTT/0.0.0%2Bsha.7dcd871d726b/SEGGER_RTT-0.0.0%2Bsha.7dcd871d726b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-anything-connected/library/SEGGER_RTT/0.0.0%2Bsha.7dcd871d726b/SEGGER_RTT-0.0.0%2Bsha.7dcd871d726b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

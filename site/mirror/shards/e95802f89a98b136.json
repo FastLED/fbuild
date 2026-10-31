@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maizy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maizy/library/JC_Button_ESP/2.0.2/JC_Button_ESP-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JC_Button_ESP-2.0.2.tar.gz",
+    "size_bytes": 19072,
+    "sha256": "832cd4435132ca3d028c9f1f5bb932cf73f06330a726717ff4c09851f5fd7170",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maizy/library/JC_Button_ESP/2.0.2/JC_Button_ESP-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/maizy/library/JC_Button_ESP/2.0.2/JC_Button_ESP-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maizy/library/JC_Button_ESP8266/2.0.1/JC_Button_ESP8266-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JC_Button_ESP8266-2.0.1.tar.gz",
+    "size_bytes": 19056,
+    "sha256": "d03ed0df1a2779b41450052caa804c51b7bf8b901283761c3006f729fa52fd26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maizy/library/JC_Button_ESP8266/2.0.1/JC_Button_ESP8266-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/maizy/library/JC_Button_ESP8266/2.0.1/JC_Button_ESP8266-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

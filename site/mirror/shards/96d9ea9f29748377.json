@@ -1,0 +1,347 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jn0v",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jn0v/library/DomoticsCore/1.3.0/DomoticsCore-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-1.3.0.tar.gz",
+    "size_bytes": 140054,
+    "sha256": "5064006d137b2bb67b0c77430aae36cd58fa5bf210f7c3f673cad8fe55e11c98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/1.3.0/DomoticsCore-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/1.3.0/DomoticsCore-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/1.3.1/DomoticsCore-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-1.3.1.tar.gz",
+    "size_bytes": 133901,
+    "sha256": "ef714c04014c0fbbaddc0504e96e994bfd39240e136963f393a12b3ff11acaaa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/1.3.1/DomoticsCore-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/1.3.1/DomoticsCore-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/1.3.2/DomoticsCore-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-1.3.2.tar.gz",
+    "size_bytes": 136190,
+    "sha256": "6d098f9dc0f98b74000882462f23806412c36dd923c82fa62eeac6aa9b76fac6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/1.3.2/DomoticsCore-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/1.3.2/DomoticsCore-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/1.3.3/DomoticsCore-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-1.3.3.tar.gz",
+    "size_bytes": 160903,
+    "sha256": "8a8a4138906ebc08958fe5a88615424ba1e2ef7a32d930a9907875efd5e9e62e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/1.3.3/DomoticsCore-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/1.3.3/DomoticsCore-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/1.4.0/DomoticsCore-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-1.4.0.tar.gz",
+    "size_bytes": 163240,
+    "sha256": "1c2290446bd2e4f02688a282b8d10b8995a66d7c8542da36a94e2b7f50eb4e68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/1.4.0/DomoticsCore-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/1.4.0/DomoticsCore-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/1.5.0/DomoticsCore-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-1.5.0.tar.gz",
+    "size_bytes": 163392,
+    "sha256": "c85330bb546a42db8559803a25d0ef897713342d76bdc671896f42f675d555c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/1.5.0/DomoticsCore-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/1.5.0/DomoticsCore-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/1.6.0/DomoticsCore-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-1.6.0.tar.gz",
+    "size_bytes": 185359,
+    "sha256": "f56fe2623e7b285eac5d4b8e0c69be55808e4c5db9193904deb784c857d48565",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/1.6.0/DomoticsCore-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/1.6.0/DomoticsCore-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/1.6.1/DomoticsCore-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-1.6.1.tar.gz",
+    "size_bytes": 185455,
+    "sha256": "b3732649ed8c2b81de66d059a25e0ec03a0640be52398839bb31d32334e25b48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/1.6.1/DomoticsCore-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/1.6.1/DomoticsCore-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.0.1/DomoticsCore-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.0.1.tar.gz",
+    "size_bytes": 192120,
+    "sha256": "76c4ecf063ea927368bb748b9ec62d61d40fb2c50cfc9ec71a916cada99d1989",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.0.1/DomoticsCore-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.0.1/DomoticsCore-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.1.0/DomoticsCore-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.1.0.tar.gz",
+    "size_bytes": 196984,
+    "sha256": "272d03593f0185aa0d71cbf95bd1289081f7edf119c53f596e43e56f0740fb52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.1.0/DomoticsCore-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.1.0/DomoticsCore-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.1.1/DomoticsCore-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.1.1.tar.gz",
+    "size_bytes": 196960,
+    "sha256": "f8a59a1bfd22b018ad247dc00aff83576eae0ec6b77f1886da725985b334a36e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.1.1/DomoticsCore-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.1.1/DomoticsCore-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.10.0/DomoticsCore-2.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.10.0.tar.gz",
+    "size_bytes": 287571,
+    "sha256": "0a173cbfd6e399562f368d44419c205e3fc6419018563d8c0fc05c3eaeb8423a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.10.0/DomoticsCore-2.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.10.0/DomoticsCore-2.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.11.0/DomoticsCore-2.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.11.0.tar.gz",
+    "size_bytes": 288636,
+    "sha256": "66331b2d909a25cd0ba691d8e0f3953e4eb0efb5f564cb8b39ed096829666f3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.11.0/DomoticsCore-2.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.11.0/DomoticsCore-2.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.12.0/DomoticsCore-2.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.12.0.tar.gz",
+    "size_bytes": 290528,
+    "sha256": "9bea5a050dc3993275af1a983e5b9e849558b317ee580f7fad12817204158091",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.12.0/DomoticsCore-2.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.12.0/DomoticsCore-2.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.12.1/DomoticsCore-2.12.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.12.1.tar.gz",
+    "size_bytes": 291633,
+    "sha256": "f3fb98a08d6db17f2090af773aead4b3b07929940dc5456ed4b2ace90130b433",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.12.1/DomoticsCore-2.12.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.12.1/DomoticsCore-2.12.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.13.0/DomoticsCore-2.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.13.0.tar.gz",
+    "size_bytes": 290773,
+    "sha256": "a317df16b914dedfefaec3a96441272cc5cc13d4df11e561b0d2b08636c797d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.13.0/DomoticsCore-2.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.13.0/DomoticsCore-2.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.2.0/DomoticsCore-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.2.0.tar.gz",
+    "size_bytes": 201095,
+    "sha256": "85b5ed1148f9e317e5503fea19102977a1b92ab206fc18d810a295c1acef4801",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.2.0/DomoticsCore-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.2.0/DomoticsCore-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.3.0/DomoticsCore-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.3.0.tar.gz",
+    "size_bytes": 228542,
+    "sha256": "ba063fe93cd7f780464d420867494bb270d30a01969091fac725becf744ddf01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.3.0/DomoticsCore-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.3.0/DomoticsCore-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.4.0/DomoticsCore-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.4.0.tar.gz",
+    "size_bytes": 258179,
+    "sha256": "5cfa9926ff91f9eeefca5e7519341c4637bfee3ac68da5d0518173c28bd1a5e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.4.0/DomoticsCore-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.4.0/DomoticsCore-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.5.0/DomoticsCore-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.5.0.tar.gz",
+    "size_bytes": 261861,
+    "sha256": "a3ba6617162f66c63acea10ac66e6efe1cf2f1eb3f1333b7d9cee87567139d79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.5.0/DomoticsCore-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.5.0/DomoticsCore-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.6.0/DomoticsCore-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.6.0.tar.gz",
+    "size_bytes": 269172,
+    "sha256": "78c5b264c5de7343137ec1fd2431757ecb47301a3671bc1140db971005bee882",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.6.0/DomoticsCore-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.6.0/DomoticsCore-2.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.6.1/DomoticsCore-2.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.6.1.tar.gz",
+    "size_bytes": 271972,
+    "sha256": "2484e3a1064f31b5feaebd9037c26415ae8999a06f5ca50318986519f7836bf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.6.1/DomoticsCore-2.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.6.1/DomoticsCore-2.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.7.0/DomoticsCore-2.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.7.0.tar.gz",
+    "size_bytes": 281748,
+    "sha256": "5b1900bd353746dd605aee069e8466ead0c8b98fd85860ce70d7aead17da526c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.7.0/DomoticsCore-2.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.7.0/DomoticsCore-2.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.7.1/DomoticsCore-2.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.7.1.tar.gz",
+    "size_bytes": 282436,
+    "sha256": "e7dff5b4a71fb0e56b0e61a3a0e8af19fe4eba034978aca2fe0087f170958209",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.7.1/DomoticsCore-2.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.7.1/DomoticsCore-2.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.8.0/DomoticsCore-2.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.8.0.tar.gz",
+    "size_bytes": 284913,
+    "sha256": "4801f4f406631d563b3ee3c71599d207811255303223a5db2027aa5d4c7807dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.8.0/DomoticsCore-2.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.8.0/DomoticsCore-2.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jn0v/library/DomoticsCore/2.9.0/DomoticsCore-2.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsCore-2.9.0.tar.gz",
+    "size_bytes": 287106,
+    "sha256": "2273bb303a5ebcc526e92aed7e8ba42ce13b6a5cb2026d11804b85905111e74a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jn0v/library/DomoticsCore/2.9.0/DomoticsCore-2.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jn0v/library/DomoticsCore/2.9.0/DomoticsCore-2.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

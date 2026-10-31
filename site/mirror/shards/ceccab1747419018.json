@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/emanuelefeola",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "emanuelefeola/library/ArduinoHttpClient/0.5.0/ArduinoHttpClient-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoHttpClient-0.5.0.tar.gz",
+    "size_bytes": 22379,
+    "sha256": "df17c3049a7235fccfaee21d78989e7bb5840a983347d9dec1ded4e35b91bc99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emanuelefeola/library/ArduinoHttpClient/0.5.0/ArduinoHttpClient-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/emanuelefeola/library/ArduinoHttpClient/0.5.0/ArduinoHttpClient-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emanuelefeola/library/TCA6408/0.0.8/TCA6408-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCA6408-0.0.8.tar.gz",
+    "size_bytes": 3926,
+    "sha256": "c35fdc1e6905a142cb7ed22c00deb4a32ddcee117c92713381f0eba5a4c6194f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emanuelefeola/library/TCA6408/0.0.8/TCA6408-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/emanuelefeola/library/TCA6408/0.0.8/TCA6408-0.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

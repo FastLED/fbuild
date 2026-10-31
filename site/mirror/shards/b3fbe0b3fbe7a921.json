@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jakubsdf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jakubsdf/library/LedDisplayFonts/1.0.0/LedDisplayFonts-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedDisplayFonts-1.0.0.tar.gz",
+    "size_bytes": 3165,
+    "sha256": "ea7888bdf7c52c67647aa50795e20c00ecdc44215378a0aa158537c332f589a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jakubsdf/library/LedDisplayFonts/1.0.0/LedDisplayFonts-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jakubsdf/library/LedDisplayFonts/1.0.0/LedDisplayFonts-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

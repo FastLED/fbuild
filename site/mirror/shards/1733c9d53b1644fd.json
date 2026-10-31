@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mairas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mairas/library/ReactESP/2.1.0/ReactESP-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReactESP-2.1.0.tar.gz",
+    "size_bytes": 41673,
+    "sha256": "620184b3f265d1ad3938c63fcd7d8834d6d19b7faad317783db8713b3413a369",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mairas/library/ReactESP/2.1.0/ReactESP-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mairas/library/ReactESP/2.1.0/ReactESP-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mairas/library/ReactESP/3.2.0/ReactESP-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReactESP-3.2.0.tar.gz",
+    "size_bytes": 42879,
+    "sha256": "fe2f10954c49532e53fb510ba489f68d19d307c3deddbcaa1f08af02d1bc7c13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mairas/library/ReactESP/3.2.0/ReactESP-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mairas/library/ReactESP/3.2.0/ReactESP-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mairas/library/ReactESP/3.3.0/ReactESP-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReactESP-3.3.0.tar.gz",
+    "size_bytes": 44302,
+    "sha256": "500b1522e8b73a81bca43e897811cd4d9336331aefd682ed40b6d91f7096b532",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mairas/library/ReactESP/3.3.0/ReactESP-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mairas/library/ReactESP/3.3.0/ReactESP-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mairas/library/ReactESP/3.3.1/ReactESP-3.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReactESP-3.3.1.tar.gz",
+    "size_bytes": 44366,
+    "sha256": "d1a7d919028bb8b41bc2e1b0517411b5934ef8781cd339bb97efd5b424b14843",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mairas/library/ReactESP/3.3.1/ReactESP-3.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mairas/library/ReactESP/3.3.1/ReactESP-3.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

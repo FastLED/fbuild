@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/frameworklabs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "frameworklabs/library/proto_activities/0.1.0/proto_activities-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "proto_activities-0.1.0.tar.gz",
+    "size_bytes": 12527,
+    "sha256": "8e4bb21a456d5117647e78ee9f1bf0adfb6dbbd71e033bedea499190ab3777f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/frameworklabs/library/proto_activities/0.1.0/proto_activities-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/frameworklabs/library/proto_activities/0.1.0/proto_activities-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

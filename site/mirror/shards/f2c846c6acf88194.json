@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fundokukiri",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fundokukiri/library/GUI_746/0.0.0+sha.a7fb0dba4c8a/GUI_746-0.0.0+sha.a7fb0dba4c8a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GUI_746-0.0.0+sha.a7fb0dba4c8a.tar.gz",
+    "size_bytes": 6396,
+    "sha256": "4ad38f3423d347466edfd9531957a718ce33f5083dbe1676a4e3897e5db80cce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fundokukiri/library/GUI_746/0.0.0%2Bsha.a7fb0dba4c8a/GUI_746-0.0.0%2Bsha.a7fb0dba4c8a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fundokukiri/library/GUI_746/0.0.0%2Bsha.a7fb0dba4c8a/GUI_746-0.0.0%2Bsha.a7fb0dba4c8a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fundokukiri/library/LCD_746/0.0.0+sha.d44525b1de98/LCD_746-0.0.0+sha.d44525b1de98.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_746-0.0.0+sha.d44525b1de98.tar.gz",
+    "size_bytes": 4203,
+    "sha256": "fa06bd500a550a042114c68c8c840849260078ba8313d3c3c28b7954451b350d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fundokukiri/library/LCD_746/0.0.0%2Bsha.d44525b1de98/LCD_746-0.0.0%2Bsha.d44525b1de98.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fundokukiri/library/LCD_746/0.0.0%2Bsha.d44525b1de98/LCD_746-0.0.0%2Bsha.d44525b1de98.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fundokukiri/library/LCD_DISCO_F746NG/0.0.0+sha.cf10ae4cedd3/LCD_DISCO_F746NG-0.0.0+sha.cf10ae4cedd3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_DISCO_F746NG-0.0.0+sha.cf10ae4cedd3.tar.gz",
+    "size_bytes": 4231,
+    "sha256": "7c7f63fc44a1ff06d897d1802ab2b53d197e504c78762917c8b7502813848c22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fundokukiri/library/LCD_DISCO_F746NG/0.0.0%2Bsha.cf10ae4cedd3/LCD_DISCO_F746NG-0.0.0%2Bsha.cf10ae4cedd3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fundokukiri/library/LCD_DISCO_F746NG/0.0.0%2Bsha.cf10ae4cedd3/LCD_DISCO_F746NG-0.0.0%2Bsha.cf10ae4cedd3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fundokukiri/library/TS_F746/0.0.0+sha.fe0cf5e2960f/TS_F746-0.0.0+sha.fe0cf5e2960f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TS_F746-0.0.0+sha.fe0cf5e2960f.tar.gz",
+    "size_bytes": 2414,
+    "sha256": "c2aa90419b7065cd32c3865627ca8f3efee10daa2eca2ab97b3529e16cba9dc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fundokukiri/library/TS_F746/0.0.0%2Bsha.fe0cf5e2960f/TS_F746-0.0.0%2Bsha.fe0cf5e2960f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fundokukiri/library/TS_F746/0.0.0%2Bsha.fe0cf5e2960f/TS_F746-0.0.0%2Bsha.fe0cf5e2960f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

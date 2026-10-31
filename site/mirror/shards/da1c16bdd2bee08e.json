@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shurillu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shurillu/library/CTBot/2.1.14/CTBot-2.1.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CTBot-2.1.14.tar.gz",
+    "size_bytes": 29288,
+    "sha256": "08bcc16194636593e7c5f926a49bdef5156f4338c4eedada24a67f1528f78103",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shurillu/library/CTBot/2.1.14/CTBot-2.1.14.tar.gz",
+     "https://dl.registry.platformio.org/download/shurillu/library/CTBot/2.1.14/CTBot-2.1.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shurillu/library/Cdrv8833/1.0.1/Cdrv8833-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Cdrv8833-1.0.1.tar.gz",
+    "size_bytes": 5092,
+    "sha256": "b22e14af195e7c73104cdf42ba510363fe4beab914dfd2f47f4b44dcadfc7b51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shurillu/library/Cdrv8833/1.0.1/Cdrv8833-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/shurillu/library/Cdrv8833/1.0.1/Cdrv8833-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

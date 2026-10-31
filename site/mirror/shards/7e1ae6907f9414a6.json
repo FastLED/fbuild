@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-stumpi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-stumpi/library/MCP9808/0.0.0+sha.f8e8cccfd476/MCP9808-0.0.0+sha.f8e8cccfd476.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP9808-0.0.0+sha.f8e8cccfd476.tar.gz",
+    "size_bytes": 1619,
+    "sha256": "fd2eb1485511d8d227e63fce23e34d607c52bec343d49626b5cfa52303ad497c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stumpi/library/MCP9808/0.0.0%2Bsha.f8e8cccfd476/MCP9808-0.0.0%2Bsha.f8e8cccfd476.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stumpi/library/MCP9808/0.0.0%2Bsha.f8e8cccfd476/MCP9808-0.0.0%2Bsha.f8e8cccfd476.tar.gz"
+    ]
+   }
+  }
+ ]
+}

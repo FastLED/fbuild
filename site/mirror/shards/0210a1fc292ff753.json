@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-oprospero",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-oprospero/library/CircleBuffer/0.0.0+sha.8c7e5801d763/CircleBuffer-0.0.0+sha.8c7e5801d763.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircleBuffer-0.0.0+sha.8c7e5801d763.tar.gz",
+    "size_bytes": 1168,
+    "sha256": "f668ec79e878d33a72169a558a125dc0b69b490c65c3fcebca208f4a4cb5b41d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-oprospero/library/CircleBuffer/0.0.0%2Bsha.8c7e5801d763/CircleBuffer-0.0.0%2Bsha.8c7e5801d763.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-oprospero/library/CircleBuffer/0.0.0%2Bsha.8c7e5801d763/CircleBuffer-0.0.0%2Bsha.8c7e5801d763.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-oprospero/library/GY80/0.0.0+sha.cc026f60357a/GY80-0.0.0+sha.cc026f60357a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GY80-0.0.0+sha.cc026f60357a.tar.gz",
+    "size_bytes": 2523,
+    "sha256": "bc54769091330e770f744d1fc3ab259b1d25d45c7663edb6c075f6dba79cc2a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-oprospero/library/GY80/0.0.0%2Bsha.cc026f60357a/GY80-0.0.0%2Bsha.cc026f60357a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-oprospero/library/GY80/0.0.0%2Bsha.cc026f60357a/GY80-0.0.0%2Bsha.cc026f60357a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-oprospero/library/MotionDriver_6_1/0.0.0+sha.5fa30cf392c3/MotionDriver_6_1-0.0.0+sha.5fa30cf392c3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotionDriver_6_1-0.0.0+sha.5fa30cf392c3.tar.gz",
+    "size_bytes": 39001,
+    "sha256": "37e8a2f3149cca55fe17f0c7c581471d5af1ff541d453be99dd266f3590ea24a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-oprospero/library/MotionDriver_6_1/0.0.0%2Bsha.5fa30cf392c3/MotionDriver_6_1-0.0.0%2Bsha.5fa30cf392c3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-oprospero/library/MotionDriver_6_1/0.0.0%2Bsha.5fa30cf392c3/MotionDriver_6_1-0.0.0%2Bsha.5fa30cf392c3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-oprospero/library/MotionDriverv512/0.0.0+sha.2cb380415dc7/MotionDriverv512-0.0.0+sha.2cb380415dc7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotionDriverv512-0.0.0+sha.2cb380415dc7.tar.gz",
+    "size_bytes": 44558,
+    "sha256": "3eeda06b2c256c8ad84f9329e5f8a3ab5c8ee63628d5488f7693b47c76b0fbde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-oprospero/library/MotionDriverv512/0.0.0%2Bsha.2cb380415dc7/MotionDriverv512-0.0.0%2Bsha.2cb380415dc7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-oprospero/library/MotionDriverv512/0.0.0%2Bsha.2cb380415dc7/MotionDriverv512-0.0.0%2Bsha.2cb380415dc7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/johannesmtc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "johannesmtc/library/ESP32_MAS/1.0/ESP32_MAS-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_MAS-1.0.tar.gz",
+    "size_bytes": 45167,
+    "sha256": "b5b5f6d08806fdce84418b072b1482ac748c7ba836d0b58dfb21a137fb1210f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johannesmtc/library/ESP32_MAS/1.0/ESP32_MAS-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/johannesmtc/library/ESP32_MAS/1.0/ESP32_MAS-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

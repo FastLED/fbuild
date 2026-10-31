@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gabygold",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gabygold/library/ButtonToSwitch/4.0.1/ButtonToSwitch-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonToSwitch-4.0.1.tar.gz",
+    "size_bytes": 65796,
+    "sha256": "8b3dd142626d423b8fe3d16eac042b0325bb9c0aff7a8b2dfe1318aca5dffd18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gabygold/library/ButtonToSwitch/4.0.1/ButtonToSwitch-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gabygold/library/ButtonToSwitch/4.0.1/ButtonToSwitch-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gabygold/library/ButtonToSwitch_ESP32/4.4.0/ButtonToSwitch_ESP32-4.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonToSwitch_ESP32-4.4.0.tar.gz",
+    "size_bytes": 81441,
+    "sha256": "f36a218fa16e91c11b943b90b4e52a3a2c3c1d8c9ad1f9afe1fee73272dce8ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gabygold/library/ButtonToSwitch_ESP32/4.4.0/ButtonToSwitch_ESP32-4.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gabygold/library/ButtonToSwitch_ESP32/4.4.0/ButtonToSwitch_ESP32-4.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gabygold/library/FourBitLedDigitalTube/2.4.1/FourBitLedDigitalTube-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FourBitLedDigitalTube-2.4.1.tar.gz",
+    "size_bytes": 46251,
+    "sha256": "d7ffcd5043f338e1978e85cda718fd2d003aed6710a9d83fedd2f6fc09b55578",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gabygold/library/FourBitLedDigitalTube/2.4.1/FourBitLedDigitalTube-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gabygold/library/FourBitLedDigitalTube/2.4.1/FourBitLedDigitalTube-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gabygold/library/SevenSeg-74HC595/1.0.0/SevenSeg-74HC595-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSeg-74HC595-1.0.0.tar.gz",
+    "size_bytes": 29018,
+    "sha256": "b09396e6db9739b137440f6373d6c2794b1453f793eefed6b1a6bdfeaa3d1fff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gabygold/library/SevenSeg-74HC595/1.0.0/SevenSeg-74HC595-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gabygold/library/SevenSeg-74HC595/1.0.0/SevenSeg-74HC595-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gabygold/library/SevenSegDisplays/1.3.0/SevenSegDisplays-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSegDisplays-1.3.0.tar.gz",
+    "size_bytes": 46192,
+    "sha256": "c5db8ac60d15d6201d4c014a426619cab948a9679ce49adc2cec26be888c27d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gabygold/library/SevenSegDisplays/1.3.0/SevenSegDisplays-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gabygold/library/SevenSegDisplays/1.3.0/SevenSegDisplays-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gabygold/library/mpbToSwitch/2.4.0/mpbToSwitch-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mpbToSwitch-2.4.0.tar.gz",
+    "size_bytes": 30264,
+    "sha256": "91e16b1f60b09dfce987971543bb5473b920c5bee7b08f5237e637687a73d935",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gabygold/library/mpbToSwitch/2.4.0/mpbToSwitch-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gabygold/library/mpbToSwitch/2.4.0/mpbToSwitch-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gabygold/library/switchHIL/1.0.0/switchHIL-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "switchHIL-1.0.0.tar.gz",
+    "size_bytes": 20412,
+    "sha256": "9a29238149764835964f94c656afec7e36a3d73a922c1d762980542364835a04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gabygold/library/switchHIL/1.0.0/switchHIL-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gabygold/library/switchHIL/1.0.0/switchHIL-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

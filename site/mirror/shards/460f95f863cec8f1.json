@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ubidots",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ubidots/library/Ubidots%20Arduino%20YUN/2.0.0/UbidotsArduinoYUN-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UbidotsArduinoYUN-2.0.0.tar.gz",
+    "size_bytes": 5336,
+    "sha256": "f1120daacb1eb896a79b1e598816fa36b008dfd8b871a1bf7df0e79379168804",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ubidots/library/Ubidots%2520Arduino%2520YUN/2.0.0/UbidotsArduinoYUN-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ubidots/library/Ubidots%20Arduino%20YUN/2.0.0/UbidotsArduinoYUN-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ubidots/library/Ubidots%20FONA%20Library/3.0.0/UbidotsFONALibrary-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UbidotsFONALibrary-3.0.0.tar.gz",
+    "size_bytes": 7574,
+    "sha256": "df5a70057173887f044c54112838fef92efe42587655fd3f8f0fd991e697a291",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ubidots/library/Ubidots%2520FONA%2520Library/3.0.0/UbidotsFONALibrary-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ubidots/library/Ubidots%20FONA%20Library/3.0.0/UbidotsFONALibrary-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ubidots/library/Ubidots%20GPRS%20Library/4.0.1/UbidotsGPRSLibrary-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UbidotsGPRSLibrary-4.0.1.tar.gz",
+    "size_bytes": 11831,
+    "sha256": "d272fa1f4039e31f4c65fbbccf04a78873347067f6425abd2cfccd3bc93492d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ubidots/library/Ubidots%2520GPRS%2520Library/4.0.1/UbidotsGPRSLibrary-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ubidots/library/Ubidots%20GPRS%20Library/4.0.1/UbidotsGPRSLibrary-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ubidots/library/Ubidots%20MQTT%20for%20ESP8266/1.1/UbidotsMQTTforESP8266-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UbidotsMQTTforESP8266-1.1.tar.gz",
+    "size_bytes": 5747,
+    "sha256": "dbb3f5a1cbfb69c99c558d8c8ddf95646580b65dd360d9d81abda2e0fd73c265",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ubidots/library/Ubidots%2520MQTT%2520for%2520ESP8266/1.1/UbidotsMQTTforESP8266-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ubidots/library/Ubidots%20MQTT%20for%20ESP8266/1.1/UbidotsMQTTforESP8266-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

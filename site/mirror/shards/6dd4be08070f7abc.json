@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/avajadi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "avajadi/library/ADSRLib/0.0.1/ADSRLib-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADSRLib-0.0.1.tar.gz",
+    "size_bytes": 3587,
+    "sha256": "949171eedd8f3b59d304c7a4a640369025b6d1d4e0e216ca1a6c70d342511e11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avajadi/library/ADSRLib/0.0.1/ADSRLib-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/avajadi/library/ADSRLib/0.0.1/ADSRLib-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

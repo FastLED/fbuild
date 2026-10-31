@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/klenov1900-lang",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "klenov1900-lang/library/DS3231_EASY/1.0.0/DS3231_EASY-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS3231_EASY-1.0.0.tar.gz",
+    "size_bytes": 10651,
+    "sha256": "cdc9253735e9aeee34c37939df013d45197edefcbc767698bb78790847a35b77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klenov1900-lang/library/DS3231_EASY/1.0.0/DS3231_EASY-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/klenov1900-lang/library/DS3231_EASY/1.0.0/DS3231_EASY-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klenov1900-lang/library/I2C_EASY/1.0.0/I2C_EASY-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C_EASY-1.0.0.tar.gz",
+    "size_bytes": 11155,
+    "sha256": "ba5ce981c445ae6b7f2accae9f60595f816d6e5fa945f85877f5d9bdf9056b1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klenov1900-lang/library/I2C_EASY/1.0.0/I2C_EASY-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/klenov1900-lang/library/I2C_EASY/1.0.0/I2C_EASY-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klenov1900-lang/library/OLED2.42_EASY/1.0.0/OLED2.42_EASY-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OLED2.42_EASY-1.0.0.tar.gz",
+    "size_bytes": 21665,
+    "sha256": "d192d53db214face6db92830e8f83069460a16bda8cb3aebbb115c1452656490",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klenov1900-lang/library/OLED2.42_EASY/1.0.0/OLED2.42_EASY-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/klenov1900-lang/library/OLED2.42_EASY/1.0.0/OLED2.42_EASY-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klenov1900-lang/library/OLED2.42_EASY/2.0.0/OLED2.42_EASY-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OLED2.42_EASY-2.0.0.tar.gz",
+    "size_bytes": 24022,
+    "sha256": "f666cb24e292bd289922da5ffa48f3b6d5f685977462cd399074f732f3a80e64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klenov1900-lang/library/OLED2.42_EASY/2.0.0/OLED2.42_EASY-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/klenov1900-lang/library/OLED2.42_EASY/2.0.0/OLED2.42_EASY-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klenov1900-lang/library/PCFKeypad/1.0.0/PCFKeypad-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCFKeypad-1.0.0.tar.gz",
+    "size_bytes": 11253,
+    "sha256": "ae602083c710c024102eed856abf42054c31c8e101209a0d451e08d3f3521ad8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klenov1900-lang/library/PCFKeypad/1.0.0/PCFKeypad-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/klenov1900-lang/library/PCFKeypad/1.0.0/PCFKeypad-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klenov1900-lang/library/PCFKeypad_EASY/1.0.0/PCFKeypad_EASY-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCFKeypad_EASY-1.0.0.tar.gz",
+    "size_bytes": 12358,
+    "sha256": "3545fe5fa0796ff88ea51c2005afdf7e0054fa620477f100ab3274813fb721ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klenov1900-lang/library/PCFKeypad_EASY/1.0.0/PCFKeypad_EASY-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/klenov1900-lang/library/PCFKeypad_EASY/1.0.0/PCFKeypad_EASY-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klenov1900-lang/library/TM1637_6Easy/1.0.0/TM1637_6Easy-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1637_6Easy-1.0.0.tar.gz",
+    "size_bytes": 6093,
+    "sha256": "933099f428c819748d07899dfcea33d2084f531b3b222b74fb74611b075665c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klenov1900-lang/library/TM1637_6Easy/1.0.0/TM1637_6Easy-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/klenov1900-lang/library/TM1637_6Easy/1.0.0/TM1637_6Easy-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klenov1900-lang/library/TM1637_6Easy/2.0.0/TM1637_6Easy-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1637_6Easy-2.0.0.tar.gz",
+    "size_bytes": 10237,
+    "sha256": "f03dd665d3ab93f0d5441fdd844cfbc33f242b016ceeebeea6a3bd4bf9222748",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klenov1900-lang/library/TM1637_6Easy/2.0.0/TM1637_6Easy-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/klenov1900-lang/library/TM1637_6Easy/2.0.0/TM1637_6Easy-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klenov1900-lang/library/TM1637_6Easy/2.1.0/TM1637_6Easy-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1637_6Easy-2.1.0.tar.gz",
+    "size_bytes": 16076,
+    "sha256": "913121053852555e24efdfea5070dab40bbb2a4ce856c2ce3d25e02a814fc1f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klenov1900-lang/library/TM1637_6Easy/2.1.0/TM1637_6Easy-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/klenov1900-lang/library/TM1637_6Easy/2.1.0/TM1637_6Easy-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

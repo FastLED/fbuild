@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/huilab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "huilab/library/Honeywell%20TruStability%20SPI/1.0.0/HoneywellTruStabilitySPI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HoneywellTruStabilitySPI-1.0.0.tar.gz",
+    "size_bytes": 32979,
+    "sha256": "1372a310a76d1c06b983948f34e0c07e56300d3dadb8a0b8d5b693dcd55d94eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/huilab/library/Honeywell%2520TruStability%2520SPI/1.0.0/HoneywellTruStabilitySPI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/huilab/library/Honeywell%20TruStability%20SPI/1.0.0/HoneywellTruStabilitySPI-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "huilab/library/Honeywell%20Zephyr%20I2C/1.0.0/HoneywellZephyrI2C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HoneywellZephyrI2C-1.0.0.tar.gz",
+    "size_bytes": 31917,
+    "sha256": "d9197b47681f57ff5f55bb70ee797ba15a885e507119db191da5019e24f1fda4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/huilab/library/Honeywell%2520Zephyr%2520I2C/1.0.0/HoneywellZephyrI2C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/huilab/library/Honeywell%20Zephyr%20I2C/1.0.0/HoneywellZephyrI2C-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

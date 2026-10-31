@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yangcq88517",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yangcq88517/library/BME680/0.0.0+sha.85088a918342/BME680-0.0.0+sha.85088a918342.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME680-0.0.0+sha.85088a918342.tar.gz",
+    "size_bytes": 11476,
+    "sha256": "ee3f18be1669913b9e4ea85e36680c0ca4daf4c7b0e279676f96ae4f32fb19cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yangcq88517/library/BME680/0.0.0%2Bsha.85088a918342/BME680-0.0.0%2Bsha.85088a918342.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yangcq88517/library/BME680/0.0.0%2Bsha.85088a918342/BME680-0.0.0%2Bsha.85088a918342.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yangcq88517/library/BufferedArray/0.0.0+sha.765da30c4d9b/BufferedArray-0.0.0+sha.765da30c4d9b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BufferedArray-0.0.0+sha.765da30c4d9b.tar.gz",
+    "size_bytes": 1968,
+    "sha256": "2afd08232c9a1f40338e30f5b84d01b1aa86444d5ee2eaa15769bd4bb71e8653",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yangcq88517/library/BufferedArray/0.0.0%2Bsha.765da30c4d9b/BufferedArray-0.0.0%2Bsha.765da30c4d9b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yangcq88517/library/BufferedArray/0.0.0%2Bsha.765da30c4d9b/BufferedArray-0.0.0%2Bsha.765da30c4d9b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yangcq88517/library/FM24V10/0.0.0+sha.b9f6d029c760/FM24V10-0.0.0+sha.b9f6d029c760.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FM24V10-0.0.0+sha.b9f6d029c760.tar.gz",
+    "size_bytes": 1837,
+    "sha256": "07efe1a7780cbeb2ff0abf5c4199596ece1a9f26229ca88aee635ded3a198ee0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yangcq88517/library/FM24V10/0.0.0%2Bsha.b9f6d029c760/FM24V10-0.0.0%2Bsha.b9f6d029c760.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yangcq88517/library/FM24V10/0.0.0%2Bsha.b9f6d029c760/FM24V10-0.0.0%2Bsha.b9f6d029c760.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yangcq88517/library/MGC3130/0.0.0+sha.de7934ec7ea2/MGC3130-0.0.0+sha.de7934ec7ea2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MGC3130-0.0.0+sha.de7934ec7ea2.tar.gz",
+    "size_bytes": 11578,
+    "sha256": "36ff862d1b6182ed3ea38acce855e0ead54f626237df608f75cda47d2b2b7d14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yangcq88517/library/MGC3130/0.0.0%2Bsha.de7934ec7ea2/MGC3130-0.0.0%2Bsha.de7934ec7ea2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yangcq88517/library/MGC3130/0.0.0%2Bsha.de7934ec7ea2/MGC3130-0.0.0%2Bsha.de7934ec7ea2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yangcq88517/library/SP03/0.0.0+sha.4090898287d5/SP03-0.0.0+sha.4090898287d5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SP03-0.0.0+sha.4090898287d5.tar.gz",
+    "size_bytes": 1768,
+    "sha256": "b09193240d616855848029205756c0e612c97fac254bc540f7386a7233dbc0ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yangcq88517/library/SP03/0.0.0%2Bsha.4090898287d5/SP03-0.0.0%2Bsha.4090898287d5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yangcq88517/library/SP03/0.0.0%2Bsha.4090898287d5/SP03-0.0.0%2Bsha.4090898287d5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yangcq88517/library/SRF02/0.0.0+sha.adf5a063372d/SRF02-0.0.0+sha.adf5a063372d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SRF02-0.0.0+sha.adf5a063372d.tar.gz",
+    "size_bytes": 1344,
+    "sha256": "25150c334c5a20149eeca54963348882bf2c94099b459d9a82cc61875f937733",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yangcq88517/library/SRF02/0.0.0%2Bsha.adf5a063372d/SRF02-0.0.0%2Bsha.adf5a063372d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yangcq88517/library/SRF02/0.0.0%2Bsha.adf5a063372d/SRF02-0.0.0%2Bsha.adf5a063372d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yangcq88517/library/SmartLabXBeeAPI2/0.0.0+sha.6e4ef3c302b4/SmartLabXBeeAPI2-0.0.0+sha.6e4ef3c302b4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartLabXBeeAPI2-0.0.0+sha.6e4ef3c302b4.tar.gz",
+    "size_bytes": 25936,
+    "sha256": "ad614b10f7be884d505e59d9fce4f30cb649c6575ab29d29f63b100a14ae3376",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yangcq88517/library/SmartLabXBeeAPI2/0.0.0%2Bsha.6e4ef3c302b4/SmartLabXBeeAPI2-0.0.0%2Bsha.6e4ef3c302b4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yangcq88517/library/SmartLabXBeeAPI2/0.0.0%2Bsha.6e4ef3c302b4/SmartLabXBeeAPI2-0.0.0%2Bsha.6e4ef3c302b4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yangcq88517/library/SmartLabXBeeCore/0.0.0+sha.5f31ddc17239/SmartLabXBeeCore-0.0.0+sha.5f31ddc17239.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartLabXBeeCore-0.0.0+sha.5f31ddc17239.tar.gz",
+    "size_bytes": 21662,
+    "sha256": "2fc6879b3142043a6d71caeb3259f40e302b8e702c27c6bbcb33bf4cafb3e12c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yangcq88517/library/SmartLabXBeeCore/0.0.0%2Bsha.5f31ddc17239/SmartLabXBeeCore-0.0.0%2Bsha.5f31ddc17239.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yangcq88517/library/SmartLabXBeeCore/0.0.0%2Bsha.5f31ddc17239/SmartLabXBeeCore-0.0.0%2Bsha.5f31ddc17239.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yangcq88517/library/SmartLab_MuRata/0.0.0+sha.0ce800923eda/SmartLab_MuRata-0.0.0+sha.0ce800923eda.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartLab_MuRata-0.0.0+sha.0ce800923eda.tar.gz",
+    "size_bytes": 25249,
+    "sha256": "cf39de15a1b7d15b9cc33af83367bad1427fc4c70726d2847f739899e1047e97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yangcq88517/library/SmartLab_MuRata/0.0.0%2Bsha.0ce800923eda/SmartLab_MuRata-0.0.0%2Bsha.0ce800923eda.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yangcq88517/library/SmartLab_MuRata/0.0.0%2Bsha.0ce800923eda/SmartLab_MuRata-0.0.0%2Bsha.0ce800923eda.tar.gz"
+    ]
+   }
+  }
+ ]
+}

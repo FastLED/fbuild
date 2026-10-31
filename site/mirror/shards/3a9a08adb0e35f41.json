@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vincentmuriithi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vincentmuriithi/library/kari/1.2.0/kari-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kari-1.2.0.tar.gz",
+    "size_bytes": 2800613,
+    "sha256": "aa396725ebc62300fdf70e775923681454bd830834600eb3b41ca60a64405159",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vincentmuriithi/library/kari/1.2.0/kari-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vincentmuriithi/library/kari/1.2.0/kari-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-etherealflaim",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-etherealflaim/library/HvZAlphaNumLib/0.0.0+sha.48d04cc40e1c/HvZAlphaNumLib-0.0.0+sha.48d04cc40e1c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HvZAlphaNumLib-0.0.0+sha.48d04cc40e1c.tar.gz",
+    "size_bytes": 2084,
+    "sha256": "3e40354cdf59e5ce59fd74c25042c9ee307660bd9b5df783977657b1877329bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-etherealflaim/library/HvZAlphaNumLib/0.0.0%2Bsha.48d04cc40e1c/HvZAlphaNumLib-0.0.0%2Bsha.48d04cc40e1c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-etherealflaim/library/HvZAlphaNumLib/0.0.0%2Bsha.48d04cc40e1c/HvZAlphaNumLib-0.0.0%2Bsha.48d04cc40e1c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

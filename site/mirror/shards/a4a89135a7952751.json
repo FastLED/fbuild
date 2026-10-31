@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dirkhillbrecht",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dirkhillbrecht/library/UiUiUi/0.9.2/UiUiUi-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UiUiUi-0.9.2.tar.gz",
+    "size_bytes": 1105387,
+    "sha256": "8c85170970c9403b860e5c47722e3fdd50def65cf1549e5855af0b384fa75baf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dirkhillbrecht/library/UiUiUi/0.9.2/UiUiUi-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dirkhillbrecht/library/UiUiUi/0.9.2/UiUiUi-0.9.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

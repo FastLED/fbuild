@@ -1,0 +1,347 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tobozo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tobozo/library/ESP32-Chimera-Core/1.5.2/ESP32-Chimera-Core-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-Chimera-Core-1.5.2.tar.gz",
+    "size_bytes": 176063,
+    "sha256": "b80ead686a9a949518dad56bd1b4a760b643eb671ce93fb504b9fd560766060c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/ESP32-Chimera-Core/1.5.2/ESP32-Chimera-Core-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/ESP32-Chimera-Core/1.5.2/ESP32-Chimera-Core-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/ESP32-ENC28J60/2.0.1/ESP32-ENC28J60-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-ENC28J60-2.0.1.tar.gz",
+    "size_bytes": 163452,
+    "sha256": "34ea9b2cb2083bba21e6f892eba44433a7fb5ee8082f63f096d39b7d6add3901",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/ESP32-ENC28J60/2.0.1/ESP32-ENC28J60-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/ESP32-ENC28J60/2.0.1/ESP32-ENC28J60-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/ESP32-PSRamFS/1.0.6/ESP32-PSRamFS-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-PSRamFS-1.0.6.tar.gz",
+    "size_bytes": 31771,
+    "sha256": "146ed9055dc02a9ce691f282c6c61cb26f7439841b9750136bcd5019f7e90dd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/ESP32-PSRamFS/1.0.6/ESP32-PSRamFS-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/ESP32-PSRamFS/1.0.6/ESP32-PSRamFS-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/ESP32-PSRamFS/1.0.7/ESP32-PSRamFS-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-PSRamFS-1.0.7.tar.gz",
+    "size_bytes": 31829,
+    "sha256": "efa8f3bb423d009fd2ba86fbbdb21028d0be03da1a14040e273c43b28654edc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/ESP32-PSRamFS/1.0.7/ESP32-PSRamFS-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/ESP32-PSRamFS/1.0.7/ESP32-PSRamFS-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/ESP32-PSRamFS/1.0.8/ESP32-PSRamFS-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-PSRamFS-1.0.8.tar.gz",
+    "size_bytes": 44335,
+    "sha256": "6a7efd4b7129f2387b9d6914397c086dca9bfeac5609fefc7971f1be913ac6a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/ESP32-PSRamFS/1.0.8/ESP32-PSRamFS-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/ESP32-PSRamFS/1.0.8/ESP32-PSRamFS-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/ESP32-PSRamFS/1.0.9/ESP32-PSRamFS-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-PSRamFS-1.0.9.tar.gz",
+    "size_bytes": 38041,
+    "sha256": "018fbd61079c5d58162dbb648e97b68bc56618f542ca40d9fb353d7ed1547171",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/ESP32-PSRamFS/1.0.9/ESP32-PSRamFS-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/ESP32-PSRamFS/1.0.9/ESP32-PSRamFS-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/ESP32-USB-Soft-Host/0.1.5/ESP32-USB-Soft-Host-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-USB-Soft-Host-0.1.5.tar.gz",
+    "size_bytes": 37697,
+    "sha256": "0fad673a009b3982b77be4871ae5c20d0ec786f0ec68f3bbaf997558ebf68222",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/ESP32-USB-Soft-Host/0.1.5/ESP32-USB-Soft-Host-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/ESP32-USB-Soft-Host/0.1.5/ESP32-USB-Soft-Host-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/ESP32-imgur-uploader/1.0.3/ESP32-imgur-uploader-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-imgur-uploader-1.0.3.tar.gz",
+    "size_bytes": 354694,
+    "sha256": "15e4187c561b3e72c3ea60994867a79a6b42f96fda7e7dc7ee891d01c6669dac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/ESP32-imgur-uploader/1.0.3/ESP32-imgur-uploader-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/ESP32-imgur-uploader/1.0.3/ESP32-imgur-uploader-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/ESP32-targz/1.2.0/ESP32-targz-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-targz-1.2.0.tar.gz",
+    "size_bytes": 276197,
+    "sha256": "ab78af3c68b0cb85b5341ad9660bf6233e929e56effe5d07bff89e4280b293cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/ESP32-targz/1.2.0/ESP32-targz-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/ESP32-targz/1.2.0/ESP32-targz-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/ESP32-targz/1.2.9/ESP32-targz-1.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-targz-1.2.9.tar.gz",
+    "size_bytes": 672030,
+    "sha256": "14d192cbac4eacf42adcc1b8cc8b58c6ee9f1d508f157ba9eaa6e888b216eb29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/ESP32-targz/1.2.9/ESP32-targz-1.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/ESP32-targz/1.2.9/ESP32-targz-1.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/ESP32-targz/1.3.0/ESP32-targz-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-targz-1.3.0.tar.gz",
+    "size_bytes": 670926,
+    "sha256": "62d725fec323445d2df7d16e2be57bc916e9bb805ea3aa60e27e734ee0f09008",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/ESP32-targz/1.3.0/ESP32-targz-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/ESP32-targz/1.3.0/ESP32-targz-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/ESP32-targz/1.3.1/ESP32-targz-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-targz-1.3.1.tar.gz",
+    "size_bytes": 677402,
+    "sha256": "98bc6423738159ace56f52cadb9cca8d5378bbbae58008d4d45788cd738f6c73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/ESP32-targz/1.3.1/ESP32-targz-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/ESP32-targz/1.3.1/ESP32-targz-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/ESP8266SDUpdater/0.0.2/ESP8266SDUpdater-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266SDUpdater-0.0.2.tar.gz",
+    "size_bytes": 7537,
+    "sha256": "27c2a65fe9437c371ab20cd10973cd1b879cac298c50c5774c14364d53105e79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/ESP8266SDUpdater/0.0.2/ESP8266SDUpdater-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/ESP8266SDUpdater/0.0.2/ESP8266SDUpdater-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/LGFXMeter/0.2.0/LGFXMeter-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFXMeter-0.2.0.tar.gz",
+    "size_bytes": 137529,
+    "sha256": "b9341c1f09ab62abdf6274e597056dca1b33f51b7d223d694ad0e0885549b85a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/LGFXMeter/0.2.0/LGFXMeter-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/LGFXMeter/0.2.0/LGFXMeter-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/LGFX_Fonts/1.1.0/LGFX_Fonts-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFX_Fonts-1.1.0.tar.gz",
+    "size_bytes": 6826069,
+    "sha256": "4589ee4104d5a60e7ec3c885e5cc6c5ebcdad08cc08b4a11b0d60de340fa3dfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/LGFX_Fonts/1.1.0/LGFX_Fonts-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/LGFX_Fonts/1.1.0/LGFX_Fonts-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/LGFX_Fonts/1.1.1/LGFX_Fonts-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFX_Fonts-1.1.1.tar.gz",
+    "size_bytes": 6870275,
+    "sha256": "cf1f9243c1311d5cc0d5c239da233f44f6d6572a1aec4713e528689a173fbbb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/LGFX_Fonts/1.1.1/LGFX_Fonts-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/LGFX_Fonts/1.1.1/LGFX_Fonts-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/LGFX_Fonts/1.1.2/LGFX_Fonts-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFX_Fonts-1.1.2.tar.gz",
+    "size_bytes": 3570878,
+    "sha256": "23c2f5ab98d1d9acd99eee1f47b5d8e67eeba6f9eb596210b6a278b7976f5fbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/LGFX_Fonts/1.1.2/LGFX_Fonts-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/LGFX_Fonts/1.1.2/LGFX_Fonts-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/LGFX_PPA/0.1.0/LGFX_PPA-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFX_PPA-0.1.0.tar.gz",
+    "size_bytes": 9929,
+    "sha256": "765eb389c02492f378b9cb56aac48a335d9b0662b29504a5fe082e4922f93f5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/LGFX_PPA/0.1.0/LGFX_PPA-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/LGFX_PPA/0.1.0/LGFX_PPA-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/LGFX_PPA/0.1.1/LGFX_PPA-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFX_PPA-0.1.1.tar.gz",
+    "size_bytes": 9716,
+    "sha256": "745dc94a7dab20b2157101a3f12ba13071ef28f02d1336822c7abb9850a7d6d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/LGFX_PPA/0.1.1/LGFX_PPA-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/LGFX_PPA/0.1.1/LGFX_PPA-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/LGFX_PPA/0.2.0/LGFX_PPA-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFX_PPA-0.2.0.tar.gz",
+    "size_bytes": 10156,
+    "sha256": "1da803f7a7c74d61969588a8c6b6d51cb031e3f0243b6770c26575cc186e8cde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/LGFX_PPA/0.2.0/LGFX_PPA-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/LGFX_PPA/0.2.0/LGFX_PPA-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/LGFX_PPA/0.2.1/LGFX_PPA-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFX_PPA-0.2.1.tar.gz",
+    "size_bytes": 11074,
+    "sha256": "d12720cbcee8b2ce3b6e7408422ff4ffe67e83fd699446f366698e3f95514069",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/LGFX_PPA/0.2.1/LGFX_PPA-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/LGFX_PPA/0.2.1/LGFX_PPA-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/LGFX_PPA/0.2.2/LGFX_PPA-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFX_PPA-0.2.2.tar.gz",
+    "size_bytes": 12227,
+    "sha256": "9d4b011bdf0913de4240a97b322c5e51ffd5706a8053e1dd804804947228c59b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/LGFX_PPA/0.2.2/LGFX_PPA-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/LGFX_PPA/0.2.2/LGFX_PPA-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/LGFX_PPA/0.2.3/LGFX_PPA-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFX_PPA-0.2.3.tar.gz",
+    "size_bytes": 12375,
+    "sha256": "2d2cc8ab11f4a896479a24c88b69a8ad9fa03ac1fdb0b284c21bd83756b45f59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/LGFX_PPA/0.2.3/LGFX_PPA-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/LGFX_PPA/0.2.3/LGFX_PPA-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/M5Stack-SD-Updater/1.2.8/M5Stack-SD-Updater-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Stack-SD-Updater-1.2.8.tar.gz",
+    "size_bytes": 237817,
+    "sha256": "c56e5869d6b0c865053e8b5269d9d3048c41ad868754260e84ecde5c5f6235b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/M5Stack-SD-Updater/1.2.8/M5Stack-SD-Updater-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/M5Stack-SD-Updater/1.2.8/M5Stack-SD-Updater-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/WiFiManagerTz/1.3.3/WiFiManagerTz-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiManagerTz-1.3.3.tar.gz",
+    "size_bytes": 14381,
+    "sha256": "d9af3e9249abf907304d013a53a72154e2acd44ab6fd3287ef5e23eed2ae1f2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/WiFiManagerTz/1.3.3/WiFiManagerTz-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/WiFiManagerTz/1.3.3/WiFiManagerTz-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobozo/library/YAMLDuino/1.5.0/YAMLDuino-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YAMLDuino-1.5.0.tar.gz",
+    "size_bytes": 212570,
+    "sha256": "02e91110f938280fa842ee52876eac0cb1f235b6ced13b2280766013d5b2f3b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobozo/library/YAMLDuino/1.5.0/YAMLDuino-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tobozo/library/YAMLDuino/1.5.0/YAMLDuino-1.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

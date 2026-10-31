@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/karibura-cyber",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "karibura-cyber/library/NHBot/0.1.2/NHBot-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NHBot-0.1.2.tar.gz",
+    "size_bytes": 12288,
+    "sha256": "2caff7c99fce0e9b4ce95fc89a57b1fac7882e0686973523907dfcdb86a5524d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/karibura-cyber/library/NHBot/0.1.2/NHBot-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/karibura-cyber/library/NHBot/0.1.2/NHBot-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

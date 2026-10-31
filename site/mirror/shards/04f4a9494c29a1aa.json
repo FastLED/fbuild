@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-phungductung",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-phungductung/library/BSP_DISCO_F746NG/0.0.0+sha.e4fe96f3a891/BSP_DISCO_F746NG-0.0.0+sha.e4fe96f3a891.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSP_DISCO_F746NG-0.0.0+sha.e4fe96f3a891.tar.gz",
+    "size_bytes": 94144,
+    "sha256": "ba23a925fd21aa6fc34438b7e3a0f87b2957860d09db46e8efee4fbad38a8e75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-phungductung/library/BSP_DISCO_F746NG/0.0.0%2Bsha.e4fe96f3a891/BSP_DISCO_F746NG-0.0.0%2Bsha.e4fe96f3a891.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-phungductung/library/BSP_DISCO_F746NG/0.0.0%2Bsha.e4fe96f3a891/BSP_DISCO_F746NG-0.0.0%2Bsha.e4fe96f3a891.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-phungductung/library/F746-GUI/0.0.0+sha.4e245f4bc8ac/F746-GUI-0.0.0+sha.4e245f4bc8ac.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "F746-GUI-0.0.0+sha.4e245f4bc8ac.tar.gz",
+    "size_bytes": 104644,
+    "sha256": "73eccd45643c56e55c6260fb1bd8aa30a2051bc6e0443c6093fc94759cd60cd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-phungductung/library/F746-GUI/0.0.0%2Bsha.4e245f4bc8ac/F746-GUI-0.0.0%2Bsha.4e245f4bc8ac.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-phungductung/library/F746-GUI/0.0.0%2Bsha.4e245f4bc8ac/F746-GUI-0.0.0%2Bsha.4e245f4bc8ac.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-phungductung/library/F746-SAI-IO/0.0.0+sha.f255629eada1/F746-SAI-IO-0.0.0+sha.f255629eada1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "F746-SAI-IO-0.0.0+sha.f255629eada1.tar.gz",
+    "size_bytes": 4513,
+    "sha256": "e6d223f983d4000ed878bdee55f9199fc24b6daeae4d001b8ad071cbaa7fc7dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-phungductung/library/F746-SAI-IO/0.0.0%2Bsha.f255629eada1/F746-SAI-IO-0.0.0%2Bsha.f255629eada1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-phungductung/library/F746-SAI-IO/0.0.0%2Bsha.f255629eada1/F746-SAI-IO-0.0.0%2Bsha.f255629eada1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-phungductung/library/SD_PlayerSkeleton/0.0.0+sha.84ca69a520f9/SD_PlayerSkeleton-0.0.0+sha.84ca69a520f9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SD_PlayerSkeleton-0.0.0+sha.84ca69a520f9.tar.gz",
+    "size_bytes": 3560,
+    "sha256": "f82d7ca9907c4ad72f290151b8709c12f966a61bc193af9f9839cf157f397b11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-phungductung/library/SD_PlayerSkeleton/0.0.0%2Bsha.84ca69a520f9/SD_PlayerSkeleton-0.0.0%2Bsha.84ca69a520f9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-phungductung/library/SD_PlayerSkeleton/0.0.0%2Bsha.84ca69a520f9/SD_PlayerSkeleton-0.0.0%2Bsha.84ca69a520f9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

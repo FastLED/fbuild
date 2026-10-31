@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/csobirka",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "csobirka/library/SevenSegment/1.1.8/SevenSegment-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSegment-1.1.8.tar.gz",
+    "size_bytes": 2585,
+    "sha256": "f226e31d8e40718866a1be65a09b30ca5cadc4dc6edbf9520396899eb040fa7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/csobirka/library/SevenSegment/1.1.8/SevenSegment-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/csobirka/library/SevenSegment/1.1.8/SevenSegment-1.1.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

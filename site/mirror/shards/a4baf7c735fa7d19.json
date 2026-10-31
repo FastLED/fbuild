@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-allar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-allar/library/TCS3472_I2C/0.0.0+sha.764a98777c11/TCS3472_I2C-0.0.0+sha.764a98777c11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCS3472_I2C-0.0.0+sha.764a98777c11.tar.gz",
+    "size_bytes": 5333,
+    "sha256": "06da3070bd3dd65b3851c5b32d1a403299ce4c8c7f55c40e51285e5c442969b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-allar/library/TCS3472_I2C/0.0.0%2Bsha.764a98777c11/TCS3472_I2C-0.0.0%2Bsha.764a98777c11.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-allar/library/TCS3472_I2C/0.0.0%2Bsha.764a98777c11/TCS3472_I2C-0.0.0%2Bsha.764a98777c11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-allar/library/WConstants/0.0.0+sha.35d94fa8cf10/WConstants-0.0.0+sha.35d94fa8cf10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WConstants-0.0.0+sha.35d94fa8cf10.tar.gz",
+    "size_bytes": 2122,
+    "sha256": "b08c8572528754d345e0cf11882fb35d02825fa552e7917f8593de725e164ce0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-allar/library/WConstants/0.0.0%2Bsha.35d94fa8cf10/WConstants-0.0.0%2Bsha.35d94fa8cf10.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-allar/library/WConstants/0.0.0%2Bsha.35d94fa8cf10/WConstants-0.0.0%2Bsha.35d94fa8cf10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

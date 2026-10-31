@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stanislavjochman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stanislavjochman/library/LegoSensorAdapter/1.0.0/LegoSensorAdapter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LegoSensorAdapter-1.0.0.tar.gz",
+    "size_bytes": 5755,
+    "sha256": "e57857242eeca0c317c491e2c09c04d84cc129f3a0e058dc028cc522657d1553",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stanislavjochman/library/LegoSensorAdapter/1.0.0/LegoSensorAdapter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stanislavjochman/library/LegoSensorAdapter/1.0.0/LegoSensorAdapter-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

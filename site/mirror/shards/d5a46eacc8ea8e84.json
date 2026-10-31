@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/juanjomartinf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "juanjomartinf/library/JMBase/1.1.0/JMBase-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JMBase-1.1.0.tar.gz",
+    "size_bytes": 2658,
+    "sha256": "8f44f27990cc01bdd7c3ec28aeb363ad70ca945985b2bfbe61442c0ebf6a0f33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juanjomartinf/library/JMBase/1.1.0/JMBase-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juanjomartinf/library/JMBase/1.1.0/JMBase-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juanjomartinf/library/JMBase/1.2.0/JMBase-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JMBase-1.2.0.tar.gz",
+    "size_bytes": 2735,
+    "sha256": "c9f1f89742944c02ec0314df205b54ca4d019e891d65f831c1ba53d736fc2be0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juanjomartinf/library/JMBase/1.2.0/JMBase-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juanjomartinf/library/JMBase/1.2.0/JMBase-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juanjomartinf/library/JMBase/1.3.5/JMBase-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JMBase-1.3.5.tar.gz",
+    "size_bytes": 3900,
+    "sha256": "de68e329e665aa7c6b93186358eafe7f4d1ad26a802db178447c2df56722be15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juanjomartinf/library/JMBase/1.3.5/JMBase-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/juanjomartinf/library/JMBase/1.3.5/JMBase-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juanjomartinf/library/JMBase/1.3.6/JMBase-1.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JMBase-1.3.6.tar.gz",
+    "size_bytes": 3876,
+    "sha256": "75e7ee8e502490bf24863ae6dcda6ac138993fc0183ece5edff431a10e0e9bf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juanjomartinf/library/JMBase/1.3.6/JMBase-1.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/juanjomartinf/library/JMBase/1.3.6/JMBase-1.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juanjomartinf/library/JMBase/1.5.0/JMBase-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JMBase-1.5.0.tar.gz",
+    "size_bytes": 4247,
+    "sha256": "5ef3045e49b97410afc912677cf3965e5a5dd5dbffce8330f8c673084c7ecb6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juanjomartinf/library/JMBase/1.5.0/JMBase-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juanjomartinf/library/JMBase/1.5.0/JMBase-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juanjomartinf/library/JMBase/1.6.0/JMBase-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JMBase-1.6.0.tar.gz",
+    "size_bytes": 4367,
+    "sha256": "0100c67edd938175d3ce4ad88dae8d2c8c8264f459e7e19ddd692b033805590b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juanjomartinf/library/JMBase/1.6.0/JMBase-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juanjomartinf/library/JMBase/1.6.0/JMBase-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juanjomartinf/library/JMBase/1.7.1/JMBase-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JMBase-1.7.1.tar.gz",
+    "size_bytes": 4408,
+    "sha256": "70465bd34b818f8925b61a07bba708533947f29ce9ed51c1b1093713b7c699fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juanjomartinf/library/JMBase/1.7.1/JMBase-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/juanjomartinf/library/JMBase/1.7.1/JMBase-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juanjomartinf/library/JMBase/1.8.0/JMBase-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JMBase-1.8.0.tar.gz",
+    "size_bytes": 4398,
+    "sha256": "43a536e1ca312793c0e900eb065e33da46b9fbb01668eda272ec64e200a12a5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juanjomartinf/library/JMBase/1.8.0/JMBase-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juanjomartinf/library/JMBase/1.8.0/JMBase-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juanjomartinf/library/JMBase/1.8.1/JMBase-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JMBase-1.8.1.tar.gz",
+    "size_bytes": 3902,
+    "sha256": "c09ad9543ee211336704bde6d04c0d7f44f18d60f521ca81c7147d01de16d9d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juanjomartinf/library/JMBase/1.8.1/JMBase-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/juanjomartinf/library/JMBase/1.8.1/JMBase-1.8.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

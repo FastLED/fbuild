@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/manoj26may",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "manoj26may/library/CodePrinter/1.2.0/CodePrinter-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodePrinter-1.2.0.tar.gz",
+    "size_bytes": 2440,
+    "sha256": "8ad545ab04d7b35019ff2d6126bfb979ea027611f8bcdd24bbdb019a8d8cc014",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/manoj26may/library/CodePrinter/1.2.0/CodePrinter-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/manoj26may/library/CodePrinter/1.2.0/CodePrinter-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "manoj26may/library/IOT/1.1.0/IOT-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOT-1.1.0.tar.gz",
+    "size_bytes": 2581,
+    "sha256": "9d99ed4e07cdfc8d3f9f954b8526cfb1ece2de855995db4626a4efa91240834e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/manoj26may/library/IOT/1.1.0/IOT-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/manoj26may/library/IOT/1.1.0/IOT-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

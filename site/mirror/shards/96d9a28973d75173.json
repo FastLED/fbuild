@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fotherja",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fotherja/library/BQ76952/2.1.1/BQ76952-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BQ76952-2.1.1.tar.gz",
+    "size_bytes": 10296,
+    "sha256": "359a8e304995c970093d0eca3cbe93f66bf9b51a350679c63a33ef5af0e618cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fotherja/library/BQ76952/2.1.1/BQ76952-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fotherja/library/BQ76952/2.1.1/BQ76952-2.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

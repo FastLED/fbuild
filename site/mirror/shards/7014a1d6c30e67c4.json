@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/solidsnake745",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "solidsnake745/library/MIDI%20Device%20Controller/1.1.0/MIDIDeviceController-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MIDIDeviceController-1.1.0.tar.gz",
+    "size_bytes": 34987,
+    "sha256": "eb60f788781a018067ab11c0aeffeb2cafdd0582b3a4e7414432fab1a36237ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solidsnake745/library/MIDI%2520Device%2520Controller/1.1.0/MIDIDeviceController-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solidsnake745/library/MIDI%20Device%20Controller/1.1.0/MIDIDeviceController-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

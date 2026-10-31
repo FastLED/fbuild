@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lecsdragos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lecsdragos/library/CD4511B%20Seven%20Segment%20Display%20Driver/1.0.0/CD4511BSevenSegmentDisplayDriver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CD4511BSevenSegmentDisplayDriver-1.0.0.tar.gz",
+    "size_bytes": 1908,
+    "sha256": "2eeed62cc4ebda4e73e12c2e7b6c8ed334d2b7406415e7c31d706899ff5d800e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lecsdragos/library/CD4511B%2520Seven%2520Segment%2520Display%2520Driver/1.0.0/CD4511BSevenSegmentDisplayDriver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lecsdragos/library/CD4511B%20Seven%20Segment%20Display%20Driver/1.0.0/CD4511BSevenSegmentDisplayDriver-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

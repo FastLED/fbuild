@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leofig-rj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leofig-rj/library/LF_LoRa/0.0.1/LF_LoRa-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LF_LoRa-0.0.1.tar.gz",
+    "size_bytes": 18083,
+    "sha256": "0f3924c0f87ccdbd67cdaebe6ff55232e892a3b8a2c682689d0c465a056d0f44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leofig-rj/library/LF_LoRa/0.0.1/LF_LoRa-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leofig-rj/library/LF_LoRa/0.0.1/LF_LoRa-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

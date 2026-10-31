@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mxjac",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mxjac/library/Alex/0.0.0+sha.45d466252fb6/Alex-0.0.0+sha.45d466252fb6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Alex-0.0.0+sha.45d466252fb6.tar.gz",
+    "size_bytes": 1465,
+    "sha256": "a2d0b67959790b4337841611a20b91be9504bfeb6059e4c7e288df487058d0a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mxjac/library/Alex/0.0.0%2Bsha.45d466252fb6/Alex-0.0.0%2Bsha.45d466252fb6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mxjac/library/Alex/0.0.0%2Bsha.45d466252fb6/Alex-0.0.0%2Bsha.45d466252fb6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

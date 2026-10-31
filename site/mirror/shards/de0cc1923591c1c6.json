@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/frankboesing",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "frankboesing/library/AsyncTelnet/1.1.0/AsyncTelnet-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTelnet-1.1.0.tar.gz",
+    "size_bytes": 7023,
+    "sha256": "4d821c8c0ba8bf4528ad05e677a0215932f8fa5b3bb797d002972ef95181bbd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/frankboesing/library/AsyncTelnet/1.1.0/AsyncTelnet-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/frankboesing/library/AsyncTelnet/1.1.0/AsyncTelnet-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "frankboesing/library/Audiocodecs/0.32/Audiocodecs-0.32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Audiocodecs-0.32.tar.gz",
+    "size_bytes": 62147129,
+    "sha256": "00d3c7648e81b7c3542154c5cde18e93047ba37c74880e0cf294b82661ef32fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/frankboesing/library/Audiocodecs/0.32/Audiocodecs-0.32.tar.gz",
+     "https://dl.registry.platformio.org/download/frankboesing/library/Audiocodecs/0.32/Audiocodecs-0.32.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "frankboesing/library/FastCRC/1.41/FastCRC-1.41.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastCRC-1.41.tar.gz",
+    "size_bytes": 35292,
+    "sha256": "3330cb6110b0d7c745b162541fd39ccc07d2991edaf844227ec67bc57998a2dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/frankboesing/library/FastCRC/1.41/FastCRC-1.41.tar.gz",
+     "https://dl.registry.platformio.org/download/frankboesing/library/FastCRC/1.41/FastCRC-1.41.tar.gz"
+    ]
+   }
+  }
+ ]
+}

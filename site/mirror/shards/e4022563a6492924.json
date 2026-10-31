@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arduino-irremote",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arduino-irremote/library/IRremote/4.5.0/IRremote-4.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.5.0.tar.gz",
+    "size_bytes": 350687,
+    "sha256": "a22d5323f06887f1b582b6b6a01bcd8d119023c593dedf71ad3bab72983df79a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-irremote/library/IRremote/4.5.0/IRremote-4.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-irremote/library/IRremote/4.5.0/IRremote-4.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-irremote/library/IRremote/4.6.0/IRremote-4.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.6.0.tar.gz",
+    "size_bytes": 371174,
+    "sha256": "01ce65158930d53dcb74698085a14301066dc314e32f5e5c1b6ad53425968746",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-irremote/library/IRremote/4.6.0/IRremote-4.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-irremote/library/IRremote/4.6.0/IRremote-4.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-irremote/library/IRremote/4.6.1/IRremote-4.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.6.1.tar.gz",
+    "size_bytes": 371520,
+    "sha256": "6264dad081ddf9511c1b9faf4b0bb0bf6e6c923ed4fcc1841244a7052cb626f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-irremote/library/IRremote/4.6.1/IRremote-4.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-irremote/library/IRremote/4.6.1/IRremote-4.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-irremote/library/IRremote/4.7.0/IRremote-4.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.7.0.tar.gz",
+    "size_bytes": 372174,
+    "sha256": "1fb4a17aa54a872902b5431b99210b68d87202ac0b82eb5b11c35136014a6710",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-irremote/library/IRremote/4.7.0/IRremote-4.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-irremote/library/IRremote/4.7.0/IRremote-4.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-irremote/library/IRremote/4.7.1/IRremote-4.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-4.7.1.tar.gz",
+    "size_bytes": 372214,
+    "sha256": "ea8065fda0a4c18746413d29079e1823bbff287d4086f34a2a3f99e5eb8b006a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-irremote/library/IRremote/4.7.1/IRremote-4.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-irremote/library/IRremote/4.7.1/IRremote-4.7.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

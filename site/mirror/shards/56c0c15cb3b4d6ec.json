@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/malokhvii-eduard",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "malokhvii-eduard/library/arduino-bme280/1.0.6/arduino-bme280-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-bme280-1.0.6.tar.gz",
+    "size_bytes": 11039,
+    "sha256": "687d78e712172def404bc699508e049315e7e32f228b1dbb7ca23bb5a43f7f93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/malokhvii-eduard/library/arduino-bme280/1.0.6/arduino-bme280-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/malokhvii-eduard/library/arduino-bme280/1.0.6/arduino-bme280-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "malokhvii-eduard/library/arduino-mhz19/2.0.2/arduino-mhz19-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-mhz19-2.0.2.tar.gz",
+    "size_bytes": 3679,
+    "sha256": "8b43673f799381eaa9c70cbf63a2070e4e952151ea051119548f4fdc0dcff273",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/malokhvii-eduard/library/arduino-mhz19/2.0.2/arduino-mhz19-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/malokhvii-eduard/library/arduino-mhz19/2.0.2/arduino-mhz19-2.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/anha1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "anha1/library/SilkyRMS/1.0.1/SilkyRMS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SilkyRMS-1.0.1.tar.gz",
+    "size_bytes": 8057,
+    "sha256": "51b35efe9687aab04c07fd98bbd129f6e8da3b12e548532ecc501827c3797f93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anha1/library/SilkyRMS/1.0.1/SilkyRMS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/anha1/library/SilkyRMS/1.0.1/SilkyRMS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anha1/library/SilkyRMS/1.1.0/SilkyRMS-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SilkyRMS-1.1.0.tar.gz",
+    "size_bytes": 8475,
+    "sha256": "0c1c5770278c23faa48fd424de456afe0ca04a32c4aa01e6ac2d69a7e759c8a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anha1/library/SilkyRMS/1.1.0/SilkyRMS-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/anha1/library/SilkyRMS/1.1.0/SilkyRMS-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

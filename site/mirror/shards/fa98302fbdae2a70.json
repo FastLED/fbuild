@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alphanodesdev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alphanodesdev/library/SciFyIoT/1.0.0/SciFyIoT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SciFyIoT-1.0.0.tar.gz",
+    "size_bytes": 5954,
+    "sha256": "312b1ee8d013fc98c09a3e2438242b89ffbb8e696afff6b30a7c89729ce87c5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alphanodesdev/library/SciFyIoT/1.0.0/SciFyIoT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alphanodesdev/library/SciFyIoT/1.0.0/SciFyIoT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alphanodesdev/library/SciFyIoT/1.0.2/SciFyIoT-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SciFyIoT-1.0.2.tar.gz",
+    "size_bytes": 6189,
+    "sha256": "e59ca7a7915c0852d98ec4073c3ddbc61fb3f55494ea7368cca1c2a0f4b56c46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alphanodesdev/library/SciFyIoT/1.0.2/SciFyIoT-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alphanodesdev/library/SciFyIoT/1.0.2/SciFyIoT-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alphanodesdev/library/SciFyIoT/1.0.3/SciFyIoT-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SciFyIoT-1.0.3.tar.gz",
+    "size_bytes": 8818,
+    "sha256": "66e55420f8cba412e81bc4a2eee919f9ae4afaf4e6e6d57350a1fc5a4c2e3d1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alphanodesdev/library/SciFyIoT/1.0.3/SciFyIoT-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/alphanodesdev/library/SciFyIoT/1.0.3/SciFyIoT-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alphanodesdev/library/SciFyIoT/1.0.8/SciFyIoT-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SciFyIoT-1.0.8.tar.gz",
+    "size_bytes": 9512,
+    "sha256": "e02e4ccdb4d0f7012cd530f4329efc4fa16491415752894f03b4138fb137e957",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alphanodesdev/library/SciFyIoT/1.0.8/SciFyIoT-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/alphanodesdev/library/SciFyIoT/1.0.8/SciFyIoT-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alphanodesdev/library/SciFyIoT/2.0.0/SciFyIoT-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SciFyIoT-2.0.0.tar.gz",
+    "size_bytes": 7271,
+    "sha256": "6ac01c3fdd2f5e0405c3567048d521fb39a7752e2484687dba2a670e1715a9ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alphanodesdev/library/SciFyIoT/2.0.0/SciFyIoT-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alphanodesdev/library/SciFyIoT/2.0.0/SciFyIoT-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alphanodesdev/library/SciFyIoT/2.0.1/SciFyIoT-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SciFyIoT-2.0.1.tar.gz",
+    "size_bytes": 7055,
+    "sha256": "397d1c1526671fa3854ec86b1a3e6b6954bc796418ccb7af74dcce1f675f4aa1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alphanodesdev/library/SciFyIoT/2.0.1/SciFyIoT-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alphanodesdev/library/SciFyIoT/2.0.1/SciFyIoT-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-macrum",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-macrum/library/AS289R2/0.0.0+sha.b7d6c02caf97/AS289R2-0.0.0+sha.b7d6c02caf97.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS289R2-0.0.0+sha.b7d6c02caf97.tar.gz",
+    "size_bytes": 4454,
+    "sha256": "94c7f068958b91d4221d964dd1249296aff766d9033ae9411b225b383ba2623f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macrum/library/AS289R2/0.0.0%2Bsha.b7d6c02caf97/AS289R2-0.0.0%2Bsha.b7d6c02caf97.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macrum/library/AS289R2/0.0.0%2Bsha.b7d6c02caf97/AS289R2-0.0.0%2Bsha.b7d6c02caf97.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-macrum/library/BME280/0.0.0+sha.c1f1647004c4/BME280-0.0.0+sha.c1f1647004c4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280-0.0.0+sha.c1f1647004c4.tar.gz",
+    "size_bytes": 3895,
+    "sha256": "ca16b7122cf0a5fc2ddd7e4a1c81ded6ac90aa75892efa17f954a43f80998e43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macrum/library/BME280/0.0.0%2Bsha.c1f1647004c4/BME280-0.0.0%2Bsha.c1f1647004c4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macrum/library/BME280/0.0.0%2Bsha.c1f1647004c4/BME280-0.0.0%2Bsha.c1f1647004c4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-macrum/library/BME280_SPI/0.0.0+sha.f0faf51d3d4a/BME280_SPI-0.0.0+sha.f0faf51d3d4a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280_SPI-0.0.0+sha.f0faf51d3d4a.tar.gz",
+    "size_bytes": 3544,
+    "sha256": "c77d900940d748bd533dd2dece81186641a03920573cc6306e0074b165e0f36d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macrum/library/BME280_SPI/0.0.0%2Bsha.f0faf51d3d4a/BME280_SPI-0.0.0%2Bsha.f0faf51d3d4a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macrum/library/BME280_SPI/0.0.0%2Bsha.f0faf51d3d4a/BME280_SPI-0.0.0%2Bsha.f0faf51d3d4a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-macrum/library/BMP280_SPI/0.0.0+sha.0463be4e35c0/BMP280_SPI-0.0.0+sha.0463be4e35c0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP280_SPI-0.0.0+sha.0463be4e35c0.tar.gz",
+    "size_bytes": 2914,
+    "sha256": "3415cc4a162927e97ab4d408068f3095cdcfb2bfa3cb57defb82bea9ce0a4961",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macrum/library/BMP280_SPI/0.0.0%2Bsha.0463be4e35c0/BMP280_SPI-0.0.0%2Bsha.0463be4e35c0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macrum/library/BMP280_SPI/0.0.0%2Bsha.0463be4e35c0/BMP280_SPI-0.0.0%2Bsha.0463be4e35c0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-macrum/library/FM25W256/0.0.0+sha.aa1c1f07c942/FM25W256-0.0.0+sha.aa1c1f07c942.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FM25W256-0.0.0+sha.aa1c1f07c942.tar.gz",
+    "size_bytes": 2633,
+    "sha256": "5affa799be5e3b5d27fe1856c865cac0360be6b21a65d47549754ad40615662f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macrum/library/FM25W256/0.0.0%2Bsha.aa1c1f07c942/FM25W256-0.0.0%2Bsha.aa1c1f07c942.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macrum/library/FM25W256/0.0.0%2Bsha.aa1c1f07c942/FM25W256-0.0.0%2Bsha.aa1c1f07c942.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-macrum/library/GT20L16J1Y_font/0.0.0+sha.aed20a7685b9/GT20L16J1Y_font-0.0.0+sha.aed20a7685b9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GT20L16J1Y_font-0.0.0+sha.aed20a7685b9.tar.gz",
+    "size_bytes": 1923,
+    "sha256": "d8e8f932926413355512ba64cc2d45c63ca8747684bd9a744883c010e208fd73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macrum/library/GT20L16J1Y_font/0.0.0%2Bsha.aed20a7685b9/GT20L16J1Y_font-0.0.0%2Bsha.aed20a7685b9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macrum/library/GT20L16J1Y_font/0.0.0%2Bsha.aed20a7685b9/GT20L16J1Y_font-0.0.0%2Bsha.aed20a7685b9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-macrum/library/Grove_temperature/0.0.0+sha.aee37a51ccbb/Grove_temperature-0.0.0+sha.aee37a51ccbb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove_temperature-0.0.0+sha.aee37a51ccbb.tar.gz",
+    "size_bytes": 2007,
+    "sha256": "52c1a2166727353e74c5aaf3bab3deae0821665c4ed150a3045973fb6e706f4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macrum/library/Grove_temperature/0.0.0%2Bsha.aee37a51ccbb/Grove_temperature-0.0.0%2Bsha.aee37a51ccbb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macrum/library/Grove_temperature/0.0.0%2Bsha.aee37a51ccbb/Grove_temperature-0.0.0%2Bsha.aee37a51ccbb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-macrum/library/MB85RCxx_I2C/0.0.0+sha.b4cd8ba57300/MB85RCxx_I2C-0.0.0+sha.b4cd8ba57300.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MB85RCxx_I2C-0.0.0+sha.b4cd8ba57300.tar.gz",
+    "size_bytes": 2733,
+    "sha256": "bb6d0b1dae2d968ad12f6833c1882c6f562d1fe88bf750cd313682e5ddde38da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macrum/library/MB85RCxx_I2C/0.0.0%2Bsha.b4cd8ba57300/MB85RCxx_I2C-0.0.0%2Bsha.b4cd8ba57300.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macrum/library/MB85RCxx_I2C/0.0.0%2Bsha.b4cd8ba57300/MB85RCxx_I2C-0.0.0%2Bsha.b4cd8ba57300.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-macrum/library/MB85RSxx_SPI/0.0.0+sha.f397b42257f8/MB85RSxx_SPI-0.0.0+sha.f397b42257f8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MB85RSxx_SPI-0.0.0+sha.f397b42257f8.tar.gz",
+    "size_bytes": 3046,
+    "sha256": "7e28c0e678ccb972a878b9b5a355603ed92b3258cdd0d696a3beeede05da7224",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macrum/library/MB85RSxx_SPI/0.0.0%2Bsha.f397b42257f8/MB85RSxx_SPI-0.0.0%2Bsha.f397b42257f8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macrum/library/MB85RSxx_SPI/0.0.0%2Bsha.f397b42257f8/MB85RSxx_SPI-0.0.0%2Bsha.f397b42257f8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-macrum/library/ST7567/0.0.0+sha.743aff4786ba/ST7567-0.0.0+sha.743aff4786ba.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7567-0.0.0+sha.743aff4786ba.tar.gz",
+    "size_bytes": 10777,
+    "sha256": "4add61d6f3aa511bef48ceff76b7743902d523cd429b172442eae26b771f9134",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macrum/library/ST7567/0.0.0%2Bsha.743aff4786ba/ST7567-0.0.0%2Bsha.743aff4786ba.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macrum/library/ST7567/0.0.0%2Bsha.743aff4786ba/ST7567-0.0.0%2Bsha.743aff4786ba.tar.gz"
+    ]
+   }
+  }
+ ]
+}

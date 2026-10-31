@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/telleropnul",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "telleropnul/library/BigFont01/1.0.3/BigFont01-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BigFont01-1.0.3.tar.gz",
+    "size_bytes": 16100,
+    "sha256": "7a4e7818becec3bacb93ee768f93cd8fa55c4cc63f1ee920c4475b76186a8671",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/telleropnul/library/BigFont01/1.0.3/BigFont01-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/telleropnul/library/BigFont01/1.0.3/BigFont01-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "telleropnul/library/BigFont01_I2C/1.0.4/BigFont01_I2C-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BigFont01_I2C-1.0.4.tar.gz",
+    "size_bytes": 16045,
+    "sha256": "bc038c649ddcd013165d9ad1725ec30ae4ee9d06bdf62d4f74cf48dfcb3d0152",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/telleropnul/library/BigFont01_I2C/1.0.4/BigFont01_I2C-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/telleropnul/library/BigFont01_I2C/1.0.4/BigFont01_I2C-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "telleropnul/library/BigFont02/1.0.1/BigFont02-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BigFont02-1.0.1.tar.gz",
+    "size_bytes": 15852,
+    "sha256": "8f9220cd2135ca1536a0ddb954cfa0f8b88f150b1136f486929579b88aefbb80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/telleropnul/library/BigFont02/1.0.1/BigFont02-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/telleropnul/library/BigFont02/1.0.1/BigFont02-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "telleropnul/library/BigFont02_I2C/1.0.2/BigFont02_I2C-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BigFont02_I2C-1.0.2.tar.gz",
+    "size_bytes": 15793,
+    "sha256": "9dcd62ed8593db04ac3bead5c335f5a1fe902646d8cbc0484eee848830260ef3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/telleropnul/library/BigFont02_I2C/1.0.2/BigFont02_I2C-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/telleropnul/library/BigFont02_I2C/1.0.2/BigFont02_I2C-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

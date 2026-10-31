@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adaptiveengineering",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adaptiveengineering/library/LinkGenericDash/1.0.0/LinkGenericDash-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LinkGenericDash-1.0.0.tar.gz",
+    "size_bytes": 12556,
+    "sha256": "5802182dd5248c3e23ab49784e2b081e610272bafbb786edb6ba120bbcfd3048",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adaptiveengineering/library/LinkGenericDash/1.0.0/LinkGenericDash-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adaptiveengineering/library/LinkGenericDash/1.0.0/LinkGenericDash-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/richarddeweerd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "richarddeweerd/library/WiFiCfgManager/1.0.0/WiFiCfgManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiCfgManager-1.0.0.tar.gz",
+    "size_bytes": 78886,
+    "sha256": "ee279304d049c38509968923bcaccd4f7beb5244aa7171663789a0471ca227db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richarddeweerd/library/WiFiCfgManager/1.0.0/WiFiCfgManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/richarddeweerd/library/WiFiCfgManager/1.0.0/WiFiCfgManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "richarddeweerd/library/esp-config-manager/0.2.5/esp-config-manager-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-config-manager-0.2.5.tar.gz",
+    "size_bytes": 3123,
+    "sha256": "3d7c46fe6c05aa18206c699f9733724e826ca022906874e9a9bd447b6b241385",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richarddeweerd/library/esp-config-manager/0.2.5/esp-config-manager-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/richarddeweerd/library/esp-config-manager/0.2.5/esp-config-manager-0.2.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

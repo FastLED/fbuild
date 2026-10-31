@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alirezashirzadath",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alirezashirzadath/library/Soocket/0.1.0/Soocket-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Soocket-0.1.0.tar.gz",
+    "size_bytes": 4084,
+    "sha256": "31b064ac3250fe5ea9baa00a1abd8a75d53ac48f698465499b25a882d107a0f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alirezashirzadath/library/Soocket/0.1.0/Soocket-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alirezashirzadath/library/Soocket/0.1.0/Soocket-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

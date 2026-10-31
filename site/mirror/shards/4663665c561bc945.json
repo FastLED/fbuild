@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/raspiaudio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "raspiaudio/library/Muse_library/1.0.5/Muse_library-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Muse_library-1.0.5.tar.gz",
+    "size_bytes": 1185538,
+    "sha256": "2ebee61990c6c2343b57024f99f887247c1b4951b72e167f03cc85011f927a63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/raspiaudio/library/Muse_library/1.0.5/Muse_library-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/raspiaudio/library/Muse_library/1.0.5/Muse_library-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

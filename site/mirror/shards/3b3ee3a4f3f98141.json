@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-zcw607",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-zcw607/library/MPU6050-DMP/0.0.0+sha.4d3c598e3719/MPU6050-DMP-0.0.0+sha.4d3c598e3719.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050-DMP-0.0.0+sha.4d3c598e3719.tar.gz",
+    "size_bytes": 43015,
+    "sha256": "7836f89b6a915b839e06f02f1ebe9e578a17909c7a710335859914f10c1317d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-zcw607/library/MPU6050-DMP/0.0.0%2Bsha.4d3c598e3719/MPU6050-DMP-0.0.0%2Bsha.4d3c598e3719.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-zcw607/library/MPU6050-DMP/0.0.0%2Bsha.4d3c598e3719/MPU6050-DMP-0.0.0%2Bsha.4d3c598e3719.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-zcw607/library/RF24Network/0.0.0+sha.b5836d9f8de5/RF24Network-0.0.0+sha.b5836d9f8de5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Network-0.0.0+sha.b5836d9f8de5.tar.gz",
+    "size_bytes": 9885,
+    "sha256": "a400081d40246808c8c83a31eda15b04576b049be8559f85e2ce0f4090483646",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-zcw607/library/RF24Network/0.0.0%2Bsha.b5836d9f8de5/RF24Network-0.0.0%2Bsha.b5836d9f8de5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-zcw607/library/RF24Network/0.0.0%2Bsha.b5836d9f8de5/RF24Network-0.0.0%2Bsha.b5836d9f8de5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

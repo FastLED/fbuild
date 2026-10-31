@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tcl47-github",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tcl47-github/library/RC522_UART/1.0.0/RC522_UART-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RC522_UART-1.0.0.tar.gz",
+    "size_bytes": 11459,
+    "sha256": "22d2b8fdcc2245abdb6209a87103b2adb3e1d081b99d1828262283c8990370e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcl47-github/library/RC522_UART/1.0.0/RC522_UART-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tcl47-github/library/RC522_UART/1.0.0/RC522_UART-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

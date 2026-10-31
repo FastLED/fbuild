@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/crmoratelli",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "crmoratelli/library/SupmeaDO7016/0.3.0/SupmeaDO7016-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SupmeaDO7016-0.3.0.tar.gz",
+    "size_bytes": 6854,
+    "sha256": "3e1d5d6aac554da61e393dfe7a2c1fa40b9e977d94f2c0350eeeb68c068a2ec3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/crmoratelli/library/SupmeaDO7016/0.3.0/SupmeaDO7016-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/crmoratelli/library/SupmeaDO7016/0.3.0/SupmeaDO7016-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

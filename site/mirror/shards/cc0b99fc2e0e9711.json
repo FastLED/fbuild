@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dbarbi1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dbarbi1/library/RFDuino/0.0.0+sha.cd05cc4dd824/RFDuino-0.0.0+sha.cd05cc4dd824.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFDuino-0.0.0+sha.cd05cc4dd824.tar.gz",
+    "size_bytes": 3774,
+    "sha256": "712c9e7b62cc659ba09d1db530ba3a106374387898104c7498488a5f3dca45f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dbarbi1/library/RFDuino/0.0.0%2Bsha.cd05cc4dd824/RFDuino-0.0.0%2Bsha.cd05cc4dd824.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dbarbi1/library/RFDuino/0.0.0%2Bsha.cd05cc4dd824/RFDuino-0.0.0%2Bsha.cd05cc4dd824.tar.gz"
+    ]
+   }
+  }
+ ]
+}

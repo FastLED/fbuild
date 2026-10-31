@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/areve",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "areve/library/WebSocketStreamClient/0.1.0/WebSocketStreamClient-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSocketStreamClient-0.1.0.tar.gz",
+    "size_bytes": 2335,
+    "sha256": "d35ae1aa8bbbca7483df380431f1c93c0ba4d3771d15afce318e5d6a5c9fe3f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/areve/library/WebSocketStreamClient/0.1.0/WebSocketStreamClient-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/areve/library/WebSocketStreamClient/0.1.0/WebSocketStreamClient-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

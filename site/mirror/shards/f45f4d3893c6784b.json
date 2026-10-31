@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/boby15000",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "boby15000/library/SensorCurrent/2.1.0/SensorCurrent-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorCurrent-2.1.0.tar.gz",
+    "size_bytes": 8669,
+    "sha256": "29dcddb0f7a9e1e99ed7fb9773e42381711019206d1abb5db8920a9d25cae995",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boby15000/library/SensorCurrent/2.1.0/SensorCurrent-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/boby15000/library/SensorCurrent/2.1.0/SensorCurrent-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boby15000/library/SensorCurrent/4.1.0/SensorCurrent-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorCurrent-4.1.0.tar.gz",
+    "size_bytes": 10166,
+    "sha256": "f0ddca6573293ed360ebbe61726ff7395d3337982a5b1ad44b61b4bad13003cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boby15000/library/SensorCurrent/4.1.0/SensorCurrent-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/boby15000/library/SensorCurrent/4.1.0/SensorCurrent-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boby15000/library/Simple74HC595/1.0.0/Simple74HC595-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Simple74HC595-1.0.0.tar.gz",
+    "size_bytes": 3460,
+    "sha256": "7d42ef7007b5c0fd2da798fda77107e2441436c07aa9db0286761120bdb2cd91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boby15000/library/Simple74HC595/1.0.0/Simple74HC595-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/boby15000/library/Simple74HC595/1.0.0/Simple74HC595-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boby15000/library/Simple74HC595/1.1.0/Simple74HC595-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Simple74HC595-1.1.0.tar.gz",
+    "size_bytes": 3986,
+    "sha256": "93717c9443b565be3ad12d2c9e32659dc11a29aac5277dfb42677cf72499e522",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boby15000/library/Simple74HC595/1.1.0/Simple74HC595-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/boby15000/library/Simple74HC595/1.1.0/Simple74HC595-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boby15000/library/Tempo/1.6.0/Tempo-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tempo-1.6.0.tar.gz",
+    "size_bytes": 6402,
+    "sha256": "132386ba6b293f461b706d06714d5f971c74e26c916a9a20ddda4b930e49719e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boby15000/library/Tempo/1.6.0/Tempo-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/boby15000/library/Tempo/1.6.0/Tempo-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boby15000/library/Tempo/1.6.1/Tempo-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tempo-1.6.1.tar.gz",
+    "size_bytes": 7590,
+    "sha256": "49810720ca9345f27fd2b00f1660fef7098a1f65f778c4b53aa9548e6b9297c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boby15000/library/Tempo/1.6.1/Tempo-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/boby15000/library/Tempo/1.6.1/Tempo-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boby15000/library/Tempo/1.7.0/Tempo-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tempo-1.7.0.tar.gz",
+    "size_bytes": 7584,
+    "sha256": "e274166bfaff3c137ccb507b466849c3fc0a63c41bdac696ee21d7d2243fdff2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boby15000/library/Tempo/1.7.0/Tempo-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/boby15000/library/Tempo/1.7.0/Tempo-1.7.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

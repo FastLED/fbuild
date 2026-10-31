@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nleoni",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nleoni/library/DebounceInt/0.0.0+sha.afa153f7249f/DebounceInt-0.0.0+sha.afa153f7249f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebounceInt-0.0.0+sha.afa153f7249f.tar.gz",
+    "size_bytes": 2334,
+    "sha256": "051e33416bd0f347958a3eeb1503deae2a51098ab349f4b23eabe5b53a001373",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nleoni/library/DebounceInt/0.0.0%2Bsha.afa153f7249f/DebounceInt-0.0.0%2Bsha.afa153f7249f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nleoni/library/DebounceInt/0.0.0%2Bsha.afa153f7249f/DebounceInt-0.0.0%2Bsha.afa153f7249f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nleoni/library/DebounceIntRTOS/0.0.0+sha.7d67a99b2c6a/DebounceIntRTOS-0.0.0+sha.7d67a99b2c6a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebounceIntRTOS-0.0.0+sha.7d67a99b2c6a.tar.gz",
+    "size_bytes": 2537,
+    "sha256": "9adde3a60f2dfa97c70f2296afe779a628d739a1349a9d4eb2fdc190ce081988",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nleoni/library/DebounceIntRTOS/0.0.0%2Bsha.7d67a99b2c6a/DebounceIntRTOS-0.0.0%2Bsha.7d67a99b2c6a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nleoni/library/DebounceIntRTOS/0.0.0%2Bsha.7d67a99b2c6a/DebounceIntRTOS-0.0.0%2Bsha.7d67a99b2c6a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nleoni/library/InterruptMask/0.0.0+sha.a34eddd0a2be/InterruptMask-0.0.0+sha.a34eddd0a2be.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InterruptMask-0.0.0+sha.a34eddd0a2be.tar.gz",
+    "size_bytes": 2991,
+    "sha256": "8ab561a2352f3717e137abb1d8792f7d3741b7e1bb67a1f277322c17d4966795",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nleoni/library/InterruptMask/0.0.0%2Bsha.a34eddd0a2be/InterruptMask-0.0.0%2Bsha.a34eddd0a2be.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nleoni/library/InterruptMask/0.0.0%2Bsha.a34eddd0a2be/InterruptMask-0.0.0%2Bsha.a34eddd0a2be.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nleoni/library/joystickAppBoard/0.0.0+sha.180cf3834ece/joystickAppBoard-0.0.0+sha.180cf3834ece.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "joystickAppBoard-0.0.0+sha.180cf3834ece.tar.gz",
+    "size_bytes": 1848,
+    "sha256": "d8c11873450f56ad683483f750055d095a80f16ddd0c60e0a54eea25ad574ae7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nleoni/library/joystickAppBoard/0.0.0%2Bsha.180cf3834ece/joystickAppBoard-0.0.0%2Bsha.180cf3834ece.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nleoni/library/joystickAppBoard/0.0.0%2Bsha.180cf3834ece/joystickAppBoard-0.0.0%2Bsha.180cf3834ece.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nleoni/library/temperatureRecorder/0.0.0+sha.8ec88bb8425f/temperatureRecorder-0.0.0+sha.8ec88bb8425f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "temperatureRecorder-0.0.0+sha.8ec88bb8425f.tar.gz",
+    "size_bytes": 3360,
+    "sha256": "8d12fe4625d372504a22d1d2eeafdd65455794d4ea1dcb7b8d47623d4f243446",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nleoni/library/temperatureRecorder/0.0.0%2Bsha.8ec88bb8425f/temperatureRecorder-0.0.0%2Bsha.8ec88bb8425f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nleoni/library/temperatureRecorder/0.0.0%2Bsha.8ec88bb8425f/temperatureRecorder-0.0.0%2Bsha.8ec88bb8425f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nleoni/library/thermostat/0.0.0+sha.909cb1aef872/thermostat-0.0.0+sha.909cb1aef872.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "thermostat-0.0.0+sha.909cb1aef872.tar.gz",
+    "size_bytes": 3420,
+    "sha256": "986d53d11a17fbf8ad247b711790273f4e39d2dd6fb0fc48f9f2d18eca02549b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nleoni/library/thermostat/0.0.0%2Bsha.909cb1aef872/thermostat-0.0.0%2Bsha.909cb1aef872.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nleoni/library/thermostat/0.0.0%2Bsha.909cb1aef872/thermostat-0.0.0%2Bsha.909cb1aef872.tar.gz"
+    ]
+   }
+  }
+ ]
+}

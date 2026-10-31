@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kevinlutzer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kevinlutzer/library/PM1006K/1.0.0/PM1006K-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PM1006K-1.0.0.tar.gz",
+    "size_bytes": 7262,
+    "sha256": "bbac9ee71b5c1ab6e81109085b248996f724d48154f71de87769eedcc0e95937",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kevinlutzer/library/PM1006K/1.0.0/PM1006K-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kevinlutzer/library/PM1006K/1.0.0/PM1006K-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

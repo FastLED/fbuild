@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thingscloud",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thingscloud/library/ThingsCloud_ESP_SDK/1.0.14/ThingsCloud_ESP_SDK-1.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingsCloud_ESP_SDK-1.0.14.tar.gz",
+    "size_bytes": 47600,
+    "sha256": "c29ef34fb776077fa4a2ec855fe314f4d4dd1dff7ac8e1fa6a25c1264a465780",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingscloud/library/ThingsCloud_ESP_SDK/1.0.14/ThingsCloud_ESP_SDK-1.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/thingscloud/library/ThingsCloud_ESP_SDK/1.0.14/ThingsCloud_ESP_SDK-1.0.14.tar.gz"
+    ]
+   }
+  }
+ ]
+}

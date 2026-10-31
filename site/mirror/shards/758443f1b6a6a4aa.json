@@ -1,0 +1,1036 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marceloc312",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/0.1.0/IoTSmartSysCore-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-0.1.0.tar.gz",
+    "size_bytes": 84726,
+    "sha256": "7e7f21e7944ea2528dcd5aa5c80c5438689612378581ac8cbb39f4828dd02c54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/0.1.0/IoTSmartSysCore-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/0.1.0/IoTSmartSysCore-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/0.2.0/IoTSmartSysCore-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-0.2.0.tar.gz",
+    "size_bytes": 83098,
+    "sha256": "a62409c12972cb32728463e1a2e26b2edb9428281745e43d90431c7fd87cf14f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/0.2.0/IoTSmartSysCore-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/0.2.0/IoTSmartSysCore-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/0.2.2/IoTSmartSysCore-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-0.2.2.tar.gz",
+    "size_bytes": 83650,
+    "sha256": "27257d37430b4f131e12909e383ac85d56bb9fc5b32644d03f1999e0334a03cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/0.2.2/IoTSmartSysCore-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/0.2.2/IoTSmartSysCore-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/0.2.3/IoTSmartSysCore-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-0.2.3.tar.gz",
+    "size_bytes": 83687,
+    "sha256": "fb5f82315879e632116bf1cc62333958910f4f2ad1ebba7a0106c9089e822553",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/0.2.3/IoTSmartSysCore-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/0.2.3/IoTSmartSysCore-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/0.2.4/IoTSmartSysCore-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-0.2.4.tar.gz",
+    "size_bytes": 83707,
+    "sha256": "d2ea77114d2e514f2b941fc08aaf9abfea29d32722b1f418095a7d81f0ef43f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/0.2.4/IoTSmartSysCore-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/0.2.4/IoTSmartSysCore-0.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/0.2.6/IoTSmartSysCore-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-0.2.6.tar.gz",
+    "size_bytes": 83989,
+    "sha256": "64417e9e2f1a73ce3b66f3585fc825972f6a5646b02e9ac7e849e92b282ed6f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/0.2.6/IoTSmartSysCore-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/0.2.6/IoTSmartSysCore-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/0.2.7/IoTSmartSysCore-0.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-0.2.7.tar.gz",
+    "size_bytes": 84380,
+    "sha256": "7bdbb322060d83e5e31d6625634ae95aa29bc2535813f50cd3adff8bac195307",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/0.2.7/IoTSmartSysCore-0.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/0.2.7/IoTSmartSysCore-0.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.0/IoTSmartSysCore-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.0.tar.gz",
+    "size_bytes": 100194,
+    "sha256": "d1e0b45770e9101e371e0b4d93fc2ee538964f837801c1a453d1f30bb4a04000",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.0/IoTSmartSysCore-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.0/IoTSmartSysCore-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.1/IoTSmartSysCore-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.1.tar.gz",
+    "size_bytes": 100164,
+    "sha256": "0ffd3e731029b3744c23e4f48f8b3a113d4be324209f0dac576c44c7d67ac70b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.1/IoTSmartSysCore-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.1/IoTSmartSysCore-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.10/IoTSmartSysCore-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.10.tar.gz",
+    "size_bytes": 119039,
+    "sha256": "adbfa7431299fc9454977a9cd3b3b6bc6fc7de6292667367bac8533b7d880326",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.10/IoTSmartSysCore-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.10/IoTSmartSysCore-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.11/IoTSmartSysCore-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.11.tar.gz",
+    "size_bytes": 117752,
+    "sha256": "5c7ec6645f1238881269ae10557e588430218dfefd5ccfd8a2a904fc02a8c1e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.11/IoTSmartSysCore-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.11/IoTSmartSysCore-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.12/IoTSmartSysCore-1.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.12.tar.gz",
+    "size_bytes": 117838,
+    "sha256": "4d65bad9c81bf0502d9c936db87f213408df6c1bf7b4fab9e95d0b30f7e62b11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.12/IoTSmartSysCore-1.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.12/IoTSmartSysCore-1.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.13/IoTSmartSysCore-1.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.13.tar.gz",
+    "size_bytes": 117344,
+    "sha256": "1bc5e8af0aaab148b0cb1675dee2ce265aab23eb53696fe85382e2582c95ef88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.13/IoTSmartSysCore-1.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.13/IoTSmartSysCore-1.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.14/IoTSmartSysCore-1.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.14.tar.gz",
+    "size_bytes": 117277,
+    "sha256": "8e00eaabb1415d73d4da1b63f1e00789b0ee11a29505e54720cccdbcae277d61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.14/IoTSmartSysCore-1.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.14/IoTSmartSysCore-1.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.15/IoTSmartSysCore-1.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.15.tar.gz",
+    "size_bytes": 117206,
+    "sha256": "e297ee0c5d9e389ab9bd0a8989bab207b1bcdf0a26ae85eb98a0b61a4fd22f4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.15/IoTSmartSysCore-1.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.15/IoTSmartSysCore-1.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.16/IoTSmartSysCore-1.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.16.tar.gz",
+    "size_bytes": 118476,
+    "sha256": "e1652bdd8b0df5dd673da81e5af99367ae322d1372a21d8c0b2bc0e470391af0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.16/IoTSmartSysCore-1.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.16/IoTSmartSysCore-1.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.17/IoTSmartSysCore-1.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.17.tar.gz",
+    "size_bytes": 118472,
+    "sha256": "7d00a3411988f652e6eb9ef06d2ab2f6247a9d6d3eeb639b8648868a5a78f69a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.17/IoTSmartSysCore-1.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.17/IoTSmartSysCore-1.0.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.18/IoTSmartSysCore-1.0.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.18.tar.gz",
+    "size_bytes": 118651,
+    "sha256": "7ba2ef203f1afc78e8ba8f7a271e3f673cdc415c026b8abe441301504edbc326",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.18/IoTSmartSysCore-1.0.18.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.18/IoTSmartSysCore-1.0.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.20/IoTSmartSysCore-1.0.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.20.tar.gz",
+    "size_bytes": 118997,
+    "sha256": "0c712a09b2a0328823a28b016e46548ed77dcd177543c823e09341c7df7941be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.20/IoTSmartSysCore-1.0.20.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.20/IoTSmartSysCore-1.0.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.21/IoTSmartSysCore-1.0.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.21.tar.gz",
+    "size_bytes": 119527,
+    "sha256": "e2625724afc3f925646ad46756556cb28571faae69feee452af18efe1d10a219",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.21/IoTSmartSysCore-1.0.21.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.21/IoTSmartSysCore-1.0.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.22/IoTSmartSysCore-1.0.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.22.tar.gz",
+    "size_bytes": 129138,
+    "sha256": "5beef42dd5d6dbeaf9dc0140587d9f267874b2a8a1b81f0fd6772a2d8a512a77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.22/IoTSmartSysCore-1.0.22.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.22/IoTSmartSysCore-1.0.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.23/IoTSmartSysCore-1.0.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.23.tar.gz",
+    "size_bytes": 131628,
+    "sha256": "67a87af6db2f29e39208f8a6c1aa5cb6c629eced649f22c953aa61e8608abf01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.23/IoTSmartSysCore-1.0.23.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.23/IoTSmartSysCore-1.0.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.24/IoTSmartSysCore-1.0.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.24.tar.gz",
+    "size_bytes": 133686,
+    "sha256": "ac98b8391cc43990896725b2b926367ab21a5470eb2548e950bf83b9ede0f013",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.24/IoTSmartSysCore-1.0.24.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.24/IoTSmartSysCore-1.0.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.25/IoTSmartSysCore-1.0.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.25.tar.gz",
+    "size_bytes": 134540,
+    "sha256": "b97c4a21a07733cd222a59baa2b374064b79dcd72473bd7e9c3d819e20c90be5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.25/IoTSmartSysCore-1.0.25.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.25/IoTSmartSysCore-1.0.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.26/IoTSmartSysCore-1.0.26.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.26.tar.gz",
+    "size_bytes": 135873,
+    "sha256": "72eb3d3d578bb117637ed2f00a80a858ef566db0f1d41716c2dcb1e8abef088d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.26/IoTSmartSysCore-1.0.26.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.26/IoTSmartSysCore-1.0.26.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.27/IoTSmartSysCore-1.0.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.27.tar.gz",
+    "size_bytes": 139569,
+    "sha256": "4d5697ccff0a3572b1813c2f993b9bd05c580cc1c77ad1f814824987b310c0fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.27/IoTSmartSysCore-1.0.27.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.27/IoTSmartSysCore-1.0.27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.28/IoTSmartSysCore-1.0.28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.28.tar.gz",
+    "size_bytes": 139986,
+    "sha256": "3b7a1b7ebb49c554bf24ac1e0f0618101e5fcca0056d55380188a850db82233a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.28/IoTSmartSysCore-1.0.28.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.28/IoTSmartSysCore-1.0.28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.29/IoTSmartSysCore-1.0.29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.29.tar.gz",
+    "size_bytes": 140055,
+    "sha256": "dedf289f4145336a50fb772d8bcc647f6582aeb9231f942f6c094f8de6e3fea2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.29/IoTSmartSysCore-1.0.29.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.29/IoTSmartSysCore-1.0.29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.3/IoTSmartSysCore-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.3.tar.gz",
+    "size_bytes": 112923,
+    "sha256": "35e9b8be6d92541d844fb6621be5eeca3dcf3a3b5903b61d007513d59d579f70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.3/IoTSmartSysCore-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.3/IoTSmartSysCore-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.30/IoTSmartSysCore-1.0.30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.30.tar.gz",
+    "size_bytes": 140196,
+    "sha256": "f6c8fa3a96be9929c74e302a1511bfdfc2c195d534df40e986f3e820c1121dcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.30/IoTSmartSysCore-1.0.30.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.30/IoTSmartSysCore-1.0.30.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.31/IoTSmartSysCore-1.0.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.31.tar.gz",
+    "size_bytes": 140972,
+    "sha256": "e091e9c300942faffdc5e89df15e52155bccd6888445240adc41323a79b4c7bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.31/IoTSmartSysCore-1.0.31.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.31/IoTSmartSysCore-1.0.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.32/IoTSmartSysCore-1.0.32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.32.tar.gz",
+    "size_bytes": 144236,
+    "sha256": "c6f2c27b76f0c85a963556d16734d3ded0e137f6e4cb98f55c28b833c234e135",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.32/IoTSmartSysCore-1.0.32.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.32/IoTSmartSysCore-1.0.32.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.33/IoTSmartSysCore-1.0.33.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.33.tar.gz",
+    "size_bytes": 147186,
+    "sha256": "3fd39a471822493978ea4c8b416a7994b1c6ad1be939fae5ae093f525032ef0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.33/IoTSmartSysCore-1.0.33.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.33/IoTSmartSysCore-1.0.33.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.34/IoTSmartSysCore-1.0.34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.34.tar.gz",
+    "size_bytes": 148460,
+    "sha256": "f854b9c65a52927cd80da69d8dc05ed211369a6fde6cf8c0377b8bb148e7d22c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.34/IoTSmartSysCore-1.0.34.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.34/IoTSmartSysCore-1.0.34.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.35/IoTSmartSysCore-1.0.35.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.35.tar.gz",
+    "size_bytes": 148540,
+    "sha256": "98b9c30aece9a0b1bd929ddb09257cd854434531132991e9749d4e570ac0815d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.35/IoTSmartSysCore-1.0.35.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.35/IoTSmartSysCore-1.0.35.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.36/IoTSmartSysCore-1.0.36.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.36.tar.gz",
+    "size_bytes": 149161,
+    "sha256": "b7d932ae1961461949d2823b257b4e6501ef239b5337a7d18e45d5d47fd3c0b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.36/IoTSmartSysCore-1.0.36.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.36/IoTSmartSysCore-1.0.36.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.37/IoTSmartSysCore-1.0.37.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.37.tar.gz",
+    "size_bytes": 152909,
+    "sha256": "a82f215181e94a7f8700d5c0bfd70bb998dfb9e91cc9f7c13de1403a32d79389",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.37/IoTSmartSysCore-1.0.37.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.37/IoTSmartSysCore-1.0.37.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.38/IoTSmartSysCore-1.0.38.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.38.tar.gz",
+    "size_bytes": 155057,
+    "sha256": "4b003264428c5c9c3dc6880f2834e6618b4c5b91c9fb9645da92fb1663348a77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.38/IoTSmartSysCore-1.0.38.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.38/IoTSmartSysCore-1.0.38.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.39/IoTSmartSysCore-1.0.39.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.39.tar.gz",
+    "size_bytes": 155337,
+    "sha256": "f71767ff1b42051f33b7653e398f047d797646e37152fbd4de081e62853d4f0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.39/IoTSmartSysCore-1.0.39.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.39/IoTSmartSysCore-1.0.39.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.4/IoTSmartSysCore-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.4.tar.gz",
+    "size_bytes": 116190,
+    "sha256": "425c14896cb3be9a6474055cb1830b7a99ad70d7a63c2ea3a8d3987cd28c9277",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.4/IoTSmartSysCore-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.4/IoTSmartSysCore-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.40/IoTSmartSysCore-1.0.40.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.40.tar.gz",
+    "size_bytes": 155987,
+    "sha256": "027553900c9e391363691be0fa30f88096a6beddd2fecc8c55cc8388680249c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.40/IoTSmartSysCore-1.0.40.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.40/IoTSmartSysCore-1.0.40.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.41/IoTSmartSysCore-1.0.41.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.41.tar.gz",
+    "size_bytes": 156532,
+    "sha256": "e864c05529701938ca1d8cb4e3ed9a41262fcd4a8f808fe85688e02b45428af8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.41/IoTSmartSysCore-1.0.41.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.41/IoTSmartSysCore-1.0.41.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.42/IoTSmartSysCore-1.0.42.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.42.tar.gz",
+    "size_bytes": 158591,
+    "sha256": "43e2616f4661ec15b96098f0026cfd6a500aff2747ecdebce8d98f0b89a1695f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.42/IoTSmartSysCore-1.0.42.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.42/IoTSmartSysCore-1.0.42.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.43/IoTSmartSysCore-1.0.43.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.43.tar.gz",
+    "size_bytes": 158753,
+    "sha256": "155cdbceb60eac0ea426cf16b6373ba95319e3cd93b27a42d6109a8c3041fdf8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.43/IoTSmartSysCore-1.0.43.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.43/IoTSmartSysCore-1.0.43.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.44/IoTSmartSysCore-1.0.44.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.44.tar.gz",
+    "size_bytes": 159380,
+    "sha256": "29502d4d3a75a1b45bb9396da510f912214aac8752c27b9f439dfbbb75f19980",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.44/IoTSmartSysCore-1.0.44.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.44/IoTSmartSysCore-1.0.44.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.45/IoTSmartSysCore-1.0.45.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.45.tar.gz",
+    "size_bytes": 159370,
+    "sha256": "e13dae334ecb2dc6f9a868e4e2ce072586cd2f9a210a03210a724855e8505a4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.45/IoTSmartSysCore-1.0.45.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.45/IoTSmartSysCore-1.0.45.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.46/IoTSmartSysCore-1.0.46.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.46.tar.gz",
+    "size_bytes": 161105,
+    "sha256": "504b645f1fa539a59689f81affac65679f155c92b0b4fee108e397bc93ee9f28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.46/IoTSmartSysCore-1.0.46.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.46/IoTSmartSysCore-1.0.46.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.47/IoTSmartSysCore-1.0.47.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.47.tar.gz",
+    "size_bytes": 163239,
+    "sha256": "9cc77e7f898d4920c9b54b911b7475335d3869c172ca8554d10937f41d7dfc3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.47/IoTSmartSysCore-1.0.47.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.47/IoTSmartSysCore-1.0.47.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.48/IoTSmartSysCore-1.0.48.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.48.tar.gz",
+    "size_bytes": 163305,
+    "sha256": "38f68e9933bd52d1543a47d47f0653f175a17650ecdb6fd846a765eb8ac6115f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.48/IoTSmartSysCore-1.0.48.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.48/IoTSmartSysCore-1.0.48.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.49/IoTSmartSysCore-1.0.49.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.49.tar.gz",
+    "size_bytes": 166913,
+    "sha256": "845843f63b326878bb58ee79efd6554be9e3d7ceb96224c0467babda3800c52b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.49/IoTSmartSysCore-1.0.49.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.49/IoTSmartSysCore-1.0.49.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.5/IoTSmartSysCore-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.5.tar.gz",
+    "size_bytes": 116360,
+    "sha256": "2a22e54c235f159bba4ab15fbc08477803cb0ebf0d73838fef5eb47d3d49b571",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.5/IoTSmartSysCore-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.5/IoTSmartSysCore-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.51/IoTSmartSysCore-1.0.51.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.51.tar.gz",
+    "size_bytes": 166875,
+    "sha256": "108dcb0e8c5fcc287177e1f62926a01e9a09cb4d9ec9cf3cb141810a4bae7445",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.51/IoTSmartSysCore-1.0.51.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.51/IoTSmartSysCore-1.0.51.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.52/IoTSmartSysCore-1.0.52.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.52.tar.gz",
+    "size_bytes": 166861,
+    "sha256": "93eadb4605fda00140c88cd87ed0f141feec3ac877f20165ebef87a43a314bd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.52/IoTSmartSysCore-1.0.52.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.52/IoTSmartSysCore-1.0.52.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.53/IoTSmartSysCore-1.0.53.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.53.tar.gz",
+    "size_bytes": 167648,
+    "sha256": "d11d708ee1f4be751a2fd14ec719068e6bd4c3f8f60115d96680ac4faa19a0ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.53/IoTSmartSysCore-1.0.53.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.53/IoTSmartSysCore-1.0.53.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.54/IoTSmartSysCore-1.0.54.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.54.tar.gz",
+    "size_bytes": 172904,
+    "sha256": "e22d9e02fb4dc8788036afb2c134407e26954299898e87bc849d9664538dc489",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.54/IoTSmartSysCore-1.0.54.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.54/IoTSmartSysCore-1.0.54.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.55/IoTSmartSysCore-1.0.55.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.55.tar.gz",
+    "size_bytes": 188344,
+    "sha256": "44d16162e4b512d3b8b3bf996daeba39ea789d59343aabf02969eba6f3a99957",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.55/IoTSmartSysCore-1.0.55.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.55/IoTSmartSysCore-1.0.55.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.56/IoTSmartSysCore-1.0.56.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.56.tar.gz",
+    "size_bytes": 212533,
+    "sha256": "8c1952346564cd42a3ce30a5d3fe67c0325262c5e30695f4c33bea73589f4813",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.56/IoTSmartSysCore-1.0.56.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.56/IoTSmartSysCore-1.0.56.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.57/IoTSmartSysCore-1.0.57.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.57.tar.gz",
+    "size_bytes": 228829,
+    "sha256": "a5da008937091f64c0e92d65503026213d3cf1d8246413692bea2ab37ccb8b3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.57/IoTSmartSysCore-1.0.57.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.57/IoTSmartSysCore-1.0.57.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.58/IoTSmartSysCore-1.0.58.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.58.tar.gz",
+    "size_bytes": 230852,
+    "sha256": "6aa3788118c971381250df691a8042b792ae2d28a3f6fefec1cf6f89beee9e51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.58/IoTSmartSysCore-1.0.58.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.58/IoTSmartSysCore-1.0.58.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.59/IoTSmartSysCore-1.0.59.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.59.tar.gz",
+    "size_bytes": 231185,
+    "sha256": "8895bad7681a818885572351f6f11b312533eddd4cb29ee50bfdef2d7fe67719",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.59/IoTSmartSysCore-1.0.59.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.59/IoTSmartSysCore-1.0.59.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.6/IoTSmartSysCore-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.6.tar.gz",
+    "size_bytes": 117703,
+    "sha256": "8fa65821063f40647f03468911981db1733697626c2b313e3f42ebbbcd54bc57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.6/IoTSmartSysCore-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.6/IoTSmartSysCore-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.60/IoTSmartSysCore-1.0.60.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.60.tar.gz",
+    "size_bytes": 234308,
+    "sha256": "fb1428ddcae64d4b5c5b5d8623313072d22bb21784290de2ac3452697d04adbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.60/IoTSmartSysCore-1.0.60.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.60/IoTSmartSysCore-1.0.60.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.61/IoTSmartSysCore-1.0.61.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.61.tar.gz",
+    "size_bytes": 234302,
+    "sha256": "e2cf1ce2a0486f3eb6fe0780f5fb2763a2993b0c3be185198ac45ba5c796a4b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.61/IoTSmartSysCore-1.0.61.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.61/IoTSmartSysCore-1.0.61.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.62/IoTSmartSysCore-1.0.62.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.62.tar.gz",
+    "size_bytes": 234625,
+    "sha256": "0ec8d6ef5a5e5d6793ca662a0af8de800b3105c216268d65538d860f1f895fea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.62/IoTSmartSysCore-1.0.62.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.62/IoTSmartSysCore-1.0.62.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.7/IoTSmartSysCore-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.7.tar.gz",
+    "size_bytes": 117712,
+    "sha256": "738a550f3f44038dc8e149de23535e4c24d6da9f7b9deafaac432f9cf7f942b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.7/IoTSmartSysCore-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.7/IoTSmartSysCore-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.8/IoTSmartSysCore-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.8.tar.gz",
+    "size_bytes": 118063,
+    "sha256": "d1ff1736e33d533c1cd6e71c82d051bb005f39387d6e15590a1ce0f45802864b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.8/IoTSmartSysCore-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.8/IoTSmartSysCore-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCore/1.0.9/IoTSmartSysCore-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCore-1.0.9.tar.gz",
+    "size_bytes": 118028,
+    "sha256": "6c58318d75664bc9830d5383708fac8af622c4d131b541df325f2575d2f15429",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCore/1.0.9/IoTSmartSysCore-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCore/1.0.9/IoTSmartSysCore-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCoreEsp8266/0.0.4/IoTSmartSysCoreEsp8266-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCoreEsp8266-0.0.4.tar.gz",
+    "size_bytes": 77542,
+    "sha256": "1f90fc5257fb940d3623f48942d95b63bdf71973158c897de23b67006a2aef0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCoreEsp8266/0.0.4/IoTSmartSysCoreEsp8266-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCoreEsp8266/0.0.4/IoTSmartSysCoreEsp8266-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCoreEsp8266/1.0.0/IoTSmartSysCoreEsp8266-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCoreEsp8266-1.0.0.tar.gz",
+    "size_bytes": 79210,
+    "sha256": "115efcd3dc2bf683eb614c9b084852804ffbf3c8b6159868f907cce2c6bcf84f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.0/IoTSmartSysCoreEsp8266-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.0/IoTSmartSysCoreEsp8266-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCoreEsp8266/1.0.1/IoTSmartSysCoreEsp8266-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCoreEsp8266-1.0.1.tar.gz",
+    "size_bytes": 76194,
+    "sha256": "444920a127422c9b8ab0827d49629e6362309993addf32517c1fb0d9c61c9637",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.1/IoTSmartSysCoreEsp8266-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.1/IoTSmartSysCoreEsp8266-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCoreEsp8266/1.0.10/IoTSmartSysCoreEsp8266-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCoreEsp8266-1.0.10.tar.gz",
+    "size_bytes": 98276,
+    "sha256": "1a20f355586d9fc7c1ff776f3cb3486ea2d7eacd9e305457afff7e18fa3bd798",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.10/IoTSmartSysCoreEsp8266-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.10/IoTSmartSysCoreEsp8266-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCoreEsp8266/1.0.11/IoTSmartSysCoreEsp8266-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCoreEsp8266-1.0.11.tar.gz",
+    "size_bytes": 100901,
+    "sha256": "5e8da256221c9ba22d352a0cc75f67b64813075cd59b91ba1805c87eb289ef6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.11/IoTSmartSysCoreEsp8266-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.11/IoTSmartSysCoreEsp8266-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCoreEsp8266/1.0.2/IoTSmartSysCoreEsp8266-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCoreEsp8266-1.0.2.tar.gz",
+    "size_bytes": 76724,
+    "sha256": "baa134e02544ec413ecfbcde34404b157cf8b62f00030c57cd25916966552dda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.2/IoTSmartSysCoreEsp8266-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.2/IoTSmartSysCoreEsp8266-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCoreEsp8266/1.0.4/IoTSmartSysCoreEsp8266-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCoreEsp8266-1.0.4.tar.gz",
+    "size_bytes": 77456,
+    "sha256": "ed6129fd6dc9271af319d767c50f6df7312218f201cbeab26d136753bc5be30a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.4/IoTSmartSysCoreEsp8266-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.4/IoTSmartSysCoreEsp8266-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCoreEsp8266/1.0.5/IoTSmartSysCoreEsp8266-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCoreEsp8266-1.0.5.tar.gz",
+    "size_bytes": 80104,
+    "sha256": "168af3909e5aa1b212f29f614d315a79c9a784c548b1f66be42a6616dbc65c85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.5/IoTSmartSysCoreEsp8266-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.5/IoTSmartSysCoreEsp8266-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCoreEsp8266/1.0.6/IoTSmartSysCoreEsp8266-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCoreEsp8266-1.0.6.tar.gz",
+    "size_bytes": 79620,
+    "sha256": "32bfece0e81506600e3968ca771c8315f8702644a24bd76c6691614f41a9c62f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.6/IoTSmartSysCoreEsp8266-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.6/IoTSmartSysCoreEsp8266-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCoreEsp8266/1.0.7/IoTSmartSysCoreEsp8266-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCoreEsp8266-1.0.7.tar.gz",
+    "size_bytes": 80261,
+    "sha256": "3417b64a129d2fc866e098678d5ffddcb6b5dcaf95572ae02a42e339f0cdffc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.7/IoTSmartSysCoreEsp8266-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.7/IoTSmartSysCoreEsp8266-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCoreEsp8266/1.0.8/IoTSmartSysCoreEsp8266-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCoreEsp8266-1.0.8.tar.gz",
+    "size_bytes": 99876,
+    "sha256": "cb9079f3f967658546242322f1470daf1f3c5fdd2fe086df7d067849e80f14be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.8/IoTSmartSysCoreEsp8266-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.8/IoTSmartSysCoreEsp8266-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "marceloc312/library/IoTSmartSysCoreEsp8266/1.0.9/IoTSmartSysCoreEsp8266-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTSmartSysCoreEsp8266-1.0.9.tar.gz",
+    "size_bytes": 99362,
+    "sha256": "05bcaee1486dc4169d8e988d49bb46c0471bce645888b419bc4631681435dd8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.9/IoTSmartSysCoreEsp8266-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/marceloc312/library/IoTSmartSysCoreEsp8266/1.0.9/IoTSmartSysCoreEsp8266-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}
