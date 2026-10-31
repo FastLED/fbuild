@@ -11,6 +11,36 @@ use std::path::PathBuf;
 use fbuild_build::{BuildOrchestrator, BuildParams, compile_backend};
 use fbuild_core::BuildProfile;
 
+/// Test `BuildParams`: everything at its default except the project, env and
+/// build dir each test supplies (FastLED/fbuild#1459 added `shrink`, whose
+/// default is `Auto`, so it stays out of every call site).
+fn esp32_params(project_dir: PathBuf, env_name: &str, build_dir: PathBuf) -> BuildParams {
+    BuildParams {
+        project_dir,
+        shrink: Default::default(),
+        env_name: env_name.to_string(),
+        clean_all: false,
+        clean_only: false,
+        clean: true,
+        profile: BuildProfile::Release,
+        build_dir,
+        verbose: true,
+        jobs: None,
+        generate_compiledb: false,
+        compiledb_only: false,
+        log_sender: None,
+        symbol_analysis: false,
+        symbol_analysis_path: None,
+        no_timestamp: false,
+        src_dir: None,
+        pio_env: Default::default(),
+        extra_build_flags: Vec::new(),
+        watch_set_cache: None,
+        bloat_analysis: false,
+        caller_path: None,
+    }
+}
+
 /// 15-min wall-clock cap for `--ignored` real-toolchain tests (FastLED/fbuild#806).
 /// Without this, a stuck TCP read against the Espressif toolchain mirror or a
 /// wedged xtensa-gcc process can hold the `--ignored` CI job hostage for the
@@ -99,30 +129,7 @@ void loop() {
         fbuild_paths::FBUILD_DIR_NAME,
         fbuild_paths::BUILD_DIR_NAME
     ));
-    let params = BuildParams {
-        project_dir: project_dir.to_path_buf(),
-        shrink: Default::default(),
-        env_name: "esp32dev".to_string(),
-        clean_all: false,
-        clean_only: false,
-        clean: true,
-        profile: BuildProfile::Release,
-        build_dir,
-        verbose: true,
-        jobs: None,
-        generate_compiledb: false,
-        compiledb_only: false,
-        log_sender: None,
-        symbol_analysis: false,
-        symbol_analysis_path: None,
-        no_timestamp: false,
-        src_dir: None,
-        pio_env: Default::default(),
-        extra_build_flags: Vec::new(),
-        watch_set_cache: None,
-        bloat_analysis: false,
-        caller_path: None,
-    };
+    let params = esp32_params(project_dir.to_path_buf(), "esp32dev", build_dir);
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = under_test_timeout(orchestrator.build(&params))
@@ -181,30 +188,10 @@ async fn esp32_effective_flags_invalidate_no_op_fingerprint() {
         fbuild_paths::FBUILD_DIR_NAME,
         fbuild_paths::BUILD_DIR_NAME
     ));
-    let mut params = BuildParams {
-        project_dir: project_dir.to_path_buf(),
-        shrink: Default::default(),
-        env_name: "esp32dev".to_string(),
-        clean_all: false,
-        clean_only: false,
-        clean: true,
-        profile: BuildProfile::Release,
-        build_dir,
-        verbose: false,
-        jobs: None,
-        generate_compiledb: true,
-        compiledb_only: false,
-        log_sender: None,
-        symbol_analysis: false,
-        symbol_analysis_path: None,
-        no_timestamp: true,
-        src_dir: None,
-        pio_env: Default::default(),
-        extra_build_flags: Vec::new(),
-        watch_set_cache: None,
-        bloat_analysis: false,
-        caller_path: None,
-    };
+    let mut params = esp32_params(project_dir.to_path_buf(), "esp32dev", build_dir);
+    params.verbose = false;
+    params.generate_compiledb = true;
+    params.no_timestamp = true;
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let is_fast_hit =
         |result: &fbuild_build::BuildResult| result.message.contains("reused cached artifacts");
@@ -296,30 +283,7 @@ void loop() {
         fbuild_paths::FBUILD_DIR_NAME,
         fbuild_paths::BUILD_DIR_NAME
     ));
-    let params = BuildParams {
-        project_dir: project_dir.to_path_buf(),
-        shrink: Default::default(),
-        env_name: "esp32c6".to_string(),
-        clean_all: false,
-        clean: true,
-        clean_only: false,
-        profile: BuildProfile::Release,
-        build_dir,
-        verbose: true,
-        jobs: None,
-        generate_compiledb: false,
-        compiledb_only: false,
-        log_sender: None,
-        symbol_analysis: false,
-        symbol_analysis_path: None,
-        no_timestamp: false,
-        src_dir: None,
-        pio_env: Default::default(),
-        extra_build_flags: Vec::new(),
-        watch_set_cache: None,
-        bloat_analysis: false,
-        caller_path: None,
-    };
+    let params = esp32_params(project_dir.to_path_buf(), "esp32c6", build_dir);
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = under_test_timeout(orchestrator.build(&params))
@@ -404,30 +368,7 @@ void loop() {}
         fbuild_paths::FBUILD_DIR_NAME,
         fbuild_paths::BUILD_DIR_NAME
     ));
-    let params = BuildParams {
-        project_dir: project_dir.to_path_buf(),
-        shrink: Default::default(),
-        env_name: "esp32c6".to_string(),
-        clean_all: false,
-        clean: true,
-        clean_only: false,
-        profile: BuildProfile::Release,
-        build_dir: build_dir.clone(),
-        verbose: true,
-        jobs: None,
-        generate_compiledb: false,
-        compiledb_only: false,
-        log_sender: None,
-        symbol_analysis: false,
-        symbol_analysis_path: None,
-        no_timestamp: false,
-        src_dir: None,
-        pio_env: Default::default(),
-        extra_build_flags: Vec::new(),
-        watch_set_cache: None,
-        bloat_analysis: false,
-        caller_path: None,
-    };
+    let params = esp32_params(project_dir.to_path_buf(), "esp32c6", build_dir.clone());
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = under_test_timeout(orchestrator.build(&params))
@@ -490,30 +431,7 @@ void loop() {
         fbuild_paths::FBUILD_DIR_NAME,
         fbuild_paths::BUILD_DIR_NAME
     ));
-    let params = BuildParams {
-        project_dir: project_dir.to_path_buf(),
-        shrink: Default::default(),
-        env_name: "esp32c3".to_string(),
-        clean_all: false,
-        clean: true,
-        clean_only: false,
-        profile: BuildProfile::Release,
-        build_dir,
-        verbose: true,
-        jobs: None,
-        generate_compiledb: false,
-        compiledb_only: false,
-        log_sender: None,
-        symbol_analysis: false,
-        symbol_analysis_path: None,
-        no_timestamp: false,
-        src_dir: None,
-        pio_env: Default::default(),
-        extra_build_flags: Vec::new(),
-        watch_set_cache: None,
-        bloat_analysis: false,
-        caller_path: None,
-    };
+    let params = esp32_params(project_dir.to_path_buf(), "esp32c3", build_dir);
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = under_test_timeout(orchestrator.build(&params))
@@ -583,30 +501,7 @@ void loop() {
         fbuild_paths::FBUILD_DIR_NAME,
         fbuild_paths::BUILD_DIR_NAME
     ));
-    let params = BuildParams {
-        project_dir: project_dir.to_path_buf(),
-        shrink: Default::default(),
-        env_name: "esp32s3".to_string(),
-        clean_all: false,
-        clean: true,
-        clean_only: false,
-        profile: BuildProfile::Release,
-        build_dir,
-        verbose: true,
-        jobs: None,
-        generate_compiledb: false,
-        compiledb_only: false,
-        log_sender: None,
-        symbol_analysis: false,
-        symbol_analysis_path: None,
-        no_timestamp: false,
-        src_dir: None,
-        pio_env: Default::default(),
-        extra_build_flags: Vec::new(),
-        watch_set_cache: None,
-        bloat_analysis: false,
-        caller_path: None,
-    };
+    let params = esp32_params(project_dir.to_path_buf(), "esp32s3", build_dir);
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = under_test_timeout(orchestrator.build(&params))
@@ -666,30 +561,7 @@ async fn build_esp32s3_fixture() {
         fbuild_paths::FBUILD_DIR_NAME,
         fbuild_paths::BUILD_DIR_NAME
     ));
-    let params = BuildParams {
-        project_dir: project_dir.clone(),
-        shrink: Default::default(),
-        env_name: "esp32s3".to_string(),
-        clean_all: false,
-        clean: true,
-        clean_only: false,
-        profile: BuildProfile::Release,
-        build_dir: build_dir.clone(),
-        verbose: true,
-        jobs: None,
-        generate_compiledb: false,
-        compiledb_only: false,
-        log_sender: None,
-        symbol_analysis: false,
-        symbol_analysis_path: None,
-        no_timestamp: false,
-        src_dir: None,
-        pio_env: Default::default(),
-        extra_build_flags: Vec::new(),
-        watch_set_cache: None,
-        bloat_analysis: false,
-        caller_path: None,
-    };
+    let params = esp32_params(project_dir.clone(), "esp32s3", build_dir.clone());
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = under_test_timeout(orchestrator.build(&params))
@@ -741,30 +613,7 @@ async fn build_nightdriverstrip_demo() {
         fbuild_paths::BUILD_DIR_NAME
     ));
 
-    let params = BuildParams {
-        project_dir: project_dir.clone(),
-        shrink: Default::default(),
-        env_name: "demo".to_string(),
-        clean_all: false,
-        clean: true,
-        clean_only: false,
-        profile: BuildProfile::Release,
-        build_dir,
-        verbose: true,
-        jobs: None,
-        generate_compiledb: false,
-        compiledb_only: false,
-        log_sender: None,
-        symbol_analysis: false,
-        symbol_analysis_path: None,
-        no_timestamp: false,
-        src_dir: None,
-        pio_env: Default::default(),
-        extra_build_flags: Vec::new(),
-        watch_set_cache: None,
-        bloat_analysis: false,
-        caller_path: None,
-    };
+    let params = esp32_params(project_dir.clone(), "demo", build_dir);
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = under_test_timeout(orchestrator.build(&params))
@@ -842,35 +691,17 @@ async fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
     }
     install_test_compile_backend().await;
 
-    let params = BuildParams {
-        project_dir: project_dir.to_path_buf(),
-        shrink: Default::default(),
-        env_name: env_name.to_string(),
-        clean_all: false,
-        clean: false,
-        clean_only: false,
-        profile: BuildProfile::Release,
-        build_dir: fbuild_paths::BuildLayout::new(
+    let mut params = esp32_params(
+        project_dir.to_path_buf(),
+        env_name,
+        fbuild_paths::BuildLayout::new(
             project_dir.to_path_buf(),
             env_name.to_string(),
             BuildProfile::Release,
         )
         .resolve(),
-        verbose: true,
-        jobs: None,
-        generate_compiledb: false,
-        compiledb_only: false,
-        log_sender: None,
-        symbol_analysis: false,
-        symbol_analysis_path: None,
-        no_timestamp: false,
-        src_dir: None,
-        pio_env: Default::default(),
-        extra_build_flags: Vec::new(),
-        watch_set_cache: None,
-        bloat_analysis: false,
-        caller_path: None,
-    };
+    );
+    params.clean = false;
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = under_test_timeout(orchestrator.build(&params))
@@ -948,35 +779,17 @@ async fn incremental_nightdriverstrip_one_file_changed() {
         }
     }
 
-    let params = BuildParams {
-        project_dir: project_dir.clone(),
-        shrink: Default::default(),
-        env_name: env_name.to_string(),
-        clean_all: false,
-        clean: false,
-        clean_only: false,
-        profile: BuildProfile::Release,
-        build_dir: fbuild_paths::BuildLayout::new(
+    let mut params = esp32_params(
+        project_dir.clone(),
+        env_name,
+        fbuild_paths::BuildLayout::new(
             project_dir.clone(),
             env_name.to_string(),
             BuildProfile::Release,
         )
         .resolve(),
-        verbose: true,
-        jobs: None,
-        generate_compiledb: false,
-        compiledb_only: false,
-        log_sender: None,
-        symbol_analysis: false,
-        symbol_analysis_path: None,
-        no_timestamp: false,
-        src_dir: None,
-        pio_env: Default::default(),
-        extra_build_flags: Vec::new(),
-        watch_set_cache: None,
-        bloat_analysis: false,
-        caller_path: None,
-    };
+    );
+    params.clean = false;
 
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     let result = under_test_timeout(orchestrator.build(&params))
