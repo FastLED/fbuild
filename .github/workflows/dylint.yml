@@ -81,7 +81,7 @@ jobs:
       - name: Validate platform-boundary ledgers
         run: uv run --no-project python ci/enforce_platform_boundary.py --print-totals
       - name: Setup soldr
-        uses: zackees/setup-soldr@45175ff1f8602ea18680729b6f3d2a225a76182a # canary: setup-soldr main (soldr 0.9.47, Dylint 6.2.0)
+        uses: zackees/setup-soldr@bf522834325fdf22eb7091f186ac33034ceb6e66 # canary: setup-soldr main (soldr 0.9.47, Dylint 6.2.0)
         with:
           # ci-tests applies the prescribed bounded resource contract for the
           # workspace validation domain. Dylint deliberately remains on its

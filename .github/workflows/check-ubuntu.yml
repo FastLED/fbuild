@@ -59,7 +59,7 @@ jobs:
           echo "PYTHONHOME=$PYTHONHOME" >> "$GITHUB_ENV"
       - name: Setup soldr
         id: setup-soldr
-        uses: zackees/setup-soldr@45175ff1f8602ea18680729b6f3d2a225a76182a # canary: setup-soldr main (soldr 0.9.47, Dylint 6.2.0)
+        uses: zackees/setup-soldr@bf522834325fdf22eb7091f186ac33034ceb6e66 # canary: setup-soldr main (soldr 0.9.47, Dylint 6.2.0)
         with:
           s3-bucket: forge-ci-cache
           s3-endpoint: sfo3.digitaloceanspaces.com
@@ -154,7 +154,7 @@ jobs:
       # Own build-cache store: this job cross-links two release targets and
       # must not compete with (or poison) the test job's cache generation.
       - name: Setup soldr
-        uses: zackees/setup-soldr@45175ff1f8602ea18680729b6f3d2a225a76182a # canary: setup-soldr main (soldr 0.9.47, Dylint 6.2.0)
+        uses: zackees/setup-soldr@bf522834325fdf22eb7091f186ac33034ceb6e66 # canary: setup-soldr main (soldr 0.9.47, Dylint 6.2.0)
         with:
           s3-bucket: forge-ci-cache
           s3-endpoint: sfo3.digitaloceanspaces.com
@@ -213,7 +213,7 @@ jobs:
         with:
           python-version: "3.10"
       - name: Setup soldr
-        uses: zackees/setup-soldr@45175ff1f8602ea18680729b6f3d2a225a76182a # canary: setup-soldr main (soldr 0.9.47, Dylint 6.2.0)
+        uses: zackees/setup-soldr@bf522834325fdf22eb7091f186ac33034ceb6e66 # canary: setup-soldr main (soldr 0.9.47, Dylint 6.2.0)
         with:
           s3-bucket: forge-ci-cache
           s3-endpoint: sfo3.digitaloceanspaces.com

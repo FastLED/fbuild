@@ -92,7 +92,7 @@ jobs:
           ref: ${{ inputs.ref }}
       - uses: astral-sh/setup-uv@v3
       - name: Setup soldr
-        uses: zackees/setup-soldr@45175ff1f8602ea18680729b6f3d2a225a76182a # canary: setup-soldr main (soldr 0.9.47, Dylint 6.2.0)
+        uses: zackees/setup-soldr@bf522834325fdf22eb7091f186ac33034ceb6e66 # canary: setup-soldr main (soldr 0.9.47, Dylint 6.2.0)
         with:
           cache-key-suffix: acceptance-205-${{ matrix.test_bin }}
           cache: true
