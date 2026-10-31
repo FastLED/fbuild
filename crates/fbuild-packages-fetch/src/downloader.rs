@@ -498,8 +498,8 @@ pub async fn download_file(url: &str, dest_dir: &Path) -> Result<PathBuf> {
 /// attempts (a server's `Retry-After` may lengthen a wait). A non-2xx HTTP
 /// status is a hard failure unless it is 5xx, 429 or 408.
 async fn get_with_retry(url: &str) -> Result<Vec<u8>> {
-    let urls = candidate_urls(url, &configured_mirrors());
-    get_from_candidates(http::client(), &urls, RetryTiming::from_env()).await
+    let (urls, mirror_first) = resolve_candidates(url);
+    get_from_candidates(http::client(), &urls, mirror_first, RetryTiming::from_env()).await
 }
 
 async fn get_with_retry_timed(
@@ -559,12 +559,13 @@ async fn download_file_with_progress_using(
     dest_dir: &Path,
     on_progress: &mut (dyn FnMut(&DownloadProgress) + Send),
 ) -> Result<()> {
-    let urls = candidate_urls(url, &configured_mirrors());
+    let (urls, mirror_first) = resolve_candidates(url);
     download_from_candidates(
         client,
         &urls,
         dest_dir,
         on_progress,
+        mirror_first,
         RetryTiming::from_env(),
     )
     .await
@@ -949,7 +950,7 @@ pub async fn verify_checksum_async(path: &Path, expected: &str) -> Result<()> {
 mod mirror_tests;
 #[path = "downloader_mirrors.rs"]
 mod mirrors;
-use mirrors::{candidate_urls, configured_mirrors, download_from_candidates, get_from_candidates};
+use mirrors::{download_from_candidates, get_from_candidates, resolve_candidates};
 
 #[cfg(test)]
 #[path = "downloader_tests.rs"]
