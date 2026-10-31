@@ -134,6 +134,28 @@ impl PerfTimer {
         }
     }
 
+    /// Force recording/emitting on for this timer regardless of the
+    /// environment.
+    ///
+    /// `new` decides from `FBUILD_PERF_LOG`/`FBUILD_PERF_LOG_JSON`, which is
+    /// what a real build wants. Tests (and a caller that has already decided
+    /// to collect) need a timer that records without mutating process-global
+    /// env or depending on a cached `OnceLock`.
+    pub fn activate(&mut self) {
+        self.active = true;
+    }
+
+    /// Duration recorded so far for `name`, or `None` when that phase has not
+    /// run.
+    ///
+    /// Lets a caller assert on or report a single phase (e.g. the core-only
+    /// leg of a concurrent compile region) instead of re-parsing the summary
+    /// line.
+    #[must_use]
+    pub fn recorded(&self, name: &str) -> Option<Duration> {
+        self.phases.iter().find(|p| p.name == name).map(|p| p.total)
+    }
+
     /// Add a manually-measured duration (e.g. when a phase is split across
     /// closures that can't share a `&mut PerfTimer`).
     pub fn record(&mut self, name: &'static str, dur: Duration) {
@@ -245,6 +267,29 @@ mod tests {
                 active: true,
             }
         }
+    }
+
+    #[test]
+    fn recorded_reports_only_recorded_phases() {
+        let mut t = PerfTimer::new_active_for_test("test");
+        t.record("compile-core", Duration::from_millis(3));
+        t.record("compile-core", Duration::from_millis(4));
+        let core = t.recorded("compile-core");
+        let link = t.recorded("link");
+        t.active = false;
+        assert_eq!(core, Some(Duration::from_millis(7)));
+        assert_eq!(link, None);
+    }
+
+    #[test]
+    fn activate_forces_recording_without_env() {
+        let mut t = PerfTimer::new("test");
+        t.active = false;
+        t.activate();
+        t.record("phase-a", Duration::from_millis(2));
+        let recorded = t.recorded("phase-a");
+        t.active = false;
+        assert_eq!(recorded, Some(Duration::from_millis(2)));
     }
 
     #[test]
