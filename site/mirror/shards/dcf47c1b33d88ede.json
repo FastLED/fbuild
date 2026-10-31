@@ -67,6 +67,12 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/waybyte/tool/toolchain-gccmipselfrda8955/4.4.2/toolchain-gccmipselfrda8955-windows-4.4.2.tar.gz",
      "https://dl.registry.platformio.org/download/waybyte/tool/toolchain-gccmipselfrda8955/4.4.2/toolchain-gccmipselfrda8955-windows-4.4.2.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86",
+     "windows",
+     "windows_arm64"
     ]
    }
   }

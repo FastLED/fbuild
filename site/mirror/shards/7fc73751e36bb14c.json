@@ -184,6 +184,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellelftool/0.0.1/tool-cubecellelftool-darwin_x86_64-0.0.1.tar.gz",
      "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellelftool/0.0.1/tool-cubecellelftool-darwin_x86_64-0.0.1.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
     ]
    }
   },
@@ -197,6 +201,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellelftool/0.0.1/tool-cubecellelftool-linux_x86_64-0.0.1.tar.gz",
      "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellelftool/0.0.1/tool-cubecellelftool-linux_x86_64-0.0.1.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -210,6 +217,12 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellelftool/0.0.1/tool-cubecellelftool-windows-0.0.1.tar.gz",
      "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellelftool/0.0.1/tool-cubecellelftool-windows-0.0.1.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86",
+     "windows",
+     "windows_arm64"
     ]
    }
   },
@@ -223,6 +236,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellflash/0.0.1/tool-cubecellflash-darwin_x86_64-0.0.1.tar.gz",
      "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellflash/0.0.1/tool-cubecellflash-darwin_x86_64-0.0.1.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
     ]
    }
   },
@@ -236,6 +253,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellflash/0.0.1/tool-cubecellflash-linux_x86_64-0.0.1.tar.gz",
      "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellflash/0.0.1/tool-cubecellflash-linux_x86_64-0.0.1.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -249,6 +269,12 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellflash/0.0.1/tool-cubecellflash-windows-0.0.1.tar.gz",
      "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellflash/0.0.1/tool-cubecellflash-windows-0.0.1.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86",
+     "windows",
+     "windows_arm64"
     ]
    }
   },
@@ -262,6 +288,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellflash6601/0.0.1/tool-cubecellflash6601-darwin_x86_64-0.0.1.tar.gz",
      "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellflash6601/0.0.1/tool-cubecellflash6601-darwin_x86_64-0.0.1.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
     ]
    }
   },
@@ -275,6 +305,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellflash6601/0.0.1/tool-cubecellflash6601-linux_x86_64-0.0.1.tar.gz",
      "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellflash6601/0.0.1/tool-cubecellflash6601-linux_x86_64-0.0.1.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -288,6 +321,12 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellflash6601/0.0.1/tool-cubecellflash6601-windows-0.0.1.tar.gz",
      "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellflash6601/0.0.1/tool-cubecellflash6601-windows-0.0.1.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86",
+     "windows",
+     "windows_arm64"
     ]
    }
   }

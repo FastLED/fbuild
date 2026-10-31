@@ -15,6 +15,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260118/tool-openocd-riscv-wch-darwin_arm64-2.1100.260118.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260118/tool-openocd-riscv-wch-darwin_arm64-2.1100.260118.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
     ]
    }
   },
@@ -28,6 +31,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260118/tool-openocd-riscv-wch-darwin_x86_64-2.1100.260118.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260118/tool-openocd-riscv-wch-darwin_x86_64-2.1100.260118.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
     ]
    }
   },
@@ -41,6 +47,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260118/tool-openocd-riscv-wch-linux_x86_64-2.1100.260118.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260118/tool-openocd-riscv-wch-linux_x86_64-2.1100.260118.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -54,6 +63,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260118/tool-openocd-riscv-wch-windows_x86-2.1100.260118.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260118/tool-openocd-riscv-wch-windows_x86-2.1100.260118.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86"
     ]
    }
   },
@@ -67,6 +80,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260228/tool-openocd-riscv-wch-darwin_arm64-2.1100.260228.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260228/tool-openocd-riscv-wch-darwin_arm64-2.1100.260228.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
     ]
    }
   },
@@ -80,6 +96,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260228/tool-openocd-riscv-wch-darwin_x86_64-2.1100.260228.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260228/tool-openocd-riscv-wch-darwin_x86_64-2.1100.260228.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
     ]
    }
   },
@@ -93,6 +112,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260228/tool-openocd-riscv-wch-linux_x86_64-2.1100.260228.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260228/tool-openocd-riscv-wch-linux_x86_64-2.1100.260228.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -106,6 +128,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260228/tool-openocd-riscv-wch-windows_x86-2.1100.260228.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-openocd-riscv-wch/2.1100.260228/tool-openocd-riscv-wch-windows_x86-2.1100.260228.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86"
     ]
    }
   },
@@ -119,6 +145,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-wchisp/0.23.240914/tool-wchisp-darwin_arm64-0.23.240914.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-wchisp/0.23.240914/tool-wchisp-darwin_arm64-0.23.240914.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
     ]
    }
   },
@@ -132,6 +161,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-wchisp/0.23.240914/tool-wchisp-darwin_x86_64-0.23.240914.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-wchisp/0.23.240914/tool-wchisp-darwin_x86_64-0.23.240914.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
     ]
    }
   },
@@ -145,6 +177,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-wchisp/0.23.240914/tool-wchisp-linux_aarch64-0.23.240914.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-wchisp/0.23.240914/tool-wchisp-linux_aarch64-0.23.240914.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
     ]
    }
   },
@@ -158,6 +193,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-wchisp/0.23.240914/tool-wchisp-linux_x86_64-0.23.240914.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-wchisp/0.23.240914/tool-wchisp-linux_x86_64-0.23.240914.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -171,6 +209,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-wchisp/0.23.240914/tool-wchisp-windows_amd64-0.23.240914.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-wchisp/0.23.240914/tool-wchisp-windows_amd64-0.23.240914.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
     ]
    }
   },
@@ -184,6 +226,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-wlink/0.23.241116/tool-wlink-darwin_arm64-0.23.241116.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-wlink/0.23.241116/tool-wlink-darwin_arm64-0.23.241116.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
     ]
    }
   },
@@ -197,6 +242,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-wlink/0.23.241116/tool-wlink-darwin_x86_64-0.23.241116.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-wlink/0.23.241116/tool-wlink-darwin_x86_64-0.23.241116.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
     ]
    }
   },
@@ -210,6 +258,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-wlink/0.23.241116/tool-wlink-linux_x86_64-0.23.241116.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-wlink/0.23.241116/tool-wlink-linux_x86_64-0.23.241116.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -223,6 +274,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-wlink/0.23.241116/tool-wlink-windows_amd64-0.23.241116.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-wlink/0.23.241116/tool-wlink-windows_amd64-0.23.241116.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
     ]
    }
   },
@@ -236,6 +291,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/community-ch32v/tool/tool-wlink/0.23.241116/tool-wlink-windows_x86-0.23.241116.tar.gz",
      "https://dl.registry.platformio.org/download/community-ch32v/tool/tool-wlink/0.23.241116/tool-wlink-windows_x86-0.23.241116.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
     ]
    }
   }

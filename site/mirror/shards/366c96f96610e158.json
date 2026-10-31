@@ -28,6 +28,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/siliconlabs/tool/tool-slc-cli/1.0.1/tool-slc-cli-darwin_x86_64-1.0.1.tar.gz",
      "https://dl.registry.platformio.org/download/siliconlabs/tool/tool-slc-cli/1.0.1/tool-slc-cli-darwin_x86_64-1.0.1.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
     ]
    }
   },
@@ -41,6 +45,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/siliconlabs/tool/tool-slc-cli/1.0.1/tool-slc-cli-linux_x86_64-1.0.1.tar.gz",
      "https://dl.registry.platformio.org/download/siliconlabs/tool/tool-slc-cli/1.0.1/tool-slc-cli-linux_x86_64-1.0.1.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -54,6 +61,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/siliconlabs/tool/tool-slc-cli/1.0.1/tool-slc-cli-windows_amd64-1.0.1.tar.gz",
      "https://dl.registry.platformio.org/download/siliconlabs/tool/tool-slc-cli/1.0.1/tool-slc-cli-windows_amd64-1.0.1.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
     ]
    }
   }

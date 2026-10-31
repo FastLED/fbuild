@@ -70,4 +70,23 @@ registry for checksums or alternative mirrors, and no PlatformIO mirror host is
 ever a candidate. The bucket mirrors only the registry layout; GitHub URLs are
 not mirrored.
 
+## Registry index (FastLED/fbuild#1829)
+
+`platformio_registry::RegistryClient` resolves package specs (platforms,
+tools, frameworks, `lib_deps`) from the same documents instead of
+PlatformIO's registry API:
+
+- each shard component's id is `owner/type/name/version/file`, and its
+  `asset.provides` lists the PlatformIO `system` values a host-specific
+  archive serves (absent means any host);
+- the Index keys `@names-<h>` point at `shards/names-<h>.json`, whose
+  components have ids `type/name/owner` (with one archive of the package as
+  the asset), so owner-less specs can find their owner. `<h>` is the first
+  hex digit of the SHA-256 of the ASCII-lowercased name.
+
+A package the index does not list fails with `RegistryError::NotIndexed`, and
+an unreachable index or shard with `RegistryError::IndexUnavailable`; neither
+falls back to PlatformIO. `platformio_registry_fixture` builds and serves an
+index for tests in this and dependent crates.
+
 A failed fetch reports the attempt count and time spent, and names any mirrors tried.

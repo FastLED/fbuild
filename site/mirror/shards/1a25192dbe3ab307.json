@@ -249,6 +249,11 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/chintal/tool/tool-ebs/1.0.0/tool-ebs-linux_x86_64-1.0.0.tar.gz",
      "https://dl.registry.platformio.org/download/chintal/tool/tool-ebs/1.0.0/tool-ebs-linux_x86_64-1.0.0.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64",
+     "darwin_x86_64",
+     "windows_x86_64"
     ]
    }
   }

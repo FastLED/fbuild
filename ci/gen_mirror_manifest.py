@@ -8,7 +8,19 @@ zackees/manifest.json v1 documents under ``site/mirror/``:
   first key segment, a registry owner) to a shard
   descriptor ``{url, sha256, size_bytes}``;
 - ``shards/<id>.json``: one ``Release`` per owner whose components list, for
-  each object, ``urls: [bucket, vendor]`` plus ``size_bytes`` and ``sha256``.
+  each object, ``urls: [bucket, vendor]`` plus ``size_bytes`` and ``sha256``,
+  and in ``provides`` the PlatformIO ``system`` values a host-specific
+  archive serves (absent means any host);
+- ``shards/names-<h>.json``: listed under the Index keys ``@names-<h>``, one
+  component per package with id ``<type>/<name>/<owner>`` and one of its
+  archives as the asset, so fbuild can find the owner of an owner-less spec
+  such as ``lib_deps = FastLED``. ``<h>`` is the first hex digit of the
+  SHA-256 of the ASCII-lowercased name.
+
+Together these are fbuild's registry index (FastLED/fbuild#1829): fbuild
+resolves package versions from them instead of PlatformIO's registry API.
+The ``system`` values come from the mirror's own state database
+(``_state/manifest.db`` in the bucket, or ``--state-db``).
 
 Re-runs are incremental: an object already in a shard with the same size is
 not downloaded again.
@@ -30,7 +42,9 @@ import argparse
 import hashlib
 import json
 import os
+import sqlite3
 import sys
+import tempfile
 import threading
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -46,6 +60,8 @@ SCHEMA = "https://zackees.github.io/manifest.json/v1/manifest.schema.json"
 REGISTRY_PREFIX = "https://dl.registry.platformio.org/download/"
 TOOL = "fbuild-download-mirror"
 USER_AGENT = "fbuild-mirror-manifest/2"
+STATE_DB_KEY = "_state/manifest.db"
+NAMES_KEY = "@names-"  # '@' is escaped in owner keys, so no owner collides
 
 
 def vendor_url(key: str) -> str:
@@ -81,21 +97,24 @@ def shard_id(owner: str) -> str:
     return hashlib.sha256(owner.encode()).hexdigest()[:16]
 
 
-def list_bucket(credentials: Path | None) -> dict[str, int]:
-    import boto3  # only the listing step needs it
+def s3_client(credentials: Path | None):
+    import boto3  # only the bucket steps need it
 
     if credentials:
         creds = json.loads(credentials.read_text())
         key_id, secret = creds["access_key"], creds["secret_key"]
     else:
         key_id, secret = os.environ["AWS_ACCESS_KEY_ID"], os.environ["AWS_SECRET_ACCESS_KEY"]
-    s3 = boto3.client(
+    return boto3.client(
         "s3",
         region_name=REGION,
         endpoint_url=f"https://{REGION}.digitaloceanspaces.com",
         aws_access_key_id=key_id,
         aws_secret_access_key=secret,
     )
+
+
+def list_bucket(s3) -> dict[str, int]:
     objects: dict[str, int] = {}
     for page in s3.get_paginator("list_objects_v2").paginate(Bucket=BUCKET_NAME):
         for obj in page.get("Contents", []):
@@ -104,12 +123,38 @@ def list_bucket(credentials: Path | None) -> dict[str, int]:
     return objects
 
 
+def load_systems(s3, state_db: Path | None) -> dict[str, list[str]]:
+    """``key -> systems`` from the mirror's state database; ``[]`` means any
+    host. Read from ``state_db`` or downloaded from the bucket."""
+    with tempfile.TemporaryDirectory() as tmp:
+        if state_db is None:
+            state_db = Path(tmp) / "manifest.db"
+            s3.download_file(BUCKET_NAME, STATE_DB_KEY, str(state_db))
+        db = sqlite3.connect(f"file:{state_db}?mode=ro", uri=True)
+        try:
+            rows = db.execute("select key, system from files where state = 'done'").fetchall()
+        finally:
+            db.close()
+    systems: dict[str, list[str]] = {}
+    for key, system in rows:
+        if system in (None, "", "*"):
+            systems[key] = []
+            continue
+        value = json.loads(system) if system.startswith("[") else [system]
+        if not isinstance(value, list) or not all(isinstance(v, str) and v for v in value):
+            raise ValueError(f"{key}: unreadable system {system!r}")
+        systems[key] = [] if "*" in value else value
+    return systems
+
+
 def load_existing(out_dir: Path) -> dict[str, tuple[int, str]]:
     """``key -> (size, sha256)`` from the shards already on disk."""
     known: dict[str, tuple[int, str]] = {}
     for shard in (out_dir / "shards").glob("*.json"):
         for component in json.loads(shard.read_text()).get("components", []):
-            asset = component["asset"]
+            asset = component.get("asset")
+            if asset is None or shard.name.startswith("names-"):
+                continue
             known[component["id"]] = (asset["size_bytes"], asset["sha256"])
     return known
 
@@ -179,8 +224,66 @@ def render(doc: dict) -> str:
     return json.dumps(doc, indent=1, ensure_ascii=False) + "\n"
 
 
-def build_documents(hashed: dict[str, tuple[int, str]], version: str) -> dict[str, str]:
+def asset_of(key: str, size: int, sha: str, systems: list[str]) -> dict:
+    asset = {
+        "filename": key.rsplit("/", 1)[-1],
+        "size_bytes": size,
+        "sha256": sha,
+        "urls": [bucket_url(key), vendor_url(key)],
+    }
+    if systems:
+        asset["provides"] = systems
+    return asset
+
+
+def descriptor(rel: str, text: str) -> dict:
+    data = text.encode()
+    return {
+        "descriptor": {"url": rel, "sha256": hashlib.sha256(data).hexdigest(), "size_bytes": len(data)},
+        "kind_hint": "data",
+    }
+
+
+def names_bucket(name: str) -> str:
+    """Names shard for a package name; mirrors ``names_key`` in the client."""
+    return hashlib.sha256(name.encode().lower()).hexdigest()[0]
+
+
+def names_documents(
+    hashed: dict[str, tuple[int, str]], systems: dict[str, list[str]], version: str
+) -> dict[str, str]:
+    """Bucket digit -> rendered names shard."""
+    first_key: dict[str, str] = {}
+    for key in sorted(hashed):
+        owner, kind, name = key.split("/")[:3]
+        first_key.setdefault(f"{kind}/{name}/{owner}", key)
+    buckets: dict[str, list[dict]] = {}
+    for package, key in sorted(first_key.items()):
+        buckets.setdefault(names_bucket(package.split("/")[1]), []).append(
+            {"id": package, "required": False, "asset": asset_of(key, *hashed[key], systems[key])}
+        )
+    return {
+        bucket: render(
+            {
+                "$schema": SCHEMA,
+                "kind": "Release",
+                "schema_version": 1,
+                "tool": f"{TOOL}/names-{bucket}",
+                "version": version,
+                "components": components,
+            }
+        )
+        for bucket, components in sorted(buckets.items())
+    }
+
+
+def build_documents(
+    hashed: dict[str, tuple[int, str]], systems: dict[str, list[str]], version: str
+) -> dict[str, str]:
     """Relative path -> rendered document."""
+    unknown = sorted(set(hashed) - set(systems))
+    if unknown:
+        raise ValueError(f"{len(unknown)} objects have no system in the state db, e.g. {unknown[:3]}")
     by_owner: dict[str, list[str]] = {}
     for key in hashed:
         by_owner.setdefault(owner_of(key), []).append(key)
@@ -188,16 +291,7 @@ def build_documents(hashed: dict[str, tuple[int, str]], version: str) -> dict[st
     tools: dict[str, dict] = {}
     for owner in sorted(by_owner):
         components = [
-            {
-                "id": key,
-                "required": False,
-                "asset": {
-                    "filename": key.rsplit("/", 1)[-1],
-                    "size_bytes": hashed[key][0],
-                    "sha256": hashed[key][1],
-                    "urls": [bucket_url(key), vendor_url(key)],
-                },
-            }
+            {"id": key, "required": False, "asset": asset_of(key, *hashed[key], systems[key])}
             for key in sorted(by_owner[owner])
         ]
         shard = render(
@@ -212,15 +306,11 @@ def build_documents(hashed: dict[str, tuple[int, str]], version: str) -> dict[st
         )
         rel = f"shards/{shard_id(owner)}.json"
         docs[rel] = shard
-        data = shard.encode()
-        tools[owner] = {
-            "descriptor": {
-                "url": rel,
-                "sha256": hashlib.sha256(data).hexdigest(),
-                "size_bytes": len(data),
-            },
-            "kind_hint": "data",
-        }
+        tools[owner] = descriptor(rel, shard)
+    for bucket, text in names_documents(hashed, systems, version).items():
+        rel = f"shards/names-{bucket}.json"
+        docs[rel] = text
+        tools[NAMES_KEY + bucket] = descriptor(rel, text)
     docs["manifest.json"] = render(
         {"$schema": SCHEMA, "kind": "Index", "schema_version": 1, "tools": tools}
     )
@@ -231,13 +321,15 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--out-dir", type=Path, default=OUT_DIR)
     parser.add_argument("--credentials", type=Path, help="JSON file with access_key/secret_key")
+    parser.add_argument("--state-db", type=Path, help=f"local copy of the bucket's {STATE_DB_KEY}")
     parser.add_argument("--version", help="shard version (default: keep the existing one)")
     parser.add_argument("--workers", type=int, default=32)
     parser.add_argument("--checkpoint", type=Path, help="append hashes here as they finish; reused on rerun")
     parser.add_argument("--check", action="store_true", help="fail if the documents are out of date")
     args = parser.parse_args()
 
-    objects = list_bucket(args.credentials)
+    s3 = s3_client(args.credentials)
+    objects = list_bucket(s3)
     known = load_existing(args.out_dir)
     if args.check:
         stale = sorted(k for k, s in objects.items() if known.get(k, (None,))[0] != s)
@@ -250,7 +342,7 @@ def main() -> int:
     hashed = hash_missing(objects, known, args.workers, args.checkpoint)
     missing = set(objects) - set(hashed)
     version = args.version or "1"
-    docs = build_documents(hashed, version)
+    docs = build_documents(hashed, load_systems(s3, args.state_db), version)
     shards_dir = args.out_dir / "shards"
     shards_dir.mkdir(parents=True, exist_ok=True)
     keep = {args.out_dir / rel for rel in docs}

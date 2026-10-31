@@ -41,6 +41,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-darwin_x86_64-3.2.0.tar.gz",
      "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-darwin_x86_64-3.2.0.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
     ]
    }
   },
@@ -54,6 +58,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-linux_aarch64-3.2.0.tar.gz",
      "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-linux_aarch64-3.2.0.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
     ]
    }
   },
@@ -67,6 +74,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-linux_armv6l-3.2.0.tar.gz",
      "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-linux_armv6l-3.2.0.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l"
     ]
    }
   },
@@ -80,6 +90,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-linux_x86_64-3.2.0.tar.gz",
      "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-linux_x86_64-3.2.0.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -93,6 +106,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-windows_amd64-3.2.0.tar.gz",
      "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-windows_amd64-3.2.0.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
     ]
    }
   },
@@ -106,6 +123,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-windows_x86-3.2.0.tar.gz",
      "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/3.2.0/tool-mklittlefs-windows_x86-3.2.0.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
     ]
    }
   },
@@ -119,6 +139,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-darwin_x86_64-4.0.0.tar.gz",
      "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-darwin_x86_64-4.0.0.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
     ]
    }
   },
@@ -132,6 +156,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-linux_aarch64-4.0.0.tar.gz",
      "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-linux_aarch64-4.0.0.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
     ]
    }
   },
@@ -145,6 +172,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-linux_armv6l-4.0.0.tar.gz",
      "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-linux_armv6l-4.0.0.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l"
     ]
    }
   },
@@ -158,6 +188,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-linux_x86_64-4.0.0.tar.gz",
      "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-linux_x86_64-4.0.0.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -171,6 +204,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-windows_amd64-4.0.0.tar.gz",
      "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-windows_amd64-4.0.0.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
     ]
    }
   },
@@ -184,6 +221,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-windows_x86-4.0.0.tar.gz",
      "https://dl.registry.platformio.org/download/tasmota/tool/tool-mklittlefs/4.0.0/tool-mklittlefs-windows_x86-4.0.0.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
     ]
    }
   }

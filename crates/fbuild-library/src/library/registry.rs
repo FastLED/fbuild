@@ -1,11 +1,11 @@
-//! PlatformIO registry client for resolving library dependencies.
+//! Resolves `lib_deps` libraries from fbuild's registry index
+//! (FastLED/fbuild#1829); PlatformIO's registry API is never queried.
 //!
-//! Queries the PlatformIO registry API to find library owners and download URLs.
 //! Supports semver version constraints (e.g. "^1.1.1", ">=3.4.0", "~2.0").
 
+use fbuild_core::platformio_package::{PackageKind, RegistryMetadata};
 use fbuild_core::{FbuildError, Result};
-
-const REGISTRY_API_URL: &str = "https://api.registry.platformio.org/v3";
+use fbuild_packages_fetch::platformio_registry::{RegistryClient, RegistryError};
 
 /// Resolved library version with download URL.
 #[derive(Debug, Clone)]
@@ -16,241 +16,111 @@ pub struct ResolvedLibrary {
     pub download_url: String,
 }
 
-/// Search the PlatformIO registry for a library by name.
-///
-/// Returns the owner if found.
-pub async fn search_library(name: &str) -> Result<Option<String>> {
-    let url = format!("{}/search?query={}", REGISTRY_API_URL, name);
-    let response = crate::http::client().get(&url).send().await.map_err(|e| {
-        FbuildError::PackageError(format!("registry search failed for {}: {}", name, e))
-    })?;
-
-    if !response.status().is_success() {
-        return Ok(None);
-    }
-
-    let data: serde_json::Value = response.json().await.map_err(|e| {
-        FbuildError::PackageError(format!("failed to parse registry response: {}", e))
-    })?;
-
-    let items = data.get("items").and_then(|i| i.as_array());
-    if let Some(items) = items {
-        for item in items {
-            let item_name = item.get("name").and_then(|n| n.as_str()).unwrap_or("");
-            if item_name.eq_ignore_ascii_case(name) {
-                return Ok(item
-                    .get("owner")
-                    .and_then(|o| o.get("username"))
-                    .and_then(|u| u.as_str())
-                    .map(|s| s.to_string()));
-            }
-        }
-    }
-
-    Ok(None)
+fn index_error(error: RegistryError) -> FbuildError {
+    FbuildError::PackageError(error.to_string())
 }
 
-/// Resolve a library from the registry with version constraint support.
-///
-/// Uses the package details API to get all versions, then selects the best
-/// match for the given constraint. If no constraint is provided, returns
-/// the latest version.
-#[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
+/// Resolve a library with version constraint support. An empty `owner` is
+/// looked up by name; see [`select_owner`]. With no constraint the highest
+/// indexed version wins.
 pub async fn resolve_library(
     owner: &str,
     name: &str,
     version_spec: Option<&str>,
 ) -> Result<ResolvedLibrary> {
+    resolve_library_with(&RegistryClient::default(), owner, name, version_spec).await
+}
+
+async fn resolve_library_with(
+    client: &RegistryClient,
+    owner: &str,
+    name: &str,
+    version_spec: Option<&str>,
+) -> Result<ResolvedLibrary> {
     tracing::info!("resolving library: {}...", name);
-
-    // Resolve owner if not specified
-    let owner = if owner.is_empty() {
-        search_library(name).await?.ok_or_else(|| {
-            FbuildError::PackageError(format!("library '{}' not found in registry", name))
-        })?
+    let metadata = if owner.is_empty() {
+        select_owner(client, name).await?
     } else {
-        owner.to_string()
+        client
+            .package_metadata(owner, PackageKind::Library, name)
+            .await
+            .map_err(index_error)?
     };
-
-    // Use the package details API which returns all versions
-    let url = format!("{}/packages/{}/library/{}", REGISTRY_API_URL, owner, name);
-
-    let response = crate::http::client().get(&url).send().await.map_err(|e| {
-        FbuildError::PackageError(format!(
-            "registry query failed for {}/{}: {}",
-            owner, name, e
-        ))
-    })?;
-
-    if !response.status().is_success() {
-        // Fall back to search API if package details fails
-        return resolve_library_via_search(&owner, name).await;
-    }
-
-    let data: serde_json::Value = response.json().await.map_err(|e| {
-        FbuildError::PackageError(format!("failed to parse registry response: {}", e))
-    })?;
-
-    // Parse version constraint
-    let version_req = version_spec.and_then(|s| parse_version_req(s.trim()));
-
-    // Get all versions from package details
-    let versions = data
-        .get("versions")
-        .and_then(|v| v.as_array())
-        .ok_or_else(|| {
-            FbuildError::PackageError(format!("no versions found for {}/{}", owner, name))
-        })?;
-
-    // Find best matching version
-    let mut best_match: Option<(semver::Version, &serde_json::Value)> = None;
-
-    for ver_entry in versions {
-        let ver_str = match ver_entry.get("name").and_then(|n| n.as_str()) {
-            Some(s) => s,
-            None => continue,
-        };
-
-        let ver = match lenient_parse_version(ver_str) {
-            Some(v) => v,
-            None => continue,
-        };
-
-        // Check if this version satisfies the constraint
-        if let Some(ref req) = version_req {
-            if !req.matches(&ver) {
-                continue;
-            }
-        }
-
-        // Keep the highest matching version
-        if best_match
-            .as_ref()
-            .is_none_or(|(best_ver, _)| ver > *best_ver)
-        {
-            best_match = Some((ver, ver_entry));
-        }
-    }
-
-    let (matched_ver, ver_entry) = best_match.ok_or_else(|| {
-        FbuildError::PackageError(format!(
-            "no version of {}/{} matches constraint '{}'",
-            owner,
-            name,
-            version_spec.unwrap_or("*")
-        ))
-    })?;
-
-    // Extract download URL from the matched version
-    let download_url = ver_entry
-        .get("files")
-        .and_then(|f| f.as_array())
-        .and_then(|files| files.first())
-        .and_then(|file| file.get("download_url"))
-        .and_then(|u| u.as_str())
-        .ok_or_else(|| {
-            FbuildError::PackageError(format!(
-                "no download URL for {}/{}@{}",
-                owner, name, matched_ver
-            ))
-        })?;
-
-    let resolved_owner = data
-        .get("owner")
-        .and_then(|o| o.get("username"))
-        .and_then(|u| u.as_str())
-        .unwrap_or(&owner);
-
-    let resolved = ResolvedLibrary {
-        owner: resolved_owner.to_string(),
-        name: data
-            .get("name")
-            .and_then(|n| n.as_str())
-            .unwrap_or(name)
-            .to_string(),
-        version: matched_ver.to_string(),
-        download_url: download_url.to_string(),
-    };
-
+    let resolved = select_version(&metadata, version_spec)?;
     tracing::info!(
-        "resolved {} -> {}/{} v{}",
-        name,
+        "resolved {}/{}@{}",
         resolved.owner,
         resolved.name,
         resolved.version
     );
-
     Ok(resolved)
 }
 
-/// Fallback: resolve via the search API (no version constraint support).
-async fn resolve_library_via_search(owner: &str, name: &str) -> Result<ResolvedLibrary> {
-    let url = format!("{}/search?query={}", REGISTRY_API_URL, name);
+/// The library an owner-less spec names. PlatformIO's search ranked owners
+/// by popularity; the index has no such signal, so the owner publishing the
+/// most indexed versions wins, and a tie is an error asking for
+/// `owner/name`.
+async fn select_owner(client: &RegistryClient, name: &str) -> Result<RegistryMetadata> {
+    let owners = client
+        .owners(PackageKind::Library, name)
+        .await
+        .map_err(index_error)?;
+    let mut candidates = Vec::with_capacity(owners.len());
+    for owner in &owners {
+        candidates.push(
+            client
+                .package_metadata(owner, PackageKind::Library, name)
+                .await
+                .map_err(index_error)?,
+        );
+    }
+    candidates.sort_by_key(|m| std::cmp::Reverse(m.versions.len()));
+    match candidates.as_slice() {
+        [] => Err(FbuildError::PackageError(format!(
+            "library '{name}' is not in fbuild's registry index"
+        ))),
+        [first, second, ..] if first.versions.len() == second.versions.len() => {
+            Err(FbuildError::PackageError(format!(
+                "library '{name}' is published by several owners ({}); write it as owner/{name}",
+                owners.join(", ")
+            )))
+        }
+        [first, ..] => Ok(first.clone()),
+    }
+}
 
-    let response = crate::http::client().get(&url).send().await.map_err(|e| {
+/// The highest version of `metadata` satisfying `version_spec`.
+fn select_version(
+    metadata: &RegistryMetadata,
+    version_spec: Option<&str>,
+) -> Result<ResolvedLibrary> {
+    let version_req = version_spec.and_then(|s| parse_version_req(s.trim()));
+    let best = metadata
+        .versions
+        .iter()
+        .filter_map(|version| Some((lenient_parse_version(&version.name)?, version)))
+        .filter(|(parsed, _)| version_req.as_ref().is_none_or(|req| req.matches(parsed)))
+        .max_by(|(a, _), (b, _)| a.cmp(b));
+    let Some((_, version)) = best else {
+        return Err(FbuildError::PackageError(format!(
+            "no version of {}/{} matches constraint '{}'",
+            metadata.owner,
+            metadata.name,
+            version_spec.unwrap_or("*")
+        )));
+    };
+    let file = version.files.first().ok_or_else(|| {
         FbuildError::PackageError(format!(
-            "registry search failed for {}/{}: {}",
-            owner, name, e
+            "no download URL for {}/{}@{}",
+            metadata.owner, metadata.name, version.name
         ))
     })?;
-
-    let data: serde_json::Value = response.json().await.map_err(|e| {
-        FbuildError::PackageError(format!("failed to parse registry response: {}", e))
-    })?;
-
-    let items = data
-        .get("items")
-        .and_then(|i| i.as_array())
-        .ok_or_else(|| FbuildError::PackageError(format!("no results for {}/{}", owner, name)))?;
-
-    for item in items {
-        let item_name = item.get("name").and_then(|n| n.as_str()).unwrap_or("");
-        let item_owner = item
-            .get("owner")
-            .and_then(|o| o.get("username"))
-            .and_then(|u| u.as_str())
-            .unwrap_or("");
-
-        if item_name.eq_ignore_ascii_case(name)
-            && (owner.is_empty() || item_owner.eq_ignore_ascii_case(owner))
-        {
-            let version_info = item.get("version").ok_or_else(|| {
-                FbuildError::PackageError(format!("no version info for {}/{}", owner, name))
-            })?;
-
-            let version_str = version_info
-                .get("name")
-                .and_then(|n| n.as_str())
-                .ok_or_else(|| {
-                    FbuildError::PackageError(format!("no version name for {}/{}", owner, name))
-                })?;
-
-            let download_url = version_info
-                .get("files")
-                .and_then(|f| f.as_array())
-                .and_then(|files| files.first())
-                .and_then(|file| file.get("download_url"))
-                .and_then(|u| u.as_str())
-                .ok_or_else(|| {
-                    FbuildError::PackageError(format!(
-                        "no download URL for {}/{}@{}",
-                        owner, name, version_str
-                    ))
-                })?;
-
-            return Ok(ResolvedLibrary {
-                owner: item_owner.to_string(),
-                name: item_name.to_string(),
-                version: version_str.to_string(),
-                download_url: download_url.to_string(),
-            });
-        }
-    }
-
-    Err(FbuildError::PackageError(format!(
-        "library '{}/{}' not found in registry",
-        owner, name
-    )))
+    Ok(ResolvedLibrary {
+        owner: metadata.owner.clone(),
+        name: metadata.name.clone(),
+        version: version.name.clone(),
+        download_url: file.download_url.clone(),
+    })
 }
 
 /// Leniently parse a version string, padding with `.0` if needed.
@@ -280,10 +150,85 @@ fn parse_version_req(spec: &str) -> Option<semver::VersionReq> {
 mod tests {
     use super::*;
 
-    #[test]
-    fn test_registry_api_url() {
-        assert!(REGISTRY_API_URL.starts_with("https://"));
-        assert!(REGISTRY_API_URL.contains("platformio"));
+    use fbuild_packages_fetch::platformio_registry_fixture::{IndexFile, documents, serve};
+
+    fn lib(owner: &'static str, name: &'static str, version: &'static str) -> IndexFile<'static> {
+        IndexFile {
+            owner,
+            kind: "library",
+            name,
+            version,
+            systems: &[],
+            sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        }
+    }
+
+    async fn client(files: &[IndexFile<'_>]) -> RegistryClient {
+        let (url, _) = serve(documents(files)).await;
+        RegistryClient::new(url, reqwest::Client::new())
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn owner_and_lenient_versions_resolve_from_the_index() {
+        let client = client(&[
+            lib("bblanchon", "ArduinoJson", "7.4.2"),
+            lib("bblanchon", "ArduinoJson", "7.4.3"),
+            lib("bblanchon", "ArduinoJson", "6.21.5"),
+            lib("old", "Legacy", "2.72"),
+        ])
+        .await;
+        let latest = resolve_library_with(&client, "bblanchon", "ArduinoJson", Some("^7"))
+            .await
+            .unwrap();
+        assert_eq!(latest.version, "7.4.3");
+        assert_eq!(
+            latest.download_url,
+            "https://dl.registry.platformio.org/download/bblanchon/library/ArduinoJson/7.4.3/ArduinoJson-7.4.3.tar.gz"
+        );
+        let pinned = resolve_library_with(&client, "", "arduinojson", Some("6.21.5"))
+            .await
+            .unwrap();
+        assert_eq!(
+            (pinned.owner.as_str(), pinned.version.as_str()),
+            ("bblanchon", "6.21.5")
+        );
+        let legacy = resolve_library_with(&client, "old", "Legacy", Some("^2.70"))
+            .await
+            .unwrap();
+        assert_eq!(legacy.version, "2.72");
+        assert!(
+            resolve_library_with(&client, "bblanchon", "ArduinoJson", Some("^9"))
+                .await
+                .is_err()
+        );
+        assert!(
+            resolve_library_with(&client, "", "Missing", None)
+                .await
+                .is_err()
+        );
+    }
+
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn owner_less_specs_pick_the_owner_with_most_versions_or_fail_on_a_tie() {
+        let client = client(&[
+            lib("fastled", "FastLED", "3.10.0"),
+            lib("fastled", "FastLED", "3.10.1"),
+            lib("fork", "FastLED", "1.0.0"),
+            lib("a", "OneWire", "1.0.0"),
+            lib("b", "OneWire", "1.0.0"),
+        ])
+        .await;
+        let fastled = resolve_library_with(&client, "", "FastLED", None)
+            .await
+            .unwrap();
+        assert_eq!(
+            (fastled.owner.as_str(), fastled.version.as_str()),
+            ("fastled", "3.10.1")
+        );
+        let tie = resolve_library_with(&client, "", "OneWire", None)
+            .await
+            .unwrap_err();
+        assert!(tie.to_string().contains("owner/OneWire"), "{tie}");
     }
 
     #[test]
