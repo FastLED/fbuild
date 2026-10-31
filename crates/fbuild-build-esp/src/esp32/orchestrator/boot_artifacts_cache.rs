@@ -75,7 +75,7 @@ impl ArtifactKey {
         if !cached.exists() {
             return false;
         }
-        match std::fs::copy(&cached, destination) {
+        match std::fs::copy(cached, destination) {
             Ok(_) => true,
             Err(error) => {
                 tracing::warn!(
@@ -107,7 +107,7 @@ impl ArtifactKey {
                 return;
             }
         };
-        if let Err(error) = fbuild_core::fs::write_atomic_sync(&target, &bytes) {
+        if let Err(error) = fbuild_core::fs::write_atomic_sync(target, &bytes) {
             tracing::warn!(path = %target.display(), %error, "boot artifact cache: write failed");
         }
     }
