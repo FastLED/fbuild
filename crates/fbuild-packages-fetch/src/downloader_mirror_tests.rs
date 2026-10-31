@@ -1,7 +1,10 @@
 //! Tests for retry tuning, jitter and mirror fallback (FastLED/fbuild#1463).
 //! Shares the local-server helpers of [`super::tests`].
 
-use super::mirrors::{MIRROR_FIRST_ENV, attempt_order, mirror_first_requested};
+use super::mirrors::{
+    DEFAULT_MIRROR, MIRROR_FIRST_ENV, MIRRORS_ENV, attempt_order, candidate_urls,
+    mirror_first_requested, resolve_candidates,
+};
 use super::tests::{
     FAST_RETRY_TIMING, complete_response, network_test_guard, run_flaky_server, test_client,
 };
@@ -79,9 +82,14 @@ async fn buffered_download_falls_back_to_a_mirror_when_the_primary_is_down() {
         &format!("http://127.0.0.1:{primary}/files/pkg.zip"),
         &[format!("http://127.0.0.1:{mirror}/pinned")],
     );
-    let bytes = get_from_candidates(&test_client(), &urls, FAST_RETRY_TIMING)
-        .await
-        .expect("the mirror should serve the file");
+    let bytes = get_from_candidates(
+        &test_client(),
+        &urls,
+        mirror_first_requested(),
+        FAST_RETRY_TIMING,
+    )
+    .await
+    .expect("the mirror should serve the file");
 
     assert_eq!(bytes, b"hello");
     assert_eq!(
@@ -123,6 +131,7 @@ async fn streaming_download_falls_back_to_a_mirror_when_the_primary_is_down() {
         &urls,
         temp.path(),
         &mut progress,
+        mirror_first_requested(),
         FAST_RETRY_TIMING,
     )
     .await
@@ -159,6 +168,7 @@ async fn streaming_mirror_with_a_query_string_keeps_the_primary_file_name() {
         &urls,
         temp.path(),
         &mut progress,
+        mirror_first_requested(),
         FAST_RETRY_TIMING,
     )
     .await
@@ -187,9 +197,14 @@ async fn mirrors_are_only_used_after_the_primary_fails() {
         &format!("http://127.0.0.1:{primary}/f.bin"),
         &[format!("http://127.0.0.1:{mirror}")],
     );
-    get_from_candidates(&test_client(), &urls, FAST_RETRY_TIMING)
-        .await
-        .unwrap();
+    get_from_candidates(
+        &test_client(),
+        &urls,
+        mirror_first_requested(),
+        FAST_RETRY_TIMING,
+    )
+    .await
+    .unwrap();
     assert_eq!(mirror_hits.load(Ordering::SeqCst), 0);
 
     let down = "HTTP/1.1 503 Service Unavailable\r\nContent-Length: 0\r\nConnection: close\r\n\r\n";
@@ -199,10 +214,15 @@ async fn mirrors_are_only_used_after_the_primary_fails() {
         &format!("http://127.0.0.1:{a}/f.bin"),
         &[format!("http://127.0.0.1:{b}")],
     );
-    let err = get_from_candidates(&test_client(), &urls, FAST_RETRY_TIMING)
-        .await
-        .expect_err("everything is down")
-        .to_string();
+    let err = get_from_candidates(
+        &test_client(),
+        &urls,
+        mirror_first_requested(),
+        FAST_RETRY_TIMING,
+    )
+    .await
+    .expect_err("everything is down")
+    .to_string();
     assert!(err.contains(&format!("127.0.0.1:{a}")), "{err}");
     assert!(
         err.contains("also tried 1 mirror(s)") && err.contains(&format!("127.0.0.1:{b}")),
@@ -228,8 +248,8 @@ fn candidate_urls_expand_path_for_a_registry_download_url() {
     );
 }
 
-/// Off the registry there is no registry-relative path, so `{path}` degrades
-/// to the file name — the same value `{filename}` produces.
+/// Off the hosts the bucket mirrors there is no mirror path, so `{path}`
+/// degrades to the file name, the same value `{filename}` produces.
 #[test]
 fn candidate_urls_path_falls_back_to_the_file_name_off_registry() {
     let mirrors = vec!["https://mirror.example/{path}".to_string()];
@@ -240,10 +260,90 @@ fn candidate_urls_path_falls_back_to_the_file_name_off_registry() {
     // A `/download/` segment on some other host is not a registry path.
     assert_eq!(
         candidate_urls(
-            "https://github.com/o/r/releases/download/v1.2.3/pkg.tar.gz",
+            "https://downloads.example/download/v1.2.3/pkg.tar.gz",
             &mirrors
         )[1],
         "https://mirror.example/pkg.tar.gz"
+    );
+}
+
+/// GitHub URLs keep owner and repo under a `github.com/` prefix, so two repos
+/// shipping `1.8.6.tar.gz` never share a bucket key (FastLED/fbuild#1806).
+#[test]
+fn candidate_urls_path_keeps_github_owner_and_repo() {
+    let mirrors = vec!["https://mirror.example/{path}".to_string()];
+    assert_eq!(
+        candidate_urls(
+            "https://github.com/arduino/ArduinoCore-avr/archive/refs/tags/1.8.6.tar.gz",
+            &mirrors
+        )[1],
+        "https://mirror.example/github.com/arduino/ArduinoCore-avr/archive/refs/tags/1.8.6.tar.gz"
+    );
+    assert_eq!(
+        candidate_urls(
+            "https://github.com/o/r/releases/download/v1.2.3/pkg.tar.gz",
+            &mirrors
+        )[1],
+        "https://mirror.example/github.com/o/r/releases/download/v1.2.3/pkg.tar.gz"
+    );
+}
+
+/// With no mirror configured, mirrored hosts go to fbuild's own bucket first
+/// and fall back to the vendor; other hosts are left alone
+/// (FastLED/fbuild#1806).
+#[tokio::test]
+async fn unset_env_prefers_the_built_in_bucket_for_mirrored_hosts() {
+    let _guard = network_test_guard().await;
+    let _mirrors = ScopedEnv::unset(MIRRORS_ENV);
+    let _first = ScopedEnv::unset(MIRROR_FIRST_ENV);
+    let bucket = DEFAULT_MIRROR.trim_end_matches("{path}");
+
+    let registry = "https://dl.registry.platformio.org/download/platformio/platform/espressif32/6.5.0/espressif32-6.5.0.tar.gz";
+    assert_eq!(
+        resolve_candidates(registry),
+        (
+            vec![
+                registry.to_string(),
+                format!("{bucket}platformio/platform/espressif32/6.5.0/espressif32-6.5.0.tar.gz"),
+            ],
+            true
+        )
+    );
+
+    let github = "https://github.com/o/r/archive/refs/tags/1.0.tar.gz";
+    assert_eq!(
+        resolve_candidates(github),
+        (
+            vec![
+                github.to_string(),
+                format!("{bucket}github.com/o/r/archive/refs/tags/1.0.tar.gz"),
+            ],
+            true
+        )
+    );
+
+    let other = "https://vendor.example/files/pkg.zip";
+    assert_eq!(resolve_candidates(other), (vec![other.to_string()], false));
+}
+
+/// `FBUILD_DOWNLOAD_MIRROR_FIRST=0` keeps the built-in bucket but puts the
+/// vendor first; an explicitly empty `FBUILD_DOWNLOAD_MIRRORS` opts out.
+#[tokio::test]
+async fn env_overrides_the_built_in_bucket() {
+    let _guard = network_test_guard().await;
+    let registry = "https://dl.registry.platformio.org/download/o/tool/t/1.0/t-1.0.tar.gz";
+    {
+        let _mirrors = ScopedEnv::unset(MIRRORS_ENV);
+        let _first = ScopedEnv::set(MIRROR_FIRST_ENV, "0");
+        let (urls, mirror_first) = resolve_candidates(registry);
+        assert_eq!(urls.len(), 2, "{urls:?}");
+        assert!(!mirror_first);
+    }
+    let _mirrors = ScopedEnv::set(MIRRORS_ENV, "");
+    let _first = ScopedEnv::unset(MIRROR_FIRST_ENV);
+    assert_eq!(
+        resolve_candidates(registry),
+        (vec![registry.to_string()], false)
     );
 }
 
@@ -337,9 +437,14 @@ async fn mirror_first_serves_from_the_mirror_without_touching_the_primary() {
         &format!("http://127.0.0.1:{primary}/f.bin"),
         &[format!("http://127.0.0.1:{mirror}")],
     );
-    let bytes = get_from_candidates(&test_client(), &urls, FAST_RETRY_TIMING)
-        .await
-        .expect("the mirror should serve the file");
+    let bytes = get_from_candidates(
+        &test_client(),
+        &urls,
+        mirror_first_requested(),
+        FAST_RETRY_TIMING,
+    )
+    .await
+    .expect("the mirror should serve the file");
 
     assert_eq!(bytes, b"hello");
     assert_eq!(mirror_hits.load(Ordering::SeqCst), 1, "mirror goes first");
@@ -364,16 +469,48 @@ async fn mirror_first_still_reports_the_primary_error_when_everything_is_down() 
         &[format!("http://127.0.0.1:{mirror}")],
     );
 
-    let err = get_from_candidates(&test_client(), &urls, FAST_RETRY_TIMING)
-        .await
-        .expect_err("everything is down")
-        .to_string();
+    let err = get_from_candidates(
+        &test_client(),
+        &urls,
+        mirror_first_requested(),
+        FAST_RETRY_TIMING,
+    )
+    .await
+    .expect_err("everything is down")
+    .to_string();
 
     assert!(err.contains(&format!("127.0.0.1:{primary}")), "{err}");
     assert!(
         err.contains("also tried 1 mirror(s)") && err.contains(&format!("127.0.0.1:{mirror}")),
         "{err}"
     );
+}
+
+/// Scoped override of any env var, restored on drop. Holders must also hold
+/// [`network_test_guard`]: the env is process-global.
+struct ScopedEnv(&'static str, Option<String>);
+
+impl ScopedEnv {
+    fn set(name: &'static str, value: &str) -> Self {
+        let scoped = Self(name, std::env::var(name).ok());
+        std::env::set_var(name, value);
+        scoped
+    }
+
+    fn unset(name: &'static str) -> Self {
+        let scoped = Self(name, std::env::var(name).ok());
+        std::env::remove_var(name);
+        scoped
+    }
+}
+
+impl Drop for ScopedEnv {
+    fn drop(&mut self) {
+        match self.1.take() {
+            Some(previous) => std::env::set_var(self.0, previous),
+            None => std::env::remove_var(self.0),
+        }
+    }
 }
 
 /// Scoped `FBUILD_DOWNLOAD_MIRROR_FIRST` override, restored on drop. Holders

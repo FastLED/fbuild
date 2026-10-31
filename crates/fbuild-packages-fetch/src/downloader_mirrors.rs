@@ -14,18 +14,47 @@ use super::{
 /// Env var that moves the configured mirrors ahead of the primary URL.
 pub(super) const MIRROR_FIRST_ENV: &str = "FBUILD_DOWNLOAD_MIRROR_FIRST";
 
-/// Mirror bases from `FBUILD_DOWNLOAD_MIRRORS` (comma or whitespace
+/// Env var listing operator-configured mirrors.
+pub(super) const MIRRORS_ENV: &str = "FBUILD_DOWNLOAD_MIRRORS";
+
+/// fbuild's own public mirror bucket (DigitalOcean Spaces `fbuild`, `sfo3`),
+/// used when `FBUILD_DOWNLOAD_MIRRORS` is unset (FastLED/fbuild#1806). Its
+/// object keys are [`mirror_path`]s.
+pub(super) const DEFAULT_MIRROR: &str = "https://fbuild.sfo3.digitaloceanspaces.com/{path}";
+
+/// Mirror bases from a `FBUILD_DOWNLOAD_MIRRORS` value (comma or whitespace
 /// separated). Each entry is either a base URL, to which the file name is
 /// appended, or a template containing `{filename}` or `{path}`.
-pub(super) fn configured_mirrors() -> Vec<String> {
-    std::env::var("FBUILD_DOWNLOAD_MIRRORS")
-        .map(|v| {
-            v.split(|c: char| c == ',' || c.is_whitespace())
-                .filter(|m| !m.is_empty())
-                .map(str::to_string)
-                .collect()
-        })
-        .unwrap_or_default()
+fn parse_mirrors(value: &str) -> Vec<String> {
+    value
+        .split(|c: char| c == ',' || c.is_whitespace())
+        .filter(|m| !m.is_empty())
+        .map(str::to_string)
+        .collect()
+}
+
+/// Candidate URLs for `url` and whether the mirrors lead.
+///
+/// `FBUILD_DOWNLOAD_MIRRORS` set (even empty, which opts out) means exactly
+/// those mirrors, ordered by `FBUILD_DOWNLOAD_MIRROR_FIRST`. Unset means the
+/// built-in [`DEFAULT_MIRROR`], tried first unless
+/// `FBUILD_DOWNLOAD_MIRROR_FIRST` says otherwise, and only for hosts the
+/// bucket mirrors; anything else goes straight to its own URL.
+pub(super) fn resolve_candidates(url: &str) -> (Vec<String>, bool) {
+    if let Ok(value) = std::env::var(MIRRORS_ENV) {
+        return (
+            candidate_urls(url, &parse_mirrors(&value)),
+            mirror_first_requested(),
+        );
+    }
+    if mirror_path(url).is_none() {
+        return (vec![url.to_string()], false);
+    }
+    let mirror_first = std::env::var(MIRROR_FIRST_ENV).map_or(true, |_| mirror_first_requested());
+    (
+        candidate_urls(url, &[DEFAULT_MIRROR.to_string()]),
+        mirror_first,
+    )
 }
 
 /// True when `FBUILD_DOWNLOAD_MIRROR_FIRST` is truthy: the mirrors are then
@@ -50,26 +79,34 @@ pub(super) fn attempt_order(count: usize, mirror_first: bool) -> Vec<usize> {
 /// path a mirror bucket reproduces key for key.
 const REGISTRY_DOWNLOAD_HOST: &str = "dl.registry.platformio.org";
 
-/// The registry-relative path of a PlatformIO download URL — everything after
-/// `/download/`, e.g. `platformio/tool/framework-arduino-avr/5.4.0/…tar.gz`.
-/// `None` for any other URL, including a `/download/` segment on some other
-/// host (a GitHub release asset).
-fn registry_relative_path(url: &str) -> Option<&str> {
+/// GitHub, whose archive and release-asset paths a mirror bucket keeps under
+/// a `github.com/` prefix so equal file names in different repos never
+/// collide (FastLED/fbuild#1806).
+const GITHUB_HOST: &str = "github.com";
+
+/// The key a mirror bucket stores `url` under. A PlatformIO registry download
+/// maps to everything after `/download/`, e.g.
+/// `platformio/tool/framework-arduino-avr/5.4.0/…tar.gz`; a GitHub URL maps
+/// to `github.com/<owner>/<repo>/…`. `None` for any other host, including a
+/// `/download/` segment off the registry.
+fn mirror_path(url: &str) -> Option<String> {
     let (_, after_scheme) = url.split_once("://")?;
     let (host, path) = after_scheme.split_once('/')?;
-    if host != REGISTRY_DOWNLOAD_HOST {
-        return None;
+    match host {
+        REGISTRY_DOWNLOAD_HOST => path.strip_prefix("download/").map(str::to_string),
+        GITHUB_HOST => Some(format!("{GITHUB_HOST}/{path}")),
+        _ => None,
     }
-    path.strip_prefix("download/")
 }
 
 /// `url` first, then the same file on each mirror, in order. A mirror entry is
 /// a base URL (the file name is appended) or a template substituting
-/// `{filename}` or `{path}`; `{path}` keeps the registry's own directory
-/// layout and falls back to the file name off the registry.
+/// `{filename}` or `{path}`; `{path}` is the [`mirror_path`] and falls back
+/// to the file name on hosts the bucket does not mirror.
 pub(super) fn candidate_urls(url: &str, mirrors: &[String]) -> Vec<String> {
     let filename = url.rsplit('/').next().unwrap_or("download");
-    let path = registry_relative_path(url).unwrap_or(filename);
+    let mirrored = mirror_path(url);
+    let path = mirrored.as_deref().unwrap_or(filename);
     let mut urls = vec![url.to_string()];
     for mirror in mirrors {
         urls.push(
@@ -106,10 +143,11 @@ fn all_candidates_failed(primary: FbuildError, tried: &[String]) -> FbuildError 
 pub(super) async fn get_from_candidates(
     client: &reqwest::Client,
     urls: &[String],
+    mirror_first: bool,
     timing: RetryTiming,
 ) -> Result<Vec<u8>> {
     let mut primary_error = None;
-    for index in attempt_order(urls.len(), mirror_first_requested()) {
+    for index in attempt_order(urls.len(), mirror_first) {
         let url = &urls[index];
         match get_with_retry_timed(client, url, timing).await {
             Ok(bytes) => {
@@ -138,12 +176,13 @@ pub(super) async fn download_from_candidates(
     urls: &[String],
     dest_dir: &Path,
     on_progress: &mut (dyn FnMut(&DownloadProgress) + Send),
+    mirror_first: bool,
     timing: RetryTiming,
 ) -> Result<()> {
     // Every candidate lands under the primary URL's file name.
     let filename = urls[0].rsplit('/').next().unwrap_or("download").to_string();
     let mut primary_error = None;
-    for index in attempt_order(urls.len(), mirror_first_requested()) {
+    for index in attempt_order(urls.len(), mirror_first) {
         let url = &urls[index];
         match download_file_with_progress_named(
             client,
