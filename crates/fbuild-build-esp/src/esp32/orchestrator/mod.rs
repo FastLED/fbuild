@@ -23,6 +23,7 @@
 //! `impl BuildOrchestrator`; everything else is helper modules.
 
 mod boot_artifacts;
+mod boot_artifacts_cache;
 mod build;
 mod cdc;
 mod compile_phases;
