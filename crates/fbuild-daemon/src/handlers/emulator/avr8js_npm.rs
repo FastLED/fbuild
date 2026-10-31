@@ -43,13 +43,7 @@ pub(crate) async fn find_node() -> fbuild_core::Result<PathBuf> {
 pub(crate) const REFRESH_EMU_CACHE_ENV: &str = "FBUILD_REFRESH_EMU_CACHE";
 
 pub(crate) fn refresh_emu_cache_requested() -> bool {
-    matches!(
-        std::env::var(REFRESH_EMU_CACHE_ENV)
-            .ok()
-            .as_deref()
-            .map(str::trim),
-        Some("1") | Some("true") | Some("TRUE") | Some("yes") | Some("YES")
-    )
+    fbuild_core::env_flag::is_set(REFRESH_EMU_CACHE_ENV)
 }
 
 pub(crate) fn avr8js_cache_is_intact(cache_dir: &Path) -> bool {

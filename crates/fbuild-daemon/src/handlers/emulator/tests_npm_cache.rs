@@ -190,11 +190,16 @@ async fn refresh_emu_cache_requested_recognises_truthy_values() {
         ("1", true),
         ("true", true),
         ("TRUE", true),
+        ("True", true),
         ("yes", true),
         ("YES", true),
+        ("on", true),
+        (" 1 ", true),
         ("0", false),
         ("", false),
         ("no", false),
+        ("off", false),
+        ("ture", false),
     ] {
         std::env::set_var(REFRESH_EMU_CACHE_ENV, val);
         assert_eq!(

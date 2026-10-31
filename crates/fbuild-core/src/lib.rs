@@ -16,6 +16,7 @@ pub mod disk_full;
 pub mod disk_reserve;
 pub mod elapsed;
 pub mod emulator;
+pub mod env_flag;
 pub mod env_namespace;
 pub mod file_lock;
 pub mod fs;
