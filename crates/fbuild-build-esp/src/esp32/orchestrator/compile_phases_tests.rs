@@ -66,11 +66,7 @@ impl Compiler for SlowCompiler {
 fn fixture(
     core: usize,
     sketch: usize,
-) -> (
-    tempfile::TempDir,
-    Vec<std::path::PathBuf>,
-    Vec<std::path::PathBuf>,
-) {
+) -> (tempfile::TempDir, Vec<NormalizedPath>, Vec<NormalizedPath>) {
     let dir = tempfile::tempdir().unwrap();
     let root = dir.path();
     std::fs::create_dir_all(root.join("core")).unwrap();
@@ -78,7 +74,7 @@ fn fixture(
     let write = |set: &str, name: &str| {
         let path = root.join(set).join(name);
         std::fs::write(&path, "int x;").unwrap();
-        path
+        NormalizedPath::new(path)
     };
     let core_sources = (0..core)
         .map(|i| write("core", &format!("core{i}.cpp")))
