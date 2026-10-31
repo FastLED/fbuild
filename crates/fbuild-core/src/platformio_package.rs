@@ -11,8 +11,6 @@ use sha2::{Digest, Sha256};
 
 use crate::path::NormalizedPath;
 
-const REGISTRY_API: &str = "https://api.registry.platformio.org/v3/packages";
-
 /// PlatformIO registry `system` selector for a native fbuild host. Unknown
 /// architectures fail resolution rather than selecting another host's binary.
 #[must_use]
@@ -464,8 +462,9 @@ fn parse_direct_source(value: &str) -> Result<PackageSource> {
     Err(ResolutionError::InvalidSpec(value.into()))
 }
 
-/// Construct the metadata endpoint for an owner-qualified registry name.
-pub fn registry_api_url(kind: PackageKind, spec: &RegistrySpec) -> Result<String> {
+/// The `owner/type/name` path an owner-qualified registry package is listed
+/// under in fbuild's registry index (FastLED/fbuild#1829).
+pub fn registry_package_path(kind: PackageKind, spec: &RegistrySpec) -> Result<String> {
     validate_registry_type(kind, spec)?;
     let owner = spec
         .owner
@@ -477,11 +476,7 @@ pub fn registry_api_url(kind: PackageKind, spec: &RegistrySpec) -> Result<String
             spec.name
         )));
     }
-    Ok(format!(
-        "{REGISTRY_API}/{owner}/{}/{}",
-        kind.registry_type(),
-        spec.name
-    ))
+    Ok(format!("{owner}/{}/{}", kind.registry_type(), spec.name))
 }
 
 fn validate_registry_type(kind: PackageKind, spec: &RegistrySpec) -> Result<()> {
@@ -500,11 +495,35 @@ fn validate_registry_type(kind: PackageKind, spec: &RegistrySpec) -> Result<()> 
     Ok(())
 }
 
+/// Every published version of one registry package, as resolution needs it.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct RegistryMetadata {
+    pub owner: String,
+    pub name: String,
+    pub versions: Vec<RegistryVersion>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct RegistryVersion {
+    pub name: String,
+    pub files: Vec<RegistryFile>,
+}
+
+/// One archive of a version. `systems` lists the PlatformIO `system` values
+/// it serves; `*` means any host.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct RegistryFile {
+    pub systems: Vec<String>,
+    pub download_url: String,
+    pub sha256: Option<String>,
+}
+
+/// PlatformIO's registry JSON shape, kept for fixtures and recorded payloads.
 #[derive(Deserialize)]
 struct RegistryResponse {
     name: String,
     owner: RegistryOwner,
-    versions: Vec<RegistryVersion>,
+    versions: Vec<ResponseVersion>,
 }
 
 #[derive(Deserialize)]
@@ -513,13 +532,13 @@ struct RegistryOwner {
 }
 
 #[derive(Deserialize)]
-struct RegistryVersion {
+struct ResponseVersion {
     name: String,
-    files: Vec<RegistryFile>,
+    files: Vec<ResponseFile>,
 }
 
 #[derive(Deserialize)]
-struct RegistryFile {
+struct ResponseFile {
     system: serde_json::Value,
     download_url: String,
     checksum: Option<RegistryChecksum>,
@@ -528,6 +547,39 @@ struct RegistryFile {
 #[derive(Deserialize)]
 struct RegistryChecksum {
     sha256: Option<String>,
+}
+
+impl From<RegistryResponse> for RegistryMetadata {
+    fn from(response: RegistryResponse) -> Self {
+        let versions = response
+            .versions
+            .into_iter()
+            .map(|version| RegistryVersion {
+                name: version.name,
+                files: version
+                    .files
+                    .into_iter()
+                    .map(|file| RegistryFile {
+                        systems: match file.system {
+                            serde_json::Value::String(system) => vec![system],
+                            serde_json::Value::Array(systems) => systems
+                                .iter()
+                                .filter_map(|s| s.as_str().map(str::to_string))
+                                .collect(),
+                            _ => Vec::new(),
+                        },
+                        download_url: file.download_url,
+                        sha256: file.checksum.and_then(|c| c.sha256),
+                    })
+                    .collect(),
+            })
+            .collect();
+        Self {
+            owner: response.owner.username,
+            name: response.name,
+            versions,
+        }
+    }
 }
 
 fn version_matches(requirement: Option<&str>, version: &str) -> bool {
@@ -556,16 +608,12 @@ fn version_matches(requirement: Option<&str>, version: &str) -> bool {
 }
 
 fn file_matches(file: &RegistryFile, system: &str) -> Option<u8> {
-    match &file.system {
-        serde_json::Value::String(s) if s == system => Some(2),
-        serde_json::Value::String(s) if s == "*" => Some(1),
-        serde_json::Value::Array(systems) if systems.iter().any(|s| s.as_str() == Some(system)) => {
-            Some(2)
-        }
-        serde_json::Value::Array(systems) if systems.iter().any(|s| s.as_str() == Some("*")) => {
-            Some(1)
-        }
-        _ => None,
+    if file.systems.iter().any(|s| s == system) {
+        Some(2)
+    } else if file.systems.iter().any(|s| s == "*") {
+        Some(1)
+    } else {
+        None
     }
 }
 
@@ -578,21 +626,31 @@ pub fn resolve_registry_json(
     system: &str,
     metadata_json: &str,
 ) -> Result<ResolvedPayload> {
+    let response: RegistryResponse = serde_json::from_str(metadata_json)
+        .map_err(|e| ResolutionError::InvalidMetadata(e.to_string()))?;
+    resolve_registry(spec, kind, system, &response.into())
+}
+
+/// [`resolve_registry_json`] over already-parsed metadata.
+pub fn resolve_registry(
+    spec: &RegistrySpec,
+    kind: PackageKind,
+    system: &str,
+    metadata: &RegistryMetadata,
+) -> Result<ResolvedPayload> {
     validate_registry_type(kind, spec)?;
     if let Some(requirement) = &spec.requirement {
         validate_requirement(requirement)?;
     }
-    let metadata: RegistryResponse = serde_json::from_str(metadata_json)
-        .map_err(|e| ResolutionError::InvalidMetadata(e.to_string()))?;
     if !metadata.name.eq_ignore_ascii_case(&spec.name)
         || spec
             .owner
             .as_deref()
-            .is_some_and(|o| !metadata.owner.username.eq_ignore_ascii_case(o))
+            .is_some_and(|o| !metadata.owner.eq_ignore_ascii_case(o))
     {
         return Err(ResolutionError::InvalidMetadata(format!(
             "requested {:?}/{} but received {}/{}",
-            spec.owner, spec.name, metadata.owner.username, metadata.name
+            spec.owner, spec.name, metadata.owner, metadata.name
         )));
     }
     let requested = spec.requirement.as_deref().unwrap_or("*");
@@ -637,9 +695,8 @@ pub fn resolve_registry_json(
         });
     };
     let sha256 = file
-        .checksum
-        .as_ref()
-        .and_then(|c| c.sha256.as_deref())
+        .sha256
+        .as_deref()
         .filter(|hash| hash.len() == 64 && hash.bytes().all(|b| b.is_ascii_hexdigit()))
         .ok_or_else(|| ResolutionError::InvalidMetadata("missing or invalid SHA-256".into()))?;
     if !file.download_url.starts_with("https://") {
@@ -648,9 +705,9 @@ pub fn resolve_registry_json(
         ));
     }
     Ok(ResolvedPayload {
-        owner: metadata.owner.username,
+        owner: metadata.owner.clone(),
         kind,
-        name: metadata.name,
+        name: metadata.name.clone(),
         version: version.name.clone(),
         system: system.into(),
         url: file.download_url.clone(),

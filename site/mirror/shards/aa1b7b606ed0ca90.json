@@ -132,6 +132,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-darwin_arm64-0.62.3.tar.gz",
      "https://dl.registry.platformio.org/download/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-darwin_arm64-0.62.3.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
     ]
    }
   },
@@ -145,6 +148,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-darwin_x86_64-0.62.3.tar.gz",
      "https://dl.registry.platformio.org/download/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-darwin_x86_64-0.62.3.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
     ]
    }
   },
@@ -158,6 +164,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-linux_aarch64-0.62.3.tar.gz",
      "https://dl.registry.platformio.org/download/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-linux_aarch64-0.62.3.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
     ]
    }
   },
@@ -171,6 +180,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-linux_armv7l-0.62.3.tar.gz",
      "https://dl.registry.platformio.org/download/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-linux_armv7l-0.62.3.tar.gz"
+    ],
+    "provides": [
+     "linux_armv7l",
+     "linux_armv8l"
     ]
    }
   },
@@ -184,6 +197,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-linux_x86_64-0.62.3.tar.gz",
      "https://dl.registry.platformio.org/download/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-linux_x86_64-0.62.3.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -197,6 +213,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-windows_amd64-0.62.3.tar.gz",
      "https://dl.registry.platformio.org/download/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-windows_amd64-0.62.3.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
     ]
    }
   }

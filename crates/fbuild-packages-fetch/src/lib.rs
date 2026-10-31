@@ -12,6 +12,9 @@ pub mod downloader;
 pub mod extractor;
 pub mod http;
 pub mod platformio_registry;
+#[doc(hidden)]
+#[path = "platformio_registry_fixture.rs"]
+pub mod platformio_registry_fixture;
 pub mod platformio_repository;
 pub mod submodules;
 

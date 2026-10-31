@@ -44,7 +44,7 @@ const DEFAULT_MANIFEST_URLS: &[&str] = &[
 ];
 
 /// A cached copy younger than this is used without asking the server.
-pub(super) const CACHE_TTL: Duration = Duration::from_secs(24 * 60 * 60);
+pub(crate) const CACHE_TTL: Duration = Duration::from_secs(24 * 60 * 60);
 
 /// Bodies larger than this are rejected rather than parsed.
 pub(super) const MAX_MANIFEST_BYTES: usize = 8 * 1024 * 1024;
@@ -81,7 +81,7 @@ struct DescriptorDoc {
 
 /// Where an owner's shard lives and what it must hash to.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub(super) struct ShardRef {
+pub(crate) struct ShardRef {
     /// Absolute URL, or a path relative to the document that listed it.
     pub url: String,
     pub sha256: String,
@@ -99,6 +99,8 @@ struct ShardSource {
 
 #[derive(Deserialize)]
 struct Component {
+    #[serde(default)]
+    id: Option<String>,
     asset: Option<AssetDoc>,
 }
 
@@ -110,11 +112,17 @@ struct AssetDoc {
     sha256: String,
     #[serde(default)]
     yanked: bool,
+    #[serde(default)]
+    provides: Vec<String>,
 }
 
 /// One artifact's fallback settings.
 #[derive(Debug, PartialEq, Eq)]
-pub(super) struct MirrorEntry {
+pub(crate) struct MirrorEntry {
+    /// The component id; in fbuild's shards, `owner/type/name/version/file`.
+    pub id: Option<String>,
+    /// PlatformIO `system` values the archive serves; empty means any host.
+    pub systems: Vec<String>,
     /// Every URL serving this artifact, in the order to try them.
     pub urls: Vec<String>,
     /// Lowercase hex SHA-256 the bytes must match, when published.
@@ -126,8 +134,10 @@ pub(super) struct MirrorEntry {
 /// A validated manifest, indexed by every URL it lists, plus the shards of
 /// an `Index`.
 #[derive(Debug, Default)]
-pub(super) struct MirrorManifest {
+pub(crate) struct MirrorManifest {
     by_url: HashMap<String, Arc<MirrorEntry>>,
+    /// Every asset entry, in document order.
+    entries: Vec<Arc<MirrorEntry>>,
     shards: HashMap<String, ShardRef>,
     source: Option<ShardSource>,
     loaded: Mutex<HashMap<String, Option<Arc<MirrorManifest>>>>,
@@ -163,12 +173,16 @@ impl MirrorManifest {
             HashMap::new()
         };
         let mut by_url = HashMap::new();
+        let mut entries = Vec::new();
         for (index, component) in doc.components.into_iter().enumerate() {
             let Some(asset) = component.asset else {
                 continue;
             };
-            let entry =
-                Arc::new(validate_asset(asset).map_err(|e| format!("component {index}: {e}"))?);
+            let entry = Arc::new(
+                validate_asset(component.id, asset)
+                    .map_err(|e| format!("component {index}: {e}"))?,
+            );
+            entries.push(entry.clone());
             for url in &entry.urls {
                 if by_url.insert(url.clone(), entry.clone()).is_some() {
                     return Err(format!("component {index}: {url} is listed twice"));
@@ -177,6 +191,7 @@ impl MirrorManifest {
         }
         Ok(Self {
             by_url,
+            entries,
             shards,
             ..Self::default()
         })
@@ -202,6 +217,22 @@ impl MirrorManifest {
         }
         let shard = self.shard(owner?).await?;
         shard.by_url.get(url).cloned()
+    }
+
+    /// Every asset entry of this document.
+    pub(crate) fn entries(&self) -> &[Arc<MirrorEntry>] {
+        &self.entries
+    }
+
+    /// `owner`'s shard (an Index key, see [`owner_key`]), telling an owner
+    /// the Index does not list apart from a shard that could not be loaded.
+    pub(crate) async fn owner_shard(&self, owner: &str) -> ShardLookup {
+        if !self.shards.contains_key(owner) {
+            return ShardLookup::NotListed;
+        }
+        self.shard(owner)
+            .await
+            .map_or(ShardLookup::Unavailable, ShardLookup::Loaded)
     }
 
     async fn shard(&self, owner: &str) -> Option<Arc<MirrorManifest>> {
@@ -230,6 +261,35 @@ impl MirrorManifest {
         self.source = Some(source);
         self
     }
+}
+
+/// Outcome of [`MirrorManifest::owner_shard`].
+pub(crate) enum ShardLookup {
+    NotListed,
+    Unavailable,
+    Loaded(Arc<MirrorManifest>),
+}
+
+/// Index key of the names shard listing the owners of packages called
+/// `name`: `@names-` plus the first hex digit of the SHA-256 of the
+/// ASCII-lowercased name, as `names_bucket` in `ci/gen_mirror_manifest.py`.
+pub(crate) fn names_key(name: &str) -> String {
+    let digest = sha256_hex(name.to_ascii_lowercase().as_bytes());
+    format!("@names-{}", &digest[..1])
+}
+
+/// The Index key for a registry owner: escaped like `urllib.parse.quote(owner,
+/// safe="%")` in `ci/gen_mirror_manifest.py`, so `@` can never be an owner.
+pub(crate) fn owner_key(owner: &str) -> String {
+    owner
+        .bytes()
+        .map(|b| match b {
+            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'_' | b'.' | b'-' | b'~' | b'%' => {
+                char::from(b).to_string()
+            }
+            _ => format!("%{b:02X}"),
+        })
+        .collect()
 }
 
 fn is_sha256_hex(hex: &str) -> bool {
@@ -373,7 +433,7 @@ async fn fetch_shard(
     Ok((bytes, shard))
 }
 
-fn validate_asset(asset: AssetDoc) -> Result<MirrorEntry, String> {
+fn validate_asset(id: Option<String>, asset: AssetDoc) -> Result<MirrorEntry, String> {
     if asset.urls.is_empty() {
         return Err("asset has no urls".to_string());
     }
@@ -390,7 +450,16 @@ fn validate_asset(asset: AssetDoc) -> Result<MirrorEntry, String> {
         hex if is_sha256_hex(hex) => Some(hex.to_string()),
         other => return Err(format!("sha256 {other:?} is not 64 lowercase hex digits")),
     };
+    if let Some(bad) = asset
+        .provides
+        .iter()
+        .find(|s| s.is_empty() || s.chars().any(|c| c.is_whitespace() || c.is_control()))
+    {
+        return Err(format!("provides entry {bad:?} is not a system name"));
+    }
     Ok(MirrorEntry {
+        id,
+        systems: asset.provides,
         urls: asset.urls,
         sha256,
         yanked: asset.yanked,
@@ -433,7 +502,7 @@ pub(super) fn is_loopback_url(url: &str) -> bool {
 
 /// Manifest sources: `FBUILD_MIRROR_MANIFEST_URL` when set (empty disables),
 /// otherwise fbuild's published locations.
-pub(super) fn manifest_urls() -> Vec<String> {
+pub(crate) fn manifest_urls() -> Vec<String> {
     match std::env::var(MANIFEST_URL_ENV) {
         Ok(value) => value
             .split(|c: char| c == ',' || c.is_whitespace())
@@ -458,7 +527,7 @@ pub(super) fn cache_path(cache_root: &Path, sources: &[String]) -> NormalizedPat
 }
 
 /// The process-wide manifest, loaded on first use.
-pub(super) async fn current() -> Option<Arc<MirrorManifest>> {
+pub(crate) async fn current() -> Option<Arc<MirrorManifest>> {
     // Unit tests must not reach the network; they drive [`load_with`].
     if cfg!(test) {
         return None;
@@ -483,7 +552,7 @@ pub(super) async fn current() -> Option<Arc<MirrorManifest>> {
 
 /// Walk the fallback ladder: fresh cache, each source, stale cache. The
 /// result can fetch its shards with the same client, sources and cache dir.
-pub(super) async fn load_with(
+pub(crate) async fn load_with(
     client: &reqwest::Client,
     sources: &[String],
     cache: Option<&Path>,

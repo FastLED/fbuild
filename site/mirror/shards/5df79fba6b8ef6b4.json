@@ -15,6 +15,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/eggtronic/tool/tool-ponyprog/3.1.4-rc1/tool-ponyprog-linux_x86_64-3.1.4-rc1.tar.gz",
      "https://dl.registry.platformio.org/download/eggtronic/tool/tool-ponyprog/3.1.4-rc1/tool-ponyprog-linux_x86_64-3.1.4-rc1.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -28,6 +31,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/eggtronic/tool/tool-ponyprog/3.1.4-rc1/tool-ponyprog-windows_amd64-3.1.4-rc1.tar.gz",
      "https://dl.registry.platformio.org/download/eggtronic/tool/tool-ponyprog/3.1.4-rc1/tool-ponyprog-windows_amd64-3.1.4-rc1.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64"
     ]
    }
   }

@@ -15,6 +15,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-darwin_x86_64-2.1100.211207.tar.gz",
      "https://dl.registry.platformio.org/download/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-darwin_x86_64-2.1100.211207.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
     ]
    }
   },
@@ -28,6 +32,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_aarch64-2.1100.211207.tar.gz",
      "https://dl.registry.platformio.org/download/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_aarch64-2.1100.211207.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
     ]
    }
   },
@@ -41,6 +48,11 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_armv6l-2.1100.211207.tar.gz",
      "https://dl.registry.platformio.org/download/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_armv6l-2.1100.211207.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l",
+     "linux_armv8l"
     ]
    }
   },
@@ -54,6 +66,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_i686-2.1100.211207.tar.gz",
      "https://dl.registry.platformio.org/download/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_i686-2.1100.211207.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
     ]
    }
   },
@@ -67,6 +82,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_x86_64-2.1100.211207.tar.gz",
      "https://dl.registry.platformio.org/download/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_x86_64-2.1100.211207.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -80,6 +98,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-windows_amd64-2.1100.211207.tar.gz",
      "https://dl.registry.platformio.org/download/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-windows_amd64-2.1100.211207.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
     ]
    }
   },
@@ -93,6 +115,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-windows_x86-2.1100.211207.tar.gz",
      "https://dl.registry.platformio.org/download/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-windows_x86-2.1100.211207.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
     ]
    }
   }

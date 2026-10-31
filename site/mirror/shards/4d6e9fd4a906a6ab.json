@@ -236,6 +236,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-darwin_x86_64-5.100300.230216.tar.gz",
      "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-darwin_x86_64-5.100300.230216.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
     ]
    }
   },
@@ -249,6 +253,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_aarch64-5.100300.230216.tar.gz",
      "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_aarch64-5.100300.230216.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
     ]
    }
   },
@@ -262,6 +269,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_armv6l-5.100300.230216.tar.gz",
      "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_armv6l-5.100300.230216.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l"
     ]
    }
   },
@@ -275,6 +286,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_i686-5.100300.230216.tar.gz",
      "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_i686-5.100300.230216.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
     ]
    }
   },
@@ -288,6 +302,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_x86_64-5.100300.230216.tar.gz",
      "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_x86_64-5.100300.230216.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -301,6 +318,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-windows_amd64-5.100300.230216.tar.gz",
      "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-windows_amd64-5.100300.230216.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
     ]
    }
   },
@@ -314,6 +335,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-windows_x86-5.100300.230216.tar.gz",
      "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-windows_x86-5.100300.230216.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
     ]
    }
   },
@@ -327,6 +351,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-darwin_x86_64-5.100300.230216.tar.gz",
      "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-darwin_x86_64-5.100300.230216.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64",
+     "darwin_arm64"
     ]
    }
   },
@@ -340,6 +368,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_aarch64-5.100300.230216.tar.gz",
      "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_aarch64-5.100300.230216.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
     ]
    }
   },
@@ -353,6 +384,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_armv6l-5.100300.230216.tar.gz",
      "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_armv6l-5.100300.230216.tar.gz"
+    ],
+    "provides": [
+     "linux_armv6l",
+     "linux_armv7l"
     ]
    }
   },
@@ -366,6 +401,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_i686-5.100300.230216.tar.gz",
      "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_i686-5.100300.230216.tar.gz"
+    ],
+    "provides": [
+     "linux_i686"
     ]
    }
   },
@@ -379,6 +417,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_x86_64-5.100300.230216.tar.gz",
      "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_x86_64-5.100300.230216.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -392,6 +433,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-windows_amd64-5.100300.230216.tar.gz",
      "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-windows_amd64-5.100300.230216.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
     ]
    }
   },
@@ -405,6 +450,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-windows_x86-5.100300.230216.tar.gz",
      "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-windows_x86-5.100300.230216.tar.gz"
+    ],
+    "provides": [
+     "windows_x86"
     ]
    }
   }

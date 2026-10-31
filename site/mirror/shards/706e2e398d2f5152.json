@@ -15,6 +15,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-darwin_arm64-5.4.2.tar.gz",
      "https://dl.registry.platformio.org/download/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-darwin_arm64-5.4.2.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
     ]
    }
   },
@@ -28,6 +31,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-darwin_x86_64-5.4.2.tar.gz",
      "https://dl.registry.platformio.org/download/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-darwin_x86_64-5.4.2.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
     ]
    }
   },
@@ -41,6 +47,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-linux_x86_64-5.4.2.tar.gz",
      "https://dl.registry.platformio.org/download/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-linux_x86_64-5.4.2.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -54,6 +63,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-windows_amd64-5.4.2.tar.gz",
      "https://dl.registry.platformio.org/download/ginnieandmartin/tool/ttgo-tdisplay-emulator/5.4.2/ttgo-tdisplay-emulator-windows_amd64-5.4.2.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64"
     ]
    }
   }

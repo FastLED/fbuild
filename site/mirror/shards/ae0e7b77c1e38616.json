@@ -41,6 +41,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/nuclei/tool/tool-openocd-nuclei/0.10.1/tool-openocd-nuclei-linux_x86_64-0.10.1.tar.gz",
      "https://dl.registry.platformio.org/download/nuclei/tool/tool-openocd-nuclei/0.10.1/tool-openocd-nuclei-linux_x86_64-0.10.1.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -54,6 +57,11 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/nuclei/tool/tool-openocd-nuclei/0.10.1/tool-openocd-nuclei-windows_x86-0.10.1.tar.gz",
      "https://dl.registry.platformio.org/download/nuclei/tool/tool-openocd-nuclei/0.10.1/tool-openocd-nuclei-windows_x86-0.10.1.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86",
+     "windows_arm64"
     ]
    }
   },
@@ -67,6 +75,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/nuclei/tool/toolchain-riscv-gcc-nuclei/9.2.1/toolchain-riscv-gcc-nuclei-linux_x86_64-9.2.1.tar.gz",
      "https://dl.registry.platformio.org/download/nuclei/tool/toolchain-riscv-gcc-nuclei/9.2.1/toolchain-riscv-gcc-nuclei-linux_x86_64-9.2.1.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -80,6 +91,11 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/nuclei/tool/toolchain-riscv-gcc-nuclei/9.2.1/toolchain-riscv-gcc-nuclei-windows_x86-9.2.1.tar.gz",
      "https://dl.registry.platformio.org/download/nuclei/tool/toolchain-riscv-gcc-nuclei/9.2.1/toolchain-riscv-gcc-nuclei-windows_x86-9.2.1.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86",
+     "windows_arm64"
     ]
    }
   }

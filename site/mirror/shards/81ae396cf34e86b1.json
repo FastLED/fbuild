@@ -28,6 +28,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/streamlogic/tool/toolchain-fpgaoss/0.2.0/toolchain-fpgaoss-windows_amd64-0.2.0.tar.gz",
      "https://dl.registry.platformio.org/download/streamlogic/tool/toolchain-fpgaoss/0.2.0/toolchain-fpgaoss-windows_amd64-0.2.0.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
     ]
    }
   },
@@ -41,6 +45,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/streamlogic/tool/toolchain-logicc/0.3.0/toolchain-logicc-windows_amd64-0.3.0.tar.gz",
      "https://dl.registry.platformio.org/download/streamlogic/tool/toolchain-logicc/0.3.0/toolchain-logicc-windows_amd64-0.3.0.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
     ]
    }
   }

@@ -41,6 +41,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/tool-minipro/0.7.4%2Bpio3/tool-minipro-linux_x86_64-0.7.4%2Bpio3.tar.gz",
      "https://dl.registry.platformio.org/download/apojomovsky/tool/tool-minipro/0.7.4%2Bpio3/tool-minipro-linux_x86_64-0.7.4%2Bpio3.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -54,6 +57,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/tool-minipro/0.7.4%2Bpio3/tool-minipro-windows_amd64-0.7.4%2Bpio3.tar.gz",
      "https://dl.registry.platformio.org/download/apojomovsky/tool/tool-minipro/0.7.4%2Bpio3/tool-minipro-windows_amd64-0.7.4%2Bpio3.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86_64"
     ]
    }
   },
@@ -67,6 +74,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/tool-picpro/0.4.1%2Bpio3/tool-picpro-linux_x86_64-0.4.1%2Bpio3.tar.gz",
      "https://dl.registry.platformio.org/download/apojomovsky/tool/tool-picpro/0.4.1%2Bpio3/tool-picpro-linux_x86_64-0.4.1%2Bpio3.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -80,6 +90,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/tool-picpro/0.4.1%2Bpio3/tool-picpro-windows_amd64-0.4.1%2Bpio3.tar.gz",
      "https://dl.registry.platformio.org/download/apojomovsky/tool/tool-picpro/0.4.1%2Bpio3/tool-picpro-windows_amd64-0.4.1%2Bpio3.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86_64"
     ]
    }
   },
@@ -93,6 +107,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/tool-pk2cmd/1.27.1%2Bpio2/tool-pk2cmd-linux_x86_64-1.27.1%2Bpio2.tar.gz",
      "https://dl.registry.platformio.org/download/apojomovsky/tool/tool-pk2cmd/1.27.1%2Bpio2/tool-pk2cmd-linux_x86_64-1.27.1%2Bpio2.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -106,6 +123,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/tool-pk2cmd/1.27.1%2Bpio2/tool-pk2cmd-windows_amd64-1.27.1%2Bpio2.tar.gz",
      "https://dl.registry.platformio.org/download/apojomovsky/tool/tool-pk2cmd/1.27.1%2Bpio2/tool-pk2cmd-windows_amd64-1.27.1%2Bpio2.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86_64"
     ]
    }
   },
@@ -119,6 +140,9 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/toolchain-epiccc/0.5.0/toolchain-epiccc-linux_x86_64-0.5.0.tar.gz",
      "https://dl.registry.platformio.org/download/apojomovsky/tool/toolchain-epiccc/0.5.0/toolchain-epiccc-linux_x86_64-0.5.0.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
     ]
    }
   },
@@ -132,6 +156,10 @@
     "urls": [
      "https://fbuild.sfo3.digitaloceanspaces.com/apojomovsky/tool/toolchain-epiccc/0.5.0/toolchain-epiccc-windows_amd64-0.5.0.tar.gz",
      "https://dl.registry.platformio.org/download/apojomovsky/tool/toolchain-epiccc/0.5.0/toolchain-epiccc-windows_amd64-0.5.0.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_x86_64"
     ]
    }
   }

@@ -745,29 +745,21 @@ mod tests {
         );
     }
 
-    #[tokio::test]
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
     async fn repository_platform_resolves_pinned_package_without_replacing_platform_source() {
-        use tokio::io::{AsyncReadExt, AsyncWriteExt};
+        use fbuild_packages::platformio_registry_fixture::{IndexFile, documents, serve};
 
-        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
-        let address = listener.local_addr().unwrap();
-        let server = tokio::spawn(async move {
-            let (mut socket, _) = listener.accept().await.unwrap();
-            let mut request = [0_u8; 2048];
-            let bytes = socket.read(&mut request).await.unwrap();
-            let request = std::str::from_utf8(&request[..bytes]).unwrap();
-            assert!(
-                request.starts_with("GET /v3/packages/platformio/tool/framework-arduino-mbed ")
-            );
-            let body = r#"{"name":"framework-arduino-mbed","owner":{"username":"platformio"},"versions":[{"name":"4.6.0","files":[{"system":"*","download_url":"https://example.test/framework-arduino-mbed-4.6.0.tar.gz","checksum":{"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}}]}]}"#;
-            let response = format!(
-                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
-                body.len()
-            );
-            socket.write_all(response.as_bytes()).await.unwrap();
-        });
+        let (index, _) = serve(documents(&[IndexFile {
+            owner: "platformio",
+            kind: "tool",
+            name: "framework-arduino-mbed",
+            version: "4.6.0",
+            systems: &[],
+            sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        }]))
+        .await;
         let client = fbuild_packages::platformio_registry::RegistryClient::new(
-            format!("http://{address}/v3"),
+            index,
             reqwest::Client::new(),
         );
         let temp = tempfile::tempdir().unwrap();
@@ -792,11 +784,10 @@ mod tests {
         )
         .await
         .unwrap();
-        server.await.unwrap();
         assert_eq!(overrides["framework-arduino-mbed"].version, "4.6.0");
         assert_eq!(
             overrides["framework-arduino-mbed"].url,
-            "https://example.test/framework-arduino-mbed-4.6.0.tar.gz"
+            "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-mbed/4.6.0/framework-arduino-mbed-4.6.0.tar.gz"
         );
         assert_eq!(
             overrides["framework-arduino-mbed"].checksum.as_deref(),
@@ -804,29 +795,21 @@ mod tests {
         );
     }
 
-    #[tokio::test]
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
     async fn unpinned_platform_keeps_explicit_registry_package_without_fetching_platform() {
-        use tokio::io::{AsyncReadExt, AsyncWriteExt};
+        use fbuild_packages::platformio_registry_fixture::{IndexFile, documents, serve};
 
-        let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
-        let address = listener.local_addr().unwrap();
-        let server = tokio::spawn(async move {
-            let (mut socket, _) = listener.accept().await.unwrap();
-            let mut request = [0_u8; 2048];
-            let bytes = socket.read(&mut request).await.unwrap();
-            let request = std::str::from_utf8(&request[..bytes]).unwrap();
-            assert!(
-                request.starts_with("GET /v3/packages/platformio/tool/toolchain-gccarmnoneeabi ")
-            );
-            let body = r#"{"name":"toolchain-gccarmnoneeabi","owner":{"username":"platformio"},"versions":[{"name":"1.90201.0","files":[{"system":"*","download_url":"https://example.test/arm-gcc.tar.gz","checksum":{"sha256":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}}]}]}"#;
-            let response = format!(
-                "HTTP/1.1 200 OK\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
-                body.len()
-            );
-            socket.write_all(response.as_bytes()).await.unwrap();
-        });
+        let (index, _) = serve(documents(&[IndexFile {
+            owner: "platformio",
+            kind: "tool",
+            name: "toolchain-gccarmnoneeabi",
+            version: "1.90201.0",
+            systems: &[],
+            sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        }]))
+        .await;
         let client = fbuild_packages::platformio_registry::RegistryClient::new(
-            format!("http://{address}/v3"),
+            index,
             reqwest::Client::new(),
         );
         let temp = tempfile::tempdir().unwrap();
@@ -848,7 +831,6 @@ mod tests {
         )
         .await
         .unwrap();
-        server.await.unwrap();
         assert_eq!(overrides["toolchain-gccarmnoneeabi"].version, "1.90201.0");
     }
 
@@ -856,7 +838,7 @@ mod tests {
     async fn explicit_registry_pin_outside_adapter_packages_fails_instead_of_using_defaults() {
         let temp = tempfile::tempdir().unwrap();
         let client = fbuild_packages::platformio_registry::RegistryClient::new(
-            "http://127.0.0.1:1/v3",
+            "http://127.0.0.1:1/manifest.json",
             reqwest::Client::new(),
         );
         let env = env(&[
@@ -888,7 +870,7 @@ mod tests {
     async fn offline_registry_resolution_does_not_contact_uncached_platform() {
         let temp = tempfile::tempdir().unwrap();
         let client = fbuild_packages::platformio_registry::RegistryClient::new(
-            "http://127.0.0.1:1/v3",
+            "http://127.0.0.1:1/manifest.json",
             reqwest::Client::new(),
         );
         let env = env(&[("platform", "platformio/espressif8266@4.0.1")]);
