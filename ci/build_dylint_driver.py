@@ -1,6 +1,6 @@
 """Retired source-build entry point for the Dylint driver.
 
-The matching Dylint 6.0.3 driver for nightly-2026-05-28 is published in
+The matching Dylint 6.2.0 driver for nightly-2026-08-15 is published in
 soldr-toolchain for every native CI host. Keep this file as a fail-closed
 pointer for callers that still use the old command.
 """

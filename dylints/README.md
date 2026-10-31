@@ -7,7 +7,7 @@ itself stays on stable 1.95.0).
 
 Run `uv run --script lint` for the full local check. It now includes the real
 workspace Dylint pass after formatting and Clippy; its first run installs the
-pinned Dylint 6.0.3 tools and nightly driver in Soldr’s cache. A single-file
+pinned Dylint 6.2.0 tools and nightly driver in Soldr’s cache. A single-file
 `./lint` invocation runs every custom Dylint on that file's crate (not its
 dependents); a full invocation checks the entire workspace. Local Dylint
 checks the host platform; ordinary PR CI runs the same workspace lints
@@ -200,7 +200,7 @@ CI runs this on every push/PR via `.github/workflows/dylint.yml`.
 `dylint_linting` builds against a specific nightly rustc; the rustc
 internal API (`rustc_lint`, `rustc_hir`, `rustc_span`) changes between
 nightlies. Keeping each dylint crate out of the stable workspace lets
-it pin `nightly-2026-05-28` in its own `rust-toolchain.toml` without
+it pin `nightly-2026-08-15` in its own `rust-toolchain.toml` without
 forcing the entire workspace to nightly.
 
 The workspace registers the lint directory via:
@@ -211,6 +211,6 @@ libraries = [{ path = "dylints/*" }]
 ```
 
 so `soldr dylint --all` picks every dylint up automatically. Soldr resolves
-Dylint 6.0.3, `dylint-link`, and the driver for `nightly-2026-05-28` from
+Dylint 6.2.0, `dylint-link`, and the driver for `nightly-2026-08-15` from
 the verified prebuilt catalogue. An absent asset fails preparation instead
 of compiling a tool or driver during CI.
