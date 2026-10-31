@@ -118,3 +118,4 @@ port_scan_stdout*.txt
 # Profiling harness artifacts (FastLED/fbuild#942) - local-only measurement
 # output: flamegraphs, perf.data, daemon logs, timing tables.
 ci/docker-profile/out/
+.clud/logs/
