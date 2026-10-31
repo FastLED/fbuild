@@ -173,14 +173,14 @@ jobs:
           # Reuse the verified driver path exported by setup-soldr's Dylint
           # mode; it owns the driver cache outside SOLDR_CACHE_DIR.
           : "${DYLINT_DRIVER_PATH:?}"
-          # Dylint's UI runner asks for the short nightly directory; Soldr's
-          # verified asset lives under the host-qualified directory.
+          # Dylint's UI runner asks for the short nightly directory; Soldr
+          # 0.9.47+ stages the verified driver under both names.
           host="$(RUSTUP_TOOLCHAIN=nightly-2026-08-15 soldr rustc -vV | sed -n 's/^host: //p')"
           short="nightly-2026-08-15"
           qualified="${short}-${host}"
           test -f "$DYLINT_DRIVER_PATH/$qualified/dylint-driver"
+          test -f "$DYLINT_DRIVER_PATH/$short/dylint-driver"
           test -d "${RUSTUP_HOME:?}/toolchains/$qualified"
-          ln -sfnT "$qualified" "$DYLINT_DRIVER_PATH/$short"
           # The driver reads RUSTUP_HOME/toolchains/$RUSTUP_TOOLCHAIN
           # literally. Cargo's short nightly tag must resolve to the same
           # installed sysroot while keeping the lint library's short tag.
