@@ -12,10 +12,10 @@ crate-type = ["cdylib"]
 
 [dependencies]
 # Keep the library and test harness on the repository-wide Dylint release.
-dylint_linting = "=6.0.3"
+dylint_linting = "=6.2.0"
 
 [dev-dependencies]
-dylint_testing = "=6.0.3"
+dylint_testing = "=6.2.0"
 
 [package.metadata.rust-analyzer]
 rustc_private = true

@@ -96,7 +96,9 @@ pub struct DeployRequest {
     /// Explicit deploy protocol, currently `isp` or `wlink` for CH32V.
     #[serde(default)]
     pub protocol: Option<String>,
-    /// RP2040 deploy transport, `picotool` (default) or `uf2`.
+    /// RP2040 deploy transport, `picotool` (default), `uf2` or `swd`.
+    /// The USB transports retry over `swd` when they fail and a debug probe
+    /// is attached (FastLED/fbuild#1423).
     #[serde(default)]
     pub transport: Option<String>,
     #[serde(default)]

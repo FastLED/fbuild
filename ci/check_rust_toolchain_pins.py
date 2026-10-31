@@ -46,7 +46,7 @@ PIN_FIELD_PATTERNS = tuple(
     )
 )
 PIN_FILE_CHANNEL = re.compile(rf"^\s*channel\s*=\s*[\"']?{SELECTOR}", re.IGNORECASE)
-NIGHTLY_PIN = "nightly-2026-05-28"
+NIGHTLY_PIN = "nightly-2026-08-15"
 
 PIN_PATTERNS = {
     ".clippy.toml": (r'^msrv\s*=\s*"{pin}"$',),
