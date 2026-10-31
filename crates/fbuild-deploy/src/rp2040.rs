@@ -120,6 +120,25 @@ fn should_attempt_picotool_first(
     }
 }
 
+/// Pure fallback decision (FastLED/fbuild#1423): should a *failed* USB deploy
+/// be retried over SWD?
+///
+/// All three conditions are required:
+/// - the caller did not already select SWD (then there is nothing to fall back
+///   from — the SWD attempt was the only attempt),
+/// - a CMSIS-DAP-class probe is actually attached, because "absent a probe,
+///   behavior is unchanged" (the retry would otherwise just burn the 120 s
+///   probe-rs guard on a guaranteed `No probes were found`),
+/// - the build has an image probe-rs can address (the co-located `.elf` or an
+///   Intel HEX), since SWD cannot place a bare `.bin`/`.uf2`.
+fn should_fall_back_to_swd(
+    transport: Rp2040Transport,
+    probe_attached: bool,
+    swd_artifact_available: bool,
+) -> bool {
+    transport != Rp2040Transport::Swd && probe_attached && swd_artifact_available
+}
+
 /// probe-rs's built-in target name for an RP-series chip family.
 fn probe_rs_chip_for_family(family_id: u32) -> &'static str {
     if family_id == RP2350_FAMILY_ID {
@@ -1525,484 +1544,19 @@ impl Rp2040Deployer {
         })
     }
 
-    pub fn for_mcu(mcu: &str) -> Result<Self> {
-        let mut deployer = Self::default();
-        match mcu.to_ascii_lowercase().as_str() {
-            value if value.starts_with("rp2040") => {}
-            value if value.starts_with("rp2350") => deployer.family_id = RP2350_FAMILY_ID,
-            _ => {
-                return Err(FbuildError::DeployFailed(format!(
-                    "unsupported Raspberry Pi MCU {mcu:?}; expected rp2040 or rp2350"
-                )));
-            }
-        }
-        Ok(deployer)
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq)]
-struct PicoCdcPort {
-    name: String,
-    serial_number: Option<String>,
-    vendor_id: u16,
-    product_id: u16,
-    health: fbuild_serial::ports::PortHealth,
-    instance_id: Option<String>,
-    parent_instance_id: Option<String>,
-}
-
-type PicoResetInterface = fbuild_serial::ports::UsbResetInterface;
-
-fn catalogue_pico_cdc_ports(expected_family: u32) -> Result<Vec<PicoCdcPort>> {
-    let ports = fbuild_serial::ports::available_ports().map_err(|error| {
-        FbuildError::SerialError(format!(
-            "failed to enumerate post-deploy serial ports: {error}"
-        ))
-    })?;
-    let mut matches: Vec<PicoCdcPort> = ports
-        .into_iter()
-        .filter_map(|port| {
-            let serialport::SerialPortType::UsbPort(usb) = &port.info.port_type else {
-                return None;
-            };
-            let matches_family = fbuild_core::usb::profiles::profiles_for(usb.vid, usb.pid)
-                .iter()
-                .any(|profile| profile_matches_family(profile, expected_family));
-            matches_family.then(|| PicoCdcPort {
-                name: port.info.port_name,
-                serial_number: usb.serial_number.clone(),
-                vendor_id: usb.vid,
-                product_id: usb.pid,
-                health: port.health,
-                instance_id: port.instance_id,
-                parent_instance_id: port.parent_instance_id,
-            })
-        })
-        .collect();
-    matches.sort_by(|left, right| left.name.cmp(&right.name));
-    Ok(matches)
-}
-
-fn catalogue_pico_reset_interfaces(expected_family: u32) -> Vec<PicoResetInterface> {
-    let mut matches: Vec<_> = fbuild_serial::ports::present_usb_reset_interfaces()
-        .into_iter()
-        .filter(|interface| {
-            fbuild_core::usb::profiles::profiles_for(interface.vid, interface.pid)
-                .iter()
-                .any(|profile| profile_matches_family(profile, expected_family))
-        })
-        .collect();
-    matches.sort_by(|left, right| left.instance_id.cmp(&right.instance_id));
-    matches
-}
-
-/// Resolve an exact healthy application reset interface when the selected CDC
-/// endpoint itself is not usable. A serial selector may recover even after the
-/// COM devnode disappears; a COM selector must still match a retained,
-/// catalogue-identified unhealthy record before its serial can be trusted.
-fn resolve_reset_only_target(
-    selector: &str,
-    cdc_candidates: &[PicoCdcPort],
-    reset_interfaces: &[PicoResetInterface],
-) -> Result<Option<PicoResetInterface>> {
-    let (serial, expected_vid_pid) = if let Some(serial) = serial_selector(selector) {
-        (serial, None)
-    } else {
-        let matching_cdc: Vec<_> = cdc_candidates
-            .iter()
-            .filter(|candidate| candidate.name == selector)
-            .collect();
-        let candidate = match matching_cdc.as_slice() {
-            [] => return Ok(None),
-            [only] if only.health.is_known_unhealthy() => *only,
-            [only] => {
-                return Err(FbuildError::DeployFailed(format!(
-                    "RP2040 runtime selector {selector:?} matched healthy {}, but normal CDC target resolution failed",
-                    only.name
-                )));
-            }
-            many => {
-                return Err(FbuildError::DeployFailed(format!(
-                    "RP2040 runtime selector {selector:?} is ambiguous across {} CDC records",
-                    many.len()
-                )));
-            }
-        };
-        let Some(serial) = candidate.serial_number.as_deref() else {
-            return Ok(None);
-        };
-        (serial, Some((candidate.vendor_id, candidate.product_id)))
-    };
-
-    let matching_reset: Vec<_> = reset_interfaces
-        .iter()
-        .filter(|interface| interface.serial_number.eq_ignore_ascii_case(serial))
-        .filter(|interface| {
-            expected_vid_pid.is_none_or(|(vid, pid)| (interface.vid, interface.pid) == (vid, pid))
-        })
-        .collect();
-    match matching_reset.as_slice() {
-        [] => Ok(None),
-        [only] => Ok(Some((*only).clone())),
-        many => Err(FbuildError::DeployFailed(format!(
-            "RP2040 reset-interface selector {selector:?} is ambiguous across {} exact serial/VID/PID matches; fbuild refuses an unscoped reset",
-            many.len()
-        ))),
-    }
-}
-
-fn reset_interface_for_runtime_target(
-    target: &target::RequestedRuntimeTarget,
-    reset_interfaces: &[PicoResetInterface],
-) -> Result<Option<PicoResetInterface>> {
-    let Some(serial) = target.serial_number.as_deref() else {
-        return Ok(None);
-    };
-    let matches: Vec<_> = reset_interfaces
-        .iter()
-        .filter(|interface| interface.serial_number.eq_ignore_ascii_case(serial))
-        .filter(|interface| (interface.vid, interface.pid) == (target.vendor_id, target.product_id))
-        .collect();
-    match matches.as_slice() {
-        [] => Ok(None),
-        [only] => Ok(Some((*only).clone())),
-        many => Err(FbuildError::DeployFailed(format!(
-            "RP2040 runtime target {} is ambiguous across {} exact reset-interface matches; fbuild refuses an unscoped reset",
-            target.port,
-            many.len()
-        ))),
-    }
-}
-
-/// CDC-wait failure classification: a quiet window (`Timeout`) is
-/// recoverable once the flash itself is confirmed, while an enumeration or
-/// selection error (`Enumeration`) always fails the deploy.
-#[derive(Debug)]
-enum CdcWaitError {
-    Timeout(CdcWaitTimeout),
-    Enumeration(FbuildError),
-}
-
-#[derive(Debug)]
-struct CdcWaitTimeout {
-    elapsed: Duration,
-    previous_port: Option<String>,
-    requested_serial: Option<String>,
-    candidates: Vec<PicoCdcPort>,
-    /// The most recent bounded-open failure on an otherwise eligible
-    /// candidate, as `"<port>: <error>"` (FastLED/fbuild#1147: healthy
-    /// metadata alone never proves a live endpoint).
-    last_open_error: Option<String>,
-}
-
-impl CdcWaitTimeout {
-    fn diagnostics(&self) -> String {
-        let prior_port = self.previous_port.as_deref().unwrap_or("none");
-        let requested_serial = self.requested_serial.as_deref().unwrap_or("none");
-        let candidates = if self.candidates.is_empty() {
-            "none".to_string()
-        } else {
-            self.candidates
-                .iter()
-                .map(|candidate| {
-                    let serial = candidate
-                        .serial_number
-                        .as_deref()
-                        .map(|value| format!("serial {value}"))
-                        .unwrap_or_else(|| "serial unavailable".to_string());
-                    let instance = candidate
-                        .instance_id
-                        .as_deref()
-                        .map(|value| format!("; instance {value}"))
-                        .unwrap_or_default();
-                    let parent = candidate
-                        .parent_instance_id
-                        .as_deref()
-                        .map(|value| format!("; parent {value}"))
-                        .unwrap_or_default();
-                    format!(
-                        "{} ({serial}; health {}{instance}{parent})",
-                        candidate.name,
-                        candidate.health.label()
-                    )
-                })
-                .collect::<Vec<_>>()
-                .join(", ")
-        };
-        let open_error = self
-            .last_open_error
-            .as_deref()
-            .map(|value| format!("; last open error {value}"))
-            .unwrap_or_default();
-        format!(
-            "elapsed {}ms; prior port {prior_port}; requested serial {requested_serial}; catalogue candidates: {candidates}{open_error}",
-            self.elapsed.as_millis()
-        )
-    }
-
-    /// Manual recovery guidance for a confirmed flash whose runtime CDC never
-    /// became a healthy, openable endpoint (FastLED/fbuild#1147 step 5). When
-    /// Windows retained stale devnode records for this board, name them so the
-    /// user sees exactly why the historical COM port was not returned.
-    fn recovery_guidance(&self) -> String {
-        let stale: Vec<String> = self
-            .candidates
-            .iter()
-            .filter(|candidate| candidate.health.is_known_unhealthy())
-            .map(describe_unhealthy)
-            .collect();
-        let stale_note = if stale.is_empty() {
-            String::new()
-        } else {
-            format!(
-                " Windows retained stale/problem devnode record(s) for this board: {}; a historical COM name with a matching serial is not a live endpoint and was not returned.",
-                stale.join(", ")
-            )
-        };
-        format!(
-            "{stale_note} To recover manually: use a direct motherboard USB port and a known-good data cable, then 1) hold BOOT/BOOTSEL, 2) press and release RESET while still holding BOOT, 3) keep BOOT held for about two seconds, then release, 4) verify an RPI-RP2 volume appears and rerun the deploy."
-        )
-    }
-}
-
-fn wait_for_cdc_port(
-    previous_port: Option<&str>,
-    requested_serial: Option<&str>,
-    before: &BTreeSet<String>,
-    expected_family: u32,
-    timeout: Duration,
-) -> std::result::Result<PicoCdcPort, CdcWaitError> {
-    let started = Instant::now();
-    wait_for_cdc_port_with_clock(
-        previous_port,
-        requested_serial,
-        before,
-        timeout,
-        || catalogue_pico_cdc_ports(expected_family),
-        probe_cdc_openable,
-        || started.elapsed(),
-        std::thread::sleep,
-    )
-}
-
-/// Bounded openability probe (FastLED/fbuild#1147): health metadata alone
-/// never proves a live endpoint, so the selected candidate must open before
-/// it may become `DeploymentResult::port`.
-fn probe_cdc_openable(port: &PicoCdcPort) -> std::result::Result<(), String> {
-    serialport::new(&port.name, 115_200)
-        .timeout(Duration::from_millis(250))
-        .open()
-        .map(drop)
-        .map_err(|error| error.to_string())
-}
-
-#[allow(clippy::too_many_arguments)]
-fn wait_for_cdc_port_with_clock<F, P, E, S>(
-    previous_port: Option<&str>,
-    requested_serial: Option<&str>,
-    before: &BTreeSet<String>,
-    timeout: Duration,
-    mut catalogue: F,
-    mut probe: P,
-    mut elapsed: E,
-    mut sleep: S,
-) -> std::result::Result<PicoCdcPort, CdcWaitError>
-where
-    F: FnMut() -> Result<Vec<PicoCdcPort>>,
-    P: FnMut(&PicoCdcPort) -> std::result::Result<(), String>,
-    E: FnMut() -> Duration,
-    S: FnMut(Duration),
-{
-    let mut last_open_error: Option<String> = None;
-    loop {
-        let ports = catalogue().map_err(CdcWaitError::Enumeration)?;
-        match select_cdc_candidate(previous_port, requested_serial, before, &ports) {
-            // A candidate that fails its bounded open probe is not returned;
-            // the loop keeps polling so a transient just-enumerated failure
-            // can clear, and the last failure lands in the timeout
-            // diagnostics (FastLED/fbuild#1147).
-            Ok(Some(selected)) => match probe(&selected) {
-                Ok(()) => return Ok(selected),
-                Err(error) => {
-                    last_open_error = Some(format!("{}: {error}", selected.name));
-                }
-            },
-            Ok(None) => {}
-            Err(error) => return Err(CdcWaitError::Enumeration(error)),
-        }
-        let waited = elapsed();
-        if waited >= timeout {
-            return Err(CdcWaitError::Timeout(CdcWaitTimeout {
-                elapsed: waited,
-                previous_port: previous_port.map(str::to_string),
-                requested_serial: requested_serial.map(str::to_string),
-                candidates: ports,
-                last_open_error,
-            }));
-        }
-        sleep(CDC_POLL_INTERVAL.min(timeout.saturating_sub(waited)));
-    }
-}
-
-/// Post-flash CDC state: either the runtime port was re-identified, or the
-/// flash is confirmed good but the port never showed inside the window.
-#[derive(Debug)]
-enum PostFlashCdc {
-    Confirmed(String),
-    /// Carries the message fragment explaining the downgrade.
-    Unconfirmed(String),
-}
-
-/// Decide the deploy outcome after the runtime-CDC wait (FastLED/fbuild#1082
-/// stage 7). Once the eject watch (or a PICOBOOT load) confirmed the ROM
-/// accepted the image, a quiet CDC window must not fail the deploy: first-plug
-/// driver installation routinely exceeds it, and a hard failure makes CI
-/// re-flash a healthy board. Enumeration errors still fail regardless.
-fn resolve_post_flash_cdc(
-    flash_confirmed: bool,
-    wait_result: std::result::Result<PicoCdcPort, CdcWaitError>,
-    window: Duration,
-) -> Result<PostFlashCdc> {
-    match wait_result {
-        Ok(port) => Ok(PostFlashCdc::Confirmed(port.name)),
-        Err(CdcWaitError::Enumeration(error)) => Err(error),
-        Err(CdcWaitError::Timeout(diagnostics)) if flash_confirmed => {
-            tracing::warn!(diagnostics = %diagnostics.diagnostics(), "RP2040 runtime CDC did not return before the confirmed-flash deadline");
-            Ok(PostFlashCdc::Unconfirmed(format!(
-                "the firmware was flashed and accepted, but no healthy, openable runtime CDC port reappeared within {}s ({}).{} First-plug driver installation can also exceed this window (extend it with {POST_DEPLOY_TIMEOUT_ENV})",
-                window.as_secs(),
-                diagnostics.diagnostics(),
-                diagnostics.recovery_guidance(),
-            )))
-        }
-        Err(CdcWaitError::Timeout(diagnostics)) => {
-            tracing::warn!(diagnostics = %diagnostics.diagnostics(), "RP2040 runtime CDC did not return before the unconfirmed-flash deadline");
-            Err(FbuildError::DeployFailed(format!(
-                "RP2040 firmware was transferred, but no catalogue-identified runtime CDC port appeared within {}s; verify that the firmware enables USB serial and that FastLED/boards USB data is current (extend the window with {POST_DEPLOY_TIMEOUT_ENV})",
-                window.as_secs()
-            )))
-        }
-    }
-}
-
-fn profile_matches_family(
-    profile: &fbuild_core::usb::profiles::UsbTransportProfile,
-    family_id: u32,
-) -> bool {
-    use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
-
-    if profile.purpose != UsbPurpose::Runtime
-        || profile.role != UsbDeviceRole::RuntimeCdc
-        || profile.interface.as_deref() != Some("cdc")
-    {
-        return false;
-    }
-    let expected = if family_id == RP2350_FAMILY_ID {
-        "rp2350"
-    } else {
-        "rp2040"
-    };
-    profile.family.as_deref() == Some(expected)
-}
-
-fn ensure_verified_usb_profiles() -> Result<()> {
-    let dir = fbuild_paths::get_cache_root().join("usb");
-    let meta_path = dir.join("_meta.json");
-    let profiles_path = dir.join("usb-profiles.json");
-    if fbuild_core::usb::profiles::populate_profiles_from_paths(&meta_path, &profiles_path) {
-        Ok(())
-    } else {
-        Err(FbuildError::DeployFailed(
-            "verified FastLED/boards USB profiles are unavailable; fbuild refuses to guess a Pico VID/PID or use a built-in fallback"
-                .to_string(),
-        ))
-    }
-}
-
-/// Best-effort Windows PICOBOOT preflight + bounded target-bound `picotool
-/// info` probe + `picotool load -x`, all folded into a single string error so the
-/// caller can compose the final combined-transport message if the
-/// mass-storage fallback also fails (FastLED/fbuild#1162/#1163). Off
-/// Windows, `present_usb_problem_devices` is a no-op empty vec, so preflight
-/// is always `Ready` there and this reduces to probe + load.
-async fn attempt_picotool_primary(
-    project_dir: &Path,
-    artifact: &Path,
-    target: &picotool::PicotoolTarget,
-    load_timeout: Duration,
-) -> std::result::Result<picotool::PicotoolLoad, String> {
-    let preflight_result = if fbuild_core::platform::host::is_windows() {
-        let devices =
-            tokio::task::spawn_blocking(fbuild_serial::ports::present_usb_problem_devices)
-                .await
-                .unwrap_or_default();
-        Some(preflight::classify_picoboot_preflight(&devices, target))
-    } else {
-        None
-    };
-    if !should_attempt_picotool_first(Rp2040Transport::Picotool, preflight_result.as_ref()) {
-        let preflight = preflight_result
-            .as_ref()
-            .expect("picotool preflight can only block when a problem was found");
-        let message = preflight::problem_message(preflight);
-        tracing::warn!("{message}");
-        return Err(message);
-    }
-    if let Err(probe_error) =
-        picotool::probe_picotool_info(project_dir, target, PICOTOOL_INFO_PROBE_TIMEOUT).await
-    {
-        return Err(format!("picotool info probe failed: {probe_error}"));
-    }
-    picotool::load_with_managed_picotool(
-        project_dir,
-        artifact,
-        target,
-        None,
-        load_timeout,
-        picotool::PicotoolMode::Primary,
-    )
-    .await
-    .map_err(|error| error.to_string())
-}
-
-/// Bounded-retry BOOTSEL mass-storage transfer, shared by the `Uf2`-primary
-/// path and the `Picotool`-primary fallback path.
-async fn run_mass_storage_transfer(
-    volume: PathBuf,
-    artifact: PathBuf,
-    bootloader_timeout: Duration,
-    write_budget: Duration,
-    volumes_before: BTreeSet<PathBuf>,
-) -> Result<std::result::Result<MscTransfer, MscTransferFailure>> {
-    let runtime = tokio::runtime::Handle::current();
-    tokio::task::spawn_blocking(move || {
-        transfer_uf2_with_retries(
-            volume,
-            UF2_TRANSFER_ATTEMPTS,
-            |volume| {
-                let artifact = artifact.clone();
-                let volume = volume.to_path_buf();
-                runtime.block_on(run_with_watchdog(
-                    write_budget,
-                    "RP2040 UF2 write",
-                    move || copy_prepared_uf2(&artifact, &volume),
-                ))
-            },
-            |volume| wait_for_volume_disappearance(volume, Duration::from_secs(2)).is_ok(),
-            || find_uf2_volume_until(bootloader_timeout, &volumes_before),
-        )
-    })
-    .await
-    .map_err(|error| FbuildError::DeployFailed(format!("RP2040 UF2 writer task failed: {error}")))
-}
-
-#[async_trait::async_trait]
-impl Deployer for Rp2040Deployer {
-    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
-    async fn deploy(
+    /// Deploy, self-healing over SWD when a USB transport cannot reach the
+    /// target (FastLED/fbuild#1423).
+    ///
+    /// The USB transports are always tried first: they need no extra hardware.
+    /// When they fail *and* a registry-identified debug probe is attached *and*
+    /// the build has an image SWD can place, the same deploy is retried through
+    /// probe-rs, so a board that wedged before USB bring-up recovers on the next
+    /// deploy instead of stranding until a human walks over. With no probe, the
+    /// USB transport's own error is returned untouched.
+    async fn deploy_with_fallback(
         &self,
         project_dir: &Path,
-        _env_name: &str,
+        env_name: &str,
         firmware_path: &Path,
         port: Option<&str>,
     ) -> Result<DeploymentResult> {
@@ -2011,6 +1565,52 @@ impl Deployer for Rp2040Deployer {
             // whole point), so skip the BOOTSEL/runtime profile preparation.
             return self.deploy_via_swd(firmware_path, port).await;
         }
+        let usb_error = match self
+            .deploy_via_usb(project_dir, env_name, firmware_path, port)
+            .await
+        {
+            Ok(result) => return Ok(result),
+            Err(error) => error,
+        };
+        let probe_attached = tokio::task::spawn_blocking(crate::probe_rs::debug_probe_attached)
+            .await
+            .unwrap_or(false);
+        let artifact_available = swd_artifact_for(firmware_path).is_ok();
+        if !should_fall_back_to_swd(self.transport, probe_attached, artifact_available) {
+            return Err(usb_error);
+        }
+        tracing::warn!(
+            usb_error = %usb_error,
+            "RP-series USB deploy failed; a CMSIS-DAP probe is attached, retrying over SWD"
+        );
+        match self.deploy_via_swd(firmware_path, port).await {
+            Ok(mut result) => {
+                result.message.push_str(
+                    " (recovered over SWD after the USB transport failed; the target did not enumerate)",
+                );
+                result.stderr.push_str(&format!(
+                    "\nUSB transport error before the SWD fallback:\n{usb_error}"
+                ));
+                Ok(result)
+            }
+            Err(swd_error) => Err(FbuildError::DeployFailed(format!(
+                "RP-series USB deploy failed and the attached CMSIS-DAP probe could not recover the target either\nUSB transport error:\n{usb_error}\nSWD error:\n{swd_error}"
+            ))),
+        }
+    }
+
+    // Body is unchanged from the pre-fallback `Deployer::deploy`; the split into
+    // an inherent method (so the fallback wrapper can call it) is the only
+    // difference, and it is why the two baseline expectations travel here.
+    #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
+    async fn deploy_via_usb(
+        &self,
+        project_dir: &Path,
+        _env_name: &str,
+        firmware_path: &Path,
+        port: Option<&str>,
+    ) -> Result<DeploymentResult> {
         tokio::task::spawn_blocking(ensure_verified_usb_profiles)
             .await
             .map_err(|error| {
@@ -2504,6 +2104,490 @@ impl Deployer for Rp2040Deployer {
             stderr: transfer_stderr,
             outcome: DeployOutcome::FullFlash,
         })
+    }
+
+    pub fn for_mcu(mcu: &str) -> Result<Self> {
+        let mut deployer = Self::default();
+        match mcu.to_ascii_lowercase().as_str() {
+            value if value.starts_with("rp2040") => {}
+            value if value.starts_with("rp2350") => deployer.family_id = RP2350_FAMILY_ID,
+            _ => {
+                return Err(FbuildError::DeployFailed(format!(
+                    "unsupported Raspberry Pi MCU {mcu:?}; expected rp2040 or rp2350"
+                )));
+            }
+        }
+        Ok(deployer)
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct PicoCdcPort {
+    name: String,
+    serial_number: Option<String>,
+    vendor_id: u16,
+    product_id: u16,
+    health: fbuild_serial::ports::PortHealth,
+    instance_id: Option<String>,
+    parent_instance_id: Option<String>,
+}
+
+type PicoResetInterface = fbuild_serial::ports::UsbResetInterface;
+
+fn catalogue_pico_cdc_ports(expected_family: u32) -> Result<Vec<PicoCdcPort>> {
+    let ports = fbuild_serial::ports::available_ports().map_err(|error| {
+        FbuildError::SerialError(format!(
+            "failed to enumerate post-deploy serial ports: {error}"
+        ))
+    })?;
+    let mut matches: Vec<PicoCdcPort> = ports
+        .into_iter()
+        .filter_map(|port| {
+            let serialport::SerialPortType::UsbPort(usb) = &port.info.port_type else {
+                return None;
+            };
+            let matches_family = fbuild_core::usb::profiles::profiles_for(usb.vid, usb.pid)
+                .iter()
+                .any(|profile| profile_matches_family(profile, expected_family));
+            matches_family.then(|| PicoCdcPort {
+                name: port.info.port_name,
+                serial_number: usb.serial_number.clone(),
+                vendor_id: usb.vid,
+                product_id: usb.pid,
+                health: port.health,
+                instance_id: port.instance_id,
+                parent_instance_id: port.parent_instance_id,
+            })
+        })
+        .collect();
+    matches.sort_by(|left, right| left.name.cmp(&right.name));
+    Ok(matches)
+}
+
+fn catalogue_pico_reset_interfaces(expected_family: u32) -> Vec<PicoResetInterface> {
+    let mut matches: Vec<_> = fbuild_serial::ports::present_usb_reset_interfaces()
+        .into_iter()
+        .filter(|interface| {
+            fbuild_core::usb::profiles::profiles_for(interface.vid, interface.pid)
+                .iter()
+                .any(|profile| profile_matches_family(profile, expected_family))
+        })
+        .collect();
+    matches.sort_by(|left, right| left.instance_id.cmp(&right.instance_id));
+    matches
+}
+
+/// Resolve an exact healthy application reset interface when the selected CDC
+/// endpoint itself is not usable. A serial selector may recover even after the
+/// COM devnode disappears; a COM selector must still match a retained,
+/// catalogue-identified unhealthy record before its serial can be trusted.
+fn resolve_reset_only_target(
+    selector: &str,
+    cdc_candidates: &[PicoCdcPort],
+    reset_interfaces: &[PicoResetInterface],
+) -> Result<Option<PicoResetInterface>> {
+    let (serial, expected_vid_pid) = if let Some(serial) = serial_selector(selector) {
+        (serial, None)
+    } else {
+        let matching_cdc: Vec<_> = cdc_candidates
+            .iter()
+            .filter(|candidate| candidate.name == selector)
+            .collect();
+        let candidate = match matching_cdc.as_slice() {
+            [] => return Ok(None),
+            [only] if only.health.is_known_unhealthy() => *only,
+            [only] => {
+                return Err(FbuildError::DeployFailed(format!(
+                    "RP2040 runtime selector {selector:?} matched healthy {}, but normal CDC target resolution failed",
+                    only.name
+                )));
+            }
+            many => {
+                return Err(FbuildError::DeployFailed(format!(
+                    "RP2040 runtime selector {selector:?} is ambiguous across {} CDC records",
+                    many.len()
+                )));
+            }
+        };
+        let Some(serial) = candidate.serial_number.as_deref() else {
+            return Ok(None);
+        };
+        (serial, Some((candidate.vendor_id, candidate.product_id)))
+    };
+
+    let matching_reset: Vec<_> = reset_interfaces
+        .iter()
+        .filter(|interface| interface.serial_number.eq_ignore_ascii_case(serial))
+        .filter(|interface| {
+            expected_vid_pid.is_none_or(|(vid, pid)| (interface.vid, interface.pid) == (vid, pid))
+        })
+        .collect();
+    match matching_reset.as_slice() {
+        [] => Ok(None),
+        [only] => Ok(Some((*only).clone())),
+        many => Err(FbuildError::DeployFailed(format!(
+            "RP2040 reset-interface selector {selector:?} is ambiguous across {} exact serial/VID/PID matches; fbuild refuses an unscoped reset",
+            many.len()
+        ))),
+    }
+}
+
+fn reset_interface_for_runtime_target(
+    target: &target::RequestedRuntimeTarget,
+    reset_interfaces: &[PicoResetInterface],
+) -> Result<Option<PicoResetInterface>> {
+    let Some(serial) = target.serial_number.as_deref() else {
+        return Ok(None);
+    };
+    let matches: Vec<_> = reset_interfaces
+        .iter()
+        .filter(|interface| interface.serial_number.eq_ignore_ascii_case(serial))
+        .filter(|interface| (interface.vid, interface.pid) == (target.vendor_id, target.product_id))
+        .collect();
+    match matches.as_slice() {
+        [] => Ok(None),
+        [only] => Ok(Some((*only).clone())),
+        many => Err(FbuildError::DeployFailed(format!(
+            "RP2040 runtime target {} is ambiguous across {} exact reset-interface matches; fbuild refuses an unscoped reset",
+            target.port,
+            many.len()
+        ))),
+    }
+}
+
+/// CDC-wait failure classification: a quiet window (`Timeout`) is
+/// recoverable once the flash itself is confirmed, while an enumeration or
+/// selection error (`Enumeration`) always fails the deploy.
+#[derive(Debug)]
+enum CdcWaitError {
+    Timeout(CdcWaitTimeout),
+    Enumeration(FbuildError),
+}
+
+#[derive(Debug)]
+struct CdcWaitTimeout {
+    elapsed: Duration,
+    previous_port: Option<String>,
+    requested_serial: Option<String>,
+    candidates: Vec<PicoCdcPort>,
+    /// The most recent bounded-open failure on an otherwise eligible
+    /// candidate, as `"<port>: <error>"` (FastLED/fbuild#1147: healthy
+    /// metadata alone never proves a live endpoint).
+    last_open_error: Option<String>,
+}
+
+impl CdcWaitTimeout {
+    fn diagnostics(&self) -> String {
+        let prior_port = self.previous_port.as_deref().unwrap_or("none");
+        let requested_serial = self.requested_serial.as_deref().unwrap_or("none");
+        let candidates = if self.candidates.is_empty() {
+            "none".to_string()
+        } else {
+            self.candidates
+                .iter()
+                .map(|candidate| {
+                    let serial = candidate
+                        .serial_number
+                        .as_deref()
+                        .map(|value| format!("serial {value}"))
+                        .unwrap_or_else(|| "serial unavailable".to_string());
+                    let instance = candidate
+                        .instance_id
+                        .as_deref()
+                        .map(|value| format!("; instance {value}"))
+                        .unwrap_or_default();
+                    let parent = candidate
+                        .parent_instance_id
+                        .as_deref()
+                        .map(|value| format!("; parent {value}"))
+                        .unwrap_or_default();
+                    format!(
+                        "{} ({serial}; health {}{instance}{parent})",
+                        candidate.name,
+                        candidate.health.label()
+                    )
+                })
+                .collect::<Vec<_>>()
+                .join(", ")
+        };
+        let open_error = self
+            .last_open_error
+            .as_deref()
+            .map(|value| format!("; last open error {value}"))
+            .unwrap_or_default();
+        format!(
+            "elapsed {}ms; prior port {prior_port}; requested serial {requested_serial}; catalogue candidates: {candidates}{open_error}",
+            self.elapsed.as_millis()
+        )
+    }
+
+    /// Manual recovery guidance for a confirmed flash whose runtime CDC never
+    /// became a healthy, openable endpoint (FastLED/fbuild#1147 step 5). When
+    /// Windows retained stale devnode records for this board, name them so the
+    /// user sees exactly why the historical COM port was not returned.
+    fn recovery_guidance(&self) -> String {
+        let stale: Vec<String> = self
+            .candidates
+            .iter()
+            .filter(|candidate| candidate.health.is_known_unhealthy())
+            .map(describe_unhealthy)
+            .collect();
+        let stale_note = if stale.is_empty() {
+            String::new()
+        } else {
+            format!(
+                " Windows retained stale/problem devnode record(s) for this board: {}; a historical COM name with a matching serial is not a live endpoint and was not returned.",
+                stale.join(", ")
+            )
+        };
+        format!(
+            "{stale_note} To recover manually: use a direct motherboard USB port and a known-good data cable, then 1) hold BOOT/BOOTSEL, 2) press and release RESET while still holding BOOT, 3) keep BOOT held for about two seconds, then release, 4) verify an RPI-RP2 volume appears and rerun the deploy."
+        )
+    }
+}
+
+fn wait_for_cdc_port(
+    previous_port: Option<&str>,
+    requested_serial: Option<&str>,
+    before: &BTreeSet<String>,
+    expected_family: u32,
+    timeout: Duration,
+) -> std::result::Result<PicoCdcPort, CdcWaitError> {
+    let started = Instant::now();
+    wait_for_cdc_port_with_clock(
+        previous_port,
+        requested_serial,
+        before,
+        timeout,
+        || catalogue_pico_cdc_ports(expected_family),
+        probe_cdc_openable,
+        || started.elapsed(),
+        std::thread::sleep,
+    )
+}
+
+/// Bounded openability probe (FastLED/fbuild#1147): health metadata alone
+/// never proves a live endpoint, so the selected candidate must open before
+/// it may become `DeploymentResult::port`.
+fn probe_cdc_openable(port: &PicoCdcPort) -> std::result::Result<(), String> {
+    serialport::new(&port.name, 115_200)
+        .timeout(Duration::from_millis(250))
+        .open()
+        .map(drop)
+        .map_err(|error| error.to_string())
+}
+
+#[allow(clippy::too_many_arguments)]
+fn wait_for_cdc_port_with_clock<F, P, E, S>(
+    previous_port: Option<&str>,
+    requested_serial: Option<&str>,
+    before: &BTreeSet<String>,
+    timeout: Duration,
+    mut catalogue: F,
+    mut probe: P,
+    mut elapsed: E,
+    mut sleep: S,
+) -> std::result::Result<PicoCdcPort, CdcWaitError>
+where
+    F: FnMut() -> Result<Vec<PicoCdcPort>>,
+    P: FnMut(&PicoCdcPort) -> std::result::Result<(), String>,
+    E: FnMut() -> Duration,
+    S: FnMut(Duration),
+{
+    let mut last_open_error: Option<String> = None;
+    loop {
+        let ports = catalogue().map_err(CdcWaitError::Enumeration)?;
+        match select_cdc_candidate(previous_port, requested_serial, before, &ports) {
+            // A candidate that fails its bounded open probe is not returned;
+            // the loop keeps polling so a transient just-enumerated failure
+            // can clear, and the last failure lands in the timeout
+            // diagnostics (FastLED/fbuild#1147).
+            Ok(Some(selected)) => match probe(&selected) {
+                Ok(()) => return Ok(selected),
+                Err(error) => {
+                    last_open_error = Some(format!("{}: {error}", selected.name));
+                }
+            },
+            Ok(None) => {}
+            Err(error) => return Err(CdcWaitError::Enumeration(error)),
+        }
+        let waited = elapsed();
+        if waited >= timeout {
+            return Err(CdcWaitError::Timeout(CdcWaitTimeout {
+                elapsed: waited,
+                previous_port: previous_port.map(str::to_string),
+                requested_serial: requested_serial.map(str::to_string),
+                candidates: ports,
+                last_open_error,
+            }));
+        }
+        sleep(CDC_POLL_INTERVAL.min(timeout.saturating_sub(waited)));
+    }
+}
+
+/// Post-flash CDC state: either the runtime port was re-identified, or the
+/// flash is confirmed good but the port never showed inside the window.
+#[derive(Debug)]
+enum PostFlashCdc {
+    Confirmed(String),
+    /// Carries the message fragment explaining the downgrade.
+    Unconfirmed(String),
+}
+
+/// Decide the deploy outcome after the runtime-CDC wait (FastLED/fbuild#1082
+/// stage 7). Once the eject watch (or a PICOBOOT load) confirmed the ROM
+/// accepted the image, a quiet CDC window must not fail the deploy: first-plug
+/// driver installation routinely exceeds it, and a hard failure makes CI
+/// re-flash a healthy board. Enumeration errors still fail regardless.
+fn resolve_post_flash_cdc(
+    flash_confirmed: bool,
+    wait_result: std::result::Result<PicoCdcPort, CdcWaitError>,
+    window: Duration,
+) -> Result<PostFlashCdc> {
+    match wait_result {
+        Ok(port) => Ok(PostFlashCdc::Confirmed(port.name)),
+        Err(CdcWaitError::Enumeration(error)) => Err(error),
+        Err(CdcWaitError::Timeout(diagnostics)) if flash_confirmed => {
+            tracing::warn!(diagnostics = %diagnostics.diagnostics(), "RP2040 runtime CDC did not return before the confirmed-flash deadline");
+            Ok(PostFlashCdc::Unconfirmed(format!(
+                "the firmware was flashed and accepted, but no healthy, openable runtime CDC port reappeared within {}s ({}).{} First-plug driver installation can also exceed this window (extend it with {POST_DEPLOY_TIMEOUT_ENV})",
+                window.as_secs(),
+                diagnostics.diagnostics(),
+                diagnostics.recovery_guidance(),
+            )))
+        }
+        Err(CdcWaitError::Timeout(diagnostics)) => {
+            tracing::warn!(diagnostics = %diagnostics.diagnostics(), "RP2040 runtime CDC did not return before the unconfirmed-flash deadline");
+            Err(FbuildError::DeployFailed(format!(
+                "RP2040 firmware was transferred, but no catalogue-identified runtime CDC port appeared within {}s; verify that the firmware enables USB serial and that FastLED/boards USB data is current (extend the window with {POST_DEPLOY_TIMEOUT_ENV})",
+                window.as_secs()
+            )))
+        }
+    }
+}
+
+fn profile_matches_family(
+    profile: &fbuild_core::usb::profiles::UsbTransportProfile,
+    family_id: u32,
+) -> bool {
+    use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
+
+    if profile.purpose != UsbPurpose::Runtime
+        || profile.role != UsbDeviceRole::RuntimeCdc
+        || profile.interface.as_deref() != Some("cdc")
+    {
+        return false;
+    }
+    let expected = if family_id == RP2350_FAMILY_ID {
+        "rp2350"
+    } else {
+        "rp2040"
+    };
+    profile.family.as_deref() == Some(expected)
+}
+
+fn ensure_verified_usb_profiles() -> Result<()> {
+    let dir = fbuild_paths::get_cache_root().join("usb");
+    let meta_path = dir.join("_meta.json");
+    let profiles_path = dir.join("usb-profiles.json");
+    if fbuild_core::usb::profiles::populate_profiles_from_paths(&meta_path, &profiles_path) {
+        Ok(())
+    } else {
+        Err(FbuildError::DeployFailed(
+            "verified FastLED/boards USB profiles are unavailable; fbuild refuses to guess a Pico VID/PID or use a built-in fallback"
+                .to_string(),
+        ))
+    }
+}
+
+/// Best-effort Windows PICOBOOT preflight + bounded target-bound `picotool
+/// info` probe + `picotool load -x`, all folded into a single string error so the
+/// caller can compose the final combined-transport message if the
+/// mass-storage fallback also fails (FastLED/fbuild#1162/#1163). Off
+/// Windows, `present_usb_problem_devices` is a no-op empty vec, so preflight
+/// is always `Ready` there and this reduces to probe + load.
+async fn attempt_picotool_primary(
+    project_dir: &Path,
+    artifact: &Path,
+    target: &picotool::PicotoolTarget,
+    load_timeout: Duration,
+) -> std::result::Result<picotool::PicotoolLoad, String> {
+    let preflight_result = if fbuild_core::platform::host::is_windows() {
+        let devices =
+            tokio::task::spawn_blocking(fbuild_serial::ports::present_usb_problem_devices)
+                .await
+                .unwrap_or_default();
+        Some(preflight::classify_picoboot_preflight(&devices, target))
+    } else {
+        None
+    };
+    if !should_attempt_picotool_first(Rp2040Transport::Picotool, preflight_result.as_ref()) {
+        let preflight = preflight_result
+            .as_ref()
+            .expect("picotool preflight can only block when a problem was found");
+        let message = preflight::problem_message(preflight);
+        tracing::warn!("{message}");
+        return Err(message);
+    }
+    if let Err(probe_error) =
+        picotool::probe_picotool_info(project_dir, target, PICOTOOL_INFO_PROBE_TIMEOUT).await
+    {
+        return Err(format!("picotool info probe failed: {probe_error}"));
+    }
+    picotool::load_with_managed_picotool(
+        project_dir,
+        artifact,
+        target,
+        None,
+        load_timeout,
+        picotool::PicotoolMode::Primary,
+    )
+    .await
+    .map_err(|error| error.to_string())
+}
+
+/// Bounded-retry BOOTSEL mass-storage transfer, shared by the `Uf2`-primary
+/// path and the `Picotool`-primary fallback path.
+async fn run_mass_storage_transfer(
+    volume: PathBuf,
+    artifact: PathBuf,
+    bootloader_timeout: Duration,
+    write_budget: Duration,
+    volumes_before: BTreeSet<PathBuf>,
+) -> Result<std::result::Result<MscTransfer, MscTransferFailure>> {
+    let runtime = tokio::runtime::Handle::current();
+    tokio::task::spawn_blocking(move || {
+        transfer_uf2_with_retries(
+            volume,
+            UF2_TRANSFER_ATTEMPTS,
+            |volume| {
+                let artifact = artifact.clone();
+                let volume = volume.to_path_buf();
+                runtime.block_on(run_with_watchdog(
+                    write_budget,
+                    "RP2040 UF2 write",
+                    move || copy_prepared_uf2(&artifact, &volume),
+                ))
+            },
+            |volume| wait_for_volume_disappearance(volume, Duration::from_secs(2)).is_ok(),
+            || find_uf2_volume_until(bootloader_timeout, &volumes_before),
+        )
+    })
+    .await
+    .map_err(|error| FbuildError::DeployFailed(format!("RP2040 UF2 writer task failed: {error}")))
+}
+
+#[async_trait::async_trait]
+impl Deployer for Rp2040Deployer {
+    async fn deploy(
+        &self,
+        project_dir: &Path,
+        env_name: &str,
+        firmware_path: &Path,
+        port: Option<&str>,
+    ) -> Result<DeploymentResult> {
+        self.deploy_with_fallback(project_dir, env_name, firmware_path, port)
+            .await
     }
 
     /// The RP2040 deploy path rediscovers its post-flash endpoint through a
@@ -4277,6 +4361,28 @@ mod tests {
             parse_rp2040_transport(Some("swd")).unwrap(),
             Rp2040Transport::Swd
         );
+    }
+
+    #[test]
+    fn a_failed_usb_deploy_falls_back_to_swd_only_with_a_probe_and_a_placeable_image() {
+        // The only combination that retries: USB transport, probe attached,
+        // ELF/HEX available.
+        assert!(should_fall_back_to_swd(
+            Rp2040Transport::Picotool,
+            true,
+            true
+        ));
+        assert!(should_fall_back_to_swd(Rp2040Transport::Uf2, true, true));
+        // No probe -> behavior unchanged, the USB error is the answer.
+        assert!(!should_fall_back_to_swd(
+            Rp2040Transport::Picotool,
+            false,
+            true
+        ));
+        // No placeable image -> SWD would fail on the artifact, not the target.
+        assert!(!should_fall_back_to_swd(Rp2040Transport::Uf2, true, false));
+        // Already asked for SWD: there is nothing to fall back from.
+        assert!(!should_fall_back_to_swd(Rp2040Transport::Swd, true, true));
     }
 
     #[test]
