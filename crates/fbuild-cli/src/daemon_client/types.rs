@@ -62,6 +62,9 @@ pub struct BuildRequest {
     /// See FastLED/fbuild#594.
     #[serde(default)]
     pub bloat_analysis: bool,
+    /// Resolved `--shrink` mode forwarded to the daemon (FastLED/fbuild#1459).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub shrink: Option<String>,
 }
 
 /// `POST /api/install-deps` request. Mirrors

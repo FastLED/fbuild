@@ -272,10 +272,10 @@ pub async fn async_main() {
             bloat_analysis,
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
-            // `--shrink` has had no consumer since FastLED/fbuild#496: the
-            // registry is empty on every platform, so an explicit request was
-            // accepted and then silently dropped. Report that honestly before
-            // the build starts (FastLED/fbuild#1459).
+            // `--shrink` had no consumer at all until FastLED/fbuild#1459:
+            // an explicit request was accepted and then silently dropped.
+            // Report the decision honestly before the build starts — the only
+            // reducer wired to the link stage today is ESP32 `printf`.
             let shrink_mode = fbuild_build::shrink::resolve_explicit(
                 cli.shrink.map(fbuild_build::shrink::ShrinkMode::from),
                 shrink.map(fbuild_build::shrink::ShrinkMode::from),
@@ -310,6 +310,7 @@ pub async fn async_main() {
                     no_timestamp,
                     output_dir,
                     bloat_analysis,
+                    shrink_mode,
                 )
                 .await
             }

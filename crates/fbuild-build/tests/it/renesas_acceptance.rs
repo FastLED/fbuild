@@ -40,6 +40,7 @@ void loop() { result++; }
     .unwrap();
     let params = BuildParams {
         project_dir: project.to_path_buf(),
+        shrink: Default::default(),
         env_name: "uno_r4".into(),
         build_dir: project
             .join(fbuild_paths::FBUILD_DIR_NAME)

@@ -59,6 +59,7 @@ async fn build(project_dir: &Path, env_name: &str, farm: bool) -> NormalizedPath
     ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
+        shrink: Default::default(),
         env_name: env_name.to_string(),
         clean_all: false,
         clean_only: false,

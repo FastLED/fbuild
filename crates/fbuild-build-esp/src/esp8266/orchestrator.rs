@@ -787,6 +787,7 @@ mod tests {
         .resolve();
         let params = BuildParams {
             project_dir: project.path().to_path_buf(),
+            shrink: Default::default(),
             env_name: "esp8266".into(),
             clean_all: false,
             clean_only: false,

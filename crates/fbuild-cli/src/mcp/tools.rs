@@ -111,6 +111,7 @@ pub(super) async fn execute_tool(
                 profile: None,
                 generate_compiledb: false,
                 compiledb_only: false,
+                shrink: None,
                 request_id: Some(uuid_v4()),
                 caller_pid,
                 caller_cwd,

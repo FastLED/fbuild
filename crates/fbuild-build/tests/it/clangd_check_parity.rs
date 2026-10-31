@@ -163,6 +163,7 @@ async fn clangd_check_parity_uno() {
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
+        shrink: Default::default(),
         env_name: "uno".to_string(),
         clean_all: false,
         clean_only: false,

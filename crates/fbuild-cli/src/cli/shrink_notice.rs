@@ -1,12 +1,15 @@
 //! Honest reporting for `--shrink` (FastLED/fbuild#1459).
 //!
-//! `--shrink[=MODE]` has been accepted by the CLI since FastLED/fbuild#496, but
-//! no platform has a registered shrinker yet:
-//! [`fbuild_build::shrink::registry::registry_for`] still returns an empty slice
-//! for every platform, and the resolved decision never reaches the link stage.
+//! `--shrink[=MODE]` has been accepted by the CLI since FastLED/fbuild#496. The
+//! only reducer wired to the link stage is ESP32 `printf` (newlib-nano); every
+//! other platform still resolves through an empty
+//! [`fbuild_build::shrink::registry::registry_for`] slice.
 //! A build therefore applies nothing — and says nothing, which is the part that
 //! misleads: a user who asks for `--shrink=safe` cannot tell the request was
 //! dropped, so the flag looks like it works.
+//!
+//! ESP32 `--shrink=printf` (newlib-nano, FastLED/fbuild#1459) reports the
+//! applied reducer through [`applied_notice`] instead of the unsupported line.
 //!
 //! This module converts that silence into one line per build, and only for an
 //! *explicit* request this build cannot honour:
@@ -84,12 +87,40 @@ pub fn unsupported_notice(
     if matches!(mode, ShrinkMode::Auto | ShrinkMode::Off) || !available.is_empty() {
         return None;
     }
+    if is_supported(mode, platform) {
+        return None;
+    }
     let target = platform.map_or("this platform", platform_id);
     Some(format!(
         "shrink: --shrink={} has no effect yet: no shrinker is registered for {target}; \
          building unshrunk (FastLED/fbuild#1459)",
         mode_name(mode)
     ))
+}
+
+/// Whether this resolver mode actually reaches the link stage on `platform`.
+///
+/// Keep in sync with `fbuild_build_esp::esp32::printf_thin::applies`: the
+/// ESP32/Xtensa newlib printf reducer is the only implemented shrinker.
+#[must_use]
+pub fn is_supported(mode: ShrinkMode, platform: Option<Platform>) -> bool {
+    mode == ShrinkMode::Printf && platform == Some(Platform::Espressif32)
+}
+
+/// The line that reports an applied reducer, or `None` when nothing applies.
+///
+/// Printed before the build so the terminal decision and the link flags always
+/// describe the same reducer.
+#[must_use]
+pub fn applied_notice(mode: ShrinkMode, platform: Option<Platform>) -> Option<String> {
+    if !is_supported(mode, platform) {
+        return None;
+    }
+    Some(
+        "shrink: --shrink=printf links newlib-nano (-specs=nano.specs) instead of \
+         newlib's full _vfprintf_r/_svfprintf_r; float formatting kept via _printf_float"
+            .to_string(),
+    )
 }
 
 /// Best-effort platform lookup from the project's `platformio.ini`.
@@ -115,6 +146,10 @@ fn platform_for(project_dir: &str, environment: Option<&str>) -> Option<Platform
 pub fn report_build_shrink(project_dir: &str, environment: Option<&str>, mode: ShrinkMode) {
     let platform = platform_for(project_dir, environment);
     let available = platform.map_or(&[][..], registry_for);
+    if let Some(line) = applied_notice(mode, platform) {
+        crate::output::diagnostic(line);
+        return;
+    }
     if let Some(line) = unsupported_notice(mode, platform, available) {
         // `output::warn` is a `tracing::warn!`, which only appears when a
         // `RUST_LOG` filter raises the level — a warning nobody sees would
@@ -152,6 +187,36 @@ mod tests {
     }
 
     #[test]
+    fn esp32_printf_is_reported_as_applied_not_unsupported() {
+        assert!(is_supported(
+            ShrinkMode::Printf,
+            Some(Platform::Espressif32)
+        ));
+        assert_eq!(
+            unsupported_notice(ShrinkMode::Printf, Some(Platform::Espressif32), &[]),
+            None
+        );
+        let line = applied_notice(ShrinkMode::Printf, Some(Platform::Espressif32))
+            .expect("the applied reducer must be reported");
+        assert!(line.contains("nano.specs"), "{line}");
+        assert!(line.contains("_printf_float"), "{line}");
+    }
+
+    #[test]
+    fn printf_on_other_platforms_stays_unsupported() {
+        for platform in [
+            Platform::AtmelAvr,
+            Platform::Espressif8266,
+            Platform::RaspberryPi,
+        ] {
+            assert!(!is_supported(ShrinkMode::Printf, Some(platform)));
+            assert!(unsupported_notice(ShrinkMode::Printf, Some(platform), &[]).is_some());
+            assert_eq!(applied_notice(ShrinkMode::Printf, Some(platform)), None);
+        }
+        assert!(unsupported_notice(ShrinkMode::Printf, None, &[]).is_some());
+    }
+
+    #[test]
     fn explicit_mode_with_empty_registry_is_reported_with_platform() {
         let line = unsupported_notice(ShrinkMode::Safe, Some(Platform::Espressif32), &[])
             .expect("an unhonoured explicit request must be reported");
@@ -163,7 +228,7 @@ mod tests {
 
     #[test]
     fn every_explicit_non_off_mode_is_reported() {
-        for mode in [ShrinkMode::Safe, ShrinkMode::Aggressive, ShrinkMode::Printf] {
+        for mode in [ShrinkMode::Safe, ShrinkMode::Aggressive] {
             let line = unsupported_notice(mode, Some(Platform::Espressif32), &[])
                 .unwrap_or_else(|| panic!("{mode:?} must be reported"));
             assert!(
