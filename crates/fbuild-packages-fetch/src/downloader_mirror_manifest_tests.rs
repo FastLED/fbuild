@@ -469,6 +469,34 @@ async fn mirror_with_matching_bytes_spares_the_primary() {
     assert_eq!(primary_hits.load(Ordering::SeqCst), 0);
 }
 
+/// #1815: a download costs the vendor exactly one request, the download
+/// itself; no HEAD for a checksum and no `?bypass=` retry for a next mirror.
+#[tokio::test]
+async fn vendor_sees_exactly_one_request_per_download() {
+    let _guard = network_test_guard().await;
+    for mirror_body in ["EVIL!", "hello"] {
+        let (mut c, _, primary_hits) = mirror_then_primary(mirror_body, "hello", HELLO_SHA).await;
+        let expected = usize::from(mirror_body != "hello");
+        get_from_candidates(&test_client(), &c, FAST_RETRY_TIMING)
+            .await
+            .unwrap();
+        assert_eq!(
+            primary_hits.load(Ordering::SeqCst),
+            expected,
+            "{mirror_body}"
+        );
+        c.order = vec![0];
+        get_from_candidates(&test_client(), &c, FAST_RETRY_TIMING)
+            .await
+            .unwrap();
+        assert_eq!(
+            primary_hits.load(Ordering::SeqCst),
+            expected + 1,
+            "primary only"
+        );
+    }
+}
+
 /// A wrong sha in the manifest must only disqualify mirrors: the vendor's
 /// bytes are the caller's to verify, so a bad manifest cannot break builds.
 #[tokio::test]
