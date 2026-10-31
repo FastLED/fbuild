@@ -267,11 +267,25 @@ pub async fn async_main() {
             symbol_analysis,
             no_timestamp,
             output_dir,
-            shrink: _,
-            no_shrink: _,
+            shrink,
+            no_shrink,
             bloat_analysis,
         }) => {
             let project_dir = resolve_project_dir(project_dir, &top_level_project_dir);
+            // `--shrink` has had no consumer since FastLED/fbuild#496: the
+            // registry is empty on every platform, so an explicit request was
+            // accepted and then silently dropped. Report that honestly before
+            // the build starts (FastLED/fbuild#1459).
+            let shrink_mode = fbuild_build::shrink::resolve_explicit(
+                cli.shrink.map(fbuild_build::shrink::ShrinkMode::from),
+                shrink.map(fbuild_build::shrink::ShrinkMode::from),
+                no_shrink || cli.no_shrink,
+            );
+            super::shrink_notice::report_build_shrink(
+                &project_dir,
+                environment.as_deref(),
+                shrink_mode,
+            );
             if platformio {
                 pio_build(
                     &project_dir,

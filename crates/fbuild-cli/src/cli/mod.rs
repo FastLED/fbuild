@@ -46,6 +46,7 @@ pub mod purge;
 pub mod reset;
 pub mod serial_probe;
 pub mod show;
+mod shrink_notice;
 pub mod symbols_cmd;
 pub mod sync_cmd;
 pub mod udev;
