@@ -91,6 +91,7 @@ async fn lpc845brk_propagates_build_flags_to_library_compile_587() {
 
     let params = BuildParams {
         project_dir: fixture.clone(),
+        shrink: Default::default(),
         env_name: "lpc845brk".to_string(),
         clean_all: false,
         clean_only: false,

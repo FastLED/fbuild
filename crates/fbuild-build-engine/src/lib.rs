@@ -201,6 +201,13 @@ pub struct BuildParams {
     /// actually emitted. This unblocks per-symbol bloat analysis on
     /// over-budget builds. See FastLED/fbuild#594.
     pub bloat_analysis: bool,
+    /// Resolved `--shrink` mode for this build (FastLED/fbuild#1459).
+    ///
+    /// Resolved once at the CLI boundary (`shrink::resolve_explicit` +
+    /// `resolve_for_context`) and forwarded per request like `caller_path`,
+    /// because the daemon does not inherit the caller's flags. Distinct from
+    /// `extra_build_flags`: shrinkers change the link, not the compile line.
+    pub shrink: crate::shrink::ShrinkMode,
     /// The CLI caller's PATH, forwarded per request so bare-name tool
     /// spawns (esptool, python, objcopy) resolve against the caller's
     /// environment instead of the daemon's spawn-time PATH

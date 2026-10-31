@@ -45,6 +45,7 @@ void loop() { digitalWrite(LED_BUILTIN, HIGH); }
         .join("pico/release");
     let params = BuildParams {
         project_dir: project.to_path_buf(),
+        shrink: Default::default(),
         env_name: "pico".into(),
         build_dir: build_dir.clone(),
         clean_all: false,

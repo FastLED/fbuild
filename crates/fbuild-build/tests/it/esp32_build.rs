@@ -101,6 +101,7 @@ void loop() {
     ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
+        shrink: Default::default(),
         env_name: "esp32dev".to_string(),
         clean_all: false,
         clean_only: false,
@@ -182,6 +183,7 @@ async fn esp32_effective_flags_invalidate_no_op_fingerprint() {
     ));
     let mut params = BuildParams {
         project_dir: project_dir.to_path_buf(),
+        shrink: Default::default(),
         env_name: "esp32dev".to_string(),
         clean_all: false,
         clean_only: false,
@@ -296,6 +298,7 @@ void loop() {
     ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
+        shrink: Default::default(),
         env_name: "esp32c6".to_string(),
         clean_all: false,
         clean: true,
@@ -403,6 +406,7 @@ void loop() {}
     ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
+        shrink: Default::default(),
         env_name: "esp32c6".to_string(),
         clean_all: false,
         clean: true,
@@ -488,6 +492,7 @@ void loop() {
     ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
+        shrink: Default::default(),
         env_name: "esp32c3".to_string(),
         clean_all: false,
         clean: true,
@@ -580,6 +585,7 @@ void loop() {
     ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
+        shrink: Default::default(),
         env_name: "esp32s3".to_string(),
         clean_all: false,
         clean: true,
@@ -662,6 +668,7 @@ async fn build_esp32s3_fixture() {
     ));
     let params = BuildParams {
         project_dir: project_dir.clone(),
+        shrink: Default::default(),
         env_name: "esp32s3".to_string(),
         clean_all: false,
         clean: true,
@@ -736,6 +743,7 @@ async fn build_nightdriverstrip_demo() {
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
+        shrink: Default::default(),
         env_name: "demo".to_string(),
         clean_all: false,
         clean: true,
@@ -836,6 +844,7 @@ async fn incremental_build_at(project_dir: &std::path::Path, env_name: &str) {
 
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
+        shrink: Default::default(),
         env_name: env_name.to_string(),
         clean_all: false,
         clean: false,
@@ -941,6 +950,7 @@ async fn incremental_nightdriverstrip_one_file_changed() {
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
+        shrink: Default::default(),
         env_name: env_name.to_string(),
         clean_all: false,
         clean: false,

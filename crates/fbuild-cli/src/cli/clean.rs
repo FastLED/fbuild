@@ -48,6 +48,7 @@ pub async fn run_clean(
         profile,
         generate_compiledb: false,
         compiledb_only: false,
+        shrink: None,
         request_id: None,
         caller_pid,
         caller_cwd,

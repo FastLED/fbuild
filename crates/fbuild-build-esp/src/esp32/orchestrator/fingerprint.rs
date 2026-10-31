@@ -33,6 +33,10 @@ pub(super) struct Esp32FingerprintMetadata {
     /// SDK `-D` flags reach every TU but come from the framework, not the
     /// project config, so a change there must not replay a stale fast path.
     pub sdk_defines: Vec<String>,
+    /// Resolved `--shrink` mode. A reducer rewrites link inputs, so flipping
+    /// `off` <-> `printf` must invalidate the fast path and relink
+    /// (FastLED/fbuild#1459).
+    pub shrink_mode: String,
 }
 
 #[cfg(test)]
@@ -68,6 +72,7 @@ mod tests {
             toolchain_name: toolchain_name.into(),
             toolchain_version: toolchain_version.into(),
             sdk_defines: vec!["-DESP_PLATFORM".into()],
+            shrink_mode: "off".into(),
         }
     }
 
@@ -83,6 +88,17 @@ mod tests {
             serde_json::to_vec(&metadata("toolchain-xtensa-esp32s3", "14.2.0")).unwrap();
         assert_ne!(original, different_name);
         assert_ne!(original, different_version);
+    }
+
+    #[test]
+    fn shrink_mode_changes_fast_path_metadata() {
+        let shrink_off = metadata("toolchain-xtensa-esp32s3", "14.2.0");
+        let mut shrink_printf = metadata("toolchain-xtensa-esp32s3", "14.2.0");
+        shrink_printf.shrink_mode = "printf".into();
+        assert_ne!(
+            serde_json::to_vec(&shrink_off).unwrap(),
+            serde_json::to_vec(&shrink_printf).unwrap()
+        );
     }
 
     #[test]

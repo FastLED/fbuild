@@ -85,6 +85,11 @@ pub struct BuildRequest {
     /// See FastLED/fbuild#594.
     #[serde(default)]
     pub bloat_analysis: bool,
+    /// Resolved `--shrink` mode (`auto`/`off`/`safe`/`aggressive`/`printf`).
+    /// Forwarded because the daemon does not inherit the caller's flags.
+    /// See FastLED/fbuild#1459.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub shrink: Option<String>,
 }
 
 /// POST /api/deploy

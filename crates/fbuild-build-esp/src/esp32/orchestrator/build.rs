@@ -180,6 +180,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve",
                 },
                 sdk_defines,
+                shrink_mode: params.shrink.as_str().to_string(),
             },
             &ctx,
         )?;
@@ -904,6 +905,31 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &ctx.board,
         ));
 
+        // `--shrink=printf` (FastLED/fbuild#1459): switch the image onto the
+        // newlib-nano copy of libc that ships inside the same toolchain, so
+        // the full `_vfprintf_r`/`_svfprintf_r`/`_dtoa_r` cluster is replaced
+        // by newlib's own thin formatter. Opt-in only; `Auto` resolves to
+        // `Off`, so a default build never takes this path. The spec file is
+        // probed first: a toolchain without a nano variant builds unshrunk
+        // rather than failing the link on a missing spec file.
+        let mut overlay_link_flags = ctx.overlay_link_flags.clone();
+        if crate::esp32::printf_thin::applies(params.shrink, Platform::Espressif32) {
+            let available = crate::esp32::printf_thin::probe_nano_specs(
+                &toolchain.get_gcc_path(),
+                params.caller_path.as_deref(),
+            )
+            .await
+            .unwrap_or(false);
+            if available {
+                overlay_link_flags.extend(crate::esp32::printf_thin::link_flags());
+            } else {
+                tracing::warn!(
+                    "shrink: --shrink=printf found no nano.specs in {}; building unshrunk",
+                    toolchain_info.name
+                );
+            }
+        }
+
         let link_result = {
             let _g = perf.phase("link-convert-size");
             crate::linker::Linker::link_all(
@@ -912,7 +938,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &all_archives,
                 build_dir,
                 &crate::linker::LinkExtraArgs {
-                    flags: ctx.overlay_link_flags.clone(),
+                    flags: overlay_link_flags,
                     libs: ctx.overlay_link_libs.clone(),
                     bloat_analysis: false,
                 },

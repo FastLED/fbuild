@@ -102,6 +102,7 @@ void loop() {
     ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
+        shrink: Default::default(),
         env_name: "teensy41".to_string(),
         clean_all: false,
         clean_only: false,
@@ -183,6 +184,7 @@ void loop() {}
     ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
+        shrink: Default::default(),
         env_name: "teensy41".to_string(),
         clean_all: false,
         clean: true,
@@ -242,6 +244,7 @@ async fn build_teensy41_fixture() {
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
+        shrink: Default::default(),
         env_name: "teensy41".to_string(),
         clean_all: false,
         clean: true,
@@ -357,6 +360,7 @@ void loop() {
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
+        shrink: Default::default(),
         env_name: "teensy30".to_string(),
         clean_all: false,
         clean: true,

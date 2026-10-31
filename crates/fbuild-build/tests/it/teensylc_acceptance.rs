@@ -52,6 +52,7 @@ async fn teensylc_blink_meets_205_acceptance_criteria() {
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
+        shrink: Default::default(),
         // WHY: env names are case-sensitive and must match the
         // [env:teensylc] key in tests/platform/teensylc/platformio.ini.
         // Same root-cause family as #220 / #221 in measure_baseline_205.py.

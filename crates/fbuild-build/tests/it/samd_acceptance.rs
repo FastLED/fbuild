@@ -52,6 +52,7 @@ void loop() { digitalWrite(LED_BUILTIN, HIGH); }
         std::fs::write(project.join("src/main.cpp"), source).unwrap();
         let params = BuildParams {
             project_dir: project.to_path_buf(),
+            shrink: Default::default(),
             env_name: "samd".into(),
             build_dir: project
                 .join(fbuild_paths::FBUILD_DIR_NAME)
