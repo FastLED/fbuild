@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hollegha",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hollegha/library/TLV320HL/0.0.0+sha.808bb0b9cf45/TLV320HL-0.0.0+sha.808bb0b9cf45.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLV320HL-0.0.0+sha.808bb0b9cf45.tar.gz",
+    "size_bytes": 5842,
+    "sha256": "cea635aade8b7a1dba6dae4e00ec6fdfd91ef4768975d49ad465d7b96897414f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hollegha/library/TLV320HL/0.0.0%2Bsha.808bb0b9cf45/TLV320HL-0.0.0%2Bsha.808bb0b9cf45.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hollegha/library/TLV320HL/0.0.0%2Bsha.808bb0b9cf45/TLV320HL-0.0.0%2Bsha.808bb0b9cf45.tar.gz"
+    ]
+   }
+  }
+ ]
+}

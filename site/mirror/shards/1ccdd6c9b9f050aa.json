@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fyrus7",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fyrus7/library/RTC3231/1.0.0/RTC3231-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC3231-1.0.0.tar.gz",
+    "size_bytes": 21569,
+    "sha256": "9f946db006e0e64a45311b4ee48d27229b51b0dca18d590fe8151270638a2412",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fyrus7/library/RTC3231/1.0.0/RTC3231-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fyrus7/library/RTC3231/1.0.0/RTC3231-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/researchanddesire",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "researchanddesire/library/RAD-JSON/1.0.0/RAD-JSON-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAD-JSON-1.0.0.tar.gz",
+    "size_bytes": 4987,
+    "sha256": "2f9700510613d1377011cc9880d507dfb6a918e0bcaeb8935b433e9d56c9d6ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/researchanddesire/library/RAD-JSON/1.0.0/RAD-JSON-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/researchanddesire/library/RAD-JSON/1.0.0/RAD-JSON-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

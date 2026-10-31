@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/avisha95",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "avisha95/library/AViShaESPCam/1.1.0/AViShaESPCam-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AViShaESPCam-1.1.0.tar.gz",
+    "size_bytes": 19569,
+    "sha256": "5b6fc52d68c39dc9947c267e918296adb49440c1246797b9b718b7ead0ffa5fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avisha95/library/AViShaESPCam/1.1.0/AViShaESPCam-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avisha95/library/AViShaESPCam/1.1.0/AViShaESPCam-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avisha95/library/AViShaESPCam/1.1.1/AViShaESPCam-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AViShaESPCam-1.1.1.tar.gz",
+    "size_bytes": 23510,
+    "sha256": "66987f26f9cf20b124013dfead56b7f867edaa2f7fc4323e3c13a04d1a7a2a89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avisha95/library/AViShaESPCam/1.1.1/AViShaESPCam-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/avisha95/library/AViShaESPCam/1.1.1/AViShaESPCam-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avisha95/library/AViShaMQTT/1.0.0/AViShaMQTT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AViShaMQTT-1.0.0.tar.gz",
+    "size_bytes": 15441,
+    "sha256": "4ed1bb6e6793478db00ed15d3758f0d7069d8d6972ce28453c15bc8c0c30aeab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avisha95/library/AViShaMQTT/1.0.0/AViShaMQTT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avisha95/library/AViShaMQTT/1.0.0/AViShaMQTT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avisha95/library/AViShaMQTT/1.1.0/AViShaMQTT-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AViShaMQTT-1.1.0.tar.gz",
+    "size_bytes": 35697,
+    "sha256": "653f2e02705d6be3fae8bd3c9e646cdde5bf35f5fad426e18d3d3495434237ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avisha95/library/AViShaMQTT/1.1.0/AViShaMQTT-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avisha95/library/AViShaMQTT/1.1.0/AViShaMQTT-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avisha95/library/AViShaMQTT/1.2.0/AViShaMQTT-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AViShaMQTT-1.2.0.tar.gz",
+    "size_bytes": 25753,
+    "sha256": "961c9c73635facbef248a5658ca3d15c57043d78fad484053b2c903bfddcaa33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avisha95/library/AViShaMQTT/1.2.0/AViShaMQTT-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avisha95/library/AViShaMQTT/1.2.0/AViShaMQTT-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avisha95/library/AViShaOTA/1.0.0/AViShaOTA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AViShaOTA-1.0.0.tar.gz",
+    "size_bytes": 11593,
+    "sha256": "f3d1298601b6981315d063dd76a0b5163c18c246ab943b3559c1f7c775eca869",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avisha95/library/AViShaOTA/1.0.0/AViShaOTA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avisha95/library/AViShaOTA/1.0.0/AViShaOTA-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avisha95/library/AViShaWiFi/1.0.0/AViShaWiFi-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AViShaWiFi-1.0.0.tar.gz",
+    "size_bytes": 15304,
+    "sha256": "15b71f72ad3b70173724873cd455bf2944d178d306d0ff77bdec64ee9f043c2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avisha95/library/AViShaWiFi/1.0.0/AViShaWiFi-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avisha95/library/AViShaWiFi/1.0.0/AViShaWiFi-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

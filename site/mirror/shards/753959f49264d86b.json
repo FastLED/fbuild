@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/934virginia",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "934virginia/library/Norman/1.0.0/Norman-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Norman-1.0.0.tar.gz",
+    "size_bytes": 13000,
+    "sha256": "1aa560d0c1e44c23440b0a9f3de7f674e38be7a0b6cb2f554f657c4083c7bdc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/934virginia/library/Norman/1.0.0/Norman-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/934virginia/library/Norman/1.0.0/Norman-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

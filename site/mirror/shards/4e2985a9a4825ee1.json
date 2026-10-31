@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maciekish",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maciekish/library/DCS-BIOS%20DCSBIOSKit-Fork/3.9.0/DCS-BIOSDCSBIOSKit-Fork-3.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCS-BIOSDCSBIOSKit-Fork-3.9.0.tar.gz",
+    "size_bytes": 265958,
+    "sha256": "729fea314b703f71109433c4c9fac1351768d61e324a5cf517691a16ca3f059b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maciekish/library/DCS-BIOS%2520DCSBIOSKit-Fork/3.9.0/DCS-BIOSDCSBIOSKit-Fork-3.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maciekish/library/DCS-BIOS%20DCSBIOSKit-Fork/3.9.0/DCS-BIOSDCSBIOSKit-Fork-3.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-daniel-davvid",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-daniel-davvid/library/BMP280/0.0.0+sha.3a0af995dd4c/BMP280-0.0.0+sha.3a0af995dd4c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP280-0.0.0+sha.3a0af995dd4c.tar.gz",
+    "size_bytes": 2920,
+    "sha256": "7e4be7446c6f36b8fda25455d9204cc2d5220233ce089c1fbdc9b0a87bcf5aa7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-daniel-davvid/library/BMP280/0.0.0%2Bsha.3a0af995dd4c/BMP280-0.0.0%2Bsha.3a0af995dd4c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-daniel-davvid/library/BMP280/0.0.0%2Bsha.3a0af995dd4c/BMP280-0.0.0%2Bsha.3a0af995dd4c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-daniel-davvid/library/MAX17043/0.0.0+sha.4287b7d9c9ca/MAX17043-0.0.0+sha.4287b7d9c9ca.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX17043-0.0.0+sha.4287b7d9c9ca.tar.gz",
+    "size_bytes": 2487,
+    "sha256": "5ac9ac080b6089ff2fa9d63aca04de018721a9f96d2ebb3116c60534a6f991f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-daniel-davvid/library/MAX17043/0.0.0%2Bsha.4287b7d9c9ca/MAX17043-0.0.0%2Bsha.4287b7d9c9ca.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-daniel-davvid/library/MAX17043/0.0.0%2Bsha.4287b7d9c9ca/MAX17043-0.0.0%2Bsha.4287b7d9c9ca.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-daniel-davvid/library/SSD1306_I2C/0.0.0+sha.05989d252f62/SSD1306_I2C-0.0.0+sha.05989d252f62.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1306_I2C-0.0.0+sha.05989d252f62.tar.gz",
+    "size_bytes": 1032,
+    "sha256": "aae11a3035be446a5fda0b58e8953d71d7f8e91ead9423a2d4503f4df3d72239",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-daniel-davvid/library/SSD1306_I2C/0.0.0%2Bsha.05989d252f62/SSD1306_I2C-0.0.0%2Bsha.05989d252f62.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-daniel-davvid/library/SSD1306_I2C/0.0.0%2Bsha.05989d252f62/SSD1306_I2C-0.0.0%2Bsha.05989d252f62.tar.gz"
+    ]
+   }
+  }
+ ]
+}

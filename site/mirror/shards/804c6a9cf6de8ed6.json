@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cike-567",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cike-567/library/ps2shebei/1.0.0/ps2shebei-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ps2shebei-1.0.0.tar.gz",
+    "size_bytes": 15505,
+    "sha256": "c1b35e57e402a6d4c16639648d18d03617a341cc65f29968e28be88468c1e2f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cike-567/library/ps2shebei/1.0.0/ps2shebei-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cike-567/library/ps2shebei/1.0.0/ps2shebei-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cike-567/library/ps2zhuji/1.0.0/ps2zhuji-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ps2zhuji-1.0.0.tar.gz",
+    "size_bytes": 16489,
+    "sha256": "be9c6721f689081ea48bd7bd2c8dfda359851968a7b2508c59e3c5763123b1ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cike-567/library/ps2zhuji/1.0.0/ps2zhuji-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cike-567/library/ps2zhuji/1.0.0/ps2zhuji-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

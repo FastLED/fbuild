@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-marcomissyou",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-marcomissyou/library/WIFI_API/0.0.0+sha.a2de37bf5f3d/WIFI_API-0.0.0+sha.a2de37bf5f3d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WIFI_API-0.0.0+sha.a2de37bf5f3d.tar.gz",
+    "size_bytes": 515726,
+    "sha256": "a1da9fb177c475156fe0c114923fb4d68d3c6e1dcac86fa258a89a028b7a3733",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-marcomissyou/library/WIFI_API/0.0.0%2Bsha.a2de37bf5f3d/WIFI_API-0.0.0%2Bsha.a2de37bf5f3d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-marcomissyou/library/WIFI_API/0.0.0%2Bsha.a2de37bf5f3d/WIFI_API-0.0.0%2Bsha.a2de37bf5f3d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-marcomissyou/library/WIFI_API_32kRAM/0.0.0+sha.4085cc9441f3/WIFI_API_32kRAM-0.0.0+sha.4085cc9441f3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WIFI_API_32kRAM-0.0.0+sha.4085cc9441f3.tar.gz",
+    "size_bytes": 529826,
+    "sha256": "ce29f16f4ea69bfb8c02e8afe70cb8e49e48be7a5058a7073b025bb091a59a66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-marcomissyou/library/WIFI_API_32kRAM/0.0.0%2Bsha.4085cc9441f3/WIFI_API_32kRAM-0.0.0%2Bsha.4085cc9441f3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-marcomissyou/library/WIFI_API_32kRAM/0.0.0%2Bsha.4085cc9441f3/WIFI_API_32kRAM-0.0.0%2Bsha.4085cc9441f3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

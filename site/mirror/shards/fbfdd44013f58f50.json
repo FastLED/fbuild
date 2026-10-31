@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kikoaac",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kikoaac/library/Motor/0.0.0+sha.3b639d84a95d/Motor-0.0.0+sha.3b639d84a95d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor-0.0.0+sha.3b639d84a95d.tar.gz",
+    "size_bytes": 1521,
+    "sha256": "710fe3cf84535dd41622a433b3bf55d140c760b4b0e9004c611d1adaf0d86bee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kikoaac/library/Motor/0.0.0%2Bsha.3b639d84a95d/Motor-0.0.0%2Bsha.3b639d84a95d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kikoaac/library/Motor/0.0.0%2Bsha.3b639d84a95d/Motor-0.0.0%2Bsha.3b639d84a95d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kikoaac/library/QEI/0.0.0+sha.a24686ca50ab/QEI-0.0.0+sha.a24686ca50ab.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QEI-0.0.0+sha.a24686ca50ab.tar.gz",
+    "size_bytes": 2236,
+    "sha256": "7b860f8ff0a4a9e1bf523dd0f0a5ad3c4db3bed6c4417b07849b63612264c5dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kikoaac/library/QEI/0.0.0%2Bsha.a24686ca50ab/QEI-0.0.0%2Bsha.a24686ca50ab.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kikoaac/library/QEI/0.0.0%2Bsha.a24686ca50ab/QEI-0.0.0%2Bsha.a24686ca50ab.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kikoaac/library/QEI2/0.0.0+sha.49fa8827718d/QEI2-0.0.0+sha.49fa8827718d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QEI2-0.0.0+sha.49fa8827718d.tar.gz",
+    "size_bytes": 2482,
+    "sha256": "9593fe64f1bf43c57b42a6009c360afdc5457fe7c0544e5c76e9559d0fce2aac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kikoaac/library/QEI2/0.0.0%2Bsha.49fa8827718d/QEI2-0.0.0%2Bsha.49fa8827718d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kikoaac/library/QEI2/0.0.0%2Bsha.49fa8827718d/QEI2-0.0.0%2Bsha.49fa8827718d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

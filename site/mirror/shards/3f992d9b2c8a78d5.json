@@ -1,0 +1,360 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sissors",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sissors/library/AK8975/0.0.0+sha.76f65416ae1b/AK8975-0.0.0+sha.76f65416ae1b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AK8975-0.0.0+sha.76f65416ae1b.tar.gz",
+    "size_bytes": 2596,
+    "sha256": "df5451aa437da869b694e820e77b586465cc350dc23e264292f8b84a12069479",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/AK8975/0.0.0%2Bsha.76f65416ae1b/AK8975-0.0.0%2Bsha.76f65416ae1b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/AK8975/0.0.0%2Bsha.76f65416ae1b/AK8975-0.0.0%2Bsha.76f65416ae1b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/BufferedSoftSerial/0.0.0+sha.671a6724ce79/BufferedSoftSerial-0.0.0+sha.671a6724ce79.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BufferedSoftSerial-0.0.0+sha.671a6724ce79.tar.gz",
+    "size_bytes": 3689,
+    "sha256": "c966696b2a9e90f8279fbee5e7562dd0cc32005cd3fe7075f6c880b78f21f648",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/BufferedSoftSerial/0.0.0%2Bsha.671a6724ce79/BufferedSoftSerial-0.0.0%2Bsha.671a6724ce79.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/BufferedSoftSerial/0.0.0%2Bsha.671a6724ce79/BufferedSoftSerial-0.0.0%2Bsha.671a6724ce79.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/BurstSPI/0.0.0+sha.bc069279eb37/BurstSPI-0.0.0+sha.bc069279eb37.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BurstSPI-0.0.0+sha.bc069279eb37.tar.gz",
+    "size_bytes": 3844,
+    "sha256": "28a3af7c00ec6d8d959b5e9a98b266c37ba3a95e95ef2bc99d008713dc246043",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/BurstSPI/0.0.0%2Bsha.bc069279eb37/BurstSPI-0.0.0%2Bsha.bc069279eb37.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/BurstSPI/0.0.0%2Bsha.bc069279eb37/BurstSPI-0.0.0%2Bsha.bc069279eb37.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/CalibrateMagneto/0.0.0+sha.8620dbd88cd4/CalibrateMagneto-0.0.0+sha.8620dbd88cd4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CalibrateMagneto-0.0.0+sha.8620dbd88cd4.tar.gz",
+    "size_bytes": 3104,
+    "sha256": "db7306df0deb8d0f0bdc86dc35d9b1e15db35d9a16fd048daa1108e25017742b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/CalibrateMagneto/0.0.0%2Bsha.8620dbd88cd4/CalibrateMagneto-0.0.0%2Bsha.8620dbd88cd4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/CalibrateMagneto/0.0.0%2Bsha.8620dbd88cd4/CalibrateMagneto-0.0.0%2Bsha.8620dbd88cd4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/DS1302/0.0.0+sha.9a746f303e59/DS1302-0.0.0+sha.9a746f303e59.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1302-0.0.0+sha.9a746f303e59.tar.gz",
+    "size_bytes": 2962,
+    "sha256": "bb9dc5fdd815d923b3e2270df4ca12856f30ef32a5d0010f37752ed26b2cb744",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/DS1302/0.0.0%2Bsha.9a746f303e59/DS1302-0.0.0%2Bsha.9a746f303e59.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/DS1302/0.0.0%2Bsha.9a746f303e59/DS1302-0.0.0%2Bsha.9a746f303e59.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/DS1820/0.0.0+sha.236eb8f8e73a/DS1820-0.0.0+sha.236eb8f8e73a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1820-0.0.0+sha.236eb8f8e73a.tar.gz",
+    "size_bytes": 7134,
+    "sha256": "a330b93f770b897a2325842d4c5de435d3d4b290fbbbf4f2683970388633c165",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/DS1820/0.0.0%2Bsha.236eb8f8e73a/DS1820-0.0.0%2Bsha.236eb8f8e73a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/DS1820/0.0.0%2Bsha.236eb8f8e73a/DS1820-0.0.0%2Bsha.236eb8f8e73a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/FastAnalogIn/0.0.0+sha.46fbc645de4d/FastAnalogIn-0.0.0+sha.46fbc645de4d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAnalogIn-0.0.0+sha.46fbc645de4d.tar.gz",
+    "size_bytes": 5362,
+    "sha256": "edf50dfbee89795257f8947d028c691cc52b505d28a504fd63f775125b8594dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/FastAnalogIn/0.0.0%2Bsha.46fbc645de4d/FastAnalogIn-0.0.0%2Bsha.46fbc645de4d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/FastAnalogIn/0.0.0%2Bsha.46fbc645de4d/FastAnalogIn-0.0.0%2Bsha.46fbc645de4d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/FastIO/0.0.0+sha.45b32f07e790/FastIO-0.0.0+sha.45b32f07e790.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastIO-0.0.0+sha.45b32f07e790.tar.gz",
+    "size_bytes": 4764,
+    "sha256": "37baaaa1eb4b06cf261d7aa895b3be84e4a09bc038251b00c23c2f61eff2ee21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/FastIO/0.0.0%2Bsha.45b32f07e790/FastIO-0.0.0%2Bsha.45b32f07e790.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/FastIO/0.0.0%2Bsha.45b32f07e790/FastIO-0.0.0%2Bsha.45b32f07e790.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/FastPWM/0.0.0+sha.d6c2b73d71f5/FastPWM-0.0.0+sha.d6c2b73d71f5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastPWM-0.0.0+sha.d6c2b73d71f5.tar.gz",
+    "size_bytes": 6611,
+    "sha256": "c2e77c31ae50754d55d687c9dfb27a4d6e1c0af2e25815607657539098ff8c64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/FastPWM/0.0.0%2Bsha.d6c2b73d71f5/FastPWM-0.0.0%2Bsha.d6c2b73d71f5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/FastPWM/0.0.0%2Bsha.d6c2b73d71f5/FastPWM-0.0.0%2Bsha.d6c2b73d71f5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/FreescaleIAP/0.0.0+sha.ab8a833a25eb/FreescaleIAP-0.0.0+sha.ab8a833a25eb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreescaleIAP-0.0.0+sha.ab8a833a25eb.tar.gz",
+    "size_bytes": 3368,
+    "sha256": "96cee8da409ebe87b8e3f937f3ce41b7c98ec5a2417dc56637dc64fef1aecdea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/FreescaleIAP/0.0.0%2Bsha.ab8a833a25eb/FreescaleIAP-0.0.0%2Bsha.ab8a833a25eb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/FreescaleIAP/0.0.0%2Bsha.ab8a833a25eb/FreescaleIAP-0.0.0%2Bsha.ab8a833a25eb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/IMUCalc/0.0.0+sha.51c902d63dda/IMUCalc-0.0.0+sha.51c902d63dda.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMUCalc-0.0.0+sha.51c902d63dda.tar.gz",
+    "size_bytes": 3157,
+    "sha256": "098640b6de560f1c00b56a0d4ae6bcc7f8dcdfec95f9a8e439559abaff91653f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/IMUCalc/0.0.0%2Bsha.51c902d63dda/IMUCalc-0.0.0%2Bsha.51c902d63dda.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/IMUCalc/0.0.0%2Bsha.51c902d63dda/IMUCalc-0.0.0%2Bsha.51c902d63dda.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/LPC1114_WakeInterruptIn/0.0.0+sha.128f3fe79240/LPC1114_WakeInterruptIn-0.0.0+sha.128f3fe79240.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LPC1114_WakeInterruptIn-0.0.0+sha.128f3fe79240.tar.gz",
+    "size_bytes": 2160,
+    "sha256": "01c916feb2f5dd90c9ee0fd36f4f149ca31b6408661d40c4bb3a6e51ee17e81f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/LPC1114_WakeInterruptIn/0.0.0%2Bsha.128f3fe79240/LPC1114_WakeInterruptIn-0.0.0%2Bsha.128f3fe79240.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/LPC1114_WakeInterruptIn/0.0.0%2Bsha.128f3fe79240/LPC1114_WakeInterruptIn-0.0.0%2Bsha.128f3fe79240.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/MMA7660/0.0.0+sha.36a163511e34/MMA7660-0.0.0+sha.36a163511e34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA7660-0.0.0+sha.36a163511e34.tar.gz",
+    "size_bytes": 4195,
+    "sha256": "7c5c9ec836ac48a82fa61480d04a2b7ba39fd3ac3a0cf16fd293ed44ce7abeb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/MMA7660/0.0.0%2Bsha.36a163511e34/MMA7660-0.0.0%2Bsha.36a163511e34.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/MMA7660/0.0.0%2Bsha.36a163511e34/MMA7660-0.0.0%2Bsha.36a163511e34.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/MODI2C/0.0.0+sha.ff579e7e8efa/MODI2C-0.0.0+sha.ff579e7e8efa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MODI2C-0.0.0+sha.ff579e7e8efa.tar.gz",
+    "size_bytes": 5646,
+    "sha256": "0be65d8ac1a13d04f635a675c4e46b6b45645bd02b88579574c0d8fd111a4cb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/MODI2C/0.0.0%2Bsha.ff579e7e8efa/MODI2C-0.0.0%2Bsha.ff579e7e8efa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/MODI2C/0.0.0%2Bsha.ff579e7e8efa/MODI2C-0.0.0%2Bsha.ff579e7e8efa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/MODSERIAL/0.0.0+sha.d2a5e26fd658/MODSERIAL-0.0.0+sha.d2a5e26fd658.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MODSERIAL-0.0.0+sha.d2a5e26fd658.tar.gz",
+    "size_bytes": 20867,
+    "sha256": "7639907ddb008312d7af9f491c4cecad7ebe9d18da4d7c567a116a6401e78f05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/MODSERIAL/0.0.0%2Bsha.d2a5e26fd658/MODSERIAL-0.0.0%2Bsha.d2a5e26fd658.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/MODSERIAL/0.0.0%2Bsha.d2a5e26fd658/MODSERIAL-0.0.0%2Bsha.d2a5e26fd658.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/RTC/0.0.0+sha.be9d058ee5c7/RTC-0.0.0+sha.be9d058ee5c7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC-0.0.0+sha.be9d058ee5c7.tar.gz",
+    "size_bytes": 3351,
+    "sha256": "92e2ba328e025f0a8f7ba9b4a98f817de5cf3aced0a40342ff259d83760ee6e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/RTC/0.0.0%2Bsha.be9d058ee5c7/RTC-0.0.0%2Bsha.be9d058ee5c7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/RTC/0.0.0%2Bsha.be9d058ee5c7/RTC-0.0.0%2Bsha.be9d058ee5c7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/RTOS_SPI/0.0.0+sha.0ab62cbad3aa/RTOS_SPI-0.0.0+sha.0ab62cbad3aa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTOS_SPI-0.0.0+sha.0ab62cbad3aa.tar.gz",
+    "size_bytes": 2248,
+    "sha256": "6cf60660b55fff5648464f31236fe904afe11b50337716b0ddba499a69844ed9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/RTOS_SPI/0.0.0%2Bsha.0ab62cbad3aa/RTOS_SPI-0.0.0%2Bsha.0ab62cbad3aa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/RTOS_SPI/0.0.0%2Bsha.0ab62cbad3aa/RTOS_SPI-0.0.0%2Bsha.0ab62cbad3aa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/S25FL216K/0.0.0+sha.2bcefc9e64f8/S25FL216K-0.0.0+sha.2bcefc9e64f8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "S25FL216K-0.0.0+sha.2bcefc9e64f8.tar.gz",
+    "size_bytes": 2088,
+    "sha256": "0abb08548635bf09dbc355b2c53731f14c2c0304182a893e80edbf345996efc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/S25FL216K/0.0.0%2Bsha.2bcefc9e64f8/S25FL216K-0.0.0%2Bsha.2bcefc9e64f8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/S25FL216K/0.0.0%2Bsha.2bcefc9e64f8/S25FL216K-0.0.0%2Bsha.2bcefc9e64f8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/S25FL216K_USBFileSystem/0.0.0+sha.ec125501d68f/S25FL216K_USBFileSystem-0.0.0+sha.ec125501d68f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "S25FL216K_USBFileSystem-0.0.0+sha.ec125501d68f.tar.gz",
+    "size_bytes": 2090,
+    "sha256": "3326ac7b1ccef18c0962eda028444f069ce8040b3de3148c5f4a56e31ffa4b77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/S25FL216K_USBFileSystem/0.0.0%2Bsha.ec125501d68f/S25FL216K_USBFileSystem-0.0.0%2Bsha.ec125501d68f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/S25FL216K_USBFileSystem/0.0.0%2Bsha.ec125501d68f/S25FL216K_USBFileSystem-0.0.0%2Bsha.ec125501d68f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/SDFileSystem-RTOS/0.0.0+sha.da69a01b8096/SDFileSystem-RTOS-0.0.0+sha.da69a01b8096.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDFileSystem-RTOS-0.0.0+sha.da69a01b8096.tar.gz",
+    "size_bytes": 6072,
+    "sha256": "53d83e2e3730b4b1bc9f377ffed69a0b95b2655b40fca3c0c5af7755eadc51b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/SDFileSystem-RTOS/0.0.0%2Bsha.da69a01b8096/SDFileSystem-RTOS-0.0.0%2Bsha.da69a01b8096.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/SDFileSystem-RTOS/0.0.0%2Bsha.da69a01b8096/SDFileSystem-RTOS-0.0.0%2Bsha.da69a01b8096.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/SLCD/0.0.0+sha.ef2b3b7f1b01/SLCD-0.0.0+sha.ef2b3b7f1b01.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SLCD-0.0.0+sha.ef2b3b7f1b01.tar.gz",
+    "size_bytes": 7285,
+    "sha256": "3beb1cf3db530f9f4c2168e5247f607713a191da35761751b314d47e12187102",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/SLCD/0.0.0%2Bsha.ef2b3b7f1b01/SLCD-0.0.0%2Bsha.ef2b3b7f1b01.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/SLCD/0.0.0%2Bsha.ef2b3b7f1b01/SLCD-0.0.0%2Bsha.ef2b3b7f1b01.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/Si114x/0.0.0+sha.971d705818e7/Si114x-0.0.0+sha.971d705818e7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Si114x-0.0.0+sha.971d705818e7.tar.gz",
+    "size_bytes": 3571,
+    "sha256": "d0628b7118077a458c45ed7a29b17bbcf2a251827a495c29f9e17739fc20be62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/Si114x/0.0.0%2Bsha.971d705818e7/Si114x-0.0.0%2Bsha.971d705818e7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/Si114x/0.0.0%2Bsha.971d705818e7/Si114x-0.0.0%2Bsha.971d705818e7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/SimpleDMA/0.0.0+sha.f7345d41b076/SimpleDMA-0.0.0+sha.f7345d41b076.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleDMA-0.0.0+sha.f7345d41b076.tar.gz",
+    "size_bytes": 4572,
+    "sha256": "6cc10e88a6e725aad4e56513ffbec4c9587cc828a33bf906652e1c05b258bb84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/SimpleDMA/0.0.0%2Bsha.f7345d41b076/SimpleDMA-0.0.0%2Bsha.f7345d41b076.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/SimpleDMA/0.0.0%2Bsha.f7345d41b076/SimpleDMA-0.0.0%2Bsha.f7345d41b076.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/SoftI2C/0.0.0+sha.05473196d133/SoftI2C-0.0.0+sha.05473196d133.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftI2C-0.0.0+sha.05473196d133.tar.gz",
+    "size_bytes": 2540,
+    "sha256": "17ce1ccc2cd8d2b1dbe8389a224ae4e9849ab7373755d6ba607e1084b0559319",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/SoftI2C/0.0.0%2Bsha.05473196d133/SoftI2C-0.0.0%2Bsha.05473196d133.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/SoftI2C/0.0.0%2Bsha.05473196d133/SoftI2C-0.0.0%2Bsha.05473196d133.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/SoftSerial/0.0.0+sha.a0029614de72/SoftSerial-0.0.0+sha.a0029614de72.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftSerial-0.0.0+sha.a0029614de72.tar.gz",
+    "size_bytes": 3655,
+    "sha256": "6877a916c53ba5e53b3de7e0671c3ef21a8554d1bf5e817ab9ebbffafbbce5c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/SoftSerial/0.0.0%2Bsha.a0029614de72/SoftSerial-0.0.0%2Bsha.a0029614de72.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/SoftSerial/0.0.0%2Bsha.a0029614de72/SoftSerial-0.0.0%2Bsha.a0029614de72.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/USBFileSystem/0.0.0+sha.a9e1dffac4bd/USBFileSystem-0.0.0+sha.a9e1dffac4bd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBFileSystem-0.0.0+sha.a9e1dffac4bd.tar.gz",
+    "size_bytes": 55129,
+    "sha256": "6c9450fa18805122c7531a596bfa16cc927849cdc61325a6f70663621d7f7d15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/USBFileSystem/0.0.0%2Bsha.a9e1dffac4bd/USBFileSystem-0.0.0%2Bsha.a9e1dffac4bd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/USBFileSystem/0.0.0%2Bsha.a9e1dffac4bd/USBFileSystem-0.0.0%2Bsha.a9e1dffac4bd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sissors/library/WakeUp/0.0.0+sha.65c04a02ad45/WakeUp-0.0.0+sha.65c04a02ad45.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WakeUp-0.0.0+sha.65c04a02ad45.tar.gz",
+    "size_bytes": 6809,
+    "sha256": "69d996c6ca48e1df582564483c3d1236187cb2d8bd601873346a94a45e09ffe5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sissors/library/WakeUp/0.0.0%2Bsha.65c04a02ad45/WakeUp-0.0.0%2Bsha.65c04a02ad45.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sissors/library/WakeUp/0.0.0%2Bsha.65c04a02ad45/WakeUp-0.0.0%2Bsha.65c04a02ad45.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-laserdad",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-laserdad/library/OB1203_example_driver/0.0.0+sha.ca9caacd0f9f/OB1203_example_driver-0.0.0+sha.ca9caacd0f9f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OB1203_example_driver-0.0.0+sha.ca9caacd0f9f.tar.gz",
+    "size_bytes": 6262,
+    "sha256": "489ec7be82fa37cd31f2efa03160ed3606c4361685d50b294c1e795d782f5fc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-laserdad/library/OB1203_example_driver/0.0.0%2Bsha.ca9caacd0f9f/OB1203_example_driver-0.0.0%2Bsha.ca9caacd0f9f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-laserdad/library/OB1203_example_driver/0.0.0%2Bsha.ca9caacd0f9f/OB1203_example_driver-0.0.0%2Bsha.ca9caacd0f9f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

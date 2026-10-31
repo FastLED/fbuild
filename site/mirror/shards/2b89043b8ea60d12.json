@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wokwi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wokwi/library/TinyDebug/2.0.0/TinyDebug-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyDebug-2.0.0.tar.gz",
+    "size_bytes": 2971,
+    "sha256": "d58e12bf2ddd748d7c5835742d351b4ed27999a92ec6bb5556f0b359b1820ce6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wokwi/library/TinyDebug/2.0.0/TinyDebug-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wokwi/library/TinyDebug/2.0.0/TinyDebug-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

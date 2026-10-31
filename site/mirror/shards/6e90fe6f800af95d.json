@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hrlexyc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hrlexyc/library/TimedActions/0.0.4/TimedActions-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimedActions-0.0.4.tar.gz",
+    "size_bytes": 2125,
+    "sha256": "28c30b88900d4ba51d273a802492df15adee94edb47a455c70aa38e50e71fc10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hrlexyc/library/TimedActions/0.0.4/TimedActions-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/hrlexyc/library/TimedActions/0.0.4/TimedActions-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

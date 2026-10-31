@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gabygold67",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gabygold67/library/SevenSegDisplays_ESP32/3.3.0/SevenSegDisplays_ESP32-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSegDisplays_ESP32-3.3.0.tar.gz",
+    "size_bytes": 72880,
+    "sha256": "430203a4803a58009d681ec29ac8820a57829b1472edd723568eb24169b98896",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gabygold67/library/SevenSegDisplays_ESP32/3.3.0/SevenSegDisplays_ESP32-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gabygold67/library/SevenSegDisplays_ESP32/3.3.0/SevenSegDisplays_ESP32-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gabygold67/library/ShiftRegGPIOXpander_AVR/3.1.0/ShiftRegGPIOXpander_AVR-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShiftRegGPIOXpander_AVR-3.1.0.tar.gz",
+    "size_bytes": 35927,
+    "sha256": "0bc8257985e6fdd78671e26d47a7aa8f89cff51115103dfc5b10efc8df5fdf77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gabygold67/library/ShiftRegGPIOXpander_AVR/3.1.0/ShiftRegGPIOXpander_AVR-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gabygold67/library/ShiftRegGPIOXpander_AVR/3.1.0/ShiftRegGPIOXpander_AVR-3.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

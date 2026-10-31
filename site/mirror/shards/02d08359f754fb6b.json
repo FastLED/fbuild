@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/erik",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "erik/library/depthai_spi/0.0.3/depthai_spi-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "depthai_spi-0.0.3.tar.gz",
+    "size_bytes": 204647,
+    "sha256": "e5aeb1d8ff8651dfe0723c6ef18d444d493880b6c6452722e712a8b8c12191b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erik/library/depthai_spi/0.0.3/depthai_spi-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/erik/library/depthai_spi/0.0.3/depthai_spi-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

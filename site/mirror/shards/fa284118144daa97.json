@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-riccardopat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-riccardopat/library/wifi-x-nucleo-idw01m1-modified/0.0.0+sha.777a6d4f4d4a/wifi-x-nucleo-idw01m1-modified-0.0.0+sha.777a6d4f4d4a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wifi-x-nucleo-idw01m1-modified-0.0.0+sha.777a6d4f4d4a.tar.gz",
+    "size_bytes": 24526,
+    "sha256": "1511ae041a5b80deeeb5281605db90190c176550d98b1bbceea7d28843f2736d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-riccardopat/library/wifi-x-nucleo-idw01m1-modified/0.0.0%2Bsha.777a6d4f4d4a/wifi-x-nucleo-idw01m1-modified-0.0.0%2Bsha.777a6d4f4d4a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-riccardopat/library/wifi-x-nucleo-idw01m1-modified/0.0.0%2Bsha.777a6d4f4d4a/wifi-x-nucleo-idw01m1-modified-0.0.0%2Bsha.777a6d4f4d4a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

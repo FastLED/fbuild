@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/peregrinedev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "peregrinedev/library/Orientation/2.0.0/Orientation-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Orientation-2.0.0.tar.gz",
+    "size_bytes": 3174,
+    "sha256": "3556ca41c8eddb91de10c91dd5b167a771cbde97307f8bcb54b1e581ceee553d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peregrinedev/library/Orientation/2.0.0/Orientation-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/peregrinedev/library/Orientation/2.0.0/Orientation-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peregrinedev/library/Quaternion/1.1.0/Quaternion-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Quaternion-1.1.0.tar.gz",
+    "size_bytes": 2446,
+    "sha256": "2fced376277804be2833c87d903833012b43d4eaf384e6215a1e158304698366",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peregrinedev/library/Quaternion/1.1.0/Quaternion-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/peregrinedev/library/Quaternion/1.1.0/Quaternion-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

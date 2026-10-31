@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/anvishinc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "anvishinc/library/GlideEdgent/1.6.0/GlideEdgent-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GlideEdgent-1.6.0.tar.gz",
+    "size_bytes": 25074,
+    "sha256": "0cbd5d1f5a7580bdb246a1ac6ee3ac43954ebf59e7cafddfb2e19a9b5f4979ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anvishinc/library/GlideEdgent/1.6.0/GlideEdgent-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/anvishinc/library/GlideEdgent/1.6.0/GlideEdgent-1.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

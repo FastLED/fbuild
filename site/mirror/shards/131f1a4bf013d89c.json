@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dds-group",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dds-group/library/GUI_Layers/0.0.0+sha.a60fc9b7f71e/GUI_Layers-0.0.0+sha.a60fc9b7f71e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GUI_Layers-0.0.0+sha.a60fc9b7f71e.tar.gz",
+    "size_bytes": 2641,
+    "sha256": "d802dd0758f42287e664849da06b2206142babe51d5faf7c3b83bdcf2aff8fc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dds-group/library/GUI_Layers/0.0.0%2Bsha.a60fc9b7f71e/GUI_Layers-0.0.0%2Bsha.a60fc9b7f71e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dds-group/library/GUI_Layers/0.0.0%2Bsha.a60fc9b7f71e/GUI_Layers-0.0.0%2Bsha.a60fc9b7f71e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

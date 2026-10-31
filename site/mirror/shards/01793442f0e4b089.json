@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/unclemungo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "unclemungo/library/PIDcontrol/1.1.0/PIDcontrol-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIDcontrol-1.1.0.tar.gz",
+    "size_bytes": 2607,
+    "sha256": "5c8c645f31173e43cd23f29f13911f75b22a76af5d801ce36ddaac3ed396cb9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unclemungo/library/PIDcontrol/1.1.0/PIDcontrol-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unclemungo/library/PIDcontrol/1.1.0/PIDcontrol-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unclemungo/library/PinDefinitions/4.0.10/PinDefinitions-4.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinDefinitions-4.0.10.tar.gz",
+    "size_bytes": 3804,
+    "sha256": "486b69a014bd4278deebc4deaf53fb3c20f58de2c76850f001c866237bf13021",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unclemungo/library/PinDefinitions/4.0.10/PinDefinitions-4.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/unclemungo/library/PinDefinitions/4.0.10/PinDefinitions-4.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unclemungo/library/PinDefinitions/4.0.8/PinDefinitions-4.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinDefinitions-4.0.8.tar.gz",
+    "size_bytes": 3747,
+    "sha256": "9dc267a4d4d613acaaca8cdfaadb2532fc489552e5ac82e1c15f2087a0d369e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unclemungo/library/PinDefinitions/4.0.8/PinDefinitions-4.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/unclemungo/library/PinDefinitions/4.0.8/PinDefinitions-4.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unclemungo/library/PinDefinitions/4.0.9/PinDefinitions-4.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinDefinitions-4.0.9.tar.gz",
+    "size_bytes": 3729,
+    "sha256": "897005e3706c373c1f9caf2dd0ac6f60ad81a15e12204203e3eb9985369f9ff0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unclemungo/library/PinDefinitions/4.0.9/PinDefinitions-4.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/unclemungo/library/PinDefinitions/4.0.9/PinDefinitions-4.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unclemungo/library/Serial1Util/1.0.0/Serial1Util-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Serial1Util-1.0.0.tar.gz",
+    "size_bytes": 4605,
+    "sha256": "d83a9124b7d40c5d631aceb9add6b49de54147e599e98119ca3a04c641ce12a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unclemungo/library/Serial1Util/1.0.0/Serial1Util-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unclemungo/library/Serial1Util/1.0.0/Serial1Util-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

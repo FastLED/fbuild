@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-enel400",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-enel400/library/AlohaTransceiver/0.0.0+sha.37c1d616a848/AlohaTransceiver-0.0.0+sha.37c1d616a848.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlohaTransceiver-0.0.0+sha.37c1d616a848.tar.gz",
+    "size_bytes": 6558,
+    "sha256": "e7efe01ec957f5d568183aad3a071a4effa8235c43a66a3a44d4ffe55af446e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-enel400/library/AlohaTransceiver/0.0.0%2Bsha.37c1d616a848/AlohaTransceiver-0.0.0%2Bsha.37c1d616a848.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-enel400/library/AlohaTransceiver/0.0.0%2Bsha.37c1d616a848/AlohaTransceiver-0.0.0%2Bsha.37c1d616a848.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-enel400/library/L3PDU/0.0.0+sha.d752922def7d/L3PDU-0.0.0+sha.d752922def7d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L3PDU-0.0.0+sha.d752922def7d.tar.gz",
+    "size_bytes": 2789,
+    "sha256": "1cd0f5506102263a0ecb1ba11f3ec244cb9757cf77352c0ee025c27c80b29d98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-enel400/library/L3PDU/0.0.0%2Bsha.d752922def7d/L3PDU-0.0.0%2Bsha.d752922def7d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-enel400/library/L3PDU/0.0.0%2Bsha.d752922def7d/L3PDU-0.0.0%2Bsha.d752922def7d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-enel400/library/RingBuffer/0.0.0+sha.790344151d69/RingBuffer-0.0.0+sha.790344151d69.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RingBuffer-0.0.0+sha.790344151d69.tar.gz",
+    "size_bytes": 1593,
+    "sha256": "5c34ab77b292dec0a5259fee0fc1cd295ce5568e84ff715afce1b9cff76914a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-enel400/library/RingBuffer/0.0.0%2Bsha.790344151d69/RingBuffer-0.0.0%2Bsha.790344151d69.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-enel400/library/RingBuffer/0.0.0%2Bsha.790344151d69/RingBuffer-0.0.0%2Bsha.790344151d69.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-enel400/library/SX1276Lib/0.0.0+sha.8eef98087d91/SX1276Lib-0.0.0+sha.8eef98087d91.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX1276Lib-0.0.0+sha.8eef98087d91.tar.gz",
+    "size_bytes": 29254,
+    "sha256": "0338ae53fb6030852e2f3fb17d26775b9ca065d26bf85bd8bfb95017df4facd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-enel400/library/SX1276Lib/0.0.0%2Bsha.8eef98087d91/SX1276Lib-0.0.0%2Bsha.8eef98087d91.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-enel400/library/SX1276Lib/0.0.0%2Bsha.8eef98087d91/SX1276Lib-0.0.0%2Bsha.8eef98087d91.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-enel400/library/SerialInterfaceProtocol/0.0.0+sha.390476907bfc/SerialInterfaceProtocol-0.0.0+sha.390476907bfc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialInterfaceProtocol-0.0.0+sha.390476907bfc.tar.gz",
+    "size_bytes": 4436,
+    "sha256": "dc583e5d3c74aea12d9335d67e3a164279ee765d520c74ce69e5a655a9c75ed6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-enel400/library/SerialInterfaceProtocol/0.0.0%2Bsha.390476907bfc/SerialInterfaceProtocol-0.0.0%2Bsha.390476907bfc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-enel400/library/SerialInterfaceProtocol/0.0.0%2Bsha.390476907bfc/SerialInterfaceProtocol-0.0.0%2Bsha.390476907bfc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-enel400/library/crc/0.0.0+sha.70b7787124e0/crc-0.0.0+sha.70b7787124e0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "crc-0.0.0+sha.70b7787124e0.tar.gz",
+    "size_bytes": 928,
+    "sha256": "8662b8e367c04bbff87ecbbe9104d5a20faf6e5879899154e833ee1baed8c8d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-enel400/library/crc/0.0.0%2Bsha.70b7787124e0/crc-0.0.0%2Bsha.70b7787124e0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-enel400/library/crc/0.0.0%2Bsha.70b7787124e0/crc-0.0.0%2Bsha.70b7787124e0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-enel400/library/duinotech_16x2_LCD/0.0.0+sha.b4b2435f4a7f/duinotech_16x2_LCD-0.0.0+sha.b4b2435f4a7f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "duinotech_16x2_LCD-0.0.0+sha.b4b2435f4a7f.tar.gz",
+    "size_bytes": 4666,
+    "sha256": "012d1445e41fca349d936ae25aa909fe8dd9cf379deee87f8eca4f340eaadfb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-enel400/library/duinotech_16x2_LCD/0.0.0%2Bsha.b4b2435f4a7f/duinotech_16x2_LCD-0.0.0%2Bsha.b4b2435f4a7f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-enel400/library/duinotech_16x2_LCD/0.0.0%2Bsha.b4b2435f4a7f/duinotech_16x2_LCD-0.0.0%2Bsha.b4b2435f4a7f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

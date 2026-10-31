@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mjenkins11",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mjenkins11/library/LG1300L_IMU/0.0.0+sha.9bac32f6c9a0/LG1300L_IMU-0.0.0+sha.9bac32f6c9a0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LG1300L_IMU-0.0.0+sha.9bac32f6c9a0.tar.gz",
+    "size_bytes": 2208,
+    "sha256": "7fe21ec60dfd54bcd99e7c274919939bee02d0940bdb3b6e24a309de9d3f8859",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mjenkins11/library/LG1300L_IMU/0.0.0%2Bsha.9bac32f6c9a0/LG1300L_IMU-0.0.0%2Bsha.9bac32f6c9a0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mjenkins11/library/LG1300L_IMU/0.0.0%2Bsha.9bac32f6c9a0/LG1300L_IMU-0.0.0%2Bsha.9bac32f6c9a0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

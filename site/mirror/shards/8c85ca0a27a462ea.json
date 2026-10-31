@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sudomesh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sudomesh/library/LoRaLayer2/1.0.1/LoRaLayer2-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaLayer2-1.0.1.tar.gz",
+    "size_bytes": 14352,
+    "sha256": "dc31f30ff1b12baf142f0a05215b26b1270ca9235ca71933106b291b6337ba6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sudomesh/library/LoRaLayer2/1.0.1/LoRaLayer2-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sudomesh/library/LoRaLayer2/1.0.1/LoRaLayer2-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

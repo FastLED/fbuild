@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/szaffarano",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "szaffarano/library/ACNoblex/1.0.0/ACNoblex-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACNoblex-1.0.0.tar.gz",
+    "size_bytes": 12307,
+    "sha256": "79e8ff02f9a4b2cd0f7a9fd4c5a2b05fd8142db493bb92a99d3b69523cb75187",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/szaffarano/library/ACNoblex/1.0.0/ACNoblex-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/szaffarano/library/ACNoblex/1.0.0/ACNoblex-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

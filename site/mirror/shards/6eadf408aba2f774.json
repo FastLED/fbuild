@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nishanthraj707",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nishanthraj707/library/BAVA%20Protocol/1.0.1/BAVAProtocol-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BAVAProtocol-1.0.1.tar.gz",
+    "size_bytes": 10696,
+    "sha256": "1435b7b1fa641fa89c3a1c4ee2a8c9b8a133bf5ff4bb4a311f6ac9448bd7f4d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nishanthraj707/library/BAVA%2520Protocol/1.0.1/BAVAProtocol-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nishanthraj707/library/BAVA%20Protocol/1.0.1/BAVAProtocol-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nishanthraj707/library/BAVA%20Protocol/1.0.2/bava-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bava-1.0.2.tar.gz",
+    "size_bytes": 37859,
+    "sha256": "6d51140254fe834d6863d64cea185560ec24bc92ba453d9bbd55bd0180f76107",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nishanthraj707/library/BAVA%2520Protocol/1.0.2/bava-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nishanthraj707/library/BAVA%20Protocol/1.0.2/bava-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nishanthraj707/library/BAVA%20Protocol/1.0.4/bava-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bava-1.0.4.tar.gz",
+    "size_bytes": 50586,
+    "sha256": "6cda23d47e7dd247fc12f2ba9387b4b6015b338d31898eda661439c45f008418",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nishanthraj707/library/BAVA%2520Protocol/1.0.4/bava-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nishanthraj707/library/BAVA%20Protocol/1.0.4/bava-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nishanthraj707/library/BAVA%20Protocol/1.0.5/BAVAProtocol-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BAVAProtocol-1.0.5.tar.gz",
+    "size_bytes": 30248,
+    "sha256": "b67e9256f2e0d51ed98b2c8d2cac25100b13c9eea286930e8f20bb0e260157d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nishanthraj707/library/BAVA%2520Protocol/1.0.5/BAVAProtocol-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nishanthraj707/library/BAVA%20Protocol/1.0.5/BAVAProtocol-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

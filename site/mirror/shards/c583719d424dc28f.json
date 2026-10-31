@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/openmrn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "openmrn/library/OpenMRNLite/2.2.1/OpenMRNLite-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenMRNLite-2.2.1.tar.gz",
+    "size_bytes": 670069,
+    "sha256": "51911706f4ac5e003d1b9cd380823e3bb777749720c23827a1d281fadc603ee0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openmrn/library/OpenMRNLite/2.2.1/OpenMRNLite-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/openmrn/library/OpenMRNLite/2.2.1/OpenMRNLite-2.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sbe3binkz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sbe3binkz/library/Thermistor/1.0.0/Thermistor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Thermistor-1.0.0.tar.gz",
+    "size_bytes": 1799,
+    "sha256": "f1bbeb1b6522a46f4b749016d1a2440e5b5bf5310af53e0a0bfb385b73bcdc68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbe3binkz/library/Thermistor/1.0.0/Thermistor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sbe3binkz/library/Thermistor/1.0.0/Thermistor-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

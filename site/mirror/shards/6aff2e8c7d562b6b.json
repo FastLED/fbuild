@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kotobuki",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kotobuki/library/SetPoint/1.0/SetPoint-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SetPoint-1.0.tar.gz",
+    "size_bytes": 2258,
+    "sha256": "57229095b32794db52bdbffb5a51550f2793213a33462bcea6f5b7a0aa5aae1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kotobuki/library/SetPoint/1.0/SetPoint-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kotobuki/library/SetPoint/1.0/SetPoint-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

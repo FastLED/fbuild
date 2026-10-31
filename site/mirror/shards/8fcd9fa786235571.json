@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kimballa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kimballa/library/PyArduinoDebug/0.5.0/PyArduinoDebug-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PyArduinoDebug-0.5.0.tar.gz",
+    "size_bytes": 21088,
+    "sha256": "febd08c529e2411fb38169b6311c113c772e08e594ded2e942e0fac10df37908",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kimballa/library/PyArduinoDebug/0.5.0/PyArduinoDebug-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kimballa/library/PyArduinoDebug/0.5.0/PyArduinoDebug-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kimballa/library/tiny-collections/0.3.0/tiny-collections-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tiny-collections-0.3.0.tar.gz",
+    "size_bytes": 9330,
+    "sha256": "04077bec2554843f253344b53e5332459783cdc217183d70a3cb92723406e4ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kimballa/library/tiny-collections/0.3.0/tiny-collections-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kimballa/library/tiny-collections/0.3.0/tiny-collections-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kimballa/library/uiwidgets/0.2.0/uiwidgets-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uiwidgets-0.2.0.tar.gz",
+    "size_bytes": 22661,
+    "sha256": "5d2fe354ff94e90b4b8e5bb6ec07595c61101644d1a246d31fb54ba249312717",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kimballa/library/uiwidgets/0.2.0/uiwidgets-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kimballa/library/uiwidgets/0.2.0/uiwidgets-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

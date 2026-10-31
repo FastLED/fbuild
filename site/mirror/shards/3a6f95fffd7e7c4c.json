@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-softsysco",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-softsysco/library/Grove_AS3935Lightning_sensor/1.0.0/Grove_AS3935Lightning_sensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grove_AS3935Lightning_sensor-1.0.0.tar.gz",
+    "size_bytes": 18991,
+    "sha256": "ce78fe1ab1ec473d62470ea1aff1f87621efab49fedd7ab163c2d93bd2c94df9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-softsysco/library/Grove_AS3935Lightning_sensor/1.0.0/Grove_AS3935Lightning_sensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-softsysco/library/Grove_AS3935Lightning_sensor/1.0.0/Grove_AS3935Lightning_sensor-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-d15321854",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-d15321854/library/MPU9250/0.0.0+sha.2b7b98cf595c/MPU9250-0.0.0+sha.2b7b98cf595c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9250-0.0.0+sha.2b7b98cf595c.tar.gz",
+    "size_bytes": 5727,
+    "sha256": "3cdfd23fe5825f1a1f431cf7ddc13de88c7645dfd914c51623ed6fabc03dfe6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-d15321854/library/MPU9250/0.0.0%2Bsha.2b7b98cf595c/MPU9250-0.0.0%2Bsha.2b7b98cf595c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-d15321854/library/MPU9250/0.0.0%2Bsha.2b7b98cf595c/MPU9250-0.0.0%2Bsha.2b7b98cf595c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

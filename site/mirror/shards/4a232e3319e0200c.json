@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tgiachi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tgiachi/library/airsoft-modula-library/1.0.5/airsoft-modula-library-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "airsoft-modula-library-1.0.5.tar.gz",
+    "size_bytes": 4252,
+    "sha256": "69ccbf4e8c85b5752c47fb8e64e451eacb76c8aba3ba85f7cbb8db2144c993a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tgiachi/library/airsoft-modula-library/1.0.5/airsoft-modula-library-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tgiachi/library/airsoft-modula-library/1.0.5/airsoft-modula-library-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tgiachi/library/airsoft-modula/1.1.6/airsoft-modula-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "airsoft-modula-1.1.6.tar.gz",
+    "size_bytes": 4116,
+    "sha256": "412fb4e461f659a1750e69e28a9d00aa0ef298599216b7e74f9dc59046bcfbf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tgiachi/library/airsoft-modula/1.1.6/airsoft-modula-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tgiachi/library/airsoft-modula/1.1.6/airsoft-modula-1.1.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

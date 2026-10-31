@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wolpra98",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wolpra98/library/Date/0.0.0+sha.d2f9a55f0e6d/Date-0.0.0+sha.d2f9a55f0e6d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Date-0.0.0+sha.d2f9a55f0e6d.tar.gz",
+    "size_bytes": 918,
+    "sha256": "92634f75bdfa28c9d857c9815e4f93d5cb98942ec6675ff20d7c58727298e034",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wolpra98/library/Date/0.0.0%2Bsha.d2f9a55f0e6d/Date-0.0.0%2Bsha.d2f9a55f0e6d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wolpra98/library/Date/0.0.0%2Bsha.d2f9a55f0e6d/Date-0.0.0%2Bsha.d2f9a55f0e6d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wolpra98/library/LCD/0.0.0+sha.b25367985a15/LCD-0.0.0+sha.b25367985a15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD-0.0.0+sha.b25367985a15.tar.gz",
+    "size_bytes": 2740,
+    "sha256": "28760124c460f6671386fd13a618a8872ec4612e03d4d2ebb59c8af0b5b05991",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wolpra98/library/LCD/0.0.0%2Bsha.b25367985a15/LCD-0.0.0%2Bsha.b25367985a15.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wolpra98/library/LCD/0.0.0%2Bsha.b25367985a15/LCD-0.0.0%2Bsha.b25367985a15.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/freaklabs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "freaklabs/library/cmdArduino/1.0.0/cmdArduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cmdArduino-1.0.0.tar.gz",
+    "size_bytes": 6167,
+    "sha256": "3edd489e2cfc945b1768f437b26ada5f195e0b7e80b73fa1a910eb16c9263790",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/freaklabs/library/cmdArduino/1.0.0/cmdArduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/freaklabs/library/cmdArduino/1.0.0/cmdArduino-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

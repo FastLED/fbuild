@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gigasitron-xcross",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gigasitron-xcross/library/XC_GUI/1.0.1/XC_GUI-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XC_GUI-1.0.1.tar.gz",
+    "size_bytes": 1236823,
+    "sha256": "9ba004b9f1e15d06976b6b7e8ec74d86ad9caea539045c7e81ad45a41cada74b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gigasitron-xcross/library/XC_GUI/1.0.1/XC_GUI-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gigasitron-xcross/library/XC_GUI/1.0.1/XC_GUI-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gigasitron-xcross/library/XC_GUI/1.0.8/XC_GUI-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XC_GUI-1.0.8.tar.gz",
+    "size_bytes": 1320626,
+    "sha256": "a788ac00bc79b83b7db140843f0b3bb56d9eaa7bb470a1321610d957224ebb48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gigasitron-xcross/library/XC_GUI/1.0.8/XC_GUI-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/gigasitron-xcross/library/XC_GUI/1.0.8/XC_GUI-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gigasitron-xcross/library/XC_GUI/1.0.9/XC_GUI-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XC_GUI-1.0.9.tar.gz",
+    "size_bytes": 1321004,
+    "sha256": "3149631ca78190c94326a0b179f3ba466e0c2b774c48004ce353228ad2c1d7fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gigasitron-xcross/library/XC_GUI/1.0.9/XC_GUI-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/gigasitron-xcross/library/XC_GUI/1.0.9/XC_GUI-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gigasitron-xcross/library/XC_GUI/1.1.0/XC_GUI-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XC_GUI-1.1.0.tar.gz",
+    "size_bytes": 1446597,
+    "sha256": "32be8304e34fa362d0cfa97c51c4e6eb8bf3423c5c687fe8c40e5aa20c80851b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gigasitron-xcross/library/XC_GUI/1.1.0/XC_GUI-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gigasitron-xcross/library/XC_GUI/1.1.0/XC_GUI-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gigasitron-xcross/library/XC_GUI/1.1.1/XC_GUI-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XC_GUI-1.1.1.tar.gz",
+    "size_bytes": 1526514,
+    "sha256": "25a8184abe9a792707ef278452ae85992cc7bf8bb8a07a0d12b372e2af07823e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gigasitron-xcross/library/XC_GUI/1.1.1/XC_GUI-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gigasitron-xcross/library/XC_GUI/1.1.1/XC_GUI-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gigasitron-xcross/library/XC_GUI/1.1.3/XC_GUI-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XC_GUI-1.1.3.tar.gz",
+    "size_bytes": 1707569,
+    "sha256": "eca6f57d9f2361b225f2544b7f5da6110c33337ac54df7fda523ceb5819a372d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gigasitron-xcross/library/XC_GUI/1.1.3/XC_GUI-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gigasitron-xcross/library/XC_GUI/1.1.3/XC_GUI-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gigasitron-xcross/library/XC_GUI/1.1.6/XC_GUI-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XC_GUI-1.1.6.tar.gz",
+    "size_bytes": 1711730,
+    "sha256": "dc3d7aaafb57a908cf97bf49489e789e839d892b3c2a88c7d77512636f106ebe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gigasitron-xcross/library/XC_GUI/1.1.6/XC_GUI-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gigasitron-xcross/library/XC_GUI/1.1.6/XC_GUI-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gigasitron-xcross/library/XC_SR04/0.1.0/XC_SR04-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XC_SR04-0.1.0.tar.gz",
+    "size_bytes": 7673,
+    "sha256": "b95cf8f588ba87871e96021cc216f91e2001a595ca787c750bbcb0e4ef52c98d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gigasitron-xcross/library/XC_SR04/0.1.0/XC_SR04-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gigasitron-xcross/library/XC_SR04/0.1.0/XC_SR04-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

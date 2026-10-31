@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-raminou",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-raminou/library/QMC5883L/0.0.0+sha.4136b94b5cb9/QMC5883L-0.0.0+sha.4136b94b5cb9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QMC5883L-0.0.0+sha.4136b94b5cb9.tar.gz",
+    "size_bytes": 2531,
+    "sha256": "eeb3434d40bb790892ebf3309665066e3c98377e00f7cf6eecacab8c7435aa66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-raminou/library/QMC5883L/0.0.0%2Bsha.4136b94b5cb9/QMC5883L-0.0.0%2Bsha.4136b94b5cb9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-raminou/library/QMC5883L/0.0.0%2Bsha.4136b94b5cb9/QMC5883L-0.0.0%2Bsha.4136b94b5cb9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

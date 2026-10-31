@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mrmot021",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mrmot021/library/PLS7%20shield/1.3.0/PLS7shield-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PLS7shield-1.3.0.tar.gz",
+    "size_bytes": 2347,
+    "sha256": "c10aae7be23ec1ff72cc29c48d4f0bc256c5edd0b34ec55a0c9ab2cd16d8f393",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrmot021/library/PLS7%2520shield/1.3.0/PLS7shield-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mrmot021/library/PLS7%20shield/1.3.0/PLS7shield-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

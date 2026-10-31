@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vockens-group-sensors",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vockens-group-sensors/library/TSL2561_library/0.0.0+sha.5b5911bfc644/TSL2561_library-0.0.0+sha.5b5911bfc644.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSL2561_library-0.0.0+sha.5b5911bfc644.tar.gz",
+    "size_bytes": 5747,
+    "sha256": "546846516083f7c27d079083dd83fc055720576e19c9b6ab6cd647257ea71be7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vockens-group-sensors/library/TSL2561_library/0.0.0%2Bsha.5b5911bfc644/TSL2561_library-0.0.0%2Bsha.5b5911bfc644.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vockens-group-sensors/library/TSL2561_library/0.0.0%2Bsha.5b5911bfc644/TSL2561_library-0.0.0%2Bsha.5b5911bfc644.tar.gz"
+    ]
+   }
+  }
+ ]
+}

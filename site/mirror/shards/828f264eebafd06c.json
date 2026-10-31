@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mazylol",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mazylol/library/QuickLED/1.2.2/QuickLED-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuickLED-1.2.2.tar.gz",
+    "size_bytes": 6282,
+    "sha256": "35c73dd1bad3a07780cc204e7c99a7397e3ae2aca4f45a12d0a77b5077a1f23c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mazylol/library/QuickLED/1.2.2/QuickLED-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mazylol/library/QuickLED/1.2.2/QuickLED-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

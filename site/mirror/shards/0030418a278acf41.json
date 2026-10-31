@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bram",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bram/library/Embedded%20lib/1.0.4/Embeddedlib-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Embeddedlib-1.0.4.tar.gz",
+    "size_bytes": 3391,
+    "sha256": "4fb193b2b80fa4e2dfdc47acbc9f70e11062d5701001792a39b38bf708f6031a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bram/library/Embedded%2520lib/1.0.4/Embeddedlib-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bram/library/Embedded%20lib/1.0.4/Embeddedlib-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

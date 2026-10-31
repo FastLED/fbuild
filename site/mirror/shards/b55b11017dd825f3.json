@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/puuu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "puuu/library/ESPiLight/0.17.0/ESPiLight-0.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPiLight-0.17.0.tar.gz",
+    "size_bytes": 96221,
+    "sha256": "7a175df382d50dd532d5ed5bad8a15c5c80a0ed25532ceac9c55d125502a8f22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/puuu/library/ESPiLight/0.17.0/ESPiLight-0.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/puuu/library/ESPiLight/0.17.0/ESPiLight-0.17.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "puuu/library/USIWire/0.2.0/USIWire-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USIWire-0.2.0.tar.gz",
+    "size_bytes": 25379,
+    "sha256": "52e496eceb97c4a4ba2e8b3e6f4c8f1096896adc508edcb97e40d35540907381",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/puuu/library/USIWire/0.2.0/USIWire-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/puuu/library/USIWire/0.2.0/USIWire-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/grubykarol",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "grubykarol/library/RemoteDebugFork997/3.0.7/RemoteDebugFork997-3.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteDebugFork997-3.0.7.tar.gz",
+    "size_bytes": 60755,
+    "sha256": "5490d9a86b52373287327d8a54d691f4e2055c77892b87fb1d5da1f64d2c2c81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/grubykarol/library/RemoteDebugFork997/3.0.7/RemoteDebugFork997-3.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/grubykarol/library/RemoteDebugFork997/3.0.7/RemoteDebugFork997-3.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

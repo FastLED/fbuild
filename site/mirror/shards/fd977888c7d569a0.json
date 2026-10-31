@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/razvan-mocanu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "razvan-mocanu/library/LC709204F/1.0.0/LC709204F-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LC709204F-1.0.0.tar.gz",
+    "size_bytes": 11870,
+    "sha256": "aaefb34f023f40d9626d2b5158c5d8c2f0bdb85ed44ca5254d1aca2dedd7d6ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/razvan-mocanu/library/LC709204F/1.0.0/LC709204F-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/razvan-mocanu/library/LC709204F/1.0.0/LC709204F-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ledongthuc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ledongthuc/library/CustomSoftwareSerial/1.0.0/CustomSoftwareSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CustomSoftwareSerial-1.0.0.tar.gz",
+    "size_bytes": 8297,
+    "sha256": "c94f6ca0379f3aa4f3718c98a910b660f0e735cce178c7b4d05b9ee0c1419a5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ledongthuc/library/CustomSoftwareSerial/1.0.0/CustomSoftwareSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ledongthuc/library/CustomSoftwareSerial/1.0.0/CustomSoftwareSerial-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

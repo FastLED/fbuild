@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iamthechad",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iamthechad/library/Parallax%20LCD/1.2/ParallaxLCD-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ParallaxLCD-1.2.tar.gz",
+    "size_bytes": 5813,
+    "sha256": "6c0e0ec8c4427deb03c577b38ebf6b40d089d438d904d5f776bde4af4b5bd89b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iamthechad/library/Parallax%2520LCD/1.2/ParallaxLCD-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/iamthechad/library/Parallax%20LCD/1.2/ParallaxLCD-1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

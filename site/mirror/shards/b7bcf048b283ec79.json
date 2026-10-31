@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-team-h-tvz-seminar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-team-h-tvz-seminar/library/BMP280/0.0.0+sha.ebdd46de7842/BMP280-0.0.0+sha.ebdd46de7842.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP280-0.0.0+sha.ebdd46de7842.tar.gz",
+    "size_bytes": 2987,
+    "sha256": "f7f21dc6ef13212f4bd9e19eba1a63d5e9ee764b86772eb55c39f3937664b2d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team-h-tvz-seminar/library/BMP280/0.0.0%2Bsha.ebdd46de7842/BMP280-0.0.0%2Bsha.ebdd46de7842.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team-h-tvz-seminar/library/BMP280/0.0.0%2Bsha.ebdd46de7842/BMP280-0.0.0%2Bsha.ebdd46de7842.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-team-h-tvz-seminar/library/Library%20for%20QMC5883L/0.0.0+sha.146db5bc0fee/LibraryforQMC5883L-0.0.0+sha.146db5bc0fee.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibraryforQMC5883L-0.0.0+sha.146db5bc0fee.tar.gz",
+    "size_bytes": 2122,
+    "sha256": "ddc753be840306cd522213007bcd4814c7d715bb01c693a9e1a0f3e3aff69ce4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team-h-tvz-seminar/library/Library%2520for%2520QMC5883L/0.0.0%2Bsha.146db5bc0fee/LibraryforQMC5883L-0.0.0%2Bsha.146db5bc0fee.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team-h-tvz-seminar/library/Library%20for%20QMC5883L/0.0.0%2Bsha.146db5bc0fee/LibraryforQMC5883L-0.0.0%2Bsha.146db5bc0fee.tar.gz"
+    ]
+   }
+  }
+ ]
+}

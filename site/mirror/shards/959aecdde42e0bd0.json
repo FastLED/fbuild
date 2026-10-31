@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-baserk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-baserk/library/HMC5883L/0.0.0+sha.bbc9ad18fd3e/HMC5883L-0.0.0+sha.bbc9ad18fd3e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC5883L-0.0.0+sha.bbc9ad18fd3e.tar.gz",
+    "size_bytes": 3382,
+    "sha256": "bcc9b6c8d88b298bb3e39ba35157e4cec215e154b03a4bb867b2a9c2c56e69fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-baserk/library/HMC5883L/0.0.0%2Bsha.bbc9ad18fd3e/HMC5883L-0.0.0%2Bsha.bbc9ad18fd3e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-baserk/library/HMC5883L/0.0.0%2Bsha.bbc9ad18fd3e/HMC5883L-0.0.0%2Bsha.bbc9ad18fd3e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-baserk/library/brushlessController_L293D/0.0.0+sha.7cab71c38d62/brushlessController_L293D-0.0.0+sha.7cab71c38d62.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "brushlessController_L293D-0.0.0+sha.7cab71c38d62.tar.gz",
+    "size_bytes": 2498,
+    "sha256": "ec276fbcf763977142fdb17f862515a0a8508f5818a3ffe7e8dae221d2b29a6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-baserk/library/brushlessController_L293D/0.0.0%2Bsha.7cab71c38d62/brushlessController_L293D-0.0.0%2Bsha.7cab71c38d62.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-baserk/library/brushlessController_L293D/0.0.0%2Bsha.7cab71c38d62/brushlessController_L293D-0.0.0%2Bsha.7cab71c38d62.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-baserk/library/brushlessController_TB6612FNG/0.0.0+sha.32d402d0ee1e/brushlessController_TB6612FNG-0.0.0+sha.32d402d0ee1e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "brushlessController_TB6612FNG-0.0.0+sha.32d402d0ee1e.tar.gz",
+    "size_bytes": 3402,
+    "sha256": "9c4d246a57fdc5eda6474883e8dc6d226fb80ff75fe56303d2630b4bde2b86fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-baserk/library/brushlessController_TB6612FNG/0.0.0%2Bsha.32d402d0ee1e/brushlessController_TB6612FNG-0.0.0%2Bsha.32d402d0ee1e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-baserk/library/brushlessController_TB6612FNG/0.0.0%2Bsha.32d402d0ee1e/brushlessController_TB6612FNG-0.0.0%2Bsha.32d402d0ee1e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-baserk/library/ledControl/0.0.0+sha.c86dd9e1bb24/ledControl-0.0.0+sha.c86dd9e1bb24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ledControl-0.0.0+sha.c86dd9e1bb24.tar.gz",
+    "size_bytes": 1775,
+    "sha256": "8ab950d0bab48ae836e9ede7f17bfa50b5e8e404d348bddfc42192ba4c683214",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-baserk/library/ledControl/0.0.0%2Bsha.c86dd9e1bb24/ledControl-0.0.0%2Bsha.c86dd9e1bb24.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-baserk/library/ledControl/0.0.0%2Bsha.c86dd9e1bb24/ledControl-0.0.0%2Bsha.c86dd9e1bb24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-baserk/library/ledControl2/0.0.0+sha.1655ee0ec2ca/ledControl2-0.0.0+sha.1655ee0ec2ca.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ledControl2-0.0.0+sha.1655ee0ec2ca.tar.gz",
+    "size_bytes": 1980,
+    "sha256": "c8dd15b9bc7ce29e15857b7af9ddea4a0d231f9f43bc2a2270b647356ece5339",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-baserk/library/ledControl2/0.0.0%2Bsha.1655ee0ec2ca/ledControl2-0.0.0%2Bsha.1655ee0ec2ca.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-baserk/library/ledControl2/0.0.0%2Bsha.1655ee0ec2ca/ledControl2-0.0.0%2Bsha.1655ee0ec2ca.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-baserk/library/ledCounter/0.0.0+sha.dbabf5266268/ledCounter-0.0.0+sha.dbabf5266268.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ledCounter-0.0.0+sha.dbabf5266268.tar.gz",
+    "size_bytes": 1784,
+    "sha256": "d33c71e9aa1a567adce1cbb29e927f0d7944194197802107311767bdc06fcb4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-baserk/library/ledCounter/0.0.0%2Bsha.dbabf5266268/ledCounter-0.0.0%2Bsha.dbabf5266268.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-baserk/library/ledCounter/0.0.0%2Bsha.dbabf5266268/ledCounter-0.0.0%2Bsha.dbabf5266268.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-baserk/library/led_KnightRider/0.0.0+sha.40f0e5d34c52/led_KnightRider-0.0.0+sha.40f0e5d34c52.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "led_KnightRider-0.0.0+sha.40f0e5d34c52.tar.gz",
+    "size_bytes": 1706,
+    "sha256": "4db759489737d09cc382751810edeefcc600cb32f59cb9842f954583a65872de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-baserk/library/led_KnightRider/0.0.0%2Bsha.40f0e5d34c52/led_KnightRider-0.0.0%2Bsha.40f0e5d34c52.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-baserk/library/led_KnightRider/0.0.0%2Bsha.40f0e5d34c52/led_KnightRider-0.0.0%2Bsha.40f0e5d34c52.tar.gz"
+    ]
+   }
+  }
+ ]
+}

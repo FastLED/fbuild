@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eiannone",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eiannone/library/Blinker/1.0.0/Blinker-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blinker-1.0.0.tar.gz",
+    "size_bytes": 13938,
+    "sha256": "51955b5d3330cca1521ed3befd0c46f7393bfcec9b00c4674fa7da9e4b1c1b0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eiannone/library/Blinker/1.0.0/Blinker-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eiannone/library/Blinker/1.0.0/Blinker-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eiannone/library/Heltec_Esp32_Display/0.1.0/Heltec_Esp32_Display-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Heltec_Esp32_Display-0.1.0.tar.gz",
+    "size_bytes": 41751,
+    "sha256": "a437b36e2fa131c1c61791f5d5305ac9e39e384d452cdf1ecb57742a8e60f81f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eiannone/library/Heltec_Esp32_Display/0.1.0/Heltec_Esp32_Display-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eiannone/library/Heltec_Esp32_Display/0.1.0/Heltec_Esp32_Display-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eiannone/library/Heltec_Esp32_LoRaWan/0.7.0/Heltec_Esp32_LoRaWan-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Heltec_Esp32_LoRaWan-0.7.0.tar.gz",
+    "size_bytes": 401167,
+    "sha256": "57bdd2d28f96b5eaae51b7bf147357677b2c7ba56d5184cd11af73718051176c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eiannone/library/Heltec_Esp32_LoRaWan/0.7.0/Heltec_Esp32_LoRaWan-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eiannone/library/Heltec_Esp32_LoRaWan/0.7.0/Heltec_Esp32_LoRaWan-0.7.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

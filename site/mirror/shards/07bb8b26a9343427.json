@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jcrygier",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jcrygier/library/ESP8266UPnP/0.0.1/ESP8266UPnP-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266UPnP-0.0.1.tar.gz",
+    "size_bytes": 3125,
+    "sha256": "bd9c73dc5cc934939b18abb9813efb5a2bbca7367da2ab61a8329e069987da35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcrygier/library/ESP8266UPnP/0.0.1/ESP8266UPnP-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jcrygier/library/ESP8266UPnP/0.0.1/ESP8266UPnP-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

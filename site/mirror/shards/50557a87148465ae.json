@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/proffalken",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "proffalken/library/Sigil/0.7.1/Sigil-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sigil-0.7.1.tar.gz",
+    "size_bytes": 12101,
+    "sha256": "931c05610d72d79f7cad7cd96f71e117d5d08818a830ff0ecef85eaf778d2c8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/proffalken/library/Sigil/0.7.1/Sigil-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/proffalken/library/Sigil/0.7.1/Sigil-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "proffalken/library/Sigil/0.7.2/Sigil-0.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sigil-0.7.2.tar.gz",
+    "size_bytes": 12314,
+    "sha256": "7eee52d2c1037a4ca5e9b6b7c2c72402738002635f2e2515ac2464fd7baac696",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/proffalken/library/Sigil/0.7.2/Sigil-0.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/proffalken/library/Sigil/0.7.2/Sigil-0.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "proffalken/library/Sigil/0.7.3/Sigil-0.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sigil-0.7.3.tar.gz",
+    "size_bytes": 12477,
+    "sha256": "f27c86a49cb767f09ff4de7e256e166f6d53b0f6e0c25ad8732c2a9c7f895309",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/proffalken/library/Sigil/0.7.3/Sigil-0.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/proffalken/library/Sigil/0.7.3/Sigil-0.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "proffalken/library/Sigil/0.7.4/Sigil-0.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sigil-0.7.4.tar.gz",
+    "size_bytes": 13964,
+    "sha256": "865dbe7f398716c40d8ad928c4a3474acb8a06692f1cbda955ec6794fc754047",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/proffalken/library/Sigil/0.7.4/Sigil-0.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/proffalken/library/Sigil/0.7.4/Sigil-0.7.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "proffalken/library/Sigil/0.7.5/Sigil-0.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sigil-0.7.5.tar.gz",
+    "size_bytes": 16715,
+    "sha256": "119e663519b297c354447b542c918d12a6ed5f62615101f4bb24528605b5db37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/proffalken/library/Sigil/0.7.5/Sigil-0.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/proffalken/library/Sigil/0.7.5/Sigil-0.7.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "proffalken/library/Sigil/0.8.0/Sigil-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sigil-0.8.0.tar.gz",
+    "size_bytes": 17866,
+    "sha256": "aae3bcf39778376b50c8be275356ffc90b160ab5ad6a9bc1e886000d108afe48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/proffalken/library/Sigil/0.8.0/Sigil-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/proffalken/library/Sigil/0.8.0/Sigil-0.8.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

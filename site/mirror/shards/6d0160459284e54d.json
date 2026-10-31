@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ghostcrab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ghostcrab/library/ADS7128/1.1.0/ADS7128-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS7128-1.1.0.tar.gz",
+    "size_bytes": 19758,
+    "sha256": "f65d53e797d82e8516e4c289c92577569742ee0c887a9caf69b6ede5a436cfc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ghostcrab/library/ADS7128/1.1.0/ADS7128-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ghostcrab/library/ADS7128/1.1.0/ADS7128-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

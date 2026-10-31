@@ -1,0 +1,503 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/diyables",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "diyables/library/DIYables%20Bluetooth/1.0.0/DIYablesBluetooth-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesBluetooth-1.0.0.tar.gz",
+    "size_bytes": 46818,
+    "sha256": "3d9025e9ea0c52e7a00bfa20ae27038da9aea133c6d93c19ef6e6b061aa38e2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520Bluetooth/1.0.0/DIYablesBluetooth-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20Bluetooth/1.0.0/DIYablesBluetooth-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20Bluetooth/1.0.1/DIYablesBluetooth-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesBluetooth-1.0.1.tar.gz",
+    "size_bytes": 47255,
+    "sha256": "f2417d3a435dd65c9de6a75a9cb61c65ba37ab53e69b166383c8d6fc42f79cd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520Bluetooth/1.0.1/DIYablesBluetooth-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20Bluetooth/1.0.1/DIYablesBluetooth-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20ESP32%20WebApps/1.0.1/DIYablesESP32WebApps-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesESP32WebApps-1.0.1.tar.gz",
+    "size_bytes": 23275,
+    "sha256": "9b44f8dbb630096c060d837e9f1bc47c4783d0b3ed72d5dbd06fb733fd33e180",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520ESP32%2520WebApps/1.0.1/DIYablesESP32WebApps-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20ESP32%20WebApps/1.0.1/DIYablesESP32WebApps-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20ESP32%20WebServer/1.0.0/DIYablesESP32WebServer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesESP32WebServer-1.0.0.tar.gz",
+    "size_bytes": 41447,
+    "sha256": "ce21f30d33fd12bef4c19788f66413d734a46b53b75b071c5d2c91bce0c8c2d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520ESP32%2520WebServer/1.0.0/DIYablesESP32WebServer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20ESP32%20WebServer/1.0.0/DIYablesESP32WebServer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20ESP32%20WebServer/1.0.1/DIYablesESP32WebServer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesESP32WebServer-1.0.1.tar.gz",
+    "size_bytes": 40699,
+    "sha256": "2bbb4d9fd47b9a4984aef98d3f5af240343ae8e8b566539d4a6feaf36d3c7839",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520ESP32%2520WebServer/1.0.1/DIYablesESP32WebServer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20ESP32%20WebServer/1.0.1/DIYablesESP32WebServer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20LCD%20I2C/1.0.0/DIYablesLCDI2C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesLCDI2C-1.0.0.tar.gz",
+    "size_bytes": 15206,
+    "sha256": "83f48f3773ca94dd85a16b1ee2adefcdd0bee521eb926c14345f1bc768814651",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520LCD%2520I2C/1.0.0/DIYablesLCDI2C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20LCD%20I2C/1.0.0/DIYablesLCDI2C-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20TFT%20Round/1.0.1/DIYablesTFTRound-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesTFTRound-1.0.1.tar.gz",
+    "size_bytes": 12805,
+    "sha256": "c18afb18561af8dd66ec3230054ee05d90b9e5f6d372356dbe372b90552020ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520TFT%2520Round/1.0.1/DIYablesTFTRound-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20TFT%20Round/1.0.1/DIYablesTFTRound-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20TFT%20Round/1.1.0/DIYablesTFTRound-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesTFTRound-1.1.0.tar.gz",
+    "size_bytes": 13631,
+    "sha256": "bbe5219e7dd20cbdae29132c2c4c7e794fc562d260a8a2b22a89a8341252a85d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520TFT%2520Round/1.1.0/DIYablesTFTRound-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20TFT%20Round/1.1.0/DIYablesTFTRound-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20TFT%20SPI/1.0.0/DIYablesTFTSPI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesTFTSPI-1.0.0.tar.gz",
+    "size_bytes": 26212,
+    "sha256": "0c2b1ac887af1446efad964a210f0cc436209a82f52ee1f1eb05c7583ac5b21f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520TFT%2520SPI/1.0.0/DIYablesTFTSPI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20TFT%20SPI/1.0.0/DIYablesTFTSPI-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20TFT%20SPI/1.0.1/DIYablesTFTSPI-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesTFTSPI-1.0.1.tar.gz",
+    "size_bytes": 27475,
+    "sha256": "c408b646e7a1fef7dc72761cf73d4c63ec16727dae71af8a83fb926c28ede695",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520TFT%2520SPI/1.0.1/DIYablesTFTSPI-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20TFT%20SPI/1.0.1/DIYablesTFTSPI-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20TFT%20SPI/1.0.3/DIYablesTFTSPI-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesTFTSPI-1.0.3.tar.gz",
+    "size_bytes": 33777,
+    "sha256": "0bcccf2f7cbcea7cb9142d74be58dc834d2090634b55c691f56fc2a908d787fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520TFT%2520SPI/1.0.3/DIYablesTFTSPI-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20TFT%20SPI/1.0.3/DIYablesTFTSPI-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20TFT%20Shield%20Mega/1.0.0/DIYablesTFTShieldMega-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesTFTShieldMega-1.0.0.tar.gz",
+    "size_bytes": 17212,
+    "sha256": "c89b947fe7767281544991b3e3d6645778b58408ec78ce93d1c31e2d9c87cfbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520TFT%2520Shield%2520Mega/1.0.0/DIYablesTFTShieldMega-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20TFT%20Shield%20Mega/1.0.0/DIYablesTFTShieldMega-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20TFT%20Shield%20Mega/1.0.1/DIYablesTFTShieldMega-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesTFTShieldMega-1.0.1.tar.gz",
+    "size_bytes": 17253,
+    "sha256": "be2e6d03c6db68a25ceec95b5d0cb412ac9cd99b4ab68c409a9e82af98f88feb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520TFT%2520Shield%2520Mega/1.0.1/DIYablesTFTShieldMega-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20TFT%20Shield%20Mega/1.0.1/DIYablesTFTShieldMega-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20TFT%20Shield%20Mega/1.0.2/DIYablesTFTShieldMega-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesTFTShieldMega-1.0.2.tar.gz",
+    "size_bytes": 17381,
+    "sha256": "a95e05bae91141e8cf2f4cad7687b03d6944f51c50a40e3515de08abf5348bac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520TFT%2520Shield%2520Mega/1.0.2/DIYablesTFTShieldMega-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20TFT%20Shield%20Mega/1.0.2/DIYablesTFTShieldMega-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20TFT%20Shield/1.1.0/DIYablesTFTShield-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesTFTShield-1.1.0.tar.gz",
+    "size_bytes": 15624,
+    "sha256": "056be463813008667361119466e254983155ea23a2dcdd3056bfa9c8d15f14b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520TFT%2520Shield/1.1.0/DIYablesTFTShield-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20TFT%20Shield/1.1.0/DIYablesTFTShield-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20TFT%20Shield/1.1.2/DIYablesTFTShield-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesTFTShield-1.1.2.tar.gz",
+    "size_bytes": 15632,
+    "sha256": "20628154b81d6a5f19b93051759936c02d67c6b075734537cdd28a461226efa3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520TFT%2520Shield/1.1.2/DIYablesTFTShield-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20TFT%20Shield/1.1.2/DIYablesTFTShield-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20TFT%20Touch%20Shield/2.0.0/DIYablesTFTTouchShield-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesTFTTouchShield-2.0.0.tar.gz",
+    "size_bytes": 16773,
+    "sha256": "3eaaac50fd4b1222ec61d69bc9a86037c437a47396063a0a9f3eee77e07900b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520TFT%2520Touch%2520Shield/2.0.0/DIYablesTFTTouchShield-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20TFT%20Touch%20Shield/2.0.0/DIYablesTFTTouchShield-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20TFT%20Touch%20Shield/2.0.1/DIYablesTFTTouchShield-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesTFTTouchShield-2.0.1.tar.gz",
+    "size_bytes": 16913,
+    "sha256": "70259524d4a5b1c85a87e0a1d861fe460d62ed6e838e00f66bffd283203f7019",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520TFT%2520Touch%2520Shield/2.0.1/DIYablesTFTTouchShield-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20TFT%20Touch%20Shield/2.0.1/DIYablesTFTTouchShield-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20TFT%20Touch%20Shield/2.0.2/DIYablesTFTTouchShield-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesTFTTouchShield-2.0.2.tar.gz",
+    "size_bytes": 16281,
+    "sha256": "a7b3175eceaa1168bad2c152008647fac6a3585e6d4d3e72f4bd97d98b196f8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520TFT%2520Touch%2520Shield/2.0.2/DIYablesTFTTouchShield-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20TFT%20Touch%20Shield/2.0.2/DIYablesTFTTouchShield-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20TFT%20Touch%20Shield/2.1.0/DIYablesTFTTouchShield-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesTFTTouchShield-2.1.0.tar.gz",
+    "size_bytes": 20787,
+    "sha256": "55a655bbadb3dea30bd7b108b3d8fe41bdb5598a257dfbbb83d6db64f0fa7962",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520TFT%2520Touch%2520Shield/2.1.0/DIYablesTFTTouchShield-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20TFT%20Touch%20Shield/2.1.0/DIYablesTFTTouchShield-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20TFT%20Touch%20Shield/2.2.1/DIYablesTFTTouchShield-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesTFTTouchShield-2.2.1.tar.gz",
+    "size_bytes": 31141,
+    "sha256": "52a233b607ffb293ca04c2c63b302c944bdda87745a97ae7af1ff66445322a95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520TFT%2520Touch%2520Shield/2.2.1/DIYablesTFTTouchShield-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20TFT%20Touch%20Shield/2.2.1/DIYablesTFTTouchShield-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20WebApps/1.0.1/DIYablesWebApps-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesWebApps-1.0.1.tar.gz",
+    "size_bytes": 113615,
+    "sha256": "51b896ea3e44ba10bf6b1e203e90a5789dd8b3316939b3b607cdb52f0339a0ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520WebApps/1.0.1/DIYablesWebApps-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20WebApps/1.0.1/DIYablesWebApps-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables%20WebApps/1.0.3/DIYablesWebApps-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYablesWebApps-1.0.3.tar.gz",
+    "size_bytes": 114752,
+    "sha256": "b262a584e39c774976390bd95d652a9757d029f3aa5c7cdb5651bbb3d7531f90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables%2520WebApps/1.0.3/DIYablesWebApps-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables%20WebApps/1.0.3/DIYablesWebApps-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables_4Digit7Segment_74HC595/1.0.3/DIYables_4Digit7Segment_74HC595-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYables_4Digit7Segment_74HC595-1.0.3.tar.gz",
+    "size_bytes": 4858,
+    "sha256": "8e0f5f29b51924aedaad42cfd8f4b0474a939ca016b152acfaebcccb6868369e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables_4Digit7Segment_74HC595/1.0.3/DIYables_4Digit7Segment_74HC595-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables_4Digit7Segment_74HC595/1.0.3/DIYables_4Digit7Segment_74HC595-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables_4Digit7Segment_74HC595/2.0.0/DIYables_4Digit7Segment_74HC595-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYables_4Digit7Segment_74HC595-2.0.0.tar.gz",
+    "size_bytes": 9374,
+    "sha256": "a5c197b9a284a29ae6f5361707f1f9f4c670bc585abcbbc2ee178e8d2b5b0ce2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables_4Digit7Segment_74HC595/2.0.0/DIYables_4Digit7Segment_74HC595-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables_4Digit7Segment_74HC595/2.0.0/DIYables_4Digit7Segment_74HC595-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables_4Digit7Segment_TM1637/1.0.0/DIYables_4Digit7Segment_TM1637-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYables_4Digit7Segment_TM1637-1.0.0.tar.gz",
+    "size_bytes": 6974,
+    "sha256": "eca4fcbb1a239627e7c87217c2b26d3a88e1e9bb1f968de8a41494521eadacba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables_4Digit7Segment_TM1637/1.0.0/DIYables_4Digit7Segment_TM1637-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables_4Digit7Segment_TM1637/1.0.0/DIYables_4Digit7Segment_TM1637-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables_DC_Motor/1.0.0/DIYables_DC_Motor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYables_DC_Motor-1.0.0.tar.gz",
+    "size_bytes": 4866,
+    "sha256": "46df410563893fb50ed3bb268b431f4661e96055acf0fe1557c8afe85bce2ea0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables_DC_Motor/1.0.0/DIYables_DC_Motor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables_DC_Motor/1.0.0/DIYables_DC_Motor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables_DS18B20/1.0.0/DIYables_DS18B20-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYables_DS18B20-1.0.0.tar.gz",
+    "size_bytes": 16872,
+    "sha256": "3032540fba8328858c703712e8a719967c584e6dffa92a7f3ace4a50f3b68d8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables_DS18B20/1.0.0/DIYables_DS18B20-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables_DS18B20/1.0.0/DIYables_DS18B20-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables_IRcontroller/1.0.1/DIYables_IRcontroller-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYables_IRcontroller-1.0.1.tar.gz",
+    "size_bytes": 4754,
+    "sha256": "ab1eb6f59417a885d857d1eb78f74eb631c1e3a927b3322e4b8f8d3993f5e4c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables_IRcontroller/1.0.1/DIYables_IRcontroller-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables_IRcontroller/1.0.1/DIYables_IRcontroller-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables_Keypad/1.0.1/DIYables_Keypad-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYables_Keypad-1.0.1.tar.gz",
+    "size_bytes": 3658,
+    "sha256": "e470236c6ad6d8e966de840d18c85ac79f85795ede9554ace2faccccf36365e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables_Keypad/1.0.1/DIYables_Keypad-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables_Keypad/1.0.1/DIYables_Keypad-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables_LED_Matrix/1.0.0/DIYables_LED_Matrix-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYables_LED_Matrix-1.0.0.tar.gz",
+    "size_bytes": 6501,
+    "sha256": "fc5fc3ccdbd3b8b6a19f05f8d1d9abbd4bcd40a08ae652b3219a849d125d60cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables_LED_Matrix/1.0.0/DIYables_LED_Matrix-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables_LED_Matrix/1.0.0/DIYables_LED_Matrix-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables_MiniMp3/1.0.0/DIYables_MiniMp3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYables_MiniMp3-1.0.0.tar.gz",
+    "size_bytes": 10914,
+    "sha256": "801cb308a4a06d7a77c4dc2196b0004d1e5f2d9ea8a8a6819da7c32e879467d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables_MiniMp3/1.0.0/DIYables_MiniMp3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables_MiniMp3/1.0.0/DIYables_MiniMp3-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables_MultiFuncShield/1.0.0/DIYables_MultiFuncShield-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYables_MultiFuncShield-1.0.0.tar.gz",
+    "size_bytes": 10479,
+    "sha256": "66924653bc496f0d8123e914110149013a7ad8988216828fb071af5d0e4c2acf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables_MultiFuncShield/1.0.0/DIYables_MultiFuncShield-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables_MultiFuncShield/1.0.0/DIYables_MultiFuncShield-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables_OLED_SSD1309/1.0.1/DIYables_OLED_SSD1309-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYables_OLED_SSD1309-1.0.1.tar.gz",
+    "size_bytes": 14819,
+    "sha256": "7feb521eb0850389b39028ac30ddf710aad84ab1fbc3890f73b21a45392aff9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables_OLED_SSD1309/1.0.1/DIYables_OLED_SSD1309-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables_OLED_SSD1309/1.0.1/DIYables_OLED_SSD1309-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/DIYables_OLED_SSD1309/1.0.2/DIYables_OLED_SSD1309-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIYables_OLED_SSD1309-1.0.2.tar.gz",
+    "size_bytes": 14373,
+    "sha256": "5f86e889bcd30abbc0982a25cd9b79f60a7a74751387a66fe7adc01bf546d648",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/DIYables_OLED_SSD1309/1.0.2/DIYables_OLED_SSD1309-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/DIYables_OLED_SSD1309/1.0.2/DIYables_OLED_SSD1309-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/Web%20Server%20for%20Arduino%20Uno%20R4%20WiFi/1.0.1/WebServerforArduinoUnoR4WiFi-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebServerforArduinoUnoR4WiFi-1.0.1.tar.gz",
+    "size_bytes": 39027,
+    "sha256": "9e45e8e25c11dc447a29420a7a48adf44081c2f0391d54435a0e9ea91be1d896",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/Web%2520Server%2520for%2520Arduino%2520Uno%2520R4%2520WiFi/1.0.1/WebServerforArduinoUnoR4WiFi-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/Web%20Server%20for%20Arduino%20Uno%20R4%20WiFi/1.0.1/WebServerforArduinoUnoR4WiFi-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/Web%20Server%20for%20Arduino%20Uno%20R4%20WiFi/1.0.2/WebServerforArduinoUnoR4WiFi-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebServerforArduinoUnoR4WiFi-1.0.2.tar.gz",
+    "size_bytes": 40509,
+    "sha256": "278516f14b9591ea57023c346f275a2c54814f651df04c07cbe1882cf1b0e90f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/Web%2520Server%2520for%2520Arduino%2520Uno%2520R4%2520WiFi/1.0.2/WebServerforArduinoUnoR4WiFi-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/Web%20Server%20for%20Arduino%20Uno%20R4%20WiFi/1.0.2/WebServerforArduinoUnoR4WiFi-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diyables/library/Web%20Server%20for%20Arduino%20Uno%20R4%20WiFi/1.0.3/WebServerforArduinoUnoR4WiFi-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebServerforArduinoUnoR4WiFi-1.0.3.tar.gz",
+    "size_bytes": 40610,
+    "sha256": "aa0db65f909daf720d9131e88e4a69d6da94ab55b735c7d344b7a7a7ab1a5bb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diyables/library/Web%2520Server%2520for%2520Arduino%2520Uno%2520R4%2520WiFi/1.0.3/WebServerforArduinoUnoR4WiFi-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/diyables/library/Web%20Server%20for%20Arduino%20Uno%20R4%20WiFi/1.0.3/WebServerforArduinoUnoR4WiFi-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

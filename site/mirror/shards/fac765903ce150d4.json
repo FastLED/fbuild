@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zahidaof",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zahidaof/library/SIM7600%20TTS%20Library/1.0.0/SIM7600TTSLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIM7600TTSLibrary-1.0.0.tar.gz",
+    "size_bytes": 2949,
+    "sha256": "d781340a2ad31cd2310b6c63c94c9a14044c8797ac89d2342bf53b2e2d2d2ad9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zahidaof/library/SIM7600%2520TTS%2520Library/1.0.0/SIM7600TTSLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zahidaof/library/SIM7600%20TTS%20Library/1.0.0/SIM7600TTSLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

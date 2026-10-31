@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/michalmonday",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "michalmonday/library/CSV%20Parser/1.4.1/CSVParser-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CSVParser-1.4.1.tar.gz",
+    "size_bytes": 33198,
+    "sha256": "d3cf37223ac0888fa78e1fcce63e2a28412800b7cb446d359d05494baf0a9ba0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/michalmonday/library/CSV%2520Parser/1.4.1/CSVParser-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/michalmonday/library/CSV%20Parser/1.4.1/CSVParser-1.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

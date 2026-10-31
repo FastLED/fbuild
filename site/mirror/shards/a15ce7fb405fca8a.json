@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tknapp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tknapp/library/ASCIIGraph/0.0.0+sha.0f0b1ad6f3ac/ASCIIGraph-0.0.0+sha.0f0b1ad6f3ac.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ASCIIGraph-0.0.0+sha.0f0b1ad6f3ac.tar.gz",
+    "size_bytes": 3029,
+    "sha256": "3b0007d45e755c9b455044f2f0e31b4b81473a60f7f939823567de4a8a45f69b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tknapp/library/ASCIIGraph/0.0.0%2Bsha.0f0b1ad6f3ac/ASCIIGraph-0.0.0%2Bsha.0f0b1ad6f3ac.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tknapp/library/ASCIIGraph/0.0.0%2Bsha.0f0b1ad6f3ac/ASCIIGraph-0.0.0%2Bsha.0f0b1ad6f3ac.tar.gz"
+    ]
+   }
+  }
+ ]
+}

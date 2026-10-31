@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/darklazy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "darklazy/library/MWTimeout/1.0.0/MWTimeout-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MWTimeout-1.0.0.tar.gz",
+    "size_bytes": 11126,
+    "sha256": "10b18659ec047c1d1f6971595b816ed7425bb956b7c7af0febaf480cdd167b46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/darklazy/library/MWTimeout/1.0.0/MWTimeout-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/darklazy/library/MWTimeout/1.0.0/MWTimeout-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

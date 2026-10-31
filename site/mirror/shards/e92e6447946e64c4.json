@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/liebtrau",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "liebtrau/library/RobustDcf/2.7/RobustDcf-2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobustDcf-2.7.tar.gz",
+    "size_bytes": 23894,
+    "sha256": "a5d7fb9c57c714829102984558511b01b09cbe4730676de2f653719477e0157d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liebtrau/library/RobustDcf/2.7/RobustDcf-2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/liebtrau/library/RobustDcf/2.7/RobustDcf-2.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

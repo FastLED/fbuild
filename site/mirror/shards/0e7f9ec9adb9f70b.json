@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/acapovilla",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "acapovilla/library/MH-T7042A%20Library/1.0.0/MH-T7042ALibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MH-T7042ALibrary-1.0.0.tar.gz",
+    "size_bytes": 4668,
+    "sha256": "d1dae5c65614cf4d973d70690de1f727f0ec5f99a86995ac4731ba722326ce3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acapovilla/library/MH-T7042A%2520Library/1.0.0/MH-T7042ALibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/acapovilla/library/MH-T7042A%20Library/1.0.0/MH-T7042ALibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

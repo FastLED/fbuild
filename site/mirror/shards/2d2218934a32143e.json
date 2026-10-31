@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-alexmarinov",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-alexmarinov/library/BNO055/0.0.0+sha.149f7245fa5d/BNO055-0.0.0+sha.149f7245fa5d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BNO055-0.0.0+sha.149f7245fa5d.tar.gz",
+    "size_bytes": 661,
+    "sha256": "3be9057b628a25af647424f93d005062e1702ca248003ee8a53a139dbdd204cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alexmarinov/library/BNO055/0.0.0%2Bsha.149f7245fa5d/BNO055-0.0.0%2Bsha.149f7245fa5d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alexmarinov/library/BNO055/0.0.0%2Bsha.149f7245fa5d/BNO055-0.0.0%2Bsha.149f7245fa5d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

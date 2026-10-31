@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ishandaga",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ishandaga/library/hashmap.c/1.0.1/hashmap.c-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hashmap.c-1.0.1.tar.gz",
+    "size_bytes": 12242,
+    "sha256": "30e708dc0142e6a865935cb01b84637312fb9df4abed72334f6f02965797ea3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ishandaga/library/hashmap.c/1.0.1/hashmap.c-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ishandaga/library/hashmap.c/1.0.1/hashmap.c-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ishandaga/library/hashmap/1.0.0/hashmap-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hashmap-1.0.0.tar.gz",
+    "size_bytes": 12243,
+    "sha256": "0c290e02be436ef1d8344d567f23e004811c170f06492e09994a3e62d5cf4eff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ishandaga/library/hashmap/1.0.0/hashmap-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ishandaga/library/hashmap/1.0.0/hashmap-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kaushalpkk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kaushalpkk/library/DCMotor/0.0.0+sha.a0dc016b7cbb/DCMotor-0.0.0+sha.a0dc016b7cbb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCMotor-0.0.0+sha.a0dc016b7cbb.tar.gz",
+    "size_bytes": 1194,
+    "sha256": "4cd46d685abed4351a9dea1041e79702e7fcf29b05deaa2faa0370a321c6f9ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kaushalpkk/library/DCMotor/0.0.0%2Bsha.a0dc016b7cbb/DCMotor-0.0.0%2Bsha.a0dc016b7cbb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kaushalpkk/library/DCMotor/0.0.0%2Bsha.a0dc016b7cbb/DCMotor-0.0.0%2Bsha.a0dc016b7cbb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kaushalpkk/library/LTC2942/0.0.0+sha.547ec53dc37d/LTC2942-0.0.0+sha.547ec53dc37d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTC2942-0.0.0+sha.547ec53dc37d.tar.gz",
+    "size_bytes": 4654,
+    "sha256": "186e88543f6dc5c2f01dc8dc648d6fd015c7948bcb95474305c700edfa3eda7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kaushalpkk/library/LTC2942/0.0.0%2Bsha.547ec53dc37d/LTC2942-0.0.0%2Bsha.547ec53dc37d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kaushalpkk/library/LTC2942/0.0.0%2Bsha.547ec53dc37d/LTC2942-0.0.0%2Bsha.547ec53dc37d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kaushalpkk/library/MaxbotixLV/0.0.0+sha.b99b1e0e3290/MaxbotixLV-0.0.0+sha.b99b1e0e3290.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MaxbotixLV-0.0.0+sha.b99b1e0e3290.tar.gz",
+    "size_bytes": 992,
+    "sha256": "59e263787cb33e907294830e027c8f9e9894cd26ba13b5eff28de32124fe2564",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kaushalpkk/library/MaxbotixLV/0.0.0%2Bsha.b99b1e0e3290/MaxbotixLV-0.0.0%2Bsha.b99b1e0e3290.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kaushalpkk/library/MaxbotixLV/0.0.0%2Bsha.b99b1e0e3290/MaxbotixLV-0.0.0%2Bsha.b99b1e0e3290.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kaushalpkk/library/QuadratureEncoder/0.0.0+sha.52fba054be6c/QuadratureEncoder-0.0.0+sha.52fba054be6c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuadratureEncoder-0.0.0+sha.52fba054be6c.tar.gz",
+    "size_bytes": 1978,
+    "sha256": "db8114d40bde58d9cc5951d817c1ba83ef2fa383947ce4a1071cec4787ea09ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kaushalpkk/library/QuadratureEncoder/0.0.0%2Bsha.52fba054be6c/QuadratureEncoder-0.0.0%2Bsha.52fba054be6c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kaushalpkk/library/QuadratureEncoder/0.0.0%2Bsha.52fba054be6c/QuadratureEncoder-0.0.0%2Bsha.52fba054be6c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kaushalpkk/library/TPA81/0.0.0+sha.bd1c02c7bc8a/TPA81-0.0.0+sha.bd1c02c7bc8a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TPA81-0.0.0+sha.bd1c02c7bc8a.tar.gz",
+    "size_bytes": 933,
+    "sha256": "1f0e34ca8d412b6ff8538cd8beae58f9858fb6fee37d1971e46ab3076823f728",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kaushalpkk/library/TPA81/0.0.0%2Bsha.bd1c02c7bc8a/TPA81-0.0.0%2Bsha.bd1c02c7bc8a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kaushalpkk/library/TPA81/0.0.0%2Bsha.bd1c02c7bc8a/TPA81-0.0.0%2Bsha.bd1c02c7bc8a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

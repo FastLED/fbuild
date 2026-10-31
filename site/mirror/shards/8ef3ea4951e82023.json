@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-senior-design123",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-senior-design123/library/KeypadLib/0.0.0+sha.9ebfd71933e9/KeypadLib-0.0.0+sha.9ebfd71933e9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KeypadLib-0.0.0+sha.9ebfd71933e9.tar.gz",
+    "size_bytes": 2908,
+    "sha256": "54e4546c4fd6f7f1f4fd5d5b3ff44dbde358d81eaa3faa98d8d04a192af3319d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-senior-design123/library/KeypadLib/0.0.0%2Bsha.9ebfd71933e9/KeypadLib-0.0.0%2Bsha.9ebfd71933e9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-senior-design123/library/KeypadLib/0.0.0%2Bsha.9ebfd71933e9/KeypadLib-0.0.0%2Bsha.9ebfd71933e9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-senior-design123/library/workingLCD/0.0.0+sha.5902486704c2/workingLCD-0.0.0+sha.5902486704c2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "workingLCD-0.0.0+sha.5902486704c2.tar.gz",
+    "size_bytes": 47737,
+    "sha256": "8eb8119a96041224fa8bf5e85fb797471883322a2e9d51adc7ecfaaa894c5090",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-senior-design123/library/workingLCD/0.0.0%2Bsha.5902486704c2/workingLCD-0.0.0%2Bsha.5902486704c2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-senior-design123/library/workingLCD/0.0.0%2Bsha.5902486704c2/workingLCD-0.0.0%2Bsha.5902486704c2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

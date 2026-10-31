@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/n-magi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "n-magi/library/CliTerminal/0.2/CliTerminal-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CliTerminal-0.2.tar.gz",
+    "size_bytes": 2724,
+    "sha256": "7dcab458e202457331ccaa88dd8e3c6172c440657d1b20c3c898b8fa798ce2af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/n-magi/library/CliTerminal/0.2/CliTerminal-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/n-magi/library/CliTerminal/0.2/CliTerminal-0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

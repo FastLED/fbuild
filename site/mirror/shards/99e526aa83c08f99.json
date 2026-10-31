@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/skabrits",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "skabrits/library/SpeedMeasurer/1.0.1/SpeedMeasurer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpeedMeasurer-1.0.1.tar.gz",
+    "size_bytes": 3557,
+    "sha256": "bc1e954dc5c9c8caf1eeb9f0112e03ecb040655d887f2bdc8d5053bb2d7e99ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skabrits/library/SpeedMeasurer/1.0.1/SpeedMeasurer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/skabrits/library/SpeedMeasurer/1.0.1/SpeedMeasurer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "skabrits/library/StringAction/1.0.5/StringAction-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StringAction-1.0.5.tar.gz",
+    "size_bytes": 2613,
+    "sha256": "083e7854d33d9e2edf3c4b0a146357236deff235883caa334fe2da097d9c15aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skabrits/library/StringAction/1.0.5/StringAction-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/skabrits/library/StringAction/1.0.5/StringAction-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

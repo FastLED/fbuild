@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bnnt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bnnt/library/EscapeManager/2.1.0/EscapeManager-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EscapeManager-2.1.0.tar.gz",
+    "size_bytes": 540870,
+    "sha256": "3a8cc30416a15045512f37c36f21bb4b020615acb070691b517d7ea92128d4e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bnnt/library/EscapeManager/2.1.0/EscapeManager-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bnnt/library/EscapeManager/2.1.0/EscapeManager-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bnnt/library/EscapeManager/2.1.1/EscapeManager-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EscapeManager-2.1.1.tar.gz",
+    "size_bytes": 552379,
+    "sha256": "a8e51cd775b1293538fc11d46c09b1b47e69d991b5208b446ed440a70c8cfe0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bnnt/library/EscapeManager/2.1.1/EscapeManager-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bnnt/library/EscapeManager/2.1.1/EscapeManager-2.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

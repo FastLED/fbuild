@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ksk0000",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ksk0000/library/sigv4pio/0.1.0/sigv4pio-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sigv4pio-0.1.0.tar.gz",
+    "size_bytes": 4336,
+    "sha256": "2d0742ff07fca8fb6aba007a9447e1e5ad0682090db41c1f2f9eee6d07d89339",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ksk0000/library/sigv4pio/0.1.0/sigv4pio-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ksk0000/library/sigv4pio/0.1.0/sigv4pio-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ksk0000/library/sigv4pio/0.1.1/sigv4pio-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sigv4pio-0.1.1.tar.gz",
+    "size_bytes": 4354,
+    "sha256": "bbcbad79ae1a43c4c28bd82554ed7c4dcd294ccba7fc3170dff6b85f35d106de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ksk0000/library/sigv4pio/0.1.1/sigv4pio-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ksk0000/library/sigv4pio/0.1.1/sigv4pio-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ksk0000/library/sigv4pio/0.1.2/sigv4pio-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sigv4pio-0.1.2.tar.gz",
+    "size_bytes": 4394,
+    "sha256": "6e8b034f87488de1f6b72704511d9ff0ab804053ca1ac4b23934293fb3b43a98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ksk0000/library/sigv4pio/0.1.2/sigv4pio-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ksk0000/library/sigv4pio/0.1.2/sigv4pio-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ksk0000/library/sigv4pio/0.1.3/sigv4pio-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sigv4pio-0.1.3.tar.gz",
+    "size_bytes": 5431,
+    "sha256": "99b46b5c4eeb81bbe0a16522bf9e215335875225337cc8e6393f5d41c91f7e06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ksk0000/library/sigv4pio/0.1.3/sigv4pio-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ksk0000/library/sigv4pio/0.1.3/sigv4pio-0.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

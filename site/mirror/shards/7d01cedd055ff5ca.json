@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lordofdorks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lordofdorks/library/NationZ_TPM20/0.0.0+sha.7ef8655b8dca/NationZ_TPM20-0.0.0+sha.7ef8655b8dca.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NationZ_TPM20-0.0.0+sha.7ef8655b8dca.tar.gz",
+    "size_bytes": 6067,
+    "sha256": "dd4508f7d87e533867296c410e6b9ccb5bcdf2b9cffc0d9f2449263c8e0316a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lordofdorks/library/NationZ_TPM20/0.0.0%2Bsha.7ef8655b8dca/NationZ_TPM20-0.0.0%2Bsha.7ef8655b8dca.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lordofdorks/library/NationZ_TPM20/0.0.0%2Bsha.7ef8655b8dca/NationZ_TPM20-0.0.0%2Bsha.7ef8655b8dca.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-lordofdorks/library/SPITIS_TPM20/0.0.0+sha.77fecfe49437/SPITIS_TPM20-0.0.0+sha.77fecfe49437.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPITIS_TPM20-0.0.0+sha.77fecfe49437.tar.gz",
+    "size_bytes": 49793,
+    "sha256": "f3c55d70f0a193dc81a14b6069e38ed654d23a0c696449a317b8abe4b9a18174",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lordofdorks/library/SPITIS_TPM20/0.0.0%2Bsha.77fecfe49437/SPITIS_TPM20-0.0.0%2Bsha.77fecfe49437.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lordofdorks/library/SPITIS_TPM20/0.0.0%2Bsha.77fecfe49437/SPITIS_TPM20-0.0.0%2Bsha.77fecfe49437.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arachnidlabs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arachnidlabs/library/Tsunami/1.0.0/Tsunami-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tsunami-1.0.0.tar.gz",
+    "size_bytes": 12072,
+    "sha256": "e49aec5043486c89c9dde5ffb2c0ae496cca754654003bdc828214fd9932be71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arachnidlabs/library/Tsunami/1.0.0/Tsunami-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arachnidlabs/library/Tsunami/1.0.0/Tsunami-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

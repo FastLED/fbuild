@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/joeystrandnes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "joeystrandnes/library/NST1001/1.2.0/NST1001-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NST1001-1.2.0.tar.gz",
+    "size_bytes": 4855,
+    "sha256": "549c820e8c2c6b7fe9c66971bfdc1af58b6404c0cab471dceb5e58cab2a30ff0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joeystrandnes/library/NST1001/1.2.0/NST1001-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joeystrandnes/library/NST1001/1.2.0/NST1001-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joeystrandnes/library/Toggl%20API%20v8%20-%20Arduino%20Implementation/1.2.4/TogglAPIv8-ArduinoImplementation-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TogglAPIv8-ArduinoImplementation-1.2.4.tar.gz",
+    "size_bytes": 12095,
+    "sha256": "96df77f8b5343e83124dc64e1f84958ce867705a2ade2952e227725f54fe6e1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joeystrandnes/library/Toggl%2520API%2520v8%2520-%2520Arduino%2520Implementation/1.2.4/TogglAPIv8-ArduinoImplementation-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/joeystrandnes/library/Toggl%20API%20v8%20-%20Arduino%20Implementation/1.2.4/TogglAPIv8-ArduinoImplementation-1.2.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

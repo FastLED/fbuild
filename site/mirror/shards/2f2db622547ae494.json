@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lawrencelg04",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lawrencelg04/library/RFID_Memory_Operations/0.1.1/RFID_Memory_Operations-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFID_Memory_Operations-0.1.1.tar.gz",
+    "size_bytes": 2524,
+    "sha256": "933d8d5346499751caa4b545210f129e3fb7d49abc5cf77048eb72dea72a84e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lawrencelg04/library/RFID_Memory_Operations/0.1.1/RFID_Memory_Operations-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lawrencelg04/library/RFID_Memory_Operations/0.1.1/RFID_Memory_Operations-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

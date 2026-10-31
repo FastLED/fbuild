@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/qmaker-programmer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "qmaker-programmer/library/segDisplay/1.0.0/segDisplay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "segDisplay-1.0.0.tar.gz",
+    "size_bytes": 9595,
+    "sha256": "a33d1d6c504f63838b123f61477f3902a14e3e19d4a6d511c133e522c2e3020a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/qmaker-programmer/library/segDisplay/1.0.0/segDisplay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/qmaker-programmer/library/segDisplay/1.0.0/segDisplay-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

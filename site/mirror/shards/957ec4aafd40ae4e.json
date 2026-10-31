@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/boriskotlyarov",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "boriskotlyarov/library/ESP8266-WiFiSetupManager/1.0.1/ESP8266-WiFiSetupManager-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266-WiFiSetupManager-1.0.1.tar.gz",
+    "size_bytes": 4904,
+    "sha256": "9897c04d6b919057d6777cf20dbe681e5b34fe9ad95d33de28e094e0b510cca1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boriskotlyarov/library/ESP8266-WiFiSetupManager/1.0.1/ESP8266-WiFiSetupManager-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/boriskotlyarov/library/ESP8266-WiFiSetupManager/1.0.1/ESP8266-WiFiSetupManager-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

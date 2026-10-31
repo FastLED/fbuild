@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/m-mcgowan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "m-mcgowan/library/note-cpp/0.3.2/note-cpp-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "note-cpp-0.3.2.tar.gz",
+    "size_bytes": 852949,
+    "sha256": "ad2b906ff7c9558e9e7033d2647405ccc3a76a8660917b61d07734d3ce894b4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m-mcgowan/library/note-cpp/0.3.2/note-cpp-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m-mcgowan/library/note-cpp/0.3.2/note-cpp-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m-mcgowan/library/note-cpp/0.3.4/note-cpp-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "note-cpp-0.3.4.tar.gz",
+    "size_bytes": 1393908,
+    "sha256": "8221b59e11e47295155e51d140af6537996d9a9e0d23bdfcebbcfc1db58c8df3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m-mcgowan/library/note-cpp/0.3.4/note-cpp-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/m-mcgowan/library/note-cpp/0.3.4/note-cpp-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m-mcgowan/library/note-emu/0.2.1/note-emu-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "note-emu-0.2.1.tar.gz",
+    "size_bytes": 14336,
+    "sha256": "0987338bc6f3dfa712847aadc86b9b479219b3e49735fef665794789e290871c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m-mcgowan/library/note-emu/0.2.1/note-emu-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m-mcgowan/library/note-emu/0.2.1/note-emu-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m-mcgowan/library/note-emu/0.3.0/note-emu-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "note-emu-0.3.0.tar.gz",
+    "size_bytes": 16918,
+    "sha256": "7995cc26a4053d33636b23c71f9369f292e6199ab8cd17c4b8520f5618ebdd79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m-mcgowan/library/note-emu/0.3.0/note-emu-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m-mcgowan/library/note-emu/0.3.0/note-emu-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m-mcgowan/library/note-emu/0.3.1/note-emu-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "note-emu-0.3.1.tar.gz",
+    "size_bytes": 17422,
+    "sha256": "76b32a81d0d57c27a520f3cecc7ee8e5712116d3d2ea9f799275f1383a77c2ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m-mcgowan/library/note-emu/0.3.1/note-emu-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m-mcgowan/library/note-emu/0.3.1/note-emu-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m-mcgowan/library/note-emu/0.3.2/note-emu-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "note-emu-0.3.2.tar.gz",
+    "size_bytes": 20861,
+    "sha256": "c0dd8c935743699e3ae1a9375c8db0935ac0b08495811e15c811e667a69cf733",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m-mcgowan/library/note-emu/0.3.2/note-emu-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m-mcgowan/library/note-emu/0.3.2/note-emu-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m-mcgowan/library/note-emu/0.3.3/note-emu-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "note-emu-0.3.3.tar.gz",
+    "size_bytes": 21388,
+    "sha256": "018d9a3ea9d300c558400d6f95aaa73234f24325944555c3acc8b4b8bb66c9d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m-mcgowan/library/note-emu/0.3.3/note-emu-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m-mcgowan/library/note-emu/0.3.3/note-emu-0.3.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

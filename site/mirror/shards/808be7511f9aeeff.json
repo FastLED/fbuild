@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ridiculousfish",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ridiculousfish/library/libdivide/5.2.0/libdivide-5.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libdivide-5.2.0.tar.gz",
+    "size_bytes": 1161953,
+    "sha256": "4b4da25f48b8a12e416a9c53690d19e222c8283ff37d6b700042ff5bc67b783e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ridiculousfish/library/libdivide/5.2.0/libdivide-5.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ridiculousfish/library/libdivide/5.2.0/libdivide-5.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ridiculousfish/library/libdivide/5.3.0/libdivide-5.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libdivide-5.3.0.tar.gz",
+    "size_bytes": 1162146,
+    "sha256": "212349e4bded24530e748783966ad9a1cd7cbb6ff44114cd0172eeb7c75311ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ridiculousfish/library/libdivide/5.3.0/libdivide-5.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ridiculousfish/library/libdivide/5.3.0/libdivide-5.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ridiculousfish/library/libdivide/5.4.0/libdivide-5.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libdivide-5.4.0.tar.gz",
+    "size_bytes": 1165728,
+    "sha256": "86b33a518806f17d670dffaa2d4fb1cf3e66353b74046c7a241dd660f9f6a302",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ridiculousfish/library/libdivide/5.4.0/libdivide-5.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ridiculousfish/library/libdivide/5.4.0/libdivide-5.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

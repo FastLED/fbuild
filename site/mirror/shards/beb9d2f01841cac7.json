@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sensidev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sensidev/library/Multichannel%20YHDC%20CT%20Sensor/1.0.0/MultichannelYHDCCTSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultichannelYHDCCTSensor-1.0.0.tar.gz",
+    "size_bytes": 3946,
+    "sha256": "6ab50698ed802614bdcbf0d8c99d39a9d92e559e7c9ea3984dd29bb648a797f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensidev/library/Multichannel%2520YHDC%2520CT%2520Sensor/1.0.0/MultichannelYHDCCTSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensidev/library/Multichannel%20YHDC%20CT%20Sensor/1.0.0/MultichannelYHDCCTSensor-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

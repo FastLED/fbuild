@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/boodskap",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "boodskap/library/Boodskap%20IoT%20Digital%20Twin%20library/1.0.0/BoodskapIoTDigitalTwinlibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BoodskapIoTDigitalTwinlibrary-1.0.0.tar.gz",
+    "size_bytes": 3000,
+    "sha256": "647ba3fd9458136d7a2a6a56e0a2dcd527459f39c936d14f4842bfdea86e8778",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boodskap/library/Boodskap%2520IoT%2520Digital%2520Twin%2520library/1.0.0/BoodskapIoTDigitalTwinlibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/boodskap/library/Boodskap%20IoT%20Digital%20Twin%20library/1.0.0/BoodskapIoTDigitalTwinlibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

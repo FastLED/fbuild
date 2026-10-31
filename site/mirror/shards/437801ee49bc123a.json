@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ihormelnyk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ihormelnyk/library/OpenTherm%20Library/1.1.4/OpenThermLibrary-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenThermLibrary-1.1.4.tar.gz",
+    "size_bytes": 8589,
+    "sha256": "cfd84222f31873f26eb130f4b38d0432524e93c482b446dad1ba151228554e8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ihormelnyk/library/OpenTherm%2520Library/1.1.4/OpenThermLibrary-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ihormelnyk/library/OpenTherm%20Library/1.1.4/OpenThermLibrary-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ihormelnyk/library/OpenTherm%20Library/1.1.5/OpenThermLibrary-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenThermLibrary-1.1.5.tar.gz",
+    "size_bytes": 9037,
+    "sha256": "2770bc9dc3981fab070c42aba505778c2cc9fcfc273736d8cbb070b4520715a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ihormelnyk/library/OpenTherm%2520Library/1.1.5/OpenThermLibrary-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ihormelnyk/library/OpenTherm%20Library/1.1.5/OpenThermLibrary-1.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

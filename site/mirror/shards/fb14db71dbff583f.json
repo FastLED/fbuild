@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dennis-van-gils",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dennis-van-gils/library/DvG_StreamCommand/1.1.1/DvG_StreamCommand-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DvG_StreamCommand-1.1.1.tar.gz",
+    "size_bytes": 38834,
+    "sha256": "34c82eb3b153e6ff978b827d15c32bc5eaef4335f3e4fb518d1b32406bf129ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dennis-van-gils/library/DvG_StreamCommand/1.1.1/DvG_StreamCommand-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dennis-van-gils/library/DvG_StreamCommand/1.1.1/DvG_StreamCommand-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dennis-van-gils/library/MIKROE_4_20mA_RT_Click/1.1.0/MIKROE_4_20mA_RT_Click-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MIKROE_4_20mA_RT_Click-1.1.0.tar.gz",
+    "size_bytes": 40458,
+    "sha256": "a6ce2fca5329e3c0a9ce11c8ea2c082d4704be76e78d5d7c83f0d340ad08956c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dennis-van-gils/library/MIKROE_4_20mA_RT_Click/1.1.0/MIKROE_4_20mA_RT_Click-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dennis-van-gils/library/MIKROE_4_20mA_RT_Click/1.1.0/MIKROE_4_20mA_RT_Click-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dennis-van-gils/library/SAMD51_InterruptTimer/1.1.1/SAMD51_InterruptTimer-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAMD51_InterruptTimer-1.1.1.tar.gz",
+    "size_bytes": 3279,
+    "sha256": "e1e824e3289052f47ad836a42554b79dbb5b4dc2fcbc300bc1d6f3624d75a32d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dennis-van-gils/library/SAMD51_InterruptTimer/1.1.1/SAMD51_InterruptTimer-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dennis-van-gils/library/SAMD51_InterruptTimer/1.1.1/SAMD51_InterruptTimer-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

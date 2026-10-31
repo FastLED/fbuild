@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/srirangaraj-b",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "srirangaraj-b/library/AD569x/1.0.0/AD569x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD569x-1.0.0.tar.gz",
+    "size_bytes": 7603,
+    "sha256": "628392dc7b71d1f488cc9503d30264c2282846cab03561a24a641411d7838155",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/srirangaraj-b/library/AD569x/1.0.0/AD569x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/srirangaraj-b/library/AD569x/1.0.0/AD569x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "srirangaraj-b/library/AD569x/1.0.1/AD569x-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD569x-1.0.1.tar.gz",
+    "size_bytes": 7599,
+    "sha256": "25cc1db4b26c02498ed161adcf15cb32f9222699571a66dfc790c4fdda29624d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/srirangaraj-b/library/AD569x/1.0.1/AD569x-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/srirangaraj-b/library/AD569x/1.0.1/AD569x-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "srirangaraj-b/library/UNOQ_STM32_HAL/1.0.0/UNOQ_STM32_HAL-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UNOQ_STM32_HAL-1.0.0.tar.gz",
+    "size_bytes": 12088,
+    "sha256": "4a4b6b646a1d272b9a8059d2c5192d76c037662da97051ba3d43a48159b9f626",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/srirangaraj-b/library/UNOQ_STM32_HAL/1.0.0/UNOQ_STM32_HAL-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/srirangaraj-b/library/UNOQ_STM32_HAL/1.0.0/UNOQ_STM32_HAL-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "srirangaraj-b/library/UNOQ_STM32_HAL/2.0.0/UNOQ_STM32_HAL-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UNOQ_STM32_HAL-2.0.0.tar.gz",
+    "size_bytes": 10304,
+    "sha256": "e796ef04c90451455b496d8d6e60abd1d054938f0d4a332308cd2f96b7fedc83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/srirangaraj-b/library/UNOQ_STM32_HAL/2.0.0/UNOQ_STM32_HAL-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/srirangaraj-b/library/UNOQ_STM32_HAL/2.0.0/UNOQ_STM32_HAL-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "srirangaraj-b/library/UNOQ_STM32_HAL/2.0.1/UNOQ_STM32_HAL-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UNOQ_STM32_HAL-2.0.1.tar.gz",
+    "size_bytes": 10301,
+    "sha256": "4aae15451760fabcde3943427c99f78c073f3fc3f4ed92030480b3e0940d0a89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/srirangaraj-b/library/UNOQ_STM32_HAL/2.0.1/UNOQ_STM32_HAL-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/srirangaraj-b/library/UNOQ_STM32_HAL/2.0.1/UNOQ_STM32_HAL-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "srirangaraj-b/library/UNOQ_STM32_HAL/2.1.0/UNOQ_STM32_HAL-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UNOQ_STM32_HAL-2.1.0.tar.gz",
+    "size_bytes": 12874,
+    "sha256": "b699ca31a10afe8a88031f7fe48ab0b72a31bd1d644a932f8a137466c317a27a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/srirangaraj-b/library/UNOQ_STM32_HAL/2.1.0/UNOQ_STM32_HAL-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/srirangaraj-b/library/UNOQ_STM32_HAL/2.1.0/UNOQ_STM32_HAL-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

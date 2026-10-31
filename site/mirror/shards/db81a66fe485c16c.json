@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-krbng4180",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-krbng4180/library/FlowMeter/0.0.0+sha.195a3c58c944/FlowMeter-0.0.0+sha.195a3c58c944.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlowMeter-0.0.0+sha.195a3c58c944.tar.gz",
+    "size_bytes": 1207,
+    "sha256": "cb4641d80982e454253932d3a0308b9b10f20c5743256d238e6ffff1cd44d993",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-krbng4180/library/FlowMeter/0.0.0%2Bsha.195a3c58c944/FlowMeter-0.0.0%2Bsha.195a3c58c944.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-krbng4180/library/FlowMeter/0.0.0%2Bsha.195a3c58c944/FlowMeter-0.0.0%2Bsha.195a3c58c944.tar.gz"
+    ]
+   }
+  }
+ ]
+}

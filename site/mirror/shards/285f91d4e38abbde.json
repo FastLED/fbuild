@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-krebyy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-krebyy/library/IOTON-API/0.0.0+sha.9c7195d31602/IOTON-API-0.0.0+sha.9c7195d31602.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOTON-API-0.0.0+sha.9c7195d31602.tar.gz",
+    "size_bytes": 33323,
+    "sha256": "4b4e2de5e1d2419101bb5cebc9b02a3794edaeacb7b800b9be4b228ff3a3265e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-krebyy/library/IOTON-API/0.0.0%2Bsha.9c7195d31602/IOTON-API-0.0.0%2Bsha.9c7195d31602.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-krebyy/library/IOTON-API/0.0.0%2Bsha.9c7195d31602/IOTON-API-0.0.0%2Bsha.9c7195d31602.tar.gz"
+    ]
+   }
+  }
+ ]
+}

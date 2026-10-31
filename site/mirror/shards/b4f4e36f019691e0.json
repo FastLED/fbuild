@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/raiotech-iot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "raiotech-iot/library/RAIOT_MQTT/1.0.0/RAIOT_MQTT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAIOT_MQTT-1.0.0.tar.gz",
+    "size_bytes": 4877,
+    "sha256": "c36c5dc31b64dcd3703ca8a03e16a030a57b265a96718d6480073825d809180e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/raiotech-iot/library/RAIOT_MQTT/1.0.0/RAIOT_MQTT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/raiotech-iot/library/RAIOT_MQTT/1.0.0/RAIOT_MQTT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "raiotech-iot/library/RAIOTerm/1.0.0/RAIOTerm-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAIOTerm-1.0.0.tar.gz",
+    "size_bytes": 2035,
+    "sha256": "7e4879427937daaa42c63c9f9d0b72c48fad6e5a344903537a767f4b4331a70a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/raiotech-iot/library/RAIOTerm/1.0.0/RAIOTerm-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/raiotech-iot/library/RAIOTerm/1.0.0/RAIOTerm-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "raiotech-iot/library/RaioGroupMatrix/1.0.1/RaioGroupMatrix-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RaioGroupMatrix-1.0.1.tar.gz",
+    "size_bytes": 4758,
+    "sha256": "3acd3394ceb1f7b4f88c7f4ddf22355f8d81fe85544a1cc15cce8ffe44bb7d23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/raiotech-iot/library/RaioGroupMatrix/1.0.1/RaioGroupMatrix-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/raiotech-iot/library/RaioGroupMatrix/1.0.1/RaioGroupMatrix-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "raiotech-iot/library/RaioLink/1.0.2/RaioLink-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RaioLink-1.0.2.tar.gz",
+    "size_bytes": 4090,
+    "sha256": "034cf2f64b751beea63171f0c8ee5287137811582f3dd00e4f2076a0fd43b7f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/raiotech-iot/library/RaioLink/1.0.2/RaioLink-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/raiotech-iot/library/RaioLink/1.0.2/RaioLink-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mesutempire",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mesutempire/library/SIM800LPlus%20HTTP%20Connector/1.0.0/SIM800LPlusHTTPConnector-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIM800LPlusHTTPConnector-1.0.0.tar.gz",
+    "size_bytes": 13067,
+    "sha256": "4123f5ba78ab4af13d2b132344c062326699ad35afa6c884fdd5b1dd5ea21fc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mesutempire/library/SIM800LPlus%2520HTTP%2520Connector/1.0.0/SIM800LPlusHTTPConnector-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mesutempire/library/SIM800LPlus%20HTTP%20Connector/1.0.0/SIM800LPlusHTTPConnector-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

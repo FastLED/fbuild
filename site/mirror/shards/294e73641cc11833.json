@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rlinnmoran",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rlinnmoran/library/MAX_M8Q_Capture/0.0.0+sha.e86bb9bd34c9/MAX_M8Q_Capture-0.0.0+sha.e86bb9bd34c9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX_M8Q_Capture-0.0.0+sha.e86bb9bd34c9.tar.gz",
+    "size_bytes": 8207,
+    "sha256": "bc2e5213d05375e661f2526d79414585852fd7918f35efffa93670f7c99e55a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rlinnmoran/library/MAX_M8Q_Capture/0.0.0%2Bsha.e86bb9bd34c9/MAX_M8Q_Capture-0.0.0%2Bsha.e86bb9bd34c9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rlinnmoran/library/MAX_M8Q_Capture/0.0.0%2Bsha.e86bb9bd34c9/MAX_M8Q_Capture-0.0.0%2Bsha.e86bb9bd34c9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jasiek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jasiek/library/statsdclient/0.0.1/statsdclient-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "statsdclient-0.0.1.tar.gz",
+    "size_bytes": 1503,
+    "sha256": "3636585624956d6e9861200640bb37fe1a70f7c9e8bf1e13ee59ff6c0eaf550d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jasiek/library/statsdclient/0.0.1/statsdclient-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jasiek/library/statsdclient/0.0.1/statsdclient-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

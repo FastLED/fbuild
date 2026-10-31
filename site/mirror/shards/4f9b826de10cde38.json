@@ -1,0 +1,282 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vgroenhuis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vgroenhuis/library/PneumaticStepper/1.0.13/PneumaticStepper-1.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PneumaticStepper-1.0.13.tar.gz",
+    "size_bytes": 26363,
+    "sha256": "6afe2118899bc66346e872a1b42e8e8db2b67e5215e232aa86af588b2c0012ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/PneumaticStepper/1.0.13/PneumaticStepper-1.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/PneumaticStepper/1.0.13/PneumaticStepper-1.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/PneumaticStepper/1.0.14/PneumaticStepper-1.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PneumaticStepper-1.0.14.tar.gz",
+    "size_bytes": 26875,
+    "sha256": "b6f77321f9b3210bdab4d22662c95f14017b658161a9d8495193cbc48eb9f2bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/PneumaticStepper/1.0.14/PneumaticStepper-1.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/PneumaticStepper/1.0.14/PneumaticStepper-1.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/PneumaticStepper/1.0.15/PneumaticStepper-1.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PneumaticStepper-1.0.15.tar.gz",
+    "size_bytes": 27449,
+    "sha256": "73bc46d25bc41066755acd2dfd9fbbc31bed87e5811041cb3971744c4a23a279",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/PneumaticStepper/1.0.15/PneumaticStepper-1.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/PneumaticStepper/1.0.15/PneumaticStepper-1.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/PneumaticStepper/1.1.0/PneumaticStepper-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PneumaticStepper-1.1.0.tar.gz",
+    "size_bytes": 17741,
+    "sha256": "a0204b8d40712f0d947f2cfe6e2d6059346220a9d3a37e915d89af9bced04e97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/PneumaticStepper/1.1.0/PneumaticStepper-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/PneumaticStepper/1.1.0/PneumaticStepper-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/PneumaticStepper/2.0.0/PneumaticStepper-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PneumaticStepper-2.0.0.tar.gz",
+    "size_bytes": 15736,
+    "sha256": "22309b48b2692101614a1a817547c587f2c8891db99fd795c08e686dd9ee46ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/PneumaticStepper/2.0.0/PneumaticStepper-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/PneumaticStepper/2.0.0/PneumaticStepper-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/PneumaticStepper/2.1.0/PneumaticStepper-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PneumaticStepper-2.1.0.tar.gz",
+    "size_bytes": 16459,
+    "sha256": "b5c8afef2138e5a02778a174a906fac7a4f8f46b5081803067e69692eabc5f75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/PneumaticStepper/2.1.0/PneumaticStepper-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/PneumaticStepper/2.1.0/PneumaticStepper-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/PneumaticStepper/2.2.0/PneumaticStepper-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PneumaticStepper-2.2.0.tar.gz",
+    "size_bytes": 17460,
+    "sha256": "854d20a8c2aa9cbd0b953054dfd664055427f3418c62e4c0dac8d1e2fa4e1c10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/PneumaticStepper/2.2.0/PneumaticStepper-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/PneumaticStepper/2.2.0/PneumaticStepper-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/roaming-wifi-manager/0.1.0/roaming-wifi-manager-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roaming-wifi-manager-0.1.0.tar.gz",
+    "size_bytes": 20502,
+    "sha256": "c2ebc368e47c92b6c10350e2416edb63c756f420ae00825020fc8484a991cbc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/roaming-wifi-manager/0.1.0/roaming-wifi-manager-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/roaming-wifi-manager/0.1.0/roaming-wifi-manager-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/roaming-wifi-manager/0.2.0/roaming-wifi-manager-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roaming-wifi-manager-0.2.0.tar.gz",
+    "size_bytes": 20726,
+    "sha256": "759dfa6a0d5ae650938c10650e175ecb2d1baa425d21cd422d7abfcaa6b76ea6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/roaming-wifi-manager/0.2.0/roaming-wifi-manager-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/roaming-wifi-manager/0.2.0/roaming-wifi-manager-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/roaming-wifi-manager/0.2.1/roaming-wifi-manager-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roaming-wifi-manager-0.2.1.tar.gz",
+    "size_bytes": 31987,
+    "sha256": "6902bb78aeedc75165a927b59585d2417d8f66f8d30d2ce6d6fb264dc7097390",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/roaming-wifi-manager/0.2.1/roaming-wifi-manager-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/roaming-wifi-manager/0.2.1/roaming-wifi-manager-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/roaming-wifi-manager/0.2.2/roaming-wifi-manager-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roaming-wifi-manager-0.2.2.tar.gz",
+    "size_bytes": 33110,
+    "sha256": "0a45806a7e10729e88a377e89b458f25de23e5b24f638ce8ebf26c79948796eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/roaming-wifi-manager/0.2.2/roaming-wifi-manager-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/roaming-wifi-manager/0.2.2/roaming-wifi-manager-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/roaming-wifi-manager/0.3.0/roaming-wifi-manager-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roaming-wifi-manager-0.3.0.tar.gz",
+    "size_bytes": 35320,
+    "sha256": "11baa8db1a54b50c0535b8cc6f69781c1cfe0950b29f6c88a345f479e0f14da3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/roaming-wifi-manager/0.3.0/roaming-wifi-manager-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/roaming-wifi-manager/0.3.0/roaming-wifi-manager-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/roaming-wifi-manager/0.3.1/roaming-wifi-manager-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roaming-wifi-manager-0.3.1.tar.gz",
+    "size_bytes": 35271,
+    "sha256": "c85af25418ce443dc8f0505bc15e3e4859d2de9bbcd2b902f774687dc296d132",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/roaming-wifi-manager/0.3.1/roaming-wifi-manager-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/roaming-wifi-manager/0.3.1/roaming-wifi-manager-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/roaming-wifi-manager/0.3.2/roaming-wifi-manager-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roaming-wifi-manager-0.3.2.tar.gz",
+    "size_bytes": 35285,
+    "sha256": "0c2a3d03ec28ad66e82a4423bf42ee30a9c5ee494dd1f30181bcf19d894c917e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/roaming-wifi-manager/0.3.2/roaming-wifi-manager-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/roaming-wifi-manager/0.3.2/roaming-wifi-manager-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/roaming-wifi-manager/0.3.3/roaming-wifi-manager-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roaming-wifi-manager-0.3.3.tar.gz",
+    "size_bytes": 35278,
+    "sha256": "a3b86ff577cb576a405ade9e5f5038276ad341ba3734d487a3cf33c00bce6b19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/roaming-wifi-manager/0.3.3/roaming-wifi-manager-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/roaming-wifi-manager/0.3.3/roaming-wifi-manager-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/roaming-wifi-manager/0.3.4/roaming-wifi-manager-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roaming-wifi-manager-0.3.4.tar.gz",
+    "size_bytes": 35251,
+    "sha256": "7ed49fcd90d5ff0fa5f2d03ff9c4a697f152008fedf809f6ad9148530dd14289",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/roaming-wifi-manager/0.3.4/roaming-wifi-manager-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/roaming-wifi-manager/0.3.4/roaming-wifi-manager-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/roaming-wifi-manager/0.3.5/roaming-wifi-manager-0.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roaming-wifi-manager-0.3.5.tar.gz",
+    "size_bytes": 35286,
+    "sha256": "9b6b8f93d99a3264ec12d184da6ed2ed11889965802b9f43824fc28a4a322c85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/roaming-wifi-manager/0.3.5/roaming-wifi-manager-0.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/roaming-wifi-manager/0.3.5/roaming-wifi-manager-0.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/roaming-wifi-manager/0.4.0/roaming-wifi-manager-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roaming-wifi-manager-0.4.0.tar.gz",
+    "size_bytes": 35393,
+    "sha256": "1c2211f2868939649c11fa95831837fd9e9aab4358c0afebd2aa67404ff08040",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/roaming-wifi-manager/0.4.0/roaming-wifi-manager-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/roaming-wifi-manager/0.4.0/roaming-wifi-manager-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/roaming-wifi-manager/0.4.1/roaming-wifi-manager-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roaming-wifi-manager-0.4.1.tar.gz",
+    "size_bytes": 35742,
+    "sha256": "1f744af70db2eb7202270800f0a5ec2972a623369c5e9b09ea3a5f23335e4b06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/roaming-wifi-manager/0.4.1/roaming-wifi-manager-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/roaming-wifi-manager/0.4.1/roaming-wifi-manager-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/roaming-wifi-manager/0.4.2/roaming-wifi-manager-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roaming-wifi-manager-0.4.2.tar.gz",
+    "size_bytes": 36865,
+    "sha256": "b068f3ef6f42567d91ebc5f55e60a7928b6466ededb1aa64e4d704a286fffe8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/roaming-wifi-manager/0.4.2/roaming-wifi-manager-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/roaming-wifi-manager/0.4.2/roaming-wifi-manager-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vgroenhuis/library/roaming-wifi-manager/0.4.3/roaming-wifi-manager-0.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roaming-wifi-manager-0.4.3.tar.gz",
+    "size_bytes": 36951,
+    "sha256": "08baf125bc994c05562bfdab150627f0bd94c835927ebff55f7d3307fa90643f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vgroenhuis/library/roaming-wifi-manager/0.4.3/roaming-wifi-manager-0.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vgroenhuis/library/roaming-wifi-manager/0.4.3/roaming-wifi-manager-0.4.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

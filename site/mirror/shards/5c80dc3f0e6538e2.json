@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/telecombretagne",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "telecombretagne/library/YACL/1.0.3/YACL-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YACL-1.0.3.tar.gz",
+    "size_bytes": 21080,
+    "sha256": "38bb25915db3dd7985f44bbe0d6a84f1dd973c070de6787f3853f7ad411273f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/telecombretagne/library/YACL/1.0.3/YACL-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/telecombretagne/library/YACL/1.0.3/YACL-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

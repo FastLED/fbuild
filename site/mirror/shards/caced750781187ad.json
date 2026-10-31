@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-marine-electricals",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-marine-electricals/library/MAX7219/0.0.0+sha.7e3d1bcc15df/MAX7219-0.0.0+sha.7e3d1bcc15df.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX7219-0.0.0+sha.7e3d1bcc15df.tar.gz",
+    "size_bytes": 4521,
+    "sha256": "3a3abe6ea7c2529def3a11391a3685c3a0fbcf2ddd2f95a94c31b3da70ad9094",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-marine-electricals/library/MAX7219/0.0.0%2Bsha.7e3d1bcc15df/MAX7219-0.0.0%2Bsha.7e3d1bcc15df.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-marine-electricals/library/MAX7219/0.0.0%2Bsha.7e3d1bcc15df/MAX7219-0.0.0%2Bsha.7e3d1bcc15df.tar.gz"
+    ]
+   }
+  }
+ ]
+}

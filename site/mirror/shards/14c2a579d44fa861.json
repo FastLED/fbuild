@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/klarsys",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "klarsys/library/ESP8266-OLED%20Display%20Library/1.0/ESP8266-OLEDDisplayLibrary-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266-OLEDDisplayLibrary-1.0.tar.gz",
+    "size_bytes": 4995,
+    "sha256": "07cd4f2de72c653cfa0a91775cd77386ecbfd343c04a23951fa001a68f6dd38f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klarsys/library/ESP8266-OLED%2520Display%2520Library/1.0/ESP8266-OLEDDisplayLibrary-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/klarsys/library/ESP8266-OLED%20Display%20Library/1.0/ESP8266-OLEDDisplayLibrary-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

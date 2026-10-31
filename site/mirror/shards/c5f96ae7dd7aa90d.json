@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/blat2512",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "blat2512/library/Segment/3.0.0/Segment-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Segment-3.0.0.tar.gz",
+    "size_bytes": 15756,
+    "sha256": "ded92d176a677a3994fb9cd41a5462f26b73be3a67b472a4e8e9792683caef90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blat2512/library/Segment/3.0.0/Segment-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blat2512/library/Segment/3.0.0/Segment-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

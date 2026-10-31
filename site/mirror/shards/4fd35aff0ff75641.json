@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kair",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kair/library/Button_SL/1.1.7/Button_SL-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button_SL-1.1.7.tar.gz",
+    "size_bytes": 6706,
+    "sha256": "5b3d7148ca93a18e52e6ae082fe272e3c740a92d17da5e5025dac5dc592f0f1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kair/library/Button_SL/1.1.7/Button_SL-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/kair/library/Button_SL/1.1.7/Button_SL-1.1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

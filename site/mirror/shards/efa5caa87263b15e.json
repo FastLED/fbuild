@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/samuel-lehnen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "samuel-lehnen/library/StreamAverage/1.0.1/StreamAverage-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamAverage-1.0.1.tar.gz",
+    "size_bytes": 4043,
+    "sha256": "ba1b6cfc3a7930954f378c9572a34c7cc2e1511ecdd8239393060903a7e956fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samuel-lehnen/library/StreamAverage/1.0.1/StreamAverage-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/samuel-lehnen/library/StreamAverage/1.0.1/StreamAverage-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/franzininho",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "franzininho/library/Franzininho_LiquidCrystal/1.0.1/Franzininho_LiquidCrystal-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Franzininho_LiquidCrystal-1.0.1.tar.gz",
+    "size_bytes": 3715,
+    "sha256": "1f001f983d2895b7b2199d21d7be5fab75a58690be68e5a42fcb174b37451c00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/franzininho/library/Franzininho_LiquidCrystal/1.0.1/Franzininho_LiquidCrystal-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/franzininho/library/Franzininho_LiquidCrystal/1.0.1/Franzininho_LiquidCrystal-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "franzininho/library/laboratorioFW-DIY/1.0.0/laboratorioFW-DIY-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "laboratorioFW-DIY-1.0.0.tar.gz",
+    "size_bytes": 1693,
+    "sha256": "b400fd020752bc88ba27bef7c05b06ad241ea6a94b3cb5508e2c729b2b43a660",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/franzininho/library/laboratorioFW-DIY/1.0.0/laboratorioFW-DIY-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/franzininho/library/laboratorioFW-DIY/1.0.0/laboratorioFW-DIY-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/franciscoros",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "franciscoros/library/AdaptiveTXWSN/0.1.0/AdaptiveTXWSN-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdaptiveTXWSN-0.1.0.tar.gz",
+    "size_bytes": 8834,
+    "sha256": "a6fa727bb67cefd0c556e8af80463a1c3c8f1cfea661590717f7b5204a55705d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/franciscoros/library/AdaptiveTXWSN/0.1.0/AdaptiveTXWSN-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/franciscoros/library/AdaptiveTXWSN/0.1.0/AdaptiveTXWSN-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "franciscoros/library/CodecWSN/0.1.0/CodecWSN-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodecWSN-0.1.0.tar.gz",
+    "size_bytes": 10468,
+    "sha256": "fce73c6abc8e418154ec1f0cb9108e3415782ca341c233f1da17b252bf61dfc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/franciscoros/library/CodecWSN/0.1.0/CodecWSN-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/franciscoros/library/CodecWSN/0.1.0/CodecWSN-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "franciscoros/library/EnergyWSN/0.1.1/EnergyWSN-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EnergyWSN-0.1.1.tar.gz",
+    "size_bytes": 8333,
+    "sha256": "f300eb00dad7bf538f7b541031356281af40ef76f4a10de76a778a9d1b6df9d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/franciscoros/library/EnergyWSN/0.1.1/EnergyWSN-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/franciscoros/library/EnergyWSN/0.1.1/EnergyWSN-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "franciscoros/library/UniversalRadioWSN/0.1.0/UniversalRadioWSN-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UniversalRadioWSN-0.1.0.tar.gz",
+    "size_bytes": 13726,
+    "sha256": "47d5704c04944236e008fd9b54925d40067ff3538388d803130b38dd8feb8c54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/franciscoros/library/UniversalRadioWSN/0.1.0/UniversalRadioWSN-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/franciscoros/library/UniversalRadioWSN/0.1.0/UniversalRadioWSN-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

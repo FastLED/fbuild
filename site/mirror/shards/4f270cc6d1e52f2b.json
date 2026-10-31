@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/giorgosxou",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "giorgosxou/library/NeuralNetwork/4.0.0/NeuralNetwork-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuralNetwork-4.0.0.tar.gz",
+    "size_bytes": 140766,
+    "sha256": "28d968ff6307f6b7867e9bbd9e4e7b4fb019bb3bb556dc04a570b21c7514d49e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/giorgosxou/library/NeuralNetwork/4.0.0/NeuralNetwork-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/giorgosxou/library/NeuralNetwork/4.0.0/NeuralNetwork-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "giorgosxou/library/NeuralNetwork/4.1.0/NeuralNetwork-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuralNetwork-4.1.0.tar.gz",
+    "size_bytes": 142664,
+    "sha256": "02044b40faabd6c33d7fda6003215fbd2e5a46724465c2c67193a8914ece42bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/giorgosxou/library/NeuralNetwork/4.1.0/NeuralNetwork-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/giorgosxou/library/NeuralNetwork/4.1.0/NeuralNetwork-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "giorgosxou/library/NeuralNetwork/4.1.7/NeuralNetwork-4.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuralNetwork-4.1.7.tar.gz",
+    "size_bytes": 146340,
+    "sha256": "6af9dc9c13d5afb6196e236bc423072bd129275a36dae2cbf39f4b347a26cbe5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/giorgosxou/library/NeuralNetwork/4.1.7/NeuralNetwork-4.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/giorgosxou/library/NeuralNetwork/4.1.7/NeuralNetwork-4.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "giorgosxou/library/NeuralNetwork/4.1.9/NeuralNetwork-4.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuralNetwork-4.1.9.tar.gz",
+    "size_bytes": 146278,
+    "sha256": "0811dd462726355e2bfa76fb47150e3b125319040076ab304a2914f1c79d10a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/giorgosxou/library/NeuralNetwork/4.1.9/NeuralNetwork-4.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/giorgosxou/library/NeuralNetwork/4.1.9/NeuralNetwork-4.1.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

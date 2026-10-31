@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ironlungx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ironlungx/library/SerialWiFiManager/1.0.2/SerialWiFiManager-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWiFiManager-1.0.2.tar.gz",
+    "size_bytes": 4391,
+    "sha256": "914cd48d5517379579b3132ebcc4850d061a9582229bdb6b5a92f66e1371cbe6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ironlungx/library/SerialWiFiManager/1.0.2/SerialWiFiManager-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ironlungx/library/SerialWiFiManager/1.0.2/SerialWiFiManager-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/creatingnull",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "creatingnull/library/NullPacketComms/0.2.3/NullPacketComms-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NullPacketComms-0.2.3.tar.gz",
+    "size_bytes": 522304,
+    "sha256": "3e71ef8fd2cfed9b9e5592b31753c24807798569886e774ceec5935b1c394589",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/creatingnull/library/NullPacketComms/0.2.3/NullPacketComms-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/creatingnull/library/NullPacketComms/0.2.3/NullPacketComms-0.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

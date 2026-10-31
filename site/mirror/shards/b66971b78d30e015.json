@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/antonykasera",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "antonykasera/library/SSFD/1.0.0/SSFD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSFD-1.0.0.tar.gz",
+    "size_bytes": 13728,
+    "sha256": "f2416cba37392e8509d889e3000dcd12eb0694d66307e674a8ca10f89ce749d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/antonykasera/library/SSFD/1.0.0/SSFD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/antonykasera/library/SSFD/1.0.0/SSFD-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

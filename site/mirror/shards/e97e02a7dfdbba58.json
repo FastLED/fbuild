@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kentashimizu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kentashimizu/library/BufferSerial/0.0.0+sha.633dd0246854/BufferSerial-0.0.0+sha.633dd0246854.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BufferSerial-0.0.0+sha.633dd0246854.tar.gz",
+    "size_bytes": 1442,
+    "sha256": "51d3fe41bf3ce9e2055b9b0b105998685a998a0a70ec05c3b295ff38de953334",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kentashimizu/library/BufferSerial/0.0.0%2Bsha.633dd0246854/BufferSerial-0.0.0%2Bsha.633dd0246854.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kentashimizu/library/BufferSerial/0.0.0%2Bsha.633dd0246854/BufferSerial-0.0.0%2Bsha.633dd0246854.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kentashimizu/library/ToggleDigitalOut/0.0.0+sha.d4dad8ffa192/ToggleDigitalOut-0.0.0+sha.d4dad8ffa192.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ToggleDigitalOut-0.0.0+sha.d4dad8ffa192.tar.gz",
+    "size_bytes": 1117,
+    "sha256": "2482f32ddc7a6bb0e78c18a68c54ec282869813f564127b1838cbdcb3ec0bb6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kentashimizu/library/ToggleDigitalOut/0.0.0%2Bsha.d4dad8ffa192/ToggleDigitalOut-0.0.0%2Bsha.d4dad8ffa192.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kentashimizu/library/ToggleDigitalOut/0.0.0%2Bsha.d4dad8ffa192/ToggleDigitalOut-0.0.0%2Bsha.d4dad8ffa192.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-icraggs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-icraggs/library/MQTTSN/0.0.0+sha.3f59a8468e46/MQTTSN-0.0.0+sha.3f59a8468e46.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTSN-0.0.0+sha.3f59a8468e46.tar.gz",
+    "size_bytes": 7664,
+    "sha256": "869c9d16a6243c835a4fe3f3e4181c7c3f3df12e12839d55721a405cd737f373",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-icraggs/library/MQTTSN/0.0.0%2Bsha.3f59a8468e46/MQTTSN-0.0.0%2Bsha.3f59a8468e46.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-icraggs/library/MQTTSN/0.0.0%2Bsha.3f59a8468e46/MQTTSN-0.0.0%2Bsha.3f59a8468e46.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-icraggs/library/MQTTSNPacket/0.0.0+sha.7fa362fa563f/MQTTSNPacket-0.0.0+sha.7fa362fa563f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTSNPacket-0.0.0+sha.7fa362fa563f.tar.gz",
+    "size_bytes": 10875,
+    "sha256": "ad6ca90d77cb2e9794fba4ca4c13dbb19ee1eeafe06ee82d51c9864a7075808d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-icraggs/library/MQTTSNPacket/0.0.0%2Bsha.7fa362fa563f/MQTTSNPacket-0.0.0%2Bsha.7fa362fa563f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-icraggs/library/MQTTSNPacket/0.0.0%2Bsha.7fa362fa563f/MQTTSNPacket-0.0.0%2Bsha.7fa362fa563f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

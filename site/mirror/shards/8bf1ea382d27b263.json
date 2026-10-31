@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-thechrisyd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-thechrisyd/library/Arduino/0.0.0+sha.272d0276d474/Arduino-0.0.0+sha.272d0276d474.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino-0.0.0+sha.272d0276d474.tar.gz",
+    "size_bytes": 3282,
+    "sha256": "367a584a7e24f1ca0a004ce065364e725b3bc349adb6829554e04ca3a931f7f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thechrisyd/library/Arduino/0.0.0%2Bsha.272d0276d474/Arduino-0.0.0%2Bsha.272d0276d474.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thechrisyd/library/Arduino/0.0.0%2Bsha.272d0276d474/Arduino-0.0.0%2Bsha.272d0276d474.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-thechrisyd/library/Gameduino/0.0.0+sha.84c1ca3e1be0/Gameduino-0.0.0+sha.84c1ca3e1be0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gameduino-0.0.0+sha.84c1ca3e1be0.tar.gz",
+    "size_bytes": 7368,
+    "sha256": "dff7233208f2397c2100690095346d44c03b6e15d2fc40a813fe280ffb491704",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thechrisyd/library/Gameduino/0.0.0%2Bsha.84c1ca3e1be0/Gameduino-0.0.0%2Bsha.84c1ca3e1be0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thechrisyd/library/Gameduino/0.0.0%2Bsha.84c1ca3e1be0/Gameduino-0.0.0%2Bsha.84c1ca3e1be0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-thechrisyd/library/RCSwitch/0.0.0+sha.6f4be1a7962c/RCSwitch-0.0.0+sha.6f4be1a7962c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RCSwitch-0.0.0+sha.6f4be1a7962c.tar.gz",
+    "size_bytes": 7748,
+    "sha256": "71f6be68d61f4fb354e8825cf8c5088785933ffe6358b2ac4c8033088ff26cc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thechrisyd/library/RCSwitch/0.0.0%2Bsha.6f4be1a7962c/RCSwitch-0.0.0%2Bsha.6f4be1a7962c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thechrisyd/library/RCSwitch/0.0.0%2Bsha.6f4be1a7962c/RCSwitch-0.0.0%2Bsha.6f4be1a7962c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-thechrisyd/library/nRF2401A/0.0.0+sha.7245524e37e4/nRF2401A-0.0.0+sha.7245524e37e4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF2401A-0.0.0+sha.7245524e37e4.tar.gz",
+    "size_bytes": 7915,
+    "sha256": "5f2e757df09ca056316742d45ee59d4ec378e5c9020bc886216ae557e4d95570",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thechrisyd/library/nRF2401A/0.0.0%2Bsha.7245524e37e4/nRF2401A-0.0.0%2Bsha.7245524e37e4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thechrisyd/library/nRF2401A/0.0.0%2Bsha.7245524e37e4/nRF2401A-0.0.0%2Bsha.7245524e37e4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

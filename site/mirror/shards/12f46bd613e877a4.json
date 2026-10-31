@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/spacehuhn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "spacehuhn/library/DstikeUpdater/1.0.0/DstikeUpdater-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DstikeUpdater-1.0.0.tar.gz",
+    "size_bytes": 6920,
+    "sha256": "cf3ca01e0fca58524f6ae97f5b6410080cce13d424241dddaf83bba216d8f897",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spacehuhn/library/DstikeUpdater/1.0.0/DstikeUpdater-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/spacehuhn/library/DstikeUpdater/1.0.0/DstikeUpdater-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spacehuhn/library/SimpleButton/0.0.0-alpha+sha.026bc1e41a/SimpleButton-0.0.0-alphasha.026bc1e41a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleButton-0.0.0-alphasha.026bc1e41a.tar.gz",
+    "size_bytes": 22235,
+    "sha256": "09b5b268beda8112c48ee0bfdcb05dc1eec8c0bc8aec1a97cdbb8b113d4f0413",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spacehuhn/library/SimpleButton/0.0.0-alpha%2Bsha.026bc1e41a/SimpleButton-0.0.0-alphasha.026bc1e41a.tar.gz",
+     "https://dl.registry.platformio.org/download/spacehuhn/library/SimpleButton/0.0.0-alpha%2Bsha.026bc1e41a/SimpleButton-0.0.0-alphasha.026bc1e41a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spacehuhn/library/SimpleCLI/1.1.4/SimpleCLI-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleCLI-1.1.4.tar.gz",
+    "size_bytes": 24051,
+    "sha256": "e24505778f372185847563baaef916d99e1fbf9312fc822d2f10fff5686dcc74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spacehuhn/library/SimpleCLI/1.1.4/SimpleCLI-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/spacehuhn/library/SimpleCLI/1.1.4/SimpleCLI-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spacehuhn/library/SimpleMap/1.0.0/SimpleMap-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleMap-1.0.0.tar.gz",
+    "size_bytes": 4907,
+    "sha256": "8af4836045bb0736bd638f18f6c226e23e79aced72940377a2bc5c04dfa91361",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spacehuhn/library/SimpleMap/1.0.0/SimpleMap-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/spacehuhn/library/SimpleMap/1.0.0/SimpleMap-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-michaelw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-michaelw/library/RPCInterface/0.0.0+sha.9d82e28ffaea/RPCInterface-0.0.0+sha.9d82e28ffaea.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RPCInterface-0.0.0+sha.9d82e28ffaea.tar.gz",
+    "size_bytes": 3065,
+    "sha256": "27e75b5ca440c671305028d6109d58d81803ecb6134c8bea58fc3fc4345b49e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-michaelw/library/RPCInterface/0.0.0%2Bsha.9d82e28ffaea/RPCInterface-0.0.0%2Bsha.9d82e28ffaea.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-michaelw/library/RPCInterface/0.0.0%2Bsha.9d82e28ffaea/RPCInterface-0.0.0%2Bsha.9d82e28ffaea.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-michaelw/library/RTC_MCP7940M/0.0.0+sha.941a59078507/RTC_MCP7940M-0.0.0+sha.941a59078507.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC_MCP7940M-0.0.0+sha.941a59078507.tar.gz",
+    "size_bytes": 3210,
+    "sha256": "a4cc2f4afb80180f22e1a67b2b0133a9eef0710d33a46b0cb5651e60625805b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-michaelw/library/RTC_MCP7940M/0.0.0%2Bsha.941a59078507/RTC_MCP7940M-0.0.0%2Bsha.941a59078507.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-michaelw/library/RTC_MCP7940M/0.0.0%2Bsha.941a59078507/RTC_MCP7940M-0.0.0%2Bsha.941a59078507.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-michaelw/library/scp1000-D01/0.0.0+sha.d509ab38e2b5/scp1000-D01-0.0.0+sha.d509ab38e2b5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "scp1000-D01-0.0.0+sha.d509ab38e2b5.tar.gz",
+    "size_bytes": 2977,
+    "sha256": "d8885db46b4079ecd9b2698460e840dda43c268448c0e208260f9a8e9cbd00ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-michaelw/library/scp1000-D01/0.0.0%2Bsha.d509ab38e2b5/scp1000-D01-0.0.0%2Bsha.d509ab38e2b5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-michaelw/library/scp1000-D01/0.0.0%2Bsha.d509ab38e2b5/scp1000-D01-0.0.0%2Bsha.d509ab38e2b5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

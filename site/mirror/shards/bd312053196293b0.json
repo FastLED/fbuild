@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/teckel12",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "teckel12/library/NewPing/1.9.7/NewPing-1.9.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NewPing-1.9.7.tar.gz",
+    "size_bytes": 13059,
+    "sha256": "e7878b5b84de0ecb09f394141e025361e8d20758e8e8b210093169fa91801120",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teckel12/library/NewPing/1.9.7/NewPing-1.9.7.tar.gz",
+     "https://dl.registry.platformio.org/download/teckel12/library/NewPing/1.9.7/NewPing-1.9.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teckel12/library/toneAC/1.5.0/toneAC-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toneAC-1.5.0.tar.gz",
+    "size_bytes": 7766,
+    "sha256": "94a966761efe8abc69b9efe180d76df9448f9f35ca03a616ce8de608f3d962b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teckel12/library/toneAC/1.5.0/toneAC-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teckel12/library/toneAC/1.5.0/toneAC-1.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

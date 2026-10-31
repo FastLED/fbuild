@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/phm-tuyenn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "phm-tuyenn/library/PS4Bluepad32/1.0.1/PS4Bluepad32-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS4Bluepad32-1.0.1.tar.gz",
+    "size_bytes": 17176,
+    "sha256": "85b1d0d7553aa9155473ae0180e83b2b91782aeca8f1fba8c747c90aa7a78743",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phm-tuyenn/library/PS4Bluepad32/1.0.1/PS4Bluepad32-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/phm-tuyenn/library/PS4Bluepad32/1.0.1/PS4Bluepad32-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

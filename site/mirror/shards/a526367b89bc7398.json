@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/i-am-crocker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "i-am-crocker/library/manchester-encoding/1.0.0-beta/manchester-encoding-1.0.0-beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "manchester-encoding-1.0.0-beta.tar.gz",
+    "size_bytes": 7600,
+    "sha256": "421519abcb141162a0977c392f3c4845b58b59059bf8821a372106cbeb467767",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/i-am-crocker/library/manchester-encoding/1.0.0-beta/manchester-encoding-1.0.0-beta.tar.gz",
+     "https://dl.registry.platformio.org/download/i-am-crocker/library/manchester-encoding/1.0.0-beta/manchester-encoding-1.0.0-beta.tar.gz"
+    ]
+   }
+  }
+ ]
+}

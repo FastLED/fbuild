@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ehbmbed2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ehbmbed2/library/LPD8806/0.0.0+sha.6ebd3ac910b6/LPD8806-0.0.0+sha.6ebd3ac910b6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LPD8806-0.0.0+sha.6ebd3ac910b6.tar.gz",
+    "size_bytes": 2319,
+    "sha256": "aedeaf9c2ccc923e4784cde5d1db37823b30e9805fbb8ee2ca30c906ebf433e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ehbmbed2/library/LPD8806/0.0.0%2Bsha.6ebd3ac910b6/LPD8806-0.0.0%2Bsha.6ebd3ac910b6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ehbmbed2/library/LPD8806/0.0.0%2Bsha.6ebd3ac910b6/LPD8806-0.0.0%2Bsha.6ebd3ac910b6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

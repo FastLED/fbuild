@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yoprogramo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yoprogramo/library/ESP%20QRcode/4.0.2/ESPQRcode-4.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPQRcode-4.0.2.tar.gz",
+    "size_bytes": 8988,
+    "sha256": "81a0626604b8722c7b18382e0e1b9d5537f44cad9cc32b729893df78d10aa800",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yoprogramo/library/ESP%2520QRcode/4.0.2/ESPQRcode-4.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/yoprogramo/library/ESP%20QRcode/4.0.2/ESPQRcode-4.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yoprogramo/library/MFRC522-yp/1.0.1/MFRC522-yp-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MFRC522-yp-1.0.1.tar.gz",
+    "size_bytes": 62161,
+    "sha256": "e0957bbb5d7a718a648d64ca6421edd7cc1b542cff6994ab7bc97f724405f499",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yoprogramo/library/MFRC522-yp/1.0.1/MFRC522-yp-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yoprogramo/library/MFRC522-yp/1.0.1/MFRC522-yp-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yoprogramo/library/QRcodeDisplay/2.1.0/QRcodeDisplay-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QRcodeDisplay-2.1.0.tar.gz",
+    "size_bytes": 10341,
+    "sha256": "bde4195557493452450e3a9ac9f5d4c2269681892b252ff9e2e1a882e7d43811",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yoprogramo/library/QRcodeDisplay/2.1.0/QRcodeDisplay-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yoprogramo/library/QRcodeDisplay/2.1.0/QRcodeDisplay-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yoprogramo/library/QRcodeEink/2.1.0/QRcodeEink-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QRcodeEink-2.1.0.tar.gz",
+    "size_bytes": 2104,
+    "sha256": "9195375132b1f34a1c340a277806b288336bf6000dee8aeea415acd17a05f0af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yoprogramo/library/QRcodeEink/2.1.0/QRcodeEink-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yoprogramo/library/QRcodeEink/2.1.0/QRcodeEink-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yoprogramo/library/QRcodeOled/2.0.0/QRcodeOled-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QRcodeOled-2.0.0.tar.gz",
+    "size_bytes": 2129,
+    "sha256": "20132a45fd2c61732e05bd2a6161c0444b78f02e424b33831c7415ca16a405e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yoprogramo/library/QRcodeOled/2.0.0/QRcodeOled-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yoprogramo/library/QRcodeOled/2.0.0/QRcodeOled-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yoprogramo/library/QRcode_ST7735/2.1.0/QRcode_ST7735-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QRcode_ST7735-2.1.0.tar.gz",
+    "size_bytes": 2002,
+    "sha256": "c36aaa8a0985ac039f6a0daeccaad41202ee9919fd8d814012a7beb4bde488e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yoprogramo/library/QRcode_ST7735/2.1.0/QRcode_ST7735-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yoprogramo/library/QRcode_ST7735/2.1.0/QRcode_ST7735-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yoprogramo/library/QRcode_ST7789/2.1.0/QRcode_ST7789-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QRcode_ST7789-2.1.0.tar.gz",
+    "size_bytes": 2164,
+    "sha256": "ec1792998a6b423ef0d0a77daf71837f1c4078394cff5412aef8c733cfa88688",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yoprogramo/library/QRcode_ST7789/2.1.0/QRcode_ST7789-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yoprogramo/library/QRcode_ST7789/2.1.0/QRcode_ST7789-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yoprogramo/library/QRcode_eSPI/2.0.0/QRcode_eSPI-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QRcode_eSPI-2.0.0.tar.gz",
+    "size_bytes": 2099,
+    "sha256": "865052a14f238c139e4a032f7703622e9f36a83b49a56a5c2b6954e5dd344b16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yoprogramo/library/QRcode_eSPI/2.0.0/QRcode_eSPI-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yoprogramo/library/QRcode_eSPI/2.0.0/QRcode_eSPI-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zerokol",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zerokol/library/eFLL/1.4.1/eFLL-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eFLL-1.4.1.tar.gz",
+    "size_bytes": 302146,
+    "sha256": "9629af5e4e91af14f9e6039769474bfaf0c2320add653951297a1bb3a02c7369",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zerokol/library/eFLL/1.4.1/eFLL-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zerokol/library/eFLL/1.4.1/eFLL-1.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

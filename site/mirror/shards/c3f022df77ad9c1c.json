@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/flatree-ys",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "flatree-ys/library/OV7725_CPUfree_Camera/1.0.1/OV7725_CPUfree_Camera-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OV7725_CPUfree_Camera-1.0.1.tar.gz",
+    "size_bytes": 15534,
+    "sha256": "6e72aa0f4d3cb53588b4f37c2f1572520d9fb490894918766acaed2f415a27a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flatree-ys/library/OV7725_CPUfree_Camera/1.0.1/OV7725_CPUfree_Camera-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/flatree-ys/library/OV7725_CPUfree_Camera/1.0.1/OV7725_CPUfree_Camera-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

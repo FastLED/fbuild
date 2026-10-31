@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jalr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jalr/library/EE895%20Arduino%20Library/0.1.1/EE895ArduinoLibrary-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EE895ArduinoLibrary-0.1.1.tar.gz",
+    "size_bytes": 9066,
+    "sha256": "0e93a5108c1db5064d993321a07424e015d3a98ab40d1eff622a088bd716f506",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jalr/library/EE895%2520Arduino%2520Library/0.1.1/EE895ArduinoLibrary-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jalr/library/EE895%20Arduino%20Library/0.1.1/EE895ArduinoLibrary-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

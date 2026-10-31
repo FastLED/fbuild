@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-andya",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-andya/library/SlowPWM/0.0.0+sha.3f7eb3ad23d4/SlowPWM-0.0.0+sha.3f7eb3ad23d4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SlowPWM-0.0.0+sha.3f7eb3ad23d4.tar.gz",
+    "size_bytes": 1661,
+    "sha256": "b259e5241965beb7ba1fbbb3d5466dab3960da38d9eac73546aa88dbe92f3de7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andya/library/SlowPWM/0.0.0%2Bsha.3f7eb3ad23d4/SlowPWM-0.0.0%2Bsha.3f7eb3ad23d4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andya/library/SlowPWM/0.0.0%2Bsha.3f7eb3ad23d4/SlowPWM-0.0.0%2Bsha.3f7eb3ad23d4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-andya/library/mBuino_Sleep/0.0.0+sha.bcb4ed255791/mBuino_Sleep-0.0.0+sha.bcb4ed255791.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mBuino_Sleep-0.0.0+sha.bcb4ed255791.tar.gz",
+    "size_bytes": 1847,
+    "sha256": "8e566d814eda4a8fb593c24f13b7ef20e933525770842db31b13bd7cc3f311eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andya/library/mBuino_Sleep/0.0.0%2Bsha.bcb4ed255791/mBuino_Sleep-0.0.0%2Bsha.bcb4ed255791.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andya/library/mBuino_Sleep/0.0.0%2Bsha.bcb4ed255791/mBuino_Sleep-0.0.0%2Bsha.bcb4ed255791.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-andya/library/mBuino_Sleep_Minimal/0.0.0+sha.9c5cd0f7aa8a/mBuino_Sleep_Minimal-0.0.0+sha.9c5cd0f7aa8a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mBuino_Sleep_Minimal-0.0.0+sha.9c5cd0f7aa8a.tar.gz",
+    "size_bytes": 1487,
+    "sha256": "2df57c0db1953cd4389c466c6e43edb84329a0d244fc1efbba9c82bdace98027",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andya/library/mBuino_Sleep_Minimal/0.0.0%2Bsha.9c5cd0f7aa8a/mBuino_Sleep_Minimal-0.0.0%2Bsha.9c5cd0f7aa8a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andya/library/mBuino_Sleep_Minimal/0.0.0%2Bsha.9c5cd0f7aa8a/mBuino_Sleep_Minimal-0.0.0%2Bsha.9c5cd0f7aa8a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-andya/library/miniFont/0.0.0+sha.46e0549c2bfb/miniFont-0.0.0+sha.46e0549c2bfb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "miniFont-0.0.0+sha.46e0549c2bfb.tar.gz",
+    "size_bytes": 3057,
+    "sha256": "6f6e410ffcc74a39ca707d496bd9c523468599dd973038a553dd73a30dd92912",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andya/library/miniFont/0.0.0%2Bsha.46e0549c2bfb/miniFont-0.0.0%2Bsha.46e0549c2bfb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andya/library/miniFont/0.0.0%2Bsha.46e0549c2bfb/miniFont-0.0.0%2Bsha.46e0549c2bfb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-andya/library/plotly/0.0.0+sha.d4f705ba2ea5/plotly-0.0.0+sha.d4f705ba2ea5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "plotly-0.0.0+sha.d4f705ba2ea5.tar.gz",
+    "size_bytes": 5616,
+    "sha256": "b0c295360d26a6f825ffbb462633a2c20ded71d08f0031c9995f4bf697949c04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andya/library/plotly/0.0.0%2Bsha.d4f705ba2ea5/plotly-0.0.0%2Bsha.d4f705ba2ea5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andya/library/plotly/0.0.0%2Bsha.d4f705ba2ea5/plotly-0.0.0%2Bsha.d4f705ba2ea5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-andya/library/wsDrive/0.0.0+sha.6aa3e7de65f9/wsDrive-0.0.0+sha.6aa3e7de65f9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wsDrive-0.0.0+sha.6aa3e7de65f9.tar.gz",
+    "size_bytes": 3316,
+    "sha256": "a179ed3a3aee8caca8b8b3b7a064f4dc1e7c343c727678f0477d7f3897428491",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-andya/library/wsDrive/0.0.0%2Bsha.6aa3e7de65f9/wsDrive-0.0.0%2Bsha.6aa3e7de65f9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-andya/library/wsDrive/0.0.0%2Bsha.6aa3e7de65f9/wsDrive-0.0.0%2Bsha.6aa3e7de65f9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

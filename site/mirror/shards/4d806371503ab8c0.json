@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/casajasmina",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "casajasmina/library/TelegramBot/1.2.5/TelegramBot-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TelegramBot-1.2.5.tar.gz",
+    "size_bytes": 14408,
+    "sha256": "3a0f946a1b600091842236c42528bdf70f42af943911423595ae3594eb1c4602",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/casajasmina/library/TelegramBot/1.2.5/TelegramBot-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/casajasmina/library/TelegramBot/1.2.5/TelegramBot-1.2.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

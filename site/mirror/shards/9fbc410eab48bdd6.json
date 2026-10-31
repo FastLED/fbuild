@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/feralai",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "feralai/library/MPG/0.4.0/MPG-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPG-0.4.0.tar.gz",
+    "size_bytes": 1023008,
+    "sha256": "00d59ed44d11d8dad4d3f1804e7204fed4c5490e96f5968b96caffcd3ca967f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/feralai/library/MPG/0.4.0/MPG-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/feralai/library/MPG/0.4.0/MPG-0.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

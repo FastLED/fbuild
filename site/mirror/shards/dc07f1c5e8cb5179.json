@@ -1,0 +1,360 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sbarabe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sbarabe/library/SBK_AvrBuzzer/1.0.0/SBK_AvrBuzzer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_AvrBuzzer-1.0.0.tar.gz",
+    "size_bytes": 11161,
+    "sha256": "fc6938a4127b801141bf6be89b1479848225e8420d9ebfb77057007df39dfefd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_AvrBuzzer/1.0.0/SBK_AvrBuzzer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_AvrBuzzer/1.0.0/SBK_AvrBuzzer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_AvrBuzzer/1.0.1/SBK_AvrBuzzer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_AvrBuzzer-1.0.1.tar.gz",
+    "size_bytes": 11518,
+    "sha256": "03b3769f7e9e70097f9719bdbdd6d835ed3a8b2220419e88e1ccf1003eeaf68c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_AvrBuzzer/1.0.1/SBK_AvrBuzzer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_AvrBuzzer/1.0.1/SBK_AvrBuzzer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_AvrBuzzer/1.1.0/SBK_AvrBuzzer-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_AvrBuzzer-1.1.0.tar.gz",
+    "size_bytes": 15657,
+    "sha256": "bc160458a508c98efa089dcccb9dac3eef5ff44e9c971599c3e3a0e00a572caf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_AvrBuzzer/1.1.0/SBK_AvrBuzzer-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_AvrBuzzer/1.1.0/SBK_AvrBuzzer-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_AvrBuzzer/1.1.1/SBK_AvrBuzzer-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_AvrBuzzer-1.1.1.tar.gz",
+    "size_bytes": 16197,
+    "sha256": "729b9b5cf0376aae74e48c4fa0dd6945f3a83ed2367668465cfecfaa81dc2465",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_AvrBuzzer/1.1.1/SBK_AvrBuzzer-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_AvrBuzzer/1.1.1/SBK_AvrBuzzer-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_BarDrive/2.0.2/SBK_BarDrive-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_BarDrive-2.0.2.tar.gz",
+    "size_bytes": 31015,
+    "sha256": "adca4538a1a262d17b54db9fcba9a6aaf90d64d357481de481b002148ccd3528",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_BarDrive/2.0.2/SBK_BarDrive-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_BarDrive/2.0.2/SBK_BarDrive-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_BarDrive/2.0.3/SBK_BarDrive-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_BarDrive-2.0.3.tar.gz",
+    "size_bytes": 30997,
+    "sha256": "54e82c74d1d0f9339f0098f858a2c01561c65d812b53e6d6e5963e1ef17efeda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_BarDrive/2.0.3/SBK_BarDrive-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_BarDrive/2.0.3/SBK_BarDrive-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_BarDrive/2.0.4/SBK_BarDrive-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_BarDrive-2.0.4.tar.gz",
+    "size_bytes": 30970,
+    "sha256": "4eefbd62abd992e32f71243e025f0e509d8292241882ecf260c38b5b217cec2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_BarDrive/2.0.4/SBK_BarDrive-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_BarDrive/2.0.4/SBK_BarDrive-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_BarDrive/2.0.5/SBK_BarDrive-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_BarDrive-2.0.5.tar.gz",
+    "size_bytes": 30951,
+    "sha256": "59b2cd53bd35330c4d20f881c353b88e2604bbd3cf56751ce14122a9a3923d33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_BarDrive/2.0.5/SBK_BarDrive-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_BarDrive/2.0.5/SBK_BarDrive-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_BarDrive/2.1.0/SBK_BarDrive-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_BarDrive-2.1.0.tar.gz",
+    "size_bytes": 40058,
+    "sha256": "9730302673d48b01c3dc731b7b83d4b67c83894f50378b70f40e0074120f5849",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_BarDrive/2.1.0/SBK_BarDrive-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_BarDrive/2.1.0/SBK_BarDrive-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_BarDrive/2.1.1/SBK_BarDrive-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_BarDrive-2.1.1.tar.gz",
+    "size_bytes": 41357,
+    "sha256": "11081ffee77e758f16d39e3f95b34bea94e3675a32fc8799656a8a3846bbbc70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_BarDrive/2.1.1/SBK_BarDrive-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_BarDrive/2.1.1/SBK_BarDrive-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_BarDrive/2.1.2/SBK_BarDrive-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_BarDrive-2.1.2.tar.gz",
+    "size_bytes": 43676,
+    "sha256": "86eee64e8785de8087a5f4ad97a68143808ebde9f5237783c69b4c545b8ec64e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_BarDrive/2.1.2/SBK_BarDrive-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_BarDrive/2.1.2/SBK_BarDrive-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_BarDrive/2.2.0/SBK_BarDrive-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_BarDrive-2.2.0.tar.gz",
+    "size_bytes": 41230,
+    "sha256": "2c6fd171d76f8412376f7cace6b8e2360e24bdd56fb3a6de0ec963c3dad98544",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_BarDrive/2.2.0/SBK_BarDrive-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_BarDrive/2.2.0/SBK_BarDrive-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_BarDrive/2.2.1/SBK_BarDrive-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_BarDrive-2.2.1.tar.gz",
+    "size_bytes": 42526,
+    "sha256": "6ccae1eaa646fb180bcf84da5285c72e0fbfbaa50e24bab1e09b5485bd879a0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_BarDrive/2.2.1/SBK_BarDrive-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_BarDrive/2.2.1/SBK_BarDrive-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_Button/1.0.0/SBK_Button-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_Button-1.0.0.tar.gz",
+    "size_bytes": 11454,
+    "sha256": "0615f52ec55b6b2264d5bb9b3bb1619850860c369be39c0e291f50a6bbdb95ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_Button/1.0.0/SBK_Button-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_Button/1.0.0/SBK_Button-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_Button/1.0.1/SBK_Button-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_Button-1.0.1.tar.gz",
+    "size_bytes": 11454,
+    "sha256": "0dac9fcf643ba497ca17cabd34389b42739a9cf2d18bc0e0ba17e27180a0dcc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_Button/1.0.1/SBK_Button-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_Button/1.0.1/SBK_Button-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_Button/1.0.2/SBK_Button-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_Button-1.0.2.tar.gz",
+    "size_bytes": 11528,
+    "sha256": "8e44bfacefe26ec31b457951aed20623906a1ec55928fcf5ed6325a2a8681067",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_Button/1.0.2/SBK_Button-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_Button/1.0.2/SBK_Button-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_Button/1.0.3/SBK_Button-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_Button-1.0.3.tar.gz",
+    "size_bytes": 10895,
+    "sha256": "8819dd33f6cbd10d677cf549b2bb2a0a3766a04ab92ba3cdd4c9bd5b3913bbb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_Button/1.0.3/SBK_Button-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_Button/1.0.3/SBK_Button-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_Button/1.1.0/SBK_Button-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_Button-1.1.0.tar.gz",
+    "size_bytes": 11828,
+    "sha256": "f7fcaaeee87f2c615b3e7c115faba52134e663631f77772d23d8d498ce1b2ca7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_Button/1.1.0/SBK_Button-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_Button/1.1.0/SBK_Button-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_Button/1.2.0/SBK_Button-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_Button-1.2.0.tar.gz",
+    "size_bytes": 12417,
+    "sha256": "e805f9c5c2a9afb71f358275e49c9f107ad18f73e08ebff7480036d574ce7861",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_Button/1.2.0/SBK_Button-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_Button/1.2.0/SBK_Button-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_Button/1.3.0/SBK_Button-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_Button-1.3.0.tar.gz",
+    "size_bytes": 13148,
+    "sha256": "2290b76a0989f95ad45cf162af586b670e6bd809bdc5cc701c48982a2b2196bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_Button/1.3.0/SBK_Button-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_Button/1.3.0/SBK_Button-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_HT16K33/2.0.0/SBK_HT16K33-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_HT16K33-2.0.0.tar.gz",
+    "size_bytes": 7775,
+    "sha256": "d3667f430387545f897fd5e5a43529e6f3660a531a7aab092d906a32013ce8ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_HT16K33/2.0.0/SBK_HT16K33-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_HT16K33/2.0.0/SBK_HT16K33-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_HT16K33/2.0.1/SBK_HT16K33-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_HT16K33-2.0.1.tar.gz",
+    "size_bytes": 7776,
+    "sha256": "1fc582cdacca1ae8ae5646ea8035bfb31cc594009e12662de848e816f49e87ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_HT16K33/2.0.1/SBK_HT16K33-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_HT16K33/2.0.1/SBK_HT16K33-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_MAX72xx/2.0.1/SBK_MAX72xx-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_MAX72xx-2.0.1.tar.gz",
+    "size_bytes": 8777,
+    "sha256": "9a29e4697f1421a7e2ec6b52bf702bbcfacb50cd91d29e02060ae5beeb1231fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_MAX72xx/2.0.1/SBK_MAX72xx-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_MAX72xx/2.0.1/SBK_MAX72xx-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_MAX72xx/2.0.2/SBK_MAX72xx-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_MAX72xx-2.0.2.tar.gz",
+    "size_bytes": 8667,
+    "sha256": "75799d273f9d7bc2bd36dae853e127aed035819b4ebb311019c3064d84cd72aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_MAX72xx/2.0.2/SBK_MAX72xx-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_MAX72xx/2.0.2/SBK_MAX72xx-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_MAX72xx/2.0.3/SBK_MAX72xx-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_MAX72xx-2.0.3.tar.gz",
+    "size_bytes": 8681,
+    "sha256": "0d4e8fad6dd452a851308413d06bb932a1736ffe7b3f5c95e8c3126dc8f988ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_MAX72xx/2.0.3/SBK_MAX72xx-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_MAX72xx/2.0.3/SBK_MAX72xx-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_MAX72xx/2.0.4/SBK_MAX72xx-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_MAX72xx-2.0.4.tar.gz",
+    "size_bytes": 8632,
+    "sha256": "51ea2f33a383ef109ec70763eca9b8a233a4725b26eb1a0811aa7b0c8b8b4efc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_MAX72xx/2.0.4/SBK_MAX72xx-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_MAX72xx/2.0.4/SBK_MAX72xx-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbarabe/library/SBK_MAX72xx/2.0.5/SBK_MAX72xx-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBK_MAX72xx-2.0.5.tar.gz",
+    "size_bytes": 8593,
+    "sha256": "7fa226394003ab7d083665fee6a61b93c1b23fd0b81f53557c93c6f64d2a31d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbarabe/library/SBK_MAX72xx/2.0.5/SBK_MAX72xx-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sbarabe/library/SBK_MAX72xx/2.0.5/SBK_MAX72xx-2.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

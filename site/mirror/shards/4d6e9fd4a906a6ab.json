@@ -1,0 +1,412 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/earlephilhower",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "earlephilhower/library/BackgroundAudio/1.4.1/BackgroundAudio-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BackgroundAudio-1.4.1.tar.gz",
+    "size_bytes": 13072720,
+    "sha256": "f9155c5be52e4ba0794b233b9ce65c7f470eb4bcef4e601727aa8a8f30d8b57c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/BackgroundAudio/1.4.1/BackgroundAudio-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/BackgroundAudio/1.4.1/BackgroundAudio-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/BackgroundAudio/1.4.2/BackgroundAudio-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BackgroundAudio-1.4.2.tar.gz",
+    "size_bytes": 13072829,
+    "sha256": "bfd250a579e452cd3712b21ae5e503af0fa031fec95781fb10cb26751672f491",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/BackgroundAudio/1.4.2/BackgroundAudio-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/BackgroundAudio/1.4.2/BackgroundAudio-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/BackgroundAudio/1.4.3/BackgroundAudio-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BackgroundAudio-1.4.3.tar.gz",
+    "size_bytes": 13073667,
+    "sha256": "599ea0edeff977739c50752634d06e7bba4f8b7b6a49c33e8860ffae3c4a728c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/BackgroundAudio/1.4.3/BackgroundAudio-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/BackgroundAudio/1.4.3/BackgroundAudio-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/BackgroundAudio/1.4.4/BackgroundAudio-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BackgroundAudio-1.4.4.tar.gz",
+    "size_bytes": 13073892,
+    "sha256": "5109a057b120a332f022e498ef37437867f8fcd57e31da31147fff774b810baa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/BackgroundAudio/1.4.4/BackgroundAudio-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/BackgroundAudio/1.4.4/BackgroundAudio-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/ESP8266Audio/1.9.5/ESP8266Audio-1.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Audio-1.9.5.tar.gz",
+    "size_bytes": 6884907,
+    "sha256": "014dc6589e27cdbaf82a99649334ef53e7ee4c620020ba423db673df1d456709",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/ESP8266Audio/1.9.5/ESP8266Audio-1.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/ESP8266Audio/1.9.5/ESP8266Audio-1.9.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/ESP8266Audio/1.9.7/ESP8266Audio-1.9.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Audio-1.9.7.tar.gz",
+    "size_bytes": 5549396,
+    "sha256": "c67a62f333823ef589d5cdac5a08dbaeee560cc999881686433843e41883128b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/ESP8266Audio/1.9.7/ESP8266Audio-1.9.7.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/ESP8266Audio/1.9.7/ESP8266Audio-1.9.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/ESP8266Audio/1.9.9/ESP8266Audio-1.9.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Audio-1.9.9.tar.gz",
+    "size_bytes": 5673646,
+    "sha256": "433bc7c37728b5374f62486f63424427897eb474b7d047b9d8c14f5088a1c27b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/ESP8266Audio/1.9.9/ESP8266Audio-1.9.9.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/ESP8266Audio/1.9.9/ESP8266Audio-1.9.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/ESP8266Audio/2.0.0/ESP8266Audio-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Audio-2.0.0.tar.gz",
+    "size_bytes": 5675383,
+    "sha256": "5acd46fbc82bd23cbfdf6bd0839276692a23b670619a4893e5d787d32194511b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/ESP8266Audio/2.0.0/ESP8266Audio-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/ESP8266Audio/2.0.0/ESP8266Audio-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/ESP8266Audio/2.1.0/ESP8266Audio-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Audio-2.1.0.tar.gz",
+    "size_bytes": 5692354,
+    "sha256": "966699f47c95116a7132da61268fd76343a9563d24b0c17c90ca7cf9881c187b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/ESP8266Audio/2.1.0/ESP8266Audio-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/ESP8266Audio/2.1.0/ESP8266Audio-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/ESP8266Audio/2.2.0/ESP8266Audio-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Audio-2.2.0.tar.gz",
+    "size_bytes": 5306061,
+    "sha256": "4c0899c8d35d9a286a7a2d597ac39317c196c417cf1cc71d6b548ac5ed683c29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/ESP8266Audio/2.2.0/ESP8266Audio-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/ESP8266Audio/2.2.0/ESP8266Audio-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/ESP8266Audio/2.3.0/ESP8266Audio-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Audio-2.3.0.tar.gz",
+    "size_bytes": 5429238,
+    "sha256": "5c01afe306d640c924f8b6c6236fee9ab1e0285142555adb977886f6222491a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/ESP8266Audio/2.3.0/ESP8266Audio-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/ESP8266Audio/2.3.0/ESP8266Audio-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/ESP8266Audio/2.4.0/ESP8266Audio-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Audio-2.4.0.tar.gz",
+    "size_bytes": 6240284,
+    "sha256": "54784a25e0209bf64c9ce15675f6baa7982f8a77bbf89cd79f59536ea9238a01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/ESP8266Audio/2.4.0/ESP8266Audio-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/ESP8266Audio/2.4.0/ESP8266Audio-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/ESP8266Audio/2.4.1/ESP8266Audio-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Audio-2.4.1.tar.gz",
+    "size_bytes": 6243167,
+    "sha256": "1fffda84ea2427530c531516df42d27f758fc9bf770e0bf50889c64bcb80b19f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/ESP8266Audio/2.4.1/ESP8266Audio-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/ESP8266Audio/2.4.1/ESP8266Audio-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/ESP8266FastROMFS/1.0/ESP8266FastROMFS-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266FastROMFS-1.0.tar.gz",
+    "size_bytes": 27614,
+    "sha256": "d553a991a5fc716062f9406cce1ce47997dc5f778d186e831fe252131c8255a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/ESP8266FastROMFS/1.0/ESP8266FastROMFS-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/ESP8266FastROMFS/1.0/ESP8266FastROMFS-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/ESP8266SAM/1.0.1/ESP8266SAM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266SAM-1.0.1.tar.gz",
+    "size_bytes": 35662,
+    "sha256": "520f81f0c49baf3ba5229e774cc507c0a592047242f9945b1b747390fc082ef5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/ESP8266SAM/1.0.1/ESP8266SAM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/ESP8266SAM/1.0.1/ESP8266SAM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/ESP8266SAM/1.1.0/ESP8266SAM-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266SAM-1.1.0.tar.gz",
+    "size_bytes": 38190,
+    "sha256": "0d34ff2b94111ec3c6c0d5f004b8a6a6620b5ee85420033dde4381dbd76c7feb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/ESP8266SAM/1.1.0/ESP8266SAM-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/ESP8266SAM/1.1.0/ESP8266SAM-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/library/PicoLlama/1.1.0/PicoLlama-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoLlama-1.1.0.tar.gz",
+    "size_bytes": 21924692,
+    "sha256": "19dabd96750c9403418ce68d23487e448a97c1e7a33ef60977df9bdf55de91ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/library/PicoLlama/1.1.0/PicoLlama-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/library/PicoLlama/1.1.0/PicoLlama-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-darwin_x86_64-5.100300.230216.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-rp2040-earlephilhower-darwin_x86_64-5.100300.230216.tar.gz",
+    "size_bytes": 373452,
+    "sha256": "88531f8799300105fa5f7eaabf4d31dd8dc546eb8518567f80c333fe21a31fe0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-darwin_x86_64-5.100300.230216.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-darwin_x86_64-5.100300.230216.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_aarch64-5.100300.230216.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-rp2040-earlephilhower-linux_aarch64-5.100300.230216.tar.gz",
+    "size_bytes": 63659,
+    "sha256": "2255ba0c736c892ed9e286630fa8421e5bc083502409de3a1b93efbdd6739c4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_aarch64-5.100300.230216.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_aarch64-5.100300.230216.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_armv6l-5.100300.230216.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-rp2040-earlephilhower-linux_armv6l-5.100300.230216.tar.gz",
+    "size_bytes": 54024,
+    "sha256": "36b44fb21f3b8305bbd1685c5ce17c2e3883373c3b1c872a0dde5ce8b49beca1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_armv6l-5.100300.230216.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_armv6l-5.100300.230216.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_i686-5.100300.230216.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-rp2040-earlephilhower-linux_i686-5.100300.230216.tar.gz",
+    "size_bytes": 70145,
+    "sha256": "6bb1a9a7b209f1b9fddff4f9ae021016c5ca24da8b7b3ce240f7f3432aadcb7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_i686-5.100300.230216.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_i686-5.100300.230216.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_x86_64-5.100300.230216.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-rp2040-earlephilhower-linux_x86_64-5.100300.230216.tar.gz",
+    "size_bytes": 65272,
+    "sha256": "04dc099daf02392824a551b9d0baceafd8d5808cf365fa6c04ec6ff13a079af2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_x86_64-5.100300.230216.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-linux_x86_64-5.100300.230216.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-windows_amd64-5.100300.230216.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-rp2040-earlephilhower-windows_amd64-5.100300.230216.tar.gz",
+    "size_bytes": 356244,
+    "sha256": "7375a27005afaf6d1d1b554daf95cc06fd10e49a391ba90998be2f8a2448b009",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-windows_amd64-5.100300.230216.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-windows_amd64-5.100300.230216.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-windows_x86-5.100300.230216.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-mklittlefs-rp2040-earlephilhower-windows_x86-5.100300.230216.tar.gz",
+    "size_bytes": 345521,
+    "sha256": "95272b9aecf341ad468ded46f6a586b839b566b90e956d56fba657f889454902",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-windows_x86-5.100300.230216.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-mklittlefs-rp2040-earlephilhower/5.100300.230216/tool-mklittlefs-rp2040-earlephilhower-windows_x86-5.100300.230216.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-darwin_x86_64-5.100300.230216.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-rp2040-earlephilhower-darwin_x86_64-5.100300.230216.tar.gz",
+    "size_bytes": 2567346,
+    "sha256": "7fe0bf83288cabe43dd42d261882e8f4723bde5720f5de91454d7d901328d09c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-darwin_x86_64-5.100300.230216.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-darwin_x86_64-5.100300.230216.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_aarch64-5.100300.230216.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-rp2040-earlephilhower-linux_aarch64-5.100300.230216.tar.gz",
+    "size_bytes": 5757251,
+    "sha256": "55f965fa0856fee8b649f488cc806c7d9faa295d61cb186a0b1aee008cb1c47c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_aarch64-5.100300.230216.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_aarch64-5.100300.230216.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_armv6l-5.100300.230216.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-rp2040-earlephilhower-linux_armv6l-5.100300.230216.tar.gz",
+    "size_bytes": 5498630,
+    "sha256": "523656dff4a7afa718b99bff0e96d49d3bd6d24e1aa4c5593be10f4575ec6b44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_armv6l-5.100300.230216.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_armv6l-5.100300.230216.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_i686-5.100300.230216.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-rp2040-earlephilhower-linux_i686-5.100300.230216.tar.gz",
+    "size_bytes": 5294606,
+    "sha256": "0794f75a334c3b1a81b6126cac394dfecdc8324b05872d69a0e02a4a787ac15d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_i686-5.100300.230216.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_i686-5.100300.230216.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_x86_64-5.100300.230216.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-rp2040-earlephilhower-linux_x86_64-5.100300.230216.tar.gz",
+    "size_bytes": 5670539,
+    "sha256": "5512e41a97160a9f472ede9d86edb7758cf268474bd5b5cb5612d40943f83509",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_x86_64-5.100300.230216.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-linux_x86_64-5.100300.230216.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-windows_amd64-5.100300.230216.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-rp2040-earlephilhower-windows_amd64-5.100300.230216.tar.gz",
+    "size_bytes": 1824055,
+    "sha256": "6afa762e479bdd0857f720ac6f0a6d82424b9fa97f4f6061469fc6379330addb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-windows_amd64-5.100300.230216.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-windows_amd64-5.100300.230216.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-windows_x86-5.100300.230216.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-rp2040-earlephilhower-windows_x86-5.100300.230216.tar.gz",
+    "size_bytes": 1854041,
+    "sha256": "9a64a0479634d4bcf0f90921cdda341e7aa973a97401ad743a01b389f62100a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-windows_x86-5.100300.230216.tar.gz",
+     "https://dl.registry.platformio.org/download/earlephilhower/tool/tool-openocd-rp2040-earlephilhower/5.100300.230216/tool-openocd-rp2040-earlephilhower-windows_x86-5.100300.230216.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jshaw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jshaw/library/SJSArray/1.5.0/SJSArray-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SJSArray-1.5.0.tar.gz",
+    "size_bytes": 16734,
+    "sha256": "0e32258d5a26a5f6e46e2c35a4f3658d6af58c22ecc7568ad5a66140b89d3bbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jshaw/library/SJSArray/1.5.0/SJSArray-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jshaw/library/SJSArray/1.5.0/SJSArray-1.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

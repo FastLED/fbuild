@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/michael-0-sys",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "michael-0-sys/library/ReflectINI/1.0.0/ReflectINI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReflectINI-1.0.0.tar.gz",
+    "size_bytes": 69365,
+    "sha256": "0e0006198bb8161a5b27fc58149eea46f11037c2ec751aa0a14c3951392ee00d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/michael-0-sys/library/ReflectINI/1.0.0/ReflectINI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/michael-0-sys/library/ReflectINI/1.0.0/ReflectINI-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "michael-0-sys/library/ReflectINI/1.1.0/ReflectINI-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReflectINI-1.1.0.tar.gz",
+    "size_bytes": 72016,
+    "sha256": "c75803300d35c3ce77166ad0d7872b52111615d4dbbfb4bb0b0fcb43296fe319",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/michael-0-sys/library/ReflectINI/1.1.0/ReflectINI-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/michael-0-sys/library/ReflectINI/1.1.0/ReflectINI-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "michael-0-sys/library/ReflectJSON/1.0.0/ReflectJSON-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReflectJSON-1.0.0.tar.gz",
+    "size_bytes": 60542,
+    "sha256": "b9db3dd1938dfddc5c38f605cd9458b2d4804eb10defcf993e8c51e59bad1e3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/michael-0-sys/library/ReflectJSON/1.0.0/ReflectJSON-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/michael-0-sys/library/ReflectJSON/1.0.0/ReflectJSON-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "michael-0-sys/library/ReflectJSON/1.2.1/ReflectJSON-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReflectJSON-1.2.1.tar.gz",
+    "size_bytes": 63792,
+    "sha256": "26719d93f14d6f9ba291fabcb6a0913a7c4604ac1eeca722bbf631c480e606b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/michael-0-sys/library/ReflectJSON/1.2.1/ReflectJSON-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/michael-0-sys/library/ReflectJSON/1.2.1/ReflectJSON-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "michael-0-sys/library/ReflectState/1.0.0/ReflectState-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReflectState-1.0.0.tar.gz",
+    "size_bytes": 61731,
+    "sha256": "4ac24aa3f64a2f6a0e6e8a7bb5da7f317660ef31cc333d67807f02f1aa9a6af9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/michael-0-sys/library/ReflectState/1.0.0/ReflectState-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/michael-0-sys/library/ReflectState/1.0.0/ReflectState-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

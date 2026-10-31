@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rogerzuber",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rogerzuber/library/DS1307/0.0.0+sha.70224be5d68c/DS1307-0.0.0+sha.70224be5d68c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1307-0.0.0+sha.70224be5d68c.tar.gz",
+    "size_bytes": 5511,
+    "sha256": "ab5b0c05fc13ea7a8d5626bb22ae7ae81e7f8f229d535d9537dab51791f3258a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rogerzuber/library/DS1307/0.0.0%2Bsha.70224be5d68c/DS1307-0.0.0%2Bsha.70224be5d68c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rogerzuber/library/DS1307/0.0.0%2Bsha.70224be5d68c/DS1307-0.0.0%2Bsha.70224be5d68c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rogerzuber/library/TM1636/0.0.0+sha.e4450fb0849a/TM1636-0.0.0+sha.e4450fb0849a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM1636-0.0.0+sha.e4450fb0849a.tar.gz",
+    "size_bytes": 2868,
+    "sha256": "a2f23c2a47f485e362e6398fd0bec3fe50f1bc272a66d82f8f6e777cb9f30039",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rogerzuber/library/TM1636/0.0.0%2Bsha.e4450fb0849a/TM1636-0.0.0%2Bsha.e4450fb0849a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rogerzuber/library/TM1636/0.0.0%2Bsha.e4450fb0849a/TM1636-0.0.0%2Bsha.e4450fb0849a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

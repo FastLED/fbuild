@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adrian200223",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adrian200223/library/Simple5641AS/1.0.0/Simple5641AS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Simple5641AS-1.0.0.tar.gz",
+    "size_bytes": 6891,
+    "sha256": "3ef0493f5df617a628f4895befaf6e465d406f2cc230b9cb0345fc07c449185a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adrian200223/library/Simple5641AS/1.0.0/Simple5641AS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adrian200223/library/Simple5641AS/1.0.0/Simple5641AS-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

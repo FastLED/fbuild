@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nizarpang",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nizarpang/library/HRandRR/0.0.0+sha.16fb5b4d1024/HRandRR-0.0.0+sha.16fb5b4d1024.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HRandRR-0.0.0+sha.16fb5b4d1024.tar.gz",
+    "size_bytes": 5733,
+    "sha256": "b08521ecc1a17a957a54938a39f7c208dbe79a6d0cbea21217cf5e3de8b88471",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nizarpang/library/HRandRR/0.0.0%2Bsha.16fb5b4d1024/HRandRR-0.0.0%2Bsha.16fb5b4d1024.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nizarpang/library/HRandRR/0.0.0%2Bsha.16fb5b4d1024/HRandRR-0.0.0%2Bsha.16fb5b4d1024.tar.gz"
+    ]
+   }
+  }
+ ]
+}

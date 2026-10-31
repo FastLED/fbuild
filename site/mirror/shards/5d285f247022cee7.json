@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bernebeer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bernebeer/library/Charge%20n%20Boost/1.1.0/ChargenBoost-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChargenBoost-1.1.0.tar.gz",
+    "size_bytes": 7163,
+    "sha256": "48409827f03fea3f04ca54e1269bfa91a67a221a71e5ea7c6caaa18946b2a007",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bernebeer/library/Charge%2520n%2520Boost/1.1.0/ChargenBoost-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bernebeer/library/Charge%20n%20Boost/1.1.0/ChargenBoost-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

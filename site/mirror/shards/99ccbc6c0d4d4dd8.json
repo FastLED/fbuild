@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/heads-project",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "heads-project/library/Message%20Pack%20for%20Arduino/1.0.1/MessagePackforArduino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MessagePackforArduino-1.0.1.tar.gz",
+    "size_bytes": 7113,
+    "sha256": "acc4d3465d190516080effbb62711bbf8d93a5004e69695e0294b6687aee8465",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heads-project/library/Message%2520Pack%2520for%2520Arduino/1.0.1/MessagePackforArduino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/heads-project/library/Message%20Pack%20for%20Arduino/1.0.1/MessagePackforArduino-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

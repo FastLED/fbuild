@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adrien-legrand",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adrien-legrand/library/AS5X47/1.0.1/AS5X47-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS5X47-1.0.1.tar.gz",
+    "size_bytes": 6176,
+    "sha256": "ed7beec397a36de6a2581a3dc65fee5c7a88342689f0b73a15347e3822cba9d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adrien-legrand/library/AS5X47/1.0.1/AS5X47-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/adrien-legrand/library/AS5X47/1.0.1/AS5X47-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adrien-legrand/library/PlaneteSciences85/1.0.0/PlaneteSciences85-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlaneteSciences85-1.0.0.tar.gz",
+    "size_bytes": 2953,
+    "sha256": "68b42d3b2b984ad69eacf8317b3298aac1f9cad63eebcf7ff8d9bdb25a549e67",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adrien-legrand/library/PlaneteSciences85/1.0.0/PlaneteSciences85-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adrien-legrand/library/PlaneteSciences85/1.0.0/PlaneteSciences85-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adrien-legrand/library/PlaneteSciences85/1.0.1/PlaneteSciences85-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlaneteSciences85-1.0.1.tar.gz",
+    "size_bytes": 3550,
+    "sha256": "f8e3ebb25452d5fc572777cbe6d8612b4a9fe8e3039ab344702f2cc7ee476af0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adrien-legrand/library/PlaneteSciences85/1.0.1/PlaneteSciences85-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/adrien-legrand/library/PlaneteSciences85/1.0.1/PlaneteSciences85-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

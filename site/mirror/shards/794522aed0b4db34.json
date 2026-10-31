@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dimag0g",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dimag0g/library/PPM-reader/1.2.0/PPM-reader-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PPM-reader-1.2.0.tar.gz",
+    "size_bytes": 16394,
+    "sha256": "b3304dc3544fd890ff997c34b5a12097f96f671177a806b7efbf21837e7ac91b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dimag0g/library/PPM-reader/1.2.0/PPM-reader-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dimag0g/library/PPM-reader/1.2.0/PPM-reader-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

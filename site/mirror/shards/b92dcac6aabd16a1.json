@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/asjdf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "asjdf/library/WebSerialLite/2.3.0/WebSerialLite-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSerialLite-2.3.0.tar.gz",
+    "size_bytes": 24613,
+    "sha256": "4014fcce6d4a3508e82410baf4a4af39e60db199aacfaa28e38348b0b31ce1ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asjdf/library/WebSerialLite/2.3.0/WebSerialLite-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/asjdf/library/WebSerialLite/2.3.0/WebSerialLite-2.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

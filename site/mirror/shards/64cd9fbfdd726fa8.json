@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tuxleon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tuxleon/library/MPU9150/0.0.0-alpha+sha.c38eb550c82e/MPU9150-0.0.0-alpha+sha.c38eb550c82e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9150-0.0.0-alpha+sha.c38eb550c82e.tar.gz",
+    "size_bytes": 41961,
+    "sha256": "9a48f72dd32b80d87b11aff6bc3a1026fc24e43792354f597f7c888405e59d08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tuxleon/library/MPU9150/0.0.0-alpha%2Bsha.c38eb550c82e/MPU9150-0.0.0-alpha%2Bsha.c38eb550c82e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tuxleon/library/MPU9150/0.0.0-alpha%2Bsha.c38eb550c82e/MPU9150-0.0.0-alpha%2Bsha.c38eb550c82e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

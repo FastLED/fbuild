@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cxandy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cxandy/library/SmartMatrix4-ESP32/4.0.3-esp32.1/SmartMatrix4-ESP32-4.0.3-esp32.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartMatrix4-ESP32-4.0.3-esp32.1.tar.gz",
+    "size_bytes": 239752,
+    "sha256": "3920db3dcbdd90da1dbb02e191c879b68ababd04c52ff1ae37bdc070e6ba6e42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cxandy/library/SmartMatrix4-ESP32/4.0.3-esp32.1/SmartMatrix4-ESP32-4.0.3-esp32.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cxandy/library/SmartMatrix4-ESP32/4.0.3-esp32.1/SmartMatrix4-ESP32-4.0.3-esp32.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

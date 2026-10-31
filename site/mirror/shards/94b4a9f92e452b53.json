@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chirp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chirp/library/ChirpSDK/3.4.1/ChirpSDK-3.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChirpSDK-3.4.1.tar.gz",
+    "size_bytes": 1041904,
+    "sha256": "21a7d6d0cfd6a746686c2c1416f6973a460e4cbf58683bbdaaf561d65fd1ec84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chirp/library/ChirpSDK/3.4.1/ChirpSDK-3.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chirp/library/ChirpSDK/3.4.1/ChirpSDK-3.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

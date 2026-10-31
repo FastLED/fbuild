@@ -1,0 +1,282 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hudakz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hudakz/library/CANMsg/0.0.0+sha.5017a65ff423/CANMsg-0.0.0+sha.5017a65ff423.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANMsg-0.0.0+sha.5017a65ff423.tar.gz",
+    "size_bytes": 1590,
+    "sha256": "75092953defa9e7859ba02fa4257d1951bbb06d89b158b9909196544833cb49d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/CANMsg/0.0.0%2Bsha.5017a65ff423/CANMsg-0.0.0%2Bsha.5017a65ff423.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/CANMsg/0.0.0%2Bsha.5017a65ff423/CANMsg-0.0.0%2Bsha.5017a65ff423.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/CANnucleo/0.0.0+sha.cebc6f21046e/CANnucleo-0.0.0+sha.cebc6f21046e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANnucleo-0.0.0+sha.cebc6f21046e.tar.gz",
+    "size_bytes": 11724,
+    "sha256": "a3afa07e6e18b47ac697e46d6e8d79f6cc2e3b8e3eed9736cd2c143cdceda032",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/CANnucleo/0.0.0%2Bsha.cebc6f21046e/CANnucleo-0.0.0%2Bsha.cebc6f21046e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/CANnucleo/0.0.0%2Bsha.cebc6f21046e/CANnucleo-0.0.0%2Bsha.cebc6f21046e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/CRC16/0.0.0+sha.3f5622979e77/CRC16-0.0.0+sha.3f5622979e77.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRC16-0.0.0+sha.3f5622979e77.tar.gz",
+    "size_bytes": 1936,
+    "sha256": "388716eea6829d9ef96c38461f9aea0ce3253f71ad342bab8e23e060cc1d557d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/CRC16/0.0.0%2Bsha.3f5622979e77/CRC16-0.0.0%2Bsha.3f5622979e77.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/CRC16/0.0.0%2Bsha.3f5622979e77/CRC16-0.0.0%2Bsha.3f5622979e77.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/CRC16_CCITT/0.0.0+sha.6ecc3a64bf7b/CRC16_CCITT-0.0.0+sha.6ecc3a64bf7b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRC16_CCITT-0.0.0+sha.6ecc3a64bf7b.tar.gz",
+    "size_bytes": 2183,
+    "sha256": "06ef27ee2a5d19898ebba50c2e8bb4f66296ccd84d81c92a019249fadabc5e96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/CRC16_CCITT/0.0.0%2Bsha.6ecc3a64bf7b/CRC16_CCITT-0.0.0%2Bsha.6ecc3a64bf7b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/CRC16_CCITT/0.0.0%2Bsha.6ecc3a64bf7b/CRC16_CCITT-0.0.0%2Bsha.6ecc3a64bf7b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/Clock/0.0.0+sha.7edabed68b0f/Clock-0.0.0+sha.7edabed68b0f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Clock-0.0.0+sha.7edabed68b0f.tar.gz",
+    "size_bytes": 2955,
+    "sha256": "aa3f46988754645c9dd52576824368c245574c9d944faa1eed1359e72c6d4caf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/Clock/0.0.0%2Bsha.7edabed68b0f/Clock-0.0.0%2Bsha.7edabed68b0f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/Clock/0.0.0%2Bsha.7edabed68b0f/Clock-0.0.0%2Bsha.7edabed68b0f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/DS1820/0.0.0+sha.74a4ff420541/DS1820-0.0.0+sha.74a4ff420541.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1820-0.0.0+sha.74a4ff420541.tar.gz",
+    "size_bytes": 4706,
+    "sha256": "49a1d06abd1ba6b87372c156f916fe1c8c3e9334bacf504b05183117cf65bd66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/DS1820/0.0.0%2Bsha.74a4ff420541/DS1820-0.0.0%2Bsha.74a4ff420541.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/DS1820/0.0.0%2Bsha.74a4ff420541/DS1820-0.0.0%2Bsha.74a4ff420541.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/HTTPServer/0.0.0+sha.8bcc62289a07/HTTPServer-0.0.0+sha.8bcc62289a07.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPServer-0.0.0+sha.8bcc62289a07.tar.gz",
+    "size_bytes": 13732,
+    "sha256": "0c78b24faf13fe806d010f680ba9cee02792361d2a06a5f3097749a733eeeccc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/HTTPServer/0.0.0%2Bsha.8bcc62289a07/HTTPServer-0.0.0%2Bsha.8bcc62289a07.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/HTTPServer/0.0.0%2Bsha.8bcc62289a07/HTTPServer-0.0.0%2Bsha.8bcc62289a07.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/ILI9341_STM32F4/0.0.0+sha.5c2870105122/ILI9341_STM32F4-0.0.0+sha.5c2870105122.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341_STM32F4-0.0.0+sha.5c2870105122.tar.gz",
+    "size_bytes": 6008,
+    "sha256": "7f43609a7ae6f7c312dd6a0cc959a39860ca3b86c0f62c504968868ab6e4b7d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/ILI9341_STM32F4/0.0.0%2Bsha.5c2870105122/ILI9341_STM32F4-0.0.0%2Bsha.5c2870105122.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/ILI9341_STM32F4/0.0.0%2Bsha.5c2870105122/ILI9341_STM32F4-0.0.0%2Bsha.5c2870105122.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/MQTTClient/0.0.0+sha.1ce536bf461b/MQTTClient-0.0.0+sha.1ce536bf461b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTClient-0.0.0+sha.1ce536bf461b.tar.gz",
+    "size_bytes": 4159,
+    "sha256": "e69841df8309b05bd3f4dfd6b13ce78f13aa9c5725451a185da56a41d223e7a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/MQTTClient/0.0.0%2Bsha.1ce536bf461b/MQTTClient-0.0.0%2Bsha.1ce536bf461b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/MQTTClient/0.0.0%2Bsha.1ce536bf461b/MQTTClient-0.0.0%2Bsha.1ce536bf461b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/Manchester/0.0.0+sha.c1b5893191fe/Manchester-0.0.0+sha.c1b5893191fe.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Manchester-0.0.0+sha.c1b5893191fe.tar.gz",
+    "size_bytes": 4325,
+    "sha256": "caecf1071d22268eec5aab5712ab9460091816c97e871d5f46ce8b0af2a027bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/Manchester/0.0.0%2Bsha.c1b5893191fe/Manchester-0.0.0%2Bsha.c1b5893191fe.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/Manchester/0.0.0%2Bsha.c1b5893191fe/Manchester-0.0.0%2Bsha.c1b5893191fe.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/ManchesterMsg/0.0.0+sha.001100cee73a/ManchesterMsg-0.0.0+sha.001100cee73a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ManchesterMsg-0.0.0+sha.001100cee73a.tar.gz",
+    "size_bytes": 2033,
+    "sha256": "16d8703ba7c4e5910edb6b7f4efe5d60f8641bff595f7f6730699f05fb7df241",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/ManchesterMsg/0.0.0%2Bsha.001100cee73a/ManchesterMsg-0.0.0%2Bsha.001100cee73a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/ManchesterMsg/0.0.0%2Bsha.001100cee73a/ManchesterMsg-0.0.0%2Bsha.001100cee73a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/ManchesterUART/0.0.0+sha.8cb6a0a77e56/ManchesterUART-0.0.0+sha.8cb6a0a77e56.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ManchesterUART-0.0.0+sha.8cb6a0a77e56.tar.gz",
+    "size_bytes": 3365,
+    "sha256": "5822ce39803c3aeed84402499c1ade95fad3d17e935b8049b225510248ab4bd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/ManchesterUART/0.0.0%2Bsha.8cb6a0a77e56/ManchesterUART-0.0.0%2Bsha.8cb6a0a77e56.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/ManchesterUART/0.0.0%2Bsha.8cb6a0a77e56/ManchesterUART-0.0.0%2Bsha.8cb6a0a77e56.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/Menu/0.0.0+sha.3d32db89c8db/Menu-0.0.0+sha.3d32db89c8db.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Menu-0.0.0+sha.3d32db89c8db.tar.gz",
+    "size_bytes": 3442,
+    "sha256": "27150347f1e12cca91c2cc87048f2e47838fee8a8471302003954379b6444f38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/Menu/0.0.0%2Bsha.3d32db89c8db/Menu-0.0.0%2Bsha.3d32db89c8db.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/Menu/0.0.0%2Bsha.3d32db89c8db/Menu-0.0.0%2Bsha.3d32db89c8db.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/RF24/0.0.0+sha.d96c2056bf37/RF24-0.0.0+sha.d96c2056bf37.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24-0.0.0+sha.d96c2056bf37.tar.gz",
+    "size_bytes": 14394,
+    "sha256": "5a4931ae8649eb573cce2241930c152e28df735734219de65b95f6edf03f8c98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/RF24/0.0.0%2Bsha.d96c2056bf37/RF24-0.0.0%2Bsha.d96c2056bf37.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/RF24/0.0.0%2Bsha.d96c2056bf37/RF24-0.0.0%2Bsha.d96c2056bf37.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/TFTPServer/0.0.0+sha.f7c0fbc8c5aa/TFTPServer-0.0.0+sha.f7c0fbc8c5aa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFTPServer-0.0.0+sha.f7c0fbc8c5aa.tar.gz",
+    "size_bytes": 5099,
+    "sha256": "032478772a9e36be4c958ff7e818ad0e28410717cf23072c77f59180b2e8f96f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/TFTPServer/0.0.0%2Bsha.f7c0fbc8c5aa/TFTPServer-0.0.0%2Bsha.f7c0fbc8c5aa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/TFTPServer/0.0.0%2Bsha.f7c0fbc8c5aa/TFTPServer-0.0.0%2Bsha.f7c0fbc8c5aa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/UIPEthernet/0.0.0+sha.8d5738a6646e/UIPEthernet-0.0.0+sha.8d5738a6646e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UIPEthernet-0.0.0+sha.8d5738a6646e.tar.gz",
+    "size_bytes": 93621,
+    "sha256": "b81cfd94c7809706354a4f966288f0a198b6ab66b27caf70515f4b102d2b7b36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/UIPEthernet/0.0.0%2Bsha.8d5738a6646e/UIPEthernet-0.0.0%2Bsha.8d5738a6646e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/UIPEthernet/0.0.0%2Bsha.8d5738a6646e/UIPEthernet-0.0.0%2Bsha.8d5738a6646e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/USBDevice_STM32F103/0.0.0+sha.a6dcac43ceaf/USBDevice_STM32F103-0.0.0+sha.a6dcac43ceaf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBDevice_STM32F103-0.0.0+sha.a6dcac43ceaf.tar.gz",
+    "size_bytes": 45153,
+    "sha256": "31c2a5bf0b74b909c67840da67da552b7522fbafb730b652144ea144fea17d6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/USBDevice_STM32F103/0.0.0%2Bsha.a6dcac43ceaf/USBDevice_STM32F103-0.0.0%2Bsha.a6dcac43ceaf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/USBDevice_STM32F103/0.0.0%2Bsha.a6dcac43ceaf/USBDevice_STM32F103-0.0.0%2Bsha.a6dcac43ceaf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/USBHost-STM32F4/0.0.0+sha.458bf947f46f/USBHost-STM32F4-0.0.0+sha.458bf947f46f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBHost-STM32F4-0.0.0+sha.458bf947f46f.tar.gz",
+    "size_bytes": 41660,
+    "sha256": "62f4fe6705a96e34bfb900b638a641cff12fdb2a0e575d44ab2ad76f5f136e36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/USBHost-STM32F4/0.0.0%2Bsha.458bf947f46f/USBHost-STM32F4-0.0.0%2Bsha.458bf947f46f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/USBHost-STM32F4/0.0.0%2Bsha.458bf947f46f/USBHost-STM32F4-0.0.0%2Bsha.458bf947f46f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/mbed-MapleMini/0.0.0+sha.f0b2ddbf8ba6/mbed-MapleMini-0.0.0+sha.f0b2ddbf8ba6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-MapleMini-0.0.0+sha.f0b2ddbf8ba6.tar.gz",
+    "size_bytes": 3311,
+    "sha256": "52bad1076a319b020a5c45edc6673f8b03c124a486de30a8aad790c30c86d942",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/mbed-MapleMini/0.0.0%2Bsha.f0b2ddbf8ba6/mbed-MapleMini-0.0.0%2Bsha.f0b2ddbf8ba6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/mbed-MapleMini/0.0.0%2Bsha.f0b2ddbf8ba6/mbed-MapleMini-0.0.0%2Bsha.f0b2ddbf8ba6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/mbed-STM32F103C8T6/0.0.0+sha.727468adfd1d/mbed-STM32F103C8T6-0.0.0+sha.727468adfd1d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-STM32F103C8T6-0.0.0+sha.727468adfd1d.tar.gz",
+    "size_bytes": 3402,
+    "sha256": "b023e69f59ec0c0e176cffb7a7bac4dc8e9ff672a7f837386ef680a2a83f27db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/mbed-STM32F103C8T6/0.0.0%2Bsha.727468adfd1d/mbed-STM32F103C8T6-0.0.0%2Bsha.727468adfd1d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/mbed-STM32F103C8T6/0.0.0%2Bsha.727468adfd1d/mbed-STM32F103C8T6-0.0.0%2Bsha.727468adfd1d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hudakz/library/millis/0.0.0+sha.ac7586424119/millis-0.0.0+sha.ac7586424119.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "millis-0.0.0+sha.ac7586424119.tar.gz",
+    "size_bytes": 1515,
+    "sha256": "7566a75a27bc0a91caabaeeae3de608dfbbd165f79282285196790896f6cb34d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hudakz/library/millis/0.0.0%2Bsha.ac7586424119/millis-0.0.0%2Bsha.ac7586424119.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hudakz/library/millis/0.0.0%2Bsha.ac7586424119/millis-0.0.0%2Bsha.ac7586424119.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jrddunbr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jrddunbr/library/meshsensor/0.1.0/meshsensor-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "meshsensor-0.1.0.tar.gz",
+    "size_bytes": 70639,
+    "sha256": "bd2fb5d3d2786eb8074545a3d1a44725c2b2ac1c862b5a6d0a841a3108ef033d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrddunbr/library/meshsensor/0.1.0/meshsensor-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jrddunbr/library/meshsensor/0.1.0/meshsensor-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jrddunbr/library/meshsensor/0.1.1/meshsensor-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "meshsensor-0.1.1.tar.gz",
+    "size_bytes": 70690,
+    "sha256": "0d016b5fbad5432f1b29162aa3b8eb97c77bba901d102ce4245d2318eb5e90f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jrddunbr/library/meshsensor/0.1.1/meshsensor-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jrddunbr/library/meshsensor/0.1.1/meshsensor-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

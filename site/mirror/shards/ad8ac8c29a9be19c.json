@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/canusorn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "canusorn/library/CynoIOT/1.0.8/CynoIOT-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CynoIOT-1.0.8.tar.gz",
+    "size_bytes": 92622,
+    "sha256": "f98dee485a7db12ffd79cc606b033539415b6bd0e062fa97ab344a1863546a83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/canusorn/library/CynoIOT/1.0.8/CynoIOT-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/canusorn/library/CynoIOT/1.0.8/CynoIOT-1.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

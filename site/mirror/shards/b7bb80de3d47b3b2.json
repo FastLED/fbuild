@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/argent-cape",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "argent-cape/library/ADSWeather/0.1.1/ADSWeather-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADSWeather-0.1.1.tar.gz",
+    "size_bytes": 4426,
+    "sha256": "7c53d98387280cf74a52fad018ad891948c24a192b2aa03fdb45e76daa89df06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/argent-cape/library/ADSWeather/0.1.1/ADSWeather-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/argent-cape/library/ADSWeather/0.1.1/ADSWeather-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

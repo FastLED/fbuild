@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/e39ad77fa0",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "e39ad77fa0/library/ArduinoPCF8574/1.0.1/ArduinoPCF8574-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoPCF8574-1.0.1.tar.gz",
+    "size_bytes": 6764,
+    "sha256": "84051d1d9387ac4bb147cb8cf12d6c6af8a43c20ea9949097829c55fbb066c1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/e39ad77fa0/library/ArduinoPCF8574/1.0.1/ArduinoPCF8574-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/e39ad77fa0/library/ArduinoPCF8574/1.0.1/ArduinoPCF8574-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "e39ad77fa0/library/ArduinoPCF8574Button/1.0.0/ArduinoPCF8574Button-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoPCF8574Button-1.0.0.tar.gz",
+    "size_bytes": 6774,
+    "sha256": "3e95a4d49340a42e97ba4ab07321569fa2b961d83eb9a7be8369ab7a2054a603",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/e39ad77fa0/library/ArduinoPCF8574Button/1.0.0/ArduinoPCF8574Button-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/e39ad77fa0/library/ArduinoPCF8574Button/1.0.0/ArduinoPCF8574Button-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/electro-smith",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "electro-smith/library/DaisyDuino/1.6.0/DaisyDuino-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DaisyDuino-1.6.0.tar.gz",
+    "size_bytes": 175503,
+    "sha256": "b371bd5aeb4c1bf1a9358fa57d0cdf7d27160eeeabac4c2aec067c1a7cc3f926",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/electro-smith/library/DaisyDuino/1.6.0/DaisyDuino-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/electro-smith/library/DaisyDuino/1.6.0/DaisyDuino-1.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stevegdvs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stevegdvs/library/MCP48xx%20DAC%20Library/0.1.2/MCP48xxDACLibrary-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP48xxDACLibrary-0.1.2.tar.gz",
+    "size_bytes": 3442,
+    "sha256": "113f3144ee5cde8b0287aff46daccf1608e5fabc599a07945a60fcde4d41f057",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stevegdvs/library/MCP48xx%2520DAC%2520Library/0.1.2/MCP48xxDACLibrary-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stevegdvs/library/MCP48xx%20DAC%20Library/0.1.2/MCP48xxDACLibrary-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

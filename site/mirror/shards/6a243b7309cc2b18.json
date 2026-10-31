@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sandbox",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sandbox/library/mbed-http/0.0.0+sha.a8d157986ad8/mbed-http-0.0.0+sha.a8d157986ad8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-http-0.0.0+sha.a8d157986ad8.tar.gz",
+    "size_bytes": 38559,
+    "sha256": "a2213249ae579151e55ed69f6d6679b1a1de0de497db6b3cf6817e3f5093e9f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sandbox/library/mbed-http/0.0.0%2Bsha.a8d157986ad8/mbed-http-0.0.0%2Bsha.a8d157986ad8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sandbox/library/mbed-http/0.0.0%2Bsha.a8d157986ad8/mbed-http-0.0.0%2Bsha.a8d157986ad8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-longdh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-longdh/library/BLE_API/0.0.0+sha.fb2a891a0d98/BLE_API-0.0.0+sha.fb2a891a0d98.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE_API-0.0.0+sha.fb2a891a0d98.tar.gz",
+    "size_bytes": 39680,
+    "sha256": "73bebf2f18364da40924c76f6835e7d97da28f26f7d18d12783357cd203b52fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-longdh/library/BLE_API/0.0.0%2Bsha.fb2a891a0d98/BLE_API-0.0.0%2Bsha.fb2a891a0d98.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-longdh/library/BLE_API/0.0.0%2Bsha.fb2a891a0d98/BLE_API-0.0.0%2Bsha.fb2a891a0d98.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-longdh/library/KalmanFilter/0.0.0+sha.dd8a94919e2e/KalmanFilter-0.0.0+sha.dd8a94919e2e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KalmanFilter-0.0.0+sha.dd8a94919e2e.tar.gz",
+    "size_bytes": 1331,
+    "sha256": "f6246d5578b600110cd45f35101a760ed94da98e81bacde5dc66bf3186bc34f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-longdh/library/KalmanFilter/0.0.0%2Bsha.dd8a94919e2e/KalmanFilter-0.0.0%2Bsha.dd8a94919e2e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-longdh/library/KalmanFilter/0.0.0%2Bsha.dd8a94919e2e/KalmanFilter-0.0.0%2Bsha.dd8a94919e2e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fulda1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fulda1/library/SUSI2/1.0.0/SUSI2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SUSI2-1.0.0.tar.gz",
+    "size_bytes": 37699,
+    "sha256": "4ec0e3e5aef79fc0fb95eb20df787e8999d286420cfb31b2612e47061150ed5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fulda1/library/SUSI2/1.0.0/SUSI2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fulda1/library/SUSI2/1.0.0/SUSI2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fulda1/library/SUSI2/1.0.1/SUSI2-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SUSI2-1.0.1.tar.gz",
+    "size_bytes": 38453,
+    "sha256": "fcd7fa227e312e87e50422c31f564c6412a2770dd1a0c7e4b8e32235936e0e0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fulda1/library/SUSI2/1.0.1/SUSI2-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fulda1/library/SUSI2/1.0.1/SUSI2-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

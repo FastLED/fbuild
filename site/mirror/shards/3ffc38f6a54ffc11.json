@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-the-darkrunners",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-the-darkrunners/library/OV7670/0.0.0+sha.7cd6eef22134/OV7670-0.0.0+sha.7cd6eef22134.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OV7670-0.0.0+sha.7cd6eef22134.tar.gz",
+    "size_bytes": 4001,
+    "sha256": "3d1dc0533007d390ce1340f0bc60fbd0851572e3da7cc09e839a6f09caa475cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-the-darkrunners/library/OV7670/0.0.0%2Bsha.7cd6eef22134/OV7670-0.0.0%2Bsha.7cd6eef22134.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-the-darkrunners/library/OV7670/0.0.0%2Bsha.7cd6eef22134/OV7670-0.0.0%2Bsha.7cd6eef22134.tar.gz"
+    ]
+   }
+  }
+ ]
+}

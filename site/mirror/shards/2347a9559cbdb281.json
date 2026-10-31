@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-renanbmx123",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-renanbmx123/library/DHT/0.0.0+sha.24682a533803/DHT-0.0.0+sha.24682a533803.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT-0.0.0+sha.24682a533803.tar.gz",
+    "size_bytes": 3558,
+    "sha256": "14642de1fbc4b8e06b9c2ce8e86ba219be818248b6bb530c3df52eaa6b8e9ceb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-renanbmx123/library/DHT/0.0.0%2Bsha.24682a533803/DHT-0.0.0%2Bsha.24682a533803.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-renanbmx123/library/DHT/0.0.0%2Bsha.24682a533803/DHT-0.0.0%2Bsha.24682a533803.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-renanbmx123/library/MQ4/0.0.0+sha.401959f72658/MQ4-0.0.0+sha.401959f72658.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQ4-0.0.0+sha.401959f72658.tar.gz",
+    "size_bytes": 2669,
+    "sha256": "7029a61b142b2c7aa6ff8b35047498dbfccaa8d9cf6f31730ed1596b685a5141",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-renanbmx123/library/MQ4/0.0.0%2Bsha.401959f72658/MQ4-0.0.0%2Bsha.401959f72658.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-renanbmx123/library/MQ4/0.0.0%2Bsha.401959f72658/MQ4-0.0.0%2Bsha.401959f72658.tar.gz"
+    ]
+   }
+  }
+ ]
+}

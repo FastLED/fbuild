@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/7semi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "7semi/library/SevenSemiSHT4x_Library/1.0.3/SevenSemiSHT4x_Library-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSemiSHT4x_Library-1.0.3.tar.gz",
+    "size_bytes": 6918,
+    "sha256": "481b27e27ff6c06779be608245a4bdf6ba9dfef95904a823dd89abf1f4500ec5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi/library/SevenSemiSHT4x_Library/1.0.3/SevenSemiSHT4x_Library-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi/library/SevenSemiSHT4x_Library/1.0.3/SevenSemiSHT4x_Library-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

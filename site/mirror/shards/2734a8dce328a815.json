@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-davidegrayson",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-davidegrayson/library/PololuEncoder/0.0.0+sha.a2dd8d8bde4c/PololuEncoder-0.0.0+sha.a2dd8d8bde4c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PololuEncoder-0.0.0+sha.a2dd8d8bde4c.tar.gz",
+    "size_bytes": 1634,
+    "sha256": "80dbd406bd3d8c0f01175a2369734273ea6c0402b633ff18520a58c6650a49fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davidegrayson/library/PololuEncoder/0.0.0%2Bsha.a2dd8d8bde4c/PololuEncoder-0.0.0%2Bsha.a2dd8d8bde4c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davidegrayson/library/PololuEncoder/0.0.0%2Bsha.a2dd8d8bde4c/PololuEncoder-0.0.0%2Bsha.a2dd8d8bde4c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-davidegrayson/library/PololuLedStrip/0.0.0+sha.c3193bc73cff/PololuLedStrip-0.0.0+sha.c3193bc73cff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PololuLedStrip-0.0.0+sha.c3193bc73cff.tar.gz",
+    "size_bytes": 4099,
+    "sha256": "13fc720a37d1a2bcec7c3df0d3121d5e64be484c543b9613a8f3fa48e1407f8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-davidegrayson/library/PololuLedStrip/0.0.0%2Bsha.c3193bc73cff/PololuLedStrip-0.0.0%2Bsha.c3193bc73cff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-davidegrayson/library/PololuLedStrip/0.0.0%2Bsha.c3193bc73cff/PololuLedStrip-0.0.0%2Bsha.c3193bc73cff.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/czernitko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "czernitko/library/PrometheusPushClient/1.0.0/PrometheusPushClient-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PrometheusPushClient-1.0.0.tar.gz",
+    "size_bytes": 4690,
+    "sha256": "d7909b244ac33379def39cdd0d1154a72900234b6483014454080ac885c6545c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/czernitko/library/PrometheusPushClient/1.0.0/PrometheusPushClient-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/czernitko/library/PrometheusPushClient/1.0.0/PrometheusPushClient-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "czernitko/library/PrometheusPushClient/1.0.1/PrometheusPushClient-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PrometheusPushClient-1.0.1.tar.gz",
+    "size_bytes": 4724,
+    "sha256": "dcb91b7aa04691f6ccf7689d24363b707486104ce2cf0fabba44691579d1fc31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/czernitko/library/PrometheusPushClient/1.0.1/PrometheusPushClient-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/czernitko/library/PrometheusPushClient/1.0.1/PrometheusPushClient-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "czernitko/library/PrometheusPushClient/1.0.2/PrometheusPushClient-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PrometheusPushClient-1.0.2.tar.gz",
+    "size_bytes": 4703,
+    "sha256": "66e09d9dc8f8ed3c84bb20eace4d140b96a4932a78df660937898fdb4e5b9d99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/czernitko/library/PrometheusPushClient/1.0.2/PrometheusPushClient-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/czernitko/library/PrometheusPushClient/1.0.2/PrometheusPushClient-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "czernitko/library/PrometheusPushClient/1.0.3/PrometheusPushClient-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PrometheusPushClient-1.0.3.tar.gz",
+    "size_bytes": 4730,
+    "sha256": "2fd15b8617fe8fa67803f9efc924f76452fc815e26a9edb431a6ad915d8a9c3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/czernitko/library/PrometheusPushClient/1.0.3/PrometheusPushClient-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/czernitko/library/PrometheusPushClient/1.0.3/PrometheusPushClient-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

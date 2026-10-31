@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/embedui",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "embedui/library/EmbedUI/1.1.2/EmbedUI-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbedUI-1.1.2.tar.gz",
+    "size_bytes": 15510,
+    "sha256": "35f23f0bcb419b780f97be832d76d92170d7b8d4e3decb4496591fe8a98a3a52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/embedui/library/EmbedUI/1.1.2/EmbedUI-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/embedui/library/EmbedUI/1.1.2/EmbedUI-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

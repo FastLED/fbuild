@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fhessel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fhessel/library/esp32_https_server/1.0.0/esp32_https_server-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_https_server-1.0.0.tar.gz",
+    "size_bytes": 75869,
+    "sha256": "5a38108a8a0e41066ba96f1f70334fef2666a5c90847ffafd8bd54c52a0e6bda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fhessel/library/esp32_https_server/1.0.0/esp32_https_server-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fhessel/library/esp32_https_server/1.0.0/esp32_https_server-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fhessel/library/esp32_https_server_compat/1.0.0/esp32_https_server_compat-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_https_server_compat-1.0.0.tar.gz",
+    "size_bytes": 21150,
+    "sha256": "a7e8077abfbf0fec9ba219972c2d9904c31fe45c669983bc24597e8f830b5d8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fhessel/library/esp32_https_server_compat/1.0.0/esp32_https_server_compat-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fhessel/library/esp32_https_server_compat/1.0.0/esp32_https_server_compat-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

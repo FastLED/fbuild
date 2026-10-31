@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bikenomad",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bikenomad/library/BillyBass/0.0.0+sha.ad0c038ebfc1/BillyBass-0.0.0+sha.ad0c038ebfc1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BillyBass-0.0.0+sha.ad0c038ebfc1.tar.gz",
+    "size_bytes": 6382,
+    "sha256": "9fd5c200545e24638bd38e145c6c187a13c13119a911e490a060c4a121ad110e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bikenomad/library/BillyBass/0.0.0%2Bsha.ad0c038ebfc1/BillyBass-0.0.0%2Bsha.ad0c038ebfc1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bikenomad/library/BillyBass/0.0.0%2Bsha.ad0c038ebfc1/BillyBass-0.0.0%2Bsha.ad0c038ebfc1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bikenomad/library/Multi_WS2811/0.0.0+sha.2c3b76ea0b40/Multi_WS2811-0.0.0+sha.2c3b76ea0b40.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Multi_WS2811-0.0.0+sha.2c3b76ea0b40.tar.gz",
+    "size_bytes": 7260,
+    "sha256": "212d9e3eb1316c047c94dd55a8fce10cb6e21af23200464642fd822b76b689a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bikenomad/library/Multi_WS2811/0.0.0%2Bsha.2c3b76ea0b40/Multi_WS2811-0.0.0%2Bsha.2c3b76ea0b40.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bikenomad/library/Multi_WS2811/0.0.0%2Bsha.2c3b76ea0b40/Multi_WS2811-0.0.0%2Bsha.2c3b76ea0b40.tar.gz"
+    ]
+   }
+  }
+ ]
+}

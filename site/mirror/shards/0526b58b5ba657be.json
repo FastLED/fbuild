@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nartemai",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nartemai/library/NaiPot/1.0.0/NaiPot-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NaiPot-1.0.0.tar.gz",
+    "size_bytes": 2616,
+    "sha256": "b8a537509da22ab7ab06bb6092a51ee079e78094c61b1dbaf0212d48e1d2729c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nartemai/library/NaiPot/1.0.0/NaiPot-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nartemai/library/NaiPot/1.0.0/NaiPot-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

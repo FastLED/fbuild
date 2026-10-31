@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/idlanzafran",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "idlanzafran/library/RapidBootWiFi/1.0.0/RapidBootWiFi-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RapidBootWiFi-1.0.0.tar.gz",
+    "size_bytes": 5673,
+    "sha256": "87ad2582c892faff431139020884df9564e9de860e75bfdbf72c6222a79c183f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idlanzafran/library/RapidBootWiFi/1.0.0/RapidBootWiFi-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/idlanzafran/library/RapidBootWiFi/1.0.0/RapidBootWiFi-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "idlanzafran/library/RapidBootWiFi/1.0.1/RapidBootWiFi-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RapidBootWiFi-1.0.1.tar.gz",
+    "size_bytes": 5691,
+    "sha256": "fb298513b23669e207b3346d5394661332c2b056074b4331984f875c5675764e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idlanzafran/library/RapidBootWiFi/1.0.1/RapidBootWiFi-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/idlanzafran/library/RapidBootWiFi/1.0.1/RapidBootWiFi-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "idlanzafran/library/RapidBootWiFi/1.0.3/RapidBootWiFi-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RapidBootWiFi-1.0.3.tar.gz",
+    "size_bytes": 6592,
+    "sha256": "0321ee13db9466a8141bb5cca705c08f0177a35463bf0f5f7e63d205152855ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idlanzafran/library/RapidBootWiFi/1.0.3/RapidBootWiFi-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/idlanzafran/library/RapidBootWiFi/1.0.3/RapidBootWiFi-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "idlanzafran/library/RapidBootWiFi/1.1.0/RapidBootWiFi-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RapidBootWiFi-1.1.0.tar.gz",
+    "size_bytes": 7992,
+    "sha256": "744a421f4d4a5a0624d2711717ded7412a076698db6560fde127a8c1b50c626a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idlanzafran/library/RapidBootWiFi/1.1.0/RapidBootWiFi-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/idlanzafran/library/RapidBootWiFi/1.1.0/RapidBootWiFi-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "idlanzafran/library/RapidBootWiFi/1.2.3/RapidBootWiFi-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RapidBootWiFi-1.2.3.tar.gz",
+    "size_bytes": 6260,
+    "sha256": "0f32c5a271fea230e2321b0a45dc59fbe17ec56fed78c3e718cac7194610d49d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idlanzafran/library/RapidBootWiFi/1.2.3/RapidBootWiFi-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/idlanzafran/library/RapidBootWiFi/1.2.3/RapidBootWiFi-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "idlanzafran/library/RapidBootWiFi/1.3.0/RapidBootWiFi-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RapidBootWiFi-1.3.0.tar.gz",
+    "size_bytes": 6555,
+    "sha256": "af0dd90c4d746244a9a62d370b194d142089352ad3307316e187a0f81bcf2120",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idlanzafran/library/RapidBootWiFi/1.3.0/RapidBootWiFi-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/idlanzafran/library/RapidBootWiFi/1.3.0/RapidBootWiFi-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "idlanzafran/library/RapidBootWiFi/1.3.1/RapidBootWiFi-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RapidBootWiFi-1.3.1.tar.gz",
+    "size_bytes": 6688,
+    "sha256": "337933066a10f2c72867b80e34993284169f6662d55ac14528c5615796437a18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idlanzafran/library/RapidBootWiFi/1.3.1/RapidBootWiFi-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/idlanzafran/library/RapidBootWiFi/1.3.1/RapidBootWiFi-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "idlanzafran/library/ThingsSentral/1.0.0/ThingsSentral-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingsSentral-1.0.0.tar.gz",
+    "size_bytes": 9032,
+    "sha256": "1a585261588e2c12a01a4e8c3882db9ca558c2223efd3e875ea7595682315803",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idlanzafran/library/ThingsSentral/1.0.0/ThingsSentral-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/idlanzafran/library/ThingsSentral/1.0.0/ThingsSentral-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "idlanzafran/library/ThingsSentral/1.1.0/ThingsSentral-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingsSentral-1.1.0.tar.gz",
+    "size_bytes": 8876,
+    "sha256": "bc54fe6343aa03fb72fb01687842eb32360ea11e99313d36bca82ebb6f31f62f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idlanzafran/library/ThingsSentral/1.1.0/ThingsSentral-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/idlanzafran/library/ThingsSentral/1.1.0/ThingsSentral-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "idlanzafran/library/ThingsSentral/1.1.1/ThingsSentral-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingsSentral-1.1.1.tar.gz",
+    "size_bytes": 8960,
+    "sha256": "704869caab14428f4089d1c589c65ed2027c64b25dcd5a3ff86169e8a4514e01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idlanzafran/library/ThingsSentral/1.1.1/ThingsSentral-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/idlanzafran/library/ThingsSentral/1.1.1/ThingsSentral-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "idlanzafran/library/ThingsSentral/1.1.2/ThingsSentral-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingsSentral-1.1.2.tar.gz",
+    "size_bytes": 9098,
+    "sha256": "af81f3602faaf8901d0b7003936ed39a90d5684d71e93b9563388aa8a0100b02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idlanzafran/library/ThingsSentral/1.1.2/ThingsSentral-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/idlanzafran/library/ThingsSentral/1.1.2/ThingsSentral-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

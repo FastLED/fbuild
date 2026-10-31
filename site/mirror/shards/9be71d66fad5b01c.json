@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/goldfish4tech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "goldfish4tech/library/Goldfish4Tech/1.0.1/Goldfish4Tech-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Goldfish4Tech-1.0.1.tar.gz",
+    "size_bytes": 11580,
+    "sha256": "7ae2a13abe392ae7f05271d752125b08eadad48fe511e9f505cfde903c43d47b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/goldfish4tech/library/Goldfish4Tech/1.0.1/Goldfish4Tech-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/goldfish4tech/library/Goldfish4Tech/1.0.1/Goldfish4Tech-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "goldfish4tech/library/Goldfish4TechAirPump/1.0.1/Goldfish4TechAirPump-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Goldfish4TechAirPump-1.0.1.tar.gz",
+    "size_bytes": 43324,
+    "sha256": "2c6b0397a60da5bdd98fa4f54e4ddf36f36b302ea47b04346b1080cac3e1c68e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/goldfish4tech/library/Goldfish4TechAirPump/1.0.1/Goldfish4TechAirPump-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/goldfish4tech/library/Goldfish4TechAirPump/1.0.1/Goldfish4TechAirPump-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

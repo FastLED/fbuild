@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/beastbroak30",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "beastbroak30/library/Mecmotor/1.2.0/Mecmotor-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mecmotor-1.2.0.tar.gz",
+    "size_bytes": 19108,
+    "sha256": "c2e502fe39fec968a5c67c6ce808da5ce88278593abcb09febe1257f0b4946ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beastbroak30/library/Mecmotor/1.2.0/Mecmotor-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beastbroak30/library/Mecmotor/1.2.0/Mecmotor-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

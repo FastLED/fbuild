@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-filea",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-filea/library/MAX30102/0.0.0+sha.02f411fefe6f/MAX30102-0.0.0+sha.02f411fefe6f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30102-0.0.0+sha.02f411fefe6f.tar.gz",
+    "size_bytes": 3481,
+    "sha256": "6437009df4765f2ed7c645586de4a5c2938a9bd9dc53968f67d4b7029fee8374",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-filea/library/MAX30102/0.0.0%2Bsha.02f411fefe6f/MAX30102-0.0.0%2Bsha.02f411fefe6f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-filea/library/MAX30102/0.0.0%2Bsha.02f411fefe6f/MAX30102-0.0.0%2Bsha.02f411fefe6f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

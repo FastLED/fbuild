@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mongonta0716",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mongonta0716/library/stackchan-arduino/0.0.4/stackchan-arduino-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stackchan-arduino-0.0.4.tar.gz",
+    "size_bytes": 16816,
+    "sha256": "ac0a6b84ef94ea2f820364a2f1f996e49acf8c0c065c33b7342c47cbca867377",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mongonta0716/library/stackchan-arduino/0.0.4/stackchan-arduino-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mongonta0716/library/stackchan-arduino/0.0.4/stackchan-arduino-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mongonta0716/library/stackchan-arduino/0.0.5/stackchan-arduino-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stackchan-arduino-0.0.5.tar.gz",
+    "size_bytes": 23053,
+    "sha256": "7bb0c83cee76498a6a94ecf7d0c9bfe5b6f8b8de880aa8041d09ac7347321f12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mongonta0716/library/stackchan-arduino/0.0.5/stackchan-arduino-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mongonta0716/library/stackchan-arduino/0.0.5/stackchan-arduino-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mongonta0716/library/stackchan-arduino/0.0.6/stackchan-arduino-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stackchan-arduino-0.0.6.tar.gz",
+    "size_bytes": 22796,
+    "sha256": "66f78a760a61fbe0f78868f7f5777c06a13c47f4a830ba67299b2315243aaf51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mongonta0716/library/stackchan-arduino/0.0.6/stackchan-arduino-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mongonta0716/library/stackchan-arduino/0.0.6/stackchan-arduino-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mongonta0716/library/stackchan-arduino/0.0.7/stackchan-arduino-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stackchan-arduino-0.0.7.tar.gz",
+    "size_bytes": 22805,
+    "sha256": "c1694ffa046c723f013f28f64bab973a4aa9790c28db7e537b7a31961455a703",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mongonta0716/library/stackchan-arduino/0.0.7/stackchan-arduino-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mongonta0716/library/stackchan-arduino/0.0.7/stackchan-arduino-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mongonta0716/library/stackchan-arduino/0.0.8/stackchan-arduino-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stackchan-arduino-0.0.8.tar.gz",
+    "size_bytes": 22843,
+    "sha256": "1fd98f53ea227d127e0ec4633295a146b963e08e33e7c3e95d84bc1589612cf5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mongonta0716/library/stackchan-arduino/0.0.8/stackchan-arduino-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/mongonta0716/library/stackchan-arduino/0.0.8/stackchan-arduino-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mongonta0716/library/stackchan-arduino/0.0.9/stackchan-arduino-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stackchan-arduino-0.0.9.tar.gz",
+    "size_bytes": 23379,
+    "sha256": "279b1a7b984be826c71dd87c787312c65232c3375334eba3c7efab29d28a2f38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mongonta0716/library/stackchan-arduino/0.0.9/stackchan-arduino-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/mongonta0716/library/stackchan-arduino/0.0.9/stackchan-arduino-0.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

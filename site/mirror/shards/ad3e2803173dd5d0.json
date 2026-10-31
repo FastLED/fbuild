@@ -1,0 +1,607 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/digitalcodesign",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "digitalcodesign/library/Escornabot-Library/1.1.0/Escornabot-Library-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Escornabot-Library-1.1.0.tar.gz",
+    "size_bytes": 21338,
+    "sha256": "fccbe8b056ae31fb467b1e90e9eac23872b199d3fe037f9200fa50107ab2b4dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/Escornabot-Library/1.1.0/Escornabot-Library-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/Escornabot-Library/1.1.0/Escornabot-Library-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-1Rele/1.0.0/MentorBit-1Rele-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-1Rele-1.0.0.tar.gz",
+    "size_bytes": 1870,
+    "sha256": "a849d1df35c4096bf6d9c175a0c916cae4ba40d80dd8c8d9bcced8467dbca595",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-1Rele/1.0.0/MentorBit-1Rele-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-1Rele/1.0.0/MentorBit-1Rele-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-1Rele/1.0.1/MentorBit-1Rele-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-1Rele-1.0.1.tar.gz",
+    "size_bytes": 16422,
+    "sha256": "b620dd57db26daaa89ced8b2a194720f5cc954db7393ee63a9633a520b8ab34e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-1Rele/1.0.1/MentorBit-1Rele-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-1Rele/1.0.1/MentorBit-1Rele-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-2Rele/1.0.0/MentorBit-2Rele-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-2Rele-1.0.0.tar.gz",
+    "size_bytes": 2034,
+    "sha256": "b12b43e64c0f4a0aaed3ee977625c986e882023a9a91728cb844aeb431989d80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-2Rele/1.0.0/MentorBit-2Rele-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-2Rele/1.0.0/MentorBit-2Rele-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-3LED/1.0.2/MentorBit-3LED-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-3LED-1.0.2.tar.gz",
+    "size_bytes": 2849,
+    "sha256": "01712cacaf5f27796c4e6bfcb323d09d0703252662403f06925e48845061e9c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-3LED/1.0.2/MentorBit-3LED-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-3LED/1.0.2/MentorBit-3LED-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-BH1750/1.0.0/MentorBit-BH1750-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-BH1750-1.0.0.tar.gz",
+    "size_bytes": 1459,
+    "sha256": "76c3b660b00f9994c633760abd901f010b948c40ab6fdb1284db89c45cf49d76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-BH1750/1.0.0/MentorBit-BH1750-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-BH1750/1.0.0/MentorBit-BH1750-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-BMP280/1.0.1/MentorBit-BMP280-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-BMP280-1.0.1.tar.gz",
+    "size_bytes": 2505,
+    "sha256": "177be61a9b85c27bd5190c0d9d9d75d1b077a8e00f4b5213cefd7421ad827706",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-BMP280/1.0.1/MentorBit-BMP280-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-BMP280/1.0.1/MentorBit-BMP280-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-BMP280/1.0.2/MentorBit-BMP280-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-BMP280-1.0.2.tar.gz",
+    "size_bytes": 16997,
+    "sha256": "572ce3159109635c308913d3108f3b2615f440d79ca88902ee6c355888bc2b5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-BMP280/1.0.2/MentorBit-BMP280-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-BMP280/1.0.2/MentorBit-BMP280-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-CANBus/1.0.0/MentorBit-CANBus-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-CANBus-1.0.0.tar.gz",
+    "size_bytes": 4379,
+    "sha256": "9120a2112fb73221e983bdf05d3eeaa9512264ec020b9919a0bcbe997c205121",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-CANBus/1.0.0/MentorBit-CANBus-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-CANBus/1.0.0/MentorBit-CANBus-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-DHT11/1.0.1/MentorBit-DHT11-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-DHT11-1.0.1.tar.gz",
+    "size_bytes": 2648,
+    "sha256": "c3ccac9581e0a0d04cbec6fd45f38861a2b10ad689d97c62db34e76454628e97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-DHT11/1.0.1/MentorBit-DHT11-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-DHT11/1.0.1/MentorBit-DHT11-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-DHT11/1.0.2/MentorBit-DHT11-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-DHT11-1.0.2.tar.gz",
+    "size_bytes": 17144,
+    "sha256": "6cecf3a39b455ab2f086b924c2b42ad04977bda4b06aeaec240360c70fec0b29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-DHT11/1.0.2/MentorBit-DHT11-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-DHT11/1.0.2/MentorBit-DHT11-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-DHT22/1.0.2/MentorBit-DHT22-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-DHT22-1.0.2.tar.gz",
+    "size_bytes": 2734,
+    "sha256": "efb176d3be14aa62cdf57b8bd9b614ef8f1801f89e15bb4b8061ddc289831ca2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-DHT22/1.0.2/MentorBit-DHT22-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-DHT22/1.0.2/MentorBit-DHT22-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-DetectorIR/1.0.0/MentorBit-DetectorIR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-DetectorIR-1.0.0.tar.gz",
+    "size_bytes": 1890,
+    "sha256": "9577e571bcb513f79caee4c1676f13bcc780fc4bb2672b457cbed8eb0c4302c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-DetectorIR/1.0.0/MentorBit-DetectorIR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-DetectorIR/1.0.0/MentorBit-DetectorIR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-DetectorIR/1.0.1/MentorBit-DetectorIR-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-DetectorIR-1.0.1.tar.gz",
+    "size_bytes": 16733,
+    "sha256": "8066aef9b3f87c7ae587c5a5a16bcf5442fbe77e4eb94f33334b812dd7d60e0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-DetectorIR/1.0.1/MentorBit-DetectorIR-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-DetectorIR/1.0.1/MentorBit-DetectorIR-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-DetectorLluvia/1.0.0/MentorBit-DetectorLluvia-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-DetectorLluvia-1.0.0.tar.gz",
+    "size_bytes": 2063,
+    "sha256": "1e86034186c4228e37b7242f0b7c546727a6ff091823f6e06fe43f73ed27e29d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-DetectorLluvia/1.0.0/MentorBit-DetectorLluvia-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-DetectorLluvia/1.0.0/MentorBit-DetectorLluvia-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-Encoder/1.0.0/MentorBit-Encoder-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-Encoder-1.0.0.tar.gz",
+    "size_bytes": 16226,
+    "sha256": "144ba17d680a10264dd558dfae105b36c7563db340bbfbf81b4549d5e4c8c858",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-Encoder/1.0.0/MentorBit-Encoder-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-Encoder/1.0.0/MentorBit-Encoder-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-Expander/1.0.0/MentorBit-Expander-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-Expander-1.0.0.tar.gz",
+    "size_bytes": 13471,
+    "sha256": "2cba6a063e34bdda25f66ccc25b00950d2a8730547b9ac817447c38fbe13f73b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-Expander/1.0.0/MentorBit-Expander-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-Expander/1.0.0/MentorBit-Expander-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-FC/1.0.0/MentorBit-FC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-FC-1.0.0.tar.gz",
+    "size_bytes": 17458,
+    "sha256": "c0aec8108af99cc948a7e1714d5b9b1533f04f4f8a6d33c4b5b4a415b7859fe2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-FC/1.0.0/MentorBit-FC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-FC/1.0.0/MentorBit-FC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-HALL/1.0.1/MentorBit-HALL-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-HALL-1.0.1.tar.gz",
+    "size_bytes": 15878,
+    "sha256": "39a4421751fd5e496b3939c1d7e8e565b7fc3e47bf115d20a52b9fc23e60c093",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-HALL/1.0.1/MentorBit-HALL-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-HALL/1.0.1/MentorBit-HALL-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-LDR/1.0.0/MentorBit-LDR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-LDR-1.0.0.tar.gz",
+    "size_bytes": 2083,
+    "sha256": "f0b99eb4975f444285515eb39e9d16df2e9ecb0639c3e8c9f9fc9402e3d00d58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-LDR/1.0.0/MentorBit-LDR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-LDR/1.0.0/MentorBit-LDR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-LDR/1.0.1/MentorBit-LDR-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-LDR-1.0.1.tar.gz",
+    "size_bytes": 15909,
+    "sha256": "678d5f6ed9dd016b95ceb6967c0ab4c9df8c3ed59efc84f8fb5e3161703f9d84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-LDR/1.0.1/MentorBit-LDR-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-LDR/1.0.1/MentorBit-LDR-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-LIS3DH/1.0.0/MentorBit-LIS3DH-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-LIS3DH-1.0.0.tar.gz",
+    "size_bytes": 4261,
+    "sha256": "799e30f76f0081845ef6ecdb9096bdfe6cd03fb905ebb6368e3a670286540224",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-LIS3DH/1.0.0/MentorBit-LIS3DH-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-LIS3DH/1.0.0/MentorBit-LIS3DH-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-Library/1.1.0/MentorBit-Library-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-Library-1.1.0.tar.gz",
+    "size_bytes": 30392,
+    "sha256": "c5282e45c9f4a3e6ca3f7a973330a911e7d815a266dabaa71a0db0553f8658a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-Library/1.1.0/MentorBit-Library-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-Library/1.1.0/MentorBit-Library-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-Library/1.1.1/MentorBit-Library-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-Library-1.1.1.tar.gz",
+    "size_bytes": 30857,
+    "sha256": "e7037879c76919b761c836fc38f664625471f47f1e3357a4ec61d1b72459ec2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-Library/1.1.1/MentorBit-Library-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-Library/1.1.1/MentorBit-Library-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-MQ/1.0.3/MentorBit-MQ-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-MQ-1.0.3.tar.gz",
+    "size_bytes": 20203,
+    "sha256": "36082bae041b927e0e8b8b7a847d532387ee9a24e9662555bee60f519cae05ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-MQ/1.0.3/MentorBit-MQ-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-MQ/1.0.3/MentorBit-MQ-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-PIR/1.0.0/MentorBit-PIR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-PIR-1.0.0.tar.gz",
+    "size_bytes": 1779,
+    "sha256": "6de46576c24a66ccebd73c390c9d9b0dd660f0ccb5b0e23a22528954b2089d25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-PIR/1.0.0/MentorBit-PIR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-PIR/1.0.0/MentorBit-PIR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-PoteLineal/1.0.0/MentorBit-PoteLineal-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-PoteLineal-1.0.0.tar.gz",
+    "size_bytes": 15321,
+    "sha256": "52a9e1e0af2f069d4d9db720e19cc86058b0c3c43169fe6fe38e462bc6b5c98c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-PoteLineal/1.0.0/MentorBit-PoteLineal-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-PoteLineal/1.0.0/MentorBit-PoteLineal-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-PoteRueda/1.0.0/MentorBit-PoteRueda-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-PoteRueda-1.0.0.tar.gz",
+    "size_bytes": 2151,
+    "sha256": "0f0b6298ee698361e609e1dd1b292be1fa50a60fdffde63608eb1ae887df65b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-PoteRueda/1.0.0/MentorBit-PoteRueda-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-PoteRueda/1.0.0/MentorBit-PoteRueda-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-Potenciometro/1.0.0/MentorBit-Potenciometro-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-Potenciometro-1.0.0.tar.gz",
+    "size_bytes": 2156,
+    "sha256": "86a675bf4cfed06fdc35b62abf3fa2f8b06e2e2dc9ed7b6a45b5503fbbd5404f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-Potenciometro/1.0.0/MentorBit-Potenciometro-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-Potenciometro/1.0.0/MentorBit-Potenciometro-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-Pulsadores/1.0.1/MentorBit-Pulsadores-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-Pulsadores-1.0.1.tar.gz",
+    "size_bytes": 15781,
+    "sha256": "2800d47c9dd36169ccbcd91ff36f926a20ee839a6dfe6d910809bd27d85f2de4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-Pulsadores/1.0.1/MentorBit-Pulsadores-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-Pulsadores/1.0.1/MentorBit-Pulsadores-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-RGB/1.0.2/MentorBit-RGB-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-RGB-1.0.2.tar.gz",
+    "size_bytes": 2826,
+    "sha256": "953e62cf1a199339c7c3c48f2113f0e5a2927c2d7470ad61a59a16b7c6074016",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-RGB/1.0.2/MentorBit-RGB-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-RGB/1.0.2/MentorBit-RGB-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-RGB/1.0.3/MentorBit-RGB-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-RGB-1.0.3.tar.gz",
+    "size_bytes": 17322,
+    "sha256": "21de083ba58b26a42e1037e4fa2d05fe9f124799515153ddae9a766d2a948e3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-RGB/1.0.3/MentorBit-RGB-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-RGB/1.0.3/MentorBit-RGB-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-RGB/1.0.4/MentorBit-RGB-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-RGB-1.0.4.tar.gz",
+    "size_bytes": 17429,
+    "sha256": "9249d8b3eedab8717c29864d703427fc76e7a8180386b046ad4fde52bb0544bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-RGB/1.0.4/MentorBit-RGB-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-RGB/1.0.4/MentorBit-RGB-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-RS232/1.0.0/MentorBit-RS232-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-RS232-1.0.0.tar.gz",
+    "size_bytes": 4535,
+    "sha256": "c64b3dd30b3736f50ee2aedb0237cf1efd6a4ab0ff465d77569f457484fd2eca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-RS232/1.0.0/MentorBit-RS232-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-RS232/1.0.0/MentorBit-RS232-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-SGP30/1.0.0/MentorBit-SGP30-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-SGP30-1.0.0.tar.gz",
+    "size_bytes": 2439,
+    "sha256": "70b1face8ebd41619cf020f581a3c4af7e52d270c77a47951fdb9b3df4eb8779",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-SGP30/1.0.0/MentorBit-SGP30-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-SGP30/1.0.0/MentorBit-SGP30-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-Ultrasonidos/1.0.0/MentorBit-Ultrasonidos-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-Ultrasonidos-1.0.0.tar.gz",
+    "size_bytes": 1940,
+    "sha256": "619d8973e481c139b3b2cc27a694d6e67c7d94f7694054c3eb4e565f2bab43f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-Ultrasonidos/1.0.0/MentorBit-Ultrasonidos-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-Ultrasonidos/1.0.0/MentorBit-Ultrasonidos-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-VL53/1.1.0/MentorBit-VL53-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-VL53-1.1.0.tar.gz",
+    "size_bytes": 2084,
+    "sha256": "85627c2808b535303073a2697d9e6beedbdcfe684e4f038017d99e47806991e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-VL53/1.1.0/MentorBit-VL53-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-VL53/1.1.0/MentorBit-VL53-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-VL53/1.1.2/MentorBit-VL53-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-VL53-1.1.2.tar.gz",
+    "size_bytes": 15778,
+    "sha256": "022aaaeb4efdb7e3af9a8bc9a2919f5c8a0f2fafe8065173a7c80b0b24d3e3ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-VL53/1.1.2/MentorBit-VL53-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-VL53/1.1.2/MentorBit-VL53-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBit-Zumbador/1.0.1/MentorBit-Zumbador-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBit-Zumbador-1.0.1.tar.gz",
+    "size_bytes": 15412,
+    "sha256": "697c8b5d82ec604c3db6ceb1c6ff4a50bab86b26153bb054701746b111dbbe32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBit-Zumbador/1.0.1/MentorBit-Zumbador-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBit-Zumbador/1.0.1/MentorBit-Zumbador-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBitMatrizPulsadores/1.0.1/MentorBitMatrizPulsadores-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBitMatrizPulsadores-1.0.1.tar.gz",
+    "size_bytes": 17257,
+    "sha256": "5219f6e8d0876f6a50c238c5a3a6e742b355e43e83ed9d930c84832790dcb14c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBitMatrizPulsadores/1.0.1/MentorBitMatrizPulsadores-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBitMatrizPulsadores/1.0.1/MentorBitMatrizPulsadores-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/MentorBitVEML/1.0.0/MentorBitVEML-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MentorBitVEML-1.0.0.tar.gz",
+    "size_bytes": 16144,
+    "sha256": "7cc5d12737720afaceb134476714e23dd3d876508d1f3cdd8c10405b761d239d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/MentorBitVEML/1.0.0/MentorBitVEML-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/MentorBitVEML/1.0.0/MentorBitVEML-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/Orbito/1.0.0/Orbito-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Orbito-1.0.0.tar.gz",
+    "size_bytes": 66100,
+    "sha256": "59941cde8f315f68334cce9783d7796e36a144d0d62185ceb4e3a2733e396a97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/Orbito/1.0.0/Orbito-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/Orbito/1.0.0/Orbito-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/OrbitoBotonera/1.0.0/OrbitoBotonera-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OrbitoBotonera-1.0.0.tar.gz",
+    "size_bytes": 16291,
+    "sha256": "28197886d677efadf051831917f3d376f0e67bbc0c1c0b5f932c2ebac4047842",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/OrbitoBotonera/1.0.0/OrbitoBotonera-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/OrbitoBotonera/1.0.0/OrbitoBotonera-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/OrbitoMochilaCalidadAire/1.0.0/OrbitoMochilaCalidadAire-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OrbitoMochilaCalidadAire-1.0.0.tar.gz",
+    "size_bytes": 17631,
+    "sha256": "5c0ce4f73b86c4db0f1f0d7f75a03c55af9eee3a24fcddce255569fe4ce6859b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/OrbitoMochilaCalidadAire/1.0.0/OrbitoMochilaCalidadAire-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/OrbitoMochilaCalidadAire/1.0.0/OrbitoMochilaCalidadAire-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/OrbitoMotores/1.0.0/OrbitoMotores-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OrbitoMotores-1.0.0.tar.gz",
+    "size_bytes": 17120,
+    "sha256": "19473fc4fbe7c39c080e8a2d7aa0ec462a481550cf41d1a9ec92e51000cbfd6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/OrbitoMotores/1.0.0/OrbitoMotores-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/OrbitoMotores/1.0.0/OrbitoMotores-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "digitalcodesign/library/Puertas-Logicas-Plugin/1.0.0/Puertas-Logicas-Plugin-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Puertas-Logicas-Plugin-1.0.0.tar.gz",
+    "size_bytes": 22274,
+    "sha256": "e573bc50ae82e608d3654206044d9ad99c459a03375d755400e928dd8df50765",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/digitalcodesign/library/Puertas-Logicas-Plugin/1.0.0/Puertas-Logicas-Plugin-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/digitalcodesign/library/Puertas-Logicas-Plugin/1.0.0/Puertas-Logicas-Plugin-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kuroneko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kuroneko/library/dcs-bios-arduino-library/0.2.11/dcs-bios-arduino-library-0.2.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dcs-bios-arduino-library-0.2.11.tar.gz",
+    "size_bytes": 14563,
+    "sha256": "6f1af439b250d3a13ca35276688fa7c88457559804d3dd7ffa2ee0a1c3756efa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kuroneko/library/dcs-bios-arduino-library/0.2.11/dcs-bios-arduino-library-0.2.11.tar.gz",
+     "https://dl.registry.platformio.org/download/kuroneko/library/dcs-bios-arduino-library/0.2.11/dcs-bios-arduino-library-0.2.11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

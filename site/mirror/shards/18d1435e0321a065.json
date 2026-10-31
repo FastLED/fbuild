@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kokke",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kokke/library/tiny-AES-c/0.0.0-alpha+sha.3f69a5899e/tiny-AES-c-0.0.0-alphasha.3f69a5899e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tiny-AES-c-0.0.0-alphasha.3f69a5899e.tar.gz",
+    "size_bytes": 13632,
+    "sha256": "4346cda3f4639021bce26e0e1c3270c6afe18a4833462931f54bebd60576da10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kokke/library/tiny-AES-c/0.0.0-alpha%2Bsha.3f69a5899e/tiny-AES-c-0.0.0-alphasha.3f69a5899e.tar.gz",
+     "https://dl.registry.platformio.org/download/kokke/library/tiny-AES-c/0.0.0-alpha%2Bsha.3f69a5899e/tiny-AES-c-0.0.0-alphasha.3f69a5899e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

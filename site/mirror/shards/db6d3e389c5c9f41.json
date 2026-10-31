@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-humlet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-humlet/library/FtControlSet/0.0.0+sha.3cce31050c90/FtControlSet-0.0.0+sha.3cce31050c90.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FtControlSet-0.0.0+sha.3cce31050c90.tar.gz",
+    "size_bytes": 4652,
+    "sha256": "bdab269dd0baff631d22b58ec33b63629479c8e914bf014914faa8707a156070",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-humlet/library/FtControlSet/0.0.0%2Bsha.3cce31050c90/FtControlSet-0.0.0%2Bsha.3cce31050c90.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-humlet/library/FtControlSet/0.0.0%2Bsha.3cce31050c90/FtControlSet-0.0.0%2Bsha.3cce31050c90.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-humlet/library/FtEncoder/0.0.0+sha.3944952c9eab/FtEncoder-0.0.0+sha.3944952c9eab.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FtEncoder-0.0.0+sha.3944952c9eab.tar.gz",
+    "size_bytes": 2493,
+    "sha256": "b5b9cd8b0b36c21db322fea70120260cdb0f43ee0b7d2cbdd913db8af02620db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-humlet/library/FtEncoder/0.0.0%2Bsha.3944952c9eab/FtEncoder-0.0.0%2Bsha.3944952c9eab.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-humlet/library/FtEncoder/0.0.0%2Bsha.3944952c9eab/FtEncoder-0.0.0%2Bsha.3944952c9eab.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-humlet/library/I2cRtosDriver/0.0.0+sha.352609d395c1/I2cRtosDriver-0.0.0+sha.352609d395c1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2cRtosDriver-0.0.0+sha.352609d395c1.tar.gz",
+    "size_bytes": 12149,
+    "sha256": "1a27193d0ea02564398586fa497e9a68bb7ce5148a57353443c38928c9540df2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-humlet/library/I2cRtosDriver/0.0.0%2Bsha.352609d395c1/I2cRtosDriver-0.0.0%2Bsha.352609d395c1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-humlet/library/I2cRtosDriver/0.0.0%2Bsha.352609d395c1/I2cRtosDriver-0.0.0%2Bsha.352609d395c1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-humlet/library/NeedfulThings/0.0.0+sha.8882925900db/NeedfulThings-0.0.0+sha.8882925900db.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeedfulThings-0.0.0+sha.8882925900db.tar.gz",
+    "size_bytes": 4158,
+    "sha256": "ac2a60b1c6506a12e871b37572c42010f60623b264f735682c5d795e104e1991",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-humlet/library/NeedfulThings/0.0.0%2Bsha.8882925900db/NeedfulThings-0.0.0%2Bsha.8882925900db.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-humlet/library/NeedfulThings/0.0.0%2Bsha.8882925900db/NeedfulThings-0.0.0%2Bsha.8882925900db.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-humlet/library/Srf0208IF/0.0.0+sha.70c946ba29cc/Srf0208IF-0.0.0+sha.70c946ba29cc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Srf0208IF-0.0.0+sha.70c946ba29cc.tar.gz",
+    "size_bytes": 4204,
+    "sha256": "3ba1e770f04d655846e8652a926a3a67c7184a7f4a4d3ce347735c06477ecffe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-humlet/library/Srf0208IF/0.0.0%2Bsha.70c946ba29cc/Srf0208IF-0.0.0%2Bsha.70c946ba29cc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-humlet/library/Srf0208IF/0.0.0%2Bsha.70c946ba29cc/Srf0208IF-0.0.0%2Bsha.70c946ba29cc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-humlet/library/TB6612FNG/0.0.0+sha.535c74e61e36/TB6612FNG-0.0.0+sha.535c74e61e36.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TB6612FNG-0.0.0+sha.535c74e61e36.tar.gz",
+    "size_bytes": 1681,
+    "sha256": "5703092f19cddd180d755bc1952285c9817d779d0f09f0c1f0fb053f8f59955a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-humlet/library/TB6612FNG/0.0.0%2Bsha.535c74e61e36/TB6612FNG-0.0.0%2Bsha.535c74e61e36.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-humlet/library/TB6612FNG/0.0.0%2Bsha.535c74e61e36/TB6612FNG-0.0.0%2Bsha.535c74e61e36.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-humlet/library/TinyJpgDec/0.0.0+sha.b6f284347a66/TinyJpgDec-0.0.0+sha.b6f284347a66.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyJpgDec-0.0.0+sha.b6f284347a66.tar.gz",
+    "size_bytes": 12021,
+    "sha256": "820e28f1004a814ec9e6031b6d1382204b23b0eb82f473f9bc92b4a32c33b6c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-humlet/library/TinyJpgDec/0.0.0%2Bsha.b6f284347a66/TinyJpgDec-0.0.0%2Bsha.b6f284347a66.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-humlet/library/TinyJpgDec/0.0.0%2Bsha.b6f284347a66/TinyJpgDec-0.0.0%2Bsha.b6f284347a66.tar.gz"
+    ]
+   }
+  }
+ ]
+}

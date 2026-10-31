@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/deimoshall",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "deimoshall/library/Raspberry%20Pi%20Pico%20CPU%20Temperature/1.0.0/RaspberryPiPicoCPUTemperature-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RaspberryPiPicoCPUTemperature-1.0.0.tar.gz",
+    "size_bytes": 2622,
+    "sha256": "1e91a06c9d79aa569ef162dd8578be36a170e26845e5b52c46354a0fdbd62d80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deimoshall/library/Raspberry%2520Pi%2520Pico%2520CPU%2520Temperature/1.0.0/RaspberryPiPicoCPUTemperature-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/deimoshall/library/Raspberry%20Pi%20Pico%20CPU%20Temperature/1.0.0/RaspberryPiPicoCPUTemperature-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

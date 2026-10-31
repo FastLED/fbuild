@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/twboom",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "twboom/library/Open-Smart%20Rich%20Shield/1.0.0/Open-SmartRichShield-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Open-SmartRichShield-1.0.0.tar.gz",
+    "size_bytes": 1324,
+    "sha256": "fb42da020dd0769193f7ac69c83e971faf90a325e63fe30067fc2d02b36288c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/twboom/library/Open-Smart%2520Rich%2520Shield/1.0.0/Open-SmartRichShield-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/twboom/library/Open-Smart%20Rich%20Shield/1.0.0/Open-SmartRichShield-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

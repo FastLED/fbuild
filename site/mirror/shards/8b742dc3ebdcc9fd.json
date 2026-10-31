@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bhepp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bhepp/library/DW1000/0.0.0+sha.028891b5f03b/DW1000-0.0.0+sha.028891b5f03b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DW1000-0.0.0+sha.028891b5f03b.tar.gz",
+    "size_bytes": 8939,
+    "sha256": "3771f2edbd7a2c3552afcf9e9d102f0c0ab1325d0bd4ebe8c210e5881fce8d9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bhepp/library/DW1000/0.0.0%2Bsha.028891b5f03b/DW1000-0.0.0%2Bsha.028891b5f03b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bhepp/library/DW1000/0.0.0%2Bsha.028891b5f03b/DW1000-0.0.0%2Bsha.028891b5f03b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

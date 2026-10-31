@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/envy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "envy/library/ESP%20KNX%20IP%20Library/0.4/ESPKNXIPLibrary-0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPKNXIPLibrary-0.4.tar.gz",
+    "size_bytes": 18717,
+    "sha256": "bd9fc88e842a08a4c934dc46d604afb3a52aa6b6f6ff2c2d1070cd9c80268948",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/envy/library/ESP%2520KNX%2520IP%2520Library/0.4/ESPKNXIPLibrary-0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/envy/library/ESP%20KNX%20IP%20Library/0.4/ESPKNXIPLibrary-0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

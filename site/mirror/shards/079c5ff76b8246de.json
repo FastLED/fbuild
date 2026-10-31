@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xdiversity",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xdiversity/library/xModLib/0.0.1/xModLib-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xModLib-0.0.1.tar.gz",
+    "size_bytes": 44924,
+    "sha256": "49bc381336ffb82d448b14adafa902e91233cb7a773e2e28d87d096c7a9d7830",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xdiversity/library/xModLib/0.0.1/xModLib-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xdiversity/library/xModLib/0.0.1/xModLib-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

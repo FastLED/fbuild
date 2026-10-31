@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/liuyinze",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "liuyinze/library/Cumulocity%20IoT%20Downstream/1.0.1/CumulocityIoTDownstream-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CumulocityIoTDownstream-1.0.1.tar.gz",
+    "size_bytes": 4487,
+    "sha256": "4994b34709708f46af9fa528df7a8c126928894648b756985a904c02a4ab3e5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liuyinze/library/Cumulocity%2520IoT%2520Downstream/1.0.1/CumulocityIoTDownstream-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/liuyinze/library/Cumulocity%20IoT%20Downstream/1.0.1/CumulocityIoTDownstream-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "liuyinze/library/Cumulocity%20IoT%20Upstreaming/1.0.3/CumulocityIoTUpstreaming-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CumulocityIoTUpstreaming-1.0.3.tar.gz",
+    "size_bytes": 3954,
+    "sha256": "1f21dc3943a0e1f279373694ced6a64af10fc65fb23e05421808351fe9fecae6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/liuyinze/library/Cumulocity%2520IoT%2520Upstreaming/1.0.3/CumulocityIoTUpstreaming-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/liuyinze/library/Cumulocity%20IoT%20Upstreaming/1.0.3/CumulocityIoTUpstreaming-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

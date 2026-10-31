@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tsda-robotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tsda-robotics/library/BMI160/0.0.0+sha.0b28b9d13164/BMI160-0.0.0+sha.0b28b9d13164.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMI160-0.0.0+sha.0b28b9d13164.tar.gz",
+    "size_bytes": 19898,
+    "sha256": "6d210b3b1e1c8bd9b375e1d4d284781d07b724284b3302555e35ad1052c02116",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tsda-robotics/library/BMI160/0.0.0%2Bsha.0b28b9d13164/BMI160-0.0.0%2Bsha.0b28b9d13164.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tsda-robotics/library/BMI160/0.0.0%2Bsha.0b28b9d13164/BMI160-0.0.0%2Bsha.0b28b9d13164.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/denkitronik",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "denkitronik/library/ADS1118%20library/1.0.3/ADS1118library-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1118library-1.0.3.tar.gz",
+    "size_bytes": 45654,
+    "sha256": "914f38d9ea74346286410c972341b1e388176c81ce0fdcef417487da185a949f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/denkitronik/library/ADS1118%2520library/1.0.3/ADS1118library-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/denkitronik/library/ADS1118%20library/1.0.3/ADS1118library-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

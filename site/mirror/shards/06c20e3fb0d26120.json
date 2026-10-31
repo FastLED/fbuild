@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/laith",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "laith/library/lwIOlinkMaster/0.0.11/lwIOlinkMaster-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lwIOlinkMaster-0.0.11.tar.gz",
+    "size_bytes": 20575,
+    "sha256": "1332d9a72637e33af9f746c82d6e943a57be1bde36e95c6910e68398642e2f97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/laith/library/lwIOlinkMaster/0.0.11/lwIOlinkMaster-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/laith/library/lwIOlinkMaster/0.0.11/lwIOlinkMaster-0.0.11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

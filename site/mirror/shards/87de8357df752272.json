@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shanghaitechgeekpie",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shanghaitechgeekpie/library/ShanghaiTech%20WiFi%20Auth/1.0/ShanghaiTechWiFiAuth-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShanghaiTechWiFiAuth-1.0.tar.gz",
+    "size_bytes": 7246,
+    "sha256": "7fcd3bda62500d04350364df3b4c509bb21087a9048a14d3ba1ceace03bf74e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shanghaitechgeekpie/library/ShanghaiTech%2520WiFi%2520Auth/1.0/ShanghaiTechWiFiAuth-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shanghaitechgeekpie/library/ShanghaiTech%20WiFi%20Auth/1.0/ShanghaiTechWiFiAuth-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

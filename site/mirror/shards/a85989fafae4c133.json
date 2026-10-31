@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ksenia",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ksenia/library/HYT/0.0.0+sha.cb02bfe8cf44/HYT-0.0.0+sha.cb02bfe8cf44.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HYT-0.0.0+sha.cb02bfe8cf44.tar.gz",
+    "size_bytes": 2002,
+    "sha256": "344db0b351c5338ddaeb4816c94ae06b956240fddd10eaa5bacf95d6eb3fcf74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ksenia/library/HYT/0.0.0%2Bsha.cb02bfe8cf44/HYT-0.0.0%2Bsha.cb02bfe8cf44.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ksenia/library/HYT/0.0.0%2Bsha.cb02bfe8cf44/HYT-0.0.0%2Bsha.cb02bfe8cf44.tar.gz"
+    ]
+   }
+  }
+ ]
+}

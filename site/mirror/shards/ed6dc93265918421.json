@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/allthingstalk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "allthingstalk/library/AllThingsTalk%20LTE-M%20SDK/2.0.4/AllThingsTalkLTE-MSDK-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AllThingsTalkLTE-MSDK-2.0.4.tar.gz",
+    "size_bytes": 146962,
+    "sha256": "3a92813e79cff8f99a36b52e35020453df0532cd52746f5bc07a8589e94aba8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/allthingstalk/library/AllThingsTalk%2520LTE-M%2520SDK/2.0.4/AllThingsTalkLTE-MSDK-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/allthingstalk/library/AllThingsTalk%20LTE-M%20SDK/2.0.4/AllThingsTalkLTE-MSDK-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "allthingstalk/library/AllThingsTalk%20LoRaWAN%20SDK/3.1.6/AllThingsTalkLoRaWANSDK-3.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AllThingsTalkLoRaWANSDK-3.1.6.tar.gz",
+    "size_bytes": 56021,
+    "sha256": "45e484cfbb91ce5c56e3d8d90b2207cd0d6ddc03d9001f005157889da531e5e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/allthingstalk/library/AllThingsTalk%2520LoRaWAN%2520SDK/3.1.6/AllThingsTalkLoRaWANSDK-3.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/allthingstalk/library/AllThingsTalk%20LoRaWAN%20SDK/3.1.6/AllThingsTalkLoRaWANSDK-3.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "allthingstalk/library/AllThingsTalk%20WiFi%20SDK/2.2.0-beta/AllThingsTalkWiFiSDK-2.2.0-beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AllThingsTalkWiFiSDK-2.2.0-beta.tar.gz",
+    "size_bytes": 42907,
+    "sha256": "594ab040ea5485de4f2db4d2d114367868bb6e930ce73094b2663cbddd3d03a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/allthingstalk/library/AllThingsTalk%2520WiFi%2520SDK/2.2.0-beta/AllThingsTalkWiFiSDK-2.2.0-beta.tar.gz",
+     "https://dl.registry.platformio.org/download/allthingstalk/library/AllThingsTalk%20WiFi%20SDK/2.2.0-beta/AllThingsTalkWiFiSDK-2.2.0-beta.tar.gz"
+    ]
+   }
+  }
+ ]
+}

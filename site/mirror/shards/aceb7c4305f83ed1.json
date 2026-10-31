@@ -1,0 +1,633 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bojanjurca",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bojanjurca/library/CinCout/1.0.0/CinCout-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CinCout-1.0.0.tar.gz",
+    "size_bytes": 9129,
+    "sha256": "d7d8a2e9773ea8e5e4ffb9acddb02d5d591caaca1ea367286f5aea723887f6bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/CinCout/1.0.0/CinCout-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/CinCout/1.0.0/CinCout-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/CinCout/1.0.10/CinCout-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CinCout-1.0.10.tar.gz",
+    "size_bytes": 10254,
+    "sha256": "2df7f0b05bb70f6de5bcf9897a143cfc5bcec6826c6eb0f1e4782b6836c289d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/CinCout/1.0.10/CinCout-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/CinCout/1.0.10/CinCout-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/CinCout/1.0.11/CinCout-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CinCout-1.0.11.tar.gz",
+    "size_bytes": 10481,
+    "sha256": "dc6b9771136fdb1f7ca43b9049b3f588d7af03af60fb4ef926dd0beaba77a041",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/CinCout/1.0.11/CinCout-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/CinCout/1.0.11/CinCout-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/CinCout/1.0.17/CinCout-1.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CinCout-1.0.17.tar.gz",
+    "size_bytes": 6612,
+    "sha256": "d95fbc41fb72b2e38759ac361a5d1e0c2af700b997e0a6867b0faec230c832a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/CinCout/1.0.17/CinCout-1.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/CinCout/1.0.17/CinCout-1.0.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/CinCout/1.0.6/CinCout-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CinCout-1.0.6.tar.gz",
+    "size_bytes": 10141,
+    "sha256": "775d741e3a4d85975f8df7a3494f0e5a1e78f4bc9eb0f4972ee2a7805d127d0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/CinCout/1.0.6/CinCout-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/CinCout/1.0.6/CinCout-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/CinCout/1.0.7/CinCout-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CinCout-1.0.7.tar.gz",
+    "size_bytes": 10156,
+    "sha256": "0a3622b2190c4a028648afa05a35b5188bc040653483b35d09d3c729ad07204a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/CinCout/1.0.7/CinCout-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/CinCout/1.0.7/CinCout-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ESP32_Multitasking_Network_Suite/0.0.1/ESP32_Multitasking_Network_Suite-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Multitasking_Network_Suite-0.0.1.tar.gz",
+    "size_bytes": 85731,
+    "sha256": "8efc4589d61a2b89213d280530ea158629b96e22942b63a80faab5a6fdfb0a4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ESP32_Multitasking_Network_Suite/0.0.1/ESP32_Multitasking_Network_Suite-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ESP32_Multitasking_Network_Suite/0.0.1/ESP32_Multitasking_Network_Suite-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.0/ESP32_Multitasking_Network_Suite-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Multitasking_Network_Suite-1.0.0.tar.gz",
+    "size_bytes": 86392,
+    "sha256": "aee7cc74b9a837724d56ef06049516ace0efe82bc044a44ec2d4c531cd01f909",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.0/ESP32_Multitasking_Network_Suite-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.0/ESP32_Multitasking_Network_Suite-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.1/ESP32_Multitasking_Network_Suite-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Multitasking_Network_Suite-1.0.1.tar.gz",
+    "size_bytes": 94789,
+    "sha256": "77c18b321b152ee00ecf5a86d45f312cc46288b7f02d79420057b17a52bc5300",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.1/ESP32_Multitasking_Network_Suite-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.1/ESP32_Multitasking_Network_Suite-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.2/ESP32_Multitasking_Network_Suite-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Multitasking_Network_Suite-1.0.2.tar.gz",
+    "size_bytes": 102095,
+    "sha256": "d80a128b8c3a80a4121084cb66359c3f94098c2e633c153b69ab07b1b5a38abd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.2/ESP32_Multitasking_Network_Suite-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.2/ESP32_Multitasking_Network_Suite-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.3/ESP32_Multitasking_Network_Suite-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Multitasking_Network_Suite-1.0.3.tar.gz",
+    "size_bytes": 101750,
+    "sha256": "20b97b7d4dde17b71e0e68e837fa7bb9dae3ea6f9f745ee77754cbac1d4ccd5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.3/ESP32_Multitasking_Network_Suite-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.3/ESP32_Multitasking_Network_Suite-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.4/ESP32_Multitasking_Network_Suite-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Multitasking_Network_Suite-1.0.4.tar.gz",
+    "size_bytes": 106467,
+    "sha256": "c56c7d8e2aa85a2d34efa9195b85ec9ec60bb2022acba6a36f283feb006600f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.4/ESP32_Multitasking_Network_Suite-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.4/ESP32_Multitasking_Network_Suite-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.5/ESP32_Multitasking_Network_Suite-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Multitasking_Network_Suite-1.0.5.tar.gz",
+    "size_bytes": 105686,
+    "sha256": "410f87191236748620dc94a1fa191be4588b3b872888d71aa838c1b7c6a0e4c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.5/ESP32_Multitasking_Network_Suite-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.5/ESP32_Multitasking_Network_Suite-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.6/ESP32_Multitasking_Network_Suite-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Multitasking_Network_Suite-1.0.6.tar.gz",
+    "size_bytes": 107845,
+    "sha256": "873baa5be75c6769273d20d9e94381c088217251938c8258e05e762d4facddf7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.6/ESP32_Multitasking_Network_Suite-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.6/ESP32_Multitasking_Network_Suite-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.7/ESP32_Multitasking_Network_Suite-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Multitasking_Network_Suite-1.0.7.tar.gz",
+    "size_bytes": 113120,
+    "sha256": "9879cba84cbf5aa91e2e3e163a6aa90c70113e05a0d046f0f1fa77e8a9efa922",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.7/ESP32_Multitasking_Network_Suite-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ESP32_Multitasking_Network_Suite/1.0.7/ESP32_Multitasking_Network_Suite-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/KeyValueDatabase/1.0.1/KeyValueDatabase-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KeyValueDatabase-1.0.1.tar.gz",
+    "size_bytes": 14551,
+    "sha256": "5f5f76bec7475c6ba34dc88a317f62503c932567f74123995039c88954060d76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/KeyValueDatabase/1.0.1/KeyValueDatabase-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/KeyValueDatabase/1.0.1/KeyValueDatabase-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/KeyValueDatabase/1.0.2/KeyValueDatabase-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KeyValueDatabase-1.0.2.tar.gz",
+    "size_bytes": 14496,
+    "sha256": "b7afe088240210bca1134eba53ebf02f6e12ed76d5362584e4653ef5e5610e49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/KeyValueDatabase/1.0.2/KeyValueDatabase-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/KeyValueDatabase/1.0.2/KeyValueDatabase-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightNeuralNetwork/1.0.1/LightweightNeuralNetwork-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightNeuralNetwork-1.0.1.tar.gz",
+    "size_bytes": 8179,
+    "sha256": "1b304dd60b4e74c192f4b1f3791e1ebc03150dbdbdeca37b708df76a43e5a722",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightNeuralNetwork/1.0.1/LightweightNeuralNetwork-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightNeuralNetwork/1.0.1/LightweightNeuralNetwork-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightNeuralNetwork/1.0.2/LightweightNeuralNetwork-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightNeuralNetwork-1.0.2.tar.gz",
+    "size_bytes": 8182,
+    "sha256": "665bde9e9f4d79b4643a2b6b2e10934079f7d67067a0d7e8f2239bcdfbb76158",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightNeuralNetwork/1.0.2/LightweightNeuralNetwork-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightNeuralNetwork/1.0.2/LightweightNeuralNetwork-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightNeuralNetwork/1.0.3/LightweightNeuralNetwork-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightNeuralNetwork-1.0.3.tar.gz",
+    "size_bytes": 10621,
+    "sha256": "af3198b9c3f9267abea84a7762ecc02dd74957b6a0f5033ee189a70b0b200576",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightNeuralNetwork/1.0.3/LightweightNeuralNetwork-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightNeuralNetwork/1.0.3/LightweightNeuralNetwork-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightNeuralNetwork/1.0.4/LightweightNeuralNetwork-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightNeuralNetwork-1.0.4.tar.gz",
+    "size_bytes": 11786,
+    "sha256": "193492acb1b5c81225ebf0139da6bae6ae194ea934dd663e5c60b5907b8d397e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightNeuralNetwork/1.0.4/LightweightNeuralNetwork-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightNeuralNetwork/1.0.4/LightweightNeuralNetwork-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightNeuralNetwork/1.0.5/LightweightNeuralNetwork-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightNeuralNetwork-1.0.5.tar.gz",
+    "size_bytes": 14843,
+    "sha256": "03a805f1b0ddacef41f8ba6893b804ea56b871e29cfeec0f58082e2d8217332a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightNeuralNetwork/1.0.5/LightweightNeuralNetwork-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightNeuralNetwork/1.0.5/LightweightNeuralNetwork-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightSTL/1.0.10/LightweightSTL-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightSTL-1.0.10.tar.gz",
+    "size_bytes": 46175,
+    "sha256": "36f2aad039eb349000c5c5d89ccf64941885fb861d2b9b1754e3648ac9282699",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightSTL/1.0.10/LightweightSTL-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightSTL/1.0.10/LightweightSTL-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightSTL/1.0.11/LightweightSTL-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightSTL-1.0.11.tar.gz",
+    "size_bytes": 47257,
+    "sha256": "af4d0ab8ed22513905859e4476827bfbc66b215dc89169092495f7535da71335",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightSTL/1.0.11/LightweightSTL-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightSTL/1.0.11/LightweightSTL-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightSTL/1.0.12/LightweightSTL-1.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightSTL-1.0.12.tar.gz",
+    "size_bytes": 47887,
+    "sha256": "439e061a87b5f1952b9280af72ae8c6365af71a93dc9e47f5e3a007dbe2bee62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightSTL/1.0.12/LightweightSTL-1.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightSTL/1.0.12/LightweightSTL-1.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightSTL/1.0.13/LightweightSTL-1.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightSTL-1.0.13.tar.gz",
+    "size_bytes": 48168,
+    "sha256": "4f084c9d39eda849ab24f4e59c7804d73a5cc9d4cba0af406b24a596f07cf607",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightSTL/1.0.13/LightweightSTL-1.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightSTL/1.0.13/LightweightSTL-1.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightSTL/1.0.14/LightweightSTL-1.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightSTL-1.0.14.tar.gz",
+    "size_bytes": 47976,
+    "sha256": "badbfb34ed023605e6cc4b84c349603885cfbd57feee47fe3faa2dc9e20a82dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightSTL/1.0.14/LightweightSTL-1.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightSTL/1.0.14/LightweightSTL-1.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightSTL/1.0.15/LightweightSTL-1.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightSTL-1.0.15.tar.gz",
+    "size_bytes": 48134,
+    "sha256": "3a8513ef0807443721e4ad37c4d40c8fd45144f945ffc643c47d769e0761e153",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightSTL/1.0.15/LightweightSTL-1.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightSTL/1.0.15/LightweightSTL-1.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightSTL/1.0.16/LightweightSTL-1.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightSTL-1.0.16.tar.gz",
+    "size_bytes": 48632,
+    "sha256": "1db6ccb0634d91111983bbd4a250018d798674760cfca98cae02f053a21d94a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightSTL/1.0.16/LightweightSTL-1.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightSTL/1.0.16/LightweightSTL-1.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightSTL/1.0.17/LightweightSTL-1.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightSTL-1.0.17.tar.gz",
+    "size_bytes": 48728,
+    "sha256": "2f6276a0e2afc232fdc18bc548538f79333721f6963edc6ab48b4cde6af3d642",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightSTL/1.0.17/LightweightSTL-1.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightSTL/1.0.17/LightweightSTL-1.0.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightSTL/1.0.2/LightweightSTL-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightSTL-1.0.2.tar.gz",
+    "size_bytes": 43640,
+    "sha256": "16977e68d0dd224ae8803a72ba771a978191edbd2c91d70d3648e5bac8826572",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightSTL/1.0.2/LightweightSTL-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightSTL/1.0.2/LightweightSTL-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightSTL/1.0.5/LightweightSTL-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightSTL-1.0.5.tar.gz",
+    "size_bytes": 45757,
+    "sha256": "8708f7589811d77fce2763fd2692ff18f57f6edf2a530edc2a144167c2651559",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightSTL/1.0.5/LightweightSTL-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightSTL/1.0.5/LightweightSTL-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightSTL/1.0.6/LightweightSTL-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightSTL-1.0.6.tar.gz",
+    "size_bytes": 45758,
+    "sha256": "2a1946fa1d2bc7717494ad7777bf87cad11dd6aaef5a4da9320fe7272e0bcd58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightSTL/1.0.6/LightweightSTL-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightSTL/1.0.6/LightweightSTL-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightSTL/1.0.7/LightweightSTL-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightSTL-1.0.7.tar.gz",
+    "size_bytes": 45758,
+    "sha256": "42b33b21dc4fda0bfc5147f311694ecb1e588fbb96ef830b207774963649a44b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightSTL/1.0.7/LightweightSTL-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightSTL/1.0.7/LightweightSTL-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightSTL/1.0.8/LightweightSTL-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightSTL-1.0.8.tar.gz",
+    "size_bytes": 45748,
+    "sha256": "d6bc5776170776b0aaea7eb0642f0c6964a884b2e486c59e23e58f435278aca0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightSTL/1.0.8/LightweightSTL-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightSTL/1.0.8/LightweightSTL-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/LightweightSTL/1.0.9/LightweightSTL-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightSTL-1.0.9.tar.gz",
+    "size_bytes": 45764,
+    "sha256": "440c5bdb2d1cf26037629078273ee534fc3b056b6c8d0b612aeab5007158b812",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/LightweightSTL/1.0.9/LightweightSTL-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/LightweightSTL/1.0.9/LightweightSTL-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ThreadSafeFS/1.0.0/ThreadSafeFS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThreadSafeFS-1.0.0.tar.gz",
+    "size_bytes": 8292,
+    "sha256": "824dbc8331d8673424076444596b06a1a5fcbff3567cdaf8bce2525ba7ed570f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ThreadSafeFS/1.0.0/ThreadSafeFS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ThreadSafeFS/1.0.0/ThreadSafeFS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ThreadSafeFS/1.0.1/ThreadSafeFS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThreadSafeFS-1.0.1.tar.gz",
+    "size_bytes": 8262,
+    "sha256": "70de1bc5fdccf5f485b33b0a361d95850eb09cc009255d0e1b09c25e78dce95b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ThreadSafeFS/1.0.1/ThreadSafeFS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ThreadSafeFS/1.0.1/ThreadSafeFS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ThreadSafeFS/1.1.0/ThreadSafeFS-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThreadSafeFS-1.1.0.tar.gz",
+    "size_bytes": 9709,
+    "sha256": "87b8be2479d1126776e26a0722c09f866eb6996112b18565adc8d8cf2cb7a5a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ThreadSafeFS/1.1.0/ThreadSafeFS-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ThreadSafeFS/1.1.0/ThreadSafeFS-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ThreadSafePing/1.0.1/ThreadSafePing-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThreadSafePing-1.0.1.tar.gz",
+    "size_bytes": 6364,
+    "sha256": "5daca16556b4cdbbe4ea7fcf7e9569692a6984c8b60655066ef94eaafb47a9ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ThreadSafePing/1.0.1/ThreadSafePing-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ThreadSafePing/1.0.1/ThreadSafePing-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ThreadSafePing/1.0.3/ThreadSafePing-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThreadSafePing-1.0.3.tar.gz",
+    "size_bytes": 7373,
+    "sha256": "7a90d1ee14226040190c0654c2c26a75d07bdf8c52bb4fbd86ab3be68fa3ae3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ThreadSafePing/1.0.3/ThreadSafePing-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ThreadSafePing/1.0.3/ThreadSafePing-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ThreadSafePing/1.0.4/ThreadSafePing-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThreadSafePing-1.0.4.tar.gz",
+    "size_bytes": 7595,
+    "sha256": "ef8c7adc0eefb59cf11525a34506b7d875916515ff1343becb92676407dc40de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ThreadSafePing/1.0.4/ThreadSafePing-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ThreadSafePing/1.0.4/ThreadSafePing-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ThreadSafePing/1.0.5/ThreadSafePing-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThreadSafePing-1.0.5.tar.gz",
+    "size_bytes": 7611,
+    "sha256": "7c67bdb4439703380f77fc0f53c694a952a6f75a23d10ab558fb95ea2ce2cb05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ThreadSafePing/1.0.5/ThreadSafePing-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ThreadSafePing/1.0.5/ThreadSafePing-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ThreadSafePing/1.0.6/ThreadSafePing-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThreadSafePing-1.0.6.tar.gz",
+    "size_bytes": 7746,
+    "sha256": "94cd8235e61d9bfbf234b3119486d9b4c9c2e17aa834ca7f3f8754e456c8f6f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ThreadSafePing/1.0.6/ThreadSafePing-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ThreadSafePing/1.0.6/ThreadSafePing-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ThreadSafePing/1.0.7/ThreadSafePing-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThreadSafePing-1.0.7.tar.gz",
+    "size_bytes": 7800,
+    "sha256": "9d0a01b983eef815ca3c3183578f18be7ba6eb2c84d261db9a53117806c8b0be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ThreadSafePing/1.0.7/ThreadSafePing-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ThreadSafePing/1.0.7/ThreadSafePing-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ThreadSafePing/1.0.8/ThreadSafePing-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThreadSafePing-1.0.8.tar.gz",
+    "size_bytes": 7778,
+    "sha256": "d50f565ad182e102beec057bb30aca342823a242e0e261b540c1885e87ddcf14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ThreadSafePing/1.0.8/ThreadSafePing-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ThreadSafePing/1.0.8/ThreadSafePing-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/ThreadSafePing/1.0.9/ThreadSafePing-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThreadSafePing-1.0.9.tar.gz",
+    "size_bytes": 7781,
+    "sha256": "3b2688e811bebd3e39c825437900bea44dfc2e27db3d067ebcd1fb8ac97408bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/ThreadSafePing/1.0.9/ThreadSafePing-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/ThreadSafePing/1.0.9/ThreadSafePing-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bojanjurca/library/cronDaemon/1.0.0/cronDaemon-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cronDaemon-1.0.0.tar.gz",
+    "size_bytes": 12600,
+    "sha256": "ba32cf2ff3d78088ede7d4f0971f234ece4ea2945a562e9168609c745d761967",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bojanjurca/library/cronDaemon/1.0.0/cronDaemon-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bojanjurca/library/cronDaemon/1.0.0/cronDaemon-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

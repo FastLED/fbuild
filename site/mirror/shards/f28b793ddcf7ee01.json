@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gfolker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gfolker/library/images/0.0.0+sha.0b8e42a60c17/images-0.0.0+sha.0b8e42a60c17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "images-0.0.0+sha.0b8e42a60c17.tar.gz",
+    "size_bytes": 22300,
+    "sha256": "dbcb1a7e0cc45a37051392b169a6b412d70abafc57eb00b3d4837613743d94a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gfolker/library/images/0.0.0%2Bsha.0b8e42a60c17/images-0.0.0%2Bsha.0b8e42a60c17.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gfolker/library/images/0.0.0%2Bsha.0b8e42a60c17/images-0.0.0%2Bsha.0b8e42a60c17.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tkreyche",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tkreyche/library/ADT7410/0.0.0+sha.e1aee50340ec/ADT7410-0.0.0+sha.e1aee50340ec.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADT7410-0.0.0+sha.e1aee50340ec.tar.gz",
+    "size_bytes": 2954,
+    "sha256": "25f1cf1c19b907877c84fcdf528792611b9dfae91f984f7fb0fe0b507c55b9e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tkreyche/library/ADT7410/0.0.0%2Bsha.e1aee50340ec/ADT7410-0.0.0%2Bsha.e1aee50340ec.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tkreyche/library/ADT7410/0.0.0%2Bsha.e1aee50340ec/ADT7410-0.0.0%2Bsha.e1aee50340ec.tar.gz"
+    ]
+   }
+  }
+ ]
+}

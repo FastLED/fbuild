@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gewisser",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gewisser/library/GyverOLEDMenu/0.3.1/GyverOLEDMenu-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverOLEDMenu-0.3.1.tar.gz",
+    "size_bytes": 9164,
+    "sha256": "2da5b652bf2d814d6e0151f2732d7a5bdafcd77d7c16f9aff1e276b877318e4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gewisser/library/GyverOLEDMenu/0.3.1/GyverOLEDMenu-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gewisser/library/GyverOLEDMenu/0.3.1/GyverOLEDMenu-0.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-syundo0730",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-syundo0730/library/Adafruit-PWM-Servo-Driver/0.0.0+sha.88bdd5c4e77b/Adafruit-PWM-Servo-Driver-0.0.0+sha.88bdd5c4e77b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit-PWM-Servo-Driver-0.0.0+sha.88bdd5c4e77b.tar.gz",
+    "size_bytes": 2543,
+    "sha256": "6c61d081feabce1b2293544996bd54cf1f1774fd18495d0a6bee562b9f87b2ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-syundo0730/library/Adafruit-PWM-Servo-Driver/0.0.0%2Bsha.88bdd5c4e77b/Adafruit-PWM-Servo-Driver-0.0.0%2Bsha.88bdd5c4e77b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-syundo0730/library/Adafruit-PWM-Servo-Driver/0.0.0%2Bsha.88bdd5c4e77b/Adafruit-PWM-Servo-Driver-0.0.0%2Bsha.88bdd5c4e77b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-syundo0730/library/ArduinoSerial/0.0.0+sha.e5a32ea3587b/ArduinoSerial-0.0.0+sha.e5a32ea3587b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoSerial-0.0.0+sha.e5a32ea3587b.tar.gz",
+    "size_bytes": 1277,
+    "sha256": "7a85a1b2f2b16d837b04e25124842bb0002b7414bd3c4b38ab9f25aa51e63173",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-syundo0730/library/ArduinoSerial/0.0.0%2Bsha.e5a32ea3587b/ArduinoSerial-0.0.0%2Bsha.e5a32ea3587b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-syundo0730/library/ArduinoSerial/0.0.0%2Bsha.e5a32ea3587b/ArduinoSerial-0.0.0%2Bsha.e5a32ea3587b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-syundo0730/library/I2Cdev/0.0.0+sha.3aa973ebe3e5/I2Cdev-0.0.0+sha.3aa973ebe3e5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cdev-0.0.0+sha.3aa973ebe3e5.tar.gz",
+    "size_bytes": 3568,
+    "sha256": "8d5042dcdd7303fd889fc358f10ba541c0095a2d828a5e4718646aad509cea86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-syundo0730/library/I2Cdev/0.0.0%2Bsha.3aa973ebe3e5/I2Cdev-0.0.0%2Bsha.3aa973ebe3e5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-syundo0730/library/I2Cdev/0.0.0%2Bsha.3aa973ebe3e5/I2Cdev-0.0.0%2Bsha.3aa973ebe3e5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-syundo0730/library/MPU9150/0.0.0+sha.1a6f1948f43d/MPU9150-0.0.0+sha.1a6f1948f43d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9150-0.0.0+sha.1a6f1948f43d.tar.gz",
+    "size_bytes": 39114,
+    "sha256": "d27fce6762092a0205aa73c01ba202d57a0f14479af62de74075f5def06f7af7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-syundo0730/library/MPU9150/0.0.0%2Bsha.1a6f1948f43d/MPU9150-0.0.0%2Bsha.1a6f1948f43d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-syundo0730/library/MPU9150/0.0.0%2Bsha.1a6f1948f43d/MPU9150-0.0.0%2Bsha.1a6f1948f43d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-syundo0730/library/RS300/0.0.0+sha.1ab1adf0915c/RS300-0.0.0+sha.1ab1adf0915c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RS300-0.0.0+sha.1ab1adf0915c.tar.gz",
+    "size_bytes": 1446,
+    "sha256": "dcb7c9fa2efc7583b580f5e602d6cd73c9b7be1c687552e78d83d8cede42ec0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-syundo0730/library/RS300/0.0.0%2Bsha.1ab1adf0915c/RS300-0.0.0%2Bsha.1ab1adf0915c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-syundo0730/library/RS300/0.0.0%2Bsha.1ab1adf0915c/RS300-0.0.0%2Bsha.1ab1adf0915c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

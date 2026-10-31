@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tlmoto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tlmoto/library/Nextion/0.0.0+sha.e4163fd9aa4c/Nextion-0.0.0+sha.e4163fd9aa4c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nextion-0.0.0+sha.e4163fd9aa4c.tar.gz",
+    "size_bytes": 7055,
+    "sha256": "614202cf3fa991c65f29de7be352dc75ab5146ae04e9069e8e12104e45841da4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tlmoto/library/Nextion/0.0.0%2Bsha.e4163fd9aa4c/Nextion-0.0.0%2Bsha.e4163fd9aa4c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tlmoto/library/Nextion/0.0.0%2Bsha.e4163fd9aa4c/Nextion-0.0.0%2Bsha.e4163fd9aa4c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

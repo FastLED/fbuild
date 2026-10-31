@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/audunkodehode",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "audunkodehode/library/JC3248W535EN-Touch-LCD/0.9.5/JC3248W535EN-Touch-LCD-0.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JC3248W535EN-Touch-LCD-0.9.5.tar.gz",
+    "size_bytes": 40332,
+    "sha256": "27fc654556ccdf2410a98e404e9071dca3b70f79f8c07245879c8da77510b8d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/audunkodehode/library/JC3248W535EN-Touch-LCD/0.9.5/JC3248W535EN-Touch-LCD-0.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/audunkodehode/library/JC3248W535EN-Touch-LCD/0.9.5/JC3248W535EN-Touch-LCD-0.9.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

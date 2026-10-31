@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tpowell33",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tpowell33/library/NeoMatrix/0.0.0+sha.9a2779957e46/NeoMatrix-0.0.0+sha.9a2779957e46.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoMatrix-0.0.0+sha.9a2779957e46.tar.gz",
+    "size_bytes": 6503,
+    "sha256": "aceb7aa3a3b4986f713ea6f0ce2ed1a705cd0653e2f17b7400c626b88d78d4a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tpowell33/library/NeoMatrix/0.0.0%2Bsha.9a2779957e46/NeoMatrix-0.0.0%2Bsha.9a2779957e46.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tpowell33/library/NeoMatrix/0.0.0%2Bsha.9a2779957e46/NeoMatrix-0.0.0%2Bsha.9a2779957e46.tar.gz"
+    ]
+   }
+  }
+ ]
+}

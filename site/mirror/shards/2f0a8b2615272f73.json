@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/15jgme",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "15jgme/library/Ardutask/0.0.3/Ardutask-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ardutask-0.0.3.tar.gz",
+    "size_bytes": 15368,
+    "sha256": "9694f46d89381617ab90a84aca64c4abca4325589dd6039a9d6c109570a6efcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/15jgme/library/Ardutask/0.0.3/Ardutask-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/15jgme/library/Ardutask/0.0.3/Ardutask-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "15jgme/library/PlatformHelpers/0.0.2/PlatformHelpers-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlatformHelpers-0.0.2.tar.gz",
+    "size_bytes": 818,
+    "sha256": "b189668ede00e4751091b58e63c40428bb3a5eabb37bddbeb230e0f1d636f448",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/15jgme/library/PlatformHelpers/0.0.2/PlatformHelpers-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/15jgme/library/PlatformHelpers/0.0.2/PlatformHelpers-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

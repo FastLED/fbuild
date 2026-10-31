@@ -1,0 +1,321 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/osu-eed",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "osu-eed/library/ERC2/1.3.5/ERC2-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.3.5.tar.gz",
+    "size_bytes": 60005,
+    "sha256": "75d89142c11caeb023ede8b6404b712317028b07de7e8cd9f8932abe6e712dc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.3.5/ERC2-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.3.5/ERC2-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.4.0/ERC2-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.4.0.tar.gz",
+    "size_bytes": 72677,
+    "sha256": "5f9c62860c43b99e8ef9c16284ea923e992101beda5b26841bd641e7e43158b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.4.0/ERC2-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.4.0/ERC2-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.4.1/ERC2-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.4.1.tar.gz",
+    "size_bytes": 72688,
+    "sha256": "f0169ed2da6137e717dab82a1dcfb147ea4884b895ca0b2a868b07514f13b53c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.4.1/ERC2-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.4.1/ERC2-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.4.2/ERC2-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.4.2.tar.gz",
+    "size_bytes": 70882,
+    "sha256": "8ba58124771a67b18f816683c037c89cba94cf17a1935b8afdf4d4ec91595e3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.4.2/ERC2-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.4.2/ERC2-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.4.3/ERC2-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.4.3.tar.gz",
+    "size_bytes": 72509,
+    "sha256": "b8689615d6cb5c615865cb196571b09d9e5d6177cbe909f17a7e8415258620ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.4.3/ERC2-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.4.3/ERC2-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.5.0/ERC2-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.5.0.tar.gz",
+    "size_bytes": 77643,
+    "sha256": "5a8d2f530b05185b0841b0fadfc54ae9892f9680817b4854e5bead3163cfdbfb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.5.0/ERC2-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.5.0/ERC2-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.5.1/ERC2-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.5.1.tar.gz",
+    "size_bytes": 79072,
+    "sha256": "3c5a93f6efc0fad0a9bcf541e3e6620baa4e407300d202de79fa01281adf34ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.5.1/ERC2-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.5.1/ERC2-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.5.10/ERC2-1.5.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.5.10.tar.gz",
+    "size_bytes": 83172,
+    "sha256": "ce6c0d688e03e887129eb5c9cf6b403c8adda232b3e14e65956f0bda73d6d407",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.5.10/ERC2-1.5.10.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.5.10/ERC2-1.5.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.5.11/ERC2-1.5.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.5.11.tar.gz",
+    "size_bytes": 83992,
+    "sha256": "4b6f3e0583d48a2572f4983d183c8605387f4c580a78b577d1323b6a4d8ac606",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.5.11/ERC2-1.5.11.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.5.11/ERC2-1.5.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.5.2/ERC2-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.5.2.tar.gz",
+    "size_bytes": 80299,
+    "sha256": "f71110a0ea0527372c3da90e824df4753a1cf0f015ee879093b8dd9512614e1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.5.2/ERC2-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.5.2/ERC2-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.5.3/ERC2-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.5.3.tar.gz",
+    "size_bytes": 80339,
+    "sha256": "8199240541c52f35a7a6510d519428f3613b29fdf4b3db39e855537ff49af118",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.5.3/ERC2-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.5.3/ERC2-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.5.4/ERC2-1.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.5.4.tar.gz",
+    "size_bytes": 81469,
+    "sha256": "570509f1ab4c537e94d8ea947c39773c8a47739b1c53d8b2577036e9c05633b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.5.4/ERC2-1.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.5.4/ERC2-1.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.5.5/ERC2-1.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.5.5.tar.gz",
+    "size_bytes": 81763,
+    "sha256": "2fc758baec30da9e6cf8dca0bcec238020b6f2ce47f7bf2b99284585c6513eb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.5.5/ERC2-1.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.5.5/ERC2-1.5.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.5.6/ERC2-1.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.5.6.tar.gz",
+    "size_bytes": 81508,
+    "sha256": "608a6688837f41b9745df5b2d2dfb5c44c434ed4fe8b5b9b95b8b173cb64d7aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.5.6/ERC2-1.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.5.6/ERC2-1.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.5.7/ERC2-1.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.5.7.tar.gz",
+    "size_bytes": 82089,
+    "sha256": "7e6c6f29e38d2224b6c1615f6db5c1e84567fe9f517f893d1ac9a7f32dd61c52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.5.7/ERC2-1.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.5.7/ERC2-1.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.5.8/ERC2-1.5.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.5.8.tar.gz",
+    "size_bytes": 83126,
+    "sha256": "794c45ec45b248067176e46b6aa4be23240fdc2f55a3245ea1292088f949ff1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.5.8/ERC2-1.5.8.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.5.8/ERC2-1.5.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.6.0/ERC2-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.6.0.tar.gz",
+    "size_bytes": 84414,
+    "sha256": "86436a6ca6bea6d3f9ca10092bd05caa93505748bc16fec56a241fe96056ed49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.6.0/ERC2-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.6.0/ERC2-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.6.1/ERC2-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.6.1.tar.gz",
+    "size_bytes": 84140,
+    "sha256": "b2841c5b2475bc2de05b8c549ade97355c4c4dd21b51854a721c2025e1c54268",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.6.1/ERC2-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.6.1/ERC2-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/1.6.2/ERC2-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-1.6.2.tar.gz",
+    "size_bytes": 84129,
+    "sha256": "a0663100a084a39d7ded7b6ec4be0c4e10ce9e91653e84345655f292e1c0300c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/1.6.2/ERC2-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/1.6.2/ERC2-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/2.0.0/ERC2-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-2.0.0.tar.gz",
+    "size_bytes": 145078,
+    "sha256": "5fd994edacf96eff43e9d35af9768cba69d2d8c95363580b836548ab5fadfc11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/2.0.0/ERC2-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/2.0.0/ERC2-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/2.1.0/ERC2-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-2.1.0.tar.gz",
+    "size_bytes": 169647,
+    "sha256": "884e37aadc274c5a6320fe58ae153ca6c4c0117ea268d493984c2bb103c8c629",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/2.1.0/ERC2-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/2.1.0/ERC2-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/2.2.0/ERC2-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-2.2.0.tar.gz",
+    "size_bytes": 851565,
+    "sha256": "e1d3e48213196052cad5070ec1f27333f0dc3eb56bba4eb7d87582be7e2ae031",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/2.2.0/ERC2-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/2.2.0/ERC2-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/2.2.1/ERC2-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-2.2.1.tar.gz",
+    "size_bytes": 1638012,
+    "sha256": "42aa56bd354f581c45c67ff4d5742aa04f523774d7c38e588b353013a4c230c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/2.2.1/ERC2-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/2.2.1/ERC2-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "osu-eed/library/ERC2/2.3.0/ERC2-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERC2-2.3.0.tar.gz",
+    "size_bytes": 2087948,
+    "sha256": "e66d9bc3f89b00ab822ce935290c0c74da149ee0883befd3446602af49bf1d95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/osu-eed/library/ERC2/2.3.0/ERC2-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/osu-eed/library/ERC2/2.3.0/ERC2-2.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marcelopi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marcelopi/library/MqttEspnowPeer2Peer/1.2.2/MqttEspnowPeer2Peer-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MqttEspnowPeer2Peer-1.2.2.tar.gz",
+    "size_bytes": 764291,
+    "sha256": "18bd91410a3fd5a3d050924a5376a001bbcf6f33cdd0d933cb39a7a3fb01d45e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcelopi/library/MqttEspnowPeer2Peer/1.2.2/MqttEspnowPeer2Peer-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/marcelopi/library/MqttEspnowPeer2Peer/1.2.2/MqttEspnowPeer2Peer-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

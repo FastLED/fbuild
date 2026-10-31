@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ichinoseki-bteam-2019",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ichinoseki-bteam-2019/library/DriveConroller/0.0.0+sha.1511d082dfd2/DriveConroller-0.0.0+sha.1511d082dfd2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DriveConroller-0.0.0+sha.1511d082dfd2.tar.gz",
+    "size_bytes": 1783,
+    "sha256": "97290c447b8c9484a7eb4bb96cfb75c9748c3e07914d4deecbd1756fc715002b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ichinoseki-bteam-2019/library/DriveConroller/0.0.0%2Bsha.1511d082dfd2/DriveConroller-0.0.0%2Bsha.1511d082dfd2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ichinoseki-bteam-2019/library/DriveConroller/0.0.0%2Bsha.1511d082dfd2/DriveConroller-0.0.0%2Bsha.1511d082dfd2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ichinoseki-bteam-2019/library/RotaryEncoder/0.0.0+sha.8217d3b6bb8d/RotaryEncoder-0.0.0+sha.8217d3b6bb8d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotaryEncoder-0.0.0+sha.8217d3b6bb8d.tar.gz",
+    "size_bytes": 1461,
+    "sha256": "6509c22db5a0239c064ab26d8da207de6f028d51c3e30e18b1ebf987ee320acb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ichinoseki-bteam-2019/library/RotaryEncoder/0.0.0%2Bsha.8217d3b6bb8d/RotaryEncoder-0.0.0%2Bsha.8217d3b6bb8d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ichinoseki-bteam-2019/library/RotaryEncoder/0.0.0%2Bsha.8217d3b6bb8d/RotaryEncoder-0.0.0%2Bsha.8217d3b6bb8d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ichinoseki-bteam-2019/library/UART/0.0.0+sha.fedd1504683c/UART-0.0.0+sha.fedd1504683c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UART-0.0.0+sha.fedd1504683c.tar.gz",
+    "size_bytes": 2132,
+    "sha256": "0e2f0135b46dbd4a641286841fa2b870708638e91303b147bc3ec4619e49ede3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ichinoseki-bteam-2019/library/UART/0.0.0%2Bsha.fedd1504683c/UART-0.0.0%2Bsha.fedd1504683c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ichinoseki-bteam-2019/library/UART/0.0.0%2Bsha.fedd1504683c/UART-0.0.0%2Bsha.fedd1504683c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ichinoseki-bteam-2019/library/_IMU/0.0.0+sha.b9d2f589254c/_IMU-0.0.0+sha.b9d2f589254c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "_IMU-0.0.0+sha.b9d2f589254c.tar.gz",
+    "size_bytes": 5432,
+    "sha256": "85da1d4b3f0ccb1e584a3b305ccbf0fe72b3e6a1acc08f2d041f284e3493b7aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ichinoseki-bteam-2019/library/_IMU/0.0.0%2Bsha.b9d2f589254c/_IMU-0.0.0%2Bsha.b9d2f589254c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ichinoseki-bteam-2019/library/_IMU/0.0.0%2Bsha.b9d2f589254c/_IMU-0.0.0%2Bsha.b9d2f589254c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

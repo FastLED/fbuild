@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jimherd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jimherd/library/FPGA_bus/0.0.0+sha.fe3dddcd448c/FPGA_bus-0.0.0+sha.fe3dddcd448c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FPGA_bus-0.0.0+sha.fe3dddcd448c.tar.gz",
+    "size_bytes": 6294,
+    "sha256": "81c30220c8ee4574ec24573838780450ca5eef4e605e6049819ed86e7f540199",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jimherd/library/FPGA_bus/0.0.0%2Bsha.fe3dddcd448c/FPGA_bus-0.0.0%2Bsha.fe3dddcd448c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jimherd/library/FPGA_bus/0.0.0%2Bsha.fe3dddcd448c/FPGA_bus-0.0.0%2Bsha.fe3dddcd448c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jimherd/library/MCP23017/0.0.0+sha.d57de266cf19/MCP23017-0.0.0+sha.d57de266cf19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017-0.0.0+sha.d57de266cf19.tar.gz",
+    "size_bytes": 3931,
+    "sha256": "45381b637e216144f0dfb5dec24c37bcbfb07fb4c438cf3074a8c8219f53ba53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jimherd/library/MCP23017/0.0.0%2Bsha.d57de266cf19/MCP23017-0.0.0%2Bsha.d57de266cf19.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jimherd/library/MCP23017/0.0.0%2Bsha.d57de266cf19/MCP23017-0.0.0%2Bsha.d57de266cf19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jimherd/library/MD25/0.0.0+sha.e575d390c730/MD25-0.0.0+sha.e575d390c730.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD25-0.0.0+sha.e575d390c730.tar.gz",
+    "size_bytes": 3428,
+    "sha256": "f5aabcf7258edd0fde90cf279c581fe157d5f68a993e9816537dfafb2cdd0d6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jimherd/library/MD25/0.0.0%2Bsha.e575d390c730/MD25-0.0.0%2Bsha.e575d390c730.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jimherd/library/MD25/0.0.0%2Bsha.e575d390c730/MD25-0.0.0%2Bsha.e575d390c730.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jimherd/library/WattBob_TextLCD/0.0.0+sha.3b26cd028e85/WattBob_TextLCD-0.0.0+sha.3b26cd028e85.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WattBob_TextLCD-0.0.0+sha.3b26cd028e85.tar.gz",
+    "size_bytes": 3810,
+    "sha256": "0a7ff3aac3cdbeab82950912993c5715c05973d0dfd6762ed16a5f7fa7a75305",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jimherd/library/WattBob_TextLCD/0.0.0%2Bsha.3b26cd028e85/WattBob_TextLCD-0.0.0%2Bsha.3b26cd028e85.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jimherd/library/WattBob_TextLCD/0.0.0%2Bsha.3b26cd028e85/WattBob_TextLCD-0.0.0%2Bsha.3b26cd028e85.tar.gz"
+    ]
+   }
+  }
+ ]
+}

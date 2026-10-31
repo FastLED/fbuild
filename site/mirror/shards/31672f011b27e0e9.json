@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/moduhub",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "moduhub/library/openafe/0.1.0/openafe-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "openafe-0.1.0.tar.gz",
+    "size_bytes": 24993,
+    "sha256": "81767a5289c1b08568931cfc7b6f379b319db6e1750e63d4f0e630e75693b4a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moduhub/library/openafe/0.1.0/openafe-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moduhub/library/openafe/0.1.0/openafe-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

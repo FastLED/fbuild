@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chiptechno",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chiptechno/library/ESP8266OTA/1.0.4/ESP8266OTA-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266OTA-1.0.4.tar.gz",
+    "size_bytes": 9480,
+    "sha256": "af543afb3774c6188ec3b504cde75b999f1f367123f2e979c98ea9af7bc241d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chiptechno/library/ESP8266OTA/1.0.4/ESP8266OTA-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/chiptechno/library/ESP8266OTA/1.0.4/ESP8266OTA-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chiptechno/library/WiFiMan/1.4.3/WiFiMan-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiMan-1.4.3.tar.gz",
+    "size_bytes": 37180,
+    "sha256": "7fd83460254278c21c1a712c4a60e38efb12c8c026970bc28cef0a0ce36090e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chiptechno/library/WiFiMan/1.4.3/WiFiMan-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/chiptechno/library/WiFiMan/1.4.3/WiFiMan-1.4.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,295 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/heltecautomation",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "heltecautomation/library/ESP32_LoRaWAN/2.1.1/ESP32_LoRaWAN-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_LoRaWAN-2.1.1.tar.gz",
+    "size_bytes": 1013404,
+    "sha256": "c4104ed7ebc3ded138b73d650b09e8d317b5b670d7e97f2603a4d2e549d01220",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/library/ESP32_LoRaWAN/2.1.1/ESP32_LoRaWAN-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/library/ESP32_LoRaWAN/2.1.1/ESP32_LoRaWAN-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/library/Heltec%20ESP32%20Dev-Boards/1.1.1/HeltecESP32Dev-Boards-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeltecESP32Dev-Boards-1.1.1.tar.gz",
+    "size_bytes": 87035,
+    "sha256": "e6fe6a1bb015dce872292f0a53839c11e7f826a2e41ddf547f321b973664a3fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/library/Heltec%2520ESP32%2520Dev-Boards/1.1.1/HeltecESP32Dev-Boards-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/library/Heltec%20ESP32%20Dev-Boards/1.1.1/HeltecESP32Dev-Boards-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/library/Heltec%20ESP32%20Dev-Boards/1.1.2/HeltecESP32Dev-Boards-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeltecESP32Dev-Boards-1.1.2.tar.gz",
+    "size_bytes": 149483,
+    "sha256": "f784d6e5cb34e12edea36364591bc7104f18b968f2aaaa88c1575c5326f76cd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/library/Heltec%2520ESP32%2520Dev-Boards/1.1.2/HeltecESP32Dev-Boards-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/library/Heltec%20ESP32%20Dev-Boards/1.1.2/HeltecESP32Dev-Boards-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/library/Heltec%20ESP32%20Dev-Boards/2.0.2/HeltecESP32Dev-Boards-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeltecESP32Dev-Boards-2.0.2.tar.gz",
+    "size_bytes": 819637,
+    "sha256": "7987aa1c7adb023e6564632d35e3e42cc9651c0374ac144423e5635403d3ebb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/library/Heltec%2520ESP32%2520Dev-Boards/2.0.2/HeltecESP32Dev-Boards-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/library/Heltec%20ESP32%20Dev-Boards/2.0.2/HeltecESP32Dev-Boards-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/library/Heltec%20ESP32%20Dev-Boards/2.1.2/HeltecESP32Dev-Boards-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeltecESP32Dev-Boards-2.1.2.tar.gz",
+    "size_bytes": 983764,
+    "sha256": "e52f04c48164697880cbdc606961a4315962e6d45941265755e0c909d5331062",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/library/Heltec%2520ESP32%2520Dev-Boards/2.1.2/HeltecESP32Dev-Boards-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/library/Heltec%20ESP32%20Dev-Boards/2.1.2/HeltecESP32Dev-Boards-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/library/Heltec%20ESP32%20Dev-Boards/2.1.4/HeltecESP32Dev-Boards-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeltecESP32Dev-Boards-2.1.4.tar.gz",
+    "size_bytes": 996717,
+    "sha256": "8d0eff2b2764a6149a61bbc6a70461ebf9fa39d0960ca5691c264b56f6a0d46c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/library/Heltec%2520ESP32%2520Dev-Boards/2.1.4/HeltecESP32Dev-Boards-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/library/Heltec%20ESP32%20Dev-Boards/2.1.4/HeltecESP32Dev-Boards-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/library/Heltec%20ESP32%20Dev-Boards/2.1.5/HeltecESP32Dev-Boards-2.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeltecESP32Dev-Boards-2.1.5.tar.gz",
+    "size_bytes": 1020607,
+    "sha256": "9c7907e5323b7b75f862f0f29592113942bd737840c4848f63ef00ae71aea1bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/library/Heltec%2520ESP32%2520Dev-Boards/2.1.5/HeltecESP32Dev-Boards-2.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/library/Heltec%20ESP32%20Dev-Boards/2.1.5/HeltecESP32Dev-Boards-2.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/library/Heltec%20ESP32%20Dev-Boards/2.1.7/HeltecESP32Dev-Boards-2.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeltecESP32Dev-Boards-2.1.7.tar.gz",
+    "size_bytes": 1048569,
+    "sha256": "568bfdaa72c96cc3e2325f804dade471df315d25b92477d672fb7933544c1a1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/library/Heltec%2520ESP32%2520Dev-Boards/2.1.7/HeltecESP32Dev-Boards-2.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/library/Heltec%20ESP32%20Dev-Boards/2.1.7/HeltecESP32Dev-Boards-2.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/library/Heltec_ESP8266/1.0.3/Heltec_ESP8266-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Heltec_ESP8266-1.0.3.tar.gz",
+    "size_bytes": 42174,
+    "sha256": "182b375223a907e077722b51915b244b7958cee998f3671024aa2e95b5929c5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/library/Heltec_ESP8266/1.0.3/Heltec_ESP8266-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/library/Heltec_ESP8266/1.0.3/Heltec_ESP8266-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/library/RadioCore_Kit/1.0.0/RadioCore_Kit-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioCore_Kit-1.0.0.tar.gz",
+    "size_bytes": 13892,
+    "sha256": "567687626d50fe7ef9b8d55e4222900d4692406a7c41cac13781e6d3d0b376ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/library/RadioCore_Kit/1.0.0/RadioCore_Kit-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/library/RadioCore_Kit/1.0.0/RadioCore_Kit-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/platform/heltec-cubecell/1.1.0/heltec-cubecell-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "heltec-cubecell-1.1.0.tar.gz",
+    "size_bytes": 19838,
+    "sha256": "88535b728e4183a40c2a76f27e510cad69e438ac58ccd5f902be2527785d7ab4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/platform/heltec-cubecell/1.1.0/heltec-cubecell-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/platform/heltec-cubecell/1.1.0/heltec-cubecell-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/tool/framework-arduinoasrmicro/1.4.0/framework-arduinoasrmicro-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-arduinoasrmicro-1.4.0.tar.gz",
+    "size_bytes": 1519963,
+    "sha256": "ab1cd4d7b941daa821d10c6da7231b38e9eba92f26b51cd80f3520cf72a0bb20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/framework-arduinoasrmicro/1.4.0/framework-arduinoasrmicro-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/tool/framework-arduinoasrmicro/1.4.0/framework-arduinoasrmicro-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/tool/framework-arduinocubecell/1.6.0/framework-arduinocubecell-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-arduinocubecell-1.6.0.tar.gz",
+    "size_bytes": 1794132,
+    "sha256": "47e947d47ffc362a7df73cf1292b4425883ac1b9a3c5daa8c7dd561ee138f304",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/framework-arduinocubecell/1.6.0/framework-arduinocubecell-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/tool/framework-arduinocubecell/1.6.0/framework-arduinocubecell-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/tool/tool-cubecellelftool/0.0.1/tool-cubecellelftool-darwin_x86_64-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-cubecellelftool-darwin_x86_64-0.0.1.tar.gz",
+    "size_bytes": 9468909,
+    "sha256": "e2cd27119fd86a0fb0b50d59494584aa7d40e68b5bbf0c6567291a535704c531",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellelftool/0.0.1/tool-cubecellelftool-darwin_x86_64-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellelftool/0.0.1/tool-cubecellelftool-darwin_x86_64-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/tool/tool-cubecellelftool/0.0.1/tool-cubecellelftool-linux_x86_64-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-cubecellelftool-linux_x86_64-0.0.1.tar.gz",
+    "size_bytes": 9975754,
+    "sha256": "21b36a45c3b0033844bea0dcb503afcb641c56ef447d19d591887be474740c21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellelftool/0.0.1/tool-cubecellelftool-linux_x86_64-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellelftool/0.0.1/tool-cubecellelftool-linux_x86_64-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/tool/tool-cubecellelftool/0.0.1/tool-cubecellelftool-windows-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-cubecellelftool-windows-0.0.1.tar.gz",
+    "size_bytes": 5943467,
+    "sha256": "0e7deda2334c11bc5a95036aa1ed3b6d735b2fab5480fce539c4d6bd3527eb87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellelftool/0.0.1/tool-cubecellelftool-windows-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellelftool/0.0.1/tool-cubecellelftool-windows-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/tool/tool-cubecellflash/0.0.1/tool-cubecellflash-darwin_x86_64-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-cubecellflash-darwin_x86_64-0.0.1.tar.gz",
+    "size_bytes": 9917199,
+    "sha256": "0816426b12e1af248bad8cacd8eac27cb70962e52cf551c42be1bc42851b15c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellflash/0.0.1/tool-cubecellflash-darwin_x86_64-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellflash/0.0.1/tool-cubecellflash-darwin_x86_64-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/tool/tool-cubecellflash/0.0.1/tool-cubecellflash-linux_x86_64-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-cubecellflash-linux_x86_64-0.0.1.tar.gz",
+    "size_bytes": 10706505,
+    "sha256": "db3b37130c5caeaf0b893f137e46032f4f0fee645b73a295de85d3c97070fe9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellflash/0.0.1/tool-cubecellflash-linux_x86_64-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellflash/0.0.1/tool-cubecellflash-linux_x86_64-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/tool/tool-cubecellflash/0.0.1/tool-cubecellflash-windows-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-cubecellflash-windows-0.0.1.tar.gz",
+    "size_bytes": 6136737,
+    "sha256": "c47dc682a271bc2816cc587c86f68dd6074bcc1bace8a1482f2514a97043b312",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellflash/0.0.1/tool-cubecellflash-windows-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellflash/0.0.1/tool-cubecellflash-windows-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/tool/tool-cubecellflash6601/0.0.1/tool-cubecellflash6601-darwin_x86_64-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-cubecellflash6601-darwin_x86_64-0.0.1.tar.gz",
+    "size_bytes": 5082700,
+    "sha256": "a5c4e011d7c48b45f2d255d51c0e0306465728b58db8707117dade809bdce9e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellflash6601/0.0.1/tool-cubecellflash6601-darwin_x86_64-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellflash6601/0.0.1/tool-cubecellflash6601-darwin_x86_64-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/tool/tool-cubecellflash6601/0.0.1/tool-cubecellflash6601-linux_x86_64-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-cubecellflash6601-linux_x86_64-0.0.1.tar.gz",
+    "size_bytes": 10346639,
+    "sha256": "de95270340d3485965ea5a166f255c1f1f6683872f447938ff2836b72fbd4432",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellflash6601/0.0.1/tool-cubecellflash6601-linux_x86_64-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellflash6601/0.0.1/tool-cubecellflash6601-linux_x86_64-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "heltecautomation/tool/tool-cubecellflash6601/0.0.1/tool-cubecellflash6601-windows-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-cubecellflash6601-windows-0.0.1.tar.gz",
+    "size_bytes": 6033317,
+    "sha256": "73bd48df8d339537bda38ffa142166b1e5fb569cdc4e52c74da3f5d455b6a272",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heltecautomation/tool/tool-cubecellflash6601/0.0.1/tool-cubecellflash6601-windows-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/heltecautomation/tool/tool-cubecellflash6601/0.0.1/tool-cubecellflash6601-windows-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jijio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jijio/library/AdvancedLogger/2.0.1/AdvancedLogger-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdvancedLogger-2.0.1.tar.gz",
+    "size_bytes": 22275,
+    "sha256": "bb27b6320b0bb0b7bb7537fded6e482a923b1a965b56cf6bc2025a51d9bdbb11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jijio/library/AdvancedLogger/2.0.1/AdvancedLogger-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jijio/library/AdvancedLogger/2.0.1/AdvancedLogger-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jijio/library/AdvancedLogger/2.1.0/AdvancedLogger-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdvancedLogger-2.1.0.tar.gz",
+    "size_bytes": 28383,
+    "sha256": "0683c44770b5ee67132c24cb05054a87330f7621f9e7a56a4da7f6c78333ca3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jijio/library/AdvancedLogger/2.1.0/AdvancedLogger-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jijio/library/AdvancedLogger/2.1.0/AdvancedLogger-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

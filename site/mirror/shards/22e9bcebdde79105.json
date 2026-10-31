@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/otacilion",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "otacilion/library/Brasilino/1.1.1/Brasilino-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Brasilino-1.1.1.tar.gz",
+    "size_bytes": 29018,
+    "sha256": "708a03ea6d8b76a5cda3fea790295b5959ef7b916a1655a7ed6c08ade66a13b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/otacilion/library/Brasilino/1.1.1/Brasilino-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/otacilion/library/Brasilino/1.1.1/Brasilino-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "otacilion/library/Brasilino/1.2.0/Brasilino-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Brasilino-1.2.0.tar.gz",
+    "size_bytes": 29630,
+    "sha256": "8516980a5c7c92cfaf0587439b98998a9e5c07f1d18d030ef8856798830df0eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/otacilion/library/Brasilino/1.2.0/Brasilino-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/otacilion/library/Brasilino/1.2.0/Brasilino-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "otacilion/library/Brasilino/1.2.1/Brasilino-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Brasilino-1.2.1.tar.gz",
+    "size_bytes": 29789,
+    "sha256": "5a6064c2a4de50853e8e6d8b796ebd3195eef5e9f24a7967da980c2c7a6d4dd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/otacilion/library/Brasilino/1.2.1/Brasilino-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/otacilion/library/Brasilino/1.2.1/Brasilino-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "otacilion/library/Brasilino/1.3.0/Brasilino-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Brasilino-1.3.0.tar.gz",
+    "size_bytes": 30375,
+    "sha256": "593087c6f740a92e56b4f0cd0e5effc05ff23894a97df66ad954683e0263722a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/otacilion/library/Brasilino/1.3.0/Brasilino-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/otacilion/library/Brasilino/1.3.0/Brasilino-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "otacilion/library/Brasilino/1.3.1/Brasilino-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Brasilino-1.3.1.tar.gz",
+    "size_bytes": 30381,
+    "sha256": "b15506f3ebcf5ceaaf004ede208df0e33b43960d1e4e74c5c3318f40f8a734f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/otacilion/library/Brasilino/1.3.1/Brasilino-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/otacilion/library/Brasilino/1.3.1/Brasilino-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

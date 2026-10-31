@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mr01right",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mr01right/library/BH1730/1.0.0/BH1730-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BH1730-1.0.0.tar.gz",
+    "size_bytes": 8433,
+    "sha256": "59b3690936f6d65f9123461d060b8873b1f4b169251023301499234e1196da65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mr01right/library/BH1730/1.0.0/BH1730-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mr01right/library/BH1730/1.0.0/BH1730-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mr01right/library/SHT40/1.0.0/SHT40-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHT40-1.0.0.tar.gz",
+    "size_bytes": 5235,
+    "sha256": "ee1c44095d7b847c2912e2b93449cad9232aebf07cb45b402d209f95b88a7c8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mr01right/library/SHT40/1.0.0/SHT40-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mr01right/library/SHT40/1.0.0/SHT40-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

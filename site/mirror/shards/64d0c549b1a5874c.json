@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ametek-powervar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ametek-powervar/library/DHCPClient/0.0.0+sha.9697009514d0/DHCPClient-0.0.0+sha.9697009514d0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHCPClient-0.0.0+sha.9697009514d0.tar.gz",
+    "size_bytes": 2677,
+    "sha256": "3897bf9cae73ee14d85d12621b4334359b473a38f7c77c914ec207a5d82660a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ametek-powervar/library/DHCPClient/0.0.0%2Bsha.9697009514d0/DHCPClient-0.0.0%2Bsha.9697009514d0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ametek-powervar/library/DHCPClient/0.0.0%2Bsha.9697009514d0/DHCPClient-0.0.0%2Bsha.9697009514d0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ametek-powervar/library/W5500Interface/0.0.0+sha.2dee44ea52a9/W5500Interface-0.0.0+sha.2dee44ea52a9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "W5500Interface-0.0.0+sha.2dee44ea52a9.tar.gz",
+    "size_bytes": 9818,
+    "sha256": "6e55b963afb9366de19b3b19266018e224ceeaa5e19e2edd3762414863ec8b5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ametek-powervar/library/W5500Interface/0.0.0%2Bsha.2dee44ea52a9/W5500Interface-0.0.0%2Bsha.2dee44ea52a9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ametek-powervar/library/W5500Interface/0.0.0%2Bsha.2dee44ea52a9/W5500Interface-0.0.0%2Bsha.2dee44ea52a9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

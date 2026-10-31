@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lualtek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lualtek/library/ButtinoHandler/0.0.2/ButtinoHandler-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtinoHandler-0.0.2.tar.gz",
+    "size_bytes": 4282,
+    "sha256": "1dd209b1a3c01ef63ac3373917e04cd341b02230ddf4e421f54750d543883b87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lualtek/library/ButtinoHandler/0.0.2/ButtinoHandler-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lualtek/library/ButtinoHandler/0.0.2/ButtinoHandler-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lualtek/library/ButtinoRAK/0.1.4/ButtinoRAK-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtinoRAK-0.1.4.tar.gz",
+    "size_bytes": 5040,
+    "sha256": "a31a67c949d7bcd3f43c7aed00073793cc5e911b627be139789a5b86dbba63eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lualtek/library/ButtinoRAK/0.1.4/ButtinoRAK-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lualtek/library/ButtinoRAK/0.1.4/ButtinoRAK-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lualtek/library/cubecell-device-lib/0.2.1/cubecell-device-lib-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cubecell-device-lib-0.2.1.tar.gz",
+    "size_bytes": 6792,
+    "sha256": "6b77cd871873db91815deadfb69c0bbcd2e2b857b31aea1bddb8d8f53ccd3776",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lualtek/library/cubecell-device-lib/0.2.1/cubecell-device-lib-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lualtek/library/cubecell-device-lib/0.2.1/cubecell-device-lib-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lualtek/library/lualtek-rakrui/0.4.0/lualtek-rakrui-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lualtek-rakrui-0.4.0.tar.gz",
+    "size_bytes": 9038,
+    "sha256": "e0ccfd5fb3e9dccd3e52b93b239508d99dde5d38e4366cb02cbad57bd9462e55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lualtek/library/lualtek-rakrui/0.4.0/lualtek-rakrui-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lualtek/library/lualtek-rakrui/0.4.0/lualtek-rakrui-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lualtek/library/lualtek-rakrui/0.4.2/lualtek-rakrui-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lualtek-rakrui-0.4.2.tar.gz",
+    "size_bytes": 9891,
+    "sha256": "af2bf8f5713b140e70871b56e766a12e947acf7c79794f213c1b424312865ff9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lualtek/library/lualtek-rakrui/0.4.2/lualtek-rakrui-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lualtek/library/lualtek-rakrui/0.4.2/lualtek-rakrui-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lualtek/library/ttn-device-lib/0.4.0/ttn-device-lib-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ttn-device-lib-0.4.0.tar.gz",
+    "size_bytes": 6561,
+    "sha256": "fc3cb32a3eb3437040cd79d948d06b930f32da8d6c7753d1e7dbdb7738d6b69b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lualtek/library/ttn-device-lib/0.4.0/ttn-device-lib-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lualtek/library/ttn-device-lib/0.4.0/ttn-device-lib-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lualtek/library/ttn-device-lib/0.4.1/ttn-device-lib-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ttn-device-lib-0.4.1.tar.gz",
+    "size_bytes": 6569,
+    "sha256": "aa53a48a19a7d15d0c5bebbb09c24010fe67532f34e03c9f96bff27f8baee886",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lualtek/library/ttn-device-lib/0.4.1/ttn-device-lib-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lualtek/library/ttn-device-lib/0.4.1/ttn-device-lib-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lualtek/library/wisblock-io-extension-mini/0.2.0/wisblock-io-extension-mini-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wisblock-io-extension-mini-0.2.0.tar.gz",
+    "size_bytes": 1601355,
+    "sha256": "8d91116ed1627e5dc8330526e3cb7e25f5895f4c5926cb71dd5ef2e8f410fe69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lualtek/library/wisblock-io-extension-mini/0.2.0/wisblock-io-extension-mini-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lualtek/library/wisblock-io-extension-mini/0.2.0/wisblock-io-extension-mini-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lualtek/library/wisblock-io-extension-mini/0.2.1/wisblock-io-extension-mini-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wisblock-io-extension-mini-0.2.1.tar.gz",
+    "size_bytes": 1601365,
+    "sha256": "b27d07bf39757e699f70969ffbaeafd5b1f84908f6782a560866ddf69f726905",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lualtek/library/wisblock-io-extension-mini/0.2.1/wisblock-io-extension-mini-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lualtek/library/wisblock-io-extension-mini/0.2.1/wisblock-io-extension-mini-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

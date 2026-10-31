@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-brdarji",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-brdarji/library/BMP280/0.0.0+sha.0aae5bf93aaa/BMP280-0.0.0+sha.0aae5bf93aaa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP280-0.0.0+sha.0aae5bf93aaa.tar.gz",
+    "size_bytes": 5345,
+    "sha256": "aaf7133181b63024c69638b1511d0760d324d8de89fa35b716bbffe859a2beff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-brdarji/library/BMP280/0.0.0%2Bsha.0aae5bf93aaa/BMP280-0.0.0%2Bsha.0aae5bf93aaa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-brdarji/library/BMP280/0.0.0%2Bsha.0aae5bf93aaa/BMP280-0.0.0%2Bsha.0aae5bf93aaa.tar.gz"
+    ]
+   }
+  }
+ ]
+}

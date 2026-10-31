@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bitbucket-christandlg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bitbucket-christandlg/library/AS3935MI/1.3.5/AS3935MI-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS3935MI-1.3.5.tar.gz",
+    "size_bytes": 18043,
+    "sha256": "3f9e301c833726a2781092e84d8e814f54c8ce080c2459a84c1fbfc7927c23a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-christandlg/library/AS3935MI/1.3.5/AS3935MI-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-christandlg/library/AS3935MI/1.3.5/AS3935MI-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-christandlg/library/BMx280MI/1.2.3/BMx280MI-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMx280MI-1.2.3.tar.gz",
+    "size_bytes": 13702,
+    "sha256": "7895897d63c9350f94a378056e161b84d9f6871e4da40c9c833eff35195ecb37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-christandlg/library/BMx280MI/1.2.3/BMx280MI-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-christandlg/library/BMx280MI/1.2.3/BMx280MI-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-christandlg/library/TSL2591MI/0.10.0/TSL2591MI-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSL2591MI-0.10.0.tar.gz",
+    "size_bytes": 16888,
+    "sha256": "39332e8d6923646fc924abfe15ea58b11602311d09d612c97c59467980e18f81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-christandlg/library/TSL2591MI/0.10.0/TSL2591MI-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-christandlg/library/TSL2591MI/0.10.0/TSL2591MI-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-christandlg/library/iAQ-CoreMI/0.0.2/iAQ-CoreMI-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iAQ-CoreMI-0.0.2.tar.gz",
+    "size_bytes": 3955,
+    "sha256": "77455c426ee318acf1a83823529f8444830035e165f94724f732bc440980cf11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-christandlg/library/iAQ-CoreMI/0.0.2/iAQ-CoreMI-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-christandlg/library/iAQ-CoreMI/0.0.2/iAQ-CoreMI-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

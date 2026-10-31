@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ghz2000",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ghz2000/library/libSeg14Display/0.0.0+sha.eb91996f0a20/libSeg14Display-0.0.0+sha.eb91996f0a20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libSeg14Display-0.0.0+sha.eb91996f0a20.tar.gz",
+    "size_bytes": 4615,
+    "sha256": "8bcd5998e36a046668a283ef5581d4ba19de6a93d4792fb3b1ba5bd2e80b58cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ghz2000/library/libSeg14Display/0.0.0%2Bsha.eb91996f0a20/libSeg14Display-0.0.0%2Bsha.eb91996f0a20.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ghz2000/library/libSeg14Display/0.0.0%2Bsha.eb91996f0a20/libSeg14Display-0.0.0%2Bsha.eb91996f0a20.tar.gz"
+    ]
+   }
+  }
+ ]
+}

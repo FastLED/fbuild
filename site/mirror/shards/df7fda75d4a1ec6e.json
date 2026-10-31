@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mrsoundhar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mrsoundhar/library/TARGET_LPC1768_N/0.0.0+sha.ae306d3f6076/TARGET_LPC1768_N-0.0.0+sha.ae306d3f6076.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TARGET_LPC1768_N-0.0.0+sha.ae306d3f6076.tar.gz",
+    "size_bytes": 404178,
+    "sha256": "918f668a947340b894bf34e3102de3fbf4156b5d6df0d3de271767ba4f91cb69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mrsoundhar/library/TARGET_LPC1768_N/0.0.0%2Bsha.ae306d3f6076/TARGET_LPC1768_N-0.0.0%2Bsha.ae306d3f6076.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mrsoundhar/library/TARGET_LPC1768_N/0.0.0%2Bsha.ae306d3f6076/TARGET_LPC1768_N-0.0.0%2Bsha.ae306d3f6076.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mrsoundhar/library/TARGET_LPC1768i2c/0.0.0+sha.559a8e4aab60/TARGET_LPC1768i2c-0.0.0+sha.559a8e4aab60.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TARGET_LPC1768i2c-0.0.0+sha.559a8e4aab60.tar.gz",
+    "size_bytes": 404194,
+    "sha256": "b9d651aec61b73465283687d8991e01177ed1bb8f526da2833cd58da2d49d49e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mrsoundhar/library/TARGET_LPC1768i2c/0.0.0%2Bsha.559a8e4aab60/TARGET_LPC1768i2c-0.0.0%2Bsha.559a8e4aab60.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mrsoundhar/library/TARGET_LPC1768i2c/0.0.0%2Bsha.559a8e4aab60/TARGET_LPC1768i2c-0.0.0%2Bsha.559a8e4aab60.tar.gz"
+    ]
+   }
+  }
+ ]
+}

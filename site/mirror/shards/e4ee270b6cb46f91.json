@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-escalator-home-automation",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-escalator-home-automation/library/DailyService/1.0.1/DailyService-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DailyService-1.0.1.tar.gz",
+    "size_bytes": 851037,
+    "sha256": "598b92046a71acfe9285bd23a1f24d9243db99226e9de7b35ee45abca2a003c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-escalator-home-automation/library/DailyService/1.0.1/DailyService-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-escalator-home-automation/library/DailyService/1.0.1/DailyService-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-escalator-home-automation/library/EscalatorSwitch/1.0.2/EscalatorSwitch-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EscalatorSwitch-1.0.2.tar.gz",
+    "size_bytes": 3995,
+    "sha256": "dffc2e7da9c88a46f6f34b2a010aefda488d9ac0c6093934d6334e8ad86824cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-escalator-home-automation/library/EscalatorSwitch/1.0.2/EscalatorSwitch-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-escalator-home-automation/library/EscalatorSwitch/1.0.2/EscalatorSwitch-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

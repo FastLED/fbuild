@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-karlrank",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-karlrank/library/ut-imu/0.0.0+sha.26fd768b952e/ut-imu-0.0.0+sha.26fd768b952e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ut-imu-0.0.0+sha.26fd768b952e.tar.gz",
+    "size_bytes": 1451,
+    "sha256": "8943d61874134b636726101ca407acb479774020cadb785b95a61c5e12b44c26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-karlrank/library/ut-imu/0.0.0%2Bsha.26fd768b952e/ut-imu-0.0.0%2Bsha.26fd768b952e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-karlrank/library/ut-imu/0.0.0%2Bsha.26fd768b952e/ut-imu-0.0.0%2Bsha.26fd768b952e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

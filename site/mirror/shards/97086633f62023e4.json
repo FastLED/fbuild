@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/falcons21",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "falcons21/library/Custom%20PID/1.0.0/CustomPID-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CustomPID-1.0.0.tar.gz",
+    "size_bytes": 3414,
+    "sha256": "4134da2b35b829df08d4bac5632c2cd12cc8e7fb585618a3ce30e5cf5a8d6e03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/falcons21/library/Custom%2520PID/1.0.0/CustomPID-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/falcons21/library/Custom%20PID/1.0.0/CustomPID-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "falcons21/library/FSerial/1.0.0/FSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FSerial-1.0.0.tar.gz",
+    "size_bytes": 2011,
+    "sha256": "15963027b9fe5b00bbbf98bb124fd37dd9277dffe5d478cb30bc0b3385736c7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/falcons21/library/FSerial/1.0.0/FSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/falcons21/library/FSerial/1.0.0/FSerial-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

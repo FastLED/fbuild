@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/davidepalladino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "davidepalladino/library/AnalogIO-Arduino/1.1.1/AnalogIO-Arduino-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogIO-Arduino-1.1.1.tar.gz",
+    "size_bytes": 20986,
+    "sha256": "dfdfe3b33005e1b3900f9febbee20a5e8b91478e3d90a30eca24509ead510fad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davidepalladino/library/AnalogIO-Arduino/1.1.1/AnalogIO-Arduino-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/davidepalladino/library/AnalogIO-Arduino/1.1.1/AnalogIO-Arduino-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "davidepalladino/library/Button-Arduino/1.2.0/Button-Arduino-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button-Arduino-1.2.0.tar.gz",
+    "size_bytes": 17562,
+    "sha256": "2144fda19d4902be96ae9e078c5d1f32a9eafe48c4af7da42d9ddb922abd2956",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davidepalladino/library/Button-Arduino/1.2.0/Button-Arduino-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/davidepalladino/library/Button-Arduino/1.2.0/Button-Arduino-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

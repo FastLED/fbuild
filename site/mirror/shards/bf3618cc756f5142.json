@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/techoverflow",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "techoverflow/library/ESP32_CAN_NG/1.0.0/ESP32_CAN_NG-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_CAN_NG-1.0.0.tar.gz",
+    "size_bytes": 21086,
+    "sha256": "5a2add7ec9baf590eaba7e9477935f2ba92308181b3327d5fe50527ecd251c68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/techoverflow/library/ESP32_CAN_NG/1.0.0/ESP32_CAN_NG-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/techoverflow/library/ESP32_CAN_NG/1.0.0/ESP32_CAN_NG-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

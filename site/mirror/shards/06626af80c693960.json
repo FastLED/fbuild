@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/burgerrelish",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "burgerrelish/library/PSRAM%20Containers/1.0.0/PSRAMContainers-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PSRAMContainers-1.0.0.tar.gz",
+    "size_bytes": 19431,
+    "sha256": "44c4c62aa2d6ac938e20b8ca680b4001120ada3ffcec8785c3cf6bd8a7097c7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/burgerrelish/library/PSRAM%2520Containers/1.0.0/PSRAMContainers-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/burgerrelish/library/PSRAM%20Containers/1.0.0/PSRAMContainers-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "burgerrelish/library/esp-brotli/1.0.1/esp-brotli-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-brotli-1.0.1.tar.gz",
+    "size_bytes": 526398,
+    "sha256": "d79aff839e279431869495191497c42f9c70ea9901f24d21e7d10d2ef8dcaae1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/burgerrelish/library/esp-brotli/1.0.1/esp-brotli-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/burgerrelish/library/esp-brotli/1.0.1/esp-brotli-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,2154 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mathieucarbou",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mathieucarbou/library/Async%20TCP/3.1.4/AsyncTCP-3.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-3.1.4.tar.gz",
+    "size_bytes": 15314,
+    "sha256": "995b73ff2d0c6d50df997d7082709264370e6b4390bfcb7184f0c46a38c115df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/Async%2520TCP/3.1.4/AsyncTCP-3.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/Async%20TCP/3.1.4/AsyncTCP-3.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/AsyncTCP/3.2.14/AsyncTCP-3.2.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-3.2.14.tar.gz",
+    "size_bytes": 16048,
+    "sha256": "e9d554d8916d252ac3a24c9e9cd14556410ca63bd632a723013467b3bbb2abf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/AsyncTCP/3.2.14/AsyncTCP-3.2.14.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/AsyncTCP/3.2.14/AsyncTCP-3.2.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/AsyncTCP/3.2.3/AsyncTCP-3.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-3.2.3.tar.gz",
+    "size_bytes": 15739,
+    "sha256": "772cea13d65ea697a63ac2a2d832187f7fb77117e4481b4a4d2c1c17ca412458",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/AsyncTCP/3.2.3/AsyncTCP-3.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/AsyncTCP/3.2.3/AsyncTCP-3.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/AsyncTCP/3.2.4/AsyncTCP-3.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-3.2.4.tar.gz",
+    "size_bytes": 15722,
+    "sha256": "d6fc4633312740893c13e7079ec0d6add5472f96fc9ea39181ee7816697a73ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/AsyncTCP/3.2.4/AsyncTCP-3.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/AsyncTCP/3.2.4/AsyncTCP-3.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/AsyncTCP/3.2.5/AsyncTCP-3.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-3.2.5.tar.gz",
+    "size_bytes": 15773,
+    "sha256": "a290d6c81d565332d0e9a791bc0c9b4b52307cd63a75c39757fa1eedcbd35316",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/AsyncTCP/3.2.5/AsyncTCP-3.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/AsyncTCP/3.2.5/AsyncTCP-3.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/AsyncTCP/3.3.1/AsyncTCP-3.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-3.3.1.tar.gz",
+    "size_bytes": 17587,
+    "sha256": "0440bb5ca4b6fb41af15129e3ae3398a8781cbcfa65b50b9ecf4a1c1c59db9b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/AsyncTCP/3.3.1/AsyncTCP-3.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/AsyncTCP/3.3.1/AsyncTCP-3.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/AsyncTCP/3.3.2/AsyncTCP-3.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-3.3.2.tar.gz",
+    "size_bytes": 17586,
+    "sha256": "2a462d2dbacb093fa7965d877a83dbfa4fa428827a258a73b1df9cc683395e5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/AsyncTCP/3.3.2/AsyncTCP-3.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/AsyncTCP/3.3.2/AsyncTCP-3.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/Dimmable%20Light%20for%20Arduino/2.0.1/DimmableLightforArduino-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DimmableLightforArduino-2.0.1.tar.gz",
+    "size_bytes": 39482,
+    "sha256": "436a9d418b33391814d63f7240312b6c692ec22bb0a1dbb2a01e25847d6a0880",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/Dimmable%2520Light%2520for%2520Arduino/2.0.1/DimmableLightforArduino-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/Dimmable%20Light%20for%20Arduino/2.0.1/DimmableLightforArduino-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESP%20Async%20WebServer/2.10.8/ESPAsyncWebServer-2.10.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-2.10.8.tar.gz",
+    "size_bytes": 52452,
+    "sha256": "985a287596c7739471c81957acffa3bdbf8598f06baa06da0cf3ed275d621b75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESP%2520Async%2520WebServer/2.10.8/ESPAsyncWebServer-2.10.8.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESP%20Async%20WebServer/2.10.8/ESPAsyncWebServer-2.10.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESP%20Async%20WebServer/2.7.0/ESPAsyncWebServer-2.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-2.7.0.tar.gz",
+    "size_bytes": 46294,
+    "sha256": "473347c527448885ba9391e0b102023befd0c3098ed3c69189f5a5156697609d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESP%2520Async%2520WebServer/2.7.0/ESPAsyncWebServer-2.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESP%20Async%20WebServer/2.7.0/ESPAsyncWebServer-2.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESP%20Async%20WebServer/3.0.6/ESPAsyncWebServer-3.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.0.6.tar.gz",
+    "size_bytes": 51812,
+    "sha256": "b9e86bd192dca2fffaf4cd8746ca1671a668b69ae39c1e6e62dcac38b243dfc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESP%2520Async%2520WebServer/3.0.6/ESPAsyncWebServer-3.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESP%20Async%20WebServer/3.0.6/ESPAsyncWebServer-3.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESPAsyncWebServer/3.1.0/ESPAsyncWebServer-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.1.0.tar.gz",
+    "size_bytes": 56139,
+    "sha256": "33c31cce6e9360f2803d1257c26e24f459126033a98df91513a23a7b8b9615a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESPAsyncWebServer/3.1.0/ESPAsyncWebServer-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESPAsyncWebServer/3.1.0/ESPAsyncWebServer-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESPAsyncWebServer/3.1.1/ESPAsyncWebServer-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.1.1.tar.gz",
+    "size_bytes": 55931,
+    "sha256": "e6e3d0892d42db3141b50a7a3551d5aeb6b2f80f94aae6aa60d0ec3703cc5622",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESPAsyncWebServer/3.1.1/ESPAsyncWebServer-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESPAsyncWebServer/3.1.1/ESPAsyncWebServer-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESPAsyncWebServer/3.1.2/ESPAsyncWebServer-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.1.2.tar.gz",
+    "size_bytes": 56940,
+    "sha256": "c7ddcbbbed004e0f61c534648e60cdd638ffff36ca0c7fef717df10fd35012e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESPAsyncWebServer/3.1.2/ESPAsyncWebServer-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESPAsyncWebServer/3.1.2/ESPAsyncWebServer-3.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESPAsyncWebServer/3.1.5/ESPAsyncWebServer-3.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.1.5.tar.gz",
+    "size_bytes": 57499,
+    "sha256": "56c3e6cb76451f07db9ae48fcfce3579d3ec9bfedc304f2239a8adc673053a7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESPAsyncWebServer/3.1.5/ESPAsyncWebServer-3.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESPAsyncWebServer/3.1.5/ESPAsyncWebServer-3.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESPAsyncWebServer/3.2.3/ESPAsyncWebServer-3.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.2.3.tar.gz",
+    "size_bytes": 58399,
+    "sha256": "a6f4c82c463568512c2f6b31d399ffc6a035bee518370dce02cb2627d494bbdf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESPAsyncWebServer/3.2.3/ESPAsyncWebServer-3.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESPAsyncWebServer/3.2.3/ESPAsyncWebServer-3.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESPAsyncWebServer/3.2.4/ESPAsyncWebServer-3.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.2.4.tar.gz",
+    "size_bytes": 58594,
+    "sha256": "bad307c816d1988f502995e5715f0d9e91a7e9b3b16f9c0bc8a3856ccb56bcfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESPAsyncWebServer/3.2.4/ESPAsyncWebServer-3.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESPAsyncWebServer/3.2.4/ESPAsyncWebServer-3.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESPAsyncWebServer/3.3.1/ESPAsyncWebServer-3.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.3.1.tar.gz",
+    "size_bytes": 63961,
+    "sha256": "abdc625472ce6d6d2756afb6f8b46e34720c38e5af993b3f6b80c657d71dc243",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESPAsyncWebServer/3.3.1/ESPAsyncWebServer-3.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESPAsyncWebServer/3.3.1/ESPAsyncWebServer-3.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESPAsyncWebServer/3.3.17/ESPAsyncWebServer-3.3.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.3.17.tar.gz",
+    "size_bytes": 82737,
+    "sha256": "7e7c1afcef75301b3b436b3a47926b4d2fdb87f1e696c2fe5d8b158622213a50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESPAsyncWebServer/3.3.17/ESPAsyncWebServer-3.3.17.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESPAsyncWebServer/3.3.17/ESPAsyncWebServer-3.3.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESPAsyncWebServer/3.3.18/ESPAsyncWebServer-3.3.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.3.18.tar.gz",
+    "size_bytes": 83415,
+    "sha256": "f4c7fd46effa19897f3f2ce1bb8576a7f101cb4aa5bbf32e93a555125827beeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESPAsyncWebServer/3.3.18/ESPAsyncWebServer-3.3.18.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESPAsyncWebServer/3.3.18/ESPAsyncWebServer-3.3.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESPAsyncWebServer/3.3.22/ESPAsyncWebServer-3.3.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.3.22.tar.gz",
+    "size_bytes": 82807,
+    "sha256": "69ff757bc0ff01dee20dbc6086f3935ef0d755056bfa711b9d29e11535c62be2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESPAsyncWebServer/3.3.22/ESPAsyncWebServer-3.3.22.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESPAsyncWebServer/3.3.22/ESPAsyncWebServer-3.3.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESPAsyncWebServer/3.3.23/ESPAsyncWebServer-3.3.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.3.23.tar.gz",
+    "size_bytes": 84940,
+    "sha256": "acd7a8bd49ea487bd87083a9b23ed5bd0d665e110c9640678213e3363e487f41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESPAsyncWebServer/3.3.23/ESPAsyncWebServer-3.3.23.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESPAsyncWebServer/3.3.23/ESPAsyncWebServer-3.3.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESPAsyncWebServer/3.3.7/ESPAsyncWebServer-3.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.3.7.tar.gz",
+    "size_bytes": 83014,
+    "sha256": "d4d20297a3ab9cf6fd652831453233358cb9c741de3ecaee70cd4cbbaacd9e0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESPAsyncWebServer/3.3.7/ESPAsyncWebServer-3.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESPAsyncWebServer/3.3.7/ESPAsyncWebServer-3.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESPAsyncWebServer/3.4.5/ESPAsyncWebServer-3.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.4.5.tar.gz",
+    "size_bytes": 90044,
+    "sha256": "9aea0255678ca6ae720ed53adefdc27c5c281b72248b512553ddf44325dbd361",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESPAsyncWebServer/3.4.5/ESPAsyncWebServer-3.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESPAsyncWebServer/3.4.5/ESPAsyncWebServer-3.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/ESPAsyncWebServer/3.6.0/ESPAsyncWebServer-3.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.6.0.tar.gz",
+    "size_bytes": 91194,
+    "sha256": "74fc683e3ae2240a3b327e4204db4ea92137a43cba9d6f2ee394cb2b99d31536",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/ESPAsyncWebServer/3.6.0/ESPAsyncWebServer-3.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/ESPAsyncWebServer/3.6.0/ESPAsyncWebServer-3.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/10.0.0/MycilaConfig-10.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-10.0.0.tar.gz",
+    "size_bytes": 17831,
+    "sha256": "faa63a62baf1916fb0440b71eea2dbf7e98a95b676e80f4bb72e37d2dcdfd99f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/10.0.0/MycilaConfig-10.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/10.0.0/MycilaConfig-10.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/11.0.0/MycilaConfig-11.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-11.0.0.tar.gz",
+    "size_bytes": 24220,
+    "sha256": "56de283a6b92476c9aac2e1060d4fe889da66f17208a0484ad69923d490c3806",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/11.0.0/MycilaConfig-11.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/11.0.0/MycilaConfig-11.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/11.0.1/MycilaConfig-11.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-11.0.1.tar.gz",
+    "size_bytes": 23897,
+    "sha256": "076354a6a88650995d792ed8b53b2f1d5d9c0a22ca1ef447e5f92557dbb0394f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/11.0.1/MycilaConfig-11.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/11.0.1/MycilaConfig-11.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/11.1.0/MycilaConfig-11.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-11.1.0.tar.gz",
+    "size_bytes": 25995,
+    "sha256": "7142ec9eb3804d33f294c23f3dc17109f861a605e28eadde04fb86cddd681352",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/11.1.0/MycilaConfig-11.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/11.1.0/MycilaConfig-11.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/11.2.0/MycilaConfig-11.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-11.2.0.tar.gz",
+    "size_bytes": 28686,
+    "sha256": "7e709135372be42179dcfefa133941938c4acf5a873852482945183137ec0915",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/11.2.0/MycilaConfig-11.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/11.2.0/MycilaConfig-11.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/11.3.0/MycilaConfig-11.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-11.3.0.tar.gz",
+    "size_bytes": 29769,
+    "sha256": "33223cb8e0516c5a1de42def582e7559c5017d888df8a8219b442dcfbef11ad4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/11.3.0/MycilaConfig-11.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/11.3.0/MycilaConfig-11.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/11.3.1/MycilaConfig-11.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-11.3.1.tar.gz",
+    "size_bytes": 31196,
+    "sha256": "b1e5bacdd9e4f4b6eb7e4d79b64a78dc7b494ad0c75a22865ae99799f7cb00c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/11.3.1/MycilaConfig-11.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/11.3.1/MycilaConfig-11.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/11.3.2/MycilaConfig-11.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-11.3.2.tar.gz",
+    "size_bytes": 31188,
+    "sha256": "1d17a78edeafb6048285775f67a531ed1c07520e50c099bbe99ca2fbaabd6fad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/11.3.2/MycilaConfig-11.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/11.3.2/MycilaConfig-11.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/11.3.3/MycilaConfig-11.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-11.3.3.tar.gz",
+    "size_bytes": 31380,
+    "sha256": "68014ccc1c10e6a9ed1d846e1d40589706e7f2ffeed9675696cdc06200786d5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/11.3.3/MycilaConfig-11.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/11.3.3/MycilaConfig-11.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/7.1.0/MycilaConfig-7.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-7.1.0.tar.gz",
+    "size_bytes": 6209,
+    "sha256": "59894b4a47e992e69e3a39a0addca38c9c915fee786e826ec3bfb556533808c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/7.1.0/MycilaConfig-7.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/7.1.0/MycilaConfig-7.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/7.2.0/MycilaConfig-7.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-7.2.0.tar.gz",
+    "size_bytes": 9550,
+    "sha256": "1d3f596f1e557cae18b7a2278d2a26a12ce41e98b876fc228a937c29fc0bb663",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/7.2.0/MycilaConfig-7.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/7.2.0/MycilaConfig-7.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/7.3.0/MycilaConfig-7.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-7.3.0.tar.gz",
+    "size_bytes": 9744,
+    "sha256": "2867b4e20cef3b6c123f539f26bb84a24f816603196739b6325053abcd5506ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/7.3.0/MycilaConfig-7.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/7.3.0/MycilaConfig-7.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/7.3.1/MycilaConfig-7.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-7.3.1.tar.gz",
+    "size_bytes": 9898,
+    "sha256": "d9f2031bb141913b78c4d14064592c5365114217203abe3f29dc6713cc30d883",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/7.3.1/MycilaConfig-7.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/7.3.1/MycilaConfig-7.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/8.0.0/MycilaConfig-8.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-8.0.0.tar.gz",
+    "size_bytes": 9758,
+    "sha256": "7466652bc28dd46e546ccba2f92cd716545336655c44e184524531d60b1372aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/8.0.0/MycilaConfig-8.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/8.0.0/MycilaConfig-8.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/8.0.1/MycilaConfig-8.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-8.0.1.tar.gz",
+    "size_bytes": 9688,
+    "sha256": "7e455caba6d0388229824ccf8675b0396e4f2e39c0d2e441344364c47ceab9d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/8.0.1/MycilaConfig-8.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/8.0.1/MycilaConfig-8.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/8.0.2/MycilaConfig-8.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-8.0.2.tar.gz",
+    "size_bytes": 9686,
+    "sha256": "9b9bd8d092fe3e29a909696362b4cbd2ea548f5c53bdef4de7662b3039d91935",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/8.0.2/MycilaConfig-8.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/8.0.2/MycilaConfig-8.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/9.0.0/MycilaConfig-9.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-9.0.0.tar.gz",
+    "size_bytes": 10935,
+    "sha256": "63b8ffaedf5b2614f2d37bd0786fc72f701df9fcf359b9c78adb2750e4c9a7c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/9.0.0/MycilaConfig-9.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/9.0.0/MycilaConfig-9.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/9.0.1/MycilaConfig-9.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-9.0.1.tar.gz",
+    "size_bytes": 11253,
+    "sha256": "74630240dfbb8c17d04bbafe2eb83f484e71e9ba980a222ab6b79fbabe320552",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/9.0.1/MycilaConfig-9.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/9.0.1/MycilaConfig-9.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/9.0.2/MycilaConfig-9.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-9.0.2.tar.gz",
+    "size_bytes": 11456,
+    "sha256": "b446e201a0cf84e3c32c5d61af6b7be76567521b2b6b7b9b3fb4bba2316e3c02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/9.0.2/MycilaConfig-9.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/9.0.2/MycilaConfig-9.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaConfig/9.0.3/MycilaConfig-9.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaConfig-9.0.3.tar.gz",
+    "size_bytes": 11472,
+    "sha256": "a9622815ba9b9ada6ec87f10abbe0f794a5e11b16a812ebdbe2f1beb130279b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaConfig/9.0.3/MycilaConfig-9.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaConfig/9.0.3/MycilaConfig-9.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDS18/5.0.1/MycilaDS18-5.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDS18-5.0.1.tar.gz",
+    "size_bytes": 8718,
+    "sha256": "5b0070ca12e967b0512f2f190dab8895d0df2c02f5ab98e1aa93a9988b9f2c96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDS18/5.0.1/MycilaDS18-5.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDS18/5.0.1/MycilaDS18-5.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDS18/5.1.0/MycilaDS18-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDS18-5.1.0.tar.gz",
+    "size_bytes": 11033,
+    "sha256": "37428c058871f49d2850d193af86a0db95bff174f495eee2be08a3c8949834b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDS18/5.1.0/MycilaDS18-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDS18/5.1.0/MycilaDS18-5.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDS18/5.1.1/MycilaDS18-5.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDS18-5.1.1.tar.gz",
+    "size_bytes": 11063,
+    "sha256": "c8f6f9501f4fc620ae679d30db504f80cef2f00f7bc995c0d1ea29538477381f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDS18/5.1.1/MycilaDS18-5.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDS18/5.1.1/MycilaDS18-5.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDS18/5.2.1/MycilaDS18-5.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDS18-5.2.1.tar.gz",
+    "size_bytes": 11293,
+    "sha256": "d6dc2b2eace5b8cd75d3352a77251bbcebb05357a3094164d8573f06c4bb3f77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDS18/5.2.1/MycilaDS18-5.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDS18/5.2.1/MycilaDS18-5.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/1.0.0/MycilaDimmer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-1.0.0.tar.gz",
+    "size_bytes": 18550,
+    "sha256": "2837e388d533d0e8ae5e2838cb7f265ff80eb53d288bc7ea0fa732406d146f14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/1.0.0/MycilaDimmer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/1.0.0/MycilaDimmer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/1.0.1/MycilaDimmer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-1.0.1.tar.gz",
+    "size_bytes": 19375,
+    "sha256": "022a59adad09618993fdfcd18ed210c7438029a9c7eefac2515e48e62bdcf7e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/1.0.1/MycilaDimmer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/1.0.1/MycilaDimmer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/1.0.2/MycilaDimmer-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-1.0.2.tar.gz",
+    "size_bytes": 25799,
+    "sha256": "3d13df9ae6286967a9be0d84635360b4378b7fa6f0793e5e873c317a28bd8c15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/1.0.2/MycilaDimmer-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/1.0.2/MycilaDimmer-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/1.1.0/MycilaDimmer-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-1.1.0.tar.gz",
+    "size_bytes": 27811,
+    "sha256": "4b52c6a478bfc0c01f67b311e477414632c0a990592ed72c8caee5f6a388dc43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/1.1.0/MycilaDimmer-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/1.1.0/MycilaDimmer-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/1.1.1/MycilaDimmer-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-1.1.1.tar.gz",
+    "size_bytes": 27732,
+    "sha256": "80fcc07f30ed408d0191eb9f57a6fa50bf2fb67b265eb03c420dc39f92525c6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/1.1.1/MycilaDimmer-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/1.1.1/MycilaDimmer-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/1.1.2/MycilaDimmer-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-1.1.2.tar.gz",
+    "size_bytes": 27818,
+    "sha256": "1711e42d7701b5030bfe891074d39b24a1a53cb00238177fd6bcd67fdcccedba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/1.1.2/MycilaDimmer-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/1.1.2/MycilaDimmer-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/2.0.0/MycilaDimmer-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-2.0.0.tar.gz",
+    "size_bytes": 32472,
+    "sha256": "cb2d40eb03ed9f28981358baa04544423e8d5594e6e987bcd1a1185071562222",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/2.0.0/MycilaDimmer-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/2.0.0/MycilaDimmer-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/2.0.1/MycilaDimmer-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-2.0.1.tar.gz",
+    "size_bytes": 32495,
+    "sha256": "7576830f7f99ee041a9b9dcbb725f740f1177460e346499a270ec6e12d96a34c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/2.0.1/MycilaDimmer-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/2.0.1/MycilaDimmer-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/2.0.2/MycilaDimmer-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-2.0.2.tar.gz",
+    "size_bytes": 32503,
+    "sha256": "4591a8fafa8360464a2893925146cc77cd39da630dc46d17ca6336c56bdb735a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/2.0.2/MycilaDimmer-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/2.0.2/MycilaDimmer-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/2.1.0/MycilaDimmer-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-2.1.0.tar.gz",
+    "size_bytes": 33321,
+    "sha256": "a399e0f0378f31630e0ff3ae1afaeae2a53197bb42cbcafefef810585d1878d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/2.1.0/MycilaDimmer-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/2.1.0/MycilaDimmer-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/2.1.1/MycilaDimmer-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-2.1.1.tar.gz",
+    "size_bytes": 33730,
+    "sha256": "4ab6b25120eb836667d4993791434c4fc38d19e04cd57c24301518d8885aeabf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/2.1.1/MycilaDimmer-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/2.1.1/MycilaDimmer-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/2.2.0/MycilaDimmer-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-2.2.0.tar.gz",
+    "size_bytes": 34128,
+    "sha256": "75c6285b0d5b79e8f55fdcf69ae0dd447952846509162f7980b59649a6956b60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/2.2.0/MycilaDimmer-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/2.2.0/MycilaDimmer-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/2.2.1/MycilaDimmer-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-2.2.1.tar.gz",
+    "size_bytes": 34005,
+    "sha256": "48f1e4fe907f996bb3cd79c053813eb56203a029411942433ac1374f9e28fe36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/2.2.1/MycilaDimmer-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/2.2.1/MycilaDimmer-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/2.2.2/MycilaDimmer-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-2.2.2.tar.gz",
+    "size_bytes": 34260,
+    "sha256": "d8a36e56e9bf639b374985ecb68de782adb100698d65935fdf1e675155c6cfb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/2.2.2/MycilaDimmer-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/2.2.2/MycilaDimmer-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/2.2.3/MycilaDimmer-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-2.2.3.tar.gz",
+    "size_bytes": 34317,
+    "sha256": "c41dfdeb97be4dc66fd46f774ebde64ea38d72664d05a935f476e9563e9febea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/2.2.3/MycilaDimmer-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/2.2.3/MycilaDimmer-2.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/2.2.4/MycilaDimmer-2.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-2.2.4.tar.gz",
+    "size_bytes": 34263,
+    "sha256": "f772d2c14c94d2745a29862b15293a160b6de33a37c3546a51ca81a7d47e3316",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/2.2.4/MycilaDimmer-2.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/2.2.4/MycilaDimmer-2.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/2.2.5/MycilaDimmer-2.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-2.2.5.tar.gz",
+    "size_bytes": 36773,
+    "sha256": "e9839e3b2f6cd11c8284083ef161b60cdd525dae23776b34b28d1096dd7530cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/2.2.5/MycilaDimmer-2.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/2.2.5/MycilaDimmer-2.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/2.2.6/MycilaDimmer-2.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-2.2.6.tar.gz",
+    "size_bytes": 37000,
+    "sha256": "98faebb1ec24d9ff1a23426b5d6239860a98c0f4ca43e472a28f2370212ceb18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/2.2.6/MycilaDimmer-2.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/2.2.6/MycilaDimmer-2.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/2.2.7/MycilaDimmer-2.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-2.2.7.tar.gz",
+    "size_bytes": 37520,
+    "sha256": "9a972f9c52e9e6f600c07c189da092fc1731c2131253be6b974deb0c6e7b533c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/2.2.7/MycilaDimmer-2.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/2.2.7/MycilaDimmer-2.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/2.3.0/MycilaDimmer-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-2.3.0.tar.gz",
+    "size_bytes": 36636,
+    "sha256": "0cbaca5f01a79c8d7e4244e6af6656189df780f7b82bd6a14c7eee9fcf352af3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/2.3.0/MycilaDimmer-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/2.3.0/MycilaDimmer-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/3.0.0/MycilaDimmer-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-3.0.0.tar.gz",
+    "size_bytes": 30654,
+    "sha256": "080238313c976c3663ccf9ee9599d9fe9b3ef622ce05231e13f98676e7acd898",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/3.0.0/MycilaDimmer-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/3.0.0/MycilaDimmer-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaDimmer/3.0.1/MycilaDimmer-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaDimmer-3.0.1.tar.gz",
+    "size_bytes": 30645,
+    "sha256": "946fb24a157e83a101de58e98438c4697537d9ec71c5600fcc9db45cd8657aea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaDimmer/3.0.1/MycilaDimmer-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaDimmer/3.0.1/MycilaDimmer-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaESPConnect/10.3.0/MycilaESPConnect-10.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaESPConnect-10.3.0.tar.gz",
+    "size_bytes": 35074,
+    "sha256": "c61c0673d959e42b58861867e027bef8d6153acbc17b120d8382ebd7c0f4e0c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaESPConnect/10.3.0/MycilaESPConnect-10.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaESPConnect/10.3.0/MycilaESPConnect-10.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaESPConnect/10.3.1/MycilaESPConnect-10.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaESPConnect-10.3.1.tar.gz",
+    "size_bytes": 35062,
+    "sha256": "a6b2092304ad7a6ebf2a387ead9e38ece8f00ae1064b782a45d69eec94a783cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaESPConnect/10.3.1/MycilaESPConnect-10.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaESPConnect/10.3.1/MycilaESPConnect-10.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaESPConnect/10.3.2/MycilaESPConnect-10.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaESPConnect-10.3.2.tar.gz",
+    "size_bytes": 35047,
+    "sha256": "484b201df0d4159177148094645b2a96d7f19820432e80d3cdbc2cee7c8c83fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaESPConnect/10.3.2/MycilaESPConnect-10.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaESPConnect/10.3.2/MycilaESPConnect-10.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaESPConnect/10.3.3/MycilaESPConnect-10.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaESPConnect-10.3.3.tar.gz",
+    "size_bytes": 35086,
+    "sha256": "2f572d38cdbacb9f73c8c340b6d9c349ea51dfd49d5b834ced3b9d438a4d4c0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaESPConnect/10.3.3/MycilaESPConnect-10.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaESPConnect/10.3.3/MycilaESPConnect-10.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaESPConnect/10.3.4/MycilaESPConnect-10.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaESPConnect-10.3.4.tar.gz",
+    "size_bytes": 35249,
+    "sha256": "1dd357393b6a68cb4f834d61035071061d843c75f16ed6117d7dba8100515d60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaESPConnect/10.3.4/MycilaESPConnect-10.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaESPConnect/10.3.4/MycilaESPConnect-10.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaESPConnect/10.4.0/MycilaESPConnect-10.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaESPConnect-10.4.0.tar.gz",
+    "size_bytes": 36751,
+    "sha256": "7303e6234ef5294e0b823eeb4aed14a44b82bdda75ca631c07ffa9502d08dc1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaESPConnect/10.4.0/MycilaESPConnect-10.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaESPConnect/10.4.0/MycilaESPConnect-10.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaESPConnect/10.4.1/MycilaESPConnect-10.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaESPConnect-10.4.1.tar.gz",
+    "size_bytes": 36741,
+    "sha256": "e345cb81e186d769e1b6e2a31c76e9335dea4c373a49f52fe4d0c798f2a50b33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaESPConnect/10.4.1/MycilaESPConnect-10.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaESPConnect/10.4.1/MycilaESPConnect-10.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaESPConnect/10.5.0/MycilaESPConnect-10.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaESPConnect-10.5.0.tar.gz",
+    "size_bytes": 36755,
+    "sha256": "73081e23c4e1e219e5545537a2cc114681c1fcbba17201ba5ba3d550f1ba2fc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaESPConnect/10.5.0/MycilaESPConnect-10.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaESPConnect/10.5.0/MycilaESPConnect-10.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaESPConnect/10.5.1/MycilaESPConnect-10.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaESPConnect-10.5.1.tar.gz",
+    "size_bytes": 36771,
+    "sha256": "592b8be2c497505e04e72aa47acc76a81541a04da239cb436c446bb05432d89d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaESPConnect/10.5.1/MycilaESPConnect-10.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaESPConnect/10.5.1/MycilaESPConnect-10.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaESPConnect/10.6.0/MycilaESPConnect-10.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaESPConnect-10.6.0.tar.gz",
+    "size_bytes": 37843,
+    "sha256": "4128116e38d7ef28193a822229c9bc3f042033680114ca668a406da35012cb8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaESPConnect/10.6.0/MycilaESPConnect-10.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaESPConnect/10.6.0/MycilaESPConnect-10.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaESPConnect/10.6.1/MycilaESPConnect-10.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaESPConnect-10.6.1.tar.gz",
+    "size_bytes": 41152,
+    "sha256": "647405abd849345d5257e59c60ab8efd5ee2ef37951479605d7e9c7903897947",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaESPConnect/10.6.1/MycilaESPConnect-10.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaESPConnect/10.6.1/MycilaESPConnect-10.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaESPConnect/10.6.2/MycilaESPConnect-10.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaESPConnect-10.6.2.tar.gz",
+    "size_bytes": 41124,
+    "sha256": "9c49e0a5c5c83a94062154f650027c11bbd9535568de454e6a72092478cf5777",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaESPConnect/10.6.2/MycilaESPConnect-10.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaESPConnect/10.6.2/MycilaESPConnect-10.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaESPConnect/10.6.3/MycilaESPConnect-10.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaESPConnect-10.6.3.tar.gz",
+    "size_bytes": 42626,
+    "sha256": "7b56269db22391d85345b679a9db360c18b13c52660933fb2a47302242f814b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaESPConnect/10.6.3/MycilaESPConnect-10.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaESPConnect/10.6.3/MycilaESPConnect-10.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaEasyDisplay/3.1.1/MycilaEasyDisplay-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaEasyDisplay-3.1.1.tar.gz",
+    "size_bytes": 7086,
+    "sha256": "dd8080372d845dead650506ba1c2421b966246a3d4a70bc67e952f828580bbd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaEasyDisplay/3.1.1/MycilaEasyDisplay-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaEasyDisplay/3.1.1/MycilaEasyDisplay-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaHADiscovery/6.1.0/MycilaHADiscovery-6.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaHADiscovery-6.1.0.tar.gz",
+    "size_bytes": 6783,
+    "sha256": "1b7e88cb407f98470dcc9d0492d76459b754fb0ff79a2f7298d1e6249a82b81b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaHADiscovery/6.1.0/MycilaHADiscovery-6.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaHADiscovery/6.1.0/MycilaHADiscovery-6.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaHADiscovery/6.2.0/MycilaHADiscovery-6.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaHADiscovery-6.2.0.tar.gz",
+    "size_bytes": 6780,
+    "sha256": "12fc645c7beda3599bcb348fb996eae091f07bb176bad73fabfb300299245b9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaHADiscovery/6.2.0/MycilaHADiscovery-6.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaHADiscovery/6.2.0/MycilaHADiscovery-6.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaHADiscovery/6.2.1/MycilaHADiscovery-6.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaHADiscovery-6.2.1.tar.gz",
+    "size_bytes": 6668,
+    "sha256": "e921149354824c03b325401283a0477a292c2fd15b5d3af5ad9e92352de0d840",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaHADiscovery/6.2.1/MycilaHADiscovery-6.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaHADiscovery/6.2.1/MycilaHADiscovery-6.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaHADiscovery/6.3.0/MycilaHADiscovery-6.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaHADiscovery-6.3.0.tar.gz",
+    "size_bytes": 6628,
+    "sha256": "2758ffbbc6b9081606dcb340d3581c4148914e3770eb8dd6864db145f43a580e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaHADiscovery/6.3.0/MycilaHADiscovery-6.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaHADiscovery/6.3.0/MycilaHADiscovery-6.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaHADiscovery/7.0.0/MycilaHADiscovery-7.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaHADiscovery-7.0.0.tar.gz",
+    "size_bytes": 6857,
+    "sha256": "59f9146a8354f4cf64dd0af6f0fe0eac0912bc09371eaeff9016020274d3d83e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaHADiscovery/7.0.0/MycilaHADiscovery-7.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaHADiscovery/7.0.0/MycilaHADiscovery-7.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaHADiscovery/7.0.1/MycilaHADiscovery-7.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaHADiscovery-7.0.1.tar.gz",
+    "size_bytes": 6870,
+    "sha256": "834d6d272836bf4f77936ae559f3dfec17df08736b873168eeb66bf2b80b6e4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaHADiscovery/7.0.1/MycilaHADiscovery-7.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaHADiscovery/7.0.1/MycilaHADiscovery-7.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaHADiscovery/7.1.0/MycilaHADiscovery-7.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaHADiscovery-7.1.0.tar.gz",
+    "size_bytes": 7246,
+    "sha256": "df608715d5302aa7f4c1ec895ae1a5aa773c839f1f2c891544c731f00256f15c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaHADiscovery/7.1.0/MycilaHADiscovery-7.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaHADiscovery/7.1.0/MycilaHADiscovery-7.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaHADiscovery/7.2.0/MycilaHADiscovery-7.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaHADiscovery-7.2.0.tar.gz",
+    "size_bytes": 7322,
+    "sha256": "e3de006ce02fc5876576abe46ae6e18cce93a6183146fe1eb11b05966a202f83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaHADiscovery/7.2.0/MycilaHADiscovery-7.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaHADiscovery/7.2.0/MycilaHADiscovery-7.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaJSY/15.3.10/MycilaJSY-15.3.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaJSY-15.3.10.tar.gz",
+    "size_bytes": 29540,
+    "sha256": "f4adc7392b4a2449b43c13b06b6e667caaefeaaf697c26ac08c1cbbb57a18750",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaJSY/15.3.10/MycilaJSY-15.3.10.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaJSY/15.3.10/MycilaJSY-15.3.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaJSY/15.3.11/MycilaJSY-15.3.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaJSY-15.3.11.tar.gz",
+    "size_bytes": 29427,
+    "sha256": "971f82b452c7915ac537ceaf7d7a796f7daf306bfe726af957a06e02ed8a88e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaJSY/15.3.11/MycilaJSY-15.3.11.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaJSY/15.3.11/MycilaJSY-15.3.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaJSY/15.3.4/MycilaJSY-15.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaJSY-15.3.4.tar.gz",
+    "size_bytes": 70654,
+    "sha256": "19e295b9e18b5660c00c2e544e78d11564dc34d812fec1a02567e87401f7585a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaJSY/15.3.4/MycilaJSY-15.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaJSY/15.3.4/MycilaJSY-15.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaJSY/15.3.5/MycilaJSY-15.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaJSY-15.3.5.tar.gz",
+    "size_bytes": 70677,
+    "sha256": "67a7c93bfb9d840efd19a9bb5ab175e6500cc9a12d4ef66f5d1400425da1b25a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaJSY/15.3.5/MycilaJSY-15.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaJSY/15.3.5/MycilaJSY-15.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaJSY/15.3.6/MycilaJSY-15.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaJSY-15.3.6.tar.gz",
+    "size_bytes": 70667,
+    "sha256": "dd86b6db71e222a3292e2aac72052e929dd8e740c080f0afdf52e6a736aae6f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaJSY/15.3.6/MycilaJSY-15.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaJSY/15.3.6/MycilaJSY-15.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaJSY/15.3.7/MycilaJSY-15.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaJSY-15.3.7.tar.gz",
+    "size_bytes": 70667,
+    "sha256": "a47b62b6c002ab91c0a69337cbf01bf24bc0ec6286be63b6087e006eeceb6e6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaJSY/15.3.7/MycilaJSY-15.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaJSY/15.3.7/MycilaJSY-15.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaJSY/15.3.8/MycilaJSY-15.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaJSY-15.3.8.tar.gz",
+    "size_bytes": 29198,
+    "sha256": "c967ed4bddb59e4bb106142eb377ef7bc7ad756615147426400702a2bdf109bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaJSY/15.3.8/MycilaJSY-15.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaJSY/15.3.8/MycilaJSY-15.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaJSY/15.3.9/MycilaJSY-15.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaJSY-15.3.9.tar.gz",
+    "size_bytes": 29506,
+    "sha256": "402d1949ee9690457d6851344e50846e715b2425dae03ba4e63282465524cb00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaJSY/15.3.9/MycilaJSY-15.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaJSY/15.3.9/MycilaJSY-15.3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaLogger/3.3.0/MycilaLogger-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaLogger-3.3.0.tar.gz",
+    "size_bytes": 4193,
+    "sha256": "e663c1558b8a796376b637a930a5b38c5f761a424f1e58a99138f124defef724",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaLogger/3.3.0/MycilaLogger-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaLogger/3.3.0/MycilaLogger-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaMQTT/6.0.7/MycilaMQTT-6.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaMQTT-6.0.7.tar.gz",
+    "size_bytes": 9426,
+    "sha256": "8b4e145dcb81e1e5d68679a7b65bad4244e1b83d46660f501359fea70a6dd42d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaMQTT/6.0.7/MycilaMQTT-6.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaMQTT/6.0.7/MycilaMQTT-6.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaMQTT/6.1.0/MycilaMQTT-6.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaMQTT-6.1.0.tar.gz",
+    "size_bytes": 10971,
+    "sha256": "deb542c7460fc6276b01814969a7c886715d5ffc1ae3dd5894b937054f3a6a1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaMQTT/6.1.0/MycilaMQTT-6.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaMQTT/6.1.0/MycilaMQTT-6.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaMQTT/6.1.1/MycilaMQTT-6.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaMQTT-6.1.1.tar.gz",
+    "size_bytes": 11029,
+    "sha256": "8c21976651d4700cf82c352862693bbc670f953514bc44f04bdfe9ea04bad2bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaMQTT/6.1.1/MycilaMQTT-6.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaMQTT/6.1.1/MycilaMQTT-6.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaMQTT/6.1.2/MycilaMQTT-6.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaMQTT-6.1.2.tar.gz",
+    "size_bytes": 14133,
+    "sha256": "1c059d76f371cc095f5a7c5f59f7eb22e5a52bfa5ff0ab8b6337ecca91e88b6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaMQTT/6.1.2/MycilaMQTT-6.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaMQTT/6.1.2/MycilaMQTT-6.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaMQTT/6.1.3/MycilaMQTT-6.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaMQTT-6.1.3.tar.gz",
+    "size_bytes": 14139,
+    "sha256": "8937568b2823efdf1ed97efc8a2755ac1841a84408d55828d2314e19e956489b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaMQTT/6.1.3/MycilaMQTT-6.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaMQTT/6.1.3/MycilaMQTT-6.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaNTP/6.0.5/MycilaNTP-6.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaNTP-6.0.5.tar.gz",
+    "size_bytes": 8872,
+    "sha256": "725444a12a9797781e575cd832785538ca41e1ac2c29e4658f6c9cf1238accfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaNTP/6.0.5/MycilaNTP-6.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaNTP/6.0.5/MycilaNTP-6.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaNTP/6.0.6/MycilaNTP-6.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaNTP-6.0.6.tar.gz",
+    "size_bytes": 8675,
+    "sha256": "a4f86081197910a2760e9e2f5a57c0542b0a2ae8c7c24204d2bcb828fe2aae4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaNTP/6.0.6/MycilaNTP-6.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaNTP/6.0.6/MycilaNTP-6.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPZEM/8.0.0/MycilaPZEM-8.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPZEM-8.0.0.tar.gz",
+    "size_bytes": 15670,
+    "sha256": "bb0d5d08e37cf913846535ada4149795e77c6abfb06df10a6c0778bbd87474e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPZEM/8.0.0/MycilaPZEM-8.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPZEM/8.0.0/MycilaPZEM-8.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPZEM/8.0.1/MycilaPZEM-8.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPZEM-8.0.1.tar.gz",
+    "size_bytes": 17429,
+    "sha256": "858dcaef969c2f9f0bad38be4feb4db474173189e41b65a3acb0bf7e8e45345b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPZEM/8.0.1/MycilaPZEM-8.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPZEM/8.0.1/MycilaPZEM-8.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPZEM/8.0.2/MycilaPZEM-8.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPZEM-8.0.2.tar.gz",
+    "size_bytes": 17453,
+    "sha256": "146704e5701b1820bf66819dcdd6ef8b753e992d773a376a75b3625133e22c8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPZEM/8.0.2/MycilaPZEM-8.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPZEM/8.0.2/MycilaPZEM-8.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPZEM/8.0.3/MycilaPZEM-8.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPZEM-8.0.3.tar.gz",
+    "size_bytes": 17462,
+    "sha256": "7f3b00b17959eae2c693608d8771392859bc56c0f71ae7cb0bb451a9709f92d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPZEM/8.0.3/MycilaPZEM-8.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPZEM/8.0.3/MycilaPZEM-8.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPZEM/8.0.4/MycilaPZEM-8.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPZEM-8.0.4.tar.gz",
+    "size_bytes": 18633,
+    "sha256": "764bc9520ec77e958d0981719f21c46cf40f0cb116fe219e3f99033545885d7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPZEM/8.0.4/MycilaPZEM-8.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPZEM/8.0.4/MycilaPZEM-8.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPZEM/8.0.5/MycilaPZEM-8.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPZEM-8.0.5.tar.gz",
+    "size_bytes": 18868,
+    "sha256": "8f6814911132589cea016a3c6fb0bca77267bf8e1504509a4921b7211983bf4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPZEM/8.0.5/MycilaPZEM-8.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPZEM/8.0.5/MycilaPZEM-8.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPZEM004Tv3/7.0.1/MycilaPZEM004Tv3-7.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPZEM004Tv3-7.0.1.tar.gz",
+    "size_bytes": 15659,
+    "sha256": "dcd85d0716ef18e1c5f6196df338ea4057b8357936201625bb5e1ecdab4a1dea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPZEM004Tv3/7.0.1/MycilaPZEM004Tv3-7.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPZEM004Tv3/7.0.1/MycilaPZEM004Tv3-7.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPZEM004Tv3/7.0.2/MycilaPZEM004Tv3-7.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPZEM004Tv3-7.0.2.tar.gz",
+    "size_bytes": 15784,
+    "sha256": "f61d9299ecfb6386f7f6d7484270417b92e8c7644e4e12d3e54e0cdf91309efe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPZEM004Tv3/7.0.2/MycilaPZEM004Tv3-7.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPZEM004Tv3/7.0.2/MycilaPZEM004Tv3-7.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPulseAnalyzer/3.0.10/MycilaPulseAnalyzer-3.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPulseAnalyzer-3.0.10.tar.gz",
+    "size_bytes": 13859,
+    "sha256": "12f1f8e282d3f9bccddb25d8875713aa20feb9b4fe61d374f0a8a95cd057a478",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPulseAnalyzer/3.0.10/MycilaPulseAnalyzer-3.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPulseAnalyzer/3.0.10/MycilaPulseAnalyzer-3.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPulseAnalyzer/3.0.11/MycilaPulseAnalyzer-3.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPulseAnalyzer-3.0.11.tar.gz",
+    "size_bytes": 13761,
+    "sha256": "2aa0114d54f9aa0f10f646c7658087f0a8511c5891aee15d9c680af41486fb74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPulseAnalyzer/3.0.11/MycilaPulseAnalyzer-3.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPulseAnalyzer/3.0.11/MycilaPulseAnalyzer-3.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPulseAnalyzer/3.0.2/MycilaPulseAnalyzer-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPulseAnalyzer-3.0.2.tar.gz",
+    "size_bytes": 14293,
+    "sha256": "badedd04727510db7d962d964accd5d136b9a1f81941d01f7e8075623726e815",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPulseAnalyzer/3.0.2/MycilaPulseAnalyzer-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPulseAnalyzer/3.0.2/MycilaPulseAnalyzer-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPulseAnalyzer/3.0.3/MycilaPulseAnalyzer-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPulseAnalyzer-3.0.3.tar.gz",
+    "size_bytes": 14327,
+    "sha256": "6c03e8114ea80ab3422774b52550feb6a0322a79f197a9f5b5904aa3de8ab828",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPulseAnalyzer/3.0.3/MycilaPulseAnalyzer-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPulseAnalyzer/3.0.3/MycilaPulseAnalyzer-3.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPulseAnalyzer/3.0.4/MycilaPulseAnalyzer-3.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPulseAnalyzer-3.0.4.tar.gz",
+    "size_bytes": 14357,
+    "sha256": "96d5b0bf261bda2efd14a137b015b6aa54db86a10d18cfd233f23c5a8aeffa20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPulseAnalyzer/3.0.4/MycilaPulseAnalyzer-3.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPulseAnalyzer/3.0.4/MycilaPulseAnalyzer-3.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPulseAnalyzer/3.0.5/MycilaPulseAnalyzer-3.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPulseAnalyzer-3.0.5.tar.gz",
+    "size_bytes": 14421,
+    "sha256": "63784b29e3f489a8f4741b177e8b27bfa9ad8abc76bf8cb3c5c943c249c135b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPulseAnalyzer/3.0.5/MycilaPulseAnalyzer-3.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPulseAnalyzer/3.0.5/MycilaPulseAnalyzer-3.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPulseAnalyzer/3.0.6/MycilaPulseAnalyzer-3.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPulseAnalyzer-3.0.6.tar.gz",
+    "size_bytes": 14388,
+    "sha256": "8cacd101113bfa10c7a921b0d8040d36ca6e2f763027f1f895cd5cb4e75947c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPulseAnalyzer/3.0.6/MycilaPulseAnalyzer-3.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPulseAnalyzer/3.0.6/MycilaPulseAnalyzer-3.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPulseAnalyzer/3.0.7/MycilaPulseAnalyzer-3.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPulseAnalyzer-3.0.7.tar.gz",
+    "size_bytes": 13948,
+    "sha256": "c1da52b526d67dab997186ba34d1de5bff896adfe31dafae67177c2828b4327a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPulseAnalyzer/3.0.7/MycilaPulseAnalyzer-3.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPulseAnalyzer/3.0.7/MycilaPulseAnalyzer-3.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPulseAnalyzer/3.0.8/MycilaPulseAnalyzer-3.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPulseAnalyzer-3.0.8.tar.gz",
+    "size_bytes": 13950,
+    "sha256": "c873ea6dd8032cc0c3ad00136026c90d326d3e3d567ef65ad2657560a301456d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPulseAnalyzer/3.0.8/MycilaPulseAnalyzer-3.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPulseAnalyzer/3.0.8/MycilaPulseAnalyzer-3.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaPulseAnalyzer/3.0.9/MycilaPulseAnalyzer-3.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaPulseAnalyzer-3.0.9.tar.gz",
+    "size_bytes": 13963,
+    "sha256": "fa02d43c19f71bc1d6c8dc732d477e6280572c472b065980f0315ca2fa011ded",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaPulseAnalyzer/3.0.9/MycilaPulseAnalyzer-3.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaPulseAnalyzer/3.0.9/MycilaPulseAnalyzer-3.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaRelay/4.0.2/MycilaRelay-4.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaRelay-4.0.2.tar.gz",
+    "size_bytes": 4414,
+    "sha256": "62a4c7e77609dcf27d5106abb55f32562dd44ec62dcc0bedc5148754278540b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaRelay/4.0.2/MycilaRelay-4.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaRelay/4.0.2/MycilaRelay-4.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaSystem/4.1.0/MycilaSystem-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaSystem-4.1.0.tar.gz",
+    "size_bytes": 5623,
+    "sha256": "53d4f0cf633d3383a398040c9e5786ef70adab1943b90c6bac6e8a5ab09365e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaSystem/4.1.0/MycilaSystem-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaSystem/4.1.0/MycilaSystem-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaSystem/4.1.1/MycilaSystem-4.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaSystem-4.1.1.tar.gz",
+    "size_bytes": 5605,
+    "sha256": "4c92ec78d073ea3344352f13f30d84614ae75e30927a0ebdf7469a7812810a57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaSystem/4.1.1/MycilaSystem-4.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaSystem/4.1.1/MycilaSystem-4.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaSystem/4.1.2/MycilaSystem-4.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaSystem-4.1.2.tar.gz",
+    "size_bytes": 5636,
+    "sha256": "832828483f017222319e7f42df0b268bc9a3c091e1c8e756927b6b2c3517c9d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaSystem/4.1.2/MycilaSystem-4.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaSystem/4.1.2/MycilaSystem-4.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaTaskManager/4.0.2/MycilaTaskManager-4.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaTaskManager-4.0.2.tar.gz",
+    "size_bytes": 8434,
+    "sha256": "52c432bd60ed0b539d4d874d1858ec134381378931e548857109ef23e685ebdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaTaskManager/4.0.2/MycilaTaskManager-4.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaTaskManager/4.0.2/MycilaTaskManager-4.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaTaskManager/4.0.3/MycilaTaskManager-4.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaTaskManager-4.0.3.tar.gz",
+    "size_bytes": 8454,
+    "sha256": "6463be7a46159f5783fab70a5e0dc8a83677018262ebe372384a307416137657",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaTaskManager/4.0.3/MycilaTaskManager-4.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaTaskManager/4.0.3/MycilaTaskManager-4.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaTaskManager/4.0.4/MycilaTaskManager-4.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaTaskManager-4.0.4.tar.gz",
+    "size_bytes": 11467,
+    "sha256": "fc42d335746df66c8108ba985f20e1f083f9eaed871561808506bc2c7c23080b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaTaskManager/4.0.4/MycilaTaskManager-4.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaTaskManager/4.0.4/MycilaTaskManager-4.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaTaskManager/4.1.0/MycilaTaskManager-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaTaskManager-4.1.0.tar.gz",
+    "size_bytes": 11571,
+    "sha256": "f986378882fbb780adc16055f5a0348e52ee1724ca703334cb2327d80cb004a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaTaskManager/4.1.0/MycilaTaskManager-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaTaskManager/4.1.0/MycilaTaskManager-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaTaskManager/4.2.0/MycilaTaskManager-4.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaTaskManager-4.2.0.tar.gz",
+    "size_bytes": 11682,
+    "sha256": "bd2c8536948ca03052c3dec5949fc0f745dd0a5636c48cced6dcbfd4d0f7cd70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaTaskManager/4.2.0/MycilaTaskManager-4.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaTaskManager/4.2.0/MycilaTaskManager-4.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaTaskManager/4.2.1/MycilaTaskManager-4.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaTaskManager-4.2.1.tar.gz",
+    "size_bytes": 11705,
+    "sha256": "6bcbd7ca805cb54d76547640e1139cd3cdd4c737142df47cbfe84f46b6bd1e15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaTaskManager/4.2.1/MycilaTaskManager-4.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaTaskManager/4.2.1/MycilaTaskManager-4.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaTaskManager/4.2.2/MycilaTaskManager-4.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaTaskManager-4.2.2.tar.gz",
+    "size_bytes": 11820,
+    "sha256": "38a76d2b440fa2af3b9aa49d7ea849ae46313244cc59ff498266289d04ee822f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaTaskManager/4.2.2/MycilaTaskManager-4.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaTaskManager/4.2.2/MycilaTaskManager-4.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaTaskManager/4.2.3/MycilaTaskManager-4.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaTaskManager-4.2.3.tar.gz",
+    "size_bytes": 11863,
+    "sha256": "cee65c93cf78ebbeb138355f9c5b6c8982a66a5f6a84552cbaabde77e7e946c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaTaskManager/4.2.3/MycilaTaskManager-4.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaTaskManager/4.2.3/MycilaTaskManager-4.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaTaskManager/4.2.4/MycilaTaskManager-4.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaTaskManager-4.2.4.tar.gz",
+    "size_bytes": 11872,
+    "sha256": "d61546b758c0c580db7b4100f01e065f9330aa7e1912e7c469050bba22628417",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaTaskManager/4.2.4/MycilaTaskManager-4.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaTaskManager/4.2.4/MycilaTaskManager-4.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaTaskManager/4.2.5/MycilaTaskManager-4.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaTaskManager-4.2.5.tar.gz",
+    "size_bytes": 11944,
+    "sha256": "631dfd2509d58f501ca93bcb6d54bbcb62d6b6fab6730b53ab50b9ed300b97f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaTaskManager/4.2.5/MycilaTaskManager-4.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaTaskManager/4.2.5/MycilaTaskManager-4.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaTaskMonitor/4.0.0/MycilaTaskMonitor-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaTaskMonitor-4.0.0.tar.gz",
+    "size_bytes": 3669,
+    "sha256": "47d84a1e808bdda739e8723ebf0fdb4f1663d95e5a7327553a09ce38b3741bbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaTaskMonitor/4.0.0/MycilaTaskMonitor-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaTaskMonitor/4.0.0/MycilaTaskMonitor-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaTrafficLight/2.0.2/MycilaTrafficLight-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaTrafficLight-2.0.2.tar.gz",
+    "size_bytes": 5130,
+    "sha256": "8c1198e302c49e6b3184798e643e160ca59dca67aaa3be170491a60fe1bd6adc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaTrafficLight/2.0.2/MycilaTrafficLight-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaTrafficLight/2.0.2/MycilaTrafficLight-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaTrial/1.1.0/MycilaTrial-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaTrial-1.1.0.tar.gz",
+    "size_bytes": 3289,
+    "sha256": "e30be149eb45230a6c54a04c47479ac0e785e5c99e1d914b20ed943b6cfd2fd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaTrial/1.1.0/MycilaTrial-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaTrial/1.1.0/MycilaTrial-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaUtilities/3.3.1/MycilaUtilities-3.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaUtilities-3.3.1.tar.gz",
+    "size_bytes": 7963,
+    "sha256": "acbd83ee8eb15fcbb4d6f0c13724505480ca4716b49e468c2fbf31706379c2e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaUtilities/3.3.1/MycilaUtilities-3.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaUtilities/3.3.1/MycilaUtilities-3.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaUtilities/4.0.0/MycilaUtilities-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaUtilities-4.0.0.tar.gz",
+    "size_bytes": 15028,
+    "sha256": "228ad02aa8c12568dcc5580812b9799f640d6c5d187b664b9fb082d33e34e443",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaUtilities/4.0.0/MycilaUtilities-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaUtilities/4.0.0/MycilaUtilities-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaUtilities/4.1.0/MycilaUtilities-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaUtilities-4.1.0.tar.gz",
+    "size_bytes": 15318,
+    "sha256": "66e275fc2d4f6dc5fed8178f41605ddb2e492bbf063715e9c8386d53afc41742",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaUtilities/4.1.0/MycilaUtilities-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaUtilities/4.1.0/MycilaUtilities-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaUtilities/4.1.1/MycilaUtilities-4.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaUtilities-4.1.1.tar.gz",
+    "size_bytes": 15350,
+    "sha256": "86d52848ed1d0462de65b2cbe899c80e840e759847f8a3ddd55d5419ac3b0141",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaUtilities/4.1.1/MycilaUtilities-4.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaUtilities/4.1.1/MycilaUtilities-4.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaUtilities/4.2.0/MycilaUtilities-4.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaUtilities-4.2.0.tar.gz",
+    "size_bytes": 15159,
+    "sha256": "d6e63c3b8ea41cb117758eda6c021630ff388bb45144f80f6756359e0c908384",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaUtilities/4.2.0/MycilaUtilities-4.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaUtilities/4.2.0/MycilaUtilities-4.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaUtilities/4.2.1/MycilaUtilities-4.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaUtilities-4.2.1.tar.gz",
+    "size_bytes": 15828,
+    "sha256": "e6039e7e721bc490d81b0e84d94a0eca0f2b37c8534202fcd4f6960cbca9f914",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaUtilities/4.2.1/MycilaUtilities-4.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaUtilities/4.2.1/MycilaUtilities-4.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaUtilities/4.2.2/MycilaUtilities-4.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaUtilities-4.2.2.tar.gz",
+    "size_bytes": 15935,
+    "sha256": "0e31938492114d32c6f86ed058bb76e55bd466427b7cdddfeed4343d3af63963",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaUtilities/4.2.2/MycilaUtilities-4.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaUtilities/4.2.2/MycilaUtilities-4.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaUtilities/4.2.3/MycilaUtilities-4.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaUtilities-4.2.3.tar.gz",
+    "size_bytes": 16706,
+    "sha256": "ce91385c967607448da7b359767e078203728f87561b6c987eea013cd90ddb0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaUtilities/4.2.3/MycilaUtilities-4.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaUtilities/4.2.3/MycilaUtilities-4.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaUtilities/4.3.0/MycilaUtilities-4.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaUtilities-4.3.0.tar.gz",
+    "size_bytes": 12911,
+    "sha256": "6b16a67761868a10d880b0af0ecf10fcdb34df4446c1c50b80065f9df62d9eab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaUtilities/4.3.0/MycilaUtilities-4.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaUtilities/4.3.0/MycilaUtilities-4.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaUtilities/5.0.0/MycilaUtilities-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaUtilities-5.0.0.tar.gz",
+    "size_bytes": 11995,
+    "sha256": "f804370002b8aaadcb0908d42c03a36288ae3857824970262dff5b36e9ccb60e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaUtilities/5.0.0/MycilaUtilities-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaUtilities/5.0.0/MycilaUtilities-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaWebSerial/8.1.1/MycilaWebSerial-8.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaWebSerial-8.1.1.tar.gz",
+    "size_bytes": 22599,
+    "sha256": "d894e9ef7a7aca0c156aa390dc26083a464a7600e2411f8fdcffcabf1c24cec7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaWebSerial/8.1.1/MycilaWebSerial-8.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaWebSerial/8.1.1/MycilaWebSerial-8.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaWebSerial/8.1.2/MycilaWebSerial-8.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaWebSerial-8.1.2.tar.gz",
+    "size_bytes": 22706,
+    "sha256": "945039e45c5d8764ee5e0ccc112c11a64610d7f589766ab72c80368dd2d848d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaWebSerial/8.1.2/MycilaWebSerial-8.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaWebSerial/8.1.2/MycilaWebSerial-8.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaWebSerial/8.1.3/MycilaWebSerial-8.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaWebSerial-8.1.3.tar.gz",
+    "size_bytes": 22713,
+    "sha256": "de17ff2eea815febff445239792c067fe476daacd0a7dc1003963d2b05cf77df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaWebSerial/8.1.3/MycilaWebSerial-8.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaWebSerial/8.1.3/MycilaWebSerial-8.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaWebSerial/8.2.0/MycilaWebSerial-8.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaWebSerial-8.2.0.tar.gz",
+    "size_bytes": 23602,
+    "sha256": "f46501e16fdaa7f7a0df448ed608534c598e671ba155df9be57fd8b22eba2d0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaWebSerial/8.2.0/MycilaWebSerial-8.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaWebSerial/8.2.0/MycilaWebSerial-8.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaWebSerial/8.2.1/MycilaWebSerial-8.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaWebSerial-8.2.1.tar.gz",
+    "size_bytes": 23618,
+    "sha256": "9bccdbe6949ee804f22f10bfa0d81ab7f4dff5467d24b82edf8084a336ec89b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaWebSerial/8.2.1/MycilaWebSerial-8.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaWebSerial/8.2.1/MycilaWebSerial-8.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaWebSerial/8.2.2/MycilaWebSerial-8.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaWebSerial-8.2.2.tar.gz",
+    "size_bytes": 24739,
+    "sha256": "2c6cfc2a4699d4daa342847397d32dc44151ad3f03817a38cb3b928c67ce52ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaWebSerial/8.2.2/MycilaWebSerial-8.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaWebSerial/8.2.2/MycilaWebSerial-8.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/MycilaWebSerial/8.2.3/MycilaWebSerial-8.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MycilaWebSerial-8.2.3.tar.gz",
+    "size_bytes": 23900,
+    "sha256": "32fd358bac27a0dbed18bc59d3bc965654f39070e459628e52348d6813a39cf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/MycilaWebSerial/8.2.3/MycilaWebSerial-8.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/MycilaWebSerial/8.2.3/MycilaWebSerial-8.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/OneWire/2.3.9/OneWire-2.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneWire-2.3.9.tar.gz",
+    "size_bytes": 17208,
+    "sha256": "5ff586465dcaa029a72babbae5f575edde539c0bf9f083b358cd4c24bb329fcd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/OneWire/2.3.9/OneWire-2.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/OneWire/2.3.9/OneWire-2.3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/StreamDebugger/2.1.2/StreamDebugger-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamDebugger-2.1.2.tar.gz",
+    "size_bytes": 3559,
+    "sha256": "b5beb922a76202cd96f05eb4b71ddda0a72c81b416530e9472419e73c59751dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/StreamDebugger/2.1.2/StreamDebugger-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/StreamDebugger/2.1.2/StreamDebugger-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/TinyGSM/0.11.9/TinyGSM-0.11.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyGSM-0.11.9.tar.gz",
+    "size_bytes": 131237,
+    "sha256": "3c7aefd1559fa8acc4a57fe3852a7c6ff6fac8d733770691bc13c2da711d8542",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/TinyGSM/0.11.9/TinyGSM-0.11.9.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/TinyGSM/0.11.9/TinyGSM-0.11.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mathieucarbou/library/WebSerialLite/6.2.0/WebSerialLite-6.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSerialLite-6.2.0.tar.gz",
+    "size_bytes": 23109,
+    "sha256": "8b2961c4742d240c8d8cd9c7fc7c9a62bb6fb52dd720b9bbafa92b2a9a665f98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathieucarbou/library/WebSerialLite/6.2.0/WebSerialLite-6.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mathieucarbou/library/WebSerialLite/6.2.0/WebSerialLite-6.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

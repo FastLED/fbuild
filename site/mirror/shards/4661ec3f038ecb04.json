@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hwkit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hwkit/library/DHT22/0.0.0+sha.340957cc8fef/DHT22-0.0.0+sha.340957cc8fef.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT22-0.0.0+sha.340957cc8fef.tar.gz",
+    "size_bytes": 4407,
+    "sha256": "6e0fee92f12482a0a94074135e78152a0ff85525b0b657120881fb4faeaa8090",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hwkit/library/DHT22/0.0.0%2Bsha.340957cc8fef/DHT22-0.0.0%2Bsha.340957cc8fef.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hwkit/library/DHT22/0.0.0%2Bsha.340957cc8fef/DHT22-0.0.0%2Bsha.340957cc8fef.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hwkit/library/NokiaLCD/0.0.0+sha.7f3a5f2e96d3/NokiaLCD-0.0.0+sha.7f3a5f2e96d3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NokiaLCD-0.0.0+sha.7f3a5f2e96d3.tar.gz",
+    "size_bytes": 7649,
+    "sha256": "fe950ffb078624d2eb006a699921d90b08ffe0f60fcf9a5c05ef7ae9784b9404",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hwkit/library/NokiaLCD/0.0.0%2Bsha.7f3a5f2e96d3/NokiaLCD-0.0.0%2Bsha.7f3a5f2e96d3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hwkit/library/NokiaLCD/0.0.0%2Bsha.7f3a5f2e96d3/NokiaLCD-0.0.0%2Bsha.7f3a5f2e96d3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

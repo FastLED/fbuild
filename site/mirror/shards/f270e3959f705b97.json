@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/newhavendisplay",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "newhavendisplay/library/NHD_Character_LCD/1.0.0/NHD_Character_LCD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NHD_Character_LCD-1.0.0.tar.gz",
+    "size_bytes": 6545,
+    "sha256": "1de9c3dbe2ed2a7eec9d69d44f05db59d4c3077693dc131a6c1e9faad5393117",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/newhavendisplay/library/NHD_Character_LCD/1.0.0/NHD_Character_LCD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/newhavendisplay/library/NHD_Character_LCD/1.0.0/NHD_Character_LCD-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

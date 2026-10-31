@@ -1,0 +1,360 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bolderflight",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20AMS5812/1.0.2/BolderFlightSystemsAMS5812-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsAMS5812-1.0.2.tar.gz",
+    "size_bytes": 17185,
+    "sha256": "7fde5cf890cd1090842b8028b9946ad473bdabe07bfc2168b78af63aad1f9b5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520AMS5812/1.0.2/BolderFlightSystemsAMS5812-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20AMS5812/1.0.2/BolderFlightSystemsAMS5812-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20AMS5915/1.0.2/BolderFlightSystemsAMS5915-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsAMS5915-1.0.2.tar.gz",
+    "size_bytes": 17130,
+    "sha256": "dc15d17c3d86b60099e2a086b7065ac5930b8003d06e92f9f739cbdfdb5e3f18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520AMS5915/1.0.2/BolderFlightSystemsAMS5915-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20AMS5915/1.0.2/BolderFlightSystemsAMS5915-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20Ainstein%20USD1/1.1.3/BolderFlightSystemsAinsteinUSD1-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsAinsteinUSD1-1.1.3.tar.gz",
+    "size_bytes": 5482,
+    "sha256": "c7bab7edd1c9d2476b750c6c13187a34e5c087aa292727c1fc3b27d5c47b7a45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520Ainstein%2520USD1/1.1.3/BolderFlightSystemsAinsteinUSD1-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20Ainstein%20USD1/1.1.3/BolderFlightSystemsAinsteinUSD1-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20Airdata%20Calculations/4.0.0/BolderFlightSystemsAirdataCalculations-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsAirdataCalculations-4.0.0.tar.gz",
+    "size_bytes": 5705,
+    "sha256": "7f148aae3cbc50f02f871dbf0b15334234512236f55d59bd388784daf3052cf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520Airdata%2520Calculations/4.0.0/BolderFlightSystemsAirdataCalculations-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20Airdata%20Calculations/4.0.0/BolderFlightSystemsAirdataCalculations-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20BME280/1.0.2/BolderFlightSystemsBME280-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsBME280-1.0.2.tar.gz",
+    "size_bytes": 21236,
+    "sha256": "d13997f284d481cfb683afd47236f71beb0abb775d49814bf3ab00af9699beec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520BME280/1.0.2/BolderFlightSystemsBME280-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20BME280/1.0.2/BolderFlightSystemsBME280-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20BMI088/1.0.1/BolderFlightSystemsBMI088-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsBMI088-1.0.1.tar.gz",
+    "size_bytes": 31109,
+    "sha256": "229eacdba0706664aa59df640c033c987f0386d8266f327575f32f8f7e2da843",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520BMI088/1.0.1/BolderFlightSystemsBMI088-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20BMI088/1.0.1/BolderFlightSystemsBMI088-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20Checksum/4.0.0/BolderFlightSystemsChecksum-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsChecksum-4.0.0.tar.gz",
+    "size_bytes": 4405,
+    "sha256": "0f0967e5b4e8aefd7a8329ebad432351c4a56ca2ce82c0f410c9dc24a31ee9b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520Checksum/4.0.0/BolderFlightSystemsChecksum-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20Checksum/4.0.0/BolderFlightSystemsChecksum-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20Circular%20Buffer/5.0.0/BolderFlightSystemsCircularBuffer-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsCircularBuffer-5.0.0.tar.gz",
+    "size_bytes": 5994,
+    "sha256": "3680d9fd3d16898a5f2d1f943707abe8f88f0355297144f50d9ce0ee9b240f72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520Circular%2520Buffer/5.0.0/BolderFlightSystemsCircularBuffer-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20Circular%20Buffer/5.0.0/BolderFlightSystemsCircularBuffer-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20Controls/4.0.0/BolderFlightSystemsControls-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsControls-4.0.0.tar.gz",
+    "size_bytes": 5372,
+    "sha256": "2e98db2dace44da3d2acb054be4f10268f098127031bd4f3244c13fdaaeb0341",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520Controls/4.0.0/BolderFlightSystemsControls-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20Controls/4.0.0/BolderFlightSystemsControls-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20Eigen/3.0.0/BolderFlightSystemsEigen-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsEigen-3.0.0.tar.gz",
+    "size_bytes": 1019084,
+    "sha256": "689c72b4adf08e929bacb002bcaea34bbedd04166a698ea7f99c88ff641916cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520Eigen/3.0.0/BolderFlightSystemsEigen-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20Eigen/3.0.0/BolderFlightSystemsEigen-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20Excitation/4.0.0/BolderFlightSystemsExcitation-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsExcitation-4.0.0.tar.gz",
+    "size_bytes": 6406,
+    "sha256": "a054deb7d526ae268a63ecf19976edf7ec5de77037401e24b863dafec7bdcc38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520Excitation/4.0.0/BolderFlightSystemsExcitation-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20Excitation/4.0.0/BolderFlightSystemsExcitation-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20Filter/4.0.0/BolderFlightSystemsFilter-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsFilter-4.0.0.tar.gz",
+    "size_bytes": 6027,
+    "sha256": "40ca6de71e1b8dd4e690b72948bc75f56731efe0090ac68c40e0d5aca7b7a5d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520Filter/4.0.0/BolderFlightSystemsFilter-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20Filter/4.0.0/BolderFlightSystemsFilter-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20Honeywell%20HG4930/1.0.0/BolderFlightSystemsHoneywellHG4930-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsHoneywellHG4930-1.0.0.tar.gz",
+    "size_bytes": 7281,
+    "sha256": "c42159c0ce7cc652929424a08b806191d38ba5cfe0ded76fdcae026ca9a3b652",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520Honeywell%2520HG4930/1.0.0/BolderFlightSystemsHoneywellHG4930-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20Honeywell%20HG4930/1.0.0/BolderFlightSystemsHoneywellHG4930-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20Imap/2.3.2/BolderFlightSystemsImap-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsImap-2.3.2.tar.gz",
+    "size_bytes": 5434,
+    "sha256": "1216260e179fc1a805383635db25a28f151970117ef1e98a05b7c50b629fbda1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520Imap/2.3.2/BolderFlightSystemsImap-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20Imap/2.3.2/BolderFlightSystemsImap-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20LEB128/2.1.1/BolderFlightSystemsLEB128-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsLEB128-2.1.1.tar.gz",
+    "size_bytes": 4731,
+    "sha256": "42ac94709a2732cc73c1127097c897a8d860f731ac9ab5bd8c8bd171f260aac1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520LEB128/2.1.1/BolderFlightSystemsLEB128-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20LEB128/2.1.1/BolderFlightSystemsLEB128-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20MPU9250/1.0.2/BolderFlightSystemsMPU9250-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsMPU9250-1.0.2.tar.gz",
+    "size_bytes": 30659,
+    "sha256": "2c8bd2d742c0e6b87934f76844324e5e7495211c0f76a028cd3b876769183a59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520MPU9250/1.0.2/BolderFlightSystemsMPU9250-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20MPU9250/1.0.2/BolderFlightSystemsMPU9250-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20MS4525/1.1.3/BolderFlightSystemsMS4525-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsMS4525-1.1.3.tar.gz",
+    "size_bytes": 6285,
+    "sha256": "d6a20212016018eb5019deb6b65e3a36f6527df82b447c0b71b376ac02240fea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520MS4525/1.1.3/BolderFlightSystemsMS4525-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20MS4525/1.1.3/BolderFlightSystemsMS4525-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20Message%20Framing/3.2.0/BolderFlightSystemsMessageFraming-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsMessageFraming-3.2.0.tar.gz",
+    "size_bytes": 6256,
+    "sha256": "73d7c50b6576c11bdd78511414c3557ccce42d3d41dc80216a38ea5cc5a349db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520Message%2520Framing/3.2.0/BolderFlightSystemsMessageFraming-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20Message%20Framing/3.2.0/BolderFlightSystemsMessageFraming-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20PWM/6.0.2/BolderFlightSystemsPWM-6.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsPWM-6.0.2.tar.gz",
+    "size_bytes": 5672,
+    "sha256": "14362f0642fbb373ea6521b7b948ab4d9896017f9c3cf2798c267dc1fff9260d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520PWM/6.0.2/BolderFlightSystemsPWM-6.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20PWM/6.0.2/BolderFlightSystemsPWM-6.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20Polytools/4.1.0/BolderFlightSystemsPolytools-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsPolytools-4.1.0.tar.gz",
+    "size_bytes": 5357,
+    "sha256": "f0dd2df9e4e602f7e3b89fdb28b87edf0f7072c78706853cf61c70eaa69d6269",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520Polytools/4.1.0/BolderFlightSystemsPolytools-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20Polytools/4.1.0/BolderFlightSystemsPolytools-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20SBUS/8.1.4/BolderFlightSystemsSBUS-8.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsSBUS-8.1.4.tar.gz",
+    "size_bytes": 8854,
+    "sha256": "c01ed590556a29f6d42b13148f0493a9201de36c6f20988f10043f6215b9c0c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520SBUS/8.1.4/BolderFlightSystemsSBUS-8.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20SBUS/8.1.4/BolderFlightSystemsSBUS-8.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20Statistics/4.0.4/BolderFlightSystemsStatistics-4.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsStatistics-4.0.4.tar.gz",
+    "size_bytes": 5275,
+    "sha256": "755fa780ca2791190246300200fd3e8c92b5127b20cde083af2065da13f192b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520Statistics/4.0.4/BolderFlightSystemsStatistics-4.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20Statistics/4.0.4/BolderFlightSystemsStatistics-4.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20Terabee/1.0.2/BolderFlightSystemsTerabee-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsTerabee-1.0.2.tar.gz",
+    "size_bytes": 7386,
+    "sha256": "fa2fd387e8408f14aa3816e95d312f3567ccd43801fff9322a3ab4c78491f1ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520Terabee/1.0.2/BolderFlightSystemsTerabee-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20Terabee/1.0.2/BolderFlightSystemsTerabee-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20UBLOX/1.0.1/BolderFlightSystemsUBLOX-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsUBLOX-1.0.1.tar.gz",
+    "size_bytes": 18762,
+    "sha256": "61b20d35ca029ce859b617634c9f6f41c6a21e65c475f7d37c45891144c952b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520UBLOX/1.0.1/BolderFlightSystemsUBLOX-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20UBLOX/1.0.1/BolderFlightSystemsUBLOX-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20ULEB128/2.1.2/BolderFlightSystemsULEB128-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsULEB128-2.1.2.tar.gz",
+    "size_bytes": 4380,
+    "sha256": "bcb2bed89e8fef512aa85000762425cba087ea144c441a89b7992d3b8a5b3c52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520ULEB128/2.1.2/BolderFlightSystemsULEB128-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20ULEB128/2.1.2/BolderFlightSystemsULEB128-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20Unit%20Conversions/5.0.0/BolderFlightSystemsUnitConversions-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsUnitConversions-5.0.0.tar.gz",
+    "size_bytes": 11544,
+    "sha256": "bbec7c78dba93b62cf2f8314a38d1007889db3bbe99fdbc34631e579cac017ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520Unit%2520Conversions/5.0.0/BolderFlightSystemsUnitConversions-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20Unit%20Conversions/5.0.0/BolderFlightSystemsUnitConversions-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bolderflight/library/Bolder%20Flight%20Systems%20VectorNav/4.0.4/BolderFlightSystemsVectorNav-4.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BolderFlightSystemsVectorNav-4.0.4.tar.gz",
+    "size_bytes": 19975,
+    "sha256": "5708fb29ec4da0647421a7a54fce18f06aa0e3b62cf27fb7b5483fd14ae834e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bolderflight/library/Bolder%2520Flight%2520Systems%2520VectorNav/4.0.4/BolderFlightSystemsVectorNav-4.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bolderflight/library/Bolder%20Flight%20Systems%20VectorNav/4.0.4/BolderFlightSystemsVectorNav-4.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

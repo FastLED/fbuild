@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/neosarchizo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "neosarchizo/library/AM1002-UART/1.0.1/AM1002-UART-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AM1002-UART-1.0.1.tar.gz",
+    "size_bytes": 15125,
+    "sha256": "d4f08f6775f34bef36c5e427524875a64201dbeb67b5d97f36e3781834b45914",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neosarchizo/library/AM1002-UART/1.0.1/AM1002-UART-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/neosarchizo/library/AM1002-UART/1.0.1/AM1002-UART-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neosarchizo/library/AM1008W-K%20I2C/1.0.0/AM1008W-KI2C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AM1008W-KI2C-1.0.0.tar.gz",
+    "size_bytes": 15479,
+    "sha256": "dbb16e8da8ce6970ae4c4e3c101639732dc05848e0d13bf99afa53f272edf29e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neosarchizo/library/AM1008W-K%2520I2C/1.0.0/AM1008W-KI2C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neosarchizo/library/AM1008W-K%20I2C/1.0.0/AM1008W-KI2C-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neosarchizo/library/CB-HCHO-V4/1.0.0/CB-HCHO-V4-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CB-HCHO-V4-1.0.0.tar.gz",
+    "size_bytes": 14677,
+    "sha256": "848e3e9d9e2e4fb41e61de5652d6844f1f3deb110cfcb9fa83daf40da0226ecd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neosarchizo/library/CB-HCHO-V4/1.0.0/CB-HCHO-V4-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neosarchizo/library/CB-HCHO-V4/1.0.0/CB-HCHO-V4-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neosarchizo/library/CM1106%20I2C/1.0.2/CM1106I2C-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CM1106I2C-1.0.2.tar.gz",
+    "size_bytes": 15752,
+    "sha256": "09418c43c4eb82e18a226309eedc08a8fb7b501baf8beb6fadd000a2c848db7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neosarchizo/library/CM1106%2520I2C/1.0.2/CM1106I2C-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/neosarchizo/library/CM1106%20I2C/1.0.2/CM1106I2C-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neosarchizo/library/PM2008%20I2C/1.0.1/PM2008I2C-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PM2008I2C-1.0.1.tar.gz",
+    "size_bytes": 14985,
+    "sha256": "688ee0098f69469aab6e69d08f1a693663a98cf0ffd7c657537f055a8b6d2933",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neosarchizo/library/PM2008%2520I2C/1.0.1/PM2008I2C-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/neosarchizo/library/PM2008%20I2C/1.0.1/PM2008I2C-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neosarchizo/library/PS-33D%20I2C/1.0.0/PS-33DI2C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS-33DI2C-1.0.0.tar.gz",
+    "size_bytes": 14367,
+    "sha256": "03bd94feb33cf84957f7eef52a036c09c47548c10fc0ef53a2ddd2816110e763",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neosarchizo/library/PS-33D%2520I2C/1.0.0/PS-33DI2C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neosarchizo/library/PS-33D%20I2C/1.0.0/PS-33DI2C-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

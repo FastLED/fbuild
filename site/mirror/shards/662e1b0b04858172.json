@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-slisgrinder",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-slisgrinder/library/TLC5940/0.0.0+sha.05d2234c0965/TLC5940-0.0.0+sha.05d2234c0965.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLC5940-0.0.0+sha.05d2234c0965.tar.gz",
+    "size_bytes": 1151,
+    "sha256": "18dd14ab6c3d69dcd994e7cab3aa009abbbb2a5f4307bad41045ca3c2040321a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-slisgrinder/library/TLC5940/0.0.0%2Bsha.05d2234c0965/TLC5940-0.0.0%2Bsha.05d2234c0965.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-slisgrinder/library/TLC5940/0.0.0%2Bsha.05d2234c0965/TLC5940-0.0.0%2Bsha.05d2234c0965.tar.gz"
+    ]
+   }
+  }
+ ]
+}

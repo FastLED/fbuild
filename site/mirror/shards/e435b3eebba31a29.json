@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mimeindustries",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mimeindustries/library/Marceau/0.0.2/Marceau-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Marceau-0.0.2.tar.gz",
+    "size_bytes": 185938,
+    "sha256": "ba8139d008af8ac0e100258890df6b9113a6303ef937fbd3da724ee1e107a728",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mimeindustries/library/Marceau/0.0.2/Marceau-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mimeindustries/library/Marceau/0.0.2/Marceau-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

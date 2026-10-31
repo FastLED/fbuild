@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/warlib1975",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "warlib1975/library/Irms_calc/1.0/Irms_calc-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Irms_calc-1.0.tar.gz",
+    "size_bytes": 2366,
+    "sha256": "a05a03633628ff555186005da3cce0489ba5674653ed4fa511fa138aa4f08da5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/warlib1975/library/Irms_calc/1.0/Irms_calc-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/warlib1975/library/Irms_calc/1.0/Irms_calc-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "warlib1975/library/ModbusConfig/1.2/ModbusConfig-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusConfig-1.2.tar.gz",
+    "size_bytes": 10700,
+    "sha256": "cfa718ad7c154c4a2d2434e5b8a5e9118fafc4fad9ffcdf5433f10315a5a9ecb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/warlib1975/library/ModbusConfig/1.2/ModbusConfig-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/warlib1975/library/ModbusConfig/1.2/ModbusConfig-1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

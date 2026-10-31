@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/microeden",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "microeden/library/MicroedenConnect/1.0.1/MicroedenConnect-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroedenConnect-1.0.1.tar.gz",
+    "size_bytes": 9453,
+    "sha256": "536f4acca6369b2ad284b4131e54d3119b5350f73211efcf307129fb3b14cb31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microeden/library/MicroedenConnect/1.0.1/MicroedenConnect-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/microeden/library/MicroedenConnect/1.0.1/MicroedenConnect-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microeden/library/MicroedenConnect/1.0.2/MicroedenConnect-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroedenConnect-1.0.2.tar.gz",
+    "size_bytes": 19479,
+    "sha256": "484779db005ed36f3e03e3ae39df405dbdfdf7ed6523af1674e09267948b67ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microeden/library/MicroedenConnect/1.0.2/MicroedenConnect-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/microeden/library/MicroedenConnect/1.0.2/MicroedenConnect-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microeden/library/MyDot/1.0.10/MyDot-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyDot-1.0.10.tar.gz",
+    "size_bytes": 87891,
+    "sha256": "cd20b142ad50537458dba52880eb9d1a009063b0dbd9f3960b0f4a0798a313f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microeden/library/MyDot/1.0.10/MyDot-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/microeden/library/MyDot/1.0.10/MyDot-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microeden/library/MyDot/1.0.11/MyDot-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyDot-1.0.11.tar.gz",
+    "size_bytes": 102188,
+    "sha256": "0217a066b87fd142f09ee38fa0ca1fea0c36a2eb3b7a131f29969d18114d7f26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microeden/library/MyDot/1.0.11/MyDot-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/microeden/library/MyDot/1.0.11/MyDot-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microeden/library/MyDot/1.0.12/MyDot-1.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyDot-1.0.12.tar.gz",
+    "size_bytes": 112152,
+    "sha256": "fd57c0674590b26970e3bfe7313ef4c6605757c93c87582e3cb499c15747426f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microeden/library/MyDot/1.0.12/MyDot-1.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/microeden/library/MyDot/1.0.12/MyDot-1.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microeden/library/MyDot/1.0.4/MyDot-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyDot-1.0.4.tar.gz",
+    "size_bytes": 15372,
+    "sha256": "410d6cd5932e0560f0b888479d4faf0ebbbb33d33ae492563105e32ea3b9fddb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microeden/library/MyDot/1.0.4/MyDot-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/microeden/library/MyDot/1.0.4/MyDot-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microeden/library/MyDot/1.0.7/MyDot-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyDot-1.0.7.tar.gz",
+    "size_bytes": 30036,
+    "sha256": "f3f0ae4e046284b398a205e30d748ee65a55d8c66389a414ce0a01ebc43fb468",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microeden/library/MyDot/1.0.7/MyDot-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/microeden/library/MyDot/1.0.7/MyDot-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microeden/library/MyDot/1.0.8/MyDot-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyDot-1.0.8.tar.gz",
+    "size_bytes": 31156,
+    "sha256": "7b75c44857011c336ea1b7f79abe912a4e48404a8343ff52524003d064c16804",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microeden/library/MyDot/1.0.8/MyDot-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/microeden/library/MyDot/1.0.8/MyDot-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microeden/library/MyDot/1.0.9/MyDot-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyDot-1.0.9.tar.gz",
+    "size_bytes": 87147,
+    "sha256": "ff31e09d46e02addfaa30cc6d1c8bdea25c3bd21c8cb90f6a07aac66034bcb31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microeden/library/MyDot/1.0.9/MyDot-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/microeden/library/MyDot/1.0.9/MyDot-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

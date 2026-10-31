@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jlarkin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jlarkin/library/ADXL345/0.0.0+sha.0fac771fec8d/ADXL345-0.0.0+sha.0fac771fec8d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL345-0.0.0+sha.0fac771fec8d.tar.gz",
+    "size_bytes": 5422,
+    "sha256": "1fdcd2408ad66b2222b3c6edb20f3477b7890bf2bfad905c25fe92cdee175621",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jlarkin/library/ADXL345/0.0.0%2Bsha.0fac771fec8d/ADXL345-0.0.0%2Bsha.0fac771fec8d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jlarkin/library/ADXL345/0.0.0%2Bsha.0fac771fec8d/ADXL345-0.0.0%2Bsha.0fac771fec8d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jlarkin/library/Adafruit_Si4713/0.0.0+sha.6643c5542090/Adafruit_Si4713-0.0.0+sha.6643c5542090.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_Si4713-0.0.0+sha.6643c5542090.tar.gz",
+    "size_bytes": 4646,
+    "sha256": "58f807f3839ac59061232c92cb112bc0d2b7533acb9d20800b16e53212621f23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jlarkin/library/Adafruit_Si4713/0.0.0%2Bsha.6643c5542090/Adafruit_Si4713-0.0.0%2Bsha.6643c5542090.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jlarkin/library/Adafruit_Si4713/0.0.0%2Bsha.6643c5542090/Adafruit_Si4713-0.0.0%2Bsha.6643c5542090.tar.gz"
+    ]
+   }
+  }
+ ]
+}

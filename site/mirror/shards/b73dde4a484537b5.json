@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jackw01",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jackw01/library/PID%20Autotuner/1.0/PIDAutotuner-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIDAutotuner-1.0.tar.gz",
+    "size_bytes": 4528,
+    "sha256": "af7f7e8389e95a4639b3bb3f1102d1dc85c02632e097e53522a407e334c4f473",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jackw01/library/PID%2520Autotuner/1.0/PIDAutotuner-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jackw01/library/PID%20Autotuner/1.0/PIDAutotuner-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jackw01/library/PID%20Controller/1.0.0/PIDController-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIDController-1.0.0.tar.gz",
+    "size_bytes": 2508,
+    "sha256": "23a7fd7f1979237508cf08bebc18683e9eb57377f92de8e4a895e41fe4781548",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jackw01/library/PID%2520Controller/1.0.0/PIDController-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jackw01/library/PID%20Controller/1.0.0/PIDController-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

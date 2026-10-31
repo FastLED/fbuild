@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jsolarski",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jsolarski/library/Gyro/0.0.0+sha.186e38f0c07e/Gyro-0.0.0+sha.186e38f0c07e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gyro-0.0.0+sha.186e38f0c07e.tar.gz",
+    "size_bytes": 2325,
+    "sha256": "d3428e52fd5bbf7975765112ecbbed023b6c865a5d6f524b4d4c20844ca7a75e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jsolarski/library/Gyro/0.0.0%2Bsha.186e38f0c07e/Gyro-0.0.0%2Bsha.186e38f0c07e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jsolarski/library/Gyro/0.0.0%2Bsha.186e38f0c07e/Gyro-0.0.0%2Bsha.186e38f0c07e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jsolarski/library/accelorometer/0.0.0+sha.c3ffcc11a89e/accelorometer-0.0.0+sha.c3ffcc11a89e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "accelorometer-0.0.0+sha.c3ffcc11a89e.tar.gz",
+    "size_bytes": 2348,
+    "sha256": "186de819663e7810749704f70c93318a1f003c44ef10def84eb2c2af9cceab7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jsolarski/library/accelorometer/0.0.0%2Bsha.c3ffcc11a89e/accelorometer-0.0.0%2Bsha.c3ffcc11a89e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jsolarski/library/accelorometer/0.0.0%2Bsha.c3ffcc11a89e/accelorometer-0.0.0%2Bsha.c3ffcc11a89e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

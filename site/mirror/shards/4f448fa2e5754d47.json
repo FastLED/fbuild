@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/makkorjamal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "makkorjamal/library/PLSduino/0.1.0/PLSduino-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PLSduino-0.1.0.tar.gz",
+    "size_bytes": 3852,
+    "sha256": "9f89f88ad2c1657f774da3e8daa5c4aaaa3c1ce332bfae9ac99f6aeb0d4cf157",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makkorjamal/library/PLSduino/0.1.0/PLSduino-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/makkorjamal/library/PLSduino/0.1.0/PLSduino-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

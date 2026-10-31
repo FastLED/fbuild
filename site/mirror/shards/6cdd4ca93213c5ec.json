@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wsalis01",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wsalis01/library/CANProtocol/0.0.0+sha.3f7b957d3617/CANProtocol-0.0.0+sha.3f7b957d3617.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANProtocol-0.0.0+sha.3f7b957d3617.tar.gz",
+    "size_bytes": 1085,
+    "sha256": "b81c04f4b5c8989498aa37c5bea80ba21bbd998b793b51a0df0840b7d87d9bce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wsalis01/library/CANProtocol/0.0.0%2Bsha.3f7b957d3617/CANProtocol-0.0.0%2Bsha.3f7b957d3617.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wsalis01/library/CANProtocol/0.0.0%2Bsha.3f7b957d3617/CANProtocol-0.0.0%2Bsha.3f7b957d3617.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wsalis01/library/ControlNode/0.0.0+sha.edb687d65942/ControlNode-0.0.0+sha.edb687d65942.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ControlNode-0.0.0+sha.edb687d65942.tar.gz",
+    "size_bytes": 1585,
+    "sha256": "a428f74ec948ba795120861450d6fd124d5a2a789281cab0cff722d19c114207",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wsalis01/library/ControlNode/0.0.0%2Bsha.edb687d65942/ControlNode-0.0.0%2Bsha.edb687d65942.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wsalis01/library/ControlNode/0.0.0%2Bsha.edb687d65942/ControlNode-0.0.0%2Bsha.edb687d65942.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wsalis01/library/DigitalPotentiometer/0.0.0+sha.9bd76a5655fa/DigitalPotentiometer-0.0.0+sha.9bd76a5655fa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalPotentiometer-0.0.0+sha.9bd76a5655fa.tar.gz",
+    "size_bytes": 1261,
+    "sha256": "36c95784a60526c080ea328cf8334f6d78829bd81ad45a440b28ef064ddaca25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wsalis01/library/DigitalPotentiometer/0.0.0%2Bsha.9bd76a5655fa/DigitalPotentiometer-0.0.0%2Bsha.9bd76a5655fa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wsalis01/library/DigitalPotentiometer/0.0.0%2Bsha.9bd76a5655fa/DigitalPotentiometer-0.0.0%2Bsha.9bd76a5655fa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wsalis01/library/SensorNode/0.0.0+sha.fbb17be9a65d/SensorNode-0.0.0+sha.fbb17be9a65d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorNode-0.0.0+sha.fbb17be9a65d.tar.gz",
+    "size_bytes": 1731,
+    "sha256": "98096a856768dc057ebcda1ddb57a53843b5bc9a6b3455403ee754e928fd4f93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wsalis01/library/SensorNode/0.0.0%2Bsha.fbb17be9a65d/SensorNode-0.0.0%2Bsha.fbb17be9a65d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wsalis01/library/SensorNode/0.0.0%2Bsha.fbb17be9a65d/SensorNode-0.0.0%2Bsha.fbb17be9a65d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wsalis01/library/VFD/0.0.0+sha.f17ce5ab5d01/VFD-0.0.0+sha.f17ce5ab5d01.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VFD-0.0.0+sha.f17ce5ab5d01.tar.gz",
+    "size_bytes": 1578,
+    "sha256": "639a94edd806cb0e04d54321f91a48fcdb2bbf02ee9bdaaa372683ab0f03d8c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wsalis01/library/VFD/0.0.0%2Bsha.f17ce5ab5d01/VFD-0.0.0%2Bsha.f17ce5ab5d01.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wsalis01/library/VFD/0.0.0%2Bsha.f17ce5ab5d01/VFD-0.0.0%2Bsha.f17ce5ab5d01.tar.gz"
+    ]
+   }
+  }
+ ]
+}

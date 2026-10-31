@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/edovis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "edovis/library/TMP126/1.0.0/TMP126-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMP126-1.0.0.tar.gz",
+    "size_bytes": 15056,
+    "sha256": "c1f88304a7b1e64473ce4f50fdbd6db1c02199a95b3af0f2105f52c1e508042d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/edovis/library/TMP126/1.0.0/TMP126-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/edovis/library/TMP126/1.0.0/TMP126-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

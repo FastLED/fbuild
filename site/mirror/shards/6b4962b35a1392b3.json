@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-leejong87",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-leejong87/library/IRremote/0.0.0+sha.10a04fa41876/IRremote-0.0.0+sha.10a04fa41876.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRremote-0.0.0+sha.10a04fa41876.tar.gz",
+    "size_bytes": 1360,
+    "sha256": "c8e85c368bc42fae99b7206f5d108ae362244aa5ac09eb96aadaf627e7878843",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-leejong87/library/IRremote/0.0.0%2Bsha.10a04fa41876/IRremote-0.0.0%2Bsha.10a04fa41876.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-leejong87/library/IRremote/0.0.0%2Bsha.10a04fa41876/IRremote-0.0.0%2Bsha.10a04fa41876.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-leejong87/library/Ultrasonic/0.0.0+sha.d8a93321fc01/Ultrasonic-0.0.0+sha.d8a93321fc01.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ultrasonic-0.0.0+sha.d8a93321fc01.tar.gz",
+    "size_bytes": 1182,
+    "sha256": "5fc12605226980a648578c0742f3c38ff840aba2d014a598c2199125e0db2dc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-leejong87/library/Ultrasonic/0.0.0%2Bsha.d8a93321fc01/Ultrasonic-0.0.0%2Bsha.d8a93321fc01.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-leejong87/library/Ultrasonic/0.0.0%2Bsha.d8a93321fc01/Ultrasonic-0.0.0%2Bsha.d8a93321fc01.tar.gz"
+    ]
+   }
+  }
+ ]
+}

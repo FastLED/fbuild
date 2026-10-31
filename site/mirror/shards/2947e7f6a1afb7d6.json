@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/locroce",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "locroce/library/libcbor/0.11/libcbor-0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libcbor-0.11.tar.gz",
+    "size_bytes": 48412,
+    "sha256": "b0eae6a38ed47d841cea30d3329e5c577bee495e1bb2e0451b10a5b8673e71cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locroce/library/libcbor/0.11/libcbor-0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/locroce/library/libcbor/0.11/libcbor-0.11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

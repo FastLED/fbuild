@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vekotin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vekotin/library/Touch_tft/0.0.0+sha.cef5cdc775ea/Touch_tft-0.0.0+sha.cef5cdc775ea.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Touch_tft-0.0.0+sha.cef5cdc775ea.tar.gz",
+    "size_bytes": 3449,
+    "sha256": "0a2b5a58cdc858525c708a4c50fd2841a916a1f3f37357f0d06e111ff3139221",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vekotin/library/Touch_tft/0.0.0%2Bsha.cef5cdc775ea/Touch_tft-0.0.0%2Bsha.cef5cdc775ea.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vekotin/library/Touch_tft/0.0.0%2Bsha.cef5cdc775ea/Touch_tft-0.0.0%2Bsha.cef5cdc775ea.tar.gz"
+    ]
+   }
+  }
+ ]
+}

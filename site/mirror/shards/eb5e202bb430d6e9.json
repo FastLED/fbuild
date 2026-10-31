@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-robt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-robt/library/MobileLCD/0.0.0+sha.39daa30e0eb3/MobileLCD-0.0.0+sha.39daa30e0eb3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MobileLCD-0.0.0+sha.39daa30e0eb3.tar.gz",
+    "size_bytes": 3379,
+    "sha256": "99261f82d852d8aa1069c151285320dc8380373ef7a6ddd8eb0b1ec2048ca1e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-robt/library/MobileLCD/0.0.0%2Bsha.39daa30e0eb3/MobileLCD-0.0.0%2Bsha.39daa30e0eb3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-robt/library/MobileLCD/0.0.0%2Bsha.39daa30e0eb3/MobileLCD-0.0.0%2Bsha.39daa30e0eb3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-marcoamerena",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-marcoamerena/library/NVIC_set_all_priorities/0.0.0+sha.571485f9ba18/NVIC_set_all_priorities-0.0.0+sha.571485f9ba18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NVIC_set_all_priorities-0.0.0+sha.571485f9ba18.tar.gz",
+    "size_bytes": 1332,
+    "sha256": "845742de0822db7c3c5a22a3f000b107ccb68d99dbc6cef142d7a7315798de87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-marcoamerena/library/NVIC_set_all_priorities/0.0.0%2Bsha.571485f9ba18/NVIC_set_all_priorities-0.0.0%2Bsha.571485f9ba18.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-marcoamerena/library/NVIC_set_all_priorities/0.0.0%2Bsha.571485f9ba18/NVIC_set_all_priorities-0.0.0%2Bsha.571485f9ba18.tar.gz"
+    ]
+   }
+  }
+ ]
+}

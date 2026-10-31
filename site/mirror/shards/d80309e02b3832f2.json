@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/macchina",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "macchina/library/Due%20SD%20HSMCI%20%28Macchina%29/0.0.1/DueSDHSMCIMacchina-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DueSDHSMCIMacchina-0.0.1.tar.gz",
+    "size_bytes": 125587,
+    "sha256": "bcff857bcf5694024f092fa581bfbe882135d15ae046f7b16dcbac1c10502d2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macchina/library/Due%2520SD%2520HSMCI%2520%2528Macchina%2529/0.0.1/DueSDHSMCIMacchina-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/macchina/library/Due%20SD%20HSMCI%20%28Macchina%29/0.0.1/DueSDHSMCIMacchina-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "macchina/library/LIN/2.0/LIN-2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIN-2.0.tar.gz",
+    "size_bytes": 9625,
+    "sha256": "0debf285c5fd2a126811bfd6572d807a457fb2f599cd93d2d917b73888b32d93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macchina/library/LIN/2.0/LIN-2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/macchina/library/LIN/2.0/LIN-2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "macchina/library/MCP2515/0.3.1/MCP2515-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP2515-0.3.1.tar.gz",
+    "size_bytes": 21895,
+    "sha256": "5c22ea1e73081ccce6b7d14d745c52b34257cd962ff95bc8eadcffc3e6f228b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macchina/library/MCP2515/0.3.1/MCP2515-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/macchina/library/MCP2515/0.3.1/MCP2515-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "macchina/library/Single-Wire%20CAN%20%28MCP2515%29/0.1.0/Single-WireCANMCP2515-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Single-WireCANMCP2515-0.1.0.tar.gz",
+    "size_bytes": 3302,
+    "sha256": "0645171af5d513b0c3d95f1b899747cc35086310e4465ecbe0c089eb7a15ef8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macchina/library/Single-Wire%2520CAN%2520%2528MCP2515%2529/0.1.0/Single-WireCANMCP2515-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/macchina/library/Single-Wire%20CAN%20%28MCP2515%29/0.1.0/Single-WireCANMCP2515-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

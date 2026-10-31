@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ncmreynolds",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ncmreynolds/library/TapCode/0.1.0/TapCode-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TapCode-0.1.0.tar.gz",
+    "size_bytes": 13580,
+    "sha256": "83725930fde7bc5262ebeb87858c5233a46c1fea172bc966ba21608eb3f7913e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ncmreynolds/library/TapCode/0.1.0/TapCode-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ncmreynolds/library/TapCode/0.1.0/TapCode-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ncmreynolds/library/bq25186/0.1.0/bq25186-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bq25186-0.1.0.tar.gz",
+    "size_bytes": 22433,
+    "sha256": "8c5dcf1a306f22f50396eb521b40902d3044da4253fc783160eb9e063670d711",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ncmreynolds/library/bq25186/0.1.0/bq25186-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ncmreynolds/library/bq25186/0.1.0/bq25186-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ncmreynolds/library/ld2410/0.1.4/ld2410-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ld2410-0.1.4.tar.gz",
+    "size_bytes": 20604,
+    "sha256": "9cb16295884d4e911c76e00afd7cf6ded36d42e10c11ce5651b1acd356021a9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ncmreynolds/library/ld2410/0.1.4/ld2410-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ncmreynolds/library/ld2410/0.1.4/ld2410-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ncmreynolds/library/ld2410/0.2.2/ld2410-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ld2410-0.2.2.tar.gz",
+    "size_bytes": 26752,
+    "sha256": "7cf0a5ad0f6e0ae5fe24e75a210eaad486b7d3fabcbc47d4001d746f15ece45f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ncmreynolds/library/ld2410/0.2.2/ld2410-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ncmreynolds/library/ld2410/0.2.2/ld2410-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ncmreynolds/library/loremipsum/0.1.0/loremipsum-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "loremipsum-0.1.0.tar.gz",
+    "size_bytes": 13470,
+    "sha256": "5a538d04308e490df6b261ad282d4b418e57761c35f360a61d9c7445c6309e48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ncmreynolds/library/loremipsum/0.1.0/loremipsum-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ncmreynolds/library/loremipsum/0.1.0/loremipsum-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ncmreynolds/library/milesTag/0.1.2/milesTag-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "milesTag-0.1.2.tar.gz",
+    "size_bytes": 19614,
+    "sha256": "fc29d5a5a9fe0d00b2ec243c4c4b8e5c4570320de47467b63fd979de11331c04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ncmreynolds/library/milesTag/0.1.2/milesTag-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ncmreynolds/library/milesTag/0.1.2/milesTag-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ncmreynolds/library/pimoroniTrackball/0.1.3/pimoroniTrackball-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pimoroniTrackball-0.1.3.tar.gz",
+    "size_bytes": 13330,
+    "sha256": "89d62f0b4d6341880b26a949c30a2d93419a9a0756615aa164a07ab29313df34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ncmreynolds/library/pimoroniTrackball/0.1.3/pimoroniTrackball-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ncmreynolds/library/pimoroniTrackball/0.1.3/pimoroniTrackball-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ncmreynolds/library/retroTerm/0.1.6/retroTerm-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "retroTerm-0.1.6.tar.gz",
+    "size_bytes": 84402,
+    "sha256": "157056fada0b47dd7c1e277cc7200df618fa43a9a9ff0cd4b6317b314e434422",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ncmreynolds/library/retroTerm/0.1.6/retroTerm-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/ncmreynolds/library/retroTerm/0.1.6/retroTerm-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ncmreynolds/library/wordwrap/0.1.0/wordwrap-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wordwrap-0.1.0.tar.gz",
+    "size_bytes": 13419,
+    "sha256": "6f3b7763fffe3c4f144781837feb008656bb7ba6806ff4d8f3ef967cae8205a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ncmreynolds/library/wordwrap/0.1.0/wordwrap-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ncmreynolds/library/wordwrap/0.1.0/wordwrap-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

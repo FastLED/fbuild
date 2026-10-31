@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-el13cj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-el13cj/library/Hexapod_Library/0.0.0+sha.82ac75ea08a7/Hexapod_Library-0.0.0+sha.82ac75ea08a7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hexapod_Library-0.0.0+sha.82ac75ea08a7.tar.gz",
+    "size_bytes": 3688,
+    "sha256": "64c655ac091aaf9db0429b9b0ad071c0cc6f0d16aa9993e8f34a01bc9806ffd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-el13cj/library/Hexapod_Library/0.0.0%2Bsha.82ac75ea08a7/Hexapod_Library-0.0.0%2Bsha.82ac75ea08a7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-el13cj/library/Hexapod_Library/0.0.0%2Bsha.82ac75ea08a7/Hexapod_Library-0.0.0%2Bsha.82ac75ea08a7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-el13cj/library/PCA9685/0.0.0+sha.3bcda7deb098/PCA9685-0.0.0+sha.3bcda7deb098.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9685-0.0.0+sha.3bcda7deb098.tar.gz",
+    "size_bytes": 2271,
+    "sha256": "d9f88bb7b0fae5359ca789fe8746c1177e13b8914d44de282aa4d9271fb649ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-el13cj/library/PCA9685/0.0.0%2Bsha.3bcda7deb098/PCA9685-0.0.0%2Bsha.3bcda7deb098.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-el13cj/library/PCA9685/0.0.0%2Bsha.3bcda7deb098/PCA9685-0.0.0%2Bsha.3bcda7deb098.tar.gz"
+    ]
+   }
+  }
+ ]
+}

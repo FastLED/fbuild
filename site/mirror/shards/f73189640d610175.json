@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-georan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-georan/library/ADXL343/0.0.0+sha.e841714a9637/ADXL343-0.0.0+sha.e841714a9637.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL343-0.0.0+sha.e841714a9637.tar.gz",
+    "size_bytes": 1082,
+    "sha256": "234227868d37306668d573c67637dcce79d115c0bcf9778d3a4a2b73eed5695b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-georan/library/ADXL343/0.0.0%2Bsha.e841714a9637/ADXL343-0.0.0%2Bsha.e841714a9637.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-georan/library/ADXL343/0.0.0%2Bsha.e841714a9637/ADXL343-0.0.0%2Bsha.e841714a9637.tar.gz"
+    ]
+   }
+  }
+ ]
+}

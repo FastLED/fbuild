@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nacademyth",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nacademyth/library/RoboFi/1.0.0/RoboFi-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboFi-1.0.0.tar.gz",
+    "size_bytes": 3580,
+    "sha256": "6d39593278ac0d55ba7e4220dc6d7896f69600e6de4bd7fd61ed394f80f33434",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nacademyth/library/RoboFi/1.0.0/RoboFi-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nacademyth/library/RoboFi/1.0.0/RoboFi-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

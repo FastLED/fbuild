@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tomasz90",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tomasz90/library/DebounceMe/4.0.2/DebounceMe-4.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebounceMe-4.0.2.tar.gz",
+    "size_bytes": 6067,
+    "sha256": "baa55935f49858ac29d4f91ba9377757a6a1d8918382fe7b02eea68480f5b29b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tomasz90/library/DebounceMe/4.0.2/DebounceMe-4.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tomasz90/library/DebounceMe/4.0.2/DebounceMe-4.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tomasz90/library/ESP32-OTA-Serial/1.1.9/ESP32-OTA-Serial-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-OTA-Serial-1.1.9.tar.gz",
+    "size_bytes": 4890,
+    "sha256": "f7e91fdb5c4869381b6ff54ff4f87c8b0634ba58be33f01dfc284d0200d5bc99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tomasz90/library/ESP32-OTA-Serial/1.1.9/ESP32-OTA-Serial-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tomasz90/library/ESP32-OTA-Serial/1.1.9/ESP32-OTA-Serial-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tomasz90/library/ESP32-OTA-Serial/1.2.1/ESP32-OTA-Serial-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-OTA-Serial-1.2.1.tar.gz",
+    "size_bytes": 4899,
+    "sha256": "7a2bfeb37b9a22baba9c03036b4c61dfba5f3673bdae9830937f5a42211c76e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tomasz90/library/ESP32-OTA-Serial/1.2.1/ESP32-OTA-Serial-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tomasz90/library/ESP32-OTA-Serial/1.2.1/ESP32-OTA-Serial-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tomasz90/library/EncodeMe/1.1.7/EncodeMe-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EncodeMe-1.1.7.tar.gz",
+    "size_bytes": 5894,
+    "sha256": "43c569046735d4da712780cf69acd8805ca557ab9ea7947d4f37dc273351c0c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tomasz90/library/EncodeMe/1.1.7/EncodeMe-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tomasz90/library/EncodeMe/1.1.7/EncodeMe-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tomasz90/library/TwoButtonsInterface/1.0.4/TwoButtonsInterface-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TwoButtonsInterface-1.0.4.tar.gz",
+    "size_bytes": 24807,
+    "sha256": "0a5db1a7f4697a8bd85a834e68ed03e0a8a3a8ede18ae81576ba2d4305faf28e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tomasz90/library/TwoButtonsInterface/1.0.4/TwoButtonsInterface-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tomasz90/library/TwoButtonsInterface/1.0.4/TwoButtonsInterface-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

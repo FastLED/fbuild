@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/romeric",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "romeric/library/Fastor/0.6.3/Fastor-0.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Fastor-0.6.3.tar.gz",
+    "size_bytes": 280025,
+    "sha256": "2bc20a816dabcbf98e22fb1a966dc308d8b09de15ca92f46bc2d56834d741625",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/romeric/library/Fastor/0.6.3/Fastor-0.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/romeric/library/Fastor/0.6.3/Fastor-0.6.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

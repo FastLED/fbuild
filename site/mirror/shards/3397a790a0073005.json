@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/schlingensiepen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "schlingensiepen/library/TelegramBotClient/0.6.1/TelegramBotClient-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TelegramBotClient-0.6.1.tar.gz",
+    "size_bytes": 42390,
+    "sha256": "d3a5c79ffa3bd0ee5a04b0bd6784c1ee3db801ac5e6acd9afae35c14d7469ec9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/schlingensiepen/library/TelegramBotClient/0.6.1/TelegramBotClient-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/schlingensiepen/library/TelegramBotClient/0.6.1/TelegramBotClient-0.6.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

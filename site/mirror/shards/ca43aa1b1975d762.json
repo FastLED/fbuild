@@ -1,0 +1,477 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nrf24",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nrf24/library/AutoAnalogAudio/1.54.0/AutoAnalogAudio-1.54.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoAnalogAudio-1.54.0.tar.gz",
+    "size_bytes": 72196,
+    "sha256": "a39d95308cf041bf3140fe6c7d81e327df69316aec9ae3bb574bc225d11c610c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/AutoAnalogAudio/1.54.0/AutoAnalogAudio-1.54.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/AutoAnalogAudio/1.54.0/AutoAnalogAudio-1.54.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/AutoAnalogAudio/1.55.1/AutoAnalogAudio-1.55.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoAnalogAudio-1.55.1.tar.gz",
+    "size_bytes": 101796685,
+    "sha256": "ff0974659041b6a3593531f84ab9a791060651594d697abad92a7b46d749f707",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/AutoAnalogAudio/1.55.1/AutoAnalogAudio-1.55.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/AutoAnalogAudio/1.55.1/AutoAnalogAudio-1.55.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/AutoAnalogAudio/1.55.3/AutoAnalogAudio-1.55.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoAnalogAudio-1.55.3.tar.gz",
+    "size_bytes": 101796896,
+    "sha256": "d2e7f313d739cd3ae0b656e6c6a77db36c375a90c09d5fecd58c76c8c2c60717",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/AutoAnalogAudio/1.55.3/AutoAnalogAudio-1.55.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/AutoAnalogAudio/1.55.3/AutoAnalogAudio-1.55.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/AutoAnalogAudio/1.55.4/AutoAnalogAudio-1.55.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoAnalogAudio-1.55.4.tar.gz",
+    "size_bytes": 101798875,
+    "sha256": "b56fc91c3bfb545a7ee8b84936766a079e60decae48a2a0de98d70d73f82d05c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/AutoAnalogAudio/1.55.4/AutoAnalogAudio-1.55.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/AutoAnalogAudio/1.55.4/AutoAnalogAudio-1.55.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/PCM/1.3.7/PCM-1.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCM-1.3.7.tar.gz",
+    "size_bytes": 22574,
+    "sha256": "41f475287cb7cc9298a6d7c095837d53368d7e6a851c1b2369e4ee593ec035d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/PCM/1.3.7/PCM-1.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/PCM/1.3.7/PCM-1.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24/1.3.12/RF24-1.3.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24-1.3.12.tar.gz",
+    "size_bytes": 224828,
+    "sha256": "c3929976ae85e4921d74b6ebb3dfab99f94cf1ff4755aaf2c54c90e236bed855",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24/1.3.12/RF24-1.3.12.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24/1.3.12/RF24-1.3.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24/1.4.10/RF24-1.4.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24-1.4.10.tar.gz",
+    "size_bytes": 5855193,
+    "sha256": "d81c9f1c3f300a11343b2f83065613b22abc5e135850f5ae8d79113c31826785",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24/1.4.10/RF24-1.4.10.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24/1.4.10/RF24-1.4.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24/1.4.11/RF24-1.4.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24-1.4.11.tar.gz",
+    "size_bytes": 5856306,
+    "sha256": "b795d5f0f50b945fa0017f70e4d4c2188aadf48196cdecc74fc38b9b611fbe5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24/1.4.11/RF24-1.4.11.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24/1.4.11/RF24-1.4.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24/1.4.8/RF24-1.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24-1.4.8.tar.gz",
+    "size_bytes": 5756733,
+    "sha256": "40794efed03e542e2d65d32ec4cfb1aa3ada92bf3e69e91c7fe79cd5b26bdbe3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24/1.4.8/RF24-1.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24/1.4.8/RF24-1.4.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24/1.4.9/RF24-1.4.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24-1.4.9.tar.gz",
+    "size_bytes": 5772676,
+    "sha256": "21b4d43998d1d62b3b67c429dc05348da6fc71bdb8c731a3a94af0f2890ba64b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24/1.4.9/RF24-1.4.9.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24/1.4.9/RF24-1.4.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24/1.5.0/RF24-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24-1.5.0.tar.gz",
+    "size_bytes": 5868849,
+    "sha256": "b8fdece3c64c05c4d6fac8163533d7158d6ba5611820c1443f614d67a047c36a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24/1.5.0/RF24-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24/1.5.0/RF24-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24/1.6.0/RF24-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24-1.6.0.tar.gz",
+    "size_bytes": 5880792,
+    "sha256": "10bfe4a4b3de475c85c399990d7bcc728a645ac6aa1a1dd09d383d3c699f943e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24/1.6.0/RF24-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24/1.6.0/RF24-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24/1.6.1/RF24-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24-1.6.1.tar.gz",
+    "size_bytes": 5882765,
+    "sha256": "3383932882e04e56ce3b0f849c03eeb591fc51baf054a59173a3ece2c62285e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24/1.6.1/RF24-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24/1.6.1/RF24-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24/1.6.2/RF24-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24-1.6.2.tar.gz",
+    "size_bytes": 5879422,
+    "sha256": "5ce411733b7c32f568bd1fcb8ee4be4d8b4d8905cc551dd4ace2609cc916594d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24/1.6.2/RF24-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24/1.6.2/RF24-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Ethernet/2.0.0/RF24Ethernet-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Ethernet-2.0.0.tar.gz",
+    "size_bytes": 682850,
+    "sha256": "8869e94c3caee36c7a52971378ac46fd4185560f964c2fec203645f2f8def54c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Ethernet/2.0.0/RF24Ethernet-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Ethernet/2.0.0/RF24Ethernet-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Ethernet/2.0.1/RF24Ethernet-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Ethernet-2.0.1.tar.gz",
+    "size_bytes": 682947,
+    "sha256": "2ff67618b3d6c1aa07590fe60f1160992c09bd3d64326ef3b591da46ddc0862c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Ethernet/2.0.1/RF24Ethernet-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Ethernet/2.0.1/RF24Ethernet-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Ethernet/2.0.2/RF24Ethernet-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Ethernet-2.0.2.tar.gz",
+    "size_bytes": 683283,
+    "sha256": "be68b27008fa0799572c2625aac31f4cdfa8460aa6e67804df085136e87ba8b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Ethernet/2.0.2/RF24Ethernet-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Ethernet/2.0.2/RF24Ethernet-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Ethernet/2.0.3/RF24Ethernet-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Ethernet-2.0.3.tar.gz",
+    "size_bytes": 685234,
+    "sha256": "97e6c243f078a54c2b2054e022b129635aeec2222f5d42089faf63649bca1b93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Ethernet/2.0.3/RF24Ethernet-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Ethernet/2.0.3/RF24Ethernet-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Ethernet/2.1.0/RF24Ethernet-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Ethernet-2.1.0.tar.gz",
+    "size_bytes": 697483,
+    "sha256": "4dae16629b7eace20069ebd9a01a859923e24fcc925d0d03a94d42b45197c6b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Ethernet/2.1.0/RF24Ethernet-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Ethernet/2.1.0/RF24Ethernet-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Ethernet/2.1.1/RF24Ethernet-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Ethernet-2.1.1.tar.gz",
+    "size_bytes": 697741,
+    "sha256": "4e647a272e8e98fe3303a63f81db776da699601c5ea25bc85b2e76313bdbb506",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Ethernet/2.1.1/RF24Ethernet-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Ethernet/2.1.1/RF24Ethernet-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Ethernet/2.1.2/RF24Ethernet-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Ethernet-2.1.2.tar.gz",
+    "size_bytes": 703919,
+    "sha256": "94b788db1d92dc214da96ea0b864ab1ae094ef3101150d137c60596032865b8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Ethernet/2.1.2/RF24Ethernet-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Ethernet/2.1.2/RF24Ethernet-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Ethernet/2.1.3/RF24Ethernet-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Ethernet-2.1.3.tar.gz",
+    "size_bytes": 703990,
+    "sha256": "1fd41c24454a9061d07b67596290d9ff5d0ff9981330f4d73e064d67a380350d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Ethernet/2.1.3/RF24Ethernet-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Ethernet/2.1.3/RF24Ethernet-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Ethernet/2.1.4/RF24Ethernet-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Ethernet-2.1.4.tar.gz",
+    "size_bytes": 704233,
+    "sha256": "7d2173935c2b752fbb508892a8b9ca4c18522ce89c159e1c324b1b711d3e9db1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Ethernet/2.1.4/RF24Ethernet-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Ethernet/2.1.4/RF24Ethernet-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Ethernet/2.2.0/RF24Ethernet-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Ethernet-2.2.0.tar.gz",
+    "size_bytes": 704382,
+    "sha256": "a1efc2684d2186352aae02c5bf30ab73488da0f23b1c6fb1439eda9a2cdeafb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Ethernet/2.2.0/RF24Ethernet-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Ethernet/2.2.0/RF24Ethernet-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Ethernet/2.2.1/RF24Ethernet-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Ethernet-2.2.1.tar.gz",
+    "size_bytes": 717464,
+    "sha256": "ba65b3ae0478e990991381a44c77578cd69c6bcb108e84345bb7cfc47f58ef03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Ethernet/2.2.1/RF24Ethernet-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Ethernet/2.2.1/RF24Ethernet-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Ethernet/2.2.2/RF24Ethernet-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Ethernet-2.2.2.tar.gz",
+    "size_bytes": 718591,
+    "sha256": "c51bd4860dc3fe7e4da46c760a20d8cd6cf2d0689368a670e10704c269557784",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Ethernet/2.2.2/RF24Ethernet-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Ethernet/2.2.2/RF24Ethernet-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Mesh/2.0.3/RF24Mesh-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Mesh-2.0.3.tar.gz",
+    "size_bytes": 401718,
+    "sha256": "3e257967699a47d3ce14de6ce27aba9f16cdbb0a4d01f3a4227a83ff18df0b44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Mesh/2.0.3/RF24Mesh-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Mesh/2.0.3/RF24Mesh-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Mesh/2.1.0/RF24Mesh-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Mesh-2.1.0.tar.gz",
+    "size_bytes": 408192,
+    "sha256": "63d68d06f256c4321a698f7f981dbf0c144d9eb397e708a1832e85e6d6bf3d06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Mesh/2.1.0/RF24Mesh-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Mesh/2.1.0/RF24Mesh-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Mesh/2.1.1/RF24Mesh-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Mesh-2.1.1.tar.gz",
+    "size_bytes": 417161,
+    "sha256": "1c5997d634a83ccb7264c2e97c9ea2298941abf70eabece7b35773592b5f2b78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Mesh/2.1.1/RF24Mesh-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Mesh/2.1.1/RF24Mesh-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Network/2.0.5/RF24Network-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Network-2.0.5.tar.gz",
+    "size_bytes": 2990570,
+    "sha256": "30270cb3c738597ba9f7b894cdd484a5bbfc21b0baff45f988656127d7799cea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Network/2.0.5/RF24Network-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Network/2.0.5/RF24Network-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Network/2.0.6/RF24Network-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Network-2.0.6.tar.gz",
+    "size_bytes": 25538272,
+    "sha256": "05dbc29f61ca52472e0ad67df9da638591adf3e023ccc9d0788dd0bb1f74a106",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Network/2.0.6/RF24Network-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Network/2.0.6/RF24Network-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Network/2.1.0/RF24Network-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Network-2.1.0.tar.gz",
+    "size_bytes": 2998804,
+    "sha256": "f51aa81808cf3557fd5b658948c48422a05ee91a9a0f3cd17967fa0129e70919",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Network/2.1.0/RF24Network-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Network/2.1.0/RF24Network-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Network/2.1.1/RF24Network-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Network-2.1.1.tar.gz",
+    "size_bytes": 3005725,
+    "sha256": "c3ece4835db8fce48b232095ddb1572d6015c3b4521605bbb595212a39587b6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Network/2.1.1/RF24Network-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Network/2.1.1/RF24Network-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Network/2.1.2/RF24Network-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Network-2.1.2.tar.gz",
+    "size_bytes": 3006080,
+    "sha256": "20e3945043ec1caf762adaaa7b7b24ba42a45a9906708be39fe35d43e268c548",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Network/2.1.2/RF24Network-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Network/2.1.2/RF24Network-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Network/2.2.0/RF24Network-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Network-2.2.0.tar.gz",
+    "size_bytes": 3006432,
+    "sha256": "878e1207af7f18cbcc2ba86c1a63965233cbcf3405a03ac4f4143f48cec877b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Network/2.2.0/RF24Network-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Network/2.2.0/RF24Network-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nrf24/library/RF24Network/2.2.1/RF24Network-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24Network-2.2.1.tar.gz",
+    "size_bytes": 3006448,
+    "sha256": "a812ab4bc20a7f47688a4922fa17c6598465fce22b71f084602a03564806692d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nrf24/library/RF24Network/2.2.1/RF24Network-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nrf24/library/RF24Network/2.2.1/RF24Network-2.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

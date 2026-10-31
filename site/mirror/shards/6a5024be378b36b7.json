@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-aoba",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-aoba/library/TinyGPSPlus/0.0.0+sha.6d3813637f20/TinyGPSPlus-0.0.0+sha.6d3813637f20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyGPSPlus-0.0.0+sha.6d3813637f20.tar.gz",
+    "size_bytes": 5998,
+    "sha256": "4010ec42c3493441fe8b91ff5b09a249dbe1110d2bd050db81e25b759b83708c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aoba/library/TinyGPSPlus/0.0.0%2Bsha.6d3813637f20/TinyGPSPlus-0.0.0%2Bsha.6d3813637f20.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aoba/library/TinyGPSPlus/0.0.0%2Bsha.6d3813637f20/TinyGPSPlus-0.0.0%2Bsha.6d3813637f20.tar.gz"
+    ]
+   }
+  }
+ ]
+}

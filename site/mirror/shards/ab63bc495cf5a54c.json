@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/madleech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "madleech/library/Button/1.0.0/Button-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button-1.0.0.tar.gz",
+    "size_bytes": 3823,
+    "sha256": "c03888e59457d24c35273cb4964db1fc74e97e0de92fc8622e1c301bc7343c23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madleech/library/Button/1.0.0/Button-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/madleech/library/Button/1.0.0/Button-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madleech/library/Button/1.2.0/Button-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button-1.2.0.tar.gz",
+    "size_bytes": 5297,
+    "sha256": "fe56ad56cffdad79424898314229f867db1e7207ee6052cd816e05da24e8c767",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madleech/library/Button/1.2.0/Button-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/madleech/library/Button/1.2.0/Button-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "madleech/library/TurnoutPulser/1.0.1/TurnoutPulser-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TurnoutPulser-1.0.1.tar.gz",
+    "size_bytes": 3925,
+    "sha256": "32c9e8192e91018190774eb494f26c17d458a284e4dfb93c5a30168b6ed082df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/madleech/library/TurnoutPulser/1.0.1/TurnoutPulser-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/madleech/library/TurnoutPulser/1.0.1/TurnoutPulser-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

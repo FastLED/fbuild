@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mbed-starter-kit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mbed-starter-kit/library/mbed%20Starter%20Kit%20Demo%20Programs/0.0.0+sha.6a73d3dc037e/mbedStarterKitDemoPrograms-0.0.0+sha.6a73d3dc037e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbedStarterKitDemoPrograms-0.0.0+sha.6a73d3dc037e.tar.gz",
+    "size_bytes": 5181,
+    "sha256": "1cfab9376e94c57a8d25df382e9dddc44be7b501a1b3c18c4059dadf9c14b5d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed-starter-kit/library/mbed%2520Starter%2520Kit%2520Demo%2520Programs/0.0.0%2Bsha.6a73d3dc037e/mbedStarterKitDemoPrograms-0.0.0%2Bsha.6a73d3dc037e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed-starter-kit/library/mbed%20Starter%20Kit%20Demo%20Programs/0.0.0%2Bsha.6a73d3dc037e/mbedStarterKitDemoPrograms-0.0.0%2Bsha.6a73d3dc037e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

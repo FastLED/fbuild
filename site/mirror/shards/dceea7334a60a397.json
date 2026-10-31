@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-1012754868",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-1012754868/library/Snake/0.0.0+sha.f63560a7e7ed/Snake-0.0.0+sha.f63560a7e7ed.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Snake-0.0.0+sha.f63560a7e7ed.tar.gz",
+    "size_bytes": 3223,
+    "sha256": "2ebd07fbb0efc2838c0c779bd3ec379d9784a858f1c06328a28a8afd2cc3887a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-1012754868/library/Snake/0.0.0%2Bsha.f63560a7e7ed/Snake-0.0.0%2Bsha.f63560a7e7ed.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-1012754868/library/Snake/0.0.0%2Bsha.f63560a7e7ed/Snake-0.0.0%2Bsha.f63560a7e7ed.tar.gz"
+    ]
+   }
+  }
+ ]
+}

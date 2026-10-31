@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/javisank",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "javisank/library/LibEdificio/1.1.1/LibEdificio-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibEdificio-1.1.1.tar.gz",
+    "size_bytes": 3465,
+    "sha256": "2a469ba7497ee9a4f8953301e44235bb14abd8c5b6658215b09d6b649f2a03ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/javisank/library/LibEdificio/1.1.1/LibEdificio-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/javisank/library/LibEdificio/1.1.1/LibEdificio-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "javisank/library/LibEstacionamiento/1.1.0/LibEstacionamiento-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibEstacionamiento-1.1.0.tar.gz",
+    "size_bytes": 4344,
+    "sha256": "c33452dddc802fd3ff2ad9a56343257ebdc3d173514466946e86a42fa03cc3f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/javisank/library/LibEstacionamiento/1.1.0/LibEstacionamiento-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/javisank/library/LibEstacionamiento/1.1.0/LibEstacionamiento-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "javisank/library/LibLucesCiudad/1.1.0/LibLucesCiudad-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibLucesCiudad-1.1.0.tar.gz",
+    "size_bytes": 3429,
+    "sha256": "c10c1bd17d48354134b8f5918451356113809ae3988d637d304083f5c399a0bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/javisank/library/LibLucesCiudad/1.1.0/LibLucesCiudad-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/javisank/library/LibLucesCiudad/1.1.0/LibLucesCiudad-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "javisank/library/LibMiniSys/1.1.0/LibMiniSys-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibMiniSys-1.1.0.tar.gz",
+    "size_bytes": 4739,
+    "sha256": "3e5b9cc457384b40ae0747d67f7d08b837410fc143e0676da29971f12e0d6b27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/javisank/library/LibMiniSys/1.1.0/LibMiniSys-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/javisank/library/LibMiniSys/1.1.0/LibMiniSys-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "javisank/library/LibSemaforo/1.1.0/LibSemaforo-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibSemaforo-1.1.0.tar.gz",
+    "size_bytes": 4555,
+    "sha256": "dedb261b981f6dbd8fd1d34099c622c8700c1c0a6c06976147993ded279777ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/javisank/library/LibSemaforo/1.1.0/LibSemaforo-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/javisank/library/LibSemaforo/1.1.0/LibSemaforo-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "javisank/library/LibSemaforosCiudad/1.1.0/LibSemaforosCiudad-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibSemaforosCiudad-1.1.0.tar.gz",
+    "size_bytes": 3812,
+    "sha256": "e35e165e65872689e128e78b6ae7b539d92df7f2b98ae4d51ae98827e9c74430",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/javisank/library/LibSemaforosCiudad/1.1.0/LibSemaforosCiudad-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/javisank/library/LibSemaforosCiudad/1.1.0/LibSemaforosCiudad-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

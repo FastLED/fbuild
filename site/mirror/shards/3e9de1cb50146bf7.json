@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jlaustill",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jlaustill/library/AD7606p16_t4/0.1.1/AD7606p16_t4-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD7606p16_t4-0.1.1.tar.gz",
+    "size_bytes": 6468,
+    "sha256": "2bad2df55e370b4b0c200c5fbbe1a05dfacd5f14e2c161786bfca7eb3b1c9cf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jlaustill/library/AD7606p16_t4/0.1.1/AD7606p16_t4-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jlaustill/library/AD7606p16_t4/0.1.1/AD7606p16_t4-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jlaustill/library/J1939/2.0.0/J1939-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "J1939-2.0.0.tar.gz",
+    "size_bytes": 3440,
+    "sha256": "3561927d8d1141138f425d4b146ee949bb24c081dd825d2994e41a9794a437dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jlaustill/library/J1939/2.0.0/J1939-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jlaustill/library/J1939/2.0.0/J1939-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jlaustill/library/J1939/2.1.0/J1939-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "J1939-2.1.0.tar.gz",
+    "size_bytes": 7077,
+    "sha256": "3a3874b5ee8e99fb47ba7c1befe4f3f070bb96b5121d70265d027ec5d2374be8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jlaustill/library/J1939/2.1.0/J1939-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jlaustill/library/J1939/2.1.0/J1939-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jlaustill/library/bit-utils/1.1.0/bit-utils-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bit-utils-1.1.0.tar.gz",
+    "size_bytes": 3070,
+    "sha256": "54e55c1154d3f36473b1e068a0349ac239cb2fd49809e4ae231e8552fb7c2900",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jlaustill/library/bit-utils/1.1.0/bit-utils-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jlaustill/library/bit-utils/1.1.0/bit-utils-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jlaustill/library/sea-dash/0.0.6/sea-dash-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sea-dash-0.0.6.tar.gz",
+    "size_bytes": 8581,
+    "sha256": "bd24833847fb40080bca75f8a3fe1fad514fb5805d547e3b1167dff77c515fa7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jlaustill/library/sea-dash/0.0.6/sea-dash-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/jlaustill/library/sea-dash/0.0.6/sea-dash-0.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

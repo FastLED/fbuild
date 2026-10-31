@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vargham",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vargham/library/Joystick/0.0.0+sha.48ba213dfbb3/Joystick-0.0.0+sha.48ba213dfbb3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Joystick-0.0.0+sha.48ba213dfbb3.tar.gz",
+    "size_bytes": 2411,
+    "sha256": "dc441b9ad8b70b3e30e4da75311ff3bea82cfcd7a9b4b1545780e15105429e49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vargham/library/Joystick/0.0.0%2Bsha.48ba213dfbb3/Joystick-0.0.0%2Bsha.48ba213dfbb3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vargham/library/Joystick/0.0.0%2Bsha.48ba213dfbb3/Joystick-0.0.0%2Bsha.48ba213dfbb3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-vargham/library/STM32F103variants/0.0.0+sha.6568c3b20d29/STM32F103variants-0.0.0+sha.6568c3b20d29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32F103variants-0.0.0+sha.6568c3b20d29.tar.gz",
+    "size_bytes": 3851,
+    "sha256": "406193667a789a5fdeaa7250254b906b7ea1817ca6172ff9e0ad1c1cc9aff078",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vargham/library/STM32F103variants/0.0.0%2Bsha.6568c3b20d29/STM32F103variants-0.0.0%2Bsha.6568c3b20d29.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vargham/library/STM32F103variants/0.0.0%2Bsha.6568c3b20d29/STM32F103variants-0.0.0%2Bsha.6568c3b20d29.tar.gz"
+    ]
+   }
+  }
+ ]
+}

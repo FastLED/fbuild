@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vasya-zh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vasya-zh/library/TMD3725/0.3.0/TMD3725-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMD3725-0.3.0.tar.gz",
+    "size_bytes": 93117,
+    "sha256": "07f61b11be6afb6ba3b10f0fc87cb8ee4d75298b1e2ef4839cfd823c0efc4281",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vasya-zh/library/TMD3725/0.3.0/TMD3725-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vasya-zh/library/TMD3725/0.3.0/TMD3725-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vasya-zh/library/TMD3725/0.3.1/TMD3725-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMD3725-0.3.1.tar.gz",
+    "size_bytes": 93831,
+    "sha256": "e9471eb1f77c491027f81049c00727479439a719d1702b6a8af79e69f3c82440",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vasya-zh/library/TMD3725/0.3.1/TMD3725-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vasya-zh/library/TMD3725/0.3.1/TMD3725-0.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ibm-iot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ibm-iot/library/IBMIoTF/0.0.0+sha.5f037f24ce29/IBMIoTF-0.0.0+sha.5f037f24ce29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IBMIoTF-0.0.0+sha.5f037f24ce29.tar.gz",
+    "size_bytes": 10950,
+    "sha256": "856f083924e3bdf68753d0bbaf9964b04a89779ef991889d12f5d717298c16c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ibm-iot/library/IBMIoTF/0.0.0%2Bsha.5f037f24ce29/IBMIoTF-0.0.0%2Bsha.5f037f24ce29.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ibm-iot/library/IBMIoTF/0.0.0%2Bsha.5f037f24ce29/IBMIoTF-0.0.0%2Bsha.5f037f24ce29.tar.gz"
+    ]
+   }
+  }
+ ]
+}

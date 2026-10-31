@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-techstep",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-techstep/library/DS3231/0.0.0+sha.1607610a4ee9/DS3231-0.0.0+sha.1607610a4ee9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS3231-0.0.0+sha.1607610a4ee9.tar.gz",
+    "size_bytes": 6687,
+    "sha256": "dca5213cd761c362341c6de804c36f51502a33fba719ff092183975e4cb5db61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-techstep/library/DS3231/0.0.0%2Bsha.1607610a4ee9/DS3231-0.0.0%2Bsha.1607610a4ee9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-techstep/library/DS3231/0.0.0%2Bsha.1607610a4ee9/DS3231-0.0.0%2Bsha.1607610a4ee9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-techstep/library/MAX72XX/0.0.0+sha.2bcf4c5b47d4/MAX72XX-0.0.0+sha.2bcf4c5b47d4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX72XX-0.0.0+sha.2bcf4c5b47d4.tar.gz",
+    "size_bytes": 4538,
+    "sha256": "83b4a194212431896c7b037084986e7b730824eb613d32e674684d0f7f5e1578",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-techstep/library/MAX72XX/0.0.0%2Bsha.2bcf4c5b47d4/MAX72XX-0.0.0%2Bsha.2bcf4c5b47d4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-techstep/library/MAX72XX/0.0.0%2Bsha.2bcf4c5b47d4/MAX72XX-0.0.0%2Bsha.2bcf4c5b47d4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

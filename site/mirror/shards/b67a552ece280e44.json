@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bubulindo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bubulindo/library/STM32Encoder/1.0/STM32Encoder-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32Encoder-1.0.tar.gz",
+    "size_bytes": 5415,
+    "sha256": "3772e139dd0d032285ec841e43e2842cb4c6fbe02dbc94022ce4e276dc8e5f4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bubulindo/library/STM32Encoder/1.0/STM32Encoder-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bubulindo/library/STM32Encoder/1.0/STM32Encoder-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-daniele",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-daniele/library/PicoTCP/0.0.0+sha.a70f34550c34/PicoTCP-0.0.0+sha.a70f34550c34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoTCP-0.0.0+sha.a70f34550c34.tar.gz",
+    "size_bytes": 130855,
+    "sha256": "2a5a9122cfdd98e533c8133b3793d39ffa9ad7fdbf121378fdb03f18d4bc0628",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-daniele/library/PicoTCP/0.0.0%2Bsha.a70f34550c34/PicoTCP-0.0.0%2Bsha.a70f34550c34.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-daniele/library/PicoTCP/0.0.0%2Bsha.a70f34550c34/PicoTCP-0.0.0%2Bsha.a70f34550c34.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-daniele/library/lpc1768-picotcp-eth-polling/0.0.0+sha.d6222c305d94/lpc1768-picotcp-eth-polling-0.0.0+sha.d6222c305d94.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lpc1768-picotcp-eth-polling-0.0.0+sha.d6222c305d94.tar.gz",
+    "size_bytes": 11029,
+    "sha256": "9bddf69107bd845351154574801795336320745354191126652174a9150b52b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-daniele/library/lpc1768-picotcp-eth-polling/0.0.0%2Bsha.d6222c305d94/lpc1768-picotcp-eth-polling-0.0.0%2Bsha.d6222c305d94.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-daniele/library/lpc1768-picotcp-eth-polling/0.0.0%2Bsha.d6222c305d94/lpc1768-picotcp-eth-polling-0.0.0%2Bsha.d6222c305d94.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/grmrgecko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "grmrgecko/library/cmd/1.0.0/cmd-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cmd-1.0.0.tar.gz",
+    "size_bytes": 5494,
+    "sha256": "198a9c252b0b3a6d834351b39148954c86c73788932bc6006c3d411cb72b3930",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/grmrgecko/library/cmd/1.0.0/cmd-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/grmrgecko/library/cmd/1.0.0/cmd-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

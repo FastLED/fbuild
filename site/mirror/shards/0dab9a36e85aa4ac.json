@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/normandunbar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "normandunbar/library/AVRmillis/1.0.2/AVRmillis-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AVRmillis-1.0.2.tar.gz",
+    "size_bytes": 8007,
+    "sha256": "4cf2aa878a6eb953c2399d8d6d72e256a6782b8ee63c57e8c8b8a9ec9a271082",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/normandunbar/library/AVRmillis/1.0.2/AVRmillis-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/normandunbar/library/AVRmillis/1.0.2/AVRmillis-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "normandunbar/library/avrDigitalPin/1.0.0/avrDigitalPin-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "avrDigitalPin-1.0.0.tar.gz",
+    "size_bytes": 3784,
+    "sha256": "daa2cbee095bf9a4297afade4ba89a491497c856f7e55d9f3bdffc247bfe5ba3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/normandunbar/library/avrDigitalPin/1.0.0/avrDigitalPin-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/normandunbar/library/avrDigitalPin/1.0.0/avrDigitalPin-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

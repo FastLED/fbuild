@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kublet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kublet/library/KGFX/0.0.22/KGFX-0.0.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KGFX-0.0.22.tar.gz",
+    "size_bytes": 207424,
+    "sha256": "64c1e0eafc05696cca36709b745ba47780d26de2698100059825ab45e46e5fa2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kublet/library/KGFX/0.0.22/KGFX-0.0.22.tar.gz",
+     "https://dl.registry.platformio.org/download/kublet/library/KGFX/0.0.22/KGFX-0.0.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kublet/library/OTAServer/1.0.4/OTAServer-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OTAServer-1.0.4.tar.gz",
+    "size_bytes": 1751,
+    "sha256": "0b70656214380b6ad6b8a77a0ce7cf2b0a2ca0ba3aa2829e90153f1cc0b00aee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kublet/library/OTAServer/1.0.4/OTAServer-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/kublet/library/OTAServer/1.0.4/OTAServer-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/homeodor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "homeodor/library/FastAnalogRead/1.3.0/FastAnalogRead-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastAnalogRead-1.3.0.tar.gz",
+    "size_bytes": 9565,
+    "sha256": "a8a75d3129b8fdbf555f422bf7773c501cf14f4ff52d232906a54b420601c933",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/homeodor/library/FastAnalogRead/1.3.0/FastAnalogRead-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/homeodor/library/FastAnalogRead/1.3.0/FastAnalogRead-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

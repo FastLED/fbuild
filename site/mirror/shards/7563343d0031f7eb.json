@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leonardobove",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leonardobove/library/avr_utils/0.0.1/avr_utils-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "avr_utils-0.0.1.tar.gz",
+    "size_bytes": 3287,
+    "sha256": "aab9e4f983403cc73a5b6f2c28da71455f29aac944f9be71d3bcd52c3a6f79e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leonardobove/library/avr_utils/0.0.1/avr_utils-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leonardobove/library/avr_utils/0.0.1/avr_utils-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

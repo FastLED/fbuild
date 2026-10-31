@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/smartelecru",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "smartelecru/library/SE_BasicUnit/1.0.1/SE_BasicUnit-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SE_BasicUnit-1.0.1.tar.gz",
+    "size_bytes": 10377,
+    "sha256": "b2915842024ac5215db6ab632072f913afbc3ae8668c89738b0c5c33e3527056",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smartelecru/library/SE_BasicUnit/1.0.1/SE_BasicUnit-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/smartelecru/library/SE_BasicUnit/1.0.1/SE_BasicUnit-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smartelecru/library/SE_Button/1.0.0/SE_Button-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SE_Button-1.0.0.tar.gz",
+    "size_bytes": 4814,
+    "sha256": "a6369e6af9cf9d9d51735799f149414bead49e09afdeb73c51ac3b8cce7aa7bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smartelecru/library/SE_Button/1.0.0/SE_Button-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/smartelecru/library/SE_Button/1.0.0/SE_Button-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smartelecru/library/SE_EEPROM/1.0.1/SE_EEPROM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SE_EEPROM-1.0.1.tar.gz",
+    "size_bytes": 4616,
+    "sha256": "95f2790167fadfd27235836fa8d039f0e71c80617e2b48b8bcea624fc3e36ec4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smartelecru/library/SE_EEPROM/1.0.1/SE_EEPROM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/smartelecru/library/SE_EEPROM/1.0.1/SE_EEPROM-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

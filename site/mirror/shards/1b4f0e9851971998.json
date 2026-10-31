@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/test1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "test1/library/class_test_1/1.0.0/class_test_1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "class_test_1-1.0.0.tar.gz",
+    "size_bytes": 2425,
+    "sha256": "c5aa2d0a270b4964ab6d8d46dce7c1c0503359c1b151b3aa3ee12b1a81547ce2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/test1/library/class_test_1/1.0.0/class_test_1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/test1/library/class_test_1/1.0.0/class_test_1-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "test1/library/test2/1.0.0/test2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "test2-1.0.0.tar.gz",
+    "size_bytes": 2789,
+    "sha256": "9b0a88a4331543a895ec7c3cfcb81ef77aabea9671a23bbdbbdf012e98cb4e66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/test1/library/test2/1.0.0/test2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/test1/library/test2/1.0.0/test2-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

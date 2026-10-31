@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-motoi1484",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-motoi1484/library/TLC5940/0.0.0+sha.be9daf113060/TLC5940-0.0.0+sha.be9daf113060.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLC5940-0.0.0+sha.be9daf113060.tar.gz",
+    "size_bytes": 3893,
+    "sha256": "07fe76e3aadc67fa4f8f8d77f408998670a18da7ee1612608e7bcee39a8f145c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-motoi1484/library/TLC5940/0.0.0%2Bsha.be9daf113060/TLC5940-0.0.0%2Bsha.be9daf113060.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-motoi1484/library/TLC5940/0.0.0%2Bsha.be9daf113060/TLC5940-0.0.0%2Bsha.be9daf113060.tar.gz"
+    ]
+   }
+  }
+ ]
+}

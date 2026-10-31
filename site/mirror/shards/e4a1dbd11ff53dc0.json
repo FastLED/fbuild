@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gevindug",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gevindug/library/HW827_PPG/1.0.2/HW827_PPG-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HW827_PPG-1.0.2.tar.gz",
+    "size_bytes": 14094021,
+    "sha256": "0ee7db4c75fc32d848e3bff5728efcc40a58f48f36167e70c3ddf5d195f14cfa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gevindug/library/HW827_PPG/1.0.2/HW827_PPG-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gevindug/library/HW827_PPG/1.0.2/HW827_PPG-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

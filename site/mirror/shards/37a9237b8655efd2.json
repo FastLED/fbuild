@@ -1,0 +1,386 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/teddokano",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "teddokano/library/AFE_NXP_Arduino/1.0.1/AFE_NXP_Arduino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AFE_NXP_Arduino-1.0.1.tar.gz",
+    "size_bytes": 46923,
+    "sha256": "f13e87180336bb74332a918139d1c4d012b1dca909f73b1c6faacb6cb1f56e6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/AFE_NXP_Arduino/1.0.1/AFE_NXP_Arduino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/AFE_NXP_Arduino/1.0.1/AFE_NXP_Arduino-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/AFE_NXP_Arduino/1.0.3/AFE_NXP_Arduino-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AFE_NXP_Arduino-1.0.3.tar.gz",
+    "size_bytes": 49063,
+    "sha256": "d62e80344b231e40b90ebee9eacc90ee403f6b60202b8e7d5852ae49f15d618e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/AFE_NXP_Arduino/1.0.3/AFE_NXP_Arduino-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/AFE_NXP_Arduino/1.0.3/AFE_NXP_Arduino-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/AFE_NXP_Arduino/2.0.1/AFE_NXP_Arduino-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AFE_NXP_Arduino-2.0.1.tar.gz",
+    "size_bytes": 55039,
+    "sha256": "e8c3aa770ee09a1c2abf7e566b51f0a4798705255a3694455cdd052d8b4718d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/AFE_NXP_Arduino/2.0.1/AFE_NXP_Arduino-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/AFE_NXP_Arduino/2.0.1/AFE_NXP_Arduino-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/AFE_NXP_Arduino/2.0.2/AFE_NXP_Arduino-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AFE_NXP_Arduino-2.0.2.tar.gz",
+    "size_bytes": 56061,
+    "sha256": "e3255232311b60acfd6770621a0c6c766c4f8d0868525dce526796f31e62a5b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/AFE_NXP_Arduino/2.0.2/AFE_NXP_Arduino-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/AFE_NXP_Arduino/2.0.2/AFE_NXP_Arduino-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/AFE_NXP_Arduino/2.0.3/AFE_NXP_Arduino-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AFE_NXP_Arduino-2.0.3.tar.gz",
+    "size_bytes": 56087,
+    "sha256": "fd87c25af18c2b008d546ebcbd718e27789ea7fd6c900e44b9d8adde59da9190",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/AFE_NXP_Arduino/2.0.3/AFE_NXP_Arduino-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/AFE_NXP_Arduino/2.0.3/AFE_NXP_Arduino-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/AFE_NXP_Arduino/2.0.4/AFE_NXP_Arduino-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AFE_NXP_Arduino-2.0.4.tar.gz",
+    "size_bytes": 57529,
+    "sha256": "825bc0a588f67aba4fc471baaac09c309c294ae8282f2656e7451c395ce075b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/AFE_NXP_Arduino/2.0.4/AFE_NXP_Arduino-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/AFE_NXP_Arduino/2.0.4/AFE_NXP_Arduino-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/AFE_NXP_Arduino/2.0.5/AFE_NXP_Arduino-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AFE_NXP_Arduino-2.0.5.tar.gz",
+    "size_bytes": 57497,
+    "sha256": "a305c2bd4169a25c4e216c4f38274c42cfe4aa99668d766a5cf460d569d21495",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/AFE_NXP_Arduino/2.0.5/AFE_NXP_Arduino-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/AFE_NXP_Arduino/2.0.5/AFE_NXP_Arduino-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/AFE_NXP_Arduino/3.0.0/AFE_NXP_Arduino-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AFE_NXP_Arduino-3.0.0.tar.gz",
+    "size_bytes": 65186,
+    "sha256": "877b151a08cdbe38e0727a44e8c8da3f34ddb03d90e7c29d59f1bf0ad4ae3594",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/AFE_NXP_Arduino/3.0.0/AFE_NXP_Arduino-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/AFE_NXP_Arduino/3.0.0/AFE_NXP_Arduino-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/BusInOut_Arduino/0.1.0/BusInOut_Arduino-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BusInOut_Arduino-0.1.0.tar.gz",
+    "size_bytes": 34776,
+    "sha256": "f30dcd2002bc5192ee045de12b8fbbc87b981df632f59035535fe4015e36469d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/BusInOut_Arduino/0.1.0/BusInOut_Arduino-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/BusInOut_Arduino/0.1.0/BusInOut_Arduino-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/BusRepeater_NXP_Arduino/1.0.4/BusRepeater_NXP_Arduino-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BusRepeater_NXP_Arduino-1.0.4.tar.gz",
+    "size_bytes": 36770,
+    "sha256": "a2db6dc7f29f06bb3d51b6c309d6bb55829e846a03042ab978e002b6c27f4fd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/BusRepeater_NXP_Arduino/1.0.4/BusRepeater_NXP_Arduino-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/BusRepeater_NXP_Arduino/1.0.4/BusRepeater_NXP_Arduino-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/EEPROM_STM_Arduino/1.1.0/EEPROM_STM_Arduino-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM_STM_Arduino-1.1.0.tar.gz",
+    "size_bytes": 36413,
+    "sha256": "5a2ef406f0da4b52aa862121eb0a945848e9ea893e0b96bb406a067e8da4c0b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/EEPROM_STM_Arduino/1.1.0/EEPROM_STM_Arduino-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/EEPROM_STM_Arduino/1.1.0/EEPROM_STM_Arduino-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/GPIO_NXP_Arduino/1.1.1/GPIO_NXP_Arduino-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPIO_NXP_Arduino-1.1.1.tar.gz",
+    "size_bytes": 48009,
+    "sha256": "c9906e687c347ce9533f1451fac885010fb8e0e0c843b3d511d71de2ec0cb91b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/GPIO_NXP_Arduino/1.1.1/GPIO_NXP_Arduino-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/GPIO_NXP_Arduino/1.1.1/GPIO_NXP_Arduino-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/GPIO_NXP_Arduino/1.1.2/GPIO_NXP_Arduino-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPIO_NXP_Arduino-1.1.2.tar.gz",
+    "size_bytes": 48256,
+    "sha256": "2678ba9bec55b88e8b69f5dbea44f5a6919dff898144a09d33df1ccd09775953",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/GPIO_NXP_Arduino/1.1.2/GPIO_NXP_Arduino-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/GPIO_NXP_Arduino/1.1.2/GPIO_NXP_Arduino-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/I2C_device_Arduino/1.1.0/I2C_device_Arduino-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C_device_Arduino-1.1.0.tar.gz",
+    "size_bytes": 37647,
+    "sha256": "4f72c94a0fc8434d7366cfd53e4c975e1123c523a9ace566bcf0ab3631591bea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/I2C_device_Arduino/1.1.0/I2C_device_Arduino-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/I2C_device_Arduino/1.1.0/I2C_device_Arduino-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/I2C_device_Arduino/1.2.0/I2C_device_Arduino-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C_device_Arduino-1.2.0.tar.gz",
+    "size_bytes": 37827,
+    "sha256": "2cba9ec4a77ab68ccbbf7b9c4d7e12175a15ec20cd1a74ef525ea99bc65c165a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/I2C_device_Arduino/1.2.0/I2C_device_Arduino-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/I2C_device_Arduino/1.2.0/I2C_device_Arduino-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/LCDDrivers_NXP_Arduino/1.0.2/LCDDrivers_NXP_Arduino-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCDDrivers_NXP_Arduino-1.0.2.tar.gz",
+    "size_bytes": 38011,
+    "sha256": "2549db3e34f89baec1c397be2403c2b60ed554d8704a1469b6e3404b638daa10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/LCDDrivers_NXP_Arduino/1.0.2/LCDDrivers_NXP_Arduino-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/LCDDrivers_NXP_Arduino/1.0.2/LCDDrivers_NXP_Arduino-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/LEDDrivers_NXP_Arduino/1.0.3/LEDDrivers_NXP_Arduino-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEDDrivers_NXP_Arduino-1.0.3.tar.gz",
+    "size_bytes": 50504,
+    "sha256": "c250ee370c2898b9ee2ec63c434af0358ff86096f1aec71129d48bae245bf07d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/LEDDrivers_NXP_Arduino/1.0.3/LEDDrivers_NXP_Arduino-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/LEDDrivers_NXP_Arduino/1.0.3/LEDDrivers_NXP_Arduino-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/LevelShifter_NXP_Arduino/0.9.3/LevelShifter_NXP_Arduino-0.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LevelShifter_NXP_Arduino-0.9.3.tar.gz",
+    "size_bytes": 37641,
+    "sha256": "8673851c109ed274a4783e5ef4c143f67a3fe42f7586654129847c73b67bc879",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/LevelShifter_NXP_Arduino/0.9.3/LevelShifter_NXP_Arduino-0.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/LevelShifter_NXP_Arduino/0.9.3/LevelShifter_NXP_Arduino-0.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/MUX_SW_NXP_Arduino/1.1.0/MUX_SW_NXP_Arduino-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MUX_SW_NXP_Arduino-1.1.0.tar.gz",
+    "size_bytes": 35726,
+    "sha256": "9c068f21610e61938849fe6dd39bab275fe80fad55e7efebcbea317e706a7bb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/MUX_SW_NXP_Arduino/1.1.0/MUX_SW_NXP_Arduino-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/MUX_SW_NXP_Arduino/1.1.0/MUX_SW_NXP_Arduino-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/Potentiometer_ADI_Arduino/0.1.0/Potentiometer_ADI_Arduino-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Potentiometer_ADI_Arduino-0.1.0.tar.gz",
+    "size_bytes": 34500,
+    "sha256": "6b228127a3ba623f2b0398b59b57c0d935cccd157f2f82f569ce6a8bf88932ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/Potentiometer_ADI_Arduino/0.1.0/Potentiometer_ADI_Arduino-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/Potentiometer_ADI_Arduino/0.1.0/Potentiometer_ADI_Arduino-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/RTC_NXP_Arduino/1.1.2/RTC_NXP_Arduino-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC_NXP_Arduino-1.1.2.tar.gz",
+    "size_bytes": 47317,
+    "sha256": "506fb437d2fd03d9f9bdf8aa9e53ce6b8959284f3f8391f7f0552c6c3c247c40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/RTC_NXP_Arduino/1.1.2/RTC_NXP_Arduino-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/RTC_NXP_Arduino/1.1.2/RTC_NXP_Arduino-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/RTC_NXP_Arduino/1.1.3/RTC_NXP_Arduino-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC_NXP_Arduino-1.1.3.tar.gz",
+    "size_bytes": 47524,
+    "sha256": "92d853c22727af8b5d9543969119985eb25240f1a978e70f157ed6d9a08e068b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/RTC_NXP_Arduino/1.1.3/RTC_NXP_Arduino-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/RTC_NXP_Arduino/1.1.3/RTC_NXP_Arduino-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/TempSensors_NXP_Arduino/1.1.1/TempSensors_NXP_Arduino-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TempSensors_NXP_Arduino-1.1.1.tar.gz",
+    "size_bytes": 40616,
+    "sha256": "88df8505d2cbf9a0b0b18472040b6c384a35fbeb5e56dfb36fd0893249baad49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/TempSensors_NXP_Arduino/1.1.1/TempSensors_NXP_Arduino-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/TempSensors_NXP_Arduino/1.1.1/TempSensors_NXP_Arduino-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/Waveshare_TFT_Touch/1.0.0/Waveshare_TFT_Touch-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Waveshare_TFT_Touch-1.0.0.tar.gz",
+    "size_bytes": 23126,
+    "sha256": "cc46d571c8c79736c700e9235ef5b7dc7d7249beadc450d2f1fcf00d273e8091",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/Waveshare_TFT_Touch/1.0.0/Waveshare_TFT_Touch-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/Waveshare_TFT_Touch/1.0.0/Waveshare_TFT_Touch-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/Waveshare_TFT_Touch/1.1.0/Waveshare_TFT_Touch-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Waveshare_TFT_Touch-1.1.0.tar.gz",
+    "size_bytes": 36678,
+    "sha256": "74df6c3b5bb44bd8a6d42b1810087a5a9f9cf7cd95bd5e82f256265545ac8714",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/Waveshare_TFT_Touch/1.1.0/Waveshare_TFT_Touch-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/Waveshare_TFT_Touch/1.1.0/Waveshare_TFT_Touch-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/Waveshare_TFT_Touch/1.3.0/Waveshare_TFT_Touch-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Waveshare_TFT_Touch-1.3.0.tar.gz",
+    "size_bytes": 62050,
+    "sha256": "1ed41a228018fd74753f7301d4d4ea4bd77b5770b3d44c9c8f94778b5fa67125",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/Waveshare_TFT_Touch/1.3.0/Waveshare_TFT_Touch-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/Waveshare_TFT_Touch/1.3.0/Waveshare_TFT_Touch-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/Waveshare_TFT_Touch/1.3.1/Waveshare_TFT_Touch-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Waveshare_TFT_Touch-1.3.1.tar.gz",
+    "size_bytes": 65261,
+    "sha256": "624efab05666d1207e4f39b2b43aa4cc7c19d4efe4eab06b1057eaa1c19f8151",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/Waveshare_TFT_Touch/1.3.1/Waveshare_TFT_Touch-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/Waveshare_TFT_Touch/1.3.1/Waveshare_TFT_Touch-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/Waveshare_TFT_Touch/1.3.2/Waveshare_TFT_Touch-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Waveshare_TFT_Touch-1.3.2.tar.gz",
+    "size_bytes": 77036,
+    "sha256": "b6bd727028636fbaab3cc060a78836f5defe33df4d015a19603dc8f10e5eaf75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/Waveshare_TFT_Touch/1.3.2/Waveshare_TFT_Touch-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/Waveshare_TFT_Touch/1.3.2/Waveshare_TFT_Touch-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teddokano/library/Waveshare_TFT_Touch/1.3.3/Waveshare_TFT_Touch-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Waveshare_TFT_Touch-1.3.3.tar.gz",
+    "size_bytes": 76945,
+    "sha256": "a8e69f6964995432b4cb54c066965b1e1fd552dc3963a0ccbc9e029f53731837",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teddokano/library/Waveshare_TFT_Touch/1.3.3/Waveshare_TFT_Touch-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/teddokano/library/Waveshare_TFT_Touch/1.3.3/Waveshare_TFT_Touch-1.3.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vbogom",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vbogom/library/TextLCD_Rus/0.0.0+sha.fbd41515ce75/TextLCD_Rus-0.0.0+sha.fbd41515ce75.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TextLCD_Rus-0.0.0+sha.fbd41515ce75.tar.gz",
+    "size_bytes": 7001,
+    "sha256": "defad471f611e92056117fd188e432802c872dfcff4b1518c9941d338f54417b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vbogom/library/TextLCD_Rus/0.0.0%2Bsha.fbd41515ce75/TextLCD_Rus-0.0.0%2Bsha.fbd41515ce75.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vbogom/library/TextLCD_Rus/0.0.0%2Bsha.fbd41515ce75/TextLCD_Rus-0.0.0%2Bsha.fbd41515ce75.tar.gz"
+    ]
+   }
+  }
+ ]
+}

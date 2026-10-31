@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/roncapat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "roncapat/library/MultiLcd/1.0.0-alpha/MultiLcd-1.0.0-alpha.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiLcd-1.0.0-alpha.tar.gz",
+    "size_bytes": 15671,
+    "sha256": "009dd51618bee7621eef1d95fc5dc510800e92392f65ba1321bdbe8282b9f931",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roncapat/library/MultiLcd/1.0.0-alpha/MultiLcd-1.0.0-alpha.tar.gz",
+     "https://dl.registry.platformio.org/download/roncapat/library/MultiLcd/1.0.0-alpha/MultiLcd-1.0.0-alpha.tar.gz"
+    ]
+   }
+  }
+ ]
+}

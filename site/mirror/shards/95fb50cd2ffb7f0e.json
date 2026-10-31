@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/elhanan7",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "elhanan7/library/e7-switcher/1.0.5/e7-switcher-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "e7-switcher-1.0.5.tar.gz",
+    "size_bytes": 2223579,
+    "sha256": "e16f96fd89881169d8f9e8116acd0ce649c10d73973e3c84271581963ad98be1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elhanan7/library/e7-switcher/1.0.5/e7-switcher-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/elhanan7/library/e7-switcher/1.0.5/e7-switcher-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elhanan7/library/e7-switcher/1.0.6/e7-switcher-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "e7-switcher-1.0.6.tar.gz",
+    "size_bytes": 2793624,
+    "sha256": "88f8704233831f25ac3ceb93b6b4f9d696b6cc698b52ba283450253653a0dbbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elhanan7/library/e7-switcher/1.0.6/e7-switcher-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/elhanan7/library/e7-switcher/1.0.6/e7-switcher-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "elhanan7/library/e7-switcher/1.0.8/e7-switcher-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "e7-switcher-1.0.8.tar.gz",
+    "size_bytes": 1726822,
+    "sha256": "eb89e77554c697ee448ef70ffc6b600bc7cee57246620ba1c68cf501b912bcad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elhanan7/library/e7-switcher/1.0.8/e7-switcher-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/elhanan7/library/e7-switcher/1.0.8/e7-switcher-1.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

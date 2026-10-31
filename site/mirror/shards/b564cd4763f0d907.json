@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ulmerman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ulmerman/library/Elegoo/1.3.1/Elegoo-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Elegoo-1.3.1.tar.gz",
+    "size_bytes": 12882,
+    "sha256": "0ce30eb39d49066f611c20b0d5349f5fc204022f5f9b4633d28e491a477c37f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulmerman/library/Elegoo/1.3.1/Elegoo-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ulmerman/library/Elegoo/1.3.1/Elegoo-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

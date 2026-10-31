@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/invandy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "invandy/library/Oregon_NR/21.9.14/Oregon_NR-21.9.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Oregon_NR-21.9.14.tar.gz",
+    "size_bytes": 40426,
+    "sha256": "2d40a8349a6ee82f7afb25e1d03db98a902002b5194177fe352845ad51d4dd11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/invandy/library/Oregon_NR/21.9.14/Oregon_NR-21.9.14.tar.gz",
+     "https://dl.registry.platformio.org/download/invandy/library/Oregon_NR/21.9.14/Oregon_NR-21.9.14.tar.gz"
+    ]
+   }
+  }
+ ]
+}

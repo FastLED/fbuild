@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/picodebr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "picodebr/library/PlugPiBlack/0.0.3/PlugPiBlack-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlugPiBlack-0.0.3.tar.gz",
+    "size_bytes": 2229,
+    "sha256": "362fa6efb9ec19bd8370d137a5e1471b828b6154f92b66109346cc6bff29c3f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picodebr/library/PlugPiBlack/0.0.3/PlugPiBlack-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/picodebr/library/PlugPiBlack/0.0.3/PlugPiBlack-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

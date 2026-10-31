@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/totemmaker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "totemmaker/library/Totem%20Library/1.1.2/TotemLibrary-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TotemLibrary-1.1.2.tar.gz",
+    "size_bytes": 49668,
+    "sha256": "e6ea51f4d518fead8ded844f9db51dd5649f40809207822132e2fd5a9525c13f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/totemmaker/library/Totem%2520Library/1.1.2/TotemLibrary-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/totemmaker/library/Totem%20Library/1.1.2/TotemLibrary-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "totemmaker/library/Totem%20Roboboard/1.3.1/TotemRoboboard-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TotemRoboboard-1.3.1.tar.gz",
+    "size_bytes": 635278,
+    "sha256": "9779dd8e7d39effbed5a4e21a5db86006e910d290f657c25beddde936c03ea48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/totemmaker/library/Totem%2520Roboboard/1.3.1/TotemRoboboard-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/totemmaker/library/Totem%20Roboboard/1.3.1/TotemRoboboard-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vax9210",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vax9210/library/ESP32Audiometer/0.1.0/ESP32Audiometer-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Audiometer-0.1.0.tar.gz",
+    "size_bytes": 5611,
+    "sha256": "4fbf3fb6f60327da3d0f9d76e2c9d8a151eb22f5cc8847f49ddc393f278a86d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vax9210/library/ESP32Audiometer/0.1.0/ESP32Audiometer-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vax9210/library/ESP32Audiometer/0.1.0/ESP32Audiometer-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

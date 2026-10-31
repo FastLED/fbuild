@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aelmendorf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aelmendorf/library/EEPROM_WL/1.0.0/EEPROM_WL-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM_WL-1.0.0.tar.gz",
+    "size_bytes": 8029,
+    "sha256": "3f60caa5c9cbeadbb2dc705b1975873db18c1ee2f82e101e1b5a9d25044f2f63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aelmendorf/library/EEPROM_WL/1.0.0/EEPROM_WL-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aelmendorf/library/EEPROM_WL/1.0.0/EEPROM_WL-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

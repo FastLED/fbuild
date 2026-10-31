@@ -1,0 +1,412 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fastled",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fastled/library/FastLED/3.10.0/FastLED-3.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.10.0.tar.gz",
+    "size_bytes": 11779351,
+    "sha256": "8d74f2c9b1b7a0a60c0beea84abb8530da1635c156818cec524b2fc8f9cbec73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.10.0/FastLED-3.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.10.0/FastLED-3.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.10.1/FastLED-3.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.10.1.tar.gz",
+    "size_bytes": 11779847,
+    "sha256": "fe6f8113c513d79904e03a4fe4d6a002bad025e94f3fbe6589d2036fedbc0a6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.10.1/FastLED-3.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.10.1/FastLED-3.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.10.2/FastLED-3.10.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.10.2.tar.gz",
+    "size_bytes": 16104660,
+    "sha256": "fffdccac13e85ff4d04b9cb5a1c2a2a76595210a99fc9d2dbb0888e2e96e9c88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.10.2/FastLED-3.10.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.10.2/FastLED-3.10.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.10.3/FastLED-3.10.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.10.3.tar.gz",
+    "size_bytes": 16228428,
+    "sha256": "b3a31137a0489e90c43bf7881299dac0da4dc599c516fd36a3b8ac35b2f43e03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.10.3/FastLED-3.10.3.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.10.3/FastLED-3.10.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.10.5/FastLED-3.10.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.10.5.tar.gz",
+    "size_bytes": 34030822,
+    "sha256": "d905fcfc19f55b2dea656237c05f00c9aa4357fc569b8de61c43034204b6ae3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.10.5/FastLED-3.10.5.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.10.5/FastLED-3.10.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.10.6/FastLED-3.10.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.10.6.tar.gz",
+    "size_bytes": 35520528,
+    "sha256": "a419159c1f0e36bdaac767d787c39ab53d7d29c16c9690bb5e4bfe5153b2e983",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.10.6/FastLED-3.10.6.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.10.6/FastLED-3.10.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.10.7/FastLED-3.10.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.10.7.tar.gz",
+    "size_bytes": 35592208,
+    "sha256": "b996483e8417751398491021b352e2cd3dbcb609efc231e6bddbc5147ece1e96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.10.7/FastLED-3.10.7.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.10.7/FastLED-3.10.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.10.8/FastLED-3.10.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.10.8.tar.gz",
+    "size_bytes": 35603752,
+    "sha256": "bab571560d0bc5366e41e7db493ddce6080c239d2c695a65336359140e8e5505",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.10.8/FastLED-3.10.8.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.10.8/FastLED-3.10.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.3.2/FastLED-3.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.3.2.tar.gz",
+    "size_bytes": 230926,
+    "sha256": "b965078537f0f8fac6117afab62a1b1a7ff3a44c071e60bd566de8e86362bfd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.3.2/FastLED-3.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.3.2/FastLED-3.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.3.3/FastLED-3.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.3.3.tar.gz",
+    "size_bytes": 240359,
+    "sha256": "78382ffe80ab9a77d6699386a21b42bddc75f074d7b79165ebde3df544bae98d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.3.3/FastLED-3.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.3.3/FastLED-3.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.4.0/FastLED-3.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.4.0.tar.gz",
+    "size_bytes": 245204,
+    "sha256": "1bb357333f0230a1e3a3a5a106a76c15f8eb34258c3e0b7bcdfd63fc036072a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.4.0/FastLED-3.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.4.0/FastLED-3.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.5.0/FastLED-3.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.5.0.tar.gz",
+    "size_bytes": 256518,
+    "sha256": "1c635e1fff8c6dcdce4fee864ba1e73ee0681e1f9e887013f7e30c75486351fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.5.0/FastLED-3.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.5.0/FastLED-3.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.6.0/FastLED-3.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.6.0.tar.gz",
+    "size_bytes": 286989,
+    "sha256": "090205863bdeeedcfc1372ebdde8495ab8c6de92f4732ccc4b6376259ef6ddcf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.6.0/FastLED-3.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.6.0/FastLED-3.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.7.0/FastLED-3.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.7.0.tar.gz",
+    "size_bytes": 297807,
+    "sha256": "493b869fd99c1e0f795f472bd66d217b3ecbe0018c40557918be3f4c1adcc92e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.7.0/FastLED-3.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.7.0/FastLED-3.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.7.1/FastLED-3.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.7.1.tar.gz",
+    "size_bytes": 299206,
+    "sha256": "e538e60f2ba3970103d19f859fed3e3601d7d9e2432dde350bf0ce923fc550f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.7.1/FastLED-3.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.7.1/FastLED-3.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.7.3/FastLED-3.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.7.3.tar.gz",
+    "size_bytes": 302236,
+    "sha256": "53665e82ba89bc20d6317c5c63fba10e2fad583145732395ea8c200ab0372b44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.7.3/FastLED-3.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.7.3/FastLED-3.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.7.4/FastLED-3.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.7.4.tar.gz",
+    "size_bytes": 310943,
+    "sha256": "f6948f5b722aa221174493f64d31d62270fc39c6b17ee8c7c574c49ff476ad95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.7.4/FastLED-3.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.7.4/FastLED-3.7.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.7.8/FastLED-3.7.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.7.8.tar.gz",
+    "size_bytes": 347183,
+    "sha256": "de075191212ab4130204e5b2a5e5059b58b5026cbe37c48df23153d8cc47a5af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.7.8/FastLED-3.7.8.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.7.8/FastLED-3.7.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.8.0/FastLED-3.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.8.0.tar.gz",
+    "size_bytes": 416019,
+    "sha256": "07f50ed4b1f11959434b09c4159d478f0502e7da6b413ca40a74177e9bca23fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.8.0/FastLED-3.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.8.0/FastLED-3.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.9.0/FastLED-3.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.9.0.tar.gz",
+    "size_bytes": 605703,
+    "sha256": "0ab499507a6152a176fad5b469a340d94c20e01534535333959892ee0a16009a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.9.0/FastLED-3.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.9.0/FastLED-3.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.9.10/FastLED-3.9.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.9.10.tar.gz",
+    "size_bytes": 11241969,
+    "sha256": "11cf1db6fe993e184c805c6bad7530ec515c5b9ef5ccd021c0476b39dab3bcac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.9.10/FastLED-3.9.10.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.9.10/FastLED-3.9.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.9.12/FastLED-3.9.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.9.12.tar.gz",
+    "size_bytes": 11249482,
+    "sha256": "88762ce084e9ef4a031f20ff991fa90165383382fa2192fbe1f0a88337cd9803",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.9.12/FastLED-3.9.12.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.9.12/FastLED-3.9.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.9.13/FastLED-3.9.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.9.13.tar.gz",
+    "size_bytes": 11254642,
+    "sha256": "a325f7bc5dd3d52d6facdbc6d5f187abb2efde85ecce26284ec572c237c1a034",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.9.13/FastLED-3.9.13.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.9.13/FastLED-3.9.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.9.14/FastLED-3.9.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.9.14.tar.gz",
+    "size_bytes": 11259035,
+    "sha256": "05c2c074caa9a5f21f372eac34cf28d86d6d944488aa846704e2576287c64f15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.9.14/FastLED-3.9.14.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.9.14/FastLED-3.9.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.9.15/FastLED-3.9.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.9.15.tar.gz",
+    "size_bytes": 11232226,
+    "sha256": "f8cf9b47999575697de6873cc6c395924dbabca7ae031360c2809d1b3bb73f8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.9.15/FastLED-3.9.15.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.9.15/FastLED-3.9.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.9.16/FastLED-3.9.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.9.16.tar.gz",
+    "size_bytes": 11279486,
+    "sha256": "31ca93df4a52eaf4f424f9183d92994b5c02035c95034e68f589e0cb115c0903",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.9.16/FastLED-3.9.16.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.9.16/FastLED-3.9.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.9.20/FastLED-3.9.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.9.20.tar.gz",
+    "size_bytes": 11773329,
+    "sha256": "6bb772223d8b0c1e15725c5de76031a1b890b6cf1238a7758eac0c78456c675d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.9.20/FastLED-3.9.20.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.9.20/FastLED-3.9.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.9.4/FastLED-3.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.9.4.tar.gz",
+    "size_bytes": 3131590,
+    "sha256": "dcf2bd0fb64af87550235d86a948014d4c4eefed051fd822b036c62f36a21bc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.9.4/FastLED-3.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.9.4/FastLED-3.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.9.6/FastLED-3.9.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.9.6.tar.gz",
+    "size_bytes": 11220348,
+    "sha256": "d99ab3a3bdd083a0ba9ce55d8af32f6f624880d2ce0ab31d6570b0ec5e1f90f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.9.6/FastLED-3.9.6.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.9.6/FastLED-3.9.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.9.7/FastLED-3.9.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.9.7.tar.gz",
+    "size_bytes": 11220839,
+    "sha256": "ff602a91c05a2ca45e15f1244cb5e205c004b102f6f4466c66fbae3a3a9240a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.9.7/FastLED-3.9.7.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.9.7/FastLED-3.9.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fastled/library/FastLED/3.9.9/FastLED-3.9.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED-3.9.9.tar.gz",
+    "size_bytes": 11237833,
+    "sha256": "4e4a0a6efc0b9689834e3e6eecca22fc976c1f935cf29dad0aaa54dce831b04c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fastled/library/FastLED/3.9.9/FastLED-3.9.9.tar.gz",
+     "https://dl.registry.platformio.org/download/fastled/library/FastLED/3.9.9/FastLED-3.9.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

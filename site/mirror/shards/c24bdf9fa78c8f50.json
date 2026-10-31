@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-symbiotic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-symbiotic/library/BooleanTicker/0.0.0+sha.9015010b5125/BooleanTicker-0.0.0+sha.9015010b5125.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BooleanTicker-0.0.0+sha.9015010b5125.tar.gz",
+    "size_bytes": 1235,
+    "sha256": "52a07d0aacd83506486bac9480eaf00db2aadbbf34b3ede423bb3e74316faa2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-symbiotic/library/BooleanTicker/0.0.0%2Bsha.9015010b5125/BooleanTicker-0.0.0%2Bsha.9015010b5125.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-symbiotic/library/BooleanTicker/0.0.0%2Bsha.9015010b5125/BooleanTicker-0.0.0%2Bsha.9015010b5125.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-symbiotic/library/I2CTransaction/0.0.0+sha.63e07ac95a2c/I2CTransaction-0.0.0+sha.63e07ac95a2c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2CTransaction-0.0.0+sha.63e07ac95a2c.tar.gz",
+    "size_bytes": 3242,
+    "sha256": "71536b56c21a780653cf1a8dc76f18f5fd8b4512dc5aabedf42c7cb57cb3febd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-symbiotic/library/I2CTransaction/0.0.0%2Bsha.63e07ac95a2c/I2CTransaction-0.0.0%2Bsha.63e07ac95a2c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-symbiotic/library/I2CTransaction/0.0.0%2Bsha.63e07ac95a2c/I2CTransaction-0.0.0%2Bsha.63e07ac95a2c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

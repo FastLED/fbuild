@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/steve-ferrero",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "steve-ferrero/library/WifiManagerDesign/0.0.5/WifiManagerDesign-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WifiManagerDesign-0.0.5.tar.gz",
+    "size_bytes": 116668,
+    "sha256": "04f053451da40562cfba5ac2d5bf14a3a3e3c50447bf140b6f3b473a9e1a553d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steve-ferrero/library/WifiManagerDesign/0.0.5/WifiManagerDesign-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/steve-ferrero/library/WifiManagerDesign/0.0.5/WifiManagerDesign-0.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

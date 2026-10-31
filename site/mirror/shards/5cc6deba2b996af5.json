@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/honvl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "honvl/library/Seeed%20Xiao%20NRF52840%20Battery/1.0.0/SeeedXiaoNRF52840Battery-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedXiaoNRF52840Battery-1.0.0.tar.gz",
+    "size_bytes": 1103,
+    "sha256": "180abc7c08b53f82c98d390a8bd7f6133c49e56e7fc56202d59dbd85d7861539",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/honvl/library/Seeed%2520Xiao%2520NRF52840%2520Battery/1.0.0/SeeedXiaoNRF52840Battery-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/honvl/library/Seeed%20Xiao%20NRF52840%20Battery/1.0.0/SeeedXiaoNRF52840Battery-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

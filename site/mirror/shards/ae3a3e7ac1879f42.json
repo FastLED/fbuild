@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pcercuei",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pcercuei/library/libserialport/0.0.0+sha.4d50ebffed6f/libserialport-0.0.0+sha.4d50ebffed6f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libserialport-0.0.0+sha.4d50ebffed6f.tar.gz",
+    "size_bytes": 13365,
+    "sha256": "1f9adda9fd7a8672c4762b38fbebcbb0617f8aa16470f1ce2395020181328f86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pcercuei/library/libserialport/0.0.0%2Bsha.4d50ebffed6f/libserialport-0.0.0%2Bsha.4d50ebffed6f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pcercuei/library/libserialport/0.0.0%2Bsha.4d50ebffed6f/libserialport-0.0.0%2Bsha.4d50ebffed6f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pcercuei/library/libxml2/0.0.0+sha.26f20484cbdc/libxml2-0.0.0+sha.26f20484cbdc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libxml2-0.0.0+sha.26f20484cbdc.tar.gz",
+    "size_bytes": 1048646,
+    "sha256": "b9cb73e46ff03c267ab7895d0621537cb47c9823713d9837575583a1c7d74dff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pcercuei/library/libxml2/0.0.0%2Bsha.26f20484cbdc/libxml2-0.0.0%2Bsha.26f20484cbdc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pcercuei/library/libxml2/0.0.0%2Bsha.26f20484cbdc/libxml2-0.0.0%2Bsha.26f20484cbdc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

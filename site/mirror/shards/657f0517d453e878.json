@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/coderfls",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "coderfls/library/MultiFunctionShield/1.5.3/MultiFunctionShield-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiFunctionShield-1.5.3.tar.gz",
+    "size_bytes": 5748,
+    "sha256": "8e36ba4f4fd67b4bd99ea21eb3ade3220e7c4e1c1a838e7c1f452523843e1c61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/coderfls/library/MultiFunctionShield/1.5.3/MultiFunctionShield-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/coderfls/library/MultiFunctionShield/1.5.3/MultiFunctionShield-1.5.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

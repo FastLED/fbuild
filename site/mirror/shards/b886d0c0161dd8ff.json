@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/byte-storede",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "byte-storede/library/AlexaIoT/1.0.0/AlexaIoT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlexaIoT-1.0.0.tar.gz",
+    "size_bytes": 23025,
+    "sha256": "53cfc5f19994295465cfbba24d0bfd9959f29395e0aa6cb23795d01d4df2e0d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/byte-storede/library/AlexaIoT/1.0.0/AlexaIoT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/byte-storede/library/AlexaIoT/1.0.0/AlexaIoT-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ziqiyap",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ziqiyap/library/SPS30/0.0.0+sha.f6b216228067/SPS30-0.0.0+sha.f6b216228067.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPS30-0.0.0+sha.f6b216228067.tar.gz",
+    "size_bytes": 4209,
+    "sha256": "b10b4720cb191f7279098fb8c1ed98bd73fd81104d4fd76c95d571bb72665938",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ziqiyap/library/SPS30/0.0.0%2Bsha.f6b216228067/SPS30-0.0.0%2Bsha.f6b216228067.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ziqiyap/library/SPS30/0.0.0%2Bsha.f6b216228067/SPS30-0.0.0%2Bsha.f6b216228067.tar.gz"
+    ]
+   }
+  }
+ ]
+}

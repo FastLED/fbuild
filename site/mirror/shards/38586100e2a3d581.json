@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/botnroll",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "botnroll/library/BnrOneAPlus/1.1.2/BnrOneAPlus-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BnrOneAPlus-1.1.2.tar.gz",
+    "size_bytes": 97549,
+    "sha256": "0c0b3efb191cee4c6f4e138fc8c8c1adc2b3d9d851ef80b9f3da024f8f14db8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/botnroll/library/BnrOneAPlus/1.1.2/BnrOneAPlus-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/botnroll/library/BnrOneAPlus/1.1.2/BnrOneAPlus-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

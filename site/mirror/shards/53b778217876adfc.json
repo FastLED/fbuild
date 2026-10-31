@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/faizyee",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "faizyee/library/DZ_HTTP/1.0.0/DZ_HTTP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DZ_HTTP-1.0.0.tar.gz",
+    "size_bytes": 2797,
+    "sha256": "666f4464fe347b9586b7bcd3d1ea4ebffb02dc4cbc9fe5d4805667ce18f492ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faizyee/library/DZ_HTTP/1.0.0/DZ_HTTP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faizyee/library/DZ_HTTP/1.0.0/DZ_HTTP-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faizyee/library/DZ_HTTP/1.0.1/DZ_HTTP-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DZ_HTTP-1.0.1.tar.gz",
+    "size_bytes": 2872,
+    "sha256": "b1096f37c93026fdf7259539f7328246c6dda79688abf7e03d2e17e5e22d8857",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faizyee/library/DZ_HTTP/1.0.1/DZ_HTTP-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/faizyee/library/DZ_HTTP/1.0.1/DZ_HTTP-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "faizyee/library/Socketyee/1.2.0/Socketyee-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Socketyee-1.2.0.tar.gz",
+    "size_bytes": 3624,
+    "sha256": "b2f13982b26c5b074ecbfb9ce5f14a63273220bf9d8cb64daae9142cd720b9a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/faizyee/library/Socketyee/1.2.0/Socketyee-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/faizyee/library/Socketyee/1.2.0/Socketyee-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

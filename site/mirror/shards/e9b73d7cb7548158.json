@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/communitygd32cores",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-darwin_x86_64-2.1100.211207.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-gd32-darwin_x86_64-2.1100.211207.tar.gz",
+    "size_bytes": 2332136,
+    "sha256": "9297113960a9033aa875a439f415139107aeeb14f8cf01033b72d66ce0adc316",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-darwin_x86_64-2.1100.211207.tar.gz",
+     "https://dl.registry.platformio.org/download/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-darwin_x86_64-2.1100.211207.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_aarch64-2.1100.211207.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-gd32-linux_aarch64-2.1100.211207.tar.gz",
+    "size_bytes": 3092013,
+    "sha256": "de178c55405bbddd12d4947edcd1fee55b5a159ed7a6cd6878cdd4ef54f3e75f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_aarch64-2.1100.211207.tar.gz",
+     "https://dl.registry.platformio.org/download/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_aarch64-2.1100.211207.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_armv6l-2.1100.211207.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-gd32-linux_armv6l-2.1100.211207.tar.gz",
+    "size_bytes": 3069653,
+    "sha256": "4ba0687bf5a090c020ee336b09888af06174a6855586d0ae2ece873d9d632a4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_armv6l-2.1100.211207.tar.gz",
+     "https://dl.registry.platformio.org/download/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_armv6l-2.1100.211207.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_i686-2.1100.211207.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-gd32-linux_i686-2.1100.211207.tar.gz",
+    "size_bytes": 3163744,
+    "sha256": "d306cd8aa85c510196606eccf9a9e52cd9e6cbd7c1ac944b0bab7c3e5789008c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_i686-2.1100.211207.tar.gz",
+     "https://dl.registry.platformio.org/download/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_i686-2.1100.211207.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_x86_64-2.1100.211207.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-gd32-linux_x86_64-2.1100.211207.tar.gz",
+    "size_bytes": 3090653,
+    "sha256": "223102e187ba07b91cbd6afca6b1d77b571cbd04491aa842ad45db5a95879f13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_x86_64-2.1100.211207.tar.gz",
+     "https://dl.registry.platformio.org/download/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-linux_x86_64-2.1100.211207.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-windows_amd64-2.1100.211207.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-gd32-windows_amd64-2.1100.211207.tar.gz",
+    "size_bytes": 2466782,
+    "sha256": "234d565e69d28dbc16be35a99e71d35622d0568a6ce8b049fff1963082b903e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-windows_amd64-2.1100.211207.tar.gz",
+     "https://dl.registry.platformio.org/download/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-windows_amd64-2.1100.211207.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-windows_x86-2.1100.211207.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-gd32-windows_x86-2.1100.211207.tar.gz",
+    "size_bytes": 2487325,
+    "sha256": "f49bb856ffb03948f68f1a4a7cecdf4737407148526d787e9d071250041231de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-windows_x86-2.1100.211207.tar.gz",
+     "https://dl.registry.platformio.org/download/communitygd32cores/tool/tool-openocd-gd32/2.1100.211207/tool-openocd-gd32-windows_x86-2.1100.211207.tar.gz"
+    ]
+   }
+  }
+ ]
+}

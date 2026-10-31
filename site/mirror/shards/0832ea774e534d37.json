@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aliasthethird",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aliasthethird/library/Blink/1.0.6/Blink-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blink-1.0.6.tar.gz",
+    "size_bytes": 2378,
+    "sha256": "c3a04d9f66728a9d492bbea136d8e97899452d51710c674bdc7d1c87c28b4a64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliasthethird/library/Blink/1.0.6/Blink-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/aliasthethird/library/Blink/1.0.6/Blink-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliasthethird/library/FunctionGenerator/1.0.1/FunctionGenerator-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FunctionGenerator-1.0.1.tar.gz",
+    "size_bytes": 3809,
+    "sha256": "6f4ce1e4f28b1e1c096dc565bf9c57765c53286cb0ec41d63ceb39e6168d39f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliasthethird/library/FunctionGenerator/1.0.1/FunctionGenerator-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aliasthethird/library/FunctionGenerator/1.0.1/FunctionGenerator-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliasthethird/library/FunctionGenerator/1.0.4/FunctionGenerator-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FunctionGenerator-1.0.4.tar.gz",
+    "size_bytes": 4624,
+    "sha256": "4a9b79338edf1055dd63a90424ec62283304e306d7fd5b234c0d2ae80c92be4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliasthethird/library/FunctionGenerator/1.0.4/FunctionGenerator-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/aliasthethird/library/FunctionGenerator/1.0.4/FunctionGenerator-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliasthethird/library/FunctionGenerator/1.0.5/FunctionGenerator-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FunctionGenerator-1.0.5.tar.gz",
+    "size_bytes": 4635,
+    "sha256": "7374117c755f2edb690eb92ebbd01db3495128bc8260943abf335e17b4e0148a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliasthethird/library/FunctionGenerator/1.0.5/FunctionGenerator-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/aliasthethird/library/FunctionGenerator/1.0.5/FunctionGenerator-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliasthethird/library/FunctionGenerator/1.0.6/FunctionGenerator-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FunctionGenerator-1.0.6.tar.gz",
+    "size_bytes": 4650,
+    "sha256": "baa84599b950eea9f93ace7e8ecd8592b944c88676b830b9f9fa04d5748aac36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliasthethird/library/FunctionGenerator/1.0.6/FunctionGenerator-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/aliasthethird/library/FunctionGenerator/1.0.6/FunctionGenerator-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliasthethird/library/FunctionGenerator/1.0.7/FunctionGenerator-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FunctionGenerator-1.0.7.tar.gz",
+    "size_bytes": 4737,
+    "sha256": "3e90457eb099d770b086c2268536452c13dff7f1f68d74160c9d58370b771453",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliasthethird/library/FunctionGenerator/1.0.7/FunctionGenerator-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/aliasthethird/library/FunctionGenerator/1.0.7/FunctionGenerator-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliasthethird/library/SayHello/1.0.4/SayHello-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SayHello-1.0.4.tar.gz",
+    "size_bytes": 1253,
+    "sha256": "ed55c6c53409ca1023e7457f61e94171931575414f004d1ae53893e32d1bb398",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliasthethird/library/SayHello/1.0.4/SayHello-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/aliasthethird/library/SayHello/1.0.4/SayHello-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aliasthethird/library/TaskStatsAnalyzer/1.0.0/TaskStatsAnalyzer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskStatsAnalyzer-1.0.0.tar.gz",
+    "size_bytes": 5314,
+    "sha256": "ecaed334deb0648cbe25bd252304c5348a723fbda1b3053c3c2e87535ffe6500",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aliasthethird/library/TaskStatsAnalyzer/1.0.0/TaskStatsAnalyzer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aliasthethird/library/TaskStatsAnalyzer/1.0.0/TaskStatsAnalyzer-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

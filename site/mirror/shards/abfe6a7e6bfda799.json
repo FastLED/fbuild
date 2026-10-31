@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/riverscn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "riverscn/library/pms/1.0.1/pms-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pms-1.0.1.tar.gz",
+    "size_bytes": 14591,
+    "sha256": "372f805c2dbbf707881e5743c648d6443976b5c9fa199450f6eff0402858beee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/riverscn/library/pms/1.0.1/pms-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/riverscn/library/pms/1.0.1/pms-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

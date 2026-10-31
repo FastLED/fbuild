@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/youjunjer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "youjunjer/library/NodeRemote/1.0.0/NodeRemote-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NodeRemote-1.0.0.tar.gz",
+    "size_bytes": 18984,
+    "sha256": "cb06bbde23d339b5582673a401762af3c490f9cb54802512b7fe871f208ba65d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/youjunjer/library/NodeRemote/1.0.0/NodeRemote-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/youjunjer/library/NodeRemote/1.0.0/NodeRemote-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "youjunjer/library/NodeRemote/1.0.1/NodeRemote-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NodeRemote-1.0.1.tar.gz",
+    "size_bytes": 22315,
+    "sha256": "656f7c7d603176db7a20c2597c1170476e114b8f60d001210ef22a3772efc53d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/youjunjer/library/NodeRemote/1.0.1/NodeRemote-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/youjunjer/library/NodeRemote/1.0.1/NodeRemote-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "youjunjer/library/NodeRemote/1.0.2/NodeRemote-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NodeRemote-1.0.2.tar.gz",
+    "size_bytes": 23082,
+    "sha256": "726bcae5583ed3dd4cdca2172782dc88fa17300569f3c0fe978d652d8e6aeddc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/youjunjer/library/NodeRemote/1.0.2/NodeRemote-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/youjunjer/library/NodeRemote/1.0.2/NodeRemote-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

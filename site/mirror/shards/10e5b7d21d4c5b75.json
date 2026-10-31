@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nawawimegahertz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nawawimegahertz/library/FarmSense/1.0.1/FarmSense-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FarmSense-1.0.1.tar.gz",
+    "size_bytes": 20897,
+    "sha256": "fc044987653f8db47f93c199815c6c4f33641082dd085b86281a746f5495b47a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nawawimegahertz/library/FarmSense/1.0.1/FarmSense-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nawawimegahertz/library/FarmSense/1.0.1/FarmSense-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nawawimegahertz/library/IndustrialSense/1.0.0/IndustrialSense-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IndustrialSense-1.0.0.tar.gz",
+    "size_bytes": 18211,
+    "sha256": "226b27aadb23d5a80bc6e0f72a5e8f72e70fab5cea7b2e39aaa578c48bfa035c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nawawimegahertz/library/IndustrialSense/1.0.0/IndustrialSense-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nawawimegahertz/library/IndustrialSense/1.0.0/IndustrialSense-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nawawimegahertz/library/IndustrialSense/1.0.1/IndustrialSense-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IndustrialSense-1.0.1.tar.gz",
+    "size_bytes": 18208,
+    "sha256": "0dd9330e2017fcdff7bf5ea1435848a0102e148409f02dc155faf53d7621d953",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nawawimegahertz/library/IndustrialSense/1.0.1/IndustrialSense-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nawawimegahertz/library/IndustrialSense/1.0.1/IndustrialSense-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

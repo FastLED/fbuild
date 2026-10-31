@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zeitgeist87",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zeitgeist87/library/PinChangeInterruptHandler/0.1/PinChangeInterruptHandler-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinChangeInterruptHandler-0.1.tar.gz",
+    "size_bytes": 16275,
+    "sha256": "2090c387b37088d20f8bbfcb16e628db944bf58f0971fa388c7006fe5a32eb00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zeitgeist87/library/PinChangeInterruptHandler/0.1/PinChangeInterruptHandler-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zeitgeist87/library/PinChangeInterruptHandler/0.1/PinChangeInterruptHandler-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zeitgeist87/library/RFReceiver/0.2/RFReceiver-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFReceiver-0.2.tar.gz",
+    "size_bytes": 15343,
+    "sha256": "d8fcf55eb5b35156fddfdb85cf4dd7f6a70bcceead38bf7693f41c4119187eef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zeitgeist87/library/RFReceiver/0.2/RFReceiver-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/zeitgeist87/library/RFReceiver/0.2/RFReceiver-0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zeitgeist87/library/RFTransmitter/0.2/RFTransmitter-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFTransmitter-0.2.tar.gz",
+    "size_bytes": 14930,
+    "sha256": "7fd7ce05ddb92794dc330110a8fcf7d8dd47240162261acb5948b477477744cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zeitgeist87/library/RFTransmitter/0.2/RFTransmitter-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/zeitgeist87/library/RFTransmitter/0.2/RFTransmitter-0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

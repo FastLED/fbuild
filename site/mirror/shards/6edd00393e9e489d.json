@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/daawesomep",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "daawesomep/library/Cardinal/1.0.2/Cardinal-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Cardinal-1.0.2.tar.gz",
+    "size_bytes": 9591,
+    "sha256": "500b45fb7177f5e4aefc3d13fc34cf717a6cc26db13cc17392ea5dc8d49b2807",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daawesomep/library/Cardinal/1.0.2/Cardinal-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/daawesomep/library/Cardinal/1.0.2/Cardinal-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daawesomep/library/DMXUSB/0.0.4/DMXUSB-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMXUSB-0.0.4.tar.gz",
+    "size_bytes": 11104,
+    "sha256": "5c06b817dcf0c36aa95e77432d476dfeaf28076d9bdb5e8dc27d9a962827564f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daawesomep/library/DMXUSB/0.0.4/DMXUSB-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/daawesomep/library/DMXUSB/0.0.4/DMXUSB-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

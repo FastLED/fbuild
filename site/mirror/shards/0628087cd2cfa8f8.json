@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kashif-baig",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kashif-baig/library/MessagingLib/1.0.0/MessagingLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MessagingLib-1.0.0.tar.gz",
+    "size_bytes": 10061,
+    "sha256": "4857baa38ae245a023c6ee6cc21edc553227a876a22b1778b30e6bbe0dd5472b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kashif-baig/library/MessagingLib/1.0.0/MessagingLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kashif-baig/library/MessagingLib/1.0.0/MessagingLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kashif-baig/library/MvcWebServerLib/3.0.0/MvcWebServerLib-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MvcWebServerLib-3.0.0.tar.gz",
+    "size_bytes": 21955,
+    "sha256": "3398ded958228cf232ed63e86f3c95a2861b5d0ffb3b4bad877ae75c9c01b685",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kashif-baig/library/MvcWebServerLib/3.0.0/MvcWebServerLib-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kashif-baig/library/MvcWebServerLib/3.0.0/MvcWebServerLib-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kashif-baig/library/StringLib/1.0.0/StringLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StringLib-1.0.0.tar.gz",
+    "size_bytes": 4134,
+    "sha256": "63781039d90e21ba1eca6d33f4b0054853d10df1ff6abf9f038d2655119a0d92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kashif-baig/library/StringLib/1.0.0/StringLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kashif-baig/library/StringLib/1.0.0/StringLib-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

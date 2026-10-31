@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sfeister",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sfeister/library/SCPI_Parser/2.2.0/SCPI_Parser-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCPI_Parser-2.2.0.tar.gz",
+    "size_bytes": 47961,
+    "sha256": "1fec3c7cabe27f69070ee39eff590aed57c938961fc6cb3fc5cc408632104992",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sfeister/library/SCPI_Parser/2.2.0/SCPI_Parser-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sfeister/library/SCPI_Parser/2.2.0/SCPI_Parser-2.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

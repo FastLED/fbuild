@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kobaproduction",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kobaproduction/library/AsyncInput/0.1.1/AsyncInput-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncInput-0.1.1.tar.gz",
+    "size_bytes": 28558,
+    "sha256": "b703da93dd134a6919dc2e6649a1f9fc8c1e3f2603aa217669559a8137a7f8a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kobaproduction/library/AsyncInput/0.1.1/AsyncInput-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kobaproduction/library/AsyncInput/0.1.1/AsyncInput-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kobaproduction/library/AvrFHT/1.1.1/AvrFHT-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AvrFHT-1.1.1.tar.gz",
+    "size_bytes": 26589,
+    "sha256": "58dc6d3f9c1642a9342f814cdbc80b0f24be03afdba3118632286295668baaed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kobaproduction/library/AvrFHT/1.1.1/AvrFHT-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kobaproduction/library/AvrFHT/1.1.1/AvrFHT-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kobaproduction/library/BDSP/0.1.1/BDSP-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BDSP-0.1.1.tar.gz",
+    "size_bytes": 8895,
+    "sha256": "11f4510fbcf7dfd2c8088a54d4ccb2905e2e5a45fa06881a2015797cb7343e51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kobaproduction/library/BDSP/0.1.1/BDSP-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kobaproduction/library/BDSP/0.1.1/BDSP-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

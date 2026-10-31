@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/matthieuvigne",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "matthieuvigne/library/RMDX/1.0.0/RMDX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RMDX-1.0.0.tar.gz",
+    "size_bytes": 4540,
+    "sha256": "5af62a766a4e4bd57c9cb502bdc930b902259bb253a6bebe10cff3a252bb6249",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthieuvigne/library/RMDX/1.0.0/RMDX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthieuvigne/library/RMDX/1.0.0/RMDX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthieuvigne/library/STS_Servos/1.2.1/STS_Servos-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STS_Servos-1.2.1.tar.gz",
+    "size_bytes": 12305,
+    "sha256": "fc6611ddc545aa3ccba4a4764c1bb038d299b84aaef9b486f6a824b825c30ba2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthieuvigne/library/STS_Servos/1.2.1/STS_Servos-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/matthieuvigne/library/STS_Servos/1.2.1/STS_Servos-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

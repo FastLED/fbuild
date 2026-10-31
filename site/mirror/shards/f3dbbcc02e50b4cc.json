@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pinorinaudo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pinorinaudo/library/DoublyLinkedList/1.0.0/DoublyLinkedList-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DoublyLinkedList-1.0.0.tar.gz",
+    "size_bytes": 92119,
+    "sha256": "8c289718a7a6b3077a25a97214591ed413d1c0aaba9de0e9043f14dcc3f094bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pinorinaudo/library/DoublyLinkedList/1.0.0/DoublyLinkedList-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pinorinaudo/library/DoublyLinkedList/1.0.0/DoublyLinkedList-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

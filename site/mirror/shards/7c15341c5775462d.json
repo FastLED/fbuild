@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yajirushi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yajirushi/library/BOARDC_BME280/0.0.0+sha.2baa0f77d4d2/BOARDC_BME280-0.0.0+sha.2baa0f77d4d2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BOARDC_BME280-0.0.0+sha.2baa0f77d4d2.tar.gz",
+    "size_bytes": 5345,
+    "sha256": "19e00292ee9ae4d3aad6d5f47a5bcd15fb3a08f27164663b515d4b4034b4e593",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yajirushi/library/BOARDC_BME280/0.0.0%2Bsha.2baa0f77d4d2/BOARDC_BME280-0.0.0%2Bsha.2baa0f77d4d2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yajirushi/library/BOARDC_BME280/0.0.0%2Bsha.2baa0f77d4d2/BOARDC_BME280-0.0.0%2Bsha.2baa0f77d4d2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yajirushi/library/BOARDC_BNO055/0.0.0+sha.64b033b30802/BOARDC_BNO055-0.0.0+sha.64b033b30802.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BOARDC_BNO055-0.0.0+sha.64b033b30802.tar.gz",
+    "size_bytes": 18353,
+    "sha256": "273962601b27d009f7ed003907338676e28d9a74b695eb9bc32854b8c85def61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yajirushi/library/BOARDC_BNO055/0.0.0%2Bsha.64b033b30802/BOARDC_BNO055-0.0.0%2Bsha.64b033b30802.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yajirushi/library/BOARDC_BNO055/0.0.0%2Bsha.64b033b30802/BOARDC_BNO055-0.0.0%2Bsha.64b033b30802.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yajirushi/library/DRV8301CTRL/0.0.0+sha.72d833823fd5/DRV8301CTRL-0.0.0+sha.72d833823fd5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DRV8301CTRL-0.0.0+sha.72d833823fd5.tar.gz",
+    "size_bytes": 10145,
+    "sha256": "90dc729ae57f9b8620cc5b5e20cade99c83dc77c3420fcfad0c534b45d1326ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yajirushi/library/DRV8301CTRL/0.0.0%2Bsha.72d833823fd5/DRV8301CTRL-0.0.0%2Bsha.72d833823fd5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yajirushi/library/DRV8301CTRL/0.0.0%2Bsha.72d833823fd5/DRV8301CTRL-0.0.0%2Bsha.72d833823fd5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yajirushi/library/L6470SDC/0.0.0+sha.4127dd195311/L6470SDC-0.0.0+sha.4127dd195311.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L6470SDC-0.0.0+sha.4127dd195311.tar.gz",
+    "size_bytes": 13226,
+    "sha256": "95bf3c9234e6ba2774ec4ce9e3402c2ab752a369edfd45172933b1f5adad0d09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yajirushi/library/L6470SDC/0.0.0%2Bsha.4127dd195311/L6470SDC-0.0.0%2Bsha.4127dd195311.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yajirushi/library/L6470SDC/0.0.0%2Bsha.4127dd195311/L6470SDC-0.0.0%2Bsha.4127dd195311.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yajirushi/library/SH_MLCD_J/0.0.0+sha.8512c64be557/SH_MLCD_J-0.0.0+sha.8512c64be557.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SH_MLCD_J-0.0.0+sha.8512c64be557.tar.gz",
+    "size_bytes": 204858,
+    "sha256": "b8b328e3d0e05210db53d6ce27e4b704fc779c564eccf6dd123e075929c6c584",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yajirushi/library/SH_MLCD_J/0.0.0%2Bsha.8512c64be557/SH_MLCD_J-0.0.0%2Bsha.8512c64be557.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yajirushi/library/SH_MLCD_J/0.0.0%2Bsha.8512c64be557/SH_MLCD_J-0.0.0%2Bsha.8512c64be557.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yajirushi/library/SPLC792I2C/0.0.0+sha.070d3d0b6f37/SPLC792I2C-0.0.0+sha.070d3d0b6f37.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPLC792I2C-0.0.0+sha.070d3d0b6f37.tar.gz",
+    "size_bytes": 4629,
+    "sha256": "0c0f6b9e89ad0b070a0da9f2ecff4fd3994ddf60485a95679513b32fa532940e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yajirushi/library/SPLC792I2C/0.0.0%2Bsha.070d3d0b6f37/SPLC792I2C-0.0.0%2Bsha.070d3d0b6f37.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yajirushi/library/SPLC792I2C/0.0.0%2Bsha.070d3d0b6f37/SPLC792I2C-0.0.0%2Bsha.070d3d0b6f37.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-yajirushi/library/VSPI/0.0.0+sha.1d153d73d37d/VSPI-0.0.0+sha.1d153d73d37d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VSPI-0.0.0+sha.1d153d73d37d.tar.gz",
+    "size_bytes": 2268,
+    "sha256": "9a04ffbea6555a0e2505e61ea15932f1669d532414828152807be9bb381b3b5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yajirushi/library/VSPI/0.0.0%2Bsha.1d153d73d37d/VSPI-0.0.0%2Bsha.1d153d73d37d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yajirushi/library/VSPI/0.0.0%2Bsha.1d153d73d37d/VSPI-0.0.0%2Bsha.1d153d73d37d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

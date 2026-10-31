@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-eencae",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-eencae/library/BMP180/0.0.0+sha.0e92710a46f9/BMP180-0.0.0+sha.0e92710a46f9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP180-0.0.0+sha.0e92710a46f9.tar.gz",
+    "size_bytes": 3922,
+    "sha256": "a3f95a867363af6d48f8da0eb484bbca0db1ee33ee3073948749ca728d120b36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eencae/library/BMP180/0.0.0%2Bsha.0e92710a46f9/BMP180-0.0.0%2Bsha.0e92710a46f9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eencae/library/BMP180/0.0.0%2Bsha.0e92710a46f9/BMP180-0.0.0%2Bsha.0e92710a46f9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eencae/library/FXOS8700CQ/0.0.0+sha.1a98f69712e8/FXOS8700CQ-0.0.0+sha.1a98f69712e8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXOS8700CQ-0.0.0+sha.1a98f69712e8.tar.gz",
+    "size_bytes": 3357,
+    "sha256": "2e6e0e03e243f57913147a3527b8b41ebf2a293080192f6874ae329f81b9bafa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eencae/library/FXOS8700CQ/0.0.0%2Bsha.1a98f69712e8/FXOS8700CQ-0.0.0%2Bsha.1a98f69712e8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eencae/library/FXOS8700CQ/0.0.0%2Bsha.1a98f69712e8/FXOS8700CQ-0.0.0%2Bsha.1a98f69712e8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eencae/library/Gamepad/0.0.0+sha.c0959710291b/Gamepad-0.0.0+sha.c0959710291b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gamepad-0.0.0+sha.c0959710291b.tar.gz",
+    "size_bytes": 5141,
+    "sha256": "f683833293b7edae2df8de535daaedc47b54ece880e00162d94cceb15efeb162",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eencae/library/Gamepad/0.0.0%2Bsha.c0959710291b/Gamepad-0.0.0%2Bsha.c0959710291b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eencae/library/Gamepad/0.0.0%2Bsha.c0959710291b/Gamepad-0.0.0%2Bsha.c0959710291b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eencae/library/Gamepad2/0.0.0+sha.33639c2eacb3/Gamepad2-0.0.0+sha.33639c2eacb3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gamepad2-0.0.0+sha.33639c2eacb3.tar.gz",
+    "size_bytes": 16745,
+    "sha256": "09ce386a85b080d09707a290785f4c8dc0013f97eefb8eb139001613ced7e356",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eencae/library/Gamepad2/0.0.0%2Bsha.33639c2eacb3/Gamepad2-0.0.0%2Bsha.33639c2eacb3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eencae/library/Gamepad2/0.0.0%2Bsha.33639c2eacb3/Gamepad2-0.0.0%2Bsha.33639c2eacb3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eencae/library/Joystick/0.0.0+sha.649b59b2fb26/Joystick-0.0.0+sha.649b59b2fb26.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Joystick-0.0.0+sha.649b59b2fb26.tar.gz",
+    "size_bytes": 3407,
+    "sha256": "e9b9f18c4c1b4f45fb8647d2dce98731cdf71c9cb6677998474caeeaa4a97d06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eencae/library/Joystick/0.0.0%2Bsha.649b59b2fb26/Joystick-0.0.0%2Bsha.649b59b2fb26.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eencae/library/Joystick/0.0.0%2Bsha.649b59b2fb26/Joystick-0.0.0%2Bsha.649b59b2fb26.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eencae/library/Joystick2/0.0.0+sha.8e384c3393dd/Joystick2-0.0.0+sha.8e384c3393dd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Joystick2-0.0.0+sha.8e384c3393dd.tar.gz",
+    "size_bytes": 2788,
+    "sha256": "4505c71dd9f5d0bd45f2543068b69607c032b9cfebf425b14cf142013c42d33b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eencae/library/Joystick2/0.0.0%2Bsha.8e384c3393dd/Joystick2-0.0.0%2Bsha.8e384c3393dd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eencae/library/Joystick2/0.0.0%2Bsha.8e384c3393dd/Joystick2-0.0.0%2Bsha.8e384c3393dd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eencae/library/Leg/0.0.0+sha.a91d18a26ba3/Leg-0.0.0+sha.a91d18a26ba3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Leg-0.0.0+sha.a91d18a26ba3.tar.gz",
+    "size_bytes": 2944,
+    "sha256": "1c58115dc017d66cde19c35f34e53c271966d6a60b9cf926c860eab451d88243",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eencae/library/Leg/0.0.0%2Bsha.a91d18a26ba3/Leg-0.0.0%2Bsha.a91d18a26ba3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eencae/library/Leg/0.0.0%2Bsha.a91d18a26ba3/Leg-0.0.0%2Bsha.a91d18a26ba3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eencae/library/MMA8452/0.0.0+sha.df3b9e41edf3/MMA8452-0.0.0+sha.df3b9e41edf3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8452-0.0.0+sha.df3b9e41edf3.tar.gz",
+    "size_bytes": 3131,
+    "sha256": "dc75145e06184256791948339e4d0b47017786fd2df1c2b97f0261fe96df6735",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eencae/library/MMA8452/0.0.0%2Bsha.df3b9e41edf3/MMA8452-0.0.0%2Bsha.df3b9e41edf3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eencae/library/MMA8452/0.0.0%2Bsha.df3b9e41edf3/MMA8452-0.0.0%2Bsha.df3b9e41edf3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eencae/library/MeArm/0.0.0+sha.d2b7780ca6b3/MeArm-0.0.0+sha.d2b7780ca6b3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeArm-0.0.0+sha.d2b7780ca6b3.tar.gz",
+    "size_bytes": 3385,
+    "sha256": "a9bba76322ae6111761f19c04c71a52ace34d178737586c2a5de6dd11f9478c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eencae/library/MeArm/0.0.0%2Bsha.d2b7780ca6b3/MeArm-0.0.0%2Bsha.d2b7780ca6b3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eencae/library/MeArm/0.0.0%2Bsha.d2b7780ca6b3/MeArm-0.0.0%2Bsha.d2b7780ca6b3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eencae/library/N5110/0.0.0+sha.32f9ffeafb6d/N5110-0.0.0+sha.32f9ffeafb6d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "N5110-0.0.0+sha.32f9ffeafb6d.tar.gz",
+    "size_bytes": 11532,
+    "sha256": "59542d974a4cc52f3b9593821cad5dd15aed388ec5aa38027499b1be0684bf1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eencae/library/N5110/0.0.0%2Bsha.32f9ffeafb6d/N5110-0.0.0%2Bsha.32f9ffeafb6d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eencae/library/N5110/0.0.0%2Bsha.32f9ffeafb6d/N5110-0.0.0%2Bsha.32f9ffeafb6d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eencae/library/SRF02/0.0.0+sha.cb489f486ece/SRF02-0.0.0+sha.cb489f486ece.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SRF02-0.0.0+sha.cb489f486ece.tar.gz",
+    "size_bytes": 2447,
+    "sha256": "c2222694ff3d5bd6d249dacefd7f9af6d254b4abef0a1c698fe25341041d769a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eencae/library/SRF02/0.0.0%2Bsha.cb489f486ece/SRF02-0.0.0%2Bsha.cb489f486ece.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eencae/library/SRF02/0.0.0%2Bsha.cb489f486ece/SRF02-0.0.0%2Bsha.cb489f486ece.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eencae/library/TMP102/0.0.0+sha.1b601445b336/TMP102-0.0.0+sha.1b601445b336.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMP102-0.0.0+sha.1b601445b336.tar.gz",
+    "size_bytes": 2647,
+    "sha256": "6e088fe45a0bf83a302e7578530d591b5b3c415344eca230fd923fc15e796814",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eencae/library/TMP102/0.0.0%2Bsha.1b601445b336/TMP102-0.0.0%2Bsha.1b601445b336.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eencae/library/TMP102/0.0.0%2Bsha.1b601445b336/TMP102-0.0.0%2Bsha.1b601445b336.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eencae/library/Tone/0.0.0+sha.f17240b3e85e/Tone-0.0.0+sha.f17240b3e85e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tone-0.0.0+sha.f17240b3e85e.tar.gz",
+    "size_bytes": 2734,
+    "sha256": "fd7a6762d4c96c5719efb212f09a3aff423048a78b265fc25d39f3c2f73835b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eencae/library/Tone/0.0.0%2Bsha.f17240b3e85e/Tone-0.0.0%2Bsha.f17240b3e85e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eencae/library/Tone/0.0.0%2Bsha.f17240b3e85e/Tone-0.0.0%2Bsha.f17240b3e85e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eencae/library/m3pi/0.0.0+sha.074ce6197b51/m3pi-0.0.0+sha.074ce6197b51.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m3pi-0.0.0+sha.074ce6197b51.tar.gz",
+    "size_bytes": 4188,
+    "sha256": "a48d485987b1c3e41d22b738d62cb0371e5273f39f893dfb89952083b5315317",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eencae/library/m3pi/0.0.0%2Bsha.074ce6197b51/m3pi-0.0.0%2Bsha.074ce6197b51.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eencae/library/m3pi/0.0.0%2Bsha.074ce6197b51/m3pi-0.0.0%2Bsha.074ce6197b51.tar.gz"
+    ]
+   }
+  }
+ ]
+}

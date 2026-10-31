@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/v-nezlo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "v-nezlo/library/ESP32-EEPROM-BlockDriver/1.0.1/ESP32-EEPROM-BlockDriver-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-EEPROM-BlockDriver-1.0.1.tar.gz",
+    "size_bytes": 17192,
+    "sha256": "354313fc5f3fcb77b6bddc12d5bb566ca245f92bffc9aec6c27847fee1207442",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/v-nezlo/library/ESP32-EEPROM-BlockDriver/1.0.1/ESP32-EEPROM-BlockDriver-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/v-nezlo/library/ESP32-EEPROM-BlockDriver/1.0.1/ESP32-EEPROM-BlockDriver-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

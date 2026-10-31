@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/moba160",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "moba160/library/m5btn/1.0.6/m5btn-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m5btn-1.0.6.tar.gz",
+    "size_bytes": 3972,
+    "sha256": "4de87edf5b0d0ce93785785834d1dd9240a83c50429c3c94225058a7a7d17637",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moba160/library/m5btn/1.0.6/m5btn-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/moba160/library/m5btn/1.0.6/m5btn-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moba160/library/z21lib/1.0.10/z21lib-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "z21lib-1.0.10.tar.gz",
+    "size_bytes": 11409,
+    "sha256": "c13b96f28e936aac375726c180842bded0c081f8c47905bf05ccc9b225e52c79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moba160/library/z21lib/1.0.10/z21lib-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/moba160/library/z21lib/1.0.10/z21lib-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moba160/library/z21lib/1.0.7/z21lib-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "z21lib-1.0.7.tar.gz",
+    "size_bytes": 10806,
+    "sha256": "490854dc675b3be1c611f66b498b76703460c8d534aed6baa79f68f8ca18280c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moba160/library/z21lib/1.0.7/z21lib-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/moba160/library/z21lib/1.0.7/z21lib-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moba160/library/z21lib/1.0.8/z21lib-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "z21lib-1.0.8.tar.gz",
+    "size_bytes": 11491,
+    "sha256": "397777209a88555b70ce573d3a2b56d1fdd15868f931cfd28cb27501b0f63ef4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moba160/library/z21lib/1.0.8/z21lib-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/moba160/library/z21lib/1.0.8/z21lib-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moba160/library/z21lib/1.0.9/z21lib-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "z21lib-1.0.9.tar.gz",
+    "size_bytes": 11408,
+    "sha256": "35e95ba874f5686eec73c71271a4efd431497cec64360726fcde8c4ffd4491d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moba160/library/z21lib/1.0.9/z21lib-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/moba160/library/z21lib/1.0.9/z21lib-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

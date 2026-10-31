@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-heroic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-heroic/library/Enrf24/0.0.0+sha.670ecbc1478a/Enrf24-0.0.0+sha.670ecbc1478a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Enrf24-0.0.0+sha.670ecbc1478a.tar.gz",
+    "size_bytes": 7842,
+    "sha256": "8d5cf83cb38a2db0b6167da3a5964490ad62cd5eacf2db5c3cbbb83d7416cb7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-heroic/library/Enrf24/0.0.0%2Bsha.670ecbc1478a/Enrf24-0.0.0%2Bsha.670ecbc1478a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-heroic/library/Enrf24/0.0.0%2Bsha.670ecbc1478a/Enrf24-0.0.0%2Bsha.670ecbc1478a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-heroic/library/FastPixelLPD8806/0.0.0+sha.5b3be78ce6bd/FastPixelLPD8806-0.0.0+sha.5b3be78ce6bd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastPixelLPD8806-0.0.0+sha.5b3be78ce6bd.tar.gz",
+    "size_bytes": 4220,
+    "sha256": "4a1dc9d0ee5af7ee1c833db07ac21d4318cb54cf8cc35a9c1fd79db411155dd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-heroic/library/FastPixelLPD8806/0.0.0%2Bsha.5b3be78ce6bd/FastPixelLPD8806-0.0.0%2Bsha.5b3be78ce6bd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-heroic/library/FastPixelLPD8806/0.0.0%2Bsha.5b3be78ce6bd/FastPixelLPD8806-0.0.0%2Bsha.5b3be78ce6bd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-heroic/library/Nrf2401A/0.0.0+sha.049f6cb8b160/Nrf2401A-0.0.0+sha.049f6cb8b160.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nrf2401A-0.0.0+sha.049f6cb8b160.tar.gz",
+    "size_bytes": 2409,
+    "sha256": "79c0bf8ed0b3feed3b8a8544eac8ad25f454480d0ed5e3a72ee3c9e61d073076",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-heroic/library/Nrf2401A/0.0.0%2Bsha.049f6cb8b160/Nrf2401A-0.0.0%2Bsha.049f6cb8b160.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-heroic/library/Nrf2401A/0.0.0%2Bsha.049f6cb8b160/Nrf2401A-0.0.0%2Bsha.049f6cb8b160.tar.gz"
+    ]
+   }
+  }
+ ]
+}

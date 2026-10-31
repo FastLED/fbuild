@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-flotsam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-flotsam/library/Adafruit_GPS/0.0.0+sha.ba9ed1caafc3/Adafruit_GPS-0.0.0+sha.ba9ed1caafc3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_GPS-0.0.0+sha.ba9ed1caafc3.tar.gz",
+    "size_bytes": 4360,
+    "sha256": "534662c7d10d4d80b43ab0195c881188c32978d97a82f56ba31a9c9a4b4e436a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-flotsam/library/Adafruit_GPS/0.0.0%2Bsha.ba9ed1caafc3/Adafruit_GPS-0.0.0%2Bsha.ba9ed1caafc3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-flotsam/library/Adafruit_GPS/0.0.0%2Bsha.ba9ed1caafc3/Adafruit_GPS-0.0.0%2Bsha.ba9ed1caafc3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-flotsam/library/GSM/0.0.0+sha.922cf54e97ec/GSM-0.0.0+sha.922cf54e97ec.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSM-0.0.0+sha.922cf54e97ec.tar.gz",
+    "size_bytes": 1988,
+    "sha256": "91c656bc2bc49a7894b35a9dd4f66000eb3c88b9f4f7837ae1f808bc1d3d8942",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-flotsam/library/GSM/0.0.0%2Bsha.922cf54e97ec/GSM-0.0.0%2Bsha.922cf54e97ec.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-flotsam/library/GSM/0.0.0%2Bsha.922cf54e97ec/GSM-0.0.0%2Bsha.922cf54e97ec.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-flotsam/library/Storage_Library/0.0.0+sha.d43bb3c9c037/Storage_Library-0.0.0+sha.d43bb3c9c037.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Storage_Library-0.0.0+sha.d43bb3c9c037.tar.gz",
+    "size_bytes": 1654,
+    "sha256": "60d1d48a2d7aa36cd79191c85e4e4cad70de4ad3498df929ea9d9b03d2aa45bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-flotsam/library/Storage_Library/0.0.0%2Bsha.d43bb3c9c037/Storage_Library-0.0.0%2Bsha.d43bb3c9c037.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-flotsam/library/Storage_Library/0.0.0%2Bsha.d43bb3c9c037/Storage_Library-0.0.0%2Bsha.d43bb3c9c037.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-flotsam/library/Temp_Library/0.0.0+sha.fc58ae197a88/Temp_Library-0.0.0+sha.fc58ae197a88.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Temp_Library-0.0.0+sha.fc58ae197a88.tar.gz",
+    "size_bytes": 1235,
+    "sha256": "a4f827b32f119b6eb238256ade255717d0f0b40043d77e0f1c02beef709b3d8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-flotsam/library/Temp_Library/0.0.0%2Bsha.fc58ae197a88/Temp_Library-0.0.0%2Bsha.fc58ae197a88.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-flotsam/library/Temp_Library/0.0.0%2Bsha.fc58ae197a88/Temp_Library-0.0.0%2Bsha.fc58ae197a88.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-flotsam/library/Wakeup/0.0.0+sha.90979502f2fa/Wakeup-0.0.0+sha.90979502f2fa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Wakeup-0.0.0+sha.90979502f2fa.tar.gz",
+    "size_bytes": 3408,
+    "sha256": "fd98778a47c116607cdadc3bfcf0a26e2d3721cf7632d1844cb19ee91cf0540c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-flotsam/library/Wakeup/0.0.0%2Bsha.90979502f2fa/Wakeup-0.0.0%2Bsha.90979502f2fa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-flotsam/library/Wakeup/0.0.0%2Bsha.90979502f2fa/Wakeup-0.0.0%2Bsha.90979502f2fa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-flotsam/library/pH_Sensor/0.0.0+sha.767f53c397ad/pH_Sensor-0.0.0+sha.767f53c397ad.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pH_Sensor-0.0.0+sha.767f53c397ad.tar.gz",
+    "size_bytes": 1776,
+    "sha256": "d050df6c33105351a1d0a24903f3a88c47a2788999f380126a3bfaa131d15fc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-flotsam/library/pH_Sensor/0.0.0%2Bsha.767f53c397ad/pH_Sensor-0.0.0%2Bsha.767f53c397ad.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-flotsam/library/pH_Sensor/0.0.0%2Bsha.767f53c397ad/pH_Sensor-0.0.0%2Bsha.767f53c397ad.tar.gz"
+    ]
+   }
+  }
+ ]
+}

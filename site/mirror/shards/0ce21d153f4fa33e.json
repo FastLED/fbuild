@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/algomusic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "algomusic/library/M16/1.0.1/M16-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M16-1.0.1.tar.gz",
+    "size_bytes": 159281,
+    "sha256": "5026bc3acd3e45c0e06f5826e3d0b3ce24bb6a5ca1658c87475bdb9b268670df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/algomusic/library/M16/1.0.1/M16-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/algomusic/library/M16/1.0.1/M16-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "algomusic/library/MultiControl/1.0.0/MultiControl-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiControl-1.0.0.tar.gz",
+    "size_bytes": 20374,
+    "sha256": "1f7e11929df67e1f4fe90c113373bb78eaa880fecc93a662bd57f3e1353a5b84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/algomusic/library/MultiControl/1.0.0/MultiControl-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/algomusic/library/MultiControl/1.0.0/MultiControl-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

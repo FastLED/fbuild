@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/elowro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "elowro/library/ADS11189/1.0.2/ADS11189-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS11189-1.0.2.tar.gz",
+    "size_bytes": 18467,
+    "sha256": "cbf9c04e9e1d625e8b295f16bd27ff73da5cd26408c739032518f31943923904",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elowro/library/ADS11189/1.0.2/ADS11189-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/elowro/library/ADS11189/1.0.2/ADS11189-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

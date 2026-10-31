@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kkmit13",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kkmit13/library/SynapseDebugger/1.0.1/SynapseDebugger-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SynapseDebugger-1.0.1.tar.gz",
+    "size_bytes": 6027,
+    "sha256": "664b2dc21feb03eb5816afe226636c1b797eb0e777ede4edf6fab11ab429ee6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kkmit13/library/SynapseDebugger/1.0.1/SynapseDebugger-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kkmit13/library/SynapseDebugger/1.0.1/SynapseDebugger-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kkmit13/library/SynapseDebugger/1.1.0/SynapseDebugger-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SynapseDebugger-1.1.0.tar.gz",
+    "size_bytes": 6332,
+    "sha256": "cacd77dae069b9f7d9ad4cabb503e9c55c8eb492618fca13ede9f0ed6a6c09f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kkmit13/library/SynapseDebugger/1.1.0/SynapseDebugger-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kkmit13/library/SynapseDebugger/1.1.0/SynapseDebugger-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

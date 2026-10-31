@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/uniot-outech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "uniot-outech/library/DexmodIoT/0.1.0/DexmodIoT-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DexmodIoT-0.1.0.tar.gz",
+    "size_bytes": 8069,
+    "sha256": "b69884c749a595d2895fdfbaa1603d6fbaa2446110451e2d5fc0ad8969135eb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uniot-outech/library/DexmodIoT/0.1.0/DexmodIoT-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uniot-outech/library/DexmodIoT/0.1.0/DexmodIoT-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uniot-outech/library/DexmodIoT/0.2.3/DexmodIoT-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DexmodIoT-0.2.3.tar.gz",
+    "size_bytes": 12607,
+    "sha256": "d43216e760e45a7627247b0d5c4d62be1c0067082a292cbf2b2071ee70bf2c0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uniot-outech/library/DexmodIoT/0.2.3/DexmodIoT-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/uniot-outech/library/DexmodIoT/0.2.3/DexmodIoT-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uniot-outech/library/DexmodIoT/0.3.1/DexmodIoT-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DexmodIoT-0.3.1.tar.gz",
+    "size_bytes": 18427,
+    "sha256": "ab252ee75267a8ad1bb1549abc849c1cba0fe33120c24b9b130bcd5ec02c5726",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uniot-outech/library/DexmodIoT/0.3.1/DexmodIoT-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/uniot-outech/library/DexmodIoT/0.3.1/DexmodIoT-0.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

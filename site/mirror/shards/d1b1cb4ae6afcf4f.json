@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/manzarehassin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "manzarehassin/library/softRTC/1.0.0/softRTC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "softRTC-1.0.0.tar.gz",
+    "size_bytes": 5926,
+    "sha256": "d16120c62165e6846dd31d099214228009bf1a70c4c41bd1e8defc97e412e9d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/manzarehassin/library/softRTC/1.0.0/softRTC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/manzarehassin/library/softRTC/1.0.0/softRTC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "manzarehassin/library/tinyRTCds1307/1.0.1/tinyRTCds1307-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyRTCds1307-1.0.1.tar.gz",
+    "size_bytes": 6844,
+    "sha256": "840572ff200391de007e740ff7f219b9fca2ebb3251748befcbfb02c1446c088",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/manzarehassin/library/tinyRTCds1307/1.0.1/tinyRTCds1307-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/manzarehassin/library/tinyRTCds1307/1.0.1/tinyRTCds1307-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

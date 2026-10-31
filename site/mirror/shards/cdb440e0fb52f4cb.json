@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/junkfix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "junkfix/library/esp32-rmt-ir/1.0.2/esp32-rmt-ir-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-rmt-ir-1.0.2.tar.gz",
+    "size_bytes": 5015,
+    "sha256": "5a44e680ebf233062b8965ba2fdf6231db00820b0be473388d655071648868d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/junkfix/library/esp32-rmt-ir/1.0.2/esp32-rmt-ir-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/junkfix/library/esp32-rmt-ir/1.0.2/esp32-rmt-ir-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

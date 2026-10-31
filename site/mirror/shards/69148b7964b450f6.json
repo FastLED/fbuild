@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aodtorusan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aodtorusan/library/opentelemetry_proto/1.9.0/opentelemetry_proto-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "opentelemetry_proto-1.9.0.tar.gz",
+    "size_bytes": 40516,
+    "sha256": "b8eab18badd957f6054e863ec8cd8a62bb4a83e7b002c4bd0b2c84a0042cf5cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aodtorusan/library/opentelemetry_proto/1.9.0/opentelemetry_proto-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aodtorusan/library/opentelemetry_proto/1.9.0/opentelemetry_proto-1.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

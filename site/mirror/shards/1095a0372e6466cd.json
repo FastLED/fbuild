@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/asmfreak",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "asmfreak/library/CRCpp/1.0.0/CRCpp-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRCpp-1.0.0.tar.gz",
+    "size_bytes": 16649,
+    "sha256": "51e490a5f49458daf0142a773a7dbf8488f8d4c89312abcb243b38f30bcc0e4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/asmfreak/library/CRCpp/1.0.0/CRCpp-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/asmfreak/library/CRCpp/1.0.0/CRCpp-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

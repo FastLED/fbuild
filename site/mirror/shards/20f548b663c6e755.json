@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nydus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nydus/library/SRF02/0.0.0+sha.559a18121e83/SRF02-0.0.0+sha.559a18121e83.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SRF02-0.0.0+sha.559a18121e83.tar.gz",
+    "size_bytes": 1573,
+    "sha256": "a68a0e2a1d246f80d21c18a507a6062e3c14d8d7c3cdbc7708e990df06c828a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nydus/library/SRF02/0.0.0%2Bsha.559a18121e83/SRF02-0.0.0%2Bsha.559a18121e83.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nydus/library/SRF02/0.0.0%2Bsha.559a18121e83/SRF02-0.0.0%2Bsha.559a18121e83.tar.gz"
+    ]
+   }
+  }
+ ]
+}

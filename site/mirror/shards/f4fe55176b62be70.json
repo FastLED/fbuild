@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-newk8600",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-newk8600/library/BMP085_lib/0.0.0+sha.2c0e7ee70b8b/BMP085_lib-0.0.0+sha.2c0e7ee70b8b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP085_lib-0.0.0+sha.2c0e7ee70b8b.tar.gz",
+    "size_bytes": 4981,
+    "sha256": "1548397d576d0a7a873f817f52adaa506c6b4b0113312256a267f9bba2e45cae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-newk8600/library/BMP085_lib/0.0.0%2Bsha.2c0e7ee70b8b/BMP085_lib-0.0.0%2Bsha.2c0e7ee70b8b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-newk8600/library/BMP085_lib/0.0.0%2Bsha.2c0e7ee70b8b/BMP085_lib-0.0.0%2Bsha.2c0e7ee70b8b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

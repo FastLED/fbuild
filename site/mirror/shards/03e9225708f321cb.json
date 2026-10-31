@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bitbucket-mgfryan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bitbucket-mgfryan/library/SmartSystem/1.0.5/SmartSystem-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartSystem-1.0.5.tar.gz",
+    "size_bytes": 20220,
+    "sha256": "78e3e933e88872f3864ce6dc25c10fb693a431df6d9631a5860f178318acc1ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-mgfryan/library/SmartSystem/1.0.5/SmartSystem-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-mgfryan/library/SmartSystem/1.0.5/SmartSystem-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

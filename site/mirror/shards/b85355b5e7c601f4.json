@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pato-99",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pato-99/library/LaskakitZivyobrazClient/1.0.0/LaskakitZivyobrazClient-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LaskakitZivyobrazClient-1.0.0.tar.gz",
+    "size_bytes": 25136,
+    "sha256": "15c544f74700c4678c7017d8065a90fbae82ed6b2deb3d0bbad9c168d1936831",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pato-99/library/LaskakitZivyobrazClient/1.0.0/LaskakitZivyobrazClient-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pato-99/library/LaskakitZivyobrazClient/1.0.0/LaskakitZivyobrazClient-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pato-99/library/LaskakitZivyobrazClient/1.0.1/LaskakitZivyobrazClient-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LaskakitZivyobrazClient-1.0.1.tar.gz",
+    "size_bytes": 25338,
+    "sha256": "98ac9cf67756c2bd077b9743931a10ffc87e1d7d64b14c612c34c48dc675cf25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pato-99/library/LaskakitZivyobrazClient/1.0.1/LaskakitZivyobrazClient-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pato-99/library/LaskakitZivyobrazClient/1.0.1/LaskakitZivyobrazClient-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

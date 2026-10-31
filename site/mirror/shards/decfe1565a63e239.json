@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/akafugu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "akafugu/library/Akafugu%20Four%20Letter%20Word%20Library/1.0.0/AkafuguFourLetterWordLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AkafuguFourLetterWordLibrary-1.0.0.tar.gz",
+    "size_bytes": 4885,
+    "sha256": "7609ccae781ce123fae41cb67d707c3ec02f8cc63d7f7e40ac9de1abb59520e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akafugu/library/Akafugu%2520Four%2520Letter%2520Word%2520Library/1.0.0/AkafuguFourLetterWordLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/akafugu/library/Akafugu%20Four%20Letter%20Word%20Library/1.0.0/AkafuguFourLetterWordLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akafugu/library/Akafugu%20TWIDisplay%20Library/1.0.1/AkafuguTWIDisplayLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AkafuguTWIDisplayLibrary-1.0.1.tar.gz",
+    "size_bytes": 6001,
+    "sha256": "0bfbbd5f3aaf26d8d0ce74b7a5cc058c66dbea3822a35554a95c305b9212ce36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akafugu/library/Akafugu%2520TWIDisplay%2520Library/1.0.1/AkafuguTWIDisplayLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akafugu/library/Akafugu%20TWIDisplay%20Library/1.0.1/AkafuguTWIDisplayLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akafugu/library/Akafugu%20TWIKeyboard%20Library/1.0.1/AkafuguTWIKeyboardLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AkafuguTWIKeyboardLibrary-1.0.1.tar.gz",
+    "size_bytes": 4515,
+    "sha256": "511965987bd8a37648b4bf5437d2dace905d1ae687e5553e377492a7f59892f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akafugu/library/Akafugu%2520TWIKeyboard%2520Library/1.0.1/AkafuguTWIKeyboardLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akafugu/library/Akafugu%20TWIKeyboard%20Library/1.0.1/AkafuguTWIKeyboardLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akafugu/library/Akafugu%20TWILiquidCrystal%20Library/1.0.2/AkafuguTWILiquidCrystalLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AkafuguTWILiquidCrystalLibrary-1.0.2.tar.gz",
+    "size_bytes": 8993,
+    "sha256": "3e29784475ab062c94374e30bc72e5fe01ec2520461fce37f8ee57e08c5545e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akafugu/library/Akafugu%2520TWILiquidCrystal%2520Library/1.0.2/AkafuguTWILiquidCrystalLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/akafugu/library/Akafugu%20TWILiquidCrystal%20Library/1.0.2/AkafuguTWILiquidCrystalLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akafugu/library/Akafugu%20WireRtc%20Library/1.0.1/AkafuguWireRtcLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AkafuguWireRtcLibrary-1.0.1.tar.gz",
+    "size_bytes": 7980,
+    "sha256": "413988c817fea817c43654c8a3a3d13a118d3061f3a75ea363bee9dba04e8fee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akafugu/library/Akafugu%2520WireRtc%2520Library/1.0.1/AkafuguWireRtcLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akafugu/library/Akafugu%20WireRtc%20Library/1.0.1/AkafuguWireRtcLibrary-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

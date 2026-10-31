@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rakware",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rakware/library/UniGraphic/0.0.0+sha.62f3bed03503/UniGraphic-0.0.0+sha.62f3bed03503.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UniGraphic-0.0.0+sha.62f3bed03503.tar.gz",
+    "size_bytes": 47517,
+    "sha256": "10cfa6891b86afe81a93d9b41c34751e3e05e6551a0b6cc9ff25a9117f5a6227",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rakware/library/UniGraphic/0.0.0%2Bsha.62f3bed03503/UniGraphic-0.0.0%2Bsha.62f3bed03503.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rakware/library/UniGraphic/0.0.0%2Bsha.62f3bed03503/UniGraphic-0.0.0%2Bsha.62f3bed03503.tar.gz"
+    ]
+   }
+  }
+ ]
+}

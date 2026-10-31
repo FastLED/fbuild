@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dcvostok",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dcvostok/platform/k1921vk/1.7.8/k1921vk-1.7.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "k1921vk-1.7.8.tar.gz",
+    "size_bytes": 217137,
+    "sha256": "155482f3d50318d374b7e5bce7575f97f393d8d5d1e6cb2194ccf7932a0c7d8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dcvostok/platform/k1921vk/1.7.8/k1921vk-1.7.8.tar.gz",
+     "https://dl.registry.platformio.org/download/dcvostok/platform/k1921vk/1.7.8/k1921vk-1.7.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dcvostok/tool/framework-k1921vk-freertos/10.5.1/framework-k1921vk-freertos-10.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-k1921vk-freertos-10.5.1.tar.gz",
+    "size_bytes": 1768943,
+    "sha256": "963d6b17c631f71adbd22d56ec79b7be93ef76eb0a783b9d6098077d1375510f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dcvostok/tool/framework-k1921vk-freertos/10.5.1/framework-k1921vk-freertos-10.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dcvostok/tool/framework-k1921vk-freertos/10.5.1/framework-k1921vk-freertos-10.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dcvostok/tool/framework-k1921vk-sdk/1.7.3/framework-k1921vk-sdk-1.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-k1921vk-sdk-1.7.3.tar.gz",
+    "size_bytes": 1389896,
+    "sha256": "31dd718e8a4d7f7e54b1ae48ed4bce7527051519a094d124a6631d815a5e1e04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dcvostok/tool/framework-k1921vk-sdk/1.7.3/framework-k1921vk-sdk-1.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dcvostok/tool/framework-k1921vk-sdk/1.7.3/framework-k1921vk-sdk-1.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dcvostok/tool/tool-k1921vkx-flasher/1.3.1/tool-k1921vkx-flasher-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-k1921vkx-flasher-1.3.1.tar.gz",
+    "size_bytes": 106330,
+    "sha256": "ebe91495bc353b65c900f029889704552103d5322b26facd3915b431d8f50aa0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dcvostok/tool/tool-k1921vkx-flasher/1.3.1/tool-k1921vkx-flasher-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dcvostok/tool/tool-k1921vkx-flasher/1.3.1/tool-k1921vkx-flasher-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dcvostok/tool/tool-openocd-k1921vk/0.12.0/tool-openocd-k1921vk-linux_x86_64-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-k1921vk-linux_x86_64-0.12.0.tar.gz",
+    "size_bytes": 2498973,
+    "sha256": "ea9ed29c152fac95937c41aa3e356222ffa0112b20f1d059f674a0a1e7d0a2ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dcvostok/tool/tool-openocd-k1921vk/0.12.0/tool-openocd-k1921vk-linux_x86_64-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dcvostok/tool/tool-openocd-k1921vk/0.12.0/tool-openocd-k1921vk-linux_x86_64-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dcvostok/tool/tool-openocd-k1921vk/0.12.0/tool-openocd-k1921vk-windows_amd64-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-k1921vk-windows_amd64-0.12.0.tar.gz",
+    "size_bytes": 2477538,
+    "sha256": "0a83389ba4580b3cb0a95beb915c3eb321a84617c129681f727761ef109c4f97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dcvostok/tool/tool-openocd-k1921vk/0.12.0/tool-openocd-k1921vk-windows_amd64-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dcvostok/tool/tool-openocd-k1921vk/0.12.0/tool-openocd-k1921vk-windows_amd64-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dcvostok/tool/vostok-1-frmwrk-vn-arduino/1.0.2/vostok-1-frmwrk-vn-arduino-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vostok-1-frmwrk-vn-arduino-1.0.2.tar.gz",
+    "size_bytes": 97462,
+    "sha256": "5cd2c0e6b62682cb2901f32b987d1908b8e2cf96b90b169a0ae1101375f568b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dcvostok/tool/vostok-1-frmwrk-vn-arduino/1.0.2/vostok-1-frmwrk-vn-arduino-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dcvostok/tool/vostok-1-frmwrk-vn-arduino/1.0.2/vostok-1-frmwrk-vn-arduino-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

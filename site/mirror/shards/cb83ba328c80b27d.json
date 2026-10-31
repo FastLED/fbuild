@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-admcrae",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-admcrae/library/uLCD_4D_Picaso/0.0.0+sha.70c65c7c4337/uLCD_4D_Picaso-0.0.0+sha.70c65c7c4337.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uLCD_4D_Picaso-0.0.0+sha.70c65c7c4337.tar.gz",
+    "size_bytes": 25253,
+    "sha256": "2932ab74831d5efaec7ef05bdc47d66acefaf1ca59a3316890fae3ecaed02aad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-admcrae/library/uLCD_4D_Picaso/0.0.0%2Bsha.70c65c7c4337/uLCD_4D_Picaso-0.0.0%2Bsha.70c65c7c4337.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-admcrae/library/uLCD_4D_Picaso/0.0.0%2Bsha.70c65c7c4337/uLCD_4D_Picaso-0.0.0%2Bsha.70c65c7c4337.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/joeycastillo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "joeycastillo/library/Oddly%20Specific%20Objects%20LCD%20FeatherWing%20Library/1.0.2/OddlySpecificObjectsLCDFeatherWingLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OddlySpecificObjectsLCDFeatherWingLibrary-1.0.2.tar.gz",
+    "size_bytes": 3432,
+    "sha256": "1c582daecae94e31067205fc1820a38a0be1daa09c9273c0128db87784796b58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joeycastillo/library/Oddly%2520Specific%2520Objects%2520LCD%2520FeatherWing%2520Library/1.0.2/OddlySpecificObjectsLCDFeatherWingLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/joeycastillo/library/Oddly%20Specific%20Objects%20LCD%20FeatherWing%20Library/1.0.2/OddlySpecificObjectsLCDFeatherWingLibrary-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

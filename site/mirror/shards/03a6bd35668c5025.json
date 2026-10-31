@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yurikleb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yurikleb/library/Yurikleb%20DRV2605%20Library/1.0.0/YuriklebDRV2605Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YuriklebDRV2605Library-1.0.0.tar.gz",
+    "size_bytes": 2538,
+    "sha256": "36f6c4d0f3b2fcd1ce207a73f810521b84533e1de0d415f214d9b9c0cdc1e5b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yurikleb/library/Yurikleb%2520DRV2605%2520Library/1.0.0/YuriklebDRV2605Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yurikleb/library/Yurikleb%20DRV2605%20Library/1.0.0/YuriklebDRV2605Library-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

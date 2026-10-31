@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/destinationspace-stem",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "destinationspace-stem/library/DS%20MCP4018%20Library/0.1.9/DSMCP4018Library-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DSMCP4018Library-0.1.9.tar.gz",
+    "size_bytes": 3080,
+    "sha256": "b637b88484a9dd0e5e16b1b119734d0a8c80f24e4faa860441868050a0a2bcb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/destinationspace-stem/library/DS%2520MCP4018%2520Library/0.1.9/DSMCP4018Library-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/destinationspace-stem/library/DS%20MCP4018%20Library/0.1.9/DSMCP4018Library-0.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "destinationspace-stem/library/DS%20PCA9536%20Library/0.1.1/DSPCA9536Library-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DSPCA9536Library-0.1.1.tar.gz",
+    "size_bytes": 2337,
+    "sha256": "1404273e7705b2ee7b566dde3702ec13059cdf1961a2a0968d50563003c1b72b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/destinationspace-stem/library/DS%2520PCA9536%2520Library/0.1.1/DSPCA9536Library-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/destinationspace-stem/library/DS%20PCA9536%20Library/0.1.1/DSPCA9536Library-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

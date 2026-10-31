@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-richarduk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-richarduk/library/Display1602/0.0.0+sha.fc4c861451e1/Display1602-0.0.0+sha.fc4c861451e1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Display1602-0.0.0+sha.fc4c861451e1.tar.gz",
+    "size_bytes": 2693,
+    "sha256": "69ad9af7890f7a5231bb4e47c4e8aace24bfd753a68a0c3dff1c1b660018474d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-richarduk/library/Display1602/0.0.0%2Bsha.fc4c861451e1/Display1602-0.0.0%2Bsha.fc4c861451e1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-richarduk/library/Display1602/0.0.0%2Bsha.fc4c861451e1/Display1602-0.0.0%2Bsha.fc4c861451e1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

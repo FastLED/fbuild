@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bundgus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bundgus/library/LPC1114_Deep_Power_Down/0.0.0+sha.959f4e23f133/LPC1114_Deep_Power_Down-0.0.0+sha.959f4e23f133.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LPC1114_Deep_Power_Down-0.0.0+sha.959f4e23f133.tar.gz",
+    "size_bytes": 1885,
+    "sha256": "6d2245462b24f8ad45d7fdd15730f049c589b192eb3fbb953bb29070fe7282cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bundgus/library/LPC1114_Deep_Power_Down/0.0.0%2Bsha.959f4e23f133/LPC1114_Deep_Power_Down-0.0.0%2Bsha.959f4e23f133.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bundgus/library/LPC1114_Deep_Power_Down/0.0.0%2Bsha.959f4e23f133/LPC1114_Deep_Power_Down-0.0.0%2Bsha.959f4e23f133.tar.gz"
+    ]
+   }
+  }
+ ]
+}

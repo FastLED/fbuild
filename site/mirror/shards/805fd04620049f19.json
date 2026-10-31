@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mike-gofton",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mike-gofton/library/ESP32PulseCounter/0.2.0/ESP32PulseCounter-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32PulseCounter-0.2.0.tar.gz",
+    "size_bytes": 5408,
+    "sha256": "3f4ce720a5ef87aaafa248fbd0c333bdaa83912cf298f7aa0e629401d9d62bdb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mike-gofton/library/ESP32PulseCounter/0.2.0/ESP32PulseCounter-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mike-gofton/library/ESP32PulseCounter/0.2.0/ESP32PulseCounter-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/franfreezy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "franfreezy/library/e220LoRa/1.0.0/e220LoRa-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "e220LoRa-1.0.0.tar.gz",
+    "size_bytes": 2311,
+    "sha256": "fb7ec110f545b1a14a8cd7b764806bd517ba6e0e3aa838bab855e4ac54c718cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/franfreezy/library/e220LoRa/1.0.0/e220LoRa-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/franfreezy/library/e220LoRa/1.0.0/e220LoRa-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

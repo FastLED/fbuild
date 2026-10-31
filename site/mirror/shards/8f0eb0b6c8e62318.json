@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mmojana",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mmojana/library/PCA9634%20library/1.0.0/PCA9634library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9634library-1.0.0.tar.gz",
+    "size_bytes": 16456,
+    "sha256": "d0ad6b126e52798db6ceef0c4cf9dde4a677a74add604c130c284f18441bfe9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mmojana/library/PCA9634%2520library/1.0.0/PCA9634library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mmojana/library/PCA9634%20library/1.0.0/PCA9634library-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/richonguzman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "richonguzman/library/APRSPacketLib/0.9.0/APRSPacketLib-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APRSPacketLib-0.9.0.tar.gz",
+    "size_bytes": 7762,
+    "sha256": "84d24a9bdd4bb81c9399ff2ce8a9dd96eed00c0a1c8f02ab49e3d390cc7eb6a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richonguzman/library/APRSPacketLib/0.9.0/APRSPacketLib-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/richonguzman/library/APRSPacketLib/0.9.0/APRSPacketLib-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "richonguzman/library/APRSPacketLib/1.0.0/APRSPacketLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APRSPacketLib-1.0.0.tar.gz",
+    "size_bytes": 19409,
+    "sha256": "1d14badf97e2a39dc64013d7cf2627fdf6087b729c722620deccfd1b45e4f2f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richonguzman/library/APRSPacketLib/1.0.0/APRSPacketLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/richonguzman/library/APRSPacketLib/1.0.0/APRSPacketLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "richonguzman/library/APRSPacketLib/1.0.1/APRSPacketLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APRSPacketLib-1.0.1.tar.gz",
+    "size_bytes": 19533,
+    "sha256": "009e2ff99ca9b4c65c8b0fd660c4b40aae5eb173259770635ef6f8c4b4381a2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richonguzman/library/APRSPacketLib/1.0.1/APRSPacketLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/richonguzman/library/APRSPacketLib/1.0.1/APRSPacketLib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "richonguzman/library/APRSPacketLib/1.0.10/APRSPacketLib-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APRSPacketLib-1.0.10.tar.gz",
+    "size_bytes": 57701,
+    "sha256": "edadd7321608b17931a622dfaee46fba23d669fcf4d5cbc958d463109e1ddbc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richonguzman/library/APRSPacketLib/1.0.10/APRSPacketLib-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/richonguzman/library/APRSPacketLib/1.0.10/APRSPacketLib-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "richonguzman/library/APRSPacketLib/1.0.2/APRSPacketLib-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APRSPacketLib-1.0.2.tar.gz",
+    "size_bytes": 19750,
+    "sha256": "efab2bd2f64ca8b039190400935ffb2522328ddced1b55e907f5d3984bd35fb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richonguzman/library/APRSPacketLib/1.0.2/APRSPacketLib-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/richonguzman/library/APRSPacketLib/1.0.2/APRSPacketLib-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "richonguzman/library/APRSPacketLib/1.0.3/APRSPacketLib-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APRSPacketLib-1.0.3.tar.gz",
+    "size_bytes": 19736,
+    "sha256": "aa24abb5089d9abd5dfc964df8f208fc237eb52ec9e72ff6f4c9ad0a44ac3a25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richonguzman/library/APRSPacketLib/1.0.3/APRSPacketLib-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/richonguzman/library/APRSPacketLib/1.0.3/APRSPacketLib-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "richonguzman/library/APRSPacketLib/1.0.4/APRSPacketLib-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APRSPacketLib-1.0.4.tar.gz",
+    "size_bytes": 19772,
+    "sha256": "e301e31de20d632602a3498ed7a2da8f593c0c5c2ce755bb88d5e74e3cf44d04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richonguzman/library/APRSPacketLib/1.0.4/APRSPacketLib-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/richonguzman/library/APRSPacketLib/1.0.4/APRSPacketLib-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "richonguzman/library/APRSPacketLib/1.0.5/APRSPacketLib-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APRSPacketLib-1.0.5.tar.gz",
+    "size_bytes": 54414,
+    "sha256": "a1358b3389b2f12af8e96744a3cc7ffd5fca6d68e1b57fb2c3014e955ba05abc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richonguzman/library/APRSPacketLib/1.0.5/APRSPacketLib-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/richonguzman/library/APRSPacketLib/1.0.5/APRSPacketLib-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "richonguzman/library/APRSPacketLib/1.0.6/APRSPacketLib-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APRSPacketLib-1.0.6.tar.gz",
+    "size_bytes": 55169,
+    "sha256": "b42a11c6ffde3ebe784e75e0f3feab4d36b6e96e5c97a2304e0077ec3ae2e76e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richonguzman/library/APRSPacketLib/1.0.6/APRSPacketLib-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/richonguzman/library/APRSPacketLib/1.0.6/APRSPacketLib-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "richonguzman/library/APRSPacketLib/1.0.7/APRSPacketLib-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APRSPacketLib-1.0.7.tar.gz",
+    "size_bytes": 55383,
+    "sha256": "948f8d6199d8550ed8f1e20dc2afe8ace6c1d4e89aa6b8731e0f67e95e70cf56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richonguzman/library/APRSPacketLib/1.0.7/APRSPacketLib-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/richonguzman/library/APRSPacketLib/1.0.7/APRSPacketLib-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "richonguzman/library/APRSPacketLib/1.0.8/APRSPacketLib-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APRSPacketLib-1.0.8.tar.gz",
+    "size_bytes": 55871,
+    "sha256": "10a27f7835ff021040012ef851882c200e54116a957e8e98c492aa8029dd98a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richonguzman/library/APRSPacketLib/1.0.8/APRSPacketLib-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/richonguzman/library/APRSPacketLib/1.0.8/APRSPacketLib-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "richonguzman/library/APRSPacketLib/1.0.9/APRSPacketLib-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APRSPacketLib-1.0.9.tar.gz",
+    "size_bytes": 56350,
+    "sha256": "d2de51a530c7754522ee4986f021b5b0c1321a5d64bd227874afc4bce7763846",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richonguzman/library/APRSPacketLib/1.0.9/APRSPacketLib-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/richonguzman/library/APRSPacketLib/1.0.9/APRSPacketLib-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

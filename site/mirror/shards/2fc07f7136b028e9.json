@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/oladapoajala",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "oladapoajala/library/Drive/1.0.0/Drive-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Drive-1.0.0.tar.gz",
+    "size_bytes": 2812,
+    "sha256": "7bc6b43347faa932abff5c4ef2bcf85c74a17160c3f851ac864108cbf232d5c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/oladapoajala/library/Drive/1.0.0/Drive-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/oladapoajala/library/Drive/1.0.0/Drive-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "oladapoajala/library/Robot/1.0.0/Robot-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Robot-1.0.0.tar.gz",
+    "size_bytes": 2532,
+    "sha256": "830fac3c839a70effb90f3d8334edc87c8cd215d3df77d4d2ebd6e3847f876cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/oladapoajala/library/Robot/1.0.0/Robot-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/oladapoajala/library/Robot/1.0.0/Robot-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

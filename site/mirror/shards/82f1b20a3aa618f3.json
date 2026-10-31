@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gavinnntann",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gavinnntann/library/HLK_fingerprint/1.1.1/HLK_fingerprint-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HLK_fingerprint-1.1.1.tar.gz",
+    "size_bytes": 19365,
+    "sha256": "1b751f405205d9f2a0237999297918a521bc2428c6a7816bc229527f88bdffca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinnntann/library/HLK_fingerprint/1.1.1/HLK_fingerprint-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinnntann/library/HLK_fingerprint/1.1.1/HLK_fingerprint-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinnntann/library/HLK_fingerprint/1.2.0/HLK_fingerprint-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HLK_fingerprint-1.2.0.tar.gz",
+    "size_bytes": 23712,
+    "sha256": "1bb5311c8d64f266e5dbac3496c4ad0443796140ec5fb2ed53135d73bea00ee6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinnntann/library/HLK_fingerprint/1.2.0/HLK_fingerprint-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinnntann/library/HLK_fingerprint/1.2.0/HLK_fingerprint-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinnntann/library/HLK_fingerprint/1.3.0/HLK_fingerprint-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HLK_fingerprint-1.3.0.tar.gz",
+    "size_bytes": 27882,
+    "sha256": "160fdea4f843bdbb73baed9e0354f61c80b379d86c91dd7f1f2df8e644c0e82c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinnntann/library/HLK_fingerprint/1.3.0/HLK_fingerprint-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinnntann/library/HLK_fingerprint/1.3.0/HLK_fingerprint-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gavinnntann/library/HLK_fingerprint/1.4.0/HLK_fingerprint-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HLK_fingerprint-1.4.0.tar.gz",
+    "size_bytes": 27925,
+    "sha256": "3afe5b6b11c0a6e674def46cace5a503f2bf12efcca16f120cbe06c2b436e5c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gavinnntann/library/HLK_fingerprint/1.4.0/HLK_fingerprint-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gavinnntann/library/HLK_fingerprint/1.4.0/HLK_fingerprint-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

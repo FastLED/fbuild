@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rsquires",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rsquires/library/SoftSerial/0.0.0+sha.55d78fef0327/SoftSerial-0.0.0+sha.55d78fef0327.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftSerial-0.0.0+sha.55d78fef0327.tar.gz",
+    "size_bytes": 3412,
+    "sha256": "c9619abf74e990e714914eb10cc2cce4f9bef4688f89bb55a454e8f146015f53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rsquires/library/SoftSerial/0.0.0%2Bsha.55d78fef0327/SoftSerial-0.0.0%2Bsha.55d78fef0327.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rsquires/library/SoftSerial/0.0.0%2Bsha.55d78fef0327/SoftSerial-0.0.0%2Bsha.55d78fef0327.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-elmoow",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-elmoow/library/WS2812/0.0.0+sha.645ab1279245/WS2812-0.0.0+sha.645ab1279245.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS2812-0.0.0+sha.645ab1279245.tar.gz",
+    "size_bytes": 1338,
+    "sha256": "fba29a310e38f3314de366dc93eef87fa745d197b5e1fa6729fc07632411a032",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-elmoow/library/WS2812/0.0.0%2Bsha.645ab1279245/WS2812-0.0.0%2Bsha.645ab1279245.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-elmoow/library/WS2812/0.0.0%2Bsha.645ab1279245/WS2812-0.0.0%2Bsha.645ab1279245.tar.gz"
+    ]
+   }
+  }
+ ]
+}

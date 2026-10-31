@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-irsanjul",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-irsanjul/library/MPC3424/0.0.0+sha.4b472be1b25f/MPC3424-0.0.0+sha.4b472be1b25f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPC3424-0.0.0+sha.4b472be1b25f.tar.gz",
+    "size_bytes": 1806,
+    "sha256": "795f7d5a07f388e13072c2e48742bb66ef24f79dd7af83709b125be99730dbb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-irsanjul/library/MPC3424/0.0.0%2Bsha.4b472be1b25f/MPC3424-0.0.0%2Bsha.4b472be1b25f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-irsanjul/library/MPC3424/0.0.0%2Bsha.4b472be1b25f/MPC3424-0.0.0%2Bsha.4b472be1b25f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-irsanjul/library/Noritake/0.0.0+sha.1a088a2b53ec/Noritake-0.0.0+sha.1a088a2b53ec.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Noritake-0.0.0+sha.1a088a2b53ec.tar.gz",
+    "size_bytes": 5204,
+    "sha256": "9ed2bac62d3cf4a71f59727cb82034b87bf96c72da51c129cc3a2744d50adaf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-irsanjul/library/Noritake/0.0.0%2Bsha.1a088a2b53ec/Noritake-0.0.0%2Bsha.1a088a2b53ec.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-irsanjul/library/Noritake/0.0.0%2Bsha.1a088a2b53ec/Noritake-0.0.0%2Bsha.1a088a2b53ec.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-irsanjul/library/PCF8563/0.0.0+sha.47c63ed3af91/PCF8563-0.0.0+sha.47c63ed3af91.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8563-0.0.0+sha.47c63ed3af91.tar.gz",
+    "size_bytes": 1824,
+    "sha256": "060995c8c68ab69a455acdcc7038c2a437643c93026d4c57964e5047e45db197",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-irsanjul/library/PCF8563/0.0.0%2Bsha.47c63ed3af91/PCF8563-0.0.0%2Bsha.47c63ed3af91.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-irsanjul/library/PCF8563/0.0.0%2Bsha.47c63ed3af91/PCF8563-0.0.0%2Bsha.47c63ed3af91.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-irsanjul/library/SX1508/0.0.0+sha.56f4a8d6cde7/SX1508-0.0.0+sha.56f4a8d6cde7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX1508-0.0.0+sha.56f4a8d6cde7.tar.gz",
+    "size_bytes": 2589,
+    "sha256": "392856356027130fc2249085f078a4dbe68e999a471cda6fe19fe9c0372b2fba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-irsanjul/library/SX1508/0.0.0%2Bsha.56f4a8d6cde7/SX1508-0.0.0%2Bsha.56f4a8d6cde7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-irsanjul/library/SX1508/0.0.0%2Bsha.56f4a8d6cde7/SX1508-0.0.0%2Bsha.56f4a8d6cde7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-irsanjul/library/Si7021/0.0.0+sha.d3514bc63a39/Si7021-0.0.0+sha.d3514bc63a39.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Si7021-0.0.0+sha.d3514bc63a39.tar.gz",
+    "size_bytes": 1806,
+    "sha256": "01cdb8aeaf33d3bb3513bf90707489b2a530735b501c8dda26e4b54a24fcf65c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-irsanjul/library/Si7021/0.0.0%2Bsha.d3514bc63a39/Si7021-0.0.0%2Bsha.d3514bc63a39.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-irsanjul/library/Si7021/0.0.0%2Bsha.d3514bc63a39/Si7021-0.0.0%2Bsha.d3514bc63a39.tar.gz"
+    ]
+   }
+  }
+ ]
+}

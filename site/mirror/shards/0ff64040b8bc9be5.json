@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/0ldev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "0ldev/library/Politician/1.0.0/Politician-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Politician-1.0.0.tar.gz",
+    "size_bytes": 38862,
+    "sha256": "911ebf2017c63bb9c8064900b17d388db128a0fa5c0c17b5845292f5130c4b9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/0ldev/library/Politician/1.0.0/Politician-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/0ldev/library/Politician/1.0.0/Politician-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

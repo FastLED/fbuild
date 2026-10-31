@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kazz12211",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kazz12211/library/AQM1602XA/0.0.0+sha.933748ca1307/AQM1602XA-0.0.0+sha.933748ca1307.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AQM1602XA-0.0.0+sha.933748ca1307.tar.gz",
+    "size_bytes": 1435,
+    "sha256": "1cf45429e7c2a88fbb5ad71529ba30a30c6da37cec288efbdac8fb2cceff179e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kazz12211/library/AQM1602XA/0.0.0%2Bsha.933748ca1307/AQM1602XA-0.0.0%2Bsha.933748ca1307.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kazz12211/library/AQM1602XA/0.0.0%2Bsha.933748ca1307/AQM1602XA-0.0.0%2Bsha.933748ca1307.tar.gz"
+    ]
+   }
+  }
+ ]
+}

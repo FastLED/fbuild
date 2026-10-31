@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-throwbot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-throwbot/library/Robot/0.0.0+sha.603c28b75dc1/Robot-0.0.0+sha.603c28b75dc1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Robot-0.0.0+sha.603c28b75dc1.tar.gz",
+    "size_bytes": 6972,
+    "sha256": "0e0c5a2ee9d2d7745f3aee674a12dd0c0259601849e391573c4ff36e22c3e7dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-throwbot/library/Robot/0.0.0%2Bsha.603c28b75dc1/Robot-0.0.0%2Bsha.603c28b75dc1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-throwbot/library/Robot/0.0.0%2Bsha.603c28b75dc1/Robot-0.0.0%2Bsha.603c28b75dc1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

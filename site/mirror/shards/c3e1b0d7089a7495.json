@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-xenonym",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-xenonym/library/xenonym_logging/0.0.0+sha.f3c036aca508/xenonym_logging-0.0.0+sha.f3c036aca508.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xenonym_logging-0.0.0+sha.f3c036aca508.tar.gz",
+    "size_bytes": 2853,
+    "sha256": "961993a416bb3e04c4e3b59d373d71c4a1cfb72091d6639e4bdb6cf6a363227c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-xenonym/library/xenonym_logging/0.0.0%2Bsha.f3c036aca508/xenonym_logging-0.0.0%2Bsha.f3c036aca508.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-xenonym/library/xenonym_logging/0.0.0%2Bsha.f3c036aca508/xenonym_logging-0.0.0%2Bsha.f3c036aca508.tar.gz"
+    ]
+   }
+  }
+ ]
+}

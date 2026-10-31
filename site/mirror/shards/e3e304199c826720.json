@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dgduncan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dgduncan/library/MCP4131%20library/1.0.0/MCP4131library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP4131library-1.0.0.tar.gz",
+    "size_bytes": 2502,
+    "sha256": "766ef2f87218374561eeccdc4299689f77dc9cfb3713240e19fd6586b70a0337",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dgduncan/library/MCP4131%2520library/1.0.0/MCP4131library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dgduncan/library/MCP4131%20library/1.0.0/MCP4131library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dgduncan/library/Seven%20Segment%20Library/1.0.3/SevenSegmentLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSegmentLibrary-1.0.3.tar.gz",
+    "size_bytes": 3044,
+    "sha256": "bc8ab2dedeb1f287997c91a17c355005901962027fe2b2530e125523c116fe21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dgduncan/library/Seven%2520Segment%2520Library/1.0.3/SevenSegmentLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dgduncan/library/Seven%20Segment%20Library/1.0.3/SevenSegmentLibrary-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

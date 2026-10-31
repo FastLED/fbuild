@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pantastisch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pantastisch/library/FixedPoint_LUT/1.0.0/FixedPoint_LUT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FixedPoint_LUT-1.0.0.tar.gz",
+    "size_bytes": 15713,
+    "sha256": "4836b24a8dfa62de8635487ffcd638c236b6acc8929e9811a520c283baea7d15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pantastisch/library/FixedPoint_LUT/1.0.0/FixedPoint_LUT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pantastisch/library/FixedPoint_LUT/1.0.0/FixedPoint_LUT-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

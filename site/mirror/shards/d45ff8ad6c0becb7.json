@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-team-spank",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-team-spank/library/addition_calc/0.0.0+sha.2b7648933d8e/addition_calc-0.0.0+sha.2b7648933d8e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "addition_calc-0.0.0+sha.2b7648933d8e.tar.gz",
+    "size_bytes": 1183,
+    "sha256": "99d75a2a80c70e21477d8b1afafb1da20c8820996d93e4c752d31fb83193fe6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team-spank/library/addition_calc/0.0.0%2Bsha.2b7648933d8e/addition_calc-0.0.0%2Bsha.2b7648933d8e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team-spank/library/addition_calc/0.0.0%2Bsha.2b7648933d8e/addition_calc-0.0.0%2Bsha.2b7648933d8e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

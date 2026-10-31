@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sdale511",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sdale511/library/DirtyVan/1.0.0/DirtyVan-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DirtyVan-1.0.0.tar.gz",
+    "size_bytes": 10620,
+    "sha256": "aad50784d73782989ad0ae65aa8ba292e87a338b26cfa316fa73d9b729da4336",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sdale511/library/DirtyVan/1.0.0/DirtyVan-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sdale511/library/DirtyVan/1.0.0/DirtyVan-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

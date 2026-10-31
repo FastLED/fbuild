@@ -1,0 +1,230 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/daven006",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "daven006/library/BlueTooth/1.0.7/BlueTooth-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlueTooth-1.0.7.tar.gz",
+    "size_bytes": 558378,
+    "sha256": "60fc798e06f3a4e5f401f024309c27bce04a14b80dafdf7bd72877b988f27b83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/BlueTooth/1.0.7/BlueTooth-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/BlueTooth/1.0.7/BlueTooth-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/CLI/1.0.4/CLI-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CLI-1.0.4.tar.gz",
+    "size_bytes": 589580,
+    "sha256": "bd4e3341536ad853524c4d29c42d499ef9cf76d541a7211301645eb278986bed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/CLI/1.0.4/CLI-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/CLI/1.0.4/CLI-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/ConnectWiFi/1.0.3/ConnectWiFi-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConnectWiFi-1.0.3.tar.gz",
+    "size_bytes": 472408,
+    "sha256": "7d6fc2913653a6b30791155e46de0f31ce277fe2a1daef6e1501af2020f26c68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/ConnectWiFi/1.0.3/ConnectWiFi-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/ConnectWiFi/1.0.3/ConnectWiFi-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/FileUtils/1.0.4/FileUtils-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FileUtils-1.0.4.tar.gz",
+    "size_bytes": 575017,
+    "sha256": "e55b1370efd51c7ddaee49eee9f873e7e539927524a34e464ae2b5a7b46f2791",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/FileUtils/1.0.4/FileUtils-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/FileUtils/1.0.4/FileUtils-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/FlowMonitor/1.0.2/FlowMonitor-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlowMonitor-1.0.2.tar.gz",
+    "size_bytes": 605523,
+    "sha256": "7b7aa527f12e480dd2a83eef65793a0e170c12fb2a35a28854cb0848bec72588",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/FlowMonitor/1.0.2/FlowMonitor-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/FlowMonitor/1.0.2/FlowMonitor-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/LED/1.0.0/LED-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LED-1.0.0.tar.gz",
+    "size_bytes": 231637,
+    "sha256": "616ac5565ac5dafe850989bd56f403d475a4c8270e7be4df7b9d507bc083bd1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/LED/1.0.0/LED-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/LED/1.0.0/LED-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/Output/1.0.4/Output-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Output-1.0.4.tar.gz",
+    "size_bytes": 2900,
+    "sha256": "54e718f1d60f4c12ace7390249219dd9462334bbaaa0f4a054b436c4ebfddbbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/Output/1.0.4/Output-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/Output/1.0.4/Output-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/Play/1.0.0/Play-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Play-1.0.0.tar.gz",
+    "size_bytes": 1557243,
+    "sha256": "48ddf4bfa7f0007856531d264f4903fe589bd737b315bae4c8836bdd2d58ea14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/Play/1.0.0/Play-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/Play/1.0.0/Play-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/ProcessWiFi/1.0.7/ProcessWiFi-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProcessWiFi-1.0.7.tar.gz",
+    "size_bytes": 534446,
+    "sha256": "7334c65e42ee886c97d0779f575113a6633e95fa027373223b984489de03d749",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/ProcessWiFi/1.0.7/ProcessWiFi-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/ProcessWiFi/1.0.7/ProcessWiFi-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/Settings/1.0.4/Settings-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settings-1.0.4.tar.gz",
+    "size_bytes": 256102,
+    "sha256": "88967d4aa2e5de2079c4b271a91c64754c49653e0703e5d7cfb90cfde3174294",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/Settings/1.0.4/Settings-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/Settings/1.0.4/Settings-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/Switch/1.0.0/Switch-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Switch-1.0.0.tar.gz",
+    "size_bytes": 228876,
+    "sha256": "6c0708526194b7745873e93df2b5873fbebd0d6bffe7f97b1f678c2b0ead2863",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/Switch/1.0.0/Switch-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/Switch/1.0.0/Switch-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/TFTP/1.0.0/TFTP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFTP-1.0.0.tar.gz",
+    "size_bytes": 473472,
+    "sha256": "288a258df51abaa98e67409e6d58762ad8c68bb92b02fcaca69e35644a37318d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/TFTP/1.0.0/TFTP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/TFTP/1.0.0/TFTP-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/TaskInfo/1.0.3/TaskInfo-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskInfo-1.0.3.tar.gz",
+    "size_bytes": 235365,
+    "sha256": "faa434064f05e606463b74b0481cdb43c0b30f92fc0debfbc33979e719fb64a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/TaskInfo/1.0.3/TaskInfo-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/TaskInfo/1.0.3/TaskInfo-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/TempMapping/1.0.9/TempMapping-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TempMapping-1.0.9.tar.gz",
+    "size_bytes": 268856,
+    "sha256": "a0aaf0959970d7b28e60a9774c86b18047138c5143d0d6da1e4a89a4f688f2fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/TempMapping/1.0.9/TempMapping-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/TempMapping/1.0.9/TempMapping-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/Temperature/1.0.4/Temperature-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Temperature-1.0.4.tar.gz",
+    "size_bytes": 263993,
+    "sha256": "157643205d25e3e5784a6107d9e8e17d5b3ba2dd838d0afc1fdd80384b8c9b14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/Temperature/1.0.4/Temperature-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/Temperature/1.0.4/Temperature-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/Tokenise/1.0.0/Tokenise-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tokenise-1.0.0.tar.gz",
+    "size_bytes": 2455,
+    "sha256": "51034ad2e8708c04a7f786faa85398339bb306ad95145193adbe6949e40eeb23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/Tokenise/1.0.0/Tokenise-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/Tokenise/1.0.0/Tokenise-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "daven006/library/iotConfig/1.0.5/iotConfig-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iotConfig-1.0.5.tar.gz",
+    "size_bytes": 369129,
+    "sha256": "29519927c873655a576db0a3333f7f5578d508ee1cdd1395dee6617fe3465fcf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daven006/library/iotConfig/1.0.5/iotConfig-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/daven006/library/iotConfig/1.0.5/iotConfig-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

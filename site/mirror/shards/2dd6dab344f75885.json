@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nouryas-tech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nouryas-tech/library/Nouryas%20Advanced%20Line%20Follower/1.1.0/NouryasAdvancedLineFollower-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NouryasAdvancedLineFollower-1.1.0.tar.gz",
+    "size_bytes": 4011,
+    "sha256": "55d19a1b885d8f691ef194c244a1676a3484482ed1be11a838a06bb74eac3e4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nouryas-tech/library/Nouryas%2520Advanced%2520Line%2520Follower/1.1.0/NouryasAdvancedLineFollower-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nouryas-tech/library/Nouryas%20Advanced%20Line%20Follower/1.1.0/NouryasAdvancedLineFollower-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

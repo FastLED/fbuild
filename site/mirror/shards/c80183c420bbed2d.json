@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tobiasebsen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tobiasebsen/library/ArtNode/0.0.0-alpha+sha.9f528328f5/ArtNode-0.0.0-alphasha.9f528328f5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArtNode-0.0.0-alphasha.9f528328f5.tar.gz",
+    "size_bytes": 44345,
+    "sha256": "f8aabf7bd6a75898e7f21700e7b6d03d063479212cbacfef95c53e6ea9927157",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobiasebsen/library/ArtNode/0.0.0-alpha%2Bsha.9f528328f5/ArtNode-0.0.0-alphasha.9f528328f5.tar.gz",
+     "https://dl.registry.platformio.org/download/tobiasebsen/library/ArtNode/0.0.0-alpha%2Bsha.9f528328f5/ArtNode-0.0.0-alphasha.9f528328f5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobiasebsen/library/KalmanFilter/1.0.0/KalmanFilter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KalmanFilter-1.0.0.tar.gz",
+    "size_bytes": 3964,
+    "sha256": "5bba6484d3cdd1f8cadcdf4a9db36aeb5048edac088f33ecef8feb8fbbfde535",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobiasebsen/library/KalmanFilter/1.0.0/KalmanFilter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tobiasebsen/library/KalmanFilter/1.0.0/KalmanFilter-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tobiasebsen/library/ST7032/0.0.0-alpha+sha.f2d902f509/ST7032-0.0.0-alphasha.f2d902f509.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7032-0.0.0-alphasha.f2d902f509.tar.gz",
+    "size_bytes": 2185,
+    "sha256": "432e155c5bbfb2374971c074ae0507fcf88fb1573696cce4ce43aff1591a5fb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobiasebsen/library/ST7032/0.0.0-alpha%2Bsha.f2d902f509/ST7032-0.0.0-alphasha.f2d902f509.tar.gz",
+     "https://dl.registry.platformio.org/download/tobiasebsen/library/ST7032/0.0.0-alpha%2Bsha.f2d902f509/ST7032-0.0.0-alphasha.f2d902f509.tar.gz"
+    ]
+   }
+  }
+ ]
+}

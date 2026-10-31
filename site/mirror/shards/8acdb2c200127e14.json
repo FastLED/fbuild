@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aarnoudhoekstraprivate",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aarnoudhoekstraprivate/library/Chassis/1.1.0/Chassis-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Chassis-1.1.0.tar.gz",
+    "size_bytes": 23873,
+    "sha256": "3da9a9572da5efb683d46682d1244c437428b96481ad4dcd2bfc05c25bbe0065",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aarnoudhoekstraprivate/library/Chassis/1.1.0/Chassis-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aarnoudhoekstraprivate/library/Chassis/1.1.0/Chassis-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

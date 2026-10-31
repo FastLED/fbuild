@@ -1,0 +1,295 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/codexpad",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "codexpad/library/CodexPad/2.1.9/CodexPad-2.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodexPad-2.1.9.tar.gz",
+    "size_bytes": 22223,
+    "sha256": "12c82f3ae7524f7d8495ad85be5f362a54b664be1681b31182609bb63a8bf6d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/CodexPad/2.1.9/CodexPad-2.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/CodexPad/2.1.9/CodexPad-2.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/CodexPad/2.2.1/CodexPad-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodexPad-2.2.1.tar.gz",
+    "size_bytes": 22590,
+    "sha256": "d220d62423cc8206d771f1bacc724e26e38c65219fe90f09e16207f05f6416a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/CodexPad/2.2.1/CodexPad-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/CodexPad/2.2.1/CodexPad-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/CodexPad/3.0.0/CodexPad-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodexPad-3.0.0.tar.gz",
+    "size_bytes": 19586,
+    "sha256": "5c4292246ab0e2fdbf51341bb05cbe8ace961e12dab450967ddd007e3b42dc7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/CodexPad/3.0.0/CodexPad-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/CodexPad/3.0.0/CodexPad-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/CodexPad/3.1.1/CodexPad-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodexPad-3.1.1.tar.gz",
+    "size_bytes": 20443,
+    "sha256": "24a99eee497ba560f77b4f5fe5b0fc633a93f83869ff41a9839be81c510fc2b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/CodexPad/3.1.1/CodexPad-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/CodexPad/3.1.1/CodexPad-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/CodexPad/3.1.2/CodexPad-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodexPad-3.1.2.tar.gz",
+    "size_bytes": 20484,
+    "sha256": "e1a0e451f857ac16d1a2d333fd2c4db15f915941d47f478c4098f0740224aeea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/CodexPad/3.1.2/CodexPad-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/CodexPad/3.1.2/CodexPad-3.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/CodexPad/4.0.0/CodexPad-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodexPad-4.0.0.tar.gz",
+    "size_bytes": 19812,
+    "sha256": "d7d82b7832355183383d8088bfb1bcb4e73d8b21ecc58968e3fefddb92763ae1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/CodexPad/4.0.0/CodexPad-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/CodexPad/4.0.0/CodexPad-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/CodexPad/4.1.0/CodexPad-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodexPad-4.1.0.tar.gz",
+    "size_bytes": 20967,
+    "sha256": "bfe4991a820384a82ba903533cd7ca1d77e9352f8b579890a49818da31c85974",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/CodexPad/4.1.0/CodexPad-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/CodexPad/4.1.0/CodexPad-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/CodexPad/4.2.0/CodexPad-4.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodexPad-4.2.0.tar.gz",
+    "size_bytes": 19194,
+    "sha256": "a387d9c512b29675892f6ed0ad95376ac969fb7d0882d4f6fbf8134d75224d7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/CodexPad/4.2.0/CodexPad-4.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/CodexPad/4.2.0/CodexPad-4.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/CodexPad/4.2.1/CodexPad-4.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodexPad-4.2.1.tar.gz",
+    "size_bytes": 19186,
+    "sha256": "3e40a40517a8481db26bea284176d55b61772670dbdc41dddc774746ad06e654",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/CodexPad/4.2.1/CodexPad-4.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/CodexPad/4.2.1/CodexPad-4.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/CodexPad/5.0.0/CodexPad-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodexPad-5.0.0.tar.gz",
+    "size_bytes": 22985,
+    "sha256": "9e8c2236364fea71829268f9c028911d63e4dbf02ac69516903af75ab4b5a3e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/CodexPad/5.0.0/CodexPad-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/CodexPad/5.0.0/CodexPad-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/CodexPad/5.0.1/CodexPad-5.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodexPad-5.0.1.tar.gz",
+    "size_bytes": 22989,
+    "sha256": "3c551cf44820c1ace4f79490be227566fe3f87630b48e67ecdceb27e39f8de50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/CodexPad/5.0.1/CodexPad-5.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/CodexPad/5.0.1/CodexPad-5.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/CodexPadFrameDecoder/1.0.1/CodexPadFrameDecoder-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodexPadFrameDecoder-1.0.1.tar.gz",
+    "size_bytes": 18853,
+    "sha256": "534ca462c89578a1b23c7df2a0f65978210ce9fec41fcdf0eb94c5a15a167903",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/CodexPadFrameDecoder/1.0.1/CodexPadFrameDecoder-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/CodexPadFrameDecoder/1.0.1/CodexPadFrameDecoder-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/CodexPadFrameDecoder/1.0.3/CodexPadFrameDecoder-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodexPadFrameDecoder-1.0.3.tar.gz",
+    "size_bytes": 21451,
+    "sha256": "fe2a41e872fa6200c316340e281aa3af55f1fb3a6fde547ed7b54158924a4fea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/CodexPadFrameDecoder/1.0.3/CodexPadFrameDecoder-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/CodexPadFrameDecoder/1.0.3/CodexPadFrameDecoder-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/GamepadCodec/1.0.0/GamepadCodec-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GamepadCodec-1.0.0.tar.gz",
+    "size_bytes": 10611,
+    "sha256": "2d14429843de5f0dcb34b2dc155497e0a2dc07961e8a3b1ef09bc57c4c62d8b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/GamepadCodec/1.0.0/GamepadCodec-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/GamepadCodec/1.0.0/GamepadCodec-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/GamepadInput/1.0.0/GamepadInput-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GamepadInput-1.0.0.tar.gz",
+    "size_bytes": 3409,
+    "sha256": "2ef6feb59670939d6ed26bc8b7d51eeed3a035e4db62f88e6df2fa571ceb3f59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/GamepadInput/1.0.0/GamepadInput-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/GamepadInput/1.0.0/GamepadInput-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/GamepadInput/1.3.0/GamepadInput-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GamepadInput-1.3.0.tar.gz",
+    "size_bytes": 5008,
+    "sha256": "8b267ba2cebb7aef753e4e800ea424cb90236450354d71c4a0ffdf1459d5ca99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/GamepadInput/1.3.0/GamepadInput-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/GamepadInput/1.3.0/GamepadInput-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/GamepadInput/2.0.0/GamepadInput-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GamepadInput-2.0.0.tar.gz",
+    "size_bytes": 5010,
+    "sha256": "df53f9ac9139903ec23eeea09529f07144b16447f6fe2f7c7cb57577a7e6b2af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/GamepadInput/2.0.0/GamepadInput-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/GamepadInput/2.0.0/GamepadInput-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/RobustFrame/1.0.0/RobustFrame-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobustFrame-1.0.0.tar.gz",
+    "size_bytes": 4096,
+    "sha256": "689331c58800b1483743d680b46faa5c32a82cb95b1687e902bc6c56fd58fbc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/RobustFrame/1.0.0/RobustFrame-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/RobustFrame/1.0.0/RobustFrame-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/RobustFrame/1.0.1/RobustFrame-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobustFrame-1.0.1.tar.gz",
+    "size_bytes": 4110,
+    "sha256": "f1f3b7f703a0335ab6fd256563690bd3d7e2ca2749b3c4ebec5a9d91cf1bdffc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/RobustFrame/1.0.1/RobustFrame-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/RobustFrame/1.0.1/RobustFrame-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/RobustFrame/1.0.2/RobustFrame-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobustFrame-1.0.2.tar.gz",
+    "size_bytes": 4097,
+    "sha256": "553a893d55664d88817b4127bacecf52dd7ea26e18a9663af123f173a0cbd60a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/RobustFrame/1.0.2/RobustFrame-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/RobustFrame/1.0.2/RobustFrame-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/RobustFrame/2.0.0/RobustFrame-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobustFrame-2.0.0.tar.gz",
+    "size_bytes": 4120,
+    "sha256": "51a75e91bcc459d675460aa8ee39fc3b0581e354423613004ecf2d6a96742cb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/RobustFrame/2.0.0/RobustFrame-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/RobustFrame/2.0.0/RobustFrame-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codexpad/library/RobustFrame/2.0.1/RobustFrame-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobustFrame-2.0.1.tar.gz",
+    "size_bytes": 9999,
+    "sha256": "ebe07f6079089f263104bde5381eb5a4b4d4eeb8d3dd0fd4503a56a0563e09cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codexpad/library/RobustFrame/2.0.1/RobustFrame-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codexpad/library/RobustFrame/2.0.1/RobustFrame-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

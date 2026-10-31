@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maxpautsch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maxpautsch/library/SvgParser/0.0.2/SvgParser-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SvgParser-0.0.2.tar.gz",
+    "size_bytes": 11073,
+    "sha256": "23eb1358e7054c655d45f7113ea2bf6279dfc5fb28deb3a3aab5dd765860b798",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxpautsch/library/SvgParser/0.0.2/SvgParser-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/maxpautsch/library/SvgParser/0.0.2/SvgParser-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxpautsch/library/mPower/0.0.1/mPower-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mPower-0.0.1.tar.gz",
+    "size_bytes": 2295,
+    "sha256": "7352588875520ac9d476749a42810d9ea0877c43da09eacae65405b0a7600a32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxpautsch/library/mPower/0.0.1/mPower-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/maxpautsch/library/mPower/0.0.1/mPower-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

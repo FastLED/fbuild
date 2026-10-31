@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aerobotics-global",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aerobotics-global/library/Orbo/0.0.3/Orbo-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Orbo-0.0.3.tar.gz",
+    "size_bytes": 2730,
+    "sha256": "748fab3d52864eb49d8c05363f88d94ead33bf6fc19919287a7846d66cc3799d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aerobotics-global/library/Orbo/0.0.3/Orbo-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/aerobotics-global/library/Orbo/0.0.3/Orbo-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

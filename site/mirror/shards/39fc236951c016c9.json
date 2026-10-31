@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nono411",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nono411/library/rgb_lcd/0.0.0+sha.fb21134ce1b9/rgb_lcd-0.0.0+sha.fb21134ce1b9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rgb_lcd-0.0.0+sha.fb21134ce1b9.tar.gz",
+    "size_bytes": 2324,
+    "sha256": "cc1bb7cc70b5bea648ffe5c3d76b42ddf1c2c56137281a05e33e5d3987d27cbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nono411/library/rgb_lcd/0.0.0%2Bsha.fb21134ce1b9/rgb_lcd-0.0.0%2Bsha.fb21134ce1b9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nono411/library/rgb_lcd/0.0.0%2Bsha.fb21134ce1b9/rgb_lcd-0.0.0%2Bsha.fb21134ce1b9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

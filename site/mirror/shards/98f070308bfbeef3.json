@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/khaudio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "khaudio/library/LedWriter/0.1.2/LedWriter-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedWriter-0.1.2.tar.gz",
+    "size_bytes": 16378,
+    "sha256": "8fd7a3f0bd5a1e3918de08d8add6953801238bd830e5a54b4736fa585a8168d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khaudio/library/LedWriter/0.1.2/LedWriter-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khaudio/library/LedWriter/0.1.2/LedWriter-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

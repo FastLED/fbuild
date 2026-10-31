@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-arduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-arduino/library/AverageValue/1.0.0/AverageValue-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AverageValue-1.0.0.tar.gz",
+    "size_bytes": 1355,
+    "sha256": "b9e74cfbcda4558e27a024877cebbe510204dfefc343383c4891734c3147fdbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-arduino/library/AverageValue/1.0.0/AverageValue-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-arduino/library/AverageValue/1.0.0/AverageValue-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-arduino/library/IntervalCallback/1.1.2/IntervalCallback-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IntervalCallback-1.1.2.tar.gz",
+    "size_bytes": 2269,
+    "sha256": "49071d5ff0fe5bb88b9cfc5e927b4461e3cc8a62a1624254c951cef1b14a11fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-arduino/library/IntervalCallback/1.1.2/IntervalCallback-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-arduino/library/IntervalCallback/1.1.2/IntervalCallback-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-arduino/library/TimeoutCallback/1.3.0/TimeoutCallback-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimeoutCallback-1.3.0.tar.gz",
+    "size_bytes": 2166,
+    "sha256": "4bb1df9660d4ec114718cc7873613eb01167c763fef78af1a92cb6758e5cbbf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-arduino/library/TimeoutCallback/1.3.0/TimeoutCallback-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-arduino/library/TimeoutCallback/1.3.0/TimeoutCallback-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rhino-reimburse",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rhino-reimburse/library/XL320_MFA/0.0.0+sha.0a63e705424e/XL320_MFA-0.0.0+sha.0a63e705424e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XL320_MFA-0.0.0+sha.0a63e705424e.tar.gz",
+    "size_bytes": 6973,
+    "sha256": "0c2fa8f1ee44074fb6b0e0b8f2f930c678cc90428ebc213a71e6fb8783182559",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rhino-reimburse/library/XL320_MFA/0.0.0%2Bsha.0a63e705424e/XL320_MFA-0.0.0%2Bsha.0a63e705424e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rhino-reimburse/library/XL320_MFA/0.0.0%2Bsha.0a63e705424e/XL320_MFA-0.0.0%2Bsha.0a63e705424e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

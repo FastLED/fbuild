@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ruiseixasm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ruiseixasm/library/JsonTalkie/3.2.1/JsonTalkie-3.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JsonTalkie-3.2.1.tar.gz",
+    "size_bytes": 108908,
+    "sha256": "3f35e7e65d757baeb08d117e3c02a7fd0f699314acdbf6e9bec87db1ebe2bdda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ruiseixasm/library/JsonTalkie/3.2.1/JsonTalkie-3.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ruiseixasm/library/JsonTalkie/3.2.1/JsonTalkie-3.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ruiseixasm/library/JsonTalkie/4.0.0/JsonTalkie-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JsonTalkie-4.0.0.tar.gz",
+    "size_bytes": 98595,
+    "sha256": "a6f68ec5efc16d0a56d1d37552e2c4d812e478fe9b25944b53518bae75952300",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ruiseixasm/library/JsonTalkie/4.0.0/JsonTalkie-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ruiseixasm/library/JsonTalkie/4.0.0/JsonTalkie-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ruiseixasm/library/JsonTalkie/4.1.0/JsonTalkie-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JsonTalkie-4.1.0.tar.gz",
+    "size_bytes": 100133,
+    "sha256": "5161a5f4e823845d9e5b94ad0ddb3d10d8564b931038f3c77ef6955109e4f257",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ruiseixasm/library/JsonTalkie/4.1.0/JsonTalkie-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ruiseixasm/library/JsonTalkie/4.1.0/JsonTalkie-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ruiseixasm/library/JsonTalkie/5.0.0/JsonTalkie-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JsonTalkie-5.0.0.tar.gz",
+    "size_bytes": 102296,
+    "sha256": "ee976e13f7ae385d96ab3092d62a28a20225c18e1dbe3a7cbca44dd977847c16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ruiseixasm/library/JsonTalkie/5.0.0/JsonTalkie-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ruiseixasm/library/JsonTalkie/5.0.0/JsonTalkie-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ruiseixasm/library/JsonTalkie/6.0.0/JsonTalkie-6.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JsonTalkie-6.0.0.tar.gz",
+    "size_bytes": 158487,
+    "sha256": "2455ccb143880bcd4bb53605fec0de800b29d118651cfed50fddf3352e961894",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ruiseixasm/library/JsonTalkie/6.0.0/JsonTalkie-6.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ruiseixasm/library/JsonTalkie/6.0.0/JsonTalkie-6.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ruiseixasm/library/Robust-EEPROM/2.2.0/Robust-EEPROM-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Robust-EEPROM-2.2.0.tar.gz",
+    "size_bytes": 17655,
+    "sha256": "2069eef63998308ef1af7c595fb1590b76bc100f33e86893f02fd20d8f0dc869",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ruiseixasm/library/Robust-EEPROM/2.2.0/Robust-EEPROM-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ruiseixasm/library/Robust-EEPROM/2.2.0/Robust-EEPROM-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ruiseixasm/library/Versatile_RotaryEncoder/1.3.1/Versatile_RotaryEncoder-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Versatile_RotaryEncoder-1.3.1.tar.gz",
+    "size_bytes": 17734,
+    "sha256": "a26440ce6cc3c9db28e44b2c971197bda106fc735e78b8276ef872cdfb9b549f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ruiseixasm/library/Versatile_RotaryEncoder/1.3.1/Versatile_RotaryEncoder-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ruiseixasm/library/Versatile_RotaryEncoder/1.3.1/Versatile_RotaryEncoder-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

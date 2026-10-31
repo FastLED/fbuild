@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tera0110",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tera0110/library/DCmotor/0.0.0+sha.4d9099e054d3/DCmotor-0.0.0+sha.4d9099e054d3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCmotor-0.0.0+sha.4d9099e054d3.tar.gz",
+    "size_bytes": 939,
+    "sha256": "572e418298bd585bfeb5043cd0530bda7c7d9cc6e828d924b6bc53056cb2bfa8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tera0110/library/DCmotor/0.0.0%2Bsha.4d9099e054d3/DCmotor-0.0.0%2Bsha.4d9099e054d3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tera0110/library/DCmotor/0.0.0%2Bsha.4d9099e054d3/DCmotor-0.0.0%2Bsha.4d9099e054d3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tera0110/library/IrLed/0.0.0+sha.72a675531d87/IrLed-0.0.0+sha.72a675531d87.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IrLed-0.0.0+sha.72a675531d87.tar.gz",
+    "size_bytes": 1014,
+    "sha256": "c337af627403458d7023301078988c4408595b528a09786faf00a78aefcafe72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tera0110/library/IrLed/0.0.0%2Bsha.72a675531d87/IrLed-0.0.0%2Bsha.72a675531d87.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tera0110/library/IrLed/0.0.0%2Bsha.72a675531d87/IrLed-0.0.0%2Bsha.72a675531d87.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tera0110/library/IrSensor/0.0.0+sha.3bb62bb60d3b/IrSensor-0.0.0+sha.3bb62bb60d3b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IrSensor-0.0.0+sha.3bb62bb60d3b.tar.gz",
+    "size_bytes": 875,
+    "sha256": "7d881f92ae2a00fcc89f323831cf04de68c5ab00170e2c5e2bfd2aabbef22828",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tera0110/library/IrSensor/0.0.0%2Bsha.3bb62bb60d3b/IrSensor-0.0.0%2Bsha.3bb62bb60d3b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tera0110/library/IrSensor/0.0.0%2Bsha.3bb62bb60d3b/IrSensor-0.0.0%2Bsha.3bb62bb60d3b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tera0110/library/KSTServo/0.0.0+sha.10cb6736d1ce/KSTServo-0.0.0+sha.10cb6736d1ce.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KSTServo-0.0.0+sha.10cb6736d1ce.tar.gz",
+    "size_bytes": 853,
+    "sha256": "e2a64daac2d077d6444bc85cf33f3dbe62ae9537bf1e8787dc71140196d1d939",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tera0110/library/KSTServo/0.0.0%2Bsha.10cb6736d1ce/KSTServo-0.0.0%2Bsha.10cb6736d1ce.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tera0110/library/KSTServo/0.0.0%2Bsha.10cb6736d1ce/KSTServo-0.0.0%2Bsha.10cb6736d1ce.tar.gz"
+    ]
+   }
+  }
+ ]
+}

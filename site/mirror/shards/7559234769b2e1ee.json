@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yesio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yesio/library/dual2s/2.0.10/dual2s-2.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dual2s-2.0.10.tar.gz",
+    "size_bytes": 38869,
+    "sha256": "8bf32a9d8253a85aa3f4d57531428bd4101ef7cc671b2ccf95916811d096c3c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yesio/library/dual2s/2.0.10/dual2s-2.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/yesio/library/dual2s/2.0.10/dual2s-2.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yesio/library/dual2s/2.0.2/dual2s-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dual2s-2.0.2.tar.gz",
+    "size_bytes": 11901,
+    "sha256": "53ba811dc40b2ede36c5225e47eab0658181ad118fc075bed6acf883b0726c98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yesio/library/dual2s/2.0.2/dual2s-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/yesio/library/dual2s/2.0.2/dual2s-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yesio/library/dual2s/2.0.4/dual2s-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dual2s-2.0.4.tar.gz",
+    "size_bytes": 29472,
+    "sha256": "052bfacbab95c02ca47958463b968a00d0049a563eb03f83f04294a1a856397a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yesio/library/dual2s/2.0.4/dual2s-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/yesio/library/dual2s/2.0.4/dual2s-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yesio/library/dual2s/2.0.5/dual2s-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dual2s-2.0.5.tar.gz",
+    "size_bytes": 34985,
+    "sha256": "2ec686922b9e64d8c4df209d90c8d999622cf5ca071df450fae541c4f38a68f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yesio/library/dual2s/2.0.5/dual2s-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/yesio/library/dual2s/2.0.5/dual2s-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yesio/library/dual2s/2.0.6/dual2s-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dual2s-2.0.6.tar.gz",
+    "size_bytes": 35761,
+    "sha256": "84f4dc0a7ace70b80bf515344530c361a4231ae16a4d8a58d18c9170fd105fef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yesio/library/dual2s/2.0.6/dual2s-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/yesio/library/dual2s/2.0.6/dual2s-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yesio/library/dual2s/2.0.7/dual2s-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dual2s-2.0.7.tar.gz",
+    "size_bytes": 35890,
+    "sha256": "8e714641f2d65599f987fa959042bd972811e7b58f361013e8d7270115014420",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yesio/library/dual2s/2.0.7/dual2s-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/yesio/library/dual2s/2.0.7/dual2s-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yesio/library/dual2s/2.0.8/dual2s-2.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dual2s-2.0.8.tar.gz",
+    "size_bytes": 35155,
+    "sha256": "ceb301a6134a8c073e25fc5ea5afc1133a4a0b111e330ca5e9f8c8414f69bd35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yesio/library/dual2s/2.0.8/dual2s-2.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/yesio/library/dual2s/2.0.8/dual2s-2.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

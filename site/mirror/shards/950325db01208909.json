@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fl-project123",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fl-project123/library/Hijri_date/1.0.0/Hijri_date-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hijri_date-1.0.0.tar.gz",
+    "size_bytes": 2303,
+    "sha256": "5f2a29c3998859b50824374577a65056ae6bba25527a8276091ae41b402861c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fl-project123/library/Hijri_date/1.0.0/Hijri_date-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fl-project123/library/Hijri_date/1.0.0/Hijri_date-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-night-crue",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-night-crue/library/JSON/0.0.0+sha.8aa4d0e98eb0/JSON-0.0.0+sha.8aa4d0e98eb0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JSON-0.0.0+sha.8aa4d0e98eb0.tar.gz",
+    "size_bytes": 9911,
+    "sha256": "1f14c0ad1d5b53c1a5191dd5630267fb53ce356e5a484e2f6304aa6ec37b3498",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-night-crue/library/JSON/0.0.0%2Bsha.8aa4d0e98eb0/JSON-0.0.0%2Bsha.8aa4d0e98eb0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-night-crue/library/JSON/0.0.0%2Bsha.8aa4d0e98eb0/JSON-0.0.0%2Bsha.8aa4d0e98eb0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

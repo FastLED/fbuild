@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/feilipu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "feilipu/library/AVR%20Standard%20C%20Time%20Library/2.0.0-2/AVRStandardCTimeLibrary-2.0.0-2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AVRStandardCTimeLibrary-2.0.0-2.tar.gz",
+    "size_bytes": 4641,
+    "sha256": "bfeead529a076ac2dae1736e7c4c608c5823779f15b6bfde6697f9b1be8459af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/feilipu/library/AVR%2520Standard%2520C%2520Time%2520Library/2.0.0-2/AVRStandardCTimeLibrary-2.0.0-2.tar.gz",
+     "https://dl.registry.platformio.org/download/feilipu/library/AVR%20Standard%20C%20Time%20Library/2.0.0-2/AVRStandardCTimeLibrary-2.0.0-2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "feilipu/library/FreeRTOS/10.5.1-1/FreeRTOS-10.5.1-1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreeRTOS-10.5.1-1.tar.gz",
+    "size_bytes": 264955,
+    "sha256": "435632573535016bf937894c2902fcd2f27f39b6380888b1459aae03c7e1d672",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/feilipu/library/FreeRTOS/10.5.1-1/FreeRTOS-10.5.1-1.tar.gz",
+     "https://dl.registry.platformio.org/download/feilipu/library/FreeRTOS/10.5.1-1/FreeRTOS-10.5.1-1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "feilipu/library/FreeRTOS/11.1.0-3/FreeRTOS-11.1.0-3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreeRTOS-11.1.0-3.tar.gz",
+    "size_bytes": 304039,
+    "sha256": "65cfaed934576b8a6073cec133b7672e9d0ffdbc8816cf68ca34f45d19069847",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/feilipu/library/FreeRTOS/11.1.0-3/FreeRTOS-11.1.0-3.tar.gz",
+     "https://dl.registry.platformio.org/download/feilipu/library/FreeRTOS/11.1.0-3/FreeRTOS-11.1.0-3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "feilipu/library/Goldilocks%20Analogue%20DAC%20Library/1.0.3/GoldilocksAnalogueDACLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GoldilocksAnalogueDACLibrary-1.0.3.tar.gz",
+    "size_bytes": 8700,
+    "sha256": "b58638fe3407bd2adaf9164e2363d060267eb5910f25e761e6b088a399c10675",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/feilipu/library/Goldilocks%2520Analogue%2520DAC%2520Library/1.0.3/GoldilocksAnalogueDACLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/feilipu/library/Goldilocks%20Analogue%20DAC%20Library/1.0.3/GoldilocksAnalogueDACLibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "feilipu/library/Goldilocks%20Analogue%20SPI%20RAM%20Library/1.0.4/GoldilocksAnalogueSPIRAMLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GoldilocksAnalogueSPIRAMLibrary-1.0.4.tar.gz",
+    "size_bytes": 11647,
+    "sha256": "39843ad312b39f8d38f3dd779e3c58966f8ad348572a96796ba7b17d257d7c76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/feilipu/library/Goldilocks%2520Analogue%2520SPI%2520RAM%2520Library/1.0.4/GoldilocksAnalogueSPIRAMLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/feilipu/library/Goldilocks%20Analogue%20SPI%20RAM%20Library/1.0.4/GoldilocksAnalogueSPIRAMLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "feilipu/library/ReGIS/2.0.1-0/ReGIS-2.0.1-0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReGIS-2.0.1-0.tar.gz",
+    "size_bytes": 27213,
+    "sha256": "6026e0fdfdabbba71e663b58e96a80f707c2e96c40c36a40cc00781f084bedd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/feilipu/library/ReGIS/2.0.1-0/ReGIS-2.0.1-0.tar.gz",
+     "https://dl.registry.platformio.org/download/feilipu/library/ReGIS/2.0.1-0/ReGIS-2.0.1-0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

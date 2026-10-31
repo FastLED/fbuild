@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/smelpro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "smelpro/library/Smelpro%20Macaron/1.0.1/SmelproMacaron-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmelproMacaron-1.0.1.tar.gz",
+    "size_bytes": 43581,
+    "sha256": "34fa94e9a861f8f14c3bf84e15b3d22cb3df74e8a23b38051d029e43a8175988",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smelpro/library/Smelpro%2520Macaron/1.0.1/SmelproMacaron-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/smelpro/library/Smelpro%20Macaron/1.0.1/SmelproMacaron-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

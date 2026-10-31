@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bogde",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bogde/library/HX711/0.7.5/HX711-0.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HX711-0.7.5.tar.gz",
+    "size_bytes": 12526,
+    "sha256": "d5ee46fbf1b69049318bb3624e463c271963c6b000ef991da214e2656a22fd85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bogde/library/HX711/0.7.5/HX711-0.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bogde/library/HX711/0.7.5/HX711-0.7.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

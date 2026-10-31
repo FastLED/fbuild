@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/uipethernet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "uipethernet/library/UIPEthernet/2.0.12/UIPEthernet-2.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UIPEthernet-2.0.12.tar.gz",
+    "size_bytes": 96140,
+    "sha256": "24921a2956f81ab7d485c1bcb470a0f4d35db97919474713d2fa957a79115340",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uipethernet/library/UIPEthernet/2.0.12/UIPEthernet-2.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/uipethernet/library/UIPEthernet/2.0.12/UIPEthernet-2.0.12.tar.gz"
+    ]
+   }
+  }
+ ]
+}

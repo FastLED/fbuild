@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bozont",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bozont/library/bozontlabsMAX7219/1.0.0/bozontlabsMAX7219-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bozontlabsMAX7219-1.0.0.tar.gz",
+    "size_bytes": 5366,
+    "sha256": "c64d7b6074c05774e875b6be19923a06b8cd06005169f2fd5eea547771a1632e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bozont/library/bozontlabsMAX7219/1.0.0/bozontlabsMAX7219-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bozont/library/bozontlabsMAX7219/1.0.0/bozontlabsMAX7219-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bozont/library/bozontlabsMAX7219/1.0.1/bozontlabsMAX7219-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bozontlabsMAX7219-1.0.1.tar.gz",
+    "size_bytes": 5353,
+    "sha256": "5ebced0c14673180ba631bac2810a8aa9cac27d4c0a96396455e689f762700da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bozont/library/bozontlabsMAX7219/1.0.1/bozontlabsMAX7219-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bozont/library/bozontlabsMAX7219/1.0.1/bozontlabsMAX7219-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bozont/library/bozontlabsUptime/1.0.0/bozontlabsUptime-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bozontlabsUptime-1.0.0.tar.gz",
+    "size_bytes": 2597,
+    "sha256": "20731e925d8a117fee2ad4bd5fed8516eb491867c98edc8cd955cc21f9b70244",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bozont/library/bozontlabsUptime/1.0.0/bozontlabsUptime-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bozont/library/bozontlabsUptime/1.0.0/bozontlabsUptime-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bozont/library/millisRTC/1.0.0/millisRTC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "millisRTC-1.0.0.tar.gz",
+    "size_bytes": 3586,
+    "sha256": "cd72b64946f5f87c04a595cb00347f7472980e98975a8310dfee971d0102593d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bozont/library/millisRTC/1.0.0/millisRTC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bozont/library/millisRTC/1.0.0/millisRTC-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

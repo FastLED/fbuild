@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-eveolution",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-eveolution/library/ardSerial/0.0.0+sha.7b9f0f2e2724/ardSerial-0.0.0+sha.7b9f0f2e2724.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ardSerial-0.0.0+sha.7b9f0f2e2724.tar.gz",
+    "size_bytes": 3351,
+    "sha256": "3cb6bfd899430b798a15337c617090e1fdcc35fa102ed332ece6737e724f4a54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eveolution/library/ardSerial/0.0.0%2Bsha.7b9f0f2e2724/ardSerial-0.0.0%2Bsha.7b9f0f2e2724.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eveolution/library/ardSerial/0.0.0%2Bsha.7b9f0f2e2724/ardSerial-0.0.0%2Bsha.7b9f0f2e2724.tar.gz"
+    ]
+   }
+  }
+ ]
+}

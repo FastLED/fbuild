@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-samux",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-samux/library/MbedJSONRpc/0.0.0+sha.067cb01b491e/MbedJSONRpc-0.0.0+sha.067cb01b491e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MbedJSONRpc-0.0.0+sha.067cb01b491e.tar.gz",
+    "size_bytes": 4644,
+    "sha256": "93395f04520456e6683b6840103e56aa374f4505522cf042fa2931a5140a5260",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-samux/library/MbedJSONRpc/0.0.0%2Bsha.067cb01b491e/MbedJSONRpc-0.0.0%2Bsha.067cb01b491e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-samux/library/MbedJSONRpc/0.0.0%2Bsha.067cb01b491e/MbedJSONRpc-0.0.0%2Bsha.067cb01b491e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-samux/library/MbedJSONValue/0.0.0+sha.10a99cdf7846/MbedJSONValue-0.0.0+sha.10a99cdf7846.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MbedJSONValue-0.0.0+sha.10a99cdf7846.tar.gz",
+    "size_bytes": 6528,
+    "sha256": "3c03e218f1b48ca6c01aed20891077a2d06e048465726f1e9e7088451d94150c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-samux/library/MbedJSONValue/0.0.0%2Bsha.10a99cdf7846/MbedJSONValue-0.0.0%2Bsha.10a99cdf7846.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-samux/library/MbedJSONValue/0.0.0%2Bsha.10a99cdf7846/MbedJSONValue-0.0.0%2Bsha.10a99cdf7846.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-samux/library/RAM_DISK/0.0.0+sha.3d0c421fe52b/RAM_DISK-0.0.0+sha.3d0c421fe52b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RAM_DISK-0.0.0+sha.3d0c421fe52b.tar.gz",
+    "size_bytes": 3405,
+    "sha256": "64b8651198c4b792d64d9df908617d0125ed615901c977a5f070d4f893c9980a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-samux/library/RAM_DISK/0.0.0%2Bsha.3d0c421fe52b/RAM_DISK-0.0.0%2Bsha.3d0c421fe52b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-samux/library/RAM_DISK/0.0.0%2Bsha.3d0c421fe52b/RAM_DISK-0.0.0%2Bsha.3d0c421fe52b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-samux/library/USBMSD_SD/0.0.0+sha.055119ccf5a7/USBMSD_SD-0.0.0+sha.055119ccf5a7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBMSD_SD-0.0.0+sha.055119ccf5a7.tar.gz",
+    "size_bytes": 5792,
+    "sha256": "337a0154af0c5fcbf0c10eb3260c6734b946109d0115b56e526176e2355e5112",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-samux/library/USBMSD_SD/0.0.0%2Bsha.055119ccf5a7/USBMSD_SD-0.0.0%2Bsha.055119ccf5a7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-samux/library/USBMSD_SD/0.0.0%2Bsha.055119ccf5a7/USBMSD_SD-0.0.0%2Bsha.055119ccf5a7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-samux/library/WebSocketClient/0.0.0+sha.4567996414a5/WebSocketClient-0.0.0+sha.4567996414a5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSocketClient-0.0.0+sha.4567996414a5.tar.gz",
+    "size_bytes": 4726,
+    "sha256": "6c44c4bad3429a8d7a38383e448f5028f65f85eb2c43e9d8e27207c75059456d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-samux/library/WebSocketClient/0.0.0%2Bsha.4567996414a5/WebSocketClient-0.0.0%2Bsha.4567996414a5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-samux/library/WebSocketClient/0.0.0%2Bsha.4567996414a5/WebSocketClient-0.0.0%2Bsha.4567996414a5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-samux/library/Websocket_Wifly/0.0.0+sha.06909bc328c0/Websocket_Wifly-0.0.0+sha.06909bc328c0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Websocket_Wifly-0.0.0+sha.06909bc328c0.tar.gz",
+    "size_bytes": 3448,
+    "sha256": "960717c4c3bb4caa36c265746d90c50355ab3cebe95cd4f19371e408907ff379",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-samux/library/Websocket_Wifly/0.0.0%2Bsha.06909bc328c0/Websocket_Wifly-0.0.0%2Bsha.06909bc328c0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-samux/library/Websocket_Wifly/0.0.0%2Bsha.06909bc328c0/Websocket_Wifly-0.0.0%2Bsha.06909bc328c0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-samux/library/WiflyInterface/0.0.0+sha.108340829acc/WiflyInterface-0.0.0+sha.108340829acc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiflyInterface-0.0.0+sha.108340829acc.tar.gz",
+    "size_bytes": 10633,
+    "sha256": "b914f3c58ad871d187562fac7ad73e5092993070459be5737411efd985032831",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-samux/library/WiflyInterface/0.0.0%2Bsha.108340829acc/WiflyInterface-0.0.0%2Bsha.108340829acc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-samux/library/WiflyInterface/0.0.0%2Bsha.108340829acc/WiflyInterface-0.0.0%2Bsha.108340829acc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

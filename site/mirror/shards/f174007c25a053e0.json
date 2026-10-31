@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ozantoteles",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ozantoteles/library/IPS-7100-I2C-Arduino/1.0.1/IPS-7100-I2C-Arduino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IPS-7100-I2C-Arduino-1.0.1.tar.gz",
+    "size_bytes": 3960,
+    "sha256": "4ab042a8e6dd2b4901c60dae17b6d8dc6f1cd9e09b9de8194c17ae490b18f5e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ozantoteles/library/IPS-7100-I2C-Arduino/1.0.1/IPS-7100-I2C-Arduino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ozantoteles/library/IPS-7100-I2C-Arduino/1.0.1/IPS-7100-I2C-Arduino-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

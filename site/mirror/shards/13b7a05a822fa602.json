@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jensstruemper",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jensstruemper/library/LedBlink/0.0.0+sha.9d5aa4d61bf0/LedBlink-0.0.0+sha.9d5aa4d61bf0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedBlink-0.0.0+sha.9d5aa4d61bf0.tar.gz",
+    "size_bytes": 1866,
+    "sha256": "6d3783b90fe4992f51c73258512c916444313ba4349f7d53b7652943115467df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jensstruemper/library/LedBlink/0.0.0%2Bsha.9d5aa4d61bf0/LedBlink-0.0.0%2Bsha.9d5aa4d61bf0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jensstruemper/library/LedBlink/0.0.0%2Bsha.9d5aa4d61bf0/LedBlink-0.0.0%2Bsha.9d5aa4d61bf0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jensstruemper/library/MLX90614/0.0.0+sha.755bd47fd6be/MLX90614-0.0.0+sha.755bd47fd6be.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MLX90614-0.0.0+sha.755bd47fd6be.tar.gz",
+    "size_bytes": 2319,
+    "sha256": "55c708a21d82d1267eaaa35fe10a443e327ccb47dc53c0ee009cd953178acd10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jensstruemper/library/MLX90614/0.0.0%2Bsha.755bd47fd6be/MLX90614-0.0.0%2Bsha.755bd47fd6be.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jensstruemper/library/MLX90614/0.0.0%2Bsha.755bd47fd6be/MLX90614-0.0.0%2Bsha.755bd47fd6be.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jensstruemper/library/PushDuration/0.0.0+sha.28c022f61c0b/PushDuration-0.0.0+sha.28c022f61c0b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PushDuration-0.0.0+sha.28c022f61c0b.tar.gz",
+    "size_bytes": 2497,
+    "sha256": "15c3855fbc976078f646e2e7d72c682939d8bbcaf71637b73a0e81fd08986fbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jensstruemper/library/PushDuration/0.0.0%2Bsha.28c022f61c0b/PushDuration-0.0.0%2Bsha.28c022f61c0b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jensstruemper/library/PushDuration/0.0.0%2Bsha.28c022f61c0b/PushDuration-0.0.0%2Bsha.28c022f61c0b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jensstruemper/library/float2str/0.0.0+sha.56bf83e1dd1d/float2str-0.0.0+sha.56bf83e1dd1d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "float2str-0.0.0+sha.56bf83e1dd1d.tar.gz",
+    "size_bytes": 2604,
+    "sha256": "3f9aa50d0a27d9b4d073af7fd921fbedb53142cad8454daf5935074fd3d4d527",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jensstruemper/library/float2str/0.0.0%2Bsha.56bf83e1dd1d/float2str-0.0.0%2Bsha.56bf83e1dd1d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jensstruemper/library/float2str/0.0.0%2Bsha.56bf83e1dd1d/float2str-0.0.0%2Bsha.56bf83e1dd1d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

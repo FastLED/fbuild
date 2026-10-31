@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maratdevt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maratdevt/library/SimpleCode/1.0.0/SimpleCode-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleCode-1.0.0.tar.gz",
+    "size_bytes": 4161,
+    "sha256": "a06acb22f58b0f19c4c3f2248b625190742f460fe49846a36cd256e32e5cead1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maratdevt/library/SimpleCode/1.0.0/SimpleCode-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maratdevt/library/SimpleCode/1.0.0/SimpleCode-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maratdevt/library/SimpleCode/2.0.0/SimpleCode-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleCode-2.0.0.tar.gz",
+    "size_bytes": 8750,
+    "sha256": "fe61ce6bad64f9f0916cffbc5a7314700ea7249b388a3a3adb1172ac37196d9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maratdevt/library/SimpleCode/2.0.0/SimpleCode-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/maratdevt/library/SimpleCode/2.0.0/SimpleCode-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

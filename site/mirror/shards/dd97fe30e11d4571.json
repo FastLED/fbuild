@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eigen-value",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eigen-value/library/Transform/0.1/Transform-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Transform-0.1.tar.gz",
+    "size_bytes": 19169,
+    "sha256": "17d6eeb85a4006a9b5758585d84d58975f7589f35bfa49720807acd38f43d195",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eigen-value/library/Transform/0.1/Transform-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/eigen-value/library/Transform/0.1/Transform-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

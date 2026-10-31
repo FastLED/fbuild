@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/morgritech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "morgritech/library/MT-arduino-momentary-button/3.0.2/MT-arduino-momentary-button-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MT-arduino-momentary-button-3.0.2.tar.gz",
+    "size_bytes": 16726,
+    "sha256": "dcba4749717f384779bca08e51c4cbfa0ef97df50875fe6e5e5c06bb09b0ccd7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/morgritech/library/MT-arduino-momentary-button/3.0.2/MT-arduino-momentary-button-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/morgritech/library/MT-arduino-momentary-button/3.0.2/MT-arduino-momentary-button-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "morgritech/library/MT-arduino-pin-debouncer/3.0.2/MT-arduino-pin-debouncer-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MT-arduino-pin-debouncer-3.0.2.tar.gz",
+    "size_bytes": 15382,
+    "sha256": "73903cea33fe98e4793e39c4817de16ed2b1fbc364af77e8f1b4b1ef16b83a8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/morgritech/library/MT-arduino-pin-debouncer/3.0.2/MT-arduino-pin-debouncer-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/morgritech/library/MT-arduino-pin-debouncer/3.0.2/MT-arduino-pin-debouncer-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "morgritech/library/MT-arduino-rotary-encoder/1.1.1/MT-arduino-rotary-encoder-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MT-arduino-rotary-encoder-1.1.1.tar.gz",
+    "size_bytes": 15949,
+    "sha256": "2d14422e267facf22b5360ba521f3f13fac5fe787fd68e4cbf9d18c1183435e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/morgritech/library/MT-arduino-rotary-encoder/1.1.1/MT-arduino-rotary-encoder-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/morgritech/library/MT-arduino-rotary-encoder/1.1.1/MT-arduino-rotary-encoder-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "morgritech/library/MT-arduino-stepper-driver/3.1.2/MT-arduino-stepper-driver-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MT-arduino-stepper-driver-3.1.2.tar.gz",
+    "size_bytes": 25020,
+    "sha256": "7d280efdd94c5270a361a5ab04947e17517a46253a6856089e254a1c0030766f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/morgritech/library/MT-arduino-stepper-driver/3.1.2/MT-arduino-stepper-driver-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/morgritech/library/MT-arduino-stepper-driver/3.1.2/MT-arduino-stepper-driver-3.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

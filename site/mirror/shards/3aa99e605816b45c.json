@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thebigpotatoe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thebigpotatoe/library/Effortless-SPIFFS/2.3.0/Effortless-SPIFFS-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Effortless-SPIFFS-2.3.0.tar.gz",
+    "size_bytes": 12444,
+    "sha256": "6e281769627ee1eaadca09fa16d1b67f629419926799bcd60b58553f2ac5361a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thebigpotatoe/library/Effortless-SPIFFS/2.3.0/Effortless-SPIFFS-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thebigpotatoe/library/Effortless-SPIFFS/2.3.0/Effortless-SPIFFS-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thebigpotatoe/library/Feature-Variables/1.0.0/Feature-Variables-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Feature-Variables-1.0.0.tar.gz",
+    "size_bytes": 15464,
+    "sha256": "60c538997d6ab12265332927d4be1e3556d4bd1d265685c1eb60d4edaed16418",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thebigpotatoe/library/Feature-Variables/1.0.0/Feature-Variables-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thebigpotatoe/library/Feature-Variables/1.0.0/Feature-Variables-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

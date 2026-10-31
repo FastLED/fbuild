@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maxpowel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maxpowel/library/ESC%20Controller/0.0.0-alpha+sha.c1e11b84c1/ESCController-0.0.0-alphasha.c1e11b84c1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESCController-0.0.0-alphasha.c1e11b84c1.tar.gz",
+    "size_bytes": 1985,
+    "sha256": "9d45a8fa2f3e992a73b286c1cf059351d915042b248c814e6f86465c74cef17f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxpowel/library/ESC%2520Controller/0.0.0-alpha%2Bsha.c1e11b84c1/ESCController-0.0.0-alphasha.c1e11b84c1.tar.gz",
+     "https://dl.registry.platformio.org/download/maxpowel/library/ESC%20Controller/0.0.0-alpha%2Bsha.c1e11b84c1/ESCController-0.0.0-alphasha.c1e11b84c1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxpowel/library/Json%20Writer/0.0.0-alpha+sha.847d9df059/JsonWriter-0.0.0-alphasha.847d9df059.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JsonWriter-0.0.0-alphasha.847d9df059.tar.gz",
+    "size_bytes": 3905,
+    "sha256": "2011a2af6b89b51451e1a9adf97b184da483851d490e7e62f4bd9b9655bba999",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxpowel/library/Json%2520Writer/0.0.0-alpha%2Bsha.847d9df059/JsonWriter-0.0.0-alphasha.847d9df059.tar.gz",
+     "https://dl.registry.platformio.org/download/maxpowel/library/Json%20Writer/0.0.0-alpha%2Bsha.847d9df059/JsonWriter-0.0.0-alphasha.847d9df059.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxpowel/library/Multiplexer/0.0.0-alpha+sha.209f176fe5/Multiplexer-0.0.0-alphasha.209f176fe5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Multiplexer-0.0.0-alphasha.209f176fe5.tar.gz",
+    "size_bytes": 3893,
+    "sha256": "1478085b3423f59efbb98b21d623edb9fbc4c26a189e45c98ce4509ac56d514d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxpowel/library/Multiplexer/0.0.0-alpha%2Bsha.209f176fe5/Multiplexer-0.0.0-alphasha.209f176fe5.tar.gz",
+     "https://dl.registry.platformio.org/download/maxpowel/library/Multiplexer/0.0.0-alpha%2Bsha.209f176fe5/Multiplexer-0.0.0-alphasha.209f176fe5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxpowel/library/ProtocolBuffersStream/0.0.0-alpha+sha.9608fa8a58/ProtocolBuffersStream-0.0.0-alphasha.9608fa8a58.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProtocolBuffersStream-0.0.0-alphasha.9608fa8a58.tar.gz",
+    "size_bytes": 4510,
+    "sha256": "f437f6be2722c970b1e26246593018b34f7aa01e99a57d20d75f78a3d5818ae9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxpowel/library/ProtocolBuffersStream/0.0.0-alpha%2Bsha.9608fa8a58/ProtocolBuffersStream-0.0.0-alphasha.9608fa8a58.tar.gz",
+     "https://dl.registry.platformio.org/download/maxpowel/library/ProtocolBuffersStream/0.0.0-alpha%2Bsha.9608fa8a58/ProtocolBuffersStream-0.0.0-alphasha.9608fa8a58.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxpowel/library/VoltMeter/0.0.0-alpha+sha.f83ce287d7/VoltMeter-0.0.0-alphasha.f83ce287d7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VoltMeter-0.0.0-alphasha.f83ce287d7.tar.gz",
+    "size_bytes": 2571,
+    "sha256": "cb17b3e8925a5e42d0bab7e98a83bb6ed3e52aa56a1d2579aa42b69a7663862c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxpowel/library/VoltMeter/0.0.0-alpha%2Bsha.f83ce287d7/VoltMeter-0.0.0-alphasha.f83ce287d7.tar.gz",
+     "https://dl.registry.platformio.org/download/maxpowel/library/VoltMeter/0.0.0-alpha%2Bsha.f83ce287d7/VoltMeter-0.0.0-alphasha.f83ce287d7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

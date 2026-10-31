@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wiladhinur",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wiladhinur/library/MyLCDESP32/1.0.0/MyLCDESP32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyLCDESP32-1.0.0.tar.gz",
+    "size_bytes": 4180,
+    "sha256": "3e36c03f7f7a12c7c607fdffe2090927c8466a8e8e2ce26d9586aa46d693e93d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wiladhinur/library/MyLCDESP32/1.0.0/MyLCDESP32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wiladhinur/library/MyLCDESP32/1.0.0/MyLCDESP32-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

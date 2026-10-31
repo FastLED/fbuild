@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/juslam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "juslam/library/IoTera/1.0.0/IoTera-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTera-1.0.0.tar.gz",
+    "size_bytes": 6920,
+    "sha256": "6bff4e36e90ff5e62ab80b9ccc4d991271f3c65c38ba96008f63111cd8fe645c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juslam/library/IoTera/1.0.0/IoTera-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juslam/library/IoTera/1.0.0/IoTera-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juslam/library/IoTera/1.1.0/IoTera-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTera-1.1.0.tar.gz",
+    "size_bytes": 8230,
+    "sha256": "b59c16371bd16f9a2466d85d1903ea1e0cc6f2b87027f6b3c0769cc7fa66ec29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juslam/library/IoTera/1.1.0/IoTera-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juslam/library/IoTera/1.1.0/IoTera-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juslam/library/IoTera/1.2.0/IoTera-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTera-1.2.0.tar.gz",
+    "size_bytes": 8621,
+    "sha256": "af954b3273713f78ceba046d96ea02f3f48014cd49381e587f42167df249b2fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juslam/library/IoTera/1.2.0/IoTera-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juslam/library/IoTera/1.2.0/IoTera-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juslam/library/IoTera/1.3.0/IoTera-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTera-1.3.0.tar.gz",
+    "size_bytes": 9137,
+    "sha256": "ec79f969f1bc7dd88eda0b9495edfe5605085ea0ef9388902c9013d71ed0d437",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juslam/library/IoTera/1.3.0/IoTera-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/juslam/library/IoTera/1.3.0/IoTera-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juslam/library/IoTera/1.3.2/IoTera-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTera-1.3.2.tar.gz",
+    "size_bytes": 9711,
+    "sha256": "e787ee05bc95eb1cca2480a5d7e3962fda7c3c700565f7baf4e31662ab3bb570",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juslam/library/IoTera/1.3.2/IoTera-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/juslam/library/IoTera/1.3.2/IoTera-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "juslam/library/IoTera/1.3.3/IoTera-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTera-1.3.3.tar.gz",
+    "size_bytes": 9793,
+    "sha256": "d5911330847daaa0736d563ff2ec5afd1bf951bfd9abaf8fc7c9fdb329998981",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/juslam/library/IoTera/1.3.3/IoTera-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/juslam/library/IoTera/1.3.3/IoTera-1.3.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

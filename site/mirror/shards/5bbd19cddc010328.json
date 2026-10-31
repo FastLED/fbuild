@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kimurayuki",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kimurayuki/library/MotorDriver/0.0.0+sha.810bc3aec72f/MotorDriver-0.0.0+sha.810bc3aec72f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorDriver-0.0.0+sha.810bc3aec72f.tar.gz",
+    "size_bytes": 2644,
+    "sha256": "be52dd0e98e1d78217a6011f18aa327e17e6b7cae95f0c50c632cf13b0bfdb9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kimurayuki/library/MotorDriver/0.0.0%2Bsha.810bc3aec72f/MotorDriver-0.0.0%2Bsha.810bc3aec72f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kimurayuki/library/MotorDriver/0.0.0%2Bsha.810bc3aec72f/MotorDriver-0.0.0%2Bsha.810bc3aec72f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

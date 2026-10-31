@@ -141,6 +141,8 @@ fn unsafe_urls_reject_the_whole_document() {
         "http://localhost@evil.example/t.tar.gz",
         "https:///no-host",
         "https://evil.example/a b",
+        "https://evil.example/a\u{8}b",
+        "https://evil.example/a\u{0}b",
         "/relative/path.tar.gz",
         "",
     ] {
@@ -213,7 +215,7 @@ async fn manifest_order_decides_the_attempt_order() {
         &format!(r#","sha256":"{HELLO_SHA}""#),
     )));
 
-    let c = resolve_with(VENDOR, Some(&m));
+    let c = resolve_with(VENDOR, m.lookup(VENDOR));
     assert_eq!(
         c.urls,
         vec![VENDOR, BUCKET, OTHER],
@@ -223,7 +225,7 @@ async fn manifest_order_decides_the_attempt_order() {
     assert_eq!(c.mirror_sha256.as_deref(), Some(HELLO_SHA));
 
     // Looked up by a mirror URL, that URL is the primary.
-    let c = resolve_with(BUCKET, Some(&m));
+    let c = resolve_with(BUCKET, m.lookup(BUCKET));
     assert_eq!(c.urls, vec![BUCKET, VENDOR, OTHER]);
     assert_eq!(c.order, vec![0, 1, 2]);
 }
@@ -234,7 +236,7 @@ async fn yanked_entries_go_straight_to_the_primary() {
     let _m = ScopedEnv::unset(MIRRORS_ENV);
     let m = parse(&doc(&component(&[BUCKET, VENDOR], r#","yanked":true"#)));
     assert_eq!(
-        resolve_with(VENDOR, Some(&m)),
+        resolve_with(VENDOR, m.lookup(VENDOR)),
         Candidates::new(vec![VENDOR.to_string()], false)
     );
 }
@@ -247,14 +249,14 @@ async fn operator_env_beats_the_manifest() {
         let _m = ScopedEnv::set(MIRRORS_ENV, "");
         let _f = ScopedEnv::unset(MIRROR_FIRST_ENV);
         assert_eq!(
-            resolve_with(VENDOR, Some(&m)),
+            resolve_with(VENDOR, m.lookup(VENDOR)),
             Candidates::new(vec![VENDOR.to_string()], false),
             "an explicit (empty) mirror list ignores the manifest"
         );
     }
     let _m = ScopedEnv::unset(MIRRORS_ENV);
     let _f = ScopedEnv::set(MIRROR_FIRST_ENV, "0");
-    let c = resolve_with(VENDOR, Some(&m));
+    let c = resolve_with(VENDOR, m.lookup(VENDOR));
     assert_eq!(c.urls, vec![VENDOR, BUCKET]);
     assert_eq!(c.order, vec![0, 1], "MIRROR_FIRST=0 puts the vendor first");
 }
@@ -265,7 +267,10 @@ async fn unlisted_urls_keep_the_built_in_default() {
     let _m = ScopedEnv::unset(MIRRORS_ENV);
     let _f = ScopedEnv::unset(MIRROR_FIRST_ENV);
     let m = parse(&doc(&component(&[OTHER], "")));
-    assert_eq!(resolve_with(VENDOR, Some(&m)), resolve_with(VENDOR, None));
+    assert_eq!(
+        resolve_with(VENDOR, m.lookup(VENDOR)),
+        resolve_with(VENDOR, None)
+    );
 }
 
 // ---------------------------------------------------------------- loading
@@ -495,56 +500,325 @@ async fn all_mirrors_rejected_and_primary_down_reports_the_primary() {
     assert!(err.contains(&primary), "{err}");
 }
 
-// ------------------------------------------------------- published document
+// ------------------------------------------------------------------ shards
 
-/// The committed manifest (what Pages serves) must pass this reader's
-/// validation, and every entry must put the bucket first with a hash.
+fn sha_hex(bytes: &[u8]) -> String {
+    use sha2::Digest;
+    sha2::Sha256::digest(bytes)
+        .iter()
+        .map(|b| format!("{b:02x}"))
+        .collect()
+}
+
+fn index(owner: &str, url: &str, shard: &str) -> String {
+    format!(
+        r#"{{"kind":"Index","schema_version":1,"tools":{{"{owner}":{{"descriptor":{{"url":"{url}","sha256":"{}","size_bytes":{}}}}}}}}}"#,
+        sha_hex(shard.as_bytes()),
+        shard.len()
+    )
+}
+
+/// An Index served at `/manifest.json` with `owner`'s shard at
+/// `/shards/o.json`; `shard_responses` is what the shard URL serves, in order.
+async fn sharded(
+    owner: &str,
+    shard: &str,
+    shard_responses: Vec<&'static str>,
+) -> (Vec<String>, Arc<AtomicUsize>) {
+    let (shard_url, shard_hits) = server(shard_responses).await;
+    // A relative descriptor resolves against the manifest's own directory,
+    // so serve the index from the shard server's port.
+    let base = shard_url.replace("manifest.json", "");
+    let idx = index(owner, &format!("{base}shards/o.json"), shard);
+    let (idx_url, _) = server(vec![http_ok(&idx)]).await;
+    (vec![idx_url], shard_hits)
+}
+
+#[test]
+fn index_descriptors_are_validated() {
+    let shard = doc(&component(&[BUCKET, VENDOR], ""));
+    let ok = MirrorManifest::parse(index("o", "shards/o.json", &shard).as_bytes()).unwrap();
+    assert_eq!(ok.shard_ref("o").unwrap().url, "shards/o.json");
+    for bad in [
+        "../escape.json",
+        "/abs.json",
+        "shards/../../x.json",
+        "http://evil.example/s.json",
+        "shards/o.json?x=1",
+        "a\\b.json",
+        "",
+    ] {
+        let json = index("o", bad, &shard);
+        assert!(
+            MirrorManifest::parse(json.as_bytes()).is_err(),
+            "{bad:?} must be rejected"
+        );
+    }
+    for json in [
+        index("", "s.json", &shard),
+        index("a/b", "s.json", &shard),
+        index("o", "s.json", &shard).replace(&sha_hex(shard.as_bytes()), "abc"),
+        index("o", "s.json", &shard).replace(
+            &format!("\"size_bytes\":{}", shard.len()),
+            "\"size_bytes\":99999999999",
+        ),
+        r#"{"kind":"Index","schema_version":1,"tools":{"o":{"summary":"no descriptor"}}}"#
+            .to_string(),
+    ] {
+        assert!(MirrorManifest::parse(json.as_bytes()).is_err(), "{json}");
+    }
+}
+
+#[tokio::test]
+async fn shard_is_fetched_verified_and_used() {
+    let _guard = network_test_guard().await;
+    let shard = doc(&component(
+        &[BUCKET, VENDOR],
+        &format!(r#","sha256":"{HELLO_SHA}""#),
+    ));
+    let (sources, hits) = sharded("o", &shard, vec![http_ok(&shard)]).await;
+    let dir = tempfile::TempDir::new().unwrap();
+    let m = load_with(
+        &test_client(),
+        &sources,
+        Some(&dir.path().join("m.json")),
+        CACHE_TTL,
+    )
+    .await
+    .unwrap();
+    assert!(
+        m.lookup(VENDOR).is_none(),
+        "the index itself lists no assets"
+    );
+    let entry = m.entry_for(VENDOR, Some("o")).await.expect("shard entry");
+    assert_eq!(entry.sha256.as_deref(), Some(HELLO_SHA));
+    // Second lookup, other owner: no extra fetches.
+    assert!(m.entry_for(VENDOR, Some("o")).await.is_some());
+    assert!(m.entry_for(VENDOR, Some("other")).await.is_none());
+    assert!(m.entry_for(VENDOR, None).await.is_none());
+    assert_eq!(hits.load(Ordering::SeqCst), 1, "one shard fetch per owner");
+}
+
+#[tokio::test]
+async fn tampered_or_hostile_shards_are_rejected() {
+    let _guard = network_test_guard().await;
+    let shard = doc(&component(&[BUCKET, VENDOR], ""));
+    let nested = index("o", "x.json", &shard);
+    for served in [
+        // Bytes that don't hash to the descriptor.
+        http_ok(&doc(&component(&[OTHER, VENDOR], ""))),
+        DOWN,
+        http_ok("<html>"),
+    ] {
+        let (sources, _) = sharded("o", &shard, vec![served]).await;
+        let m = load_with(&test_client(), &sources, None, CACHE_TTL)
+            .await
+            .unwrap();
+        assert!(m.entry_for(VENDOR, Some("o")).await.is_none());
+    }
+    // A shard that is itself an Index is refused even when its hash matches.
+    let (sources, _) = sharded("o", &nested, vec![http_ok(&nested)]).await;
+    let m = load_with(&test_client(), &sources, None, CACHE_TTL)
+        .await
+        .unwrap();
+    assert!(m.entry_for(VENDOR, Some("o")).await.is_none());
+}
+
+#[tokio::test]
+async fn cached_shard_is_reused_and_survives_an_outage() {
+    let _guard = network_test_guard().await;
+    let dir = tempfile::TempDir::new().unwrap();
+    let cache = dir.path().join("m.json");
+    let shard = doc(&component(&[BUCKET, VENDOR], ""));
+    let (sources, hits) = sharded("o", &shard, vec![http_ok(&shard)]).await;
+    let m = load_with(&test_client(), &sources, Some(&cache), CACHE_TTL)
+        .await
+        .unwrap();
+    assert!(m.entry_for(VENDOR, Some("o")).await.is_some());
+
+    // New process (fresh manifest from cache): the verified shard cache is
+    // used without asking the server again.
+    let m = load_with(&test_client(), &sources, Some(&cache), CACHE_TTL)
+        .await
+        .unwrap();
+    assert!(m.entry_for(VENDOR, Some("o")).await.is_some());
+    assert_eq!(hits.load(Ordering::SeqCst), 1);
+
+    // The index moves on to a shard nobody can serve: the stale cached
+    // shard keeps working.
+    let newer = doc(&component(&[BUCKET, VENDOR, OTHER], ""));
+    let (sources, _) = sharded("o", &newer, vec![DOWN]).await;
+    let m = load_with(
+        &test_client(),
+        &sources,
+        Some(&dir.path().join("m2.json")),
+        CACHE_TTL,
+    )
+    .await
+    .unwrap();
+    assert!(
+        m.entry_for(VENDOR, Some("o")).await.is_some(),
+        "stale shard from the shared shard cache"
+    );
+}
+
+#[tokio::test]
+async fn relative_shard_urls_resolve_against_the_manifest_source() {
+    let _guard = network_test_guard().await;
+    let shard = doc(&component(&[BUCKET, VENDOR], ""));
+    let (shard_url, _) = server(vec![http_ok(&shard)]).await;
+    // The shard server also serves the index first, at the same port.
+    let idx = index("o", "shards/o.json", &shard);
+    let hits = Arc::new(AtomicUsize::new(0));
+    let port = run_flaky_server(
+        Arc::new(std::sync::Mutex::new(vec![http_ok(&idx), http_ok(&shard)])),
+        hits.clone(),
+    )
+    .await;
+    drop(shard_url);
+    let source = format!("http://127.0.0.1:{port}/mirror/manifest.json");
+    let m = load_with(&test_client(), &[source], None, CACHE_TTL)
+        .await
+        .unwrap();
+    assert!(m.entry_for(VENDOR, Some("o")).await.is_some());
+    assert_eq!(hits.load(Ordering::SeqCst), 2);
+}
+
+/// The registry API hands out some download URLs with a literal space; the
+/// manifest lists them with `%20`. Both forms must find the entry, keep the
+/// primary exactly as requested, and never list the vendor twice.
+#[tokio::test]
+async fn space_in_registry_url_matches_the_escaped_manifest_entry() {
+    let _guard = network_test_guard().await;
+    let _m = ScopedEnv::unset(MIRRORS_ENV);
+    let _f = ScopedEnv::unset(MIRROR_FIRST_ENV);
+    let escaped = "https://dl.registry.platformio.org/download/dmytro%20korniienko/library/EmbUI/2.7.0/EmbUI-2.7.0.tar.gz";
+    let bucket = "https://fbuild.sfo3.digitaloceanspaces.com/dmytro%20korniienko/library/EmbUI/2.7.0/EmbUI-2.7.0.tar.gz";
+    let spaced = escaped.replace("%20", " ");
+    let m = parse(&doc(&component(
+        &[bucket, escaped],
+        &format!(r#","sha256":"{HELLO_SHA}""#),
+    )));
+    assert_eq!(super::mirrors::canonical_url(&spaced), escaped);
+    assert_eq!(
+        super::mirrors::registry_owner(escaped).as_deref(),
+        Some("dmytro%20korniienko")
+    );
+    let entry = m.lookup(&super::mirrors::canonical_url(&spaced));
+    let c = resolve_with(&spaced, entry);
+    assert_eq!(c.urls, vec![spaced.clone(), bucket.to_string()]);
+    assert_eq!(c.order, vec![1, 0]);
+    assert_eq!(c.mirror_sha256.as_deref(), Some(HELLO_SHA));
+}
+
+/// A manifest entry that somehow lacks the requested URL still leaves the
+/// primary in the attempt order.
+#[tokio::test]
+async fn primary_is_always_attempted() {
+    let _guard = network_test_guard().await;
+    let _m = ScopedEnv::unset(MIRRORS_ENV);
+    let _f = ScopedEnv::unset(MIRROR_FIRST_ENV);
+    let m = parse(&doc(&component(&[BUCKET, OTHER], "")));
+    let c = resolve_with(VENDOR, m.lookup(BUCKET));
+    assert_eq!(c.urls[0], VENDOR);
+    assert!(c.order.contains(&0), "{c:?}");
+}
+
+// ------------------------------------------------- no PlatformIO extras
+
+/// fbuild may talk to PlatformIO only through the primary download: no
+/// PlatformIO mirror host and no `bypass=` URL is ever a candidate, with or
+/// without a manifest (FastLED/fbuild#1815).
+#[tokio::test]
+async fn candidates_never_include_platformio_mirrors() {
+    let _guard = network_test_guard().await;
+    let _m = ScopedEnv::unset(MIRRORS_ENV);
+    let _f = ScopedEnv::unset(MIRROR_FIRST_ENV);
+    let m = parse(&doc(&component(&[BUCKET, VENDOR], "")));
+    for entry in [None, m.lookup(VENDOR)] {
+        let c = resolve_with(VENDOR, entry);
+        assert_eq!(c.urls[0], VENDOR);
+        for url in &c.urls[1..] {
+            let host = url.split('/').nth(2).unwrap();
+            assert!(!host.ends_with("platformio.org"), "{url}");
+            assert!(!url.contains("bypass="), "{url}");
+            assert!(!url.contains("pioreg"), "{url}");
+        }
+        assert_eq!(
+            c.urls
+                .iter()
+                .filter(|u| u.contains("platformio.org"))
+                .count(),
+            1,
+            "the primary is the only PlatformIO URL"
+        );
+    }
+}
+
+// ------------------------------------------------------- published documents
+
+fn site_mirror() -> fbuild_core::path::NormalizedPath {
+    fbuild_core::path::NormalizedPath::new(env!("CARGO_MANIFEST_DIR")).join("../../site/mirror")
+}
+
+/// The committed index and shards (what Pages serves) pass this reader's
+/// validation: every shard hashes to its descriptor, and every entry puts
+/// the bucket first with a sha256.
 #[tokio::test]
 async fn committed_manifest_is_accepted_and_prefers_the_bucket() {
     let _guard = network_test_guard().await;
     let _m = ScopedEnv::unset(MIRRORS_ENV);
     let _f = ScopedEnv::unset(MIRROR_FIRST_ENV);
-    let bytes = include_bytes!("../../../site/mirror/manifest.json");
-    let m = MirrorManifest::parse(bytes).expect("site/mirror/manifest.json must validate");
-    let doc: serde_json::Value = serde_json::from_slice(bytes).unwrap();
-    let components = doc["components"].as_array().unwrap();
-    assert!(!components.is_empty());
-    for component in components {
-        let urls: Vec<&str> = component["asset"]["urls"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .map(|u| u.as_str().unwrap())
-            .collect();
-        assert!(
-            urls[0].starts_with("https://fbuild.sfo3.digitaloceanspaces.com/"),
-            "{urls:?}"
-        );
-        let vendor = urls[1];
-        let c = resolve_with(vendor, Some(&m));
-        assert_eq!(c.urls[c.order[0]], urls[0], "bucket first for {vendor}");
-        assert!(c.mirror_sha256.is_some(), "{vendor} must carry a sha256");
+    let bytes = std::fs::read(site_mirror().join("manifest.json").as_path()).unwrap();
+    let m = MirrorManifest::parse(&bytes).expect("site/mirror/manifest.json must validate");
+    let doc: serde_json::Value = serde_json::from_slice(&bytes).unwrap();
+    let tools = doc["tools"].as_object().expect("an Index");
+    assert!(tools.contains_key("platformio"));
+    let mut checked = 0;
+    for owner in tools.keys() {
+        let shard_ref = m.shard_ref(owner).unwrap();
+        let shard_bytes = std::fs::read(site_mirror().join(&shard_ref.url).as_path()).unwrap();
+        assert_eq!(sha_hex(&shard_bytes), shard_ref.sha256, "{owner}");
+        assert_eq!(shard_bytes.len() as u64, shard_ref.size_bytes, "{owner}");
+        let shard_doc: serde_json::Value = serde_json::from_slice(&shard_bytes).unwrap();
+        let shard = MirrorManifest::parse(&shard_bytes).unwrap();
+        for component in shard_doc["components"].as_array().unwrap() {
+            let urls: Vec<&str> = component["asset"]["urls"]
+                .as_array()
+                .unwrap()
+                .iter()
+                .map(|u| u.as_str().unwrap())
+                .collect();
+            assert!(urls[0].starts_with("https://fbuild.sfo3.digitaloceanspaces.com/"));
+            assert!(urls[1].starts_with("https://dl.registry.platformio.org/download/"));
+            let c = resolve_with(urls[1], shard.lookup(urls[1]));
+            assert_eq!(c.urls[c.order[0]], urls[0]);
+            assert!(c.mirror_sha256.is_some());
+            checked += 1;
+        }
     }
+    assert!(checked > 1000, "only {checked} entries");
 }
 
-/// Live: the published manifest is reachable, valid, and lists the bucket.
+/// Live: the published index is reachable and its platformio shard verifies.
 #[tokio::test]
 #[ignore = "network: fetches https://fastled.github.io/fbuild/mirror/manifest.json"]
 async fn published_manifest_resolves_live() {
-    let sources = super::manifest::manifest_urls();
-    for source in &sources {
+    let vendor = "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr/5.4.0/framework-arduino-avr-5.4.0.tar.gz";
+    for source in super::manifest::manifest_urls() {
         let m = load_with(
             &test_client(),
-            std::slice::from_ref(source),
+            std::slice::from_ref(&source),
             None,
             CACHE_TTL,
         )
         .await
         .unwrap_or_else(|| panic!("{source} did not serve a valid manifest"));
-        let vendor = "https://dl.registry.platformio.org/download/platformio/tool/framework-arduino-avr/5.4.0/framework-arduino-avr-5.4.0.tar.gz";
         let entry = m
-            .lookup(vendor)
-            .expect("framework-arduino-avr 5.4.0 is mirrored");
+            .entry_for(vendor, Some("platformio"))
+            .await
+            .unwrap_or_else(|| panic!("{source}: framework-arduino-avr 5.4.0 not in its shard"));
         assert!(entry.urls[0].starts_with("https://fbuild.sfo3.digitaloceanspaces.com/"));
+        assert!(entry.sha256.is_some());
     }
 }

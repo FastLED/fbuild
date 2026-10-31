@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gauthibit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gauthibit/library/SDFileSystem_Axelta/0.0.0+sha.ac1f1c74328a/SDFileSystem_Axelta-0.0.0+sha.ac1f1c74328a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDFileSystem_Axelta-0.0.0+sha.ac1f1c74328a.tar.gz",
+    "size_bytes": 5774,
+    "sha256": "8ee4601d076a0f0f8e1a6debdc7f7cf69ec9543487632f715cc92a6eb4ea4210",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gauthibit/library/SDFileSystem_Axelta/0.0.0%2Bsha.ac1f1c74328a/SDFileSystem_Axelta-0.0.0%2Bsha.ac1f1c74328a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gauthibit/library/SDFileSystem_Axelta/0.0.0%2Bsha.ac1f1c74328a/SDFileSystem_Axelta-0.0.0%2Bsha.ac1f1c74328a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

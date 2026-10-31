@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/erriez",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "erriez/library/ErriezBH1750/1.1.2/ErriezBH1750-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ErriezBH1750-1.1.2.tar.gz",
+    "size_bytes": 45235,
+    "sha256": "09103d01431f7ee9bef608412b84c501f7ab7a70e655de8a7ffd67eacb0c845e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erriez/library/ErriezBH1750/1.1.2/ErriezBH1750-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/erriez/library/ErriezBH1750/1.1.2/ErriezBH1750-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erriez/library/ErriezBMX280/1.0.1/ErriezBMX280-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ErriezBMX280-1.0.1.tar.gz",
+    "size_bytes": 36868,
+    "sha256": "56a8e0e3e3bf2b3ee06adb87a33422946fa386610c20eb272102a26d40cd60e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erriez/library/ErriezBMX280/1.0.1/ErriezBMX280-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/erriez/library/ErriezBMX280/1.0.1/ErriezBMX280-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erriez/library/ErriezCRC32/1.0.1/ErriezCRC32-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ErriezCRC32-1.0.1.tar.gz",
+    "size_bytes": 56364,
+    "sha256": "3c999ded644dcf3dd47fa938bc8c9952c204a220382ba071d4db20307b81b4cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erriez/library/ErriezCRC32/1.0.1/ErriezCRC32-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/erriez/library/ErriezCRC32/1.0.1/ErriezCRC32-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erriez/library/ErriezDHT22/1.2.2/ErriezDHT22-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ErriezDHT22-1.2.2.tar.gz",
+    "size_bytes": 58830,
+    "sha256": "d4cfe925311f813f548c2c3280fcaff7cb0ae3399df85c03902ef838f74377a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erriez/library/ErriezDHT22/1.2.2/ErriezDHT22-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/erriez/library/ErriezDHT22/1.2.2/ErriezDHT22-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erriez/library/ErriezDS3231/2.0.0/ErriezDS3231-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ErriezDS3231-2.0.0.tar.gz",
+    "size_bytes": 50323,
+    "sha256": "208b5a5eb117120f7f416132b20867f5794f2dfe9b22969c8200f16a57617ae5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erriez/library/ErriezDS3231/2.0.0/ErriezDS3231-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/erriez/library/ErriezDS3231/2.0.0/ErriezDS3231-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erriez/library/ErriezHCSR04/1.0.0/ErriezHCSR04-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ErriezHCSR04-1.0.0.tar.gz",
+    "size_bytes": 32763,
+    "sha256": "666947b9cf5778605b18ec92230dc4498f06e03d21e2ef49f45968b120147951",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erriez/library/ErriezHCSR04/1.0.0/ErriezHCSR04-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/erriez/library/ErriezHCSR04/1.0.0/ErriezHCSR04-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erriez/library/ErriezINA219/1.0.0/ErriezINA219-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ErriezINA219-1.0.0.tar.gz",
+    "size_bytes": 35744,
+    "sha256": "a6f437ebde189089894f5cdae1a95e385562f935af141a35baa1e6c2b4775728",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erriez/library/ErriezINA219/1.0.0/ErriezINA219-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/erriez/library/ErriezINA219/1.0.0/ErriezINA219-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erriez/library/ErriezMCP23017/1.0.0/ErriezMCP23017-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ErriezMCP23017-1.0.0.tar.gz",
+    "size_bytes": 42711,
+    "sha256": "9d6a9f81388f0568661a31669375a7091197024cfc241f01b58617c0ad72363f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erriez/library/ErriezMCP23017/1.0.0/ErriezMCP23017-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/erriez/library/ErriezMCP23017/1.0.0/ErriezMCP23017-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erriez/library/ErriezMHZ19B/1.0.0/ErriezMHZ19B-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ErriezMHZ19B-1.0.0.tar.gz",
+    "size_bytes": 41411,
+    "sha256": "84c2f46a11347be7373b86276325fa4091b191b47782978b45d204620cbd55df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erriez/library/ErriezMHZ19B/1.0.0/ErriezMHZ19B-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/erriez/library/ErriezMHZ19B/1.0.0/ErriezMHZ19B-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erriez/library/ErriezSerialTerminal/1.1.4/ErriezSerialTerminal-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ErriezSerialTerminal-1.1.4.tar.gz",
+    "size_bytes": 34083,
+    "sha256": "446a0e4afaab4b1eb165cda9da36e76b20cd78325eef264d76009f9e22cc753d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erriez/library/ErriezSerialTerminal/1.1.4/ErriezSerialTerminal-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/erriez/library/ErriezSerialTerminal/1.1.4/ErriezSerialTerminal-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

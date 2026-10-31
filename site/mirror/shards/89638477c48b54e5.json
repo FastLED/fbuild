@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gandy92",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gandy92/library/NRF8001/0.0.0-alpha+sha.6cb9f8cf2d/NRF8001-0.0.0-alphasha.6cb9f8cf2d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NRF8001-0.0.0-alphasha.6cb9f8cf2d.tar.gz",
+    "size_bytes": 28294,
+    "sha256": "a593e9daaa7e3bc95c3f74965145ad3b90d643212f4837b0b38ffbe868930a4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gandy92/library/NRF8001/0.0.0-alpha%2Bsha.6cb9f8cf2d/NRF8001-0.0.0-alphasha.6cb9f8cf2d.tar.gz",
+     "https://dl.registry.platformio.org/download/gandy92/library/NRF8001/0.0.0-alpha%2Bsha.6cb9f8cf2d/NRF8001-0.0.0-alphasha.6cb9f8cf2d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

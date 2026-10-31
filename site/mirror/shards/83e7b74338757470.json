@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-deece",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-deece/library/DS1820/0.0.0+sha.b9d69bad8185/DS1820-0.0.0+sha.b9d69bad8185.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1820-0.0.0+sha.b9d69bad8185.tar.gz",
+    "size_bytes": 6003,
+    "sha256": "10303902e8d62a95d36a2811c18d953d2347fa4d7d165f9b2701c48f6d1b0c78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-deece/library/DS1820/0.0.0%2Bsha.b9d69bad8185/DS1820-0.0.0%2Bsha.b9d69bad8185.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-deece/library/DS1820/0.0.0%2Bsha.b9d69bad8185/DS1820-0.0.0%2Bsha.b9d69bad8185.tar.gz"
+    ]
+   }
+  }
+ ]
+}

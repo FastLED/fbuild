@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/foresthubai",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "foresthubai/library/fh-sdk/0.1.0/fh-sdk-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fh-sdk-0.1.0.tar.gz",
+    "size_bytes": 236481,
+    "sha256": "8ac49b3d2dbd95ee41e72f217f471bfdc7cdffbc0b94abc481cfa9577f64759a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foresthubai/library/fh-sdk/0.1.0/fh-sdk-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/foresthubai/library/fh-sdk/0.1.0/fh-sdk-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foresthubai/library/fh-sdk/0.1.1/fh-sdk-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fh-sdk-0.1.1.tar.gz",
+    "size_bytes": 233605,
+    "sha256": "cf480278922391c17c0e200102dc276d08db863f03ac6ee6a3fd04dba6b5618e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foresthubai/library/fh-sdk/0.1.1/fh-sdk-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/foresthubai/library/fh-sdk/0.1.1/fh-sdk-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "foresthubai/library/fh-sdk/0.1.2/fh-sdk-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fh-sdk-0.1.2.tar.gz",
+    "size_bytes": 234082,
+    "sha256": "9de84cfae9b79a631e70da01926c994ad5e38d3319fb4ea92ccf13cb3df0b858",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foresthubai/library/fh-sdk/0.1.2/fh-sdk-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/foresthubai/library/fh-sdk/0.1.2/fh-sdk-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maxint-rd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maxint-rd/library/TM16xx%20LEDs%20and%20Buttons/0.7.2503/TM16xxLEDsandButtons-0.7.2503.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM16xxLEDsandButtons-0.7.2503.tar.gz",
+    "size_bytes": 76286,
+    "sha256": "d14719f77ac9d0e48d2e55e5a2c6939711359a82c5a8a1a88852318ece98f174",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxint-rd/library/TM16xx%2520LEDs%2520and%2520Buttons/0.7.2503/TM16xxLEDsandButtons-0.7.2503.tar.gz",
+     "https://dl.registry.platformio.org/download/maxint-rd/library/TM16xx%20LEDs%20and%20Buttons/0.7.2503/TM16xxLEDsandButtons-0.7.2503.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maxint-rd/library/TM16xx%20LEDs%20and%20Buttons/0.7.2512/TM16xxLEDsandButtons-0.7.2512.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TM16xxLEDsandButtons-0.7.2512.tar.gz",
+    "size_bytes": 92112,
+    "sha256": "6ee26fcace323299ecd4c43dd251da563e04c0fa855fed38282a53a3ba40e633",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maxint-rd/library/TM16xx%2520LEDs%2520and%2520Buttons/0.7.2512/TM16xxLEDsandButtons-0.7.2512.tar.gz",
+     "https://dl.registry.platformio.org/download/maxint-rd/library/TM16xx%20LEDs%20and%20Buttons/0.7.2512/TM16xxLEDsandButtons-0.7.2512.tar.gz"
+    ]
+   }
+  }
+ ]
+}

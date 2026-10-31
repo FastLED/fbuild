@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mbedalvaro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mbedalvaro/library/hardwareIO/0.0.0+sha.c19dc1d8b225/hardwareIO-0.0.0+sha.c19dc1d8b225.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hardwareIO-0.0.0+sha.c19dc1d8b225.tar.gz",
+    "size_bytes": 9021,
+    "sha256": "c6ccbfc2b9e4b0d12bb109419d506934256fb79ce9b5603a7735973a84f7e527",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbedalvaro/library/hardwareIO/0.0.0%2Bsha.c19dc1d8b225/hardwareIO-0.0.0%2Bsha.c19dc1d8b225.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbedalvaro/library/hardwareIO/0.0.0%2Bsha.c19dc1d8b225/hardwareIO-0.0.0%2Bsha.c19dc1d8b225.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mbedalvaro/library/laserProjectorHardware/0.0.0+sha.b8673fcb3800/laserProjectorHardware-0.0.0+sha.b8673fcb3800.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "laserProjectorHardware-0.0.0+sha.b8673fcb3800.tar.gz",
+    "size_bytes": 3034,
+    "sha256": "870b97de3182fc390933ec9baf0a50e89b88f9f14e5608af9c50df03d6c0ad2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbedalvaro/library/laserProjectorHardware/0.0.0%2Bsha.b8673fcb3800/laserProjectorHardware-0.0.0%2Bsha.b8673fcb3800.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbedalvaro/library/laserProjectorHardware/0.0.0%2Bsha.b8673fcb3800/laserProjectorHardware-0.0.0%2Bsha.b8673fcb3800.tar.gz"
+    ]
+   }
+  }
+ ]
+}

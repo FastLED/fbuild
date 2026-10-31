@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iscorporacion",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iscorporacion/library/ISCDisplayMenu/1.0.0/ISCDisplayMenu-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ISCDisplayMenu-1.0.0.tar.gz",
+    "size_bytes": 8374,
+    "sha256": "db5f0cee5af8eb76ac90613ee0c920ade66dd11eb8724fbdcf69b70320e2e4ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iscorporacion/library/ISCDisplayMenu/1.0.0/ISCDisplayMenu-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iscorporacion/library/ISCDisplayMenu/1.0.0/ISCDisplayMenu-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

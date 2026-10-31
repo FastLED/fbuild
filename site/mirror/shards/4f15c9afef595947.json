@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sshogo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sshogo/library/SBUS/0.0.0+sha.481c23f2e4eb/SBUS-0.0.0+sha.481c23f2e4eb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SBUS-0.0.0+sha.481c23f2e4eb.tar.gz",
+    "size_bytes": 2059,
+    "sha256": "adde04759c7c3d1f86aa2a578821a2a28a6da65e8e65d1d2c008afcb8f58b0bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sshogo/library/SBUS/0.0.0%2Bsha.481c23f2e4eb/SBUS-0.0.0%2Bsha.481c23f2e4eb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sshogo/library/SBUS/0.0.0%2Bsha.481c23f2e4eb/SBUS-0.0.0%2Bsha.481c23f2e4eb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

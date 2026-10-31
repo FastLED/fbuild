@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sensesp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sensesp/library/NMEA0183/3.1.0/NMEA0183-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMEA0183-3.1.0.tar.gz",
+    "size_bytes": 24403,
+    "sha256": "aae008acda322df468e084ba37147a5a11aabfd9f8075d2abc83b70daad3673c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensesp/library/NMEA0183/3.1.0/NMEA0183-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensesp/library/NMEA0183/3.1.0/NMEA0183-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensesp/library/NMEA0183/3.1.1/NMEA0183-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMEA0183-3.1.1.tar.gz",
+    "size_bytes": 25044,
+    "sha256": "53728bb178f4ae017e30051371691803ca7789af012bad3639ba4e1d1c989c5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensesp/library/NMEA0183/3.1.1/NMEA0183-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensesp/library/NMEA0183/3.1.1/NMEA0183-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensesp/library/NMEA0183/3.2.0/NMEA0183-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMEA0183-3.2.0.tar.gz",
+    "size_bytes": 35864,
+    "sha256": "bdac0c5944b7cd906f2338e18bb5108c276952fd30c5db280da8a4188ad3d8b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensesp/library/NMEA0183/3.2.0/NMEA0183-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensesp/library/NMEA0183/3.2.0/NMEA0183-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensesp/library/NMEA0183/3.2.1/NMEA0183-3.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMEA0183-3.2.1.tar.gz",
+    "size_bytes": 886879,
+    "sha256": "e4d5b6fd7ecb8985efb2f315e7e802ee6d009ccb95a2c8f3033c6001937a0066",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensesp/library/NMEA0183/3.2.1/NMEA0183-3.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sensesp/library/NMEA0183/3.2.1/NMEA0183-3.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensesp/library/NMEA0183/3.2.2/NMEA0183-3.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMEA0183-3.2.2.tar.gz",
+    "size_bytes": 35227,
+    "sha256": "1e3b3d027afffe16759c53224b6c1d4cfcea2f41e7b0e3d56d428eae86e65140",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensesp/library/NMEA0183/3.2.2/NMEA0183-3.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sensesp/library/NMEA0183/3.2.2/NMEA0183-3.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensesp/library/OneWire/2.0.0/OneWire-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneWire-2.0.0.tar.gz",
+    "size_bytes": 14817,
+    "sha256": "87a5cfb7af70ce95865a51c8de372b68cb75a8e4bcde6f3de70bbd68362a3bdc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensesp/library/OneWire/2.0.0/OneWire-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensesp/library/OneWire/2.0.0/OneWire-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensesp/library/OneWire/3.0.2/OneWire-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneWire-3.0.2.tar.gz",
+    "size_bytes": 15571,
+    "sha256": "342cdf94f7e94a9003ae5187601c6d7ab8f785abedd177c7065a59fc635b0115",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensesp/library/OneWire/3.0.2/OneWire-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sensesp/library/OneWire/3.0.2/OneWire-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sensesp/library/VEDirect/3.0.0/VEDirect-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEDirect-3.0.0.tar.gz",
+    "size_bytes": 11676,
+    "sha256": "45fe74eae1d249a835606647f385e313fd7e1b2f7cd3f3fc51cab7d3d58cfe2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensesp/library/VEDirect/3.0.0/VEDirect-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sensesp/library/VEDirect/3.0.0/VEDirect-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

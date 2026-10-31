@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-adamgreen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-adamgreen/library/BBTrackball/0.0.0+sha.7715a78a7175/BBTrackball-0.0.0+sha.7715a78a7175.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BBTrackball-0.0.0+sha.7715a78a7175.tar.gz",
+    "size_bytes": 3860,
+    "sha256": "fd8524b0dd48d8a0f8f47639f157c95c5c7c6e8d8c2595f2d33c8fab45c7ed24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adamgreen/library/BBTrackball/0.0.0%2Bsha.7715a78a7175/BBTrackball-0.0.0%2Bsha.7715a78a7175.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adamgreen/library/BBTrackball/0.0.0%2Bsha.7715a78a7175/BBTrackball-0.0.0%2Bsha.7715a78a7175.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-adamgreen/library/FakeFileSystem/0.0.0+sha.911b8403d557/FakeFileSystem-0.0.0+sha.911b8403d557.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FakeFileSystem-0.0.0+sha.911b8403d557.tar.gz",
+    "size_bytes": 2721,
+    "sha256": "a362949ae3ea59f007e4b8364a68ec389d37cd587349d599aeacdb102dbd59dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adamgreen/library/FakeFileSystem/0.0.0%2Bsha.911b8403d557/FakeFileSystem-0.0.0%2Bsha.911b8403d557.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adamgreen/library/FakeFileSystem/0.0.0%2Bsha.911b8403d557/FakeFileSystem-0.0.0%2Bsha.911b8403d557.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-adamgreen/library/FlashFileSystem/0.0.0+sha.ca35ecd2fae6/FlashFileSystem-0.0.0+sha.ca35ecd2fae6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashFileSystem-0.0.0+sha.ca35ecd2fae6.tar.gz",
+    "size_bytes": 8762,
+    "sha256": "67d68266b4833221f895a073461a873e0b378773d8a55ca8a1916d957dc9052c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adamgreen/library/FlashFileSystem/0.0.0%2Bsha.ca35ecd2fae6/FlashFileSystem-0.0.0%2Bsha.ca35ecd2fae6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adamgreen/library/FlashFileSystem/0.0.0%2Bsha.ca35ecd2fae6/FlashFileSystem-0.0.0%2Bsha.ca35ecd2fae6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-adamgreen/library/WeatherMeters/0.0.0+sha.457832d52954/WeatherMeters-0.0.0+sha.457832d52954.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WeatherMeters-0.0.0+sha.457832d52954.tar.gz",
+    "size_bytes": 5092,
+    "sha256": "6e29dd0298b0fa7772bb8dcee3706e43f2602cd0a5725f645806f218fcf20bee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adamgreen/library/WeatherMeters/0.0.0%2Bsha.457832d52954/WeatherMeters-0.0.0%2Bsha.457832d52954.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adamgreen/library/WeatherMeters/0.0.0%2Bsha.457832d52954/WeatherMeters-0.0.0%2Bsha.457832d52954.tar.gz"
+    ]
+   }
+  }
+ ]
+}

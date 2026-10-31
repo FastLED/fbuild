@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-zoop57",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-zoop57/library/ShiftRegister/0.0.0+sha.bca974772920/ShiftRegister-0.0.0+sha.bca974772920.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShiftRegister-0.0.0+sha.bca974772920.tar.gz",
+    "size_bytes": 1027,
+    "sha256": "9425d4a114bf716949deca0c8a41d848724060e8f9231f882269cc072dc6e084",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-zoop57/library/ShiftRegister/0.0.0%2Bsha.bca974772920/ShiftRegister-0.0.0%2Bsha.bca974772920.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-zoop57/library/ShiftRegister/0.0.0%2Bsha.bca974772920/ShiftRegister-0.0.0%2Bsha.bca974772920.tar.gz"
+    ]
+   }
+  }
+ ]
+}

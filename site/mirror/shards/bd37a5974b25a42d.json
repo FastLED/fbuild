@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aau-eit5",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aau-eit5/library/iBUS/0.1.7/iBUS-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iBUS-0.1.7.tar.gz",
+    "size_bytes": 3570,
+    "sha256": "28e4eaabe3bbaaeac06e0eef8e1c66e8ce5827fda5fa8ba50bb3f4a986ed9f5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aau-eit5/library/iBUS/0.1.7/iBUS-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/aau-eit5/library/iBUS/0.1.7/iBUS-0.1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

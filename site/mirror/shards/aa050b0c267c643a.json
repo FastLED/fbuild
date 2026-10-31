@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pbrier",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pbrier/library/ConfigFile/0.0.0+sha.8c8cf4615b32/ConfigFile-0.0.0+sha.8c8cf4615b32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConfigFile-0.0.0+sha.8c8cf4615b32.tar.gz",
+    "size_bytes": 2793,
+    "sha256": "889e9ac4ba3e5f08d9aa724424385ab900f50be3f61c15f1ff4714e742c9d8be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pbrier/library/ConfigFile/0.0.0%2Bsha.8c8cf4615b32/ConfigFile-0.0.0%2Bsha.8c8cf4615b32.tar.gz",
+     "https://dl.registry.platformio.org/download/pbrier/library/ConfigFile/0.0.0%2Bsha.8c8cf4615b32/ConfigFile-0.0.0%2Bsha.8c8cf4615b32.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pbrier/library/ServoLight/0.0.0-alpha+sha.7f648fa194/ServoLight-0.0.0-alphasha.7f648fa194.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoLight-0.0.0-alphasha.7f648fa194.tar.gz",
+    "size_bytes": 3000,
+    "sha256": "5200837d175af390f3efd991128b16d781fc6415e9b5425a308a076b8d66ff6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pbrier/library/ServoLight/0.0.0-alpha%2Bsha.7f648fa194/ServoLight-0.0.0-alphasha.7f648fa194.tar.gz",
+     "https://dl.registry.platformio.org/download/pbrier/library/ServoLight/0.0.0-alpha%2Bsha.7f648fa194/ServoLight-0.0.0-alphasha.7f648fa194.tar.gz"
+    ]
+   }
+  }
+ ]
+}

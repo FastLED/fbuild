@@ -1,0 +1,230 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/topquark22",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "topquark22/library/CharlieLED/1.0.0/CharlieLED-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CharlieLED-1.0.0.tar.gz",
+    "size_bytes": 4901,
+    "sha256": "d2beeaf1c3f82717c4348cbaccdb5be24bc683ed1c1390a0aa7523fe445c2d12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/CharlieLED/1.0.0/CharlieLED-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/CharlieLED/1.0.0/CharlieLED-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/GPIOUtils/1.2/GPIOUtils-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPIOUtils-1.2.tar.gz",
+    "size_bytes": 25149,
+    "sha256": "1ade4ce8323a668ddd80e8c506adb38aa6eadfb02d9776d1e6b19d319cc4ad84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/GPIOUtils/1.2/GPIOUtils-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/GPIOUtils/1.2/GPIOUtils-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/GPIOUtils/2.2.2/GPIOUtils-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPIOUtils-2.2.2.tar.gz",
+    "size_bytes": 32006,
+    "sha256": "bfca690ccbfca7122769a73ae570b306fec2ea1a3041d88da02e31c4054eb219",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/GPIOUtils/2.2.2/GPIOUtils-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/GPIOUtils/2.2.2/GPIOUtils-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/GPIOUtils/2.3.0/GPIOUtils-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPIOUtils-2.3.0.tar.gz",
+    "size_bytes": 33240,
+    "sha256": "07dd8fc1993576eb3effa00bae6fc8614f1b410243956272347252d918be90b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/GPIOUtils/2.3.0/GPIOUtils-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/GPIOUtils/2.3.0/GPIOUtils-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/GPIOUtils/2.4.1/GPIOUtils-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPIOUtils-2.4.1.tar.gz",
+    "size_bytes": 34065,
+    "sha256": "1095c2de9eec42e9c2ae3e2f34b1e18216a67559d66624d4d619423ddac5fe38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/GPIOUtils/2.4.1/GPIOUtils-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/GPIOUtils/2.4.1/GPIOUtils-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/GPIOUtils/2.4.2/GPIOUtils-2.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPIOUtils-2.4.2.tar.gz",
+    "size_bytes": 35006,
+    "sha256": "6270e7c869d4a8d84ef2ccd0e02bb7f1be23aa1f8a605cc3ca7b7344e1a2dbfa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/GPIOUtils/2.4.2/GPIOUtils-2.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/GPIOUtils/2.4.2/GPIOUtils-2.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/GPIOUtils/2.4.3/GPIOUtils-2.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPIOUtils-2.4.3.tar.gz",
+    "size_bytes": 35003,
+    "sha256": "331f995b58925d20e22b19ebe57d4f3302e17afa2770b0ba617747d478e9aea0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/GPIOUtils/2.4.3/GPIOUtils-2.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/GPIOUtils/2.4.3/GPIOUtils-2.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/Plexorino/5.0.2/Plexorino-5.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plexorino-5.0.2.tar.gz",
+    "size_bytes": 7244,
+    "sha256": "b638efc9d34ed04945619f5deedc5dfb208d7cd6f5a0f97cced5b9353c2e8f96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/Plexorino/5.0.2/Plexorino-5.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/Plexorino/5.0.2/Plexorino-5.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/Plexorino/5.0.6/Plexorino-5.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plexorino-5.0.6.tar.gz",
+    "size_bytes": 7374,
+    "sha256": "02f414eb3b45546a902f566ea5e45040c587eda1e6cee7973eb6ce01d1a6b223",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/Plexorino/5.0.6/Plexorino-5.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/Plexorino/5.0.6/Plexorino-5.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/ServoDAC/2.1.12/ServoDAC-2.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoDAC-2.1.12.tar.gz",
+    "size_bytes": 9187,
+    "sha256": "41dc865767acaddf3ce6b7c394c3d6f570537c879976e9245e82677618d2e493",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/ServoDAC/2.1.12/ServoDAC-2.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/ServoDAC/2.1.12/ServoDAC-2.1.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/ServoDAC/2.1.6/ServoDAC-2.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoDAC-2.1.6.tar.gz",
+    "size_bytes": 8964,
+    "sha256": "4a6b87a16701552685b6654aaec8e2270964ab80f64c6af35976c7956fdd39ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/ServoDAC/2.1.6/ServoDAC-2.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/ServoDAC/2.1.6/ServoDAC-2.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/ServoDAC/2.2.1/ServoDAC-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoDAC-2.2.1.tar.gz",
+    "size_bytes": 9295,
+    "sha256": "3d0c80c233cc452de723432df8ea24cd5d05d2d148a11991da3cef679bf9d1cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/ServoDAC/2.2.1/ServoDAC-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/ServoDAC/2.2.1/ServoDAC-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/ServoDAC/2.3.0/ServoDAC-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoDAC-2.3.0.tar.gz",
+    "size_bytes": 9307,
+    "sha256": "8197fee33f3ad47d31866c95098d350bdc622f583a0ed87a3e51106211b8949d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/ServoDAC/2.3.0/ServoDAC-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/ServoDAC/2.3.0/ServoDAC-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/ServoDAC/2.3.2/ServoDAC-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoDAC-2.3.2.tar.gz",
+    "size_bytes": 9322,
+    "sha256": "7c29ed298792b7e41af50057f5a021de85027344e2f921766c28c5f4652d6820",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/ServoDAC/2.3.2/ServoDAC-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/ServoDAC/2.3.2/ServoDAC-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/ServoDAC/2.4.1/ServoDAC-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoDAC-2.4.1.tar.gz",
+    "size_bytes": 9827,
+    "sha256": "6bed2d986103884fd4b5cb03aa041b7bd11023073da2ee90e7d7ca2f9fbe0d9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/ServoDAC/2.4.1/ServoDAC-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/ServoDAC/2.4.1/ServoDAC-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/ServoDAC/2.4.3/ServoDAC-2.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoDAC-2.4.3.tar.gz",
+    "size_bytes": 9936,
+    "sha256": "bc8be3aba589d7fa99a3e876f150c7f39a770259143c74f3cba6574975d220b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/ServoDAC/2.4.3/ServoDAC-2.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/ServoDAC/2.4.3/ServoDAC-2.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "topquark22/library/ServoDAC/2.4.4/ServoDAC-2.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoDAC-2.4.4.tar.gz",
+    "size_bytes": 9251,
+    "sha256": "063fcda50714d0400a17fa300180c7483a800a3f66d049b856d31df1f690f600",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/topquark22/library/ServoDAC/2.4.4/ServoDAC-2.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/topquark22/library/ServoDAC/2.4.4/ServoDAC-2.4.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

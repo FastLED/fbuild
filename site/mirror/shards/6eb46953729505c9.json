@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dn32",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dn32/library/EspDn32Atualizacao/1.0.13/EspDn32Atualizacao-1.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspDn32Atualizacao-1.0.13.tar.gz",
+    "size_bytes": 2587,
+    "sha256": "3e2d4dde836fdaf3542af5358bf2a873a30ba0e1cfdf36356a7a0758e21c1463",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dn32/library/EspDn32Atualizacao/1.0.13/EspDn32Atualizacao-1.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/dn32/library/EspDn32Atualizacao/1.0.13/EspDn32Atualizacao-1.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dn32/library/EspDn32Contrato/1.0.6/EspDn32Contrato-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspDn32Contrato-1.0.6.tar.gz",
+    "size_bytes": 1268,
+    "sha256": "c5b0f22705b269d544af8d4f33f521d2de78c655c7842645f6c0587b4f64dc8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dn32/library/EspDn32Contrato/1.0.6/EspDn32Contrato-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dn32/library/EspDn32Contrato/1.0.6/EspDn32Contrato-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dn32/library/EspDn32Json/1.0.1/EspDn32Json-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspDn32Json-1.0.1.tar.gz",
+    "size_bytes": 1400,
+    "sha256": "cd32ca90e354b184f049e487a31778041e1ee23a7acbb4f752dfd8ceb74d90b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dn32/library/EspDn32Json/1.0.1/EspDn32Json-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dn32/library/EspDn32Json/1.0.1/EspDn32Json-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dn32/library/EspDn32Mqtt/1.1.5/EspDn32Mqtt-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspDn32Mqtt-1.1.5.tar.gz",
+    "size_bytes": 2359,
+    "sha256": "ad1261a9d365a2a13073c58fc9cad0181752e25981e7048c5bcca34f8d154ebb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dn32/library/EspDn32Mqtt/1.1.5/EspDn32Mqtt-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dn32/library/EspDn32Mqtt/1.1.5/EspDn32Mqtt-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dn32/library/EspDn32Ntp/1.0.2/EspDn32Ntp-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspDn32Ntp-1.0.2.tar.gz",
+    "size_bytes": 954,
+    "sha256": "ff1771fc021973910fecd28dba9ac75e32eefa1857920f618387f7818658e2f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dn32/library/EspDn32Ntp/1.0.2/EspDn32Ntp-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dn32/library/EspDn32Ntp/1.0.2/EspDn32Ntp-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dn32/library/EspDn32Status/1.0.5/EspDn32Status-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspDn32Status-1.0.5.tar.gz",
+    "size_bytes": 1188,
+    "sha256": "6e2637c1ba80864fe6efaef5309b2ae7695260233f869c38a6ba9c30221479ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dn32/library/EspDn32Status/1.0.5/EspDn32Status-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dn32/library/EspDn32Status/1.0.5/EspDn32Status-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dn32/library/EspDn32Ultrassom/1.0.1/EspDn32Ultrassom-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspDn32Ultrassom-1.0.1.tar.gz",
+    "size_bytes": 1060,
+    "sha256": "c8b3a91741052c8c14b30641a9fb16087cd93b289e44d0269baf29feee59a6e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dn32/library/EspDn32Ultrassom/1.0.1/EspDn32Ultrassom-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dn32/library/EspDn32Ultrassom/1.0.1/EspDn32Ultrassom-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dn32/library/EspDn32Wifi/1.0.15/EspDn32Wifi-1.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspDn32Wifi-1.0.15.tar.gz",
+    "size_bytes": 1274,
+    "sha256": "291128cca43dfc5faa0b9fde64150b27f01e79a9ab0592cab6e0d30755900223",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dn32/library/EspDn32Wifi/1.0.15/EspDn32Wifi-1.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/dn32/library/EspDn32Wifi/1.0.15/EspDn32Wifi-1.0.15.tar.gz"
+    ]
+   }
+  }
+ ]
+}

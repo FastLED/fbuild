@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rkubera",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rkubera/library/ArdPortal/0.8.0/ArdPortal-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArdPortal-0.8.0.tar.gz",
+    "size_bytes": 3950477,
+    "sha256": "b231dcd041ad126693c6153b14f6473657dd702def0dc2f4b0202bc7ba363867",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rkubera/library/ArdPortal/0.8.0/ArdPortal-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rkubera/library/ArdPortal/0.8.0/ArdPortal-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rkubera/library/ArdPortal/0.8.1/ArdPortal-0.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArdPortal-0.8.1.tar.gz",
+    "size_bytes": 3968843,
+    "sha256": "bdb5e7765ed7f3bbdf3edd3cdca90eaf926a4f93928cc9cb487f70af41d6c834",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rkubera/library/ArdPortal/0.8.1/ArdPortal-0.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rkubera/library/ArdPortal/0.8.1/ArdPortal-0.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rkubera/library/ArdPortal/0.8.2/ArdPortal-0.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArdPortal-0.8.2.tar.gz",
+    "size_bytes": 4105173,
+    "sha256": "161fcbefea7f5daf4eb615ee84f53b7826222dc3561cd128b18a6d231670a83e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rkubera/library/ArdPortal/0.8.2/ArdPortal-0.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rkubera/library/ArdPortal/0.8.2/ArdPortal-0.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rkubera/library/ArdPortal/0.9.0/ArdPortal-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArdPortal-0.9.0.tar.gz",
+    "size_bytes": 8078815,
+    "sha256": "408afa5cad8be8556a2f15d31ca76033bca5956f08cb3e5816daa4c60e8f29c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rkubera/library/ArdPortal/0.9.0/ArdPortal-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rkubera/library/ArdPortal/0.9.0/ArdPortal-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

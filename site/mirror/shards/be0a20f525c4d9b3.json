@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marbalon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marbalon/library/Eccel-C1/1.0.5/Eccel-C1-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Eccel-C1-1.0.5.tar.gz",
+    "size_bytes": 28854,
+    "sha256": "40d3f0bf9e1e3ea999813905e8aa1c081e7ea2e6429030f1317f03a6744ee923",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marbalon/library/Eccel-C1/1.0.5/Eccel-C1-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/marbalon/library/Eccel-C1/1.0.5/Eccel-C1-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

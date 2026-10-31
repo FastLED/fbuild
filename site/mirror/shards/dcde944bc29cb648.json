@@ -1,0 +1,2817 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/khoih-prog",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "khoih-prog/library/ATmega_Slow_PWM/1.0.0/ATmega_Slow_PWM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATmega_Slow_PWM-1.0.0.tar.gz",
+    "size_bytes": 26133,
+    "sha256": "b89f4018dab7006e42424a001e76936713c1864456cb90b9ba20e5da307900cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ATmega_Slow_PWM/1.0.0/ATmega_Slow_PWM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ATmega_Slow_PWM/1.0.0/ATmega_Slow_PWM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ATmega_TimerInterrupt/1.1.1/ATmega_TimerInterrupt-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATmega_TimerInterrupt-1.1.1.tar.gz",
+    "size_bytes": 30856,
+    "sha256": "2af6ed9760795bdf92e2e4756c44ad0bf718deba61373c57155eb7a821870425",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ATmega_TimerInterrupt/1.1.1/ATmega_TimerInterrupt-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ATmega_TimerInterrupt/1.1.1/ATmega_TimerInterrupt-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ATtiny_PWM/1.2.0/ATtiny_PWM-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATtiny_PWM-1.2.0.tar.gz",
+    "size_bytes": 312823,
+    "sha256": "9269af02086e8858a8966491af1d33c0ffd56aa021bf9775b1e09b1913664f34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ATtiny_PWM/1.2.0/ATtiny_PWM-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ATtiny_PWM/1.2.0/ATtiny_PWM-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ATtiny_Slow_PWM/1.0.0/ATtiny_Slow_PWM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATtiny_Slow_PWM-1.0.0.tar.gz",
+    "size_bytes": 315562,
+    "sha256": "f5f8629fbaff955c0248b879c7fc1d6522991d69f55a5e3a4d9831abed0af292",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ATtiny_Slow_PWM/1.0.0/ATtiny_Slow_PWM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ATtiny_Slow_PWM/1.0.0/ATtiny_Slow_PWM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ATtiny_TimerInterrupt/1.0.1/ATtiny_TimerInterrupt-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATtiny_TimerInterrupt-1.0.1.tar.gz",
+    "size_bytes": 320279,
+    "sha256": "7b58de1d89c57a7724815ab81045eda6b522aa645f85a8c9c71195762ab12172",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ATtiny_TimerInterrupt/1.0.1/ATtiny_TimerInterrupt-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ATtiny_TimerInterrupt/1.0.1/ATtiny_TimerInterrupt-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AVR_PWM/1.2.0/AVR_PWM-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AVR_PWM-1.2.0.tar.gz",
+    "size_bytes": 25956,
+    "sha256": "c5db82e61d012980cee69af14c21102af981b2a0e15ec28db56952e63fa4bf6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AVR_PWM/1.2.0/AVR_PWM-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AVR_PWM/1.2.0/AVR_PWM-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AVR_Slow_PWM/1.2.3/AVR_Slow_PWM-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AVR_Slow_PWM-1.2.3.tar.gz",
+    "size_bytes": 29016,
+    "sha256": "7f7ef1a62c9603254d7982a70799e3ee024e67a8ce673987bdb0f8a87c9b0fd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AVR_Slow_PWM/1.2.3/AVR_Slow_PWM-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AVR_Slow_PWM/1.2.3/AVR_Slow_PWM-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncDNSServer_ESP32_ENC/1.0.0/AsyncDNSServer_ESP32_ENC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncDNSServer_ESP32_ENC-1.0.0.tar.gz",
+    "size_bytes": 29779,
+    "sha256": "74565a9da4f93e600d670e1d5dfdf6910d19bef1ed5448cb2946ef0e6bb6bbce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncDNSServer_ESP32_ENC/1.0.0/AsyncDNSServer_ESP32_ENC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncDNSServer_ESP32_ENC/1.0.0/AsyncDNSServer_ESP32_ENC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncDNSServer_ESP32_Ethernet/1.2.0/AsyncDNSServer_ESP32_Ethernet-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncDNSServer_ESP32_Ethernet-1.2.0.tar.gz",
+    "size_bytes": 1481927,
+    "sha256": "9351bb7890178213f6abc30f8232c3e6f17a77bdd5d16ee74240ae93d5c3d61e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncDNSServer_ESP32_Ethernet/1.2.0/AsyncDNSServer_ESP32_Ethernet-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncDNSServer_ESP32_Ethernet/1.2.0/AsyncDNSServer_ESP32_Ethernet-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncDNSServer_ESP32_W5500/1.0.0/AsyncDNSServer_ESP32_W5500-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncDNSServer_ESP32_W5500-1.0.0.tar.gz",
+    "size_bytes": 29548,
+    "sha256": "0267b4cb17e9620eebedd79012ddd3cf8b8e441bd98a3ae733f85ca3dc849378",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncDNSServer_ESP32_W5500/1.0.0/AsyncDNSServer_ESP32_W5500-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncDNSServer_ESP32_W5500/1.0.0/AsyncDNSServer_ESP32_W5500-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncDNSServer_ESP32_W6100/1.0.0/AsyncDNSServer_ESP32_W6100-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncDNSServer_ESP32_W6100-1.0.0.tar.gz",
+    "size_bytes": 150412,
+    "sha256": "72d30d44aab25f9e1358bf0b2e5f9a14cd56c4f45a9067aa3097c4d9bdd2f8c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncDNSServer_ESP32_W6100/1.0.0/AsyncDNSServer_ESP32_W6100-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncDNSServer_ESP32_W6100/1.0.0/AsyncDNSServer_ESP32_W6100-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncDNSServer_RP2040W/1.0.0/AsyncDNSServer_RP2040W-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncDNSServer_RP2040W-1.0.0.tar.gz",
+    "size_bytes": 173195,
+    "sha256": "9b9f38a024a3b8a9fee20766d7e91c664ea996f4a0cb1d2b386277156c01d322",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncDNSServer_RP2040W/1.0.0/AsyncDNSServer_RP2040W-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncDNSServer_RP2040W/1.0.0/AsyncDNSServer_RP2040W-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncDNSServer_STM32/1.1.1/AsyncDNSServer_STM32-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncDNSServer_STM32-1.1.1.tar.gz",
+    "size_bytes": 104494,
+    "sha256": "0e3d7c7fd48ce873c5fd8ab178ffdda286430e4fc653c63a2b9a26cdda14eae4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncDNSServer_STM32/1.1.1/AsyncDNSServer_STM32-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncDNSServer_STM32/1.1.1/AsyncDNSServer_STM32-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncDNSServer_Teensy41/1.1.2-1/AsyncDNSServer_Teensy41-1.1.2-1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncDNSServer_Teensy41-1.1.2-1.tar.gz",
+    "size_bytes": 40362,
+    "sha256": "2268fd381f37e49ed1b43f78938c98fa48a039de07c934cedc5010bfd01cfc92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncDNSServer_Teensy41/1.1.2-1/AsyncDNSServer_Teensy41-1.1.2-1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncDNSServer_Teensy41/1.1.2-1/AsyncDNSServer_Teensy41-1.1.2-1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncDNSServer_WT32_ETH01/1.0.0/AsyncDNSServer_WT32_ETH01-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncDNSServer_WT32_ETH01-1.0.0.tar.gz",
+    "size_bytes": 18520,
+    "sha256": "d39fc2af69c224b3c5b03a4e8e71633455f369021b0bc4941cac921eacf99c5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncDNSServer_WT32_ETH01/1.0.0/AsyncDNSServer_WT32_ETH01-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncDNSServer_WT32_ETH01/1.0.0/AsyncDNSServer_WT32_ETH01-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncESP32_ENC_Manager/1.0.0/AsyncESP32_ENC_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncESP32_ENC_Manager-1.0.0.tar.gz",
+    "size_bytes": 516606,
+    "sha256": "5087453b37717686a60551257e85cffd46c52f7fda2fb29abb5bc73e878eeed1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncESP32_ENC_Manager/1.0.0/AsyncESP32_ENC_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncESP32_ENC_Manager/1.0.0/AsyncESP32_ENC_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncESP32_Ethernet_Manager/1.0.0/AsyncESP32_Ethernet_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncESP32_Ethernet_Manager-1.0.0.tar.gz",
+    "size_bytes": 1011435,
+    "sha256": "66008454a3c9a589ceba955b5873832eb6421078c2ebcb15e4ba770b0298986b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncESP32_Ethernet_Manager/1.0.0/AsyncESP32_Ethernet_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncESP32_Ethernet_Manager/1.0.0/AsyncESP32_Ethernet_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncESP32_SC_ENC_Manager/1.1.0/AsyncESP32_SC_ENC_Manager-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncESP32_SC_ENC_Manager-1.1.0.tar.gz",
+    "size_bytes": 1529394,
+    "sha256": "8af07a4da0a8c694aa4aaf98cfd175094ea030cfdd78411d5bed9cc569a09ea1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncESP32_SC_ENC_Manager/1.1.0/AsyncESP32_SC_ENC_Manager-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncESP32_SC_ENC_Manager/1.1.0/AsyncESP32_SC_ENC_Manager-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncESP32_SC_Ethernet_Manager/1.1.0/AsyncESP32_SC_Ethernet_Manager-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncESP32_SC_Ethernet_Manager-1.1.0.tar.gz",
+    "size_bytes": 1878663,
+    "sha256": "792f1ab935ac5fa34e845a9fbfe5cd22f3879acc0d75fbe76e620357236013a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncESP32_SC_Ethernet_Manager/1.1.0/AsyncESP32_SC_Ethernet_Manager-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncESP32_SC_Ethernet_Manager/1.1.0/AsyncESP32_SC_Ethernet_Manager-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncESP32_SC_W5500_Manager/1.1.0/AsyncESP32_SC_W5500_Manager-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncESP32_SC_W5500_Manager-1.1.0.tar.gz",
+    "size_bytes": 1732146,
+    "sha256": "04d6b9d6a80bd508969d0842f8f241a57441eddeea49616b8ecbf24043442df9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncESP32_SC_W5500_Manager/1.1.0/AsyncESP32_SC_W5500_Manager-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncESP32_SC_W5500_Manager/1.1.0/AsyncESP32_SC_W5500_Manager-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncESP32_SC_W6100_Manager/1.1.0/AsyncESP32_SC_W6100_Manager-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncESP32_SC_W6100_Manager-1.1.0.tar.gz",
+    "size_bytes": 1530458,
+    "sha256": "b626a2f3fb1ed30d4b09557c8329b7a03ffd0bc58642dd65c2c4727dad2577db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncESP32_SC_W6100_Manager/1.1.0/AsyncESP32_SC_W6100_Manager-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncESP32_SC_W6100_Manager/1.1.0/AsyncESP32_SC_W6100_Manager-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncESP32_W5500_Manager/1.0.0/AsyncESP32_W5500_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncESP32_W5500_Manager-1.0.0.tar.gz",
+    "size_bytes": 553349,
+    "sha256": "6f96743156a6c705427aae0ef0d8b70b73026885d1dd8998b329c8f95baa2e97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncESP32_W5500_Manager/1.0.0/AsyncESP32_W5500_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncESP32_W5500_Manager/1.0.0/AsyncESP32_W5500_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncESP32_W6100_Manager/1.0.0/AsyncESP32_W6100_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncESP32_W6100_Manager-1.0.0.tar.gz",
+    "size_bytes": 662281,
+    "sha256": "e2bcb733adf47170dfebbabd79f98b8bf9bca4edc9a7569e9da32c20e7a266e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncESP32_W6100_Manager/1.0.0/AsyncESP32_W6100_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncESP32_W6100_Manager/1.0.0/AsyncESP32_W6100_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncESP8266_ENC_Manager/1.0.0/AsyncESP8266_ENC_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncESP8266_ENC_Manager-1.0.0.tar.gz",
+    "size_bytes": 650116,
+    "sha256": "a30e6601ea1616be510d294540ce19618f0ddaa0e4e02a7d540bff7b9e3a30e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncESP8266_ENC_Manager/1.0.0/AsyncESP8266_ENC_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncESP8266_ENC_Manager/1.0.0/AsyncESP8266_ENC_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncESP8266_Ethernet_Manager/1.0.0/AsyncESP8266_Ethernet_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncESP8266_Ethernet_Manager-1.0.0.tar.gz",
+    "size_bytes": 1432096,
+    "sha256": "32cafca02f60f013c49c844bfdc7351e42e0c37f45a27077e425327bfe91b7aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncESP8266_Ethernet_Manager/1.0.0/AsyncESP8266_Ethernet_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncESP8266_Ethernet_Manager/1.0.0/AsyncESP8266_Ethernet_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncESP8266_W5100_Manager/1.0.0/AsyncESP8266_W5100_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncESP8266_W5100_Manager-1.0.0.tar.gz",
+    "size_bytes": 974237,
+    "sha256": "10877ea5b16aa22a0411801ab8aa9e501ee892ef0586841f649c438103cebb13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncESP8266_W5100_Manager/1.0.0/AsyncESP8266_W5100_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncESP8266_W5100_Manager/1.0.0/AsyncESP8266_W5100_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncESP8266_W5500_Manager/1.0.0/AsyncESP8266_W5500_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncESP8266_W5500_Manager-1.0.0.tar.gz",
+    "size_bytes": 652382,
+    "sha256": "fe70aabac8fee34b6151852ea960dfeb5b8deeea979dfc14259590a150c35a25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncESP8266_W5500_Manager/1.0.0/AsyncESP8266_W5500_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncESP8266_W5500_Manager/1.0.0/AsyncESP8266_W5500_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncHTTPRequest_ESP32_Ethernet/1.15.0/AsyncHTTPRequest_ESP32_Ethernet-1.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncHTTPRequest_ESP32_Ethernet-1.15.0.tar.gz",
+    "size_bytes": 1485932,
+    "sha256": "02833dad786161756633503e789a53240cada37437050429296d60ec3b7119ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncHTTPRequest_ESP32_Ethernet/1.15.0/AsyncHTTPRequest_ESP32_Ethernet-1.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncHTTPRequest_ESP32_Ethernet/1.15.0/AsyncHTTPRequest_ESP32_Ethernet-1.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncHTTPRequest_Generic/1.13.0/AsyncHTTPRequest_Generic-1.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncHTTPRequest_Generic-1.13.0.tar.gz",
+    "size_bytes": 993597,
+    "sha256": "306c4560bdde6c8dcd00d4fdf2211e10b46294e09e05a64451949d59f8b00a99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncHTTPRequest_Generic/1.13.0/AsyncHTTPRequest_Generic-1.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncHTTPRequest_Generic/1.13.0/AsyncHTTPRequest_Generic-1.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncHTTPRequest_RP2040W/1.3.0/AsyncHTTPRequest_RP2040W-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncHTTPRequest_RP2040W-1.3.0.tar.gz",
+    "size_bytes": 186872,
+    "sha256": "324836024ec9c6ff0ea03f62498d07fda42650c54d0e7be91e03d67e28a99f92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncHTTPRequest_RP2040W/1.3.0/AsyncHTTPRequest_RP2040W-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncHTTPRequest_RP2040W/1.3.0/AsyncHTTPRequest_RP2040W-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncHTTPRequest_Teensy41/1.10.0/AsyncHTTPRequest_Teensy41-1.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncHTTPRequest_Teensy41-1.10.0.tar.gz",
+    "size_bytes": 53042,
+    "sha256": "1769914010b3e29b1a91021e0c4bdffaa2143d468135a196e003bfefdc95b3dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncHTTPRequest_Teensy41/1.10.0/AsyncHTTPRequest_Teensy41-1.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncHTTPRequest_Teensy41/1.10.0/AsyncHTTPRequest_Teensy41-1.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncHTTPSRequest_ESP32_Ethernet/2.7.0/AsyncHTTPSRequest_ESP32_Ethernet-2.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncHTTPSRequest_ESP32_Ethernet-2.7.0.tar.gz",
+    "size_bytes": 1485974,
+    "sha256": "41efab02fe71f0a762e17ec07b23e7f73d400f88f46126d402cdd3b17d64c731",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncHTTPSRequest_ESP32_Ethernet/2.7.0/AsyncHTTPSRequest_ESP32_Ethernet-2.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncHTTPSRequest_ESP32_Ethernet/2.7.0/AsyncHTTPSRequest_ESP32_Ethernet-2.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncHTTPSRequest_Generic/2.5.0/AsyncHTTPSRequest_Generic-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncHTTPSRequest_Generic-2.5.0.tar.gz",
+    "size_bytes": 57053,
+    "sha256": "bd30b9b246c03ed86d095532a0e9500f1ed73d5f3b17c030af89a11b4e183ace",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncHTTPSRequest_Generic/2.5.0/AsyncHTTPSRequest_Generic-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncHTTPSRequest_Generic/2.5.0/AsyncHTTPSRequest_Generic-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncMQTT_ESP32/1.10.0/AsyncMQTT_ESP32-1.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncMQTT_ESP32-1.10.0.tar.gz",
+    "size_bytes": 39507,
+    "sha256": "4117f9996e3f9d49bd89802382d419100d1136976f4b7b83d76a0dc74ed5f8e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncMQTT_ESP32/1.10.0/AsyncMQTT_ESP32-1.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncMQTT_ESP32/1.10.0/AsyncMQTT_ESP32-1.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncMQTT_Generic/1.8.1/AsyncMQTT_Generic-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncMQTT_Generic-1.8.1.tar.gz",
+    "size_bytes": 113835,
+    "sha256": "125a7e34ac6e346b314cff7738b48645f7e84e0f08c2b0efbb26da8922684de3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncMQTT_Generic/1.8.1/AsyncMQTT_Generic-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncMQTT_Generic/1.8.1/AsyncMQTT_Generic-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncTCP_RP2040W/1.2.0/AsyncTCP_RP2040W-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP_RP2040W-1.2.0.tar.gz",
+    "size_bytes": 45486,
+    "sha256": "22a3feae8283635d7ebcb2d5c5fe4ce012a7df4ae1d9e9f4fdf6ee22893d41c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncTCP_RP2040W/1.2.0/AsyncTCP_RP2040W-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncTCP_RP2040W/1.2.0/AsyncTCP_RP2040W-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncTCP_SSL/1.3.1/AsyncTCP_SSL-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP_SSL-1.3.1.tar.gz",
+    "size_bytes": 32933,
+    "sha256": "6c35e1119b9f2575f720ca6cdb8485e8bf486f891cbc06e186b90a448c0c7dca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncTCP_SSL/1.3.1/AsyncTCP_SSL-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncTCP_SSL/1.3.1/AsyncTCP_SSL-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncUDP_ESP32_Ethernet/2.1.0/AsyncUDP_ESP32_Ethernet-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncUDP_ESP32_Ethernet-2.1.0.tar.gz",
+    "size_bytes": 1476946,
+    "sha256": "6f8427d91501cac47525e7f47eef9e1a22b847a9586978e284f031d14d317711",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncUDP_ESP32_Ethernet/2.1.0/AsyncUDP_ESP32_Ethernet-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncUDP_ESP32_Ethernet/2.1.0/AsyncUDP_ESP32_Ethernet-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncUDP_ESP32_SC_ENC/2.1.0/AsyncUDP_ESP32_SC_ENC-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncUDP_ESP32_SC_ENC-2.1.0.tar.gz",
+    "size_bytes": 1047564,
+    "sha256": "0af98d78a5377b2b961c26fb1d6edc790fdc79990e25c627f09d98175897246c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncUDP_ESP32_SC_ENC/2.1.0/AsyncUDP_ESP32_SC_ENC-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncUDP_ESP32_SC_ENC/2.1.0/AsyncUDP_ESP32_SC_ENC-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncUDP_ESP32_SC_Ethernet/2.2.0/AsyncUDP_ESP32_SC_Ethernet-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncUDP_ESP32_SC_Ethernet-2.2.0.tar.gz",
+    "size_bytes": 1477921,
+    "sha256": "bd54010a517e975386ad23661d9242694649977d392cea0552872c2e2353f46d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncUDP_ESP32_SC_Ethernet/2.2.0/AsyncUDP_ESP32_SC_Ethernet-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncUDP_ESP32_SC_Ethernet/2.2.0/AsyncUDP_ESP32_SC_Ethernet-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncUDP_ESP32_SC_W5500/2.1.0/AsyncUDP_ESP32_SC_W5500-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncUDP_ESP32_SC_W5500-2.1.0.tar.gz",
+    "size_bytes": 1216174,
+    "sha256": "8cb7a227eea43b2e050e7071d05958bc44bf101c227155c7f909d2e41808fe45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncUDP_ESP32_SC_W5500/2.1.0/AsyncUDP_ESP32_SC_W5500-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncUDP_ESP32_SC_W5500/2.1.0/AsyncUDP_ESP32_SC_W5500-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncUDP_ESP32_SC_W6100/2.1.0/AsyncUDP_ESP32_SC_W6100-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncUDP_ESP32_SC_W6100-2.1.0.tar.gz",
+    "size_bytes": 1021278,
+    "sha256": "f64ecd871153f18a45ebf684bf96bf335988071aaa52d24d8a6e76b87b1340ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncUDP_ESP32_SC_W6100/2.1.0/AsyncUDP_ESP32_SC_W6100-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncUDP_ESP32_SC_W6100/2.1.0/AsyncUDP_ESP32_SC_W6100-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncUDP_ESP32_W5500/2.0.0/AsyncUDP_ESP32_W5500-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncUDP_ESP32_W5500-2.0.0.tar.gz",
+    "size_bytes": 35943,
+    "sha256": "5325af288c01847438e1123f07d042959d3676f7d7c1689dd92d4ea374fdb414",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncUDP_ESP32_W5500/2.0.0/AsyncUDP_ESP32_W5500-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncUDP_ESP32_W5500/2.0.0/AsyncUDP_ESP32_W5500-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncUDP_ESP32_W6100/2.0.0/AsyncUDP_ESP32_W6100-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncUDP_ESP32_W6100-2.0.0.tar.gz",
+    "size_bytes": 155958,
+    "sha256": "7ee4ff4b1b63e8d6cd0e7efc2ecccc85c1d96306b561a254686e21acc1faf313",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncUDP_ESP32_W6100/2.0.0/AsyncUDP_ESP32_W6100-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncUDP_ESP32_W6100/2.0.0/AsyncUDP_ESP32_W6100-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncUDP_Ethernet/1.2.1/AsyncUDP_Ethernet-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncUDP_Ethernet-1.2.1.tar.gz",
+    "size_bytes": 31624,
+    "sha256": "711776af762b5a0bf5c82b33efe326a2414e5c8af728e458e4a647f52399001e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncUDP_Ethernet/1.2.1/AsyncUDP_Ethernet-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncUDP_Ethernet/1.2.1/AsyncUDP_Ethernet-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncUDP_RP2040W/1.0.0/AsyncUDP_RP2040W-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncUDP_RP2040W-1.0.0.tar.gz",
+    "size_bytes": 166502,
+    "sha256": "a76603b7a7b44ceb4b4ea8b327d04d8ef219f4fc6850729617eeb3abc72b24b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncUDP_RP2040W/1.0.0/AsyncUDP_RP2040W-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncUDP_RP2040W/1.0.0/AsyncUDP_RP2040W-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncUDP_STM32/1.3.0/AsyncUDP_STM32-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncUDP_STM32-1.3.0.tar.gz",
+    "size_bytes": 642107,
+    "sha256": "0753980fa03a33211d11db0c945c31aad63cef7bebafc33813f62a630a2794f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncUDP_STM32/1.3.0/AsyncUDP_STM32-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncUDP_STM32/1.3.0/AsyncUDP_STM32-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncUDP_Teensy41/1.2.1/AsyncUDP_Teensy41-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncUDP_Teensy41-1.2.1.tar.gz",
+    "size_bytes": 44136,
+    "sha256": "ae20c669092076a752a63540ae310d76f111d77f192b93c416e56d7b23b10153",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncUDP_Teensy41/1.2.1/AsyncUDP_Teensy41-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncUDP_Teensy41/1.2.1/AsyncUDP_Teensy41-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncUDP_WT32_ETH01/2.1.0/AsyncUDP_WT32_ETH01-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncUDP_WT32_ETH01-2.1.0.tar.gz",
+    "size_bytes": 32991,
+    "sha256": "caf5f0c1142a3b8deaed3dcec1bef564959271ee5fed798573f0bf34ad13749a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncUDP_WT32_ETH01/2.1.0/AsyncUDP_WT32_ETH01-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncUDP_WT32_ETH01/2.1.0/AsyncUDP_WT32_ETH01-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncUdp_ESP32_ENC/2.0.0/AsyncUdp_ESP32_ENC-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncUdp_ESP32_ENC-2.0.0.tar.gz",
+    "size_bytes": 36113,
+    "sha256": "1e97262cb61e0009ca6736c7787aa70aad15c1da056c70404ef85a249e5ac39f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncUdp_ESP32_ENC/2.0.0/AsyncUdp_ESP32_ENC-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncUdp_ESP32_ENC/2.0.0/AsyncUdp_ESP32_ENC-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncWT32_ETH01_Manager/1.0.0/AsyncWT32_ETH01_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWT32_ETH01_Manager-1.0.0.tar.gz",
+    "size_bytes": 502800,
+    "sha256": "146f9033aeb84d60209cd76aeabe02b8a4e52c80cbfe1d9b55bd749d77bfc719",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncWT32_ETH01_Manager/1.0.0/AsyncWT32_ETH01_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncWT32_ETH01_Manager/1.0.0/AsyncWT32_ETH01_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncWebServer_ESP32_ENC/1.6.3/AsyncWebServer_ESP32_ENC-1.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebServer_ESP32_ENC-1.6.3.tar.gz",
+    "size_bytes": 136221,
+    "sha256": "942b04d9ded8b3d7f52d5b45395c08b872a4e2eb2c8ac8a7f4f05e549f0448b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncWebServer_ESP32_ENC/1.6.3/AsyncWebServer_ESP32_ENC-1.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncWebServer_ESP32_ENC/1.6.3/AsyncWebServer_ESP32_ENC-1.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncWebServer_ESP32_SC_ENC/1.8.0/AsyncWebServer_ESP32_SC_ENC-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebServer_ESP32_SC_ENC-1.8.0.tar.gz",
+    "size_bytes": 140588,
+    "sha256": "a31061c2c8d35d13c9e42dd919c8f09fb0093b8edc508f5c79b26308a085330b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncWebServer_ESP32_SC_ENC/1.8.0/AsyncWebServer_ESP32_SC_ENC-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncWebServer_ESP32_SC_ENC/1.8.0/AsyncWebServer_ESP32_SC_ENC-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncWebServer_ESP32_SC_W5500/1.8.1/AsyncWebServer_ESP32_SC_W5500-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebServer_ESP32_SC_W5500-1.8.1.tar.gz",
+    "size_bytes": 135318,
+    "sha256": "3cb93a265900f5e755f3f782cfff348f4fd480b1177ba08a9b46f5cc9212a832",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncWebServer_ESP32_SC_W5500/1.8.1/AsyncWebServer_ESP32_SC_W5500-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncWebServer_ESP32_SC_W5500/1.8.1/AsyncWebServer_ESP32_SC_W5500-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncWebServer_ESP32_SC_W6100/1.8.1/AsyncWebServer_ESP32_SC_W6100-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebServer_ESP32_SC_W6100-1.8.1.tar.gz",
+    "size_bytes": 135465,
+    "sha256": "cda107cc6492918ce94bb1b90e9d18ff7c17fab8c51c8935800ffad1eba8a632",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncWebServer_ESP32_SC_W6100/1.8.1/AsyncWebServer_ESP32_SC_W6100-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncWebServer_ESP32_SC_W6100/1.8.1/AsyncWebServer_ESP32_SC_W6100-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncWebServer_ESP32_W5500/1.6.4/AsyncWebServer_ESP32_W5500-1.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebServer_ESP32_W5500-1.6.4.tar.gz",
+    "size_bytes": 130965,
+    "sha256": "cdb9c6f17feb00f854bc48cd4234ef8f28252b1abf64b4b4d7a114190e7320ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncWebServer_ESP32_W5500/1.6.4/AsyncWebServer_ESP32_W5500-1.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncWebServer_ESP32_W5500/1.6.4/AsyncWebServer_ESP32_W5500-1.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncWebServer_ESP32_W6100/1.6.4/AsyncWebServer_ESP32_W6100-1.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebServer_ESP32_W6100-1.6.4.tar.gz",
+    "size_bytes": 131939,
+    "sha256": "02c2f2e08e852722e9cc2966ffa53f9b6b41d56da9ad309190c307835576dceb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncWebServer_ESP32_W6100/1.6.4/AsyncWebServer_ESP32_W6100-1.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncWebServer_ESP32_W6100/1.6.4/AsyncWebServer_ESP32_W6100-1.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncWebServer_Ethernet/1.5.1/AsyncWebServer_Ethernet-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebServer_Ethernet-1.5.1.tar.gz",
+    "size_bytes": 104891,
+    "sha256": "47db7eb1f62166f42386aadaa7284370213b926f155a0c0b2e8b4d342fe0e1dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncWebServer_Ethernet/1.5.1/AsyncWebServer_Ethernet-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncWebServer_Ethernet/1.5.1/AsyncWebServer_Ethernet-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncWebServer_RP2040W/1.5.0/AsyncWebServer_RP2040W-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebServer_RP2040W-1.5.0.tar.gz",
+    "size_bytes": 1211579,
+    "sha256": "f59922abe38142903321fa507d222f201959191d50479472e8a16d5128f49e4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncWebServer_RP2040W/1.5.0/AsyncWebServer_RP2040W-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncWebServer_RP2040W/1.5.0/AsyncWebServer_RP2040W-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncWebServer_STM32/1.6.1/AsyncWebServer_STM32-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebServer_STM32-1.6.1.tar.gz",
+    "size_bytes": 1608733,
+    "sha256": "8197410dd4f1f3f4b3a0b923b4e1cb913c0cd779adac16023a3087704634d811",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncWebServer_STM32/1.6.1/AsyncWebServer_STM32-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncWebServer_STM32/1.6.1/AsyncWebServer_STM32-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncWebServer_Teensy41/1.7.0/AsyncWebServer_Teensy41-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebServer_Teensy41-1.7.0.tar.gz",
+    "size_bytes": 328096,
+    "sha256": "1a8cf43913045fd5be96fba6224434b5ad311d45afdec270563737979f9634a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncWebServer_Teensy41/1.7.0/AsyncWebServer_Teensy41-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncWebServer_Teensy41/1.7.0/AsyncWebServer_Teensy41-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/AsyncWebServer_WT32_ETH01/1.6.2/AsyncWebServer_WT32_ETH01-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebServer_WT32_ETH01-1.6.2.tar.gz",
+    "size_bytes": 118520,
+    "sha256": "b0c32655325aec25e5eca0de1790f5ddb70aa5e51f8df6ef8d89e3f66cbb3d9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/AsyncWebServer_WT32_ETH01/1.6.2/AsyncWebServer_WT32_ETH01-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/AsyncWebServer_WT32_ETH01/1.6.2/AsyncWebServer_WT32_ETH01-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/BlynkESP32_BT_WF/1.2.2/BlynkESP32_BT_WF-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlynkESP32_BT_WF-1.2.2.tar.gz",
+    "size_bytes": 388086,
+    "sha256": "2ba27b734209cb765b6ee83faeb8db5944574c12082bb47d669f68bb20e53b81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/BlynkESP32_BT_WF/1.2.2/BlynkESP32_BT_WF-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/BlynkESP32_BT_WF/1.2.2/BlynkESP32_BT_WF-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/BlynkEthernet_Manager/1.5.2/BlynkEthernet_Manager-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlynkEthernet_Manager-1.5.2.tar.gz",
+    "size_bytes": 955907,
+    "sha256": "4d20873650b85077e7b123b5693f12d2f0005a9a6b79a05df61860b4426f58f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/BlynkEthernet_Manager/1.5.2/BlynkEthernet_Manager-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/BlynkEthernet_Manager/1.5.2/BlynkEthernet_Manager-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/BlynkEthernet_STM32_WM/1.2.2/BlynkEthernet_STM32_WM-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlynkEthernet_STM32_WM-1.2.2.tar.gz",
+    "size_bytes": 882043,
+    "sha256": "04ee7d412803568bf2fd8e8bc96022712fd24c31122c253a69a8d79481d1cdd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/BlynkEthernet_STM32_WM/1.2.2/BlynkEthernet_STM32_WM-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/BlynkEthernet_STM32_WM/1.2.2/BlynkEthernet_STM32_WM-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/BlynkGSM_Manager/1.2.1/BlynkGSM_Manager-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlynkGSM_Manager-1.2.1.tar.gz",
+    "size_bytes": 126833,
+    "sha256": "613008a556b91b809b8169f787aad5d10e5c4519757b57d373b5c42cb4ed679d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/BlynkGSM_Manager/1.2.1/BlynkGSM_Manager-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/BlynkGSM_Manager/1.2.1/BlynkGSM_Manager-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/BlynkTeensy/1.0.1/BlynkTeensy-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlynkTeensy-1.0.1.tar.gz",
+    "size_bytes": 24564,
+    "sha256": "22d159fefa783371028d40ff802d609aef2ce7d5e17180df40f8e10ed7c27167",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/BlynkTeensy/1.0.1/BlynkTeensy-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/BlynkTeensy/1.0.1/BlynkTeensy-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Blynk_Async_ESP32_BT_WF/1.2.2/Blynk_Async_ESP32_BT_WF-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blynk_Async_ESP32_BT_WF-1.2.2.tar.gz",
+    "size_bytes": 388594,
+    "sha256": "0b90c8b463de5c62847ca7c2ea5802240f9efa098608a7ef993cb5ddab052a37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Blynk_Async_ESP32_BT_WF/1.2.2/Blynk_Async_ESP32_BT_WF-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Blynk_Async_ESP32_BT_WF/1.2.2/Blynk_Async_ESP32_BT_WF-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Blynk_Async_GSM_Manager/1.2.1/Blynk_Async_GSM_Manager-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blynk_Async_GSM_Manager-1.2.1.tar.gz",
+    "size_bytes": 126707,
+    "sha256": "fdd36682ea8a16f2f11b5dd02bc59a90452e85e4b5ef2f8d48cd2709f9ee87a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Blynk_Async_GSM_Manager/1.2.1/Blynk_Async_GSM_Manager-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Blynk_Async_GSM_Manager/1.2.1/Blynk_Async_GSM_Manager-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Blynk_Async_WM/1.6.2/Blynk_Async_WM-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blynk_Async_WM-1.6.2.tar.gz",
+    "size_bytes": 571883,
+    "sha256": "0142466e59ddfe8183fa328bc39a44e951172d1bfa0baf79c212bc1889d4b130",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Blynk_Async_WM/1.6.2/Blynk_Async_WM-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Blynk_Async_WM/1.6.2/Blynk_Async_WM-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Blynk_Esp8266AT_WM/1.3.1/Blynk_Esp8266AT_WM-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blynk_Esp8266AT_WM-1.3.1.tar.gz",
+    "size_bytes": 2831869,
+    "sha256": "37e1c3788f61a53f30ee1f355037e4a0105fab9e0c2b354e51ed15dcdfe86820",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Blynk_Esp8266AT_WM/1.3.1/Blynk_Esp8266AT_WM-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Blynk_Esp8266AT_WM/1.3.1/Blynk_Esp8266AT_WM-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Blynk_Teensy/1.0.0/Blynk_Teensy-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blynk_Teensy-1.0.0.tar.gz",
+    "size_bytes": 10412,
+    "sha256": "52c44a9c13aa1c4fe870fec4a2d6752908d03b9bdf338764b341ac4a4fa4060a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Blynk_Teensy/1.0.0/Blynk_Teensy-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Blynk_Teensy/1.0.0/Blynk_Teensy-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Blynk_WM/1.6.2/Blynk_WM-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blynk_WM-1.6.2.tar.gz",
+    "size_bytes": 326876,
+    "sha256": "d916e49b57a74732c413e911b00c6bdc4581f1fc8a1be27b40f4a2672ca240c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Blynk_WM/1.6.2/Blynk_WM-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Blynk_WM/1.6.2/Blynk_WM-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Blynk_WiFiManager/1.0.16/Blynk_WiFiManager-1.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blynk_WiFiManager-1.0.16.tar.gz",
+    "size_bytes": 79583,
+    "sha256": "0daba56c7c1b883c8051516312e9d1756f8f091fa261ae7f8a58b66cc28534cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Blynk_WiFiManager/1.0.16/Blynk_WiFiManager-1.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Blynk_WiFiManager/1.0.16/Blynk_WiFiManager-1.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Blynk_WiFiNINA_WM/1.1.2/Blynk_WiFiNINA_WM-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blynk_WiFiNINA_WM-1.1.2.tar.gz",
+    "size_bytes": 530154,
+    "sha256": "5eb4e6868b3392b4bd882509328de40328d86b235606ba7ec30fce6c3c1397e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Blynk_WiFiNINA_WM/1.1.2/Blynk_WiFiNINA_WM-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Blynk_WiFiNINA_WM/1.1.2/Blynk_WiFiNINA_WM-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ContinuousStepper_Generic/1.0.0/ContinuousStepper_Generic-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ContinuousStepper_Generic-1.0.0.tar.gz",
+    "size_bytes": 24546,
+    "sha256": "a1ab05072a86d25c23e99ec64d4b60c6c4f1400b014c7f71b83250c089b1b42b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ContinuousStepper_Generic/1.0.0/ContinuousStepper_Generic-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ContinuousStepper_Generic/1.0.0/ContinuousStepper_Generic-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/DDNS_Generic/1.7.0/DDNS_Generic-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DDNS_Generic-1.7.0.tar.gz",
+    "size_bytes": 517153,
+    "sha256": "58e8de8ec0e63cd2813c237ff802f952831e3790c3de108a5cc03ed86721fbfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/DDNS_Generic/1.7.0/DDNS_Generic-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/DDNS_Generic/1.7.0/DDNS_Generic-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/DS323x_Generic/1.3.1/DS323x_Generic-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS323x_Generic-1.3.1.tar.gz",
+    "size_bytes": 424607,
+    "sha256": "a3fcebfe1aa67e88aa3c7c417a8b8e1d58e395108c62d3ef9a7fa23970d51a2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/DS323x_Generic/1.3.1/DS323x_Generic-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/DS323x_Generic/1.3.1/DS323x_Generic-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/DoubleResetDetector_Generic/1.8.1/DoubleResetDetector_Generic-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DoubleResetDetector_Generic-1.8.1.tar.gz",
+    "size_bytes": 304046,
+    "sha256": "c35cb692bab7f7291073a48c307fa7acd525ea4036d28c6b07de46a0215597be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/DoubleResetDetector_Generic/1.8.1/DoubleResetDetector_Generic-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/DoubleResetDetector_Generic/1.8.1/DoubleResetDetector_Generic-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Dx_PWM/1.1.1/Dx_PWM-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dx_PWM-1.1.1.tar.gz",
+    "size_bytes": 764692,
+    "sha256": "5ad32be3e28177adbada28f9d304c8645950ae93df598c2d43bf0a699b920b07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Dx_PWM/1.1.1/Dx_PWM-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Dx_PWM/1.1.1/Dx_PWM-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Dx_Slow_PWM/1.1.0/Dx_Slow_PWM-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dx_Slow_PWM-1.1.0.tar.gz",
+    "size_bytes": 771976,
+    "sha256": "0b0b499155115cac43961d7cbfe6be84d0c72d2f1fbbe005add0a9555eac463a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Dx_Slow_PWM/1.1.0/Dx_Slow_PWM-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Dx_Slow_PWM/1.1.0/Dx_Slow_PWM-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Dx_TimerInterrupt/1.1.3/Dx_TimerInterrupt-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dx_TimerInterrupt-1.1.3.tar.gz",
+    "size_bytes": 775142,
+    "sha256": "676642f79fd2ab46f6a72dff1e45fc993ee7e046686624054bd9d35f0c823c3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Dx_TimerInterrupt/1.1.3/Dx_TimerInterrupt-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Dx_TimerInterrupt/1.1.3/Dx_TimerInterrupt-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32TimerInterrupt/2.3.0/ESP32TimerInterrupt-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32TimerInterrupt-2.3.0.tar.gz",
+    "size_bytes": 33245,
+    "sha256": "c3bc92653d429f4a90b8e8b0e5b1f73a7efdda3c615e0a549fce733d13547dff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32TimerInterrupt/2.3.0/ESP32TimerInterrupt-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32TimerInterrupt/2.3.0/ESP32TimerInterrupt-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_C3_ISR_Servo/1.2.0/ESP32_C3_ISR_Servo-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_C3_ISR_Servo-1.2.0.tar.gz",
+    "size_bytes": 23307,
+    "sha256": "855853aacf098daa4047bd5959828670536cb572d7f6ffa24506b48915bca6ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_C3_ISR_Servo/1.2.0/ESP32_C3_ISR_Servo-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_C3_ISR_Servo/1.2.0/ESP32_C3_ISR_Servo-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_C3_TimerInterrupt/1.8.0/ESP32_C3_TimerInterrupt-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_C3_TimerInterrupt-1.8.0.tar.gz",
+    "size_bytes": 287109,
+    "sha256": "9fb55f289ebf61b0f1aa6ac54d16c5e0269329765667884184b459f8ddbdba6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_C3_TimerInterrupt/1.8.0/ESP32_C3_TimerInterrupt-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_C3_TimerInterrupt/1.8.0/ESP32_C3_TimerInterrupt-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_ENC_Manager/1.0.0/ESP32_ENC_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_ENC_Manager-1.0.0.tar.gz",
+    "size_bytes": 694297,
+    "sha256": "39eeedfccccf5fd1c08e9167a10aea4d977f38f503c61e054f24887c6c0d96aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_ENC_Manager/1.0.0/ESP32_ENC_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_ENC_Manager/1.0.0/ESP32_ENC_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_Ethernet_Manager/1.0.0/ESP32_Ethernet_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Ethernet_Manager-1.0.0.tar.gz",
+    "size_bytes": 1010698,
+    "sha256": "565e981c775dfdbcd7ddd68ed7d65582df54fd055f57da5661f8b4075e9bf290",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_Ethernet_Manager/1.0.0/ESP32_Ethernet_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_Ethernet_Manager/1.0.0/ESP32_Ethernet_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_FastPWM/1.1.0/ESP32_FastPWM-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_FastPWM-1.1.0.tar.gz",
+    "size_bytes": 22640,
+    "sha256": "97580fd89285e7e84e2e1487a9fe60f95ef25ffd1a3d293802ddb1da0d3f22a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_FastPWM/1.1.0/ESP32_FastPWM-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_FastPWM/1.1.0/ESP32_FastPWM-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_ISR_Servo/1.5.0/ESP32_ISR_Servo-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_ISR_Servo-1.5.0.tar.gz",
+    "size_bytes": 26371,
+    "sha256": "9e156d9c69eb00bb14ac3280b269253592c5dde13b7090067d6816aa88cd703f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_ISR_Servo/1.5.0/ESP32_ISR_Servo-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_ISR_Servo/1.5.0/ESP32_ISR_Servo-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_New_ISR_Servo/1.4.0/ESP32_New_ISR_Servo-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_New_ISR_Servo-1.4.0.tar.gz",
+    "size_bytes": 25017,
+    "sha256": "1442be6a954378b629567e36dd6203c1c7ec3c0a0e71949fc69fd7345ffe7a53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_New_ISR_Servo/1.4.0/ESP32_New_ISR_Servo-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_New_ISR_Servo/1.4.0/ESP32_New_ISR_Servo-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_New_TimerInterrupt/1.5.0/ESP32_New_TimerInterrupt-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_New_TimerInterrupt-1.5.0.tar.gz",
+    "size_bytes": 29239,
+    "sha256": "ba475675c5d7deec3c6845fdce4d0e26678b8c64a7ce18b8a46173a71fa3cbfb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_New_TimerInterrupt/1.5.0/ESP32_New_TimerInterrupt-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_New_TimerInterrupt/1.5.0/ESP32_New_TimerInterrupt-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_PWM/1.3.3/ESP32_PWM-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_PWM-1.3.3.tar.gz",
+    "size_bytes": 27987,
+    "sha256": "9ba64aa4d125061cd88c11efdd27be5fbc25e4c6b76bee6013b3a57df787ff52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_PWM/1.3.3/ESP32_PWM-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_PWM/1.3.3/ESP32_PWM-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_S2_ISR_Servo/1.2.0/ESP32_S2_ISR_Servo-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_S2_ISR_Servo-1.2.0.tar.gz",
+    "size_bytes": 24743,
+    "sha256": "8ab02bbbc22a935b828a5afd38e46e2f1c9199df54bdedbba9762000a496498e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_S2_ISR_Servo/1.2.0/ESP32_S2_ISR_Servo-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_S2_ISR_Servo/1.2.0/ESP32_S2_ISR_Servo-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_S2_TimerInterrupt/1.8.0/ESP32_S2_TimerInterrupt-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_S2_TimerInterrupt-1.8.0.tar.gz",
+    "size_bytes": 181015,
+    "sha256": "8960b6a4715a77f94ceb4925c248e702564dcadd0e21d7a22ec99bea08c5eacc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_S2_TimerInterrupt/1.8.0/ESP32_S2_TimerInterrupt-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_S2_TimerInterrupt/1.8.0/ESP32_S2_TimerInterrupt-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_SC_ENC_Manager/1.0.0/ESP32_SC_ENC_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_SC_ENC_Manager-1.0.0.tar.gz",
+    "size_bytes": 994677,
+    "sha256": "73bc2bfcea2d215a518c8ae128838ddbeee64c6d642277831eb9e8be45b8f006",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_SC_ENC_Manager/1.0.0/ESP32_SC_ENC_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_SC_ENC_Manager/1.0.0/ESP32_SC_ENC_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_SC_Ethernet_Manager/1.0.0/ESP32_SC_Ethernet_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_SC_Ethernet_Manager-1.0.0.tar.gz",
+    "size_bytes": 1312158,
+    "sha256": "0c63318fe9bcdca07c03a0e058cba384b1328a73ee19448d26c7e466f28a6e55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_SC_Ethernet_Manager/1.0.0/ESP32_SC_Ethernet_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_SC_Ethernet_Manager/1.0.0/ESP32_SC_Ethernet_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_SC_W5500_Manager/1.0.0/ESP32_SC_W5500_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_SC_W5500_Manager-1.0.0.tar.gz",
+    "size_bytes": 1162945,
+    "sha256": "1c333c6f6045ec591d24bea581375e90b2428f857574e57a08af541ab5a045f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_SC_W5500_Manager/1.0.0/ESP32_SC_W5500_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_SC_W5500_Manager/1.0.0/ESP32_SC_W5500_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_SC_W6100_Manager/1.0.0/ESP32_SC_W6100_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_SC_W6100_Manager-1.0.0.tar.gz",
+    "size_bytes": 1528940,
+    "sha256": "6a94034731f0bcdeb697be7202e456d790911f733871edff45d3ad8cd501c821",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_SC_W6100_Manager/1.0.0/ESP32_SC_W6100_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_SC_W6100_Manager/1.0.0/ESP32_SC_W6100_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_W5500_Manager/1.0.0/ESP32_W5500_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_W5500_Manager-1.0.0.tar.gz",
+    "size_bytes": 865443,
+    "sha256": "7376dafe8fd28b5095127fdb01c38a9d00d2d52a80138d4928ac6d81bf8e587f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_W5500_Manager/1.0.0/ESP32_W5500_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_W5500_Manager/1.0.0/ESP32_W5500_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP32_W6100_Manager/1.0.0/ESP32_W6100_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_W6100_Manager-1.0.0.tar.gz",
+    "size_bytes": 662294,
+    "sha256": "6e908b8fab558065765fcdc18ac5f0ad5fab5ef578678217ad51956aadaa6027",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP32_W6100_Manager/1.0.0/ESP32_W6100_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP32_W6100_Manager/1.0.0/ESP32_W6100_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP8266TimerInterrupt/1.6.0/ESP8266TimerInterrupt-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266TimerInterrupt-1.6.0.tar.gz",
+    "size_bytes": 26398,
+    "sha256": "72d28d504d3f51c52e9e112c0fac7582830b259ed5cf1433ab3f615b3c0c96dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP8266TimerInterrupt/1.6.0/ESP8266TimerInterrupt-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP8266TimerInterrupt/1.6.0/ESP8266TimerInterrupt-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP8266_AT_WebServer/1.7.1/ESP8266_AT_WebServer-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266_AT_WebServer-1.7.1.tar.gz",
+    "size_bytes": 4264304,
+    "sha256": "a28432d0c5d7214bc88789f711d1c9f61df66142819c00a29be1660910e0f48a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP8266_AT_WebServer/1.7.1/ESP8266_AT_WebServer-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP8266_AT_WebServer/1.7.1/ESP8266_AT_WebServer-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP8266_ENC_Manager/1.0.0/ESP8266_ENC_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266_ENC_Manager-1.0.0.tar.gz",
+    "size_bytes": 791127,
+    "sha256": "36070c18442d0f37ecdbf51a5c96757ba8bb211897d812f87f4d844c6bfcf65f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP8266_ENC_Manager/1.0.0/ESP8266_ENC_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP8266_ENC_Manager/1.0.0/ESP8266_ENC_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP8266_Ethernet_Manager/1.0.0/ESP8266_Ethernet_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266_Ethernet_Manager-1.0.0.tar.gz",
+    "size_bytes": 1428912,
+    "sha256": "3cc0dd9d5ee2a1ac355dcbf423fee3fd33f0005dc69ab1c2d3467bd872f33d92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP8266_Ethernet_Manager/1.0.0/ESP8266_Ethernet_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP8266_Ethernet_Manager/1.0.0/ESP8266_Ethernet_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP8266_ISR_Servo/1.3.0/ESP8266_ISR_Servo-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266_ISR_Servo-1.3.0.tar.gz",
+    "size_bytes": 18703,
+    "sha256": "a301ca95c051d7bdb43f62b0dc18535cf3f01fc55c21b3fab3eef6ef38bcae36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP8266_ISR_Servo/1.3.0/ESP8266_ISR_Servo-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP8266_ISR_Servo/1.3.0/ESP8266_ISR_Servo-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP8266_PWM/1.2.4/ESP8266_PWM-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266_PWM-1.2.4.tar.gz",
+    "size_bytes": 22912,
+    "sha256": "e53f1de3b061e14edaaca89a9b7b94b0367b61e380144e60eb74579c733eb760",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP8266_PWM/1.2.4/ESP8266_PWM-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP8266_PWM/1.2.4/ESP8266_PWM-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP8266_W5100_Manager/1.0.0/ESP8266_W5100_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266_W5100_Manager-1.0.0.tar.gz",
+    "size_bytes": 969265,
+    "sha256": "851fa7c9dc36744662fdc24d12d24ccf38de0dcc522d619f7fc1f409e9a6e80b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP8266_W5100_Manager/1.0.0/ESP8266_W5100_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP8266_W5100_Manager/1.0.0/ESP8266_W5100_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP8266_W5500_Manager/1.0.0/ESP8266_W5500_Manager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266_W5500_Manager-1.0.0.tar.gz",
+    "size_bytes": 961836,
+    "sha256": "6141862bf2aa3f1bf71487d9500bab942bb092ca68e966af2e4c75acb55e99f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP8266_W5500_Manager/1.0.0/ESP8266_W5500_Manager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP8266_W5500_Manager/1.0.0/ESP8266_W5500_Manager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESPAsync_WiFiManager/1.15.1/ESPAsync_WiFiManager-1.15.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsync_WiFiManager-1.15.1.tar.gz",
+    "size_bytes": 1379950,
+    "sha256": "6b6cfbf4c76c673e426f1d9d15bec1b09ecc91effb4c98e042c5ff962a4ba621",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESPAsync_WiFiManager/1.15.1/ESPAsync_WiFiManager-1.15.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESPAsync_WiFiManager/1.15.1/ESPAsync_WiFiManager-1.15.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESPAsync_WiFiManager/1.9.8/ESPAsync_WiFiManager-1.9.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsync_WiFiManager-1.9.8.tar.gz",
+    "size_bytes": 1469842,
+    "sha256": "cbe52d93d08f7d938095a913b8fe595e47c89cd1e3a76203d060cd8658e569a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESPAsync_WiFiManager/1.9.8/ESPAsync_WiFiManager-1.9.8.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESPAsync_WiFiManager/1.9.8/ESPAsync_WiFiManager-1.9.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESPAsync_WiFiManager_Lite/1.10.5/ESPAsync_WiFiManager_Lite-1.10.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsync_WiFiManager_Lite-1.10.5.tar.gz",
+    "size_bytes": 233594,
+    "sha256": "24b7d1f18287456942111caa709e703b3a4f773d49884d5b720c1a8da7176d05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESPAsync_WiFiManager_Lite/1.10.5/ESPAsync_WiFiManager_Lite-1.10.5.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESPAsync_WiFiManager_Lite/1.10.5/ESPAsync_WiFiManager_Lite-1.10.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP_AT_Lib/1.5.1/ESP_AT_Lib-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_AT_Lib-1.5.1.tar.gz",
+    "size_bytes": 3857538,
+    "sha256": "77db0e2ee3a89a952c8c9291df45eae5fa3a67f3833f40d9b61933b001f91e2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP_AT_Lib/1.5.1/ESP_AT_Lib-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP_AT_Lib/1.5.1/ESP_AT_Lib-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP_AT_WM_Lite/1.6.0/ESP_AT_WM_Lite-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_AT_WM_Lite-1.6.0.tar.gz",
+    "size_bytes": 1780220,
+    "sha256": "ab93506ff3d0647fb16a7485da752342ff673f15a0412888aad85e84047f440b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP_AT_WM_Lite/1.6.0/ESP_AT_WM_Lite-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP_AT_WM_Lite/1.6.0/ESP_AT_WM_Lite-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP_AT_WiFiManager/1.4.0/ESP_AT_WiFiManager-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_AT_WiFiManager-1.4.0.tar.gz",
+    "size_bytes": 3923766,
+    "sha256": "edcf9a56b7c630f0a6b5aab7c850243f4c148f3e42273310965acbf6ec697efc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP_AT_WiFiManager/1.4.0/ESP_AT_WiFiManager-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP_AT_WiFiManager/1.4.0/ESP_AT_WiFiManager-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP_DoubleResetDetector/1.3.2/ESP_DoubleResetDetector-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_DoubleResetDetector-1.3.2.tar.gz",
+    "size_bytes": 23094,
+    "sha256": "8d4286cbf55f08e2476c42024edb0649e63da02962b755d306a3620e46a2cb6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP_DoubleResetDetector/1.3.2/ESP_DoubleResetDetector-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP_DoubleResetDetector/1.3.2/ESP_DoubleResetDetector-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP_MultiResetDetector/1.3.2/ESP_MultiResetDetector-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_MultiResetDetector-1.3.2.tar.gz",
+    "size_bytes": 23293,
+    "sha256": "039927c03b21ac6e75d2eb5276a438cf6b4b9766b8111cc1959010f875075207",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP_MultiResetDetector/1.3.2/ESP_MultiResetDetector-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP_MultiResetDetector/1.3.2/ESP_MultiResetDetector-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP_WiFiManager_Lite/1.10.5/ESP_WiFiManager_Lite-1.10.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_WiFiManager_Lite-1.10.5.tar.gz",
+    "size_bytes": 222654,
+    "sha256": "05da67d69aee745115f4862011f1ece14d51dac036f3773c4120d97a33852bd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP_WiFiManager_Lite/1.10.5/ESP_WiFiManager_Lite-1.10.5.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP_WiFiManager_Lite/1.10.5/ESP_WiFiManager_Lite-1.10.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/ESP_WifiManager/1.12.1/ESP_WifiManager-1.12.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_WifiManager-1.12.1.tar.gz",
+    "size_bytes": 1433640,
+    "sha256": "db8b24b95b1625534f2a3d5551085bc567de2aed7f7f6b19803f3117ec163b7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/ESP_WifiManager/1.12.1/ESP_WifiManager-1.12.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/ESP_WifiManager/1.12.1/ESP_WifiManager-1.12.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/EthernetWebServer/2.4.1/EthernetWebServer-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EthernetWebServer-2.4.1.tar.gz",
+    "size_bytes": 2861336,
+    "sha256": "a7736438a535fd6e89fd34390cf4ff7a19561da4ccd12930229b01fb5aa4cab4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/EthernetWebServer/2.4.1/EthernetWebServer-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/EthernetWebServer/2.4.1/EthernetWebServer-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/EthernetWebServer_SSL/1.10.0/EthernetWebServer_SSL-1.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EthernetWebServer_SSL-1.10.0.tar.gz",
+    "size_bytes": 1885948,
+    "sha256": "e6d1ba13e4a4617430ddb4c3827b55ee0b5966cfd52b441777f5012dc6bcb047",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/EthernetWebServer_SSL/1.10.0/EthernetWebServer_SSL-1.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/EthernetWebServer_SSL/1.10.0/EthernetWebServer_SSL-1.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/EthernetWebServer_SSL_STM32/1.6.0/EthernetWebServer_SSL_STM32-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EthernetWebServer_SSL_STM32-1.6.0.tar.gz",
+    "size_bytes": 1436604,
+    "sha256": "25dd4c7129509c733a2f1bf6b75761cc0576057fe25806b3ec5eb7f3d2c94293",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/EthernetWebServer_SSL_STM32/1.6.0/EthernetWebServer_SSL_STM32-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/EthernetWebServer_SSL_STM32/1.6.0/EthernetWebServer_SSL_STM32-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/EthernetWebServer_STM32/1.5.0/EthernetWebServer_STM32-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EthernetWebServer_STM32-1.5.0.tar.gz",
+    "size_bytes": 880877,
+    "sha256": "31be65c99f692b072252853ea39d29f769c81300ea8ded4fee47777e9b0d5f24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/EthernetWebServer_STM32/1.5.0/EthernetWebServer_STM32-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/EthernetWebServer_STM32/1.5.0/EthernetWebServer_STM32-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Ethernet_Generic/2.8.1/Ethernet_Generic-2.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ethernet_Generic-2.8.1.tar.gz",
+    "size_bytes": 1498127,
+    "sha256": "04da52870eda5fa392d110b0902270d9010700163d79da1b47ca819b88d91440",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Ethernet_Generic/2.8.1/Ethernet_Generic-2.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Ethernet_Generic/2.8.1/Ethernet_Generic-2.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Ethernet_Manager/1.8.1/Ethernet_Manager-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ethernet_Manager-1.8.1.tar.gz",
+    "size_bytes": 6504653,
+    "sha256": "5e5ca920475b9d5b02dd669ff8ae62a99b0b47e131f2a74784fb5c14b31de4b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Ethernet_Manager/1.8.1/Ethernet_Manager-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Ethernet_Manager/1.8.1/Ethernet_Manager-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Ethernet_Manager_Portenta_H7/1.6.1/Ethernet_Manager_Portenta_H7-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ethernet_Manager_Portenta_H7-1.6.1.tar.gz",
+    "size_bytes": 302949,
+    "sha256": "0f6c82d967835cce9bad8e7c1ff824a65107a87f47d98e7079b380e7edabb0bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Ethernet_Manager_Portenta_H7/1.6.1/Ethernet_Manager_Portenta_H7-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Ethernet_Manager_Portenta_H7/1.6.1/Ethernet_Manager_Portenta_H7-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Ethernet_Manager_STM32/1.3.2/Ethernet_Manager_STM32-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ethernet_Manager_STM32-1.3.2.tar.gz",
+    "size_bytes": 853901,
+    "sha256": "7abb5f00dff744aad2b091665841fad09dd556a85003d58fc59e526a3a711345",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Ethernet_Manager_STM32/1.3.2/Ethernet_Manager_STM32-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Ethernet_Manager_STM32/1.3.2/Ethernet_Manager_STM32-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/FS_Nano33BLE/1.2.1/FS_Nano33BLE-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FS_Nano33BLE-1.2.1.tar.gz",
+    "size_bytes": 26433,
+    "sha256": "e3575b8f5e09fb0f0fa7d224b3985105d93785579f80462f8d47955bc7e75e02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/FS_Nano33BLE/1.2.1/FS_Nano33BLE-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/FS_Nano33BLE/1.2.1/FS_Nano33BLE-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/FTPClient_Generic/1.6.0/FTPClient_Generic-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FTPClient_Generic-1.6.0.tar.gz",
+    "size_bytes": 1015923,
+    "sha256": "9d18abe537580232a08ba786e3f0b42b20f20516484eae2a946010f8187eb925",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/FTPClient_Generic/1.6.0/FTPClient_Generic-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/FTPClient_Generic/1.6.0/FTPClient_Generic-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/FTP_Server_Teensy41/1.2.0/FTP_Server_Teensy41-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FTP_Server_Teensy41-1.2.0.tar.gz",
+    "size_bytes": 55246,
+    "sha256": "2285bf08fec1f70691194e313249486dd095b0b42b07c9907e882e6114815da7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/FTP_Server_Teensy41/1.2.0/FTP_Server_Teensy41-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/FTP_Server_Teensy41/1.2.0/FTP_Server_Teensy41-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/FlashStorage_RTL8720/1.1.0/FlashStorage_RTL8720-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashStorage_RTL8720-1.1.0.tar.gz",
+    "size_bytes": 38769,
+    "sha256": "e45e95754c4bce3d227e5282b706bac0a61a79c528d1d6e1d8fe81719bf53075",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/FlashStorage_RTL8720/1.1.0/FlashStorage_RTL8720-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/FlashStorage_RTL8720/1.1.0/FlashStorage_RTL8720-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/FlashStorage_SAMD/1.3.2/FlashStorage_SAMD-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashStorage_SAMD-1.3.2.tar.gz",
+    "size_bytes": 86223,
+    "sha256": "233a540e2278dccd52993c374e5d7170eb7e9899c9fd2a5de8720bba815a7a7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/FlashStorage_SAMD/1.3.2/FlashStorage_SAMD-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/FlashStorage_SAMD/1.3.2/FlashStorage_SAMD-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/FlashStorage_STM32/1.2.0/FlashStorage_STM32-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashStorage_STM32-1.2.0.tar.gz",
+    "size_bytes": 76416,
+    "sha256": "60adb30f86f47e0a2b4e0933f7cb198df9e1428774d99d3aba13b2fa4dacb690",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/FlashStorage_STM32/1.2.0/FlashStorage_STM32-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/FlashStorage_STM32/1.2.0/FlashStorage_STM32-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/FlashStorage_STM32F1/1.1.0/FlashStorage_STM32F1-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashStorage_STM32F1-1.1.0.tar.gz",
+    "size_bytes": 260768,
+    "sha256": "57a987608a5cba6d86cd438b63e784a9b877ed26f71315674fe8dc44ea9de3ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/FlashStorage_STM32F1/1.1.0/FlashStorage_STM32F1-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/FlashStorage_STM32F1/1.1.0/FlashStorage_STM32F1-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Functional-Vlpp/1.0.2/Functional-Vlpp-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Functional-Vlpp-1.0.2.tar.gz",
+    "size_bytes": 83751,
+    "sha256": "1fc40cb49d1cb85e8126140627df12866279035b72ff7adfb5edc3f9d730f9ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Functional-Vlpp/1.0.2/Functional-Vlpp-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Functional-Vlpp/1.0.2/Functional-Vlpp-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/GSM_Generic/1.6.1/GSM_Generic-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSM_Generic-1.6.1.tar.gz",
+    "size_bytes": 355135,
+    "sha256": "9e0099fc6d043a80a21cc6a500bbe220c3882957b79e7d4ab8db786611417b0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/GSM_Generic/1.6.1/GSM_Generic-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/GSM_Generic/1.6.1/GSM_Generic-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/HTTPS_Server_Generic/1.5.0/HTTPS_Server_Generic-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPS_Server_Generic-1.5.0.tar.gz",
+    "size_bytes": 2023309,
+    "sha256": "2a651bcb38fd239cea82acbe3fadecdcb799778eab677fa3eb459596f5db7c81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/HTTPS_Server_Generic/1.5.0/HTTPS_Server_Generic-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/HTTPS_Server_Generic/1.5.0/HTTPS_Server_Generic-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/LittleFS_Mbed_RP2040/1.1.0/LittleFS_Mbed_RP2040-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LittleFS_Mbed_RP2040-1.1.0.tar.gz",
+    "size_bytes": 5739024,
+    "sha256": "28a72c8160aafebf99be91875d5ebcf14983fda6f2389e80fe30845b7b846f86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/LittleFS_Mbed_RP2040/1.1.0/LittleFS_Mbed_RP2040-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/LittleFS_Mbed_RP2040/1.1.0/LittleFS_Mbed_RP2040-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/LittleFS_Portenta_H7/1.2.0/LittleFS_Portenta_H7-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LittleFS_Portenta_H7-1.2.0.tar.gz",
+    "size_bytes": 33154,
+    "sha256": "dd7a7e75a31f0154a4540e15914f304b0b3db35d48bbe00058e321465d6ae046",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/LittleFS_Portenta_H7/1.2.0/LittleFS_Portenta_H7-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/LittleFS_Portenta_H7/1.2.0/LittleFS_Portenta_H7-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/MBED_RP2040_PWM/1.0.1/MBED_RP2040_PWM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MBED_RP2040_PWM-1.0.1.tar.gz",
+    "size_bytes": 16786,
+    "sha256": "56586c308437875c101d631763f68b078ad8b518ef033618af3def167f24a4f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/MBED_RP2040_PWM/1.0.1/MBED_RP2040_PWM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/MBED_RP2040_PWM/1.0.1/MBED_RP2040_PWM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/MBED_RP2040_Slow_PWM/1.3.0/MBED_RP2040_Slow_PWM-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MBED_RP2040_Slow_PWM-1.3.0.tar.gz",
+    "size_bytes": 25971,
+    "sha256": "22acdfed984dda8d1c869dafd972513bbb06bd50facf3f4ab0572d94284dec8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/MBED_RP2040_Slow_PWM/1.3.0/MBED_RP2040_Slow_PWM-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/MBED_RP2040_Slow_PWM/1.3.0/MBED_RP2040_Slow_PWM-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/MBED_RPI_PICO_TimerInterrupt/1.2.0/MBED_RPI_PICO_TimerInterrupt-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MBED_RPI_PICO_TimerInterrupt-1.2.0.tar.gz",
+    "size_bytes": 26981,
+    "sha256": "ff68d188b70c94543db5f3b71d5f438a674b0bc77860150ba78bebaa6706c7da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/MBED_RPI_PICO_TimerInterrupt/1.2.0/MBED_RPI_PICO_TimerInterrupt-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/MBED_RPI_PICO_TimerInterrupt/1.2.0/MBED_RPI_PICO_TimerInterrupt-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/MDNS_Generic/1.4.2/MDNS_Generic-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MDNS_Generic-1.4.2.tar.gz",
+    "size_bytes": 485456,
+    "sha256": "b03571c65d9216ffc990f0c6deef3039a2ab725a4b2e3813ceeca9e25f361e6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/MDNS_Generic/1.4.2/MDNS_Generic-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/MDNS_Generic/1.4.2/MDNS_Generic-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/MQTTPubSubClient_Generic/1.2.1/MQTTPubSubClient_Generic-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTPubSubClient_Generic-1.2.1.tar.gz",
+    "size_bytes": 443628,
+    "sha256": "9c01e0c8b761d376a71cb5964dd8f9a0797cd17efc6f5a7f999746dfbd0efe10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/MQTTPubSubClient_Generic/1.2.1/MQTTPubSubClient_Generic-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/MQTTPubSubClient_Generic/1.2.1/MQTTPubSubClient_Generic-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/MultiResetDetector_Generic/1.8.1/MultiResetDetector_Generic-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiResetDetector_Generic-1.8.1.tar.gz",
+    "size_bytes": 306226,
+    "sha256": "1268226db053ddbf92e0cce622a621ffff452583d3e0efa2479e5b20f0497aa7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/MultiResetDetector_Generic/1.8.1/MultiResetDetector_Generic-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/MultiResetDetector_Generic/1.8.1/MultiResetDetector_Generic-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/MySQL_MariaDB_Generic/1.7.2/MySQL_MariaDB_Generic-1.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MySQL_MariaDB_Generic-1.7.2.tar.gz",
+    "size_bytes": 1499877,
+    "sha256": "59ff26a7460b23908ede30de56a5a57530520785efd2740e6db8667b80754651",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/MySQL_MariaDB_Generic/1.7.2/MySQL_MariaDB_Generic-1.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/MySQL_MariaDB_Generic/1.7.2/MySQL_MariaDB_Generic-1.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/NB_Generic/1.3.1/NB_Generic-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NB_Generic-1.3.1.tar.gz",
+    "size_bytes": 340565,
+    "sha256": "8118d7267ae506baee977990c2dfbcc1e3d2b0ebb6734203618b27967d701e4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/NB_Generic/1.3.1/NB_Generic-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/NB_Generic/1.3.1/NB_Generic-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/NRF52_ISR_Servo/1.2.1/NRF52_ISR_Servo-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NRF52_ISR_Servo-1.2.1.tar.gz",
+    "size_bytes": 186115,
+    "sha256": "fd509b1cb2a7d5c6154bb202661f75bb69630f0648bdfc049f41501e879f204d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/NRF52_ISR_Servo/1.2.1/NRF52_ISR_Servo-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/NRF52_ISR_Servo/1.2.1/NRF52_ISR_Servo-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/NRF52_MBED_TimerInterrupt/1.4.1/NRF52_MBED_TimerInterrupt-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NRF52_MBED_TimerInterrupt-1.4.1.tar.gz",
+    "size_bytes": 98032,
+    "sha256": "5007eab90d789d43033f8ef45f1e8d80ece47438e65245419fc0de231e8d0167",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/NRF52_MBED_TimerInterrupt/1.4.1/NRF52_MBED_TimerInterrupt-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/NRF52_MBED_TimerInterrupt/1.4.1/NRF52_MBED_TimerInterrupt-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/NRF52_TimerInterrupt/1.4.2/NRF52_TimerInterrupt-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NRF52_TimerInterrupt-1.4.2.tar.gz",
+    "size_bytes": 265109,
+    "sha256": "5f0cbfde4e4824682842ec10b97b7e53d12c3bf87f4b3f61bc57a130d5102e8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/NRF52_TimerInterrupt/1.4.2/NRF52_TimerInterrupt-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/NRF52_TimerInterrupt/1.4.2/NRF52_TimerInterrupt-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/NTPClient_Generic/3.7.5/NTPClient_Generic-3.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTPClient_Generic-3.7.5.tar.gz",
+    "size_bytes": 486759,
+    "sha256": "434de191e35d8877ec713c059d8a357f90d2decb1755373858c30f73dc158d5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/NTPClient_Generic/3.7.5/NTPClient_Generic-3.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/NTPClient_Generic/3.7.5/NTPClient_Generic-3.7.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Portenta_H7_AsyncHTTPRequest/1.5.0/Portenta_H7_AsyncHTTPRequest-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Portenta_H7_AsyncHTTPRequest-1.5.0.tar.gz",
+    "size_bytes": 108208,
+    "sha256": "387558c3a40ed79511a5fb7e7b31a8081702a00ec287e426f8579f6ee0a8b2c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Portenta_H7_AsyncHTTPRequest/1.5.0/Portenta_H7_AsyncHTTPRequest-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Portenta_H7_AsyncHTTPRequest/1.5.0/Portenta_H7_AsyncHTTPRequest-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Portenta_H7_AsyncTCP/1.4.0/Portenta_H7_AsyncTCP-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Portenta_H7_AsyncTCP-1.4.0.tar.gz",
+    "size_bytes": 150148,
+    "sha256": "98d4c4f0471108e770b8250d4e0bd011c9e381e50123290a939a8fbcd462a14d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Portenta_H7_AsyncTCP/1.4.0/Portenta_H7_AsyncTCP-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Portenta_H7_AsyncTCP/1.4.0/Portenta_H7_AsyncTCP-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Portenta_H7_AsyncUDP/1.0.0/Portenta_H7_AsyncUDP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Portenta_H7_AsyncUDP-1.0.0.tar.gz",
+    "size_bytes": 78361,
+    "sha256": "f678c77ca31420798bcb8549ebdeb15f865bb09774f7cbb57c6f3073a7e77248",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Portenta_H7_AsyncUDP/1.0.0/Portenta_H7_AsyncUDP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Portenta_H7_AsyncUDP/1.0.0/Portenta_H7_AsyncUDP-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Portenta_H7_AsyncWebServer/1.5.0/Portenta_H7_AsyncWebServer-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Portenta_H7_AsyncWebServer-1.5.0.tar.gz",
+    "size_bytes": 471999,
+    "sha256": "1ebc622b225b95536ec938eb0294be1230cec6c154eb51f4c3e0d142d0cb6d4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Portenta_H7_AsyncWebServer/1.5.0/Portenta_H7_AsyncWebServer-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Portenta_H7_AsyncWebServer/1.5.0/Portenta_H7_AsyncWebServer-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Portenta_H7_ISR_Servo/1.0.0/Portenta_H7_ISR_Servo-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Portenta_H7_ISR_Servo-1.0.0.tar.gz",
+    "size_bytes": 402003,
+    "sha256": "3a9fcfa1825f5c171c6290c60fea6163af0029f1e05599da7fd51a75f23d9b4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Portenta_H7_ISR_Servo/1.0.0/Portenta_H7_ISR_Servo-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Portenta_H7_ISR_Servo/1.0.0/Portenta_H7_ISR_Servo-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Portenta_H7_PWM/2.1.0/Portenta_H7_PWM-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Portenta_H7_PWM-2.1.0.tar.gz",
+    "size_bytes": 29855,
+    "sha256": "89f64588226a2f33c87b1a8b29bee7956e3ffc76f306dd761bb980236e5bfe31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Portenta_H7_PWM/2.1.0/Portenta_H7_PWM-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Portenta_H7_PWM/2.1.0/Portenta_H7_PWM-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Portenta_H7_Slow_PWM/1.2.1/Portenta_H7_Slow_PWM-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Portenta_H7_Slow_PWM-1.2.1.tar.gz",
+    "size_bytes": 48739,
+    "sha256": "d6e91e38bb1c20228d56d1ab3cd6d49703f7704f4a4f0b268adfa3765aa69a19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Portenta_H7_Slow_PWM/1.2.1/Portenta_H7_Slow_PWM-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Portenta_H7_Slow_PWM/1.2.1/Portenta_H7_Slow_PWM-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Portenta_H7_TimerInterrupt/1.4.0/Portenta_H7_TimerInterrupt-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Portenta_H7_TimerInterrupt-1.4.0.tar.gz",
+    "size_bytes": 54271,
+    "sha256": "6bee5a2c93225b1793278257752ecd8197763082f7412637be0d907bc937ff53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Portenta_H7_TimerInterrupt/1.4.0/Portenta_H7_TimerInterrupt-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Portenta_H7_TimerInterrupt/1.4.0/Portenta_H7_TimerInterrupt-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/RP2040_ISR_Servo/1.1.2/RP2040_ISR_Servo-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RP2040_ISR_Servo-1.1.2.tar.gz",
+    "size_bytes": 18112,
+    "sha256": "c704737deb9902b0913a1102b66a12fd920626fc4bb95785f76c88383c27058a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/RP2040_ISR_Servo/1.1.2/RP2040_ISR_Servo-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/RP2040_ISR_Servo/1.1.2/RP2040_ISR_Servo-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/RP2040_PWM/1.7.0/RP2040_PWM-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RP2040_PWM-1.7.0.tar.gz",
+    "size_bytes": 106176,
+    "sha256": "405d5afeb75867349fcf94b28e64b4784e19ce6c69386d4fc9ad9730ad65f56a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/RP2040_PWM/1.7.0/RP2040_PWM-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/RP2040_PWM/1.7.0/RP2040_PWM-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/RP2040_RTC/1.1.1/RP2040_RTC-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RP2040_RTC-1.1.1.tar.gz",
+    "size_bytes": 98672,
+    "sha256": "ff15404e33a548ff8e884282d7a05c99388221c935cc8547e946de28acb3d0d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/RP2040_RTC/1.1.1/RP2040_RTC-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/RP2040_RTC/1.1.1/RP2040_RTC-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/RP2040_SD/1.0.1/RP2040_SD-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RP2040_SD-1.0.1.tar.gz",
+    "size_bytes": 52250,
+    "sha256": "bb28a3c579201ab9a0ccfd7e4b1ce45111354b326a0b0ce8f2333788a3a86ccf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/RP2040_SD/1.0.1/RP2040_SD-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/RP2040_SD/1.0.1/RP2040_SD-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/RP2040_Slow_PWM/1.2.1/RP2040_Slow_PWM-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RP2040_Slow_PWM-1.2.1.tar.gz",
+    "size_bytes": 25218,
+    "sha256": "0db661a955381c67277a8884ba1c3855fb529cd93cf0d28775d3536cc684f71e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/RP2040_Slow_PWM/1.2.1/RP2040_Slow_PWM-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/RP2040_Slow_PWM/1.2.1/RP2040_Slow_PWM-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/RPI_PICO_TimerInterrupt/1.3.1/RPI_PICO_TimerInterrupt-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RPI_PICO_TimerInterrupt-1.3.1.tar.gz",
+    "size_bytes": 33513,
+    "sha256": "940f8d451c7d3b1979cf87ba8a3559f984e3ef5c4a48985d013fa6924871f5c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/RPI_PICO_TimerInterrupt/1.3.1/RPI_PICO_TimerInterrupt-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/RPI_PICO_TimerInterrupt/1.3.1/RPI_PICO_TimerInterrupt-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/RTL8720_RTC/1.0.2/RTL8720_RTC-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTL8720_RTC-1.0.2.tar.gz",
+    "size_bytes": 15941,
+    "sha256": "0372b4f0fbd02433e690ed9c1dac565ade8088681b98155d0ed83b9f719e8b41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/RTL8720_RTC/1.0.2/RTL8720_RTC-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/RTL8720_RTC/1.0.2/RTL8720_RTC-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/RTL8720_TimerInterrupt/1.1.0/RTL8720_TimerInterrupt-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTL8720_TimerInterrupt-1.1.0.tar.gz",
+    "size_bytes": 667506,
+    "sha256": "b1c82ebf7e85cb32bc5ee39f967809280d7ac84d7c69ecb526074d360bd81a57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/RTL8720_TimerInterrupt/1.1.0/RTL8720_TimerInterrupt-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/RTL8720_TimerInterrupt/1.1.0/RTL8720_TimerInterrupt-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/React_Generic/2.1.0/React_Generic-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "React_Generic-2.1.0.tar.gz",
+    "size_bytes": 281980,
+    "sha256": "0ef9a352384ec50fec56f8b5593c305d48a3d67d8819ba8554461d007b874369",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/React_Generic/2.1.0/React_Generic-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/React_Generic/2.1.0/React_Generic-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/SAMDUE_PWM/1.0.1/SAMDUE_PWM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAMDUE_PWM-1.0.1.tar.gz",
+    "size_bytes": 21280,
+    "sha256": "dae33fc6d7a3a03228e0d41bc68b694ae7fc9e2c18f85ac62f6fe68847cf28f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/SAMDUE_PWM/1.0.1/SAMDUE_PWM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/SAMDUE_PWM/1.0.1/SAMDUE_PWM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/SAMDUE_Slow_PWM/1.2.2/SAMDUE_Slow_PWM-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAMDUE_Slow_PWM-1.2.2.tar.gz",
+    "size_bytes": 25210,
+    "sha256": "133702d4a8e1a9f4ffac07f7bae905f16945885da0456a271add033f3b9bf105",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/SAMDUE_Slow_PWM/1.2.2/SAMDUE_Slow_PWM-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/SAMDUE_Slow_PWM/1.2.2/SAMDUE_Slow_PWM-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/SAMDUE_TimerInterrupt/1.3.0/SAMDUE_TimerInterrupt-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAMDUE_TimerInterrupt-1.3.0.tar.gz",
+    "size_bytes": 100460,
+    "sha256": "c48ea9571c174932eaaf7b14bf58e502749fe82c3a2754e42b91265a7c18b191",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/SAMDUE_TimerInterrupt/1.3.0/SAMDUE_TimerInterrupt-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/SAMDUE_TimerInterrupt/1.3.0/SAMDUE_TimerInterrupt-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/SAMD_ISR_Servo/1.1.0/SAMD_ISR_Servo-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAMD_ISR_Servo-1.1.0.tar.gz",
+    "size_bytes": 72750,
+    "sha256": "c6f1e247929b0c1c1b0dbb5a10544d8975f26a2d258fc5139299f8bf316466ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/SAMD_ISR_Servo/1.1.0/SAMD_ISR_Servo-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/SAMD_ISR_Servo/1.1.0/SAMD_ISR_Servo-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/SAMD_PWM/1.2.0/SAMD_PWM-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAMD_PWM-1.2.0.tar.gz",
+    "size_bytes": 120349,
+    "sha256": "6e921bbd81dba6e4536f3f91987df7fd60979aba38318795e17e59ec368e6809",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/SAMD_PWM/1.2.0/SAMD_PWM-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/SAMD_PWM/1.2.0/SAMD_PWM-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/SAMD_Slow_PWM/1.2.3/SAMD_Slow_PWM-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAMD_Slow_PWM-1.2.3.tar.gz",
+    "size_bytes": 82982,
+    "sha256": "aa782b0cae8c46fa267bd0fe7914187fb358b0991f020543cef26f6916333904",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/SAMD_Slow_PWM/1.2.3/SAMD_Slow_PWM-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/SAMD_Slow_PWM/1.2.3/SAMD_Slow_PWM-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/SAMD_TimerInterrupt/1.10.1/SAMD_TimerInterrupt-1.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAMD_TimerInterrupt-1.10.1.tar.gz",
+    "size_bytes": 180948,
+    "sha256": "8bded66a28ba7cf66302532b99710707900fa00d6485167bbf0286fab199cd94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/SAMD_TimerInterrupt/1.10.1/SAMD_TimerInterrupt-1.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/SAMD_TimerInterrupt/1.10.1/SAMD_TimerInterrupt-1.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/STM32_ISR_Servo/1.1.0/STM32_ISR_Servo-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32_ISR_Servo-1.1.0.tar.gz",
+    "size_bytes": 49182,
+    "sha256": "871830da4ec6e13a9564c31d4c9d176cd3175f2375b874e9e4f33e565b2cde08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/STM32_ISR_Servo/1.1.0/STM32_ISR_Servo-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/STM32_ISR_Servo/1.1.0/STM32_ISR_Servo-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/STM32_PWM/1.0.1/STM32_PWM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32_PWM-1.0.1.tar.gz",
+    "size_bytes": 49596,
+    "sha256": "9fb0dd06bc8c3da12c6813295f5a9b753561a9b71ef58f25c37b6b3c799b77e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/STM32_PWM/1.0.1/STM32_PWM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/STM32_PWM/1.0.1/STM32_PWM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/STM32_Slow_PWM/1.2.3/STM32_Slow_PWM-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32_Slow_PWM-1.2.3.tar.gz",
+    "size_bytes": 55659,
+    "sha256": "05cadedd4e1b0d5b57a58eff330df1366908e935a1ebbb154be4dbc9d2e46995",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/STM32_Slow_PWM/1.2.3/STM32_Slow_PWM-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/STM32_Slow_PWM/1.2.3/STM32_Slow_PWM-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/STM32_TimerInterrupt/1.3.0/STM32_TimerInterrupt-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32_TimerInterrupt-1.3.0.tar.gz",
+    "size_bytes": 173907,
+    "sha256": "9f0ca3374286ede9ca2196e3b3b07b1d1bd1d87557ae72df0aa6e903f3a80c57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/STM32_TimerInterrupt/1.3.0/STM32_TimerInterrupt-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/STM32_TimerInterrupt/1.3.0/STM32_TimerInterrupt-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/SinricPro_Generic/2.8.5/SinricPro_Generic-2.8.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SinricPro_Generic-2.8.5.tar.gz",
+    "size_bytes": 7657843,
+    "sha256": "15fa230e02eabf8707616b250a9225007379fe796cf0c6a77ab86731ab1d9c51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/SinricPro_Generic/2.8.5/SinricPro_Generic-2.8.5.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/SinricPro_Generic/2.8.5/SinricPro_Generic-2.8.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/SmallProjects/1.0.2/SmallProjects-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmallProjects-1.0.2.tar.gz",
+    "size_bytes": 1388580,
+    "sha256": "931dced0a504e8ef8fbf1af51e5ebe42e03a3cb9e74d0096df1a6bd582f26d7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/SmallProjects/1.0.2/SmallProjects-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/SmallProjects/1.0.2/SmallProjects-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Teensy41_AsyncTCP/1.1.0/Teensy41_AsyncTCP-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Teensy41_AsyncTCP-1.1.0.tar.gz",
+    "size_bytes": 49237,
+    "sha256": "8f8f3bcf9130ad6503371312f6ef3a99ce008096381b0c4ef19b20bfec44b162",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Teensy41_AsyncTCP/1.1.0/Teensy41_AsyncTCP-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Teensy41_AsyncTCP/1.1.0/Teensy41_AsyncTCP-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Teensy_PWM/1.1.1/Teensy_PWM-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Teensy_PWM-1.1.1.tar.gz",
+    "size_bytes": 35184,
+    "sha256": "2491b2255fe8fbe69db5eb38b732a2812bb277c68b5d1736b8247ea398016ab7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Teensy_PWM/1.1.1/Teensy_PWM-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Teensy_PWM/1.1.1/Teensy_PWM-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Teensy_Slow_PWM/1.2.1/Teensy_Slow_PWM-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Teensy_Slow_PWM-1.2.1.tar.gz",
+    "size_bytes": 39285,
+    "sha256": "8f9679eb3c20581a046bd9ab3cd154e66198ba8a4b53307447d92f48f1a449c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Teensy_Slow_PWM/1.2.1/Teensy_Slow_PWM-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Teensy_Slow_PWM/1.2.1/Teensy_Slow_PWM-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Teensy_TimerInterrupt/1.3.0/Teensy_TimerInterrupt-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Teensy_TimerInterrupt-1.3.0.tar.gz",
+    "size_bytes": 45046,
+    "sha256": "0f54399ad8cc44164bb6fda7131999ae525e92cc6d7f548b8b4fd419c8492667",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Teensy_TimerInterrupt/1.3.0/Teensy_TimerInterrupt-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Teensy_TimerInterrupt/1.3.0/Teensy_TimerInterrupt-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/TimerInterrupt/1.8.0/TimerInterrupt-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerInterrupt-1.8.0.tar.gz",
+    "size_bytes": 37724,
+    "sha256": "22b21c0b7b5b89ddc38cc98e2fead0988a059260e0d9ac73af55df8896affdea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/TimerInterrupt/1.8.0/TimerInterrupt-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/TimerInterrupt/1.8.0/TimerInterrupt-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/TimerInterrupt_Generic/1.13.0/TimerInterrupt_Generic-1.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerInterrupt_Generic-1.13.0.tar.gz",
+    "size_bytes": 580633,
+    "sha256": "3fc706494313167fe0675054fa7f209a2532cc34b8bd5d81742fb186f441ac44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/TimerInterrupt_Generic/1.13.0/TimerInterrupt_Generic-1.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/TimerInterrupt_Generic/1.13.0/TimerInterrupt_Generic-1.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/Timezone_Generic/1.10.1/Timezone_Generic-1.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timezone_Generic-1.10.1.tar.gz",
+    "size_bytes": 475966,
+    "sha256": "2e981a1e47a0ea8f7c5609282cb4de711dec91d546999ee6f66ee002b76f8ad1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/Timezone_Generic/1.10.1/Timezone_Generic-1.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/Timezone_Generic/1.10.1/Timezone_Generic-1.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/UPnP_Generic/3.5.0/UPnP_Generic-3.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UPnP_Generic-3.5.0.tar.gz",
+    "size_bytes": 934508,
+    "sha256": "41a5f97810d3f937ffae96386f95e8da91c4696247b94f09278ece7cb3c9df96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/UPnP_Generic/3.5.0/UPnP_Generic-3.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/UPnP_Generic/3.5.0/UPnP_Generic-3.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WIOTerminal_WiFiManager/1.2.1/WIOTerminal_WiFiManager-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WIOTerminal_WiFiManager-1.2.1.tar.gz",
+    "size_bytes": 373622,
+    "sha256": "190c5625fe56e2b78ae88ccbecb676acba1854eb2cfb69c1dc06399ab5292d41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WIOTerminal_WiFiManager/1.2.1/WIOTerminal_WiFiManager-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WIOTerminal_WiFiManager/1.2.1/WIOTerminal_WiFiManager-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WebServer_ESP32_ENC/1.5.3/WebServer_ESP32_ENC-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebServer_ESP32_ENC-1.5.3.tar.gz",
+    "size_bytes": 222524,
+    "sha256": "1d7310320a85e12c1b0574f7986b9ff4f63c4b31d9790418d5a26cc63a2933b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WebServer_ESP32_ENC/1.5.3/WebServer_ESP32_ENC-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WebServer_ESP32_ENC/1.5.3/WebServer_ESP32_ENC-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WebServer_ESP32_SC_ENC/1.2.1/WebServer_ESP32_SC_ENC-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebServer_ESP32_SC_ENC-1.2.1.tar.gz",
+    "size_bytes": 1135308,
+    "sha256": "31e3d54699907e1415bb4009c615e1232cba668686e934f4d3aed99eeeeeb321",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WebServer_ESP32_SC_ENC/1.2.1/WebServer_ESP32_SC_ENC-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WebServer_ESP32_SC_ENC/1.2.1/WebServer_ESP32_SC_ENC-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WebServer_ESP32_SC_W5500/1.2.1/WebServer_ESP32_SC_W5500-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebServer_ESP32_SC_W5500-1.2.1.tar.gz",
+    "size_bytes": 1302465,
+    "sha256": "ec696d36b81b238f1be8af3c4202721fc70d70c7533d6370820e2cd034670ef2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WebServer_ESP32_SC_W5500/1.2.1/WebServer_ESP32_SC_W5500-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WebServer_ESP32_SC_W5500/1.2.1/WebServer_ESP32_SC_W5500-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WebServer_ESP32_SC_W6100/1.2.1/WebServer_ESP32_SC_W6100-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebServer_ESP32_SC_W6100-1.2.1.tar.gz",
+    "size_bytes": 1101215,
+    "sha256": "60c307ac51d56ec9c88f43505ebc65463aed04d8a00dcd9f68f21a2a6bc3d4f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WebServer_ESP32_SC_W6100/1.2.1/WebServer_ESP32_SC_W6100-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WebServer_ESP32_SC_W6100/1.2.1/WebServer_ESP32_SC_W6100-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WebServer_ESP32_W5500/1.5.3/WebServer_ESP32_W5500-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebServer_ESP32_W5500-1.5.3.tar.gz",
+    "size_bytes": 388173,
+    "sha256": "836afcaed48359758d6c780d538c6f0527ff6dfd749e05d725d905b5827a7b8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WebServer_ESP32_W5500/1.5.3/WebServer_ESP32_W5500-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WebServer_ESP32_W5500/1.5.3/WebServer_ESP32_W5500-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WebServer_ESP32_W6100/1.5.3/WebServer_ESP32_W6100-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebServer_ESP32_W6100-1.5.3.tar.gz",
+    "size_bytes": 192444,
+    "sha256": "64acc8454fa8871ceb3728a385b7539e8f6715b638097f144e5a08c727c6789c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WebServer_ESP32_W6100/1.5.3/WebServer_ESP32_W6100-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WebServer_ESP32_W6100/1.5.3/WebServer_ESP32_W6100-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WebServer_WT32_ETH01/1.5.1/WebServer_WT32_ETH01-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebServer_WT32_ETH01-1.5.1.tar.gz",
+    "size_bytes": 239325,
+    "sha256": "771a6fe61aca4950b674cc9cdda94c657e0aef53dd5de67d9ce0f09f21bf1c28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WebServer_WT32_ETH01/1.5.1/WebServer_WT32_ETH01-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WebServer_WT32_ETH01/1.5.1/WebServer_WT32_ETH01-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WebSockets2_Generic/1.13.2/WebSockets2_Generic-1.13.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSockets2_Generic-1.13.2.tar.gz",
+    "size_bytes": 2818419,
+    "sha256": "8b367401e3df541df2035a7eefe5bd500e7861bf0c6cd7b1085985fdd9e5c762",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WebSockets2_Generic/1.13.2/WebSockets2_Generic-1.13.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WebSockets2_Generic/1.13.2/WebSockets2_Generic-1.13.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WebSockets_Generic/2.16.1/WebSockets_Generic-2.16.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSockets_Generic-2.16.1.tar.gz",
+    "size_bytes": 665394,
+    "sha256": "74ecc01a61e9dd737e50e163b8bbaf172c117af01644803f25cf3d6cb1f95884",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WebSockets_Generic/2.16.1/WebSockets_Generic-2.16.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WebSockets_Generic/2.16.1/WebSockets_Generic-2.16.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WiFi101_Generic/1.0.0/WiFi101_Generic-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFi101_Generic-1.0.0.tar.gz",
+    "size_bytes": 230078,
+    "sha256": "cac9a7bc100f8404f85471fb718f1dd52ed85c227f9a79ed3b0dac871e03ea40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WiFi101_Generic/1.0.0/WiFi101_Generic-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WiFi101_Generic/1.0.0/WiFi101_Generic-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WiFiManager_Generic_Lite/1.8.0/WiFiManager_Generic_Lite-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiManager_Generic_Lite-1.8.0.tar.gz",
+    "size_bytes": 6375387,
+    "sha256": "f4f78991af22e04a56e71b16bfe5433e8cba90c4a692f487399c99aeef20de93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WiFiManager_Generic_Lite/1.8.0/WiFiManager_Generic_Lite-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WiFiManager_Generic_Lite/1.8.0/WiFiManager_Generic_Lite-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WiFiManager_NINA_Lite/1.7.1/WiFiManager_NINA_Lite-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiManager_NINA_Lite-1.7.1.tar.gz",
+    "size_bytes": 6341079,
+    "sha256": "2bd69f2bc8ad51e992c48b253883b38d6886efe75f717862f3696ecaf2a46069",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WiFiManager_NINA_Lite/1.7.1/WiFiManager_NINA_Lite-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WiFiManager_NINA_Lite/1.7.1/WiFiManager_NINA_Lite-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WiFiManager_Portenta_H7_Lite/1.6.0/WiFiManager_Portenta_H7_Lite-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiManager_Portenta_H7_Lite-1.6.0.tar.gz",
+    "size_bytes": 277707,
+    "sha256": "3abeef12071bfc5b3f1127d5f0ffb8a700722981c4e57e08f25914eaa9a88b7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WiFiManager_Portenta_H7_Lite/1.6.0/WiFiManager_Portenta_H7_Lite-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WiFiManager_Portenta_H7_Lite/1.6.0/WiFiManager_Portenta_H7_Lite-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WiFiManager_RP2040W/1.0.0/WiFiManager_RP2040W-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiManager_RP2040W-1.0.0.tar.gz",
+    "size_bytes": 202255,
+    "sha256": "12c2538cf87c77eddfb52c50d1d70afc9ab280466fde49a1a20298a86825dafb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WiFiManager_RP2040W/1.0.0/WiFiManager_RP2040W-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WiFiManager_RP2040W/1.0.0/WiFiManager_RP2040W-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WiFiManager_RP2040W_Lite/1.6.0/WiFiManager_RP2040W_Lite-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiManager_RP2040W_Lite-1.6.0.tar.gz",
+    "size_bytes": 443223,
+    "sha256": "dff418f761cac1eaba16fa1c4d9cdeb424a9f587ddf7fabca1b87129a381194d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WiFiManager_RP2040W_Lite/1.6.0/WiFiManager_RP2040W_Lite-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WiFiManager_RP2040W_Lite/1.6.0/WiFiManager_RP2040W_Lite-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WiFiManager_RTL8720/1.2.0/WiFiManager_RTL8720-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiManager_RTL8720-1.2.0.tar.gz",
+    "size_bytes": 213880,
+    "sha256": "1bfc4dc22cfe672309e68705887dfbc331cf7e7e898cf03f1d9d386e65e66312",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WiFiManager_RTL8720/1.2.0/WiFiManager_RTL8720-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WiFiManager_RTL8720/1.2.0/WiFiManager_RTL8720-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WiFiMulti_Generic/1.2.2/WiFiMulti_Generic-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiMulti_Generic-1.2.2.tar.gz",
+    "size_bytes": 356292,
+    "sha256": "050d2f9eff6b1fe94a00c3a7ad68c0c374d4ec4ab4e4c4e99c00828abc91540f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WiFiMulti_Generic/1.2.2/WiFiMulti_Generic-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WiFiMulti_Generic/1.2.2/WiFiMulti_Generic-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WiFiNINA_Generic/1.8.15-1/WiFiNINA_Generic-1.8.15-1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiNINA_Generic-1.8.15-1.tar.gz",
+    "size_bytes": 1093832,
+    "sha256": "154c2648c1c1f4d2d33fa68519360c60f3e3390f641a7bb037aa24d0b98afa7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WiFiNINA_Generic/1.8.15-1/WiFiNINA_Generic-1.8.15-1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WiFiNINA_Generic/1.8.15-1/WiFiNINA_Generic-1.8.15-1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WiFiWebServer/1.10.1/WiFiWebServer-1.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiWebServer-1.10.1.tar.gz",
+    "size_bytes": 712916,
+    "sha256": "acb505ad14d8330166f2863dab68a78074cfc432bc63f70bbb83e900ba5bdce6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WiFiWebServer/1.10.1/WiFiWebServer-1.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WiFiWebServer/1.10.1/WiFiWebServer-1.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/WiFiWebServer_RTL8720/1.1.2/WiFiWebServer_RTL8720-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiWebServer_RTL8720-1.1.2.tar.gz",
+    "size_bytes": 733554,
+    "sha256": "3f659471e760f4b62ba1ced470a6a0bf1846676a36460a033ec8f0be85b3c972",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/WiFiWebServer_RTL8720/1.1.2/WiFiWebServer_RTL8720-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/WiFiWebServer_RTL8720/1.1.2/WiFiWebServer_RTL8720-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/megaAVR_PWM/1.0.1/megaAVR_PWM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "megaAVR_PWM-1.0.1.tar.gz",
+    "size_bytes": 19875,
+    "sha256": "7aeeb1f7a7514b7d346c3fab956ca89f73ee7a7ed4ce0b6245336e222d1e3d0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/megaAVR_PWM/1.0.1/megaAVR_PWM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/megaAVR_PWM/1.0.1/megaAVR_PWM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/megaAVR_Slow_PWM/1.2.1/megaAVR_Slow_PWM-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "megaAVR_Slow_PWM-1.2.1.tar.gz",
+    "size_bytes": 26841,
+    "sha256": "d846541d8d1402b2976a8c73988132811e4b287d3392bb5db140b395ae19ddee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/megaAVR_Slow_PWM/1.2.1/megaAVR_Slow_PWM-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/megaAVR_Slow_PWM/1.2.1/megaAVR_Slow_PWM-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/megaAVR_TimerInterrupt/1.7.0/megaAVR_TimerInterrupt-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "megaAVR_TimerInterrupt-1.7.0.tar.gz",
+    "size_bytes": 34372,
+    "sha256": "73c59be8f94c7a4746585024b4afbe511baea08e2536c37f79b86d6ba4875ce6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/megaAVR_TimerInterrupt/1.7.0/megaAVR_TimerInterrupt-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/megaAVR_TimerInterrupt/1.7.0/megaAVR_TimerInterrupt-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/nRF52_MBED_PWM/1.0.3/nRF52_MBED_PWM-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF52_MBED_PWM-1.0.3.tar.gz",
+    "size_bytes": 17066,
+    "sha256": "fb953b8cbbd793501d9cb0fa955ac5206a7c7e55e3c449be9439afcbdbfce2a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/nRF52_MBED_PWM/1.0.3/nRF52_MBED_PWM-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/nRF52_MBED_PWM/1.0.3/nRF52_MBED_PWM-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/nRF52_MBED_Slow_PWM/1.2.2/nRF52_MBED_Slow_PWM-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF52_MBED_Slow_PWM-1.2.2.tar.gz",
+    "size_bytes": 27977,
+    "sha256": "926f5c9393b2ab7c4feef81dc9ac3be7a037e19246e756640a0b2e77519cc25f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/nRF52_MBED_Slow_PWM/1.2.2/nRF52_MBED_Slow_PWM-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/nRF52_MBED_Slow_PWM/1.2.2/nRF52_MBED_Slow_PWM-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/nRF52_PWM/1.0.1/nRF52_PWM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF52_PWM-1.0.1.tar.gz",
+    "size_bytes": 86646,
+    "sha256": "ad12a53f12290ca149ac4ede03afa10e7f65f32840c0249e3ac1987268536fb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/nRF52_PWM/1.0.1/nRF52_PWM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/nRF52_PWM/1.0.1/nRF52_PWM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "khoih-prog/library/nRF52_Slow_PWM/1.2.2/nRF52_Slow_PWM-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF52_Slow_PWM-1.2.2.tar.gz",
+    "size_bytes": 195741,
+    "sha256": "2ef11a9925b597f6ac4d2de7d44199a607ae80e9947ba7ba629e0b4a6ddea615",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khoih-prog/library/nRF52_Slow_PWM/1.2.2/nRF52_Slow_PWM-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/khoih-prog/library/nRF52_Slow_PWM/1.2.2/nRF52_Slow_PWM-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

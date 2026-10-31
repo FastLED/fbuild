@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/frankjoshua",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "frankjoshua/library/Rosserial%20Arduino%20Library/0.9.1/RosserialArduinoLibrary-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RosserialArduinoLibrary-0.9.1.tar.gz",
+    "size_bytes": 140432,
+    "sha256": "367c75e65b914c55bd6a56d8005d330de644f38e295a61014abbd9512767489f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/frankjoshua/library/Rosserial%2520Arduino%2520Library/0.9.1/RosserialArduinoLibrary-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/frankjoshua/library/Rosserial%20Arduino%20Library/0.9.1/RosserialArduinoLibrary-0.9.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

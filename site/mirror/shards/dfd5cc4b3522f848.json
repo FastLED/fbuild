@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ldsc-robotics-tas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ldsc-robotics-tas/library/CURRENT_CONTROL/0.0.0+sha.1a6ba05e7736/CURRENT_CONTROL-0.0.0+sha.1a6ba05e7736.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CURRENT_CONTROL-0.0.0+sha.1a6ba05e7736.tar.gz",
+    "size_bytes": 1948,
+    "sha256": "a8ef41e19e2a845090be5d04bfaccdcb6331de211dd00c5df90b7efba455f8b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ldsc-robotics-tas/library/CURRENT_CONTROL/0.0.0%2Bsha.1a6ba05e7736/CURRENT_CONTROL-0.0.0%2Bsha.1a6ba05e7736.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ldsc-robotics-tas/library/CURRENT_CONTROL/0.0.0%2Bsha.1a6ba05e7736/CURRENT_CONTROL-0.0.0%2Bsha.1a6ba05e7736.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ldsc-robotics-tas/library/IIR/0.0.0+sha.7191d27f4855/IIR-0.0.0+sha.7191d27f4855.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IIR-0.0.0+sha.7191d27f4855.tar.gz",
+    "size_bytes": 1844,
+    "sha256": "64f742b06c91566db1147eaa1e7d46e6319b63584734d7ca091f54b457ba5409",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ldsc-robotics-tas/library/IIR/0.0.0%2Bsha.7191d27f4855/IIR-0.0.0%2Bsha.7191d27f4855.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ldsc-robotics-tas/library/IIR/0.0.0%2Bsha.7191d27f4855/IIR-0.0.0%2Bsha.7191d27f4855.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ldsc-robotics-tas/library/LSM6DS3/0.0.0+sha.d5307f077753/LSM6DS3-0.0.0+sha.d5307f077753.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM6DS3-0.0.0+sha.d5307f077753.tar.gz",
+    "size_bytes": 13170,
+    "sha256": "a04b56f1cc5c77a1a219fda192337730b5c94ef1f179aee8851db49bdebbf415",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ldsc-robotics-tas/library/LSM6DS3/0.0.0%2Bsha.d5307f077753/LSM6DS3-0.0.0%2Bsha.d5307f077753.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ldsc-robotics-tas/library/LSM6DS3/0.0.0%2Bsha.d5307f077753/LSM6DS3-0.0.0%2Bsha.d5307f077753.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ldsc-robotics-tas/library/LSM6DS3_20160225/0.0.0+sha.3bc3507470bd/LSM6DS3_20160225-0.0.0+sha.3bc3507470bd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM6DS3_20160225-0.0.0+sha.3bc3507470bd.tar.gz",
+    "size_bytes": 13230,
+    "sha256": "30e1328df213ec7c5dbf7e40f7722e23e15d557e83e403e8d41e436a31b39c45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ldsc-robotics-tas/library/LSM6DS3_20160225/0.0.0%2Bsha.3bc3507470bd/LSM6DS3_20160225-0.0.0%2Bsha.3bc3507470bd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ldsc-robotics-tas/library/LSM6DS3_20160225/0.0.0%2Bsha.3bc3507470bd/LSM6DS3_20160225-0.0.0%2Bsha.3bc3507470bd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ldsc-robotics-tas/library/LSM9DS0/0.0.0+sha.5b28bc7fd9ba/LSM9DS0-0.0.0+sha.5b28bc7fd9ba.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM9DS0-0.0.0+sha.5b28bc7fd9ba.tar.gz",
+    "size_bytes": 14921,
+    "sha256": "8583d9433f874ae13804817d0c29c71583ba22aaceaf1be54eace5cd5b76b442",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ldsc-robotics-tas/library/LSM9DS0/0.0.0%2Bsha.5b28bc7fd9ba/LSM9DS0-0.0.0%2Bsha.5b28bc7fd9ba.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ldsc-robotics-tas/library/LSM9DS0/0.0.0%2Bsha.5b28bc7fd9ba/LSM9DS0-0.0.0%2Bsha.5b28bc7fd9ba.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ldsc-robotics-tas/library/MEDIAN_FILTER/0.0.0+sha.a46f56a22432/MEDIAN_FILTER-0.0.0+sha.a46f56a22432.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MEDIAN_FILTER-0.0.0+sha.a46f56a22432.tar.gz",
+    "size_bytes": 1078,
+    "sha256": "2cfb0aba9c72a044f422e879ade3ae575cdad66ad49d55d37ecd7edcc5b99782",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ldsc-robotics-tas/library/MEDIAN_FILTER/0.0.0%2Bsha.a46f56a22432/MEDIAN_FILTER-0.0.0%2Bsha.a46f56a22432.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ldsc-robotics-tas/library/MEDIAN_FILTER/0.0.0%2Bsha.a46f56a22432/MEDIAN_FILTER-0.0.0%2Bsha.a46f56a22432.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ldsc-robotics-tas/library/RF24/0.0.0+sha.6827b6f0283b/RF24-0.0.0+sha.6827b6f0283b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF24-0.0.0+sha.6827b6f0283b.tar.gz",
+    "size_bytes": 29308,
+    "sha256": "45c9f52178c47dfaf5edb89bbf46495822f7a7482aebe2146f2230c7c60a9076",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ldsc-robotics-tas/library/RF24/0.0.0%2Bsha.6827b6f0283b/RF24-0.0.0%2Bsha.6827b6f0283b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ldsc-robotics-tas/library/RF24/0.0.0%2Bsha.6827b6f0283b/RF24-0.0.0%2Bsha.6827b6f0283b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ldsc-robotics-tas/library/SENSOR_FUSION/0.0.0+sha.e493567c21ac/SENSOR_FUSION-0.0.0+sha.e493567c21ac.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SENSOR_FUSION-0.0.0+sha.e493567c21ac.tar.gz",
+    "size_bytes": 1514,
+    "sha256": "31b20938a174888fd795749056fa90b2a3762815345f6c3d850458ec0287d84a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ldsc-robotics-tas/library/SENSOR_FUSION/0.0.0%2Bsha.e493567c21ac/SENSOR_FUSION-0.0.0%2Bsha.e493567c21ac.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ldsc-robotics-tas/library/SENSOR_FUSION/0.0.0%2Bsha.e493567c21ac/SENSOR_FUSION-0.0.0%2Bsha.e493567c21ac.tar.gz"
+    ]
+   }
+  }
+ ]
+}

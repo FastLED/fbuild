@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/orkungedik",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "orkungedik/library/kMeans/1.1.3/kMeans-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kMeans-1.1.3.tar.gz",
+    "size_bytes": 17148,
+    "sha256": "af0b74909ca4e2d950d183b22f2c0c56096dd872312b2db95e223fb4c339b059",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/orkungedik/library/kMeans/1.1.3/kMeans-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/orkungedik/library/kMeans/1.1.3/kMeans-1.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rfexplorer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rfexplorer/library/RFExplorer%203GP%20IoT/1.0.1806/RFExplorer3GPIoT-1.0.1806.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFExplorer3GPIoT-1.0.1806.tar.gz",
+    "size_bytes": 16089,
+    "sha256": "50e0262d111c7206d5bfc96beb6ffd033ba5f29822547bcc807b52d40f56132c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rfexplorer/library/RFExplorer%25203GP%2520IoT/1.0.1806/RFExplorer3GPIoT-1.0.1806.tar.gz",
+     "https://dl.registry.platformio.org/download/rfexplorer/library/RFExplorer%203GP%20IoT/1.0.1806/RFExplorer3GPIoT-1.0.1806.tar.gz"
+    ]
+   }
+  }
+ ]
+}

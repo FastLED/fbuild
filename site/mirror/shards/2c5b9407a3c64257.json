@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/offcircuit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "offcircuit/library/Batflow/1.0/Batflow-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Batflow-1.0.tar.gz",
+    "size_bytes": 13626,
+    "sha256": "715ba017223799cd45d227cbd25bf475ce364bddf0c565391f88930c511b97f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/offcircuit/library/Batflow/1.0/Batflow-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/offcircuit/library/Batflow/1.0/Batflow-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "offcircuit/library/Charset/2.0.1/Charset-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Charset-2.0.1.tar.gz",
+    "size_bytes": 15293,
+    "sha256": "4b30364bf34cab0e81adde91b7298e3b838bae6f9b3218f855cb71e2a7f18e75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/offcircuit/library/Charset/2.0.1/Charset-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/offcircuit/library/Charset/2.0.1/Charset-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "offcircuit/library/DTime/1.0.0/DTime-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTime-1.0.0.tar.gz",
+    "size_bytes": 14499,
+    "sha256": "09cfa269046aeebda0ca07de6904a865bc63f2207dda1b4fa6b52069de29175a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/offcircuit/library/DTime/1.0.0/DTime-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/offcircuit/library/DTime/1.0.0/DTime-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "offcircuit/library/GPS/1.0.1/GPS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPS-1.0.1.tar.gz",
+    "size_bytes": 14612,
+    "sha256": "ccfa90143804598b6a585bdb6e378703c94b3aef8db62c0ee74d9a2d5fc2e3c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/offcircuit/library/GPS/1.0.1/GPS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/offcircuit/library/GPS/1.0.1/GPS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "offcircuit/library/LCDIC2/2.3.3/LCDIC2-2.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCDIC2-2.3.3.tar.gz",
+    "size_bytes": 14932,
+    "sha256": "bfc65b725e8fdd1009148b65762a45e8481b2718ef4d8ca01d42f7369e93739b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/offcircuit/library/LCDIC2/2.3.3/LCDIC2-2.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/offcircuit/library/LCDIC2/2.3.3/LCDIC2-2.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "offcircuit/library/Morse/1.0.0/Morse-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Morse-1.0.0.tar.gz",
+    "size_bytes": 15091,
+    "sha256": "184c0ab85438591fc0bf35a663ea05141af060b8bf5c04360534ed0c67c24127",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/offcircuit/library/Morse/1.0.0/Morse-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/offcircuit/library/Morse/1.0.0/Morse-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "offcircuit/library/Nextion/2.0.2/Nextion-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nextion-2.0.2.tar.gz",
+    "size_bytes": 193884,
+    "sha256": "913d3bbc8d919a6a04e22938761b479e8e3b293eacd02d32618511f7722e8834",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/offcircuit/library/Nextion/2.0.2/Nextion-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/offcircuit/library/Nextion/2.0.2/Nextion-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "offcircuit/library/RTCDS1307/1.0.0/RTCDS1307-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTCDS1307-1.0.0.tar.gz",
+    "size_bytes": 14745,
+    "sha256": "8e948e0d7299e602dfe5e8c439d5665ab98599e0e0eff3a13617bc809c80198c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/offcircuit/library/RTCDS1307/1.0.0/RTCDS1307-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/offcircuit/library/RTCDS1307/1.0.0/RTCDS1307-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "offcircuit/library/SDHT/2.0.0/SDHT-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDHT-2.0.0.tar.gz",
+    "size_bytes": 13818,
+    "sha256": "31ef4a4cd5a694c03f91b28be285cbc4093da37f2920590d42555f5a5d725744",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/offcircuit/library/SDHT/2.0.0/SDHT-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/offcircuit/library/SDHT/2.0.0/SDHT-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "offcircuit/library/SHCSR04/2.0.1/SHCSR04-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHCSR04-2.0.1.tar.gz",
+    "size_bytes": 13330,
+    "sha256": "5b850ab8d4a8a26481885570687a67e2c5c369024ff46c52d0cd5a3953e9d440",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/offcircuit/library/SHCSR04/2.0.1/SHCSR04-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/offcircuit/library/SHCSR04/2.0.1/SHCSR04-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hmz06967",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hmz06967/library/OZGPS_NMEA/1.0.0/OZGPS_NMEA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OZGPS_NMEA-1.0.0.tar.gz",
+    "size_bytes": 21070,
+    "sha256": "aabd0df6c13045f0f6489d91ff5622e136082a6abb5ad77136887015abe7cf79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hmz06967/library/OZGPS_NMEA/1.0.0/OZGPS_NMEA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hmz06967/library/OZGPS_NMEA/1.0.0/OZGPS_NMEA-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hmz06967/library/OzkLed/1.0.0/OzkLed-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OzkLed-1.0.0.tar.gz",
+    "size_bytes": 17458,
+    "sha256": "03b2426df11e555efb90ab009d4d5cc8dc288a44d0fd039071d850215456bd54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hmz06967/library/OzkLed/1.0.0/OzkLed-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hmz06967/library/OzkLed/1.0.0/OzkLed-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hmz06967/library/SPI-FlashMem/1.0.0/SPI-FlashMem-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI-FlashMem-1.0.0.tar.gz",
+    "size_bytes": 14856,
+    "sha256": "52779fcfea622488fb6754e4476e335f3878d36bae6f183d0b5a675ada116311",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hmz06967/library/SPI-FlashMem/1.0.0/SPI-FlashMem-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hmz06967/library/SPI-FlashMem/1.0.0/SPI-FlashMem-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hmz06967/library/esp32-rf-tuner/1.0.0/esp32-rf-tuner-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-rf-tuner-1.0.0.tar.gz",
+    "size_bytes": 20147,
+    "sha256": "7040f10ad5e57c92e72398ce8ddfb864d5a981622c216f22557b0716720464c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hmz06967/library/esp32-rf-tuner/1.0.0/esp32-rf-tuner-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hmz06967/library/esp32-rf-tuner/1.0.0/esp32-rf-tuner-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/volty98",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "volty98/library/GP2Y0A21YK_lib/1.0.1/GP2Y0A21YK_lib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GP2Y0A21YK_lib-1.0.1.tar.gz",
+    "size_bytes": 2939,
+    "sha256": "494d23a33abdaacc46506381ac296af66bea55d4beba9af2297f0b025435f339",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/volty98/library/GP2Y0A21YK_lib/1.0.1/GP2Y0A21YK_lib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/volty98/library/GP2Y0A21YK_lib/1.0.1/GP2Y0A21YK_lib-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

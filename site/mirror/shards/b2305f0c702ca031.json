@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ayatec-europe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ayatec-europe/library/AyatecSensoraya2.x/0.0.2/ayatec_sensoraya_2_demo-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ayatec_sensoraya_2_demo-0.0.2.tar.gz",
+    "size_bytes": 5014,
+    "sha256": "704efa6b97daf1319dc853d7876f48ef3431ac02f7a13582730268276278e05e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayatec-europe/library/AyatecSensoraya2.x/0.0.2/ayatec_sensoraya_2_demo-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ayatec-europe/library/AyatecSensoraya2.x/0.0.2/ayatec_sensoraya_2_demo-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayatec-europe/library/AyatecSensoraya2.x/0.0.4/AyatecSensoraya2.x-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AyatecSensoraya2.x-0.0.4.tar.gz",
+    "size_bytes": 9896,
+    "sha256": "8f9ea65ef980e2c5f7f9ef354346e5df7ca2aec1a4dbd9c861ff983fac0df5aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayatec-europe/library/AyatecSensoraya2.x/0.0.4/AyatecSensoraya2.x-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ayatec-europe/library/AyatecSensoraya2.x/0.0.4/AyatecSensoraya2.x-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

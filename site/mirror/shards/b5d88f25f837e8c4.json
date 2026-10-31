@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-edamame22",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-edamame22/library/BSP_DISCO_F746NG/0.0.0+sha.286943c42d38/BSP_DISCO_F746NG-0.0.0+sha.286943c42d38.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSP_DISCO_F746NG-0.0.0+sha.286943c42d38.tar.gz",
+    "size_bytes": 90036,
+    "sha256": "f0e2ab51c333074e958e5ecb2b51dbaada709925c7fab4e3c0f0e609d31a5a34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-edamame22/library/BSP_DISCO_F746NG/0.0.0%2Bsha.286943c42d38/BSP_DISCO_F746NG-0.0.0%2Bsha.286943c42d38.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-edamame22/library/BSP_DISCO_F746NG/0.0.0%2Bsha.286943c42d38/BSP_DISCO_F746NG-0.0.0%2Bsha.286943c42d38.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-edamame22/library/MiCS6814_GasSensor/0.0.0+sha.a15eee9bb0e6/MiCS6814_GasSensor-0.0.0+sha.a15eee9bb0e6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiCS6814_GasSensor-0.0.0+sha.a15eee9bb0e6.tar.gz",
+    "size_bytes": 8651,
+    "sha256": "353607365abccd050b3d6c3a8dd2b71a4466176e7e662a64963726d579a2c6e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-edamame22/library/MiCS6814_GasSensor/0.0.0%2Bsha.a15eee9bb0e6/MiCS6814_GasSensor-0.0.0%2Bsha.a15eee9bb0e6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-edamame22/library/MiCS6814_GasSensor/0.0.0%2Bsha.a15eee9bb0e6/MiCS6814_GasSensor-0.0.0%2Bsha.a15eee9bb0e6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

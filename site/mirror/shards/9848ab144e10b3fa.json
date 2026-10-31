@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/trazfr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "trazfr/library/Teleinfo/0.0.1/Teleinfo-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Teleinfo-0.0.1.tar.gz",
+    "size_bytes": 4307,
+    "sha256": "c9490b48310d3b2a1218cf1655d088dc5eb2f76bb640c37fae7285e8b1ae4b13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/trazfr/library/Teleinfo/0.0.1/Teleinfo-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/trazfr/library/Teleinfo/0.0.1/Teleinfo-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

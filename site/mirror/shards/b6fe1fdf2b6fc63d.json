@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/blutter",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "blutter/library/FreeRTOS%20for%20WCH%20RISC-V/0.0.1/FreeRTOSforWCHRISC-V-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreeRTOSforWCHRISC-V-0.0.1.tar.gz",
+    "size_bytes": 220531,
+    "sha256": "8964aeecda12267194dcd72b209f592aa8e7741a561ad162148986122f108eed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blutter/library/FreeRTOS%2520for%2520WCH%2520RISC-V/0.0.1/FreeRTOSforWCHRISC-V-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/blutter/library/FreeRTOS%20for%20WCH%20RISC-V/0.0.1/FreeRTOSforWCHRISC-V-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blutter/library/STM32duino%20TencentOS/1.0.0/STM32duinoTencentOS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32duinoTencentOS-1.0.0.tar.gz",
+    "size_bytes": 437439,
+    "sha256": "92f5242c8d91ec56b8d77ae53254634faaedc0ceb55b9eeca7d7d173633159be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blutter/library/STM32duino%2520TencentOS/1.0.0/STM32duinoTencentOS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blutter/library/STM32duino%20TencentOS/1.0.0/STM32duinoTencentOS-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

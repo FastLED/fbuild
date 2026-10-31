@@ -1,0 +1,243 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pooria-nek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pooria-nek/library/4R/0.2.0/4R-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "4R-0.2.0.tar.gz",
+    "size_bytes": 11759,
+    "sha256": "2851d6d14bf6164fec445c4f04929017a188ba3f408d18f749e8f0370cac6309",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/4R/0.2.0/4R-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/4R/0.2.0/4R-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/BusproCore/0.1.6/BusproCore-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BusproCore-0.1.6.tar.gz",
+    "size_bytes": 22809,
+    "sha256": "38c9f5ac2388882e0e75479d8e45895d0cedfc6c9f6bba4022e63d2d0f869c51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/BusproCore/0.1.6/BusproCore-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/BusproCore/0.1.6/BusproCore-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/BusproCore/0.1.7/BusproCore-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BusproCore-0.1.7.tar.gz",
+    "size_bytes": 23011,
+    "sha256": "ca8eee10e45ca226f4f017586426531028b874f2342283a036063a6c8a083448",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/BusproCore/0.1.7/BusproCore-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/BusproCore/0.1.7/BusproCore-0.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/BusproCore/0.1.8/BusproCore-0.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BusproCore-0.1.8.tar.gz",
+    "size_bytes": 24436,
+    "sha256": "d2daf0434d724acbff95d7ddf09294de5a06fa9a81269d1c14c8b4c86e007454",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/BusproCore/0.1.8/BusproCore-0.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/BusproCore/0.1.8/BusproCore-0.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/BusproCore/0.1.9/BusproCore-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BusproCore-0.1.9.tar.gz",
+    "size_bytes": 25190,
+    "sha256": "ab4b8f635b4e454599b0a719f2cbf3f6f8f463de23805abb3f8d9c612cff9644",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/BusproCore/0.1.9/BusproCore-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/BusproCore/0.1.9/BusproCore-0.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/BusproCore/0.2.0/BusproCore-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BusproCore-0.2.0.tar.gz",
+    "size_bytes": 24278,
+    "sha256": "4ed4a65f23419e85fb8e846682b17e48c89e981d613e1ffdb0cbe84f57d8a5a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/BusproCore/0.2.0/BusproCore-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/BusproCore/0.2.0/BusproCore-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/BusproCore/2.2.0/BusproCore-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BusproCore-2.2.0.tar.gz",
+    "size_bytes": 24831,
+    "sha256": "a62f366ab2d3bf1e2136e9d5f87914ce4c57826e81b6f81e450e72e1030f167b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/BusproCore/2.2.0/BusproCore-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/BusproCore/2.2.0/BusproCore-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/InputModule/0.6.0/InputModule-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InputModule-0.6.0.tar.gz",
+    "size_bytes": 6293,
+    "sha256": "3173f15756f48ec4836752a81b7d7722a0d1d030a8363a8fba05b7916ecda2e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/InputModule/0.6.0/InputModule-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/InputModule/0.6.0/InputModule-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/MemoryCore/0.1.0/MemoryCore-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MemoryCore-0.1.0.tar.gz",
+    "size_bytes": 13976,
+    "sha256": "1139d7ceff98545f11e9ae12e757b8d4326446614ad0ebd4510913653fbe7447",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/MemoryCore/0.1.0/MemoryCore-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/MemoryCore/0.1.0/MemoryCore-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/MemoryCore/0.2.0/MemoryCore-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MemoryCore-0.2.0.tar.gz",
+    "size_bytes": 14378,
+    "sha256": "0ae1d34830f04454f25be03b94e336701331c7f4c50320aa0ab23b34874eae7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/MemoryCore/0.2.0/MemoryCore-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/MemoryCore/0.2.0/MemoryCore-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/MemoryCore/0.2.1/MemoryCore-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MemoryCore-0.2.1.tar.gz",
+    "size_bytes": 14710,
+    "sha256": "41c188f28156ec097546fa8ba8707074251d76320fd2696266ac028d37e1ff27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/MemoryCore/0.2.1/MemoryCore-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/MemoryCore/0.2.1/MemoryCore-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/MemoryCore/1.0.0/MemoryCore-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MemoryCore-1.0.0.tar.gz",
+    "size_bytes": 15606,
+    "sha256": "adee0b46a63df831a1fc8ddc0ec55086a9002aa2ff6cfbd283fd9e42bff4f555",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/MemoryCore/1.0.0/MemoryCore-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/MemoryCore/1.0.0/MemoryCore-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/Relay%20Module/0.2.1/RelayModule-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RelayModule-0.2.1.tar.gz",
+    "size_bytes": 11777,
+    "sha256": "fcb4f25f4ffdd2b8b33a3ce459acf240809b460269bcd6955a211d4ccff0195f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/Relay%2520Module/0.2.1/RelayModule-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/Relay%20Module/0.2.1/RelayModule-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/RelayModule/0.2.5/RelayModule-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RelayModule-0.2.5.tar.gz",
+    "size_bytes": 11899,
+    "sha256": "57373623d62be8025cb7b37383f088f4168514d573414c02cae6639534d7d024",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/RelayModule/0.2.5/RelayModule-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/RelayModule/0.2.5/RelayModule-0.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/RelayModule/0.3.0/RelayModule-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RelayModule-0.3.0.tar.gz",
+    "size_bytes": 15771,
+    "sha256": "c5cd248978a8e479f3999950be0ca1483a08cceaa9d21c1b35a948761fe24d54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/RelayModule/0.3.0/RelayModule-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/RelayModule/0.3.0/RelayModule-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/RelayModule/0.7.0/RelayModule-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RelayModule-0.7.0.tar.gz",
+    "size_bytes": 18461,
+    "sha256": "93b8062d4ed09dce3804a86e491000ef058994a56b2dbf59ea718f4fd264570d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/RelayModule/0.7.0/RelayModule-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/RelayModule/0.7.0/RelayModule-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/TouchModule/0.0.1/TouchModule-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchModule-0.0.1.tar.gz",
+    "size_bytes": 18086,
+    "sha256": "8b3027d5354e9de1283fe49466ae204d5d5f08036c168d5fdef06c94f538214f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/TouchModule/0.0.1/TouchModule-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/TouchModule/0.0.1/TouchModule-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pooria-nek/library/TouchModule/2.0.0/TouchModule-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchModule-2.0.0.tar.gz",
+    "size_bytes": 75991,
+    "sha256": "62d0a025da7cdb4dfbb5d8a7364b56d81258db87cd5709cfe584ce890bd692da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pooria-nek/library/TouchModule/2.0.0/TouchModule-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pooria-nek/library/TouchModule/2.0.0/TouchModule-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

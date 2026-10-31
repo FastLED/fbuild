@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/neosegment",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "neosegment/library/Neosegment/1.0.0/Neosegment-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Neosegment-1.0.0.tar.gz",
+    "size_bytes": 7886,
+    "sha256": "8a39037fbb7e56f43acac11495856bf88912a445aa0b3632d33eb4e56151f073",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neosegment/library/Neosegment/1.0.0/Neosegment-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neosegment/library/Neosegment/1.0.0/Neosegment-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

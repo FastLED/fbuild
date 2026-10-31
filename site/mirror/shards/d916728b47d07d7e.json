@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tenveis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tenveis/library/SimpleControl/0.1.1/SimpleControl-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleControl-0.1.1.tar.gz",
+    "size_bytes": 2648,
+    "sha256": "e8c0176e7bb5292f390b335c4aad35e4c9d78f3f46042297a5214f367c18ffcf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tenveis/library/SimpleControl/0.1.1/SimpleControl-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tenveis/library/SimpleControl/0.1.1/SimpleControl-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

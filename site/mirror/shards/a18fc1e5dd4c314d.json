@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/oalpha298",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "oalpha298/library/MAX17262%20Fuel%20Gauge/1.0.1/MAX17262FuelGauge-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX17262FuelGauge-1.0.1.tar.gz",
+    "size_bytes": 3664,
+    "sha256": "5c850afde252643e843ec655487c272ebc03a7dd12e963fa3cb75daf8bfdef23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/oalpha298/library/MAX17262%2520Fuel%2520Gauge/1.0.1/MAX17262FuelGauge-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/oalpha298/library/MAX17262%20Fuel%20Gauge/1.0.1/MAX17262FuelGauge-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

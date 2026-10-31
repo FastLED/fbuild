@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nhahn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nhahn/library/KS0108/0.0.0+sha.d2d7778bbbf2/KS0108-0.0.0+sha.d2d7778bbbf2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KS0108-0.0.0+sha.d2d7778bbbf2.tar.gz",
+    "size_bytes": 21095,
+    "sha256": "a76d23dbed8f4690c86edbbf6a0133cb8bd67014d7c39d2d42b8575b19fedd17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nhahn/library/KS0108/0.0.0%2Bsha.d2d7778bbbf2/KS0108-0.0.0%2Bsha.d2d7778bbbf2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nhahn/library/KS0108/0.0.0%2Bsha.d2d7778bbbf2/KS0108-0.0.0%2Bsha.d2d7778bbbf2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

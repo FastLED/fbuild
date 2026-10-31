@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dudanian",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dudanian/library/TLC5940Servo/0.0.0+sha.b001282e967b/TLC5940Servo-0.0.0+sha.b001282e967b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLC5940Servo-0.0.0+sha.b001282e967b.tar.gz",
+    "size_bytes": 3526,
+    "sha256": "75575881133f9ac66cdfb209646d99fc4ab80feae554831e8beb676a1ae9939a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dudanian/library/TLC5940Servo/0.0.0%2Bsha.b001282e967b/TLC5940Servo-0.0.0%2Bsha.b001282e967b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dudanian/library/TLC5940Servo/0.0.0%2Bsha.b001282e967b/TLC5940Servo-0.0.0%2Bsha.b001282e967b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

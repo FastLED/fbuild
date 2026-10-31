@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/julian87nicolas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "julian87nicolas/library/Utils/2.2.1/Utils-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Utils-2.2.1.tar.gz",
+    "size_bytes": 3029,
+    "sha256": "a169d9f9d9e67c6c710eeab3e2a74de00314dc0a48f12ee33d099491599c9db5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/julian87nicolas/library/Utils/2.2.1/Utils-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/julian87nicolas/library/Utils/2.2.1/Utils-2.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

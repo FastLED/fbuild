@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jfturcot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jfturcot/library/SimpleTimer/0.0.0-alpha+sha.b30890b8f7/SimpleTimer-0.0.0-alphasha.b30890b8f7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleTimer-0.0.0-alphasha.b30890b8f7.tar.gz",
+    "size_bytes": 2996,
+    "sha256": "3e3bbf4b3dfd418433b316ee06c788fbc01e401c2879bec8cb07c74ab3bafc49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jfturcot/library/SimpleTimer/0.0.0-alpha%2Bsha.b30890b8f7/SimpleTimer-0.0.0-alphasha.b30890b8f7.tar.gz",
+     "https://dl.registry.platformio.org/download/jfturcot/library/SimpleTimer/0.0.0-alpha%2Bsha.b30890b8f7/SimpleTimer-0.0.0-alphasha.b30890b8f7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

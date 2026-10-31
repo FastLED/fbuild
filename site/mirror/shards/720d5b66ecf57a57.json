@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bokunimowakaru",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bokunimowakaru/library/xbee/0.0.0+sha.ddded5d4f96c/xbee-0.0.0+sha.ddded5d4f96c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xbee-0.0.0+sha.ddded5d4f96c.tar.gz",
+    "size_bytes": 53551,
+    "sha256": "1202b37fd3dddb4cc606b08d5eb10ba215257ff3f9417ae62f763958a0a78194",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bokunimowakaru/library/xbee/0.0.0%2Bsha.ddded5d4f96c/xbee-0.0.0%2Bsha.ddded5d4f96c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bokunimowakaru/library/xbee/0.0.0%2Bsha.ddded5d4f96c/xbee-0.0.0%2Bsha.ddded5d4f96c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

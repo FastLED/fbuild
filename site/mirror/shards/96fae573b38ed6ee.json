@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/probot-studio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "probot-studio/library/probot/0.2.7/ProbotLib-0.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProbotLib-0.2.7.tar.gz",
+    "size_bytes": 39516,
+    "sha256": "73b701c695fec5f66a896b4affb5e21dd5c16a4bd4ccd4181481eac0ca678609",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/probot-studio/library/probot/0.2.7/ProbotLib-0.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/probot-studio/library/probot/0.2.7/ProbotLib-0.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "probot-studio/library/probot/0.3.0/probot-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "probot-0.3.0.tar.gz",
+    "size_bytes": 79207,
+    "sha256": "ea83c5b77595b0f06a560b8240d59da9352e2900070afaf9bea3b424d5a405a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/probot-studio/library/probot/0.3.0/probot-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/probot-studio/library/probot/0.3.0/probot-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,373 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hoeken",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hoeken/library/PsychicHttp/1.2.1/PsychicHttp-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PsychicHttp-1.2.1.tar.gz",
+    "size_bytes": 120039,
+    "sha256": "7d0360bae7178617a49c9dc0eb68a59c928476316e1ddda8d838240182b3ef69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/PsychicHttp/1.2.1/PsychicHttp-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/PsychicHttp/1.2.1/PsychicHttp-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/PsychicHttp/2.0.0/PsychicHttp-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PsychicHttp-2.0.0.tar.gz",
+    "size_bytes": 131378,
+    "sha256": "4f2f02b1e19962fd7fa440ee88950887b2c3c45f9d590f46497f0f072cf984b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/PsychicHttp/2.0.0/PsychicHttp-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/PsychicHttp/2.0.0/PsychicHttp-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/PsychicHttp/2.1.0/PsychicHttp-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PsychicHttp-2.1.0.tar.gz",
+    "size_bytes": 131338,
+    "sha256": "9db90c5d4bccd8ca656c39f05780b035a5872a709ad1f4b4c83fc4fb50b66fe7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/PsychicHttp/2.1.0/PsychicHttp-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/PsychicHttp/2.1.0/PsychicHttp-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/PsychicHttp/2.1.1/PsychicHttp-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PsychicHttp-2.1.1.tar.gz",
+    "size_bytes": 131398,
+    "sha256": "fe4c5e97aed6a42bf138a429b849db4449c20328625b02aae43f91ed006eee31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/PsychicHttp/2.1.1/PsychicHttp-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/PsychicHttp/2.1.1/PsychicHttp-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/PsychicHttp/2.1.2/PsychicHttp-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PsychicHttp-2.1.2.tar.gz",
+    "size_bytes": 131429,
+    "sha256": "604f02b9669f2e31fd33d0e7ba670119ed9287b52065078d5d414927f8092d8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/PsychicHttp/2.1.2/PsychicHttp-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/PsychicHttp/2.1.2/PsychicHttp-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/PsychicHttp/2.2.0/PsychicHttp-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PsychicHttp-2.2.0.tar.gz",
+    "size_bytes": 135080,
+    "sha256": "1b7b1bf6cd00462604971b0d02995e91c028a6031edd13abe8df5de74593cece",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/PsychicHttp/2.2.0/PsychicHttp-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/PsychicHttp/2.2.0/PsychicHttp-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/PsychicHttp/3.0.0/PsychicHttp-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PsychicHttp-3.0.0.tar.gz",
+    "size_bytes": 140987,
+    "sha256": "9cf610dd6fba29774bd2c640bd9ab9c5fafd4e0dd2f3d5fa0c37a545d59382d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/PsychicHttp/3.0.0/PsychicHttp-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/PsychicHttp/3.0.0/PsychicHttp-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/PsychicHttp/3.1.0/PsychicHttp-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PsychicHttp-3.1.0.tar.gz",
+    "size_bytes": 142867,
+    "sha256": "6681ecc79d48c95f5e1b1103575cbdad5dc0d1a9329719916efa7320a0c2385c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/PsychicHttp/3.1.0/PsychicHttp-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/PsychicHttp/3.1.0/PsychicHttp-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/PsychicHttp/3.1.1/PsychicHttp-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PsychicHttp-3.1.1.tar.gz",
+    "size_bytes": 144878,
+    "sha256": "fd056d89249c8f88717276b122b6e16d5da8e5e58fcbb025076b3adf12577186",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/PsychicHttp/3.1.1/PsychicHttp-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/PsychicHttp/3.1.1/PsychicHttp-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/PsychicHttp/3.1.2/PsychicHttp-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PsychicHttp-3.1.2.tar.gz",
+    "size_bytes": 144882,
+    "sha256": "dbe36b0c44252d75755f18984f843e5267246de4a124aa107aae2c2a66ea8203",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/PsychicHttp/3.1.2/PsychicHttp-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/PsychicHttp/3.1.2/PsychicHttp-3.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/1.0.0/YarrboardFramework-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-1.0.0.tar.gz",
+    "size_bytes": 362087,
+    "sha256": "689bb54f8bc96d758a32210b6b99387b6a1a9e62ff8d3b6d40d16c1a6eb9b3d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/1.0.0/YarrboardFramework-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/1.0.0/YarrboardFramework-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/2.0.0/YarrboardFramework-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-2.0.0.tar.gz",
+    "size_bytes": 215083,
+    "sha256": "7282451642dca2f240eb7b9a4ffdd3a7c9a7d85a0a8a31837fb96f03dbcbe4df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/2.0.0/YarrboardFramework-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/2.0.0/YarrboardFramework-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/2.0.1/YarrboardFramework-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-2.0.1.tar.gz",
+    "size_bytes": 215219,
+    "sha256": "4017f077d7175e3798e6343773a5da3639b4b2df817f96aead74a188e143d068",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/2.0.1/YarrboardFramework-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/2.0.1/YarrboardFramework-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/2.1.0/YarrboardFramework-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-2.1.0.tar.gz",
+    "size_bytes": 220408,
+    "sha256": "191ac54a6d0acffe646d8917cad875cecd07d25d440b9007ad9bfc01d72025ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/2.1.0/YarrboardFramework-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/2.1.0/YarrboardFramework-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/2.2.0/YarrboardFramework-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-2.2.0.tar.gz",
+    "size_bytes": 220634,
+    "sha256": "8a02308b5a72dd380ade7189e326434dac6b97b57e6e5ff81f1e1e4a3748fd9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/2.2.0/YarrboardFramework-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/2.2.0/YarrboardFramework-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/2.2.1/YarrboardFramework-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-2.2.1.tar.gz",
+    "size_bytes": 220807,
+    "sha256": "c27ab1619b845c25e241c2c0278cf715d6468a0ec5e9240f9f98731c01d84466",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/2.2.1/YarrboardFramework-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/2.2.1/YarrboardFramework-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/2.2.2/YarrboardFramework-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-2.2.2.tar.gz",
+    "size_bytes": 216610,
+    "sha256": "bb9b285fe994150d159ca76e2817235a4f911c7f2e3fb944b50c1a2779eaf6a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/2.2.2/YarrboardFramework-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/2.2.2/YarrboardFramework-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/2.2.3/YarrboardFramework-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-2.2.3.tar.gz",
+    "size_bytes": 223455,
+    "sha256": "37f2172750d2e1ec42b42cfc8324af64449abd1d28eb036b7a3b2fb4b637a1e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/2.2.3/YarrboardFramework-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/2.2.3/YarrboardFramework-2.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/2.3.0/YarrboardFramework-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-2.3.0.tar.gz",
+    "size_bytes": 224105,
+    "sha256": "30ee740302c78bde7e28136d4ba247a693103273aa73c6312b9c78884c75f0aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/2.3.0/YarrboardFramework-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/2.3.0/YarrboardFramework-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/2.4.1/YarrboardFramework-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-2.4.1.tar.gz",
+    "size_bytes": 224931,
+    "sha256": "9d8acb09a90e0e8a1a27bf288f876f25b7b9a90596a893984f22b86c32730219",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/2.4.1/YarrboardFramework-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/2.4.1/YarrboardFramework-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/2.5.0/YarrboardFramework-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-2.5.0.tar.gz",
+    "size_bytes": 227641,
+    "sha256": "f49b4944e09fd75df267fde572118644882c1c129bf4700933aaea72c8f52e97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/2.5.0/YarrboardFramework-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/2.5.0/YarrboardFramework-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/2.6.0/YarrboardFramework-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-2.6.0.tar.gz",
+    "size_bytes": 228385,
+    "sha256": "f2bacffcaed82d1de95e3e3ea9de281a56364774dc662807210ed6382e9fa3fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/2.6.0/YarrboardFramework-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/2.6.0/YarrboardFramework-2.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/2.6.1/YarrboardFramework-2.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-2.6.1.tar.gz",
+    "size_bytes": 228559,
+    "sha256": "eeb82a87af5ee27fa0ab1e1ab3d40cf17806b03e94c19b28c806b1683179736b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/2.6.1/YarrboardFramework-2.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/2.6.1/YarrboardFramework-2.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/2.6.2/YarrboardFramework-2.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-2.6.2.tar.gz",
+    "size_bytes": 228716,
+    "sha256": "760098a9e24f818d96010f9db75131a9b70ea6288cb942837605d4c0b9ede1ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/2.6.2/YarrboardFramework-2.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/2.6.2/YarrboardFramework-2.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/3.0.0/YarrboardFramework-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-3.0.0.tar.gz",
+    "size_bytes": 225679,
+    "sha256": "69d3238a4ebc2c99f22b5b8665ede6422f9a72a7a4543daea1bc4ca3d64135ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/3.0.0/YarrboardFramework-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/3.0.0/YarrboardFramework-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/3.0.1/YarrboardFramework-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-3.0.1.tar.gz",
+    "size_bytes": 226060,
+    "sha256": "407d4817e8ff6dadc9f5ef1b3ceb2fedf56a927652bd01325a3718d78f0b3c87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/3.0.1/YarrboardFramework-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/3.0.1/YarrboardFramework-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/3.0.2/YarrboardFramework-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-3.0.2.tar.gz",
+    "size_bytes": 226040,
+    "sha256": "c674371698465e521d7de2761fc1a843d583f687f73b554405901766d4bc08b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/3.0.2/YarrboardFramework-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/3.0.2/YarrboardFramework-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hoeken/library/YarrboardFramework/3.0.3/YarrboardFramework-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YarrboardFramework-3.0.3.tar.gz",
+    "size_bytes": 226258,
+    "sha256": "92f8270d7c648b7108905d0b90a16db43feefc0b409f09e834816a1fb950811f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hoeken/library/YarrboardFramework/3.0.3/YarrboardFramework-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hoeken/library/YarrboardFramework/3.0.3/YarrboardFramework-3.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

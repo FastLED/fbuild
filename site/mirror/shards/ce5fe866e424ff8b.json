@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/spirilis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "spirilis/library/nRF24/0.0.0-alpha+sha.1010f8cda5/nRF24-0.0.0-alphasha.1010f8cda5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF24-0.0.0-alphasha.1010f8cda5.tar.gz",
+    "size_bytes": 25555,
+    "sha256": "a1c241350d1ee8aa5747dbc82758a7d91297c57b8b43f1bb4a238a49850f172f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spirilis/library/nRF24/0.0.0-alpha%2Bsha.1010f8cda5/nRF24-0.0.0-alphasha.1010f8cda5.tar.gz",
+     "https://dl.registry.platformio.org/download/spirilis/library/nRF24/0.0.0-alpha%2Bsha.1010f8cda5/nRF24-0.0.0-alphasha.1010f8cda5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

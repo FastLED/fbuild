@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/peterbakarac",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "peterbakarac/library/Bayesian%20Optimization/1.0.0/BayesianOptimization-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BayesianOptimization-1.0.0.tar.gz",
+    "size_bytes": 5224,
+    "sha256": "cdafd645917580b3e749f9e86a0bc73ac398b884a09fa2e9415133ec1f518084",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peterbakarac/library/Bayesian%2520Optimization/1.0.0/BayesianOptimization-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/peterbakarac/library/Bayesian%20Optimization/1.0.0/BayesianOptimization-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

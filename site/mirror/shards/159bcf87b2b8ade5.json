@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-alfredoer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-alfredoer/library/Adafruit_ST7735/0.0.0+sha.f572731fc65f/Adafruit_ST7735-0.0.0+sha.f572731fc65f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_ST7735-0.0.0+sha.f572731fc65f.tar.gz",
+    "size_bytes": 6402,
+    "sha256": "46672d680353e1e1a445752e07f0dd61b732126a8debc3d7f56d8c6c103c9020",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alfredoer/library/Adafruit_ST7735/0.0.0%2Bsha.f572731fc65f/Adafruit_ST7735-0.0.0%2Bsha.f572731fc65f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alfredoer/library/Adafruit_ST7735/0.0.0%2Bsha.f572731fc65f/Adafruit_ST7735-0.0.0%2Bsha.f572731fc65f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-alfredoer/library/KL25Z_ClockControl/0.0.0+sha.99e9aaefc9f6/KL25Z_ClockControl-0.0.0+sha.99e9aaefc9f6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KL25Z_ClockControl-0.0.0+sha.99e9aaefc9f6.tar.gz",
+    "size_bytes": 1988,
+    "sha256": "08d44f39c2fa03ac96c7fcfef1ec24dddaebfe51700007b42d6f8507436fc3aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alfredoer/library/KL25Z_ClockControl/0.0.0%2Bsha.99e9aaefc9f6/KL25Z_ClockControl-0.0.0%2Bsha.99e9aaefc9f6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alfredoer/library/KL25Z_ClockControl/0.0.0%2Bsha.99e9aaefc9f6/KL25Z_ClockControl-0.0.0%2Bsha.99e9aaefc9f6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

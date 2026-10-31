@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/esp-arduino-libs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "esp-arduino-libs/library/ESP32_Button/0.0.1/ESP32_Button-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Button-0.0.1.tar.gz",
+    "size_bytes": 26450,
+    "sha256": "c45c790cd34b53897c7f35d9af88496929ea237ad65c06e196f8edd955f92c4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esp-arduino-libs/library/ESP32_Button/0.0.1/ESP32_Button-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esp-arduino-libs/library/ESP32_Button/0.0.1/ESP32_Button-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esp-arduino-libs/library/ESP32_Knob/0.0.1/ESP32_Knob-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Knob-0.0.1.tar.gz",
+    "size_bytes": 15632,
+    "sha256": "4fb0298571a81bf4598f865be3ac5ce0ec5090dc0969b5ab555e6538dca28e5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esp-arduino-libs/library/ESP32_Knob/0.0.1/ESP32_Knob-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esp-arduino-libs/library/ESP32_Knob/0.0.1/ESP32_Knob-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esp-arduino-libs/library/ESP32_USB_STREAM/0.1.0/ESP32_USB_STREAM-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_USB_STREAM-0.1.0.tar.gz",
+    "size_bytes": 326547,
+    "sha256": "37920a4126582e509ee1c7f9c37f83ca4a5d7280d38654f2728bc8ce02d5a478",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esp-arduino-libs/library/ESP32_USB_STREAM/0.1.0/ESP32_USB_STREAM-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esp-arduino-libs/library/ESP32_USB_STREAM/0.1.0/ESP32_USB_STREAM-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esp-arduino-libs/library/esp-io-expander/0.0.1/esp-io-expander-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-io-expander-0.0.1.tar.gz",
+    "size_bytes": 19763,
+    "sha256": "2869db814325d125a93773423a33cc1feccd3658cf45ce24986c31357d65e6e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esp-arduino-libs/library/esp-io-expander/0.0.1/esp-io-expander-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esp-arduino-libs/library/esp-io-expander/0.0.1/esp-io-expander-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esp-arduino-libs/library/esp-lib-utils/0.2.3/esp-lib-utils-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-lib-utils-0.2.3.tar.gz",
+    "size_bytes": 35723,
+    "sha256": "52daaf5e5f851ad3446bf237f777a790b38cca7cc8cec7be76cbb393f2cc7c24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esp-arduino-libs/library/esp-lib-utils/0.2.3/esp-lib-utils-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/esp-arduino-libs/library/esp-lib-utils/0.2.3/esp-lib-utils-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esp-arduino-libs/library/esp-lib-utils/0.3.0/esp-lib-utils-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-lib-utils-0.3.0.tar.gz",
+    "size_bytes": 41428,
+    "sha256": "eeaad7feb8532bf3252cc99a89e20fbd730dd77b0a7dd5f4f2f48aa44d3fa905",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esp-arduino-libs/library/esp-lib-utils/0.3.0/esp-lib-utils-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esp-arduino-libs/library/esp-lib-utils/0.3.0/esp-lib-utils-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esp-arduino-libs/library/esp-ui-phone_1024_600_stylesheet/0.2.0/esp-ui-phone_1024_600_stylesheet-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-ui-phone_1024_600_stylesheet-0.2.0.tar.gz",
+    "size_bytes": 509101,
+    "sha256": "44bb70bc71fddf6f38e9cd40353fb4d1f381c59e14be0d39e241473066e72e89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esp-arduino-libs/library/esp-ui-phone_1024_600_stylesheet/0.2.0/esp-ui-phone_1024_600_stylesheet-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esp-arduino-libs/library/esp-ui-phone_1024_600_stylesheet/0.2.0/esp-ui-phone_1024_600_stylesheet-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esp-arduino-libs/library/esp-ui-phone_320_240_stylesheet/0.2.0/esp-ui-phone_320_240_stylesheet-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-ui-phone_320_240_stylesheet-0.2.0.tar.gz",
+    "size_bytes": 188180,
+    "sha256": "6adf30e0f194a81754eae4a3893de7eac4bf54f3a91a4bc4c11141f43fe630bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esp-arduino-libs/library/esp-ui-phone_320_240_stylesheet/0.2.0/esp-ui-phone_320_240_stylesheet-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esp-arduino-libs/library/esp-ui-phone_320_240_stylesheet/0.2.0/esp-ui-phone_320_240_stylesheet-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esp-arduino-libs/library/esp-ui-phone_480_480_stylesheet/0.2.0/esp-ui-phone_480_480_stylesheet-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-ui-phone_480_480_stylesheet-0.2.0.tar.gz",
+    "size_bytes": 408561,
+    "sha256": "019d6e91ef0b3b74f31bd76de6b3137af1b3268543ecc5d9d83d201f9c311e6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esp-arduino-libs/library/esp-ui-phone_480_480_stylesheet/0.2.0/esp-ui-phone_480_480_stylesheet-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esp-arduino-libs/library/esp-ui-phone_480_480_stylesheet/0.2.0/esp-ui-phone_480_480_stylesheet-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esp-arduino-libs/library/esp-ui-phone_800_480_stylesheet/0.2.0/esp-ui-phone_800_480_stylesheet-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-ui-phone_800_480_stylesheet-0.2.0.tar.gz",
+    "size_bytes": 459423,
+    "sha256": "8074e076592998be0a60ab4bb1b160b3f65d218e16ce1209623e65f18d031d48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esp-arduino-libs/library/esp-ui-phone_800_480_stylesheet/0.2.0/esp-ui-phone_800_480_stylesheet-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esp-arduino-libs/library/esp-ui-phone_800_480_stylesheet/0.2.0/esp-ui-phone_800_480_stylesheet-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pascalou1979",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pascalou1979/library/max31865spectro/0.0.0+sha.5262db31116a/max31865spectro-0.0.0+sha.5262db31116a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "max31865spectro-0.0.0+sha.5262db31116a.tar.gz",
+    "size_bytes": 4266,
+    "sha256": "ec8ee74b2cdadccbdaba763de62e1734134e9d2d2c9b37e105412d9315a3caf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pascalou1979/library/max31865spectro/0.0.0%2Bsha.5262db31116a/max31865spectro-0.0.0%2Bsha.5262db31116a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pascalou1979/library/max31865spectro/0.0.0%2Bsha.5262db31116a/max31865spectro-0.0.0%2Bsha.5262db31116a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

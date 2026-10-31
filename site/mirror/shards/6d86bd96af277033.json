@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nqnghia285",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nqnghia285/library/ArduinoSocketIOClient/1.0.3/ArduinoSocketIOClient-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoSocketIOClient-1.0.3.tar.gz",
+    "size_bytes": 11278,
+    "sha256": "5e960e149de30c864fd082707e442b0a95ab798087bec4d2523bee09da452d01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nqnghia285/library/ArduinoSocketIOClient/1.0.3/ArduinoSocketIOClient-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nqnghia285/library/ArduinoSocketIOClient/1.0.3/ArduinoSocketIOClient-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nqnghia285/library/WSListenerPlugin/1.0.8/WSListenerPlugin-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WSListenerPlugin-1.0.8.tar.gz",
+    "size_bytes": 8914,
+    "sha256": "f069991f30ab83a5bc3c3b2a0380f6bda0beb634a04097462ee0d0030e1c9a30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nqnghia285/library/WSListenerPlugin/1.0.8/WSListenerPlugin-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/nqnghia285/library/WSListenerPlugin/1.0.8/WSListenerPlugin-1.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

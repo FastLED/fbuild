@@ -1,0 +1,217 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bxparks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bxparks/library/AUnit/1.7.1/AUnit-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AUnit-1.7.1.tar.gz",
+    "size_bytes": 74665,
+    "sha256": "d8d0dfaf54e5782bc18dfc629246f1b801c7f8c1c858d1811638619bebaf81d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AUnit/1.7.1/AUnit-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AUnit/1.7.1/AUnit-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bxparks/library/AceButton/1.10.1/AceButton-1.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceButton-1.10.1.tar.gz",
+    "size_bytes": 97237,
+    "sha256": "2077a72c8063cf483ce79693381f8f526aacdc52e61655ce472149d28c59e389",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AceButton/1.10.1/AceButton-1.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AceButton/1.10.1/AceButton-1.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bxparks/library/AceButton/1.9.1/AceButton-1.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceButton-1.9.1.tar.gz",
+    "size_bytes": 293536,
+    "sha256": "ee918112e54996aeb534cc3514a8c76eb9f68b0e6fb49dc5ef299c30a751f1e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AceButton/1.9.1/AceButton-1.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AceButton/1.9.1/AceButton-1.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bxparks/library/AceCRC/1.1.1/AceCRC-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceCRC-1.1.1.tar.gz",
+    "size_bytes": 43289,
+    "sha256": "cc4a33858c27f55c3e12a4f58711868880508b60d99fce9fcb2ae0238c81113f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AceCRC/1.1.1/AceCRC-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AceCRC/1.1.1/AceCRC-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bxparks/library/AceCommon/1.6.2/AceCommon-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceCommon-1.6.2.tar.gz",
+    "size_bytes": 62788,
+    "sha256": "7e0d0d1531febdda0d9fad08f5b2dee26d71a8f64d87a44324f87a6c0a4036ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AceCommon/1.6.2/AceCommon-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AceCommon/1.6.2/AceCommon-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bxparks/library/AceRoutine/1.5.1/AceRoutine-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceRoutine-1.5.1.tar.gz",
+    "size_bytes": 89698,
+    "sha256": "4e318b7ae3bb5d8cb458e43a1cb0fc1ad15e0fd339fe06a471225d381a700ce2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AceRoutine/1.5.1/AceRoutine-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AceRoutine/1.5.1/AceRoutine-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bxparks/library/AceSPI/0.4.0/AceSPI-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceSPI-0.4.0.tar.gz",
+    "size_bytes": 23823,
+    "sha256": "34c5293b35c2d641e168d44210ddefb7d0e4b9b4e41a6f5363cfdeed9b1ec1a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AceSPI/0.4.0/AceSPI-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AceSPI/0.4.0/AceSPI-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bxparks/library/AceSegment/0.13.0/AceSegment-0.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceSegment-0.13.0.tar.gz",
+    "size_bytes": 132083,
+    "sha256": "2b98444abf59f7e35bbddf616f1f7db74c57cf7657908052104476e0fe53356b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AceSegment/0.13.0/AceSegment-0.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AceSegment/0.13.0/AceSegment-0.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bxparks/library/AceSegmentWriter/0.5/AceSegmentWriter-0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceSegmentWriter-0.5.tar.gz",
+    "size_bytes": 41491,
+    "sha256": "31569f1af06249a9f76ca7f8308a2b3c73e0d0f1e64e8ed287d8a7c0a01ffb65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AceSegmentWriter/0.5/AceSegmentWriter-0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AceSegmentWriter/0.5/AceSegmentWriter-0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bxparks/library/AceSorting/1.0.0/AceSorting-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceSorting-1.0.0.tar.gz",
+    "size_bytes": 51128,
+    "sha256": "aec8352f85e30a932e35831d70abab73002c58598a739f7cdbe99c602bf2fb25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AceSorting/1.0.0/AceSorting-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AceSorting/1.0.0/AceSorting-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bxparks/library/AceTMI/0.6/AceTMI-0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceTMI-0.6.tar.gz",
+    "size_bytes": 24241,
+    "sha256": "9dbdd5e258637f6cd4820c5fb8236f176773752ec250e080324becdf258a56f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AceTMI/0.6/AceTMI-0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AceTMI/0.6/AceTMI-0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bxparks/library/AceTime/4.0.0/AceTime-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceTime-4.0.0.tar.gz",
+    "size_bytes": 751575,
+    "sha256": "38f6172afe6a3a826d4724863c5f18e7bc3b814ce90d8a626b215a9647ff4f76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AceTime/4.0.0/AceTime-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AceTime/4.0.0/AceTime-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bxparks/library/AceTime/4.1.0/AceTime-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceTime-4.1.0.tar.gz",
+    "size_bytes": 752012,
+    "sha256": "c6e34aaeaec20d39911e32e81252af615390cfae9fcd3a961a5020aae25588b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AceTime/4.1.0/AceTime-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AceTime/4.1.0/AceTime-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bxparks/library/AceTimeClock/1.3.0/AceTimeClock-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceTimeClock-1.3.0.tar.gz",
+    "size_bytes": 65059,
+    "sha256": "f032dc384ab053c0e1a6783ed04f6decabf5ea30a7d1d1306b46beab32bfe993",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AceTimeClock/1.3.0/AceTimeClock-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AceTimeClock/1.3.0/AceTimeClock-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bxparks/library/AceUtils/0.6.0/AceUtils-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceUtils-0.6.0.tar.gz",
+    "size_bytes": 33813,
+    "sha256": "7d2a2f0a83646cfda8a4281d8eff0794d29898e5bff9d8ecde5d69c0d036bb7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AceUtils/0.6.0/AceUtils-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AceUtils/0.6.0/AceUtils-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bxparks/library/AceWire/0.4.1/AceWire-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceWire-0.4.1.tar.gz",
+    "size_bytes": 42127,
+    "sha256": "fbc13e90f7a06ed951ae74103bebd4a6d84f3db076bd75aff8859e07d476ef27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bxparks/library/AceWire/0.4.1/AceWire-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bxparks/library/AceWire/0.4.1/AceWire-0.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

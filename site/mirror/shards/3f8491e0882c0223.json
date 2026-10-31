@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arslan437",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arslan437/library/ArDebugger/0.5.0/ArDebugger-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArDebugger-0.5.0.tar.gz",
+    "size_bytes": 1643,
+    "sha256": "409ecbab4fc0d51d3664e4837d0608c5b0503c008ac184b926e6ea7403667026",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arslan437/library/ArDebugger/0.5.0/ArDebugger-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arslan437/library/ArDebugger/0.5.0/ArDebugger-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arslan437/library/Ar_Stepper/1.0.1/Ar_Stepper-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ar_Stepper-1.0.1.tar.gz",
+    "size_bytes": 14904,
+    "sha256": "ddc149046f75d54857fe779698dd7f37527ce24b082e67b616eeb17adadef408",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arslan437/library/Ar_Stepper/1.0.1/Ar_Stepper-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arslan437/library/Ar_Stepper/1.0.1/Ar_Stepper-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arslan437/library/EspFileManager/1.0.0/EspFileManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspFileManager-1.0.0.tar.gz",
+    "size_bytes": 21056,
+    "sha256": "e0d4fca8e3a59349e8d5ccb5a6b7946b92563d398c06fca8deb027621e6f4a0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arslan437/library/EspFileManager/1.0.0/EspFileManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arslan437/library/EspFileManager/1.0.0/EspFileManager-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

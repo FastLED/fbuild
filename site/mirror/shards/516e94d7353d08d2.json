@@ -1,0 +1,256 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-components",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-components/library/ATParser/0.0.0+sha.6b8190f55d83/ATParser-0.0.0+sha.6b8190f55d83.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATParser-0.0.0+sha.6b8190f55d83.tar.gz",
+    "size_bytes": 4242,
+    "sha256": "4649619679d1ddf6fc8f54126ba9718c7a10570aa91f9322f71806d89221ed7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/ATParser/0.0.0%2Bsha.6b8190f55d83/ATParser-0.0.0%2Bsha.6b8190f55d83.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/ATParser/0.0.0%2Bsha.6b8190f55d83/ATParser-0.0.0%2Bsha.6b8190f55d83.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/BluetoothSerial/0.0.0+sha.cf4d7779d9d6/BluetoothSerial-0.0.0+sha.cf4d7779d9d6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BluetoothSerial-0.0.0+sha.cf4d7779d9d6.tar.gz",
+    "size_bytes": 2404,
+    "sha256": "f18f328e8bc31c75e193c3029e451feed27a4001d495302ddc82b87f5a4cde4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/BluetoothSerial/0.0.0%2Bsha.cf4d7779d9d6/BluetoothSerial-0.0.0%2Bsha.cf4d7779d9d6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/BluetoothSerial/0.0.0%2Bsha.cf4d7779d9d6/BluetoothSerial-0.0.0%2Bsha.cf4d7779d9d6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/C12832/0.0.0+sha.03069e3deaa4/C12832-0.0.0+sha.03069e3deaa4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C12832-0.0.0+sha.03069e3deaa4.tar.gz",
+    "size_bytes": 10652,
+    "sha256": "74032e7c64be23e211a2f2154dab7e131354e55fa3fcd88961308421305735e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/C12832/0.0.0%2Bsha.03069e3deaa4/C12832-0.0.0%2Bsha.03069e3deaa4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/C12832/0.0.0%2Bsha.03069e3deaa4/C12832-0.0.0%2Bsha.03069e3deaa4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/DHT/0.0.0+sha.6937e130feca/DHT-0.0.0+sha.6937e130feca.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT-0.0.0+sha.6937e130feca.tar.gz",
+    "size_bytes": 3758,
+    "sha256": "7dd1dec71c94db015af059152d496e59ba02f1a0b1aab94b35ee1d66ce9ed2d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/DHT/0.0.0%2Bsha.6937e130feca/DHT-0.0.0%2Bsha.6937e130feca.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/DHT/0.0.0%2Bsha.6937e130feca/DHT-0.0.0%2Bsha.6937e130feca.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/ESP8266Interface/0.0.0+sha.2ad35ade7a83/ESP8266Interface-0.0.0+sha.2ad35ade7a83.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266Interface-0.0.0+sha.2ad35ade7a83.tar.gz",
+    "size_bytes": 3605,
+    "sha256": "d384713fe15250ab4103500addb0c7857e643d116c0d5ee1d87dd10f398bc487",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/ESP8266Interface/0.0.0%2Bsha.2ad35ade7a83/ESP8266Interface-0.0.0%2Bsha.2ad35ade7a83.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/ESP8266Interface/0.0.0%2Bsha.2ad35ade7a83/ESP8266Interface-0.0.0%2Bsha.2ad35ade7a83.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/Freetronics_16x2_LCD/0.0.0+sha.0e04b6c4abb8/Freetronics_16x2_LCD-0.0.0+sha.0e04b6c4abb8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Freetronics_16x2_LCD-0.0.0+sha.0e04b6c4abb8.tar.gz",
+    "size_bytes": 4505,
+    "sha256": "3958fb99e374a8793cada3273e63fb1bed8041f43bfa00ca4da12a9a6b381457",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/Freetronics_16x2_LCD/0.0.0%2Bsha.0e04b6c4abb8/Freetronics_16x2_LCD-0.0.0%2Bsha.0e04b6c4abb8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/Freetronics_16x2_LCD/0.0.0%2Bsha.0e04b6c4abb8/Freetronics_16x2_LCD-0.0.0%2Bsha.0e04b6c4abb8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/GPSProvider/0.0.0+sha.820997be26cb/GPSProvider-0.0.0+sha.820997be26cb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPSProvider-0.0.0+sha.820997be26cb.tar.gz",
+    "size_bytes": 4776,
+    "sha256": "ede670bcc6e778c81fe01526fecee8ef2eecf277b055391dc41cfcc72afc5e57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/GPSProvider/0.0.0%2Bsha.820997be26cb/GPSProvider-0.0.0%2Bsha.820997be26cb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/GPSProvider/0.0.0%2Bsha.820997be26cb/GPSProvider-0.0.0%2Bsha.820997be26cb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/GroveColourSensor/0.0.0+sha.56d6b711b8c7/GroveColourSensor-0.0.0+sha.56d6b711b8c7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveColourSensor-0.0.0+sha.56d6b711b8c7.tar.gz",
+    "size_bytes": 1852,
+    "sha256": "7aac138e800e5f7bf62f83c8e15503c6d67441b51aaa6daf58ab8764a12c398c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/GroveColourSensor/0.0.0%2Bsha.56d6b711b8c7/GroveColourSensor-0.0.0%2Bsha.56d6b711b8c7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/GroveColourSensor/0.0.0%2Bsha.56d6b711b8c7/GroveColourSensor-0.0.0%2Bsha.56d6b711b8c7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/INA219/0.0.0+sha.eee9c8ba72ff/INA219-0.0.0+sha.eee9c8ba72ff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA219-0.0.0+sha.eee9c8ba72ff.tar.gz",
+    "size_bytes": 3624,
+    "sha256": "01ed63407fbbe44cfd31d8f275599d2861debb1c2de84bc75d32893069390cf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/INA219/0.0.0%2Bsha.eee9c8ba72ff/INA219-0.0.0%2Bsha.eee9c8ba72ff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/INA219/0.0.0%2Bsha.eee9c8ba72ff/INA219-0.0.0%2Bsha.eee9c8ba72ff.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/ITG3200/0.0.0+sha.ff0a59c5c2f7/ITG3200-0.0.0+sha.ff0a59c5c2f7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ITG3200-0.0.0+sha.ff0a59c5c2f7.tar.gz",
+    "size_bytes": 4339,
+    "sha256": "4a394a2c0906ab692bbd6e267eca337b54c826bda24a2e6805fcd9e20b9abb57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/ITG3200/0.0.0%2Bsha.ff0a59c5c2f7/ITG3200-0.0.0%2Bsha.ff0a59c5c2f7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/ITG3200/0.0.0%2Bsha.ff0a59c5c2f7/ITG3200-0.0.0%2Bsha.ff0a59c5c2f7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/MotionSensor/0.0.0+sha.226520fc09bf/MotionSensor-0.0.0+sha.226520fc09bf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotionSensor-0.0.0+sha.226520fc09bf.tar.gz",
+    "size_bytes": 1820,
+    "sha256": "90424c6f988b0cc607c74394892d70a888868584413b84a607f4a1492ef88903",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/MotionSensor/0.0.0%2Bsha.226520fc09bf/MotionSensor-0.0.0%2Bsha.226520fc09bf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/MotionSensor/0.0.0%2Bsha.226520fc09bf/MotionSensor-0.0.0%2Bsha.226520fc09bf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/PN532/0.0.0+sha.26c1b3b6c192/PN532-0.0.0+sha.26c1b3b6c192.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PN532-0.0.0+sha.26c1b3b6c192.tar.gz",
+    "size_bytes": 23684,
+    "sha256": "293ac85b6c55e84d0c59bef22295482531f5104a44a7d633bf181ba04ac11996",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/PN532/0.0.0%2Bsha.26c1b3b6c192/PN532-0.0.0%2Bsha.26c1b3b6c192.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/PN532/0.0.0%2Bsha.26c1b3b6c192/PN532-0.0.0%2Bsha.26c1b3b6c192.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/SPI_TFT_ILI9341/0.0.0+sha.b8bc8296da24/SPI_TFT_ILI9341-0.0.0+sha.b8bc8296da24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_TFT_ILI9341-0.0.0+sha.b8bc8296da24.tar.gz",
+    "size_bytes": 11565,
+    "sha256": "f700f1413314c999722720550dacef99069a71d5d979a5835d84f9bb3579393c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/SPI_TFT_ILI9341/0.0.0%2Bsha.b8bc8296da24/SPI_TFT_ILI9341-0.0.0%2Bsha.b8bc8296da24.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/SPI_TFT_ILI9341/0.0.0%2Bsha.b8bc8296da24/SPI_TFT_ILI9341-0.0.0%2Bsha.b8bc8296da24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/SeeedShieldBot/0.0.0+sha.9fd1722259a1/SeeedShieldBot-0.0.0+sha.9fd1722259a1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedShieldBot-0.0.0+sha.9fd1722259a1.tar.gz",
+    "size_bytes": 2657,
+    "sha256": "0d557822670c0a34414131fb577e77ab2e804789083ff482db3e5e66ff2ded6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/SeeedShieldBot/0.0.0%2Bsha.9fd1722259a1/SeeedShieldBot-0.0.0%2Bsha.9fd1722259a1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/SeeedShieldBot/0.0.0%2Bsha.9fd1722259a1/SeeedShieldBot-0.0.0%2Bsha.9fd1722259a1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/SeeedStudioTFTv2/0.0.0+sha.362765fdf287/SeeedStudioTFTv2-0.0.0+sha.362765fdf287.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedStudioTFTv2-0.0.0+sha.362765fdf287.tar.gz",
+    "size_bytes": 3373,
+    "sha256": "118367edf4d5d7fd2e37be08b0ec4d3e0907128eb339151b60a6448237e17bb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/SeeedStudioTFTv2/0.0.0%2Bsha.362765fdf287/SeeedStudioTFTv2-0.0.0%2Bsha.362765fdf287.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/SeeedStudioTFTv2/0.0.0%2Bsha.362765fdf287/SeeedStudioTFTv2-0.0.0%2Bsha.362765fdf287.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/SerialGPS/0.0.0+sha.4e2136c38f29/SerialGPS-0.0.0+sha.4e2136c38f29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialGPS-0.0.0+sha.4e2136c38f29.tar.gz",
+    "size_bytes": 2948,
+    "sha256": "ab8798c5f1cf316387710af379fe8b4dfad65f9cba6c0ddc9603a9318ca20452",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/SerialGPS/0.0.0%2Bsha.4e2136c38f29/SerialGPS-0.0.0%2Bsha.4e2136c38f29.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/SerialGPS/0.0.0%2Bsha.4e2136c38f29/SerialGPS-0.0.0%2Bsha.4e2136c38f29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/TMP102/0.0.0+sha.5e5d818d98fa/TMP102-0.0.0+sha.5e5d818d98fa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMP102-0.0.0+sha.5e5d818d98fa.tar.gz",
+    "size_bytes": 2110,
+    "sha256": "1443ff23a5d41bd9c90e6046d0bcd01c77d0697acf24ec6573534035a69bf59b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/TMP102/0.0.0%2Bsha.5e5d818d98fa/TMP102-0.0.0%2Bsha.5e5d818d98fa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/TMP102/0.0.0%2Bsha.5e5d818d98fa/TMP102-0.0.0%2Bsha.5e5d818d98fa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/WiflyInterface/0.0.0+sha.fc3d86645d23/WiflyInterface-0.0.0+sha.fc3d86645d23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiflyInterface-0.0.0+sha.fc3d86645d23.tar.gz",
+    "size_bytes": 10665,
+    "sha256": "23048565c2592cc02c2e2d682627601f8ce1e8420297086a13de0f3ec359b7d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/WiflyInterface/0.0.0%2Bsha.fc3d86645d23/WiflyInterface-0.0.0%2Bsha.fc3d86645d23.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/WiflyInterface/0.0.0%2Bsha.fc3d86645d23/WiflyInterface-0.0.0%2Bsha.fc3d86645d23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-components/library/XBee/0.0.0+sha.f9a60cfe1026/XBee-0.0.0+sha.f9a60cfe1026.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XBee-0.0.0+sha.f9a60cfe1026.tar.gz",
+    "size_bytes": 2695,
+    "sha256": "680f77fa10d92eab0a6f392c36092f3f6cbcaacc83aa8eeb9f0b9fae97b31a02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-components/library/XBee/0.0.0%2Bsha.f9a60cfe1026/XBee-0.0.0%2Bsha.f9a60cfe1026.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-components/library/XBee/0.0.0%2Bsha.f9a60cfe1026/XBee-0.0.0%2Bsha.f9a60cfe1026.tar.gz"
+    ]
+   }
+  }
+ ]
+}

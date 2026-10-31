@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/k1mch1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "k1mch1/library/COBS/1.0.0/COBS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "COBS-1.0.0.tar.gz",
+    "size_bytes": 2334,
+    "sha256": "74ec8cfc52f638da8364bce5c964d10fc4db3089cd3cf63fa0596e6f3241ea7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k1mch1/library/COBS/1.0.0/COBS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k1mch1/library/COBS/1.0.0/COBS-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

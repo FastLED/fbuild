@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/projectoofficial",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "projectoofficial/library/Oscup/1.2.4/Oscup-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Oscup-1.2.4.tar.gz",
+    "size_bytes": 25347,
+    "sha256": "54987237b4b150600d8b80fe70bd500d4b74d3ec458e76cc3cb3e4ced8b5a102",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/projectoofficial/library/Oscup/1.2.4/Oscup-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/projectoofficial/library/Oscup/1.2.4/Oscup-1.2.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

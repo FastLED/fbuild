@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-1821319",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-1821319/library/SDFileSystem_Test_complete/0.0.0+sha.29b449498716/SDFileSystem_Test_complete-0.0.0+sha.29b449498716.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDFileSystem_Test_complete-0.0.0+sha.29b449498716.tar.gz",
+    "size_bytes": 4238,
+    "sha256": "ff64658bb52e02119a49c5f5804758f80da4728ca19347eed2c80899bd9ebaa0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-1821319/library/SDFileSystem_Test_complete/0.0.0%2Bsha.29b449498716/SDFileSystem_Test_complete-0.0.0%2Bsha.29b449498716.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-1821319/library/SDFileSystem_Test_complete/0.0.0%2Bsha.29b449498716/SDFileSystem_Test_complete-0.0.0%2Bsha.29b449498716.tar.gz"
+    ]
+   }
+  }
+ ]
+}

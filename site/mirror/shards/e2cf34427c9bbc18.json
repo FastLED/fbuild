@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/softwaretools4makers",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "softwaretools4makers/library/OPC/2.0/OPC-2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OPC-2.0.tar.gz",
+    "size_bytes": 8266,
+    "sha256": "091e5a6a9ed7464facc836713b713de1000047a5f67b005f90467db72ebb17f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/softwaretools4makers/library/OPC/2.0/OPC-2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/softwaretools4makers/library/OPC/2.0/OPC-2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

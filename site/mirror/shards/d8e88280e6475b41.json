@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zakkemble",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zakkemble/library/LM73%20Temperature%20Sensor%20Library/2.0.0/LM73TemperatureSensorLibrary-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM73TemperatureSensorLibrary-2.0.0.tar.gz",
+    "size_bytes": 5322,
+    "sha256": "a2ed59f1f5d849f09af567f4d6d65f9cc2a05fe867cd6248a005801d4b28e54b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zakkemble/library/LM73%2520Temperature%2520Sensor%2520Library/2.0.0/LM73TemperatureSensorLibrary-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zakkemble/library/LM73%20Temperature%20Sensor%20Library/2.0.0/LM73TemperatureSensorLibrary-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zakkemble/library/nRF905%20Radio%20Library/4.0.2/nRF905RadioLibrary-4.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF905RadioLibrary-4.0.2.tar.gz",
+    "size_bytes": 33092,
+    "sha256": "4d048aa3f3536367badf5684d3af1cb411dc1e4eb9721dd7f8d96e9c72d3661d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zakkemble/library/nRF905%2520Radio%2520Library/4.0.2/nRF905RadioLibrary-4.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/zakkemble/library/nRF905%20Radio%20Library/4.0.2/nRF905RadioLibrary-4.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

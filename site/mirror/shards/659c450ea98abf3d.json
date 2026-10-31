@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sakurakoi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sakurakoi/library/Adafruit-GFX-SH1122/1.0.0/Adafruit-GFX-SH1122-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit-GFX-SH1122-1.0.0.tar.gz",
+    "size_bytes": 4545,
+    "sha256": "b2eb1547f74903bbeb1beebdc9fd4bef9a28268e227bd8eaaaa8c8888eaf083c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sakurakoi/library/Adafruit-GFX-SH1122/1.0.0/Adafruit-GFX-SH1122-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sakurakoi/library/Adafruit-GFX-SH1122/1.0.0/Adafruit-GFX-SH1122-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

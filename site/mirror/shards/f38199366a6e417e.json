@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/brettmcalpine",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "brettmcalpine/library/PowerFlex4m/1.0.0/PowerFlex4m-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowerFlex4m-1.0.0.tar.gz",
+    "size_bytes": 4075,
+    "sha256": "6027e346030d64c9051001df04d9176458bd270bee3b226cd1648d16bb5b2366",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brettmcalpine/library/PowerFlex4m/1.0.0/PowerFlex4m-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/brettmcalpine/library/PowerFlex4m/1.0.0/PowerFlex4m-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

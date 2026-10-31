@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/intel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "intel/library/CuriePME/0.1/CuriePME-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CuriePME-0.1.tar.gz",
+    "size_bytes": 23513,
+    "sha256": "6e3b738e94c0b99002b193b340986baeea8d2123682dfcd64563eee02464b04d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/intel/library/CuriePME/0.1/CuriePME-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/intel/library/CuriePME/0.1/CuriePME-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

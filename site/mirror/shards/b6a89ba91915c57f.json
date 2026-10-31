@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cpm219",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cpm219/library/FT810/0.0.0+sha.ca6a7c6a2f4b/FT810-0.0.0+sha.ca6a7c6a2f4b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FT810-0.0.0+sha.ca6a7c6a2f4b.tar.gz",
+    "size_bytes": 16020,
+    "sha256": "a004624b3675fd14bc2222f4781a3d9cb3c512533295f6b79fa50547c2830e84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cpm219/library/FT810/0.0.0%2Bsha.ca6a7c6a2f4b/FT810-0.0.0%2Bsha.ca6a7c6a2f4b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cpm219/library/FT810/0.0.0%2Bsha.ca6a7c6a2f4b/FT810-0.0.0%2Bsha.ca6a7c6a2f4b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-cpm219/library/NN_lib/0.0.0+sha.efebbd20f066/NN_lib-0.0.0+sha.efebbd20f066.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NN_lib-0.0.0+sha.efebbd20f066.tar.gz",
+    "size_bytes": 14357,
+    "sha256": "61e84652f8cef39e09a7adb30089cc4e126ff18c9112279accf1d6b0e0bc8cb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cpm219/library/NN_lib/0.0.0%2Bsha.efebbd20f066/NN_lib-0.0.0%2Bsha.efebbd20f066.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cpm219/library/NN_lib/0.0.0%2Bsha.efebbd20f066/NN_lib-0.0.0%2Bsha.efebbd20f066.tar.gz"
+    ]
+   }
+  }
+ ]
+}

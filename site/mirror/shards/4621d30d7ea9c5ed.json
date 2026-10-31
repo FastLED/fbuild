@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shashank3199",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shashank3199/library/Cytron_PS2_Shield/1.1.0/Cytron_PS2_Shield-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Cytron_PS2_Shield-1.1.0.tar.gz",
+    "size_bytes": 13393,
+    "sha256": "5b26977d0e068fe2eb22e7bb417baafeeaa969572fb66ad440bf2ef58ddf4c00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shashank3199/library/Cytron_PS2_Shield/1.1.0/Cytron_PS2_Shield-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shashank3199/library/Cytron_PS2_Shield/1.1.0/Cytron_PS2_Shield-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shashank3199/library/LSA08/1.1.0/LSA08-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSA08-1.1.0.tar.gz",
+    "size_bytes": 13282,
+    "sha256": "fbe299c7a056547b1dccc286646ae62b2f5114a7d47bc3f0726c4fcfc3e641a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shashank3199/library/LSA08/1.1.0/LSA08-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shashank3199/library/LSA08/1.1.0/LSA08-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shashank3199/library/RazorIMU_9DOF/1.0.0/RazorIMU_9DOF-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RazorIMU_9DOF-1.0.0.tar.gz",
+    "size_bytes": 4359,
+    "sha256": "ca53e8f555f26bdf483500b5840ed7ad540b69a71586fe0bbd4f4026060a505f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shashank3199/library/RazorIMU_9DOF/1.0.0/RazorIMU_9DOF-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shashank3199/library/RazorIMU_9DOF/1.0.0/RazorIMU_9DOF-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

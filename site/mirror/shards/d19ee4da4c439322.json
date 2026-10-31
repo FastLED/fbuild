@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pkolar1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pkolar1/library/CAMERA/0.0.0+sha.7653b2a26797/CAMERA-0.0.0+sha.7653b2a26797.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CAMERA-0.0.0+sha.7653b2a26797.tar.gz",
+    "size_bytes": 1621,
+    "sha256": "9a5df4841cbe79da4c8c1070676f45288e1d4b5624fdedacabbdbe05e1189ca1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pkolar1/library/CAMERA/0.0.0%2Bsha.7653b2a26797/CAMERA-0.0.0%2Bsha.7653b2a26797.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pkolar1/library/CAMERA/0.0.0%2Bsha.7653b2a26797/CAMERA-0.0.0%2Bsha.7653b2a26797.tar.gz"
+    ]
+   }
+  }
+ ]
+}

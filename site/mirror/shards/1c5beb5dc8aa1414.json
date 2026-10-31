@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/opensynaptic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "opensynaptic/library/OSynaptic-FX/1.0.0/OSynaptic-FX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSynaptic-FX-1.0.0.tar.gz",
+    "size_bytes": 242431,
+    "sha256": "fea5694fb8bf288145ae56a8c4776678dce0b4d2cdefaf0b57c8be1bb53c0205",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/opensynaptic/library/OSynaptic-FX/1.0.0/OSynaptic-FX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/opensynaptic/library/OSynaptic-FX/1.0.0/OSynaptic-FX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "opensynaptic/library/OSynaptic-RX/1.0.0/OSynaptic-RX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSynaptic-RX-1.0.0.tar.gz",
+    "size_bytes": 41554,
+    "sha256": "666392c8c15332d1a9cdf53b56626ce12073bc40761c0156b90f87cd65513b96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/opensynaptic/library/OSynaptic-RX/1.0.0/OSynaptic-RX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/opensynaptic/library/OSynaptic-RX/1.0.0/OSynaptic-RX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "opensynaptic/library/OSynaptic-TX/1.0.0/OSynaptic-TX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSynaptic-TX-1.0.0.tar.gz",
+    "size_bytes": 48821,
+    "sha256": "91873b441991c7a5169028a5ec57db8e24120f9326da2ed66b637588eff3845f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/opensynaptic/library/OSynaptic-TX/1.0.0/OSynaptic-TX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/opensynaptic/library/OSynaptic-TX/1.0.0/OSynaptic-TX-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

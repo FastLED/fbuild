@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/makermatrix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "makermatrix/library/TFT%20Charts/0.1.1/TFTCharts-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFTCharts-0.1.1.tar.gz",
+    "size_bytes": 3874,
+    "sha256": "2dd445fc860e1e7a68d371d2fb0404fc697e1bd04b731b3ddb841cedabe9af7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makermatrix/library/TFT%2520Charts/0.1.1/TFTCharts-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/makermatrix/library/TFT%20Charts/0.1.1/TFTCharts-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makermatrix/library/TFT_Charts/0.1.6/TFT_Charts-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_Charts-0.1.6.tar.gz",
+    "size_bytes": 4351,
+    "sha256": "4f2a7b19e1dafce24847602f9d0b95073b8d3514575e990bb6ae3cf507be74a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makermatrix/library/TFT_Charts/0.1.6/TFT_Charts-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/makermatrix/library/TFT_Charts/0.1.6/TFT_Charts-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makermatrix/library/TFT_eSPI_Charts/0.1.1/TFT_eSPI_Charts-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_eSPI_Charts-0.1.1.tar.gz",
+    "size_bytes": 4361,
+    "sha256": "3ff77262ee7e26b0074d2fe5faec1e752d6f87cea91b30962d5c808d1e1ee46a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makermatrix/library/TFT_eSPI_Charts/0.1.1/TFT_eSPI_Charts-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/makermatrix/library/TFT_eSPI_Charts/0.1.1/TFT_eSPI_Charts-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

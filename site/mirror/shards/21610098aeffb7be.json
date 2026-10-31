@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sbkila",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sbkila/library/ESP%20Async%20WebServer/1.2.3/ESPAsyncWebServer-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-1.2.3.tar.gz",
+    "size_bytes": 75586,
+    "sha256": "07d682015e238260479e3c773a6fb1b151f73fffe4acfad3a3d10c9a2e4accac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbkila/library/ESP%2520Async%2520WebServer/1.2.3/ESPAsyncWebServer-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sbkila/library/ESP%20Async%20WebServer/1.2.3/ESPAsyncWebServer-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbkila/library/HomeAssistantLibrary/0.2.1/HomeAssistantLibrary-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantLibrary-0.2.1.tar.gz",
+    "size_bytes": 33253,
+    "sha256": "fa1293007766eec64737623c332dddc57894e11bbd6f1c5cec8dcaf7aec95244",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbkila/library/HomeAssistantLibrary/0.2.1/HomeAssistantLibrary-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sbkila/library/HomeAssistantLibrary/0.2.1/HomeAssistantLibrary-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbkila/library/HomeAssistantLibrary/0.2.10/HomeAssistantLibrary-0.2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantLibrary-0.2.10.tar.gz",
+    "size_bytes": 43552,
+    "sha256": "534fb0dde922d92d7d8e362c393e5fce04e462ff2acbaf56f083b1d33195f8d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbkila/library/HomeAssistantLibrary/0.2.10/HomeAssistantLibrary-0.2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/sbkila/library/HomeAssistantLibrary/0.2.10/HomeAssistantLibrary-0.2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbkila/library/HomeAssistantLibrary/0.2.11/HomeAssistantLibrary-0.2.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantLibrary-0.2.11.tar.gz",
+    "size_bytes": 45963,
+    "sha256": "54c3b10ec51259df6b27e355c6e1f4bd8f589e447318db942080e22ed1d62fb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbkila/library/HomeAssistantLibrary/0.2.11/HomeAssistantLibrary-0.2.11.tar.gz",
+     "https://dl.registry.platformio.org/download/sbkila/library/HomeAssistantLibrary/0.2.11/HomeAssistantLibrary-0.2.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbkila/library/HomeAssistantLibrary/0.2.12/HomeAssistantLibrary-0.2.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantLibrary-0.2.12.tar.gz",
+    "size_bytes": 45905,
+    "sha256": "2c34cf2b7f37c75006e3baf7d05f6396de27bb64ac0b7353d6fac7fa00d0c125",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbkila/library/HomeAssistantLibrary/0.2.12/HomeAssistantLibrary-0.2.12.tar.gz",
+     "https://dl.registry.platformio.org/download/sbkila/library/HomeAssistantLibrary/0.2.12/HomeAssistantLibrary-0.2.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbkila/library/HomeAssistantLibrary/0.2.13/HomeAssistantLibrary-0.2.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantLibrary-0.2.13.tar.gz",
+    "size_bytes": 46572,
+    "sha256": "27de7990cfb99b9718e78779139a4a7d9e6a4d8595b5e602d0f89eb1b8f470d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbkila/library/HomeAssistantLibrary/0.2.13/HomeAssistantLibrary-0.2.13.tar.gz",
+     "https://dl.registry.platformio.org/download/sbkila/library/HomeAssistantLibrary/0.2.13/HomeAssistantLibrary-0.2.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbkila/library/HomeAssistantLibrary/0.2.5/HomeAssistantLibrary-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantLibrary-0.2.5.tar.gz",
+    "size_bytes": 43808,
+    "sha256": "52ae5f4d226a051eef059c7d880c5f74e892edb0613b80239047f78e3344e983",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbkila/library/HomeAssistantLibrary/0.2.5/HomeAssistantLibrary-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sbkila/library/HomeAssistantLibrary/0.2.5/HomeAssistantLibrary-0.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbkila/library/HomeAssistantLibrary/0.2.6/HomeAssistantLibrary-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantLibrary-0.2.6.tar.gz",
+    "size_bytes": 43471,
+    "sha256": "27c9afcc79dd2e08c040ce0d13636f655f08bbfb5a730f6a858359a9659f730a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbkila/library/HomeAssistantLibrary/0.2.6/HomeAssistantLibrary-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sbkila/library/HomeAssistantLibrary/0.2.6/HomeAssistantLibrary-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbkila/library/HomeAssistantLibrary/0.2.7/HomeAssistantLibrary-0.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantLibrary-0.2.7.tar.gz",
+    "size_bytes": 43470,
+    "sha256": "7a22bef4b34d741709e01ed926292ce1483c550d80d69f84e8a35178028736b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbkila/library/HomeAssistantLibrary/0.2.7/HomeAssistantLibrary-0.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/sbkila/library/HomeAssistantLibrary/0.2.7/HomeAssistantLibrary-0.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbkila/library/HomeAssistantLibrary/0.2.8/HomeAssistantLibrary-0.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantLibrary-0.2.8.tar.gz",
+    "size_bytes": 43475,
+    "sha256": "0d6114828f353eef43e8b50cf97d87294c901c3f10c8ca4ae7d635e9fca1696a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbkila/library/HomeAssistantLibrary/0.2.8/HomeAssistantLibrary-0.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/sbkila/library/HomeAssistantLibrary/0.2.8/HomeAssistantLibrary-0.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sbkila/library/HomeAssistantLibray/0.1.2/HomeAssistantLibray-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantLibray-0.1.2.tar.gz",
+    "size_bytes": 29342,
+    "sha256": "3f58e6f23e309b67604e1dcaa1e9f54737226ab73ae8741a5d69ed2a3d664d43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sbkila/library/HomeAssistantLibray/0.1.2/HomeAssistantLibray-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sbkila/library/HomeAssistantLibray/0.1.2/HomeAssistantLibray-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rppicomidi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rppicomidi/library/EZ_USB_MIDI_HOST/2.2.0/EZ_USB_MIDI_HOST-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EZ_USB_MIDI_HOST-2.2.0.tar.gz",
+    "size_bytes": 29851,
+    "sha256": "3b576094e7af9feea64ef6c435002dfaa9f16d091afea30ea7bd4bd3594fca58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rppicomidi/library/EZ_USB_MIDI_HOST/2.2.0/EZ_USB_MIDI_HOST-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rppicomidi/library/EZ_USB_MIDI_HOST/2.2.0/EZ_USB_MIDI_HOST-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rppicomidi/library/TinyUSB_MIDI_Device_Arduino/0.4.0/TinyUSB_MIDI_Device_Arduino-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyUSB_MIDI_Device_Arduino-0.4.0.tar.gz",
+    "size_bytes": 9658,
+    "sha256": "d9eeb64f6f685b44fb9bbaeb43878238aa2d73f9c7aeae48cd952359875d06da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rppicomidi/library/TinyUSB_MIDI_Device_Arduino/0.4.0/TinyUSB_MIDI_Device_Arduino-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rppicomidi/library/TinyUSB_MIDI_Device_Arduino/0.4.0/TinyUSB_MIDI_Device_Arduino-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rppicomidi/library/usb_midi_host/2.0.0/usb_midi_host-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "usb_midi_host-2.0.0.tar.gz",
+    "size_bytes": 34164,
+    "sha256": "f0f848b7d61049b784a8f5f118f734fd929c00a6964fb0adbb5640a9574d6d2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rppicomidi/library/usb_midi_host/2.0.0/usb_midi_host-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rppicomidi/library/usb_midi_host/2.0.0/usb_midi_host-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

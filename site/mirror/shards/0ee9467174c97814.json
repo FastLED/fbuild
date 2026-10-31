@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bhakti08",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bhakti08/library/DebounceInterrupts/0.0.0+sha.96a51b236ba0/DebounceInterrupts-0.0.0+sha.96a51b236ba0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebounceInterrupts-0.0.0+sha.96a51b236ba0.tar.gz",
+    "size_bytes": 1590,
+    "sha256": "c8cdb5413ebc0794f2b985827a4e49b0dc0f7075a247c88073975c9e87d069fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bhakti08/library/DebounceInterrupts/0.0.0%2Bsha.96a51b236ba0/DebounceInterrupts-0.0.0%2Bsha.96a51b236ba0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bhakti08/library/DebounceInterrupts/0.0.0%2Bsha.96a51b236ba0/DebounceInterrupts-0.0.0%2Bsha.96a51b236ba0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

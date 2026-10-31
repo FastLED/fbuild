@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stuartpittaway",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stuartpittaway/library/m2tklib_u8glib/1.11/m2tklib_u8glib-1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m2tklib_u8glib-1.11.tar.gz",
+    "size_bytes": 95911,
+    "sha256": "1da3cf74f7c8ced9fb8a2cb68c4142020b3f3ec1b4a2991a09a3d349b03ac724",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stuartpittaway/library/m2tklib_u8glib/1.11/m2tklib_u8glib-1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/stuartpittaway/library/m2tklib_u8glib/1.11/m2tklib_u8glib-1.11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

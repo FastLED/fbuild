@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ferkoyanagi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ferkoyanagi/library/App%20Fernando%20K/1.0.0/AppFernandoK-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AppFernandoK-1.0.0.tar.gz",
+    "size_bytes": 4097,
+    "sha256": "d8ed5abbb65be0146f8a34289807c061d49b926200681f649562cfb0a438a2f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ferkoyanagi/library/App%2520Fernando%2520K/1.0.0/AppFernandoK-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ferkoyanagi/library/App%20Fernando%20K/1.0.0/AppFernandoK-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ferkoyanagi/library/Seven%20Segments%20K/1.0.0/SevenSegmentsK-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSegmentsK-1.0.0.tar.gz",
+    "size_bytes": 3433,
+    "sha256": "65ad1ac396a53b2a271140a4724f8e7d50bd49be2faa19482f1540d7c56cf867",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ferkoyanagi/library/Seven%2520Segments%2520K/1.0.0/SevenSegmentsK-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ferkoyanagi/library/Seven%20Segments%20K/1.0.0/SevenSegmentsK-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

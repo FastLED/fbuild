@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sensora",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sensora/library/sensora-library/0.0.5/sensora-library-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sensora-library-0.0.5.tar.gz",
+    "size_bytes": 17475,
+    "sha256": "05218c381fdf9108b1c7820b3802d018a7a4e7e78a163a2ee0321553fdb51088",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sensora/library/sensora-library/0.0.5/sensora-library-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sensora/library/sensora-library/0.0.5/sensora-library-0.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

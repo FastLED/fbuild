@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/orkalxrd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "orkalxrd/library/SimpleFlashAudio/0.1.0/SimpleFlashAudio-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFlashAudio-0.1.0.tar.gz",
+    "size_bytes": 13696,
+    "sha256": "bd4e522f96d5c01273ad5603252cf178b043011a34e39d9bcce03dab1a47de1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/orkalxrd/library/SimpleFlashAudio/0.1.0/SimpleFlashAudio-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/orkalxrd/library/SimpleFlashAudio/0.1.0/SimpleFlashAudio-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "orkalxrd/library/TinyPortal/1.0.0/TinyPortal-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyPortal-1.0.0.tar.gz",
+    "size_bytes": 1818,
+    "sha256": "5b0f4aae6ab8d741be14c30897527273a069253b65f65f7febaf84c2fe1ae011",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/orkalxrd/library/TinyPortal/1.0.0/TinyPortal-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/orkalxrd/library/TinyPortal/1.0.0/TinyPortal-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

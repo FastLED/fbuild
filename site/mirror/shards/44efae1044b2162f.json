@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/m-reimer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "m-reimer/library/EncoderStepCounter/1.1.0/EncoderStepCounter-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EncoderStepCounter-1.1.0.tar.gz",
+    "size_bytes": 5417,
+    "sha256": "6bad0f02ec719869327bd4588eeba36aaa56267806ec0a39752adef72b69470f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m-reimer/library/EncoderStepCounter/1.1.0/EncoderStepCounter-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m-reimer/library/EncoderStepCounter/1.1.0/EncoderStepCounter-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m-reimer/library/IwitVolumeKnob/1.0.0/IwitVolumeKnob-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IwitVolumeKnob-1.0.0.tar.gz",
+    "size_bytes": 6978,
+    "sha256": "dac1d8c22580df2b19a0106d507ae1c65c4cdb4a165d63da4cd4d1bb33bfb9a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m-reimer/library/IwitVolumeKnob/1.0.0/IwitVolumeKnob-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m-reimer/library/IwitVolumeKnob/1.0.0/IwitVolumeKnob-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m-reimer/library/USBStatus/1.0.0/USBStatus-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBStatus-1.0.0.tar.gz",
+    "size_bytes": 4641,
+    "sha256": "976a65b2147e030cd3066cd59e59069529ad8c55417c5ae6f874e35032e03df3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m-reimer/library/USBStatus/1.0.0/USBStatus-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m-reimer/library/USBStatus/1.0.0/USBStatus-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

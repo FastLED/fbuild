@@ -1,0 +1,243 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/epsilonrt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "epsilonrt/library/BatteryCharger/1.0.1/BatteryCharger-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BatteryCharger-1.0.1.tar.gz",
+    "size_bytes": 12061,
+    "sha256": "22fb7ff89fd5e4efdd1709ad186410aeae0ce139a36329e12fa93030d658bd42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/BatteryCharger/1.0.1/BatteryCharger-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/BatteryCharger/1.0.1/BatteryCharger-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/BatteryCharger/1.0.3/BatteryCharger-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BatteryCharger-1.0.3.tar.gz",
+    "size_bytes": 13007,
+    "sha256": "645524832010d1ce24a249b0c62ac0567ce82b81b8f5563df6bf78b126bd4978",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/BatteryCharger/1.0.3/BatteryCharger-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/BatteryCharger/1.0.3/BatteryCharger-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/EepromSecureData/1.0.0/EepromSecureData-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EepromSecureData-1.0.0.tar.gz",
+    "size_bytes": 52654,
+    "sha256": "aa285c092022055dc5b942bc37a3f26875c18b9dd2114a08eedece99b86baf0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/EepromSecureData/1.0.0/EepromSecureData-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/EepromSecureData/1.0.0/EepromSecureData-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/Hmi4DinBox/1.1.2/Hmi4DinBox-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hmi4DinBox-1.1.2.tar.gz",
+    "size_bytes": 15637,
+    "sha256": "71bb51d51355757502ff7220030c8f68709d6076ca7718bf8ce8066929c9ae94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/Hmi4DinBox/1.1.2/Hmi4DinBox-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/Hmi4DinBox/1.1.2/Hmi4DinBox-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/Max11615Lib/1.0.1/Max11615Lib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Max11615Lib-1.0.1.tar.gz",
+    "size_bytes": 39522,
+    "sha256": "5dfc1c6cb2f0a8490c7229c1caead07a5924b034c5f05df96296d0dd6e5c009c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/Max11615Lib/1.0.1/Max11615Lib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/Max11615Lib/1.0.1/Max11615Lib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/Modbus-Arduino/1.3.0/Modbus-Arduino-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modbus-Arduino-1.3.0.tar.gz",
+    "size_bytes": 45872,
+    "sha256": "8fff6bc80aa3ce941747d6b45363d5040a494a661a3c3ccf50660bc4801c181b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/Modbus-Arduino/1.3.0/Modbus-Arduino-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/Modbus-Arduino/1.3.0/Modbus-Arduino-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/Modbus-Esp8266AT/1.0.3/Modbus-Esp8266AT-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modbus-Esp8266AT-1.0.3.tar.gz",
+    "size_bytes": 8892,
+    "sha256": "1ec317226186855f2e99daa5f573a74368e3ae6eff30f9b0c57e0d6145d61c05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/Modbus-Esp8266AT/1.0.3/Modbus-Esp8266AT-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/Modbus-Esp8266AT/1.0.3/Modbus-Esp8266AT-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/Modbus-EtherCard/1.0.3/Modbus-EtherCard-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modbus-EtherCard-1.0.3.tar.gz",
+    "size_bytes": 8318,
+    "sha256": "aced34f6eaa76a778ad35976cdac35a3393886d809d50a6ef65867a0ddd98246",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/Modbus-EtherCard/1.0.3/Modbus-EtherCard-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/Modbus-EtherCard/1.0.3/Modbus-EtherCard-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/Modbus-Ethernet/1.0.3/Modbus-Ethernet-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modbus-Ethernet-1.0.3.tar.gz",
+    "size_bytes": 8400,
+    "sha256": "cb25c85830b32de81dd64ff38ba3261550bd846cc2e2e8eb1afd429fb31887f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/Modbus-Ethernet/1.0.3/Modbus-Ethernet-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/Modbus-Ethernet/1.0.3/Modbus-Ethernet-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/Modbus-Radio/1.0.3/Modbus-Radio-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modbus-Radio-1.0.3.tar.gz",
+    "size_bytes": 42683,
+    "sha256": "9a09196c44d2265786b4211c8427e88c035790ab8bbac321d99a719f12e56992",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/Modbus-Radio/1.0.3/Modbus-Radio-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/Modbus-Radio/1.0.3/Modbus-Radio-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/Modbus-Serial/2.0.5/Modbus-Serial-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modbus-Serial-2.0.5.tar.gz",
+    "size_bytes": 42170,
+    "sha256": "8b8fd84fc57c8d90dcfcc1862cc8db9f6ae6c0a898f46db82680008f00fa25cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/Modbus-Serial/2.0.5/Modbus-Serial-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/Modbus-Serial/2.0.5/Modbus-Serial-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/RadioHead/1.122.1/RadioHead-1.122.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioHead-1.122.1.tar.gz",
+    "size_bytes": 361048,
+    "sha256": "2f1f771b916fef3d1da990cf7959a2014b721496e049d4388af5613d2206df51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/RadioHead/1.122.1/RadioHead-1.122.1.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/RadioHead/1.122.1/RadioHead-1.122.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/ZigbeePilotWireControl/1.0.0/ZigbeePilotWireControl-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZigbeePilotWireControl-1.0.0.tar.gz",
+    "size_bytes": 48896,
+    "sha256": "cbdc7c8cca2f5ccb0ee8631844920431281e3c74989d8a2372531525edf28306",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/ZigbeePilotWireControl/1.0.0/ZigbeePilotWireControl-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/ZigbeePilotWireControl/1.0.0/ZigbeePilotWireControl-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/ZigbeePilotWireControl/1.0.1/ZigbeePilotWireControl-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZigbeePilotWireControl-1.0.1.tar.gz",
+    "size_bytes": 50675,
+    "sha256": "500c7f8022966c6b82993ab440d1ff8cdadb93611005f3e50b57e9038ad9c84d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/ZigbeePilotWireControl/1.0.1/ZigbeePilotWireControl-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/ZigbeePilotWireControl/1.0.1/ZigbeePilotWireControl-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/eFlexPwm/0.2.11/eFlexPwm-0.2.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eFlexPwm-0.2.11.tar.gz",
+    "size_bytes": 89770,
+    "sha256": "9ab437e6a5bd23c2ff4cb7b4e549681101018189179e4e31b9aa2b9bf3b52f75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/eFlexPwm/0.2.11/eFlexPwm-0.2.11.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/eFlexPwm/0.2.11/eFlexPwm-0.2.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/pImpl/1.1.3/pImpl-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pImpl-1.1.3.tar.gz",
+    "size_bytes": 48305,
+    "sha256": "8da6d8188a14053e22993238741604f5e5ca5de9a9b89bbe51434981e4c8d5f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/pImpl/1.1.3/pImpl-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/pImpl/1.1.3/pImpl-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/pimp/1.0.5/pimp-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pimp-1.0.5.tar.gz",
+    "size_bytes": 42138,
+    "sha256": "7ddcf4f815644b351adabc52e0530d69e40fa5819b1a503d7cc37c747eaec3d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/pimp/1.0.5/pimp-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/pimp/1.0.5/pimp-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "epsilonrt/library/spaiot-lib/1.2.5/spaiot-lib-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "spaiot-lib-1.2.5.tar.gz",
+    "size_bytes": 92313,
+    "sha256": "aa2dd9adf2e0f789b98e868c72cb848df8caa9ce09f99098a163deb710b70f59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/epsilonrt/library/spaiot-lib/1.2.5/spaiot-lib-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/epsilonrt/library/spaiot-lib/1.2.5/spaiot-lib-1.2.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

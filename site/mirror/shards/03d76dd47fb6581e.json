@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/theprototypedesigner",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "theprototypedesigner/library/TpdButton/1.0.1/TpdButton-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TpdButton-1.0.1.tar.gz",
+    "size_bytes": 3183,
+    "sha256": "7f28cd5974ce621a074d70d04c059824e25c0098482cef96114badb192d101b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/theprototypedesigner/library/TpdButton/1.0.1/TpdButton-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/theprototypedesigner/library/TpdButton/1.0.1/TpdButton-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

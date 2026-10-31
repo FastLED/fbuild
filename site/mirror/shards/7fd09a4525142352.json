@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kbmkrishnamali1992-hub",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kbmkrishnamali1992-hub/library/SIM800_GSM_GPRS/1.0.0/SIM800_GSM_GPRS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIM800_GSM_GPRS-1.0.0.tar.gz",
+    "size_bytes": 7281,
+    "sha256": "621d219b5244652bb51de4ceaf5407ac526bc55f07749aca3d12a6e6fa15f27e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kbmkrishnamali1992-hub/library/SIM800_GSM_GPRS/1.0.0/SIM800_GSM_GPRS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kbmkrishnamali1992-hub/library/SIM800_GSM_GPRS/1.0.0/SIM800_GSM_GPRS-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

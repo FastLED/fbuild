@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ajaybnl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ajaybnl/library/RFM69-Esp32_Friendly/1.5.2/RFM69-Esp32_Friendly-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFM69-Esp32_Friendly-1.5.2.tar.gz",
+    "size_bytes": 423419,
+    "sha256": "eaf38a467254e7815ec4863575285fd1186a962a0072b64eff3152b26dbc44bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ajaybnl/library/RFM69-Esp32_Friendly/1.5.2/RFM69-Esp32_Friendly-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ajaybnl/library/RFM69-Esp32_Friendly/1.5.2/RFM69-Esp32_Friendly-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ajaybnl/library/ZPH02%20Particle%20Sensor/1.0/ZPH02ParticleSensor-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZPH02ParticleSensor-1.0.tar.gz",
+    "size_bytes": 2812,
+    "sha256": "42c1398ffc58122fa4869f1ddd6c0dff76cfba4c72c3d6983d9d821cd3fad204",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ajaybnl/library/ZPH02%2520Particle%2520Sensor/1.0/ZPH02ParticleSensor-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ajaybnl/library/ZPH02%20Particle%20Sensor/1.0/ZPH02ParticleSensor-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/raz1234",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "raz1234/library/LTR559-ESP32/1.0.0/LTR559-ESP32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTR559-ESP32-1.0.0.tar.gz",
+    "size_bytes": 5900,
+    "sha256": "fa1d0ba1127bd121233e54d310c98c7c0eed7a00ff88bed831935a652531114b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/raz1234/library/LTR559-ESP32/1.0.0/LTR559-ESP32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/raz1234/library/LTR559-ESP32/1.0.0/LTR559-ESP32-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

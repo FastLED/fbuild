@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tobigr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tobigr/library/SimplifiedTimer/1.1.2/SimplifiedTimer-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimplifiedTimer-1.1.2.tar.gz",
+    "size_bytes": 2665,
+    "sha256": "680daad063f352d29608f1b47f2583b7961ade68d470a2ac7331e6c36f120858",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobigr/library/SimplifiedTimer/1.1.2/SimplifiedTimer-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tobigr/library/SimplifiedTimer/1.1.2/SimplifiedTimer-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

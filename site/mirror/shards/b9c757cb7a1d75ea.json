@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-condo2k4",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-condo2k4/library/asyncADC/0.0.0+sha.754768be9b9a/asyncADC-0.0.0+sha.754768be9b9a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "asyncADC-0.0.0+sha.754768be9b9a.tar.gz",
+    "size_bytes": 4917,
+    "sha256": "a9fbf5fd605e7e934ee1131a20f375a6ac9bea545c8adfacde9a6606c0041bc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-condo2k4/library/asyncADC/0.0.0%2Bsha.754768be9b9a/asyncADC-0.0.0%2Bsha.754768be9b9a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-condo2k4/library/asyncADC/0.0.0%2Bsha.754768be9b9a/asyncADC-0.0.0%2Bsha.754768be9b9a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/programus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "programus/library/PCM-mem/2.2/PCM-mem-2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCM-mem-2.2.tar.gz",
+    "size_bytes": 20492,
+    "sha256": "629f57a5d6332f24fab2dd63002915ec08839110b3bec49518a5785f86fe6bde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/programus/library/PCM-mem/2.2/PCM-mem-2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/programus/library/PCM-mem/2.2/PCM-mem-2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

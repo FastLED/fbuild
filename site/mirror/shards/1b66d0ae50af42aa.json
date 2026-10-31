@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-labishrestha",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-labishrestha/library/ARCH_GPRS_V2_HW/0.0.0+sha.d3d48514a2aa/ARCH_GPRS_V2_HW-0.0.0+sha.d3d48514a2aa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ARCH_GPRS_V2_HW-0.0.0+sha.d3d48514a2aa.tar.gz",
+    "size_bytes": 2598,
+    "sha256": "e799d162e048ae6e41fcabfe6738c7b2733365ac64d6e06de6da36e2465008ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-labishrestha/library/ARCH_GPRS_V2_HW/0.0.0%2Bsha.d3d48514a2aa/ARCH_GPRS_V2_HW-0.0.0%2Bsha.d3d48514a2aa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-labishrestha/library/ARCH_GPRS_V2_HW/0.0.0%2Bsha.d3d48514a2aa/ARCH_GPRS_V2_HW-0.0.0%2Bsha.d3d48514a2aa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-labishrestha/library/DS1337/0.0.0+sha.66dbf3ae0f89/DS1337-0.0.0+sha.66dbf3ae0f89.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1337-0.0.0+sha.66dbf3ae0f89.tar.gz",
+    "size_bytes": 1936,
+    "sha256": "091a8bd5edd8f8aa041fefbcd956ffe2b38b5c098841f628d3ea61d938e5b785",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-labishrestha/library/DS1337/0.0.0%2Bsha.66dbf3ae0f89/DS1337-0.0.0%2Bsha.66dbf3ae0f89.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-labishrestha/library/DS1337/0.0.0%2Bsha.66dbf3ae0f89/DS1337-0.0.0%2Bsha.66dbf3ae0f89.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-labishrestha/library/WakeUp/0.0.0+sha.30845899cca2/WakeUp-0.0.0+sha.30845899cca2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WakeUp-0.0.0+sha.30845899cca2.tar.gz",
+    "size_bytes": 6472,
+    "sha256": "7b14fcaa2a40f49ed4ce0205eeb01a2da4f329ac5a4b8d5d5ab06b875cea9025",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-labishrestha/library/WakeUp/0.0.0%2Bsha.30845899cca2/WakeUp-0.0.0%2Bsha.30845899cca2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-labishrestha/library/WakeUp/0.0.0%2Bsha.30845899cca2/WakeUp-0.0.0%2Bsha.30845899cca2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

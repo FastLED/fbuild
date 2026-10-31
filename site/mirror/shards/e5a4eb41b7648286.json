@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bhagman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bhagman/library/ControlledServo/1.0.0/ControlledServo-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ControlledServo-1.0.0.tar.gz",
+    "size_bytes": 4166,
+    "sha256": "cee90dce7f46fe0882f792f5dca3726503bb7e6d466f2585fbd99d140d4658c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bhagman/library/ControlledServo/1.0.0/ControlledServo-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bhagman/library/ControlledServo/1.0.0/ControlledServo-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bhagman/library/LitSwitch/1.0.0/LitSwitch-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LitSwitch-1.0.0.tar.gz",
+    "size_bytes": 3585,
+    "sha256": "3ed3a7835a19a34af371e62867d203f08b8c2d3f138a474e386c21c298c3d46e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bhagman/library/LitSwitch/1.0.0/LitSwitch-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bhagman/library/LitSwitch/1.0.0/LitSwitch-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bhagman/library/MillisTimer/1.0.0/MillisTimer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MillisTimer-1.0.0.tar.gz",
+    "size_bytes": 3491,
+    "sha256": "d892ba7b2d54506c5cab25d2342d38e298bc564afe753b86d7b9899d3508bdb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bhagman/library/MillisTimer/1.0.0/MillisTimer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bhagman/library/MillisTimer/1.0.0/MillisTimer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bhagman/library/SoftPWM/1.0.1/SoftPWM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftPWM-1.0.1.tar.gz",
+    "size_bytes": 7054,
+    "sha256": "a9965857dd89fcd8374dd7bf7cb5e056a5285ef1f2d10a9afcac2b80bcc30159",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bhagman/library/SoftPWM/1.0.1/SoftPWM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bhagman/library/SoftPWM/1.0.1/SoftPWM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bhagman/library/Tone/1.0.0/Tone-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tone-1.0.0.tar.gz",
+    "size_bytes": 12443,
+    "sha256": "554a4f865b15e4591274c7edd5e7d33b3356bb16b8a944422152b3d913b27653",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bhagman/library/Tone/1.0.0/Tone-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bhagman/library/Tone/1.0.0/Tone-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bhagman/library/WireData/1.0.0/WireData-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WireData-1.0.0.tar.gz",
+    "size_bytes": 3084,
+    "sha256": "2533a42e04ef4856d8d19ca4de16bda3eca011e9ba4b94b15aa600ef58eec4a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bhagman/library/WireData/1.0.0/WireData-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bhagman/library/WireData/1.0.0/WireData-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

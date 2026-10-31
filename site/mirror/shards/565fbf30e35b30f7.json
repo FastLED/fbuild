@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/u-fire",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "u-fire/library/EC%20Salinity%20Probe%20Interface/2.0.0/ECSalinityProbeInterface-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ECSalinityProbeInterface-2.0.0.tar.gz",
+    "size_bytes": 24942,
+    "sha256": "dea05cd3963cceb593a8ca6326e07830db8e326292ec6ff7ccef4e295821190f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/u-fire/library/EC%2520Salinity%2520Probe%2520Interface/2.0.0/ECSalinityProbeInterface-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/u-fire/library/EC%20Salinity%20Probe%20Interface/2.0.0/ECSalinityProbeInterface-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "u-fire/library/ISE%20Probe%20Interface/2.0.0/ISEProbeInterface-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ISEProbeInterface-2.0.0.tar.gz",
+    "size_bytes": 30430,
+    "sha256": "00f1a148d95117c1556015fd837066fa58604b7336f438f34f45a43070930a95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/u-fire/library/ISE%2520Probe%2520Interface/2.0.0/ISEProbeInterface-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/u-fire/library/ISE%20Probe%20Interface/2.0.0/ISEProbeInterface-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "u-fire/library/Isolated%20EC%20Probe%20Interface/1.2.2/IsolatedECProbeInterface-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IsolatedECProbeInterface-1.2.2.tar.gz",
+    "size_bytes": 22006,
+    "sha256": "2c0709f7e10dcf2692427e52bbd650e863312d90677143a12b725b5ca4cdc0c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/u-fire/library/Isolated%2520EC%2520Probe%2520Interface/1.2.2/IsolatedECProbeInterface-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/u-fire/library/Isolated%20EC%20Probe%20Interface/1.2.2/IsolatedECProbeInterface-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "u-fire/library/Isolated%20ISE%20Probe%20Interface/1.2.0/IsolatedISEProbeInterface-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IsolatedISEProbeInterface-1.2.0.tar.gz",
+    "size_bytes": 22640,
+    "sha256": "701690abe8272f9ffb33c36539ba3e6b83ce7cbce189bd6a0b75ae399f168100",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/u-fire/library/Isolated%2520ISE%2520Probe%2520Interface/1.2.0/IsolatedISEProbeInterface-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/u-fire/library/Isolated%20ISE%20Probe%20Interface/1.2.0/IsolatedISEProbeInterface-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "u-fire/library/Microfire%20Mod-NTC/2.0.0/MicrofireMod-NTC-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicrofireMod-NTC-2.0.0.tar.gz",
+    "size_bytes": 5618,
+    "sha256": "d924e26a350535566465328cbbb11bc047f6a94a03db934613b41ac9ac6e444a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/u-fire/library/Microfire%2520Mod-NTC/2.0.0/MicrofireMod-NTC-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/u-fire/library/Microfire%20Mod-NTC/2.0.0/MicrofireMod-NTC-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "u-fire/library/Microfire_SHT3x/1.0.0/Microfire_SHT3x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Microfire_SHT3x-1.0.0.tar.gz",
+    "size_bytes": 4957,
+    "sha256": "a5c610d7f5858673fbefafbd51598f7c4e3a02e9a4f70fd9690942ba56353f99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/u-fire/library/Microfire_SHT3x/1.0.0/Microfire_SHT3x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/u-fire/library/Microfire_SHT3x/1.0.0/Microfire_SHT3x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "u-fire/library/steamrocket/0.9.0/steamrocket-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "steamrocket-0.9.0.tar.gz",
+    "size_bytes": 23455,
+    "sha256": "907bbeadac024743f81a261e061735a421173e66585ffd3472502c1793b535c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/u-fire/library/steamrocket/0.9.0/steamrocket-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/u-fire/library/steamrocket/0.9.0/steamrocket-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "u-fire/library/uFire%20PAR%20Sensor/1.0.0/uFirePARSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uFirePARSensor-1.0.0.tar.gz",
+    "size_bytes": 12866,
+    "sha256": "cb67c71bd5750a9ff1e56677d355ef635797996ad2ed33eb62115815edf0e911",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/u-fire/library/uFire%2520PAR%2520Sensor/1.0.0/uFirePARSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/u-fire/library/uFire%20PAR%20Sensor/1.0.0/uFirePARSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "u-fire/library/uFire%20SHT20/1.1.2/uFireSHT20-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uFireSHT20-1.1.2.tar.gz",
+    "size_bytes": 12400,
+    "sha256": "be2ae086a89547fbc13c5a225e76b4575948ca7380a505c16cefa53c594b3c02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/u-fire/library/uFire%2520SHT20/1.1.2/uFireSHT20-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/u-fire/library/uFire%20SHT20/1.1.2/uFireSHT20-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

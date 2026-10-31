@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zouyu1121",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zouyu1121/library/serial-color-debug/1.0.0/serial-color-debug-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "serial-color-debug-1.0.0.tar.gz",
+    "size_bytes": 4433,
+    "sha256": "ed78212aa2de15e3821631459d00d6a6a97dce894185ab967ff7398b143bd043",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zouyu1121/library/serial-color-debug/1.0.0/serial-color-debug-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zouyu1121/library/serial-color-debug/1.0.0/serial-color-debug-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

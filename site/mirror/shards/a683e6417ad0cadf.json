@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-denizdosluoglu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-denizdosluoglu/library/RD117_MBED_mod/0.0.0+sha.c8c2768c3a34/RD117_MBED_mod-0.0.0+sha.c8c2768c3a34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RD117_MBED_mod-0.0.0+sha.c8c2768c3a34.tar.gz",
+    "size_bytes": 9492,
+    "sha256": "eabe9577ebaf3aae55342723e5af80fa07180e161440f3cc8878406004c9aad6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-denizdosluoglu/library/RD117_MBED_mod/0.0.0%2Bsha.c8c2768c3a34/RD117_MBED_mod-0.0.0%2Bsha.c8c2768c3a34.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-denizdosluoglu/library/RD117_MBED_mod/0.0.0%2Bsha.c8c2768c3a34/RD117_MBED_mod-0.0.0%2Bsha.c8c2768c3a34.tar.gz"
+    ]
+   }
+  }
+ ]
+}

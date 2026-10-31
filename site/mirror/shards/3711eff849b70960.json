@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jacob-yan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jacob-yan/library/PololuLedStrip/0.0.0+sha.2fcd4e3cd8ac/PololuLedStrip-0.0.0+sha.2fcd4e3cd8ac.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PololuLedStrip-0.0.0+sha.2fcd4e3cd8ac.tar.gz",
+    "size_bytes": 3633,
+    "sha256": "aa8e9b54b1f19275c1e3695d977ca4bd86b7c2b263ae340378e88cc7b0dd7205",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jacob-yan/library/PololuLedStrip/0.0.0%2Bsha.2fcd4e3cd8ac/PololuLedStrip-0.0.0%2Bsha.2fcd4e3cd8ac.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jacob-yan/library/PololuLedStrip/0.0.0%2Bsha.2fcd4e3cd8ac/PololuLedStrip-0.0.0%2Bsha.2fcd4e3cd8ac.tar.gz"
+    ]
+   }
+  }
+ ]
+}

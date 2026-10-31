@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zakrzewiaczek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zakrzewiaczek/library/PantryClient/1.0.0/PantryClient-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PantryClient-1.0.0.tar.gz",
+    "size_bytes": 16547,
+    "sha256": "eea7a9eeb91379709cf846db54234e8b95bc5bd34f67802bca3967a8dae27f0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zakrzewiaczek/library/PantryClient/1.0.0/PantryClient-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zakrzewiaczek/library/PantryClient/1.0.0/PantryClient-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

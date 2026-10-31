@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitmodu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitmodu/library/Fast/1.0/Fast-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Fast-1.0.tar.gz",
+    "size_bytes": 3997,
+    "sha256": "11ef27f61c0ed3c229fc9dcd078eaf5325b6991ee2810da77ae06f3a03da0c71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitmodu/library/Fast/1.0/Fast-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitmodu/library/Fast/1.0/Fast-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/waybyte",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "waybyte/platform/logicrom/1.1.0/logicrom-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "logicrom-1.1.0.tar.gz",
+    "size_bytes": 51422,
+    "sha256": "b21979db73833a1fa6a743879ef390d560b25ccc7f31f0461ee1fce8307ca9f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/waybyte/platform/logicrom/1.1.0/logicrom-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/waybyte/platform/logicrom/1.1.0/logicrom-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "waybyte/tool/framework-logicromarduino/1.1.0/framework-logicromarduino-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-logicromarduino-1.1.0.tar.gz",
+    "size_bytes": 26140076,
+    "sha256": "2bf99e9c45e3562659d5edfb8f6ae815e5acacbcff96fe847f5203afc9ba81ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/waybyte/tool/framework-logicromarduino/1.1.0/framework-logicromarduino-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/waybyte/tool/framework-logicromarduino/1.1.0/framework-logicromarduino-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "waybyte/tool/framework-logicromsdk/1.2.0/framework-logicromsdk-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-logicromsdk-1.2.0.tar.gz",
+    "size_bytes": 25991821,
+    "sha256": "684ac888f7d4693f3230b6f807972594af6302b85df897f3aff714342daf30c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/waybyte/tool/framework-logicromsdk/1.2.0/framework-logicromsdk-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/waybyte/tool/framework-logicromsdk/1.2.0/framework-logicromsdk-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "waybyte/tool/tool-logicromflasher/3.0.0/tool-logicromflasher-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-logicromflasher-3.0.0.tar.gz",
+    "size_bytes": 11933739,
+    "sha256": "90f3e7bc6d109fa2af19d28776e15293f8b7dcf15a15017b20d645a2366bc1d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/waybyte/tool/tool-logicromflasher/3.0.0/tool-logicromflasher-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/waybyte/tool/tool-logicromflasher/3.0.0/tool-logicromflasher-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "waybyte/tool/toolchain-gccmipselfrda8955/4.4.2/toolchain-gccmipselfrda8955-windows-4.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-gccmipselfrda8955-windows-4.4.2.tar.gz",
+    "size_bytes": 25819446,
+    "sha256": "382f120180a5fc2d4f2d19247feec0cf60c2de13376b870dd69e78970730ac95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/waybyte/tool/toolchain-gccmipselfrda8955/4.4.2/toolchain-gccmipselfrda8955-windows-4.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/waybyte/tool/toolchain-gccmipselfrda8955/4.4.2/toolchain-gccmipselfrda8955-windows-4.4.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/siteswapjuggler",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "siteswapjuggler/library/Ramp/0.6.4/Ramp-0.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ramp-0.6.4.tar.gz",
+    "size_bytes": 18965,
+    "sha256": "caa716b62b00b712575b8247167d56e1ca3d082a56953f63aaaf088738ed757f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siteswapjuggler/library/Ramp/0.6.4/Ramp-0.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/siteswapjuggler/library/Ramp/0.6.4/Ramp-0.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "siteswapjuggler/library/Ramp/0.7.0/Ramp-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ramp-0.7.0.tar.gz",
+    "size_bytes": 19394,
+    "sha256": "beae4dd5404f3b80ac368241934e4cd76766f74f56596e20dd8e5f1fc3adf9c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/siteswapjuggler/library/Ramp/0.7.0/Ramp-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/siteswapjuggler/library/Ramp/0.7.0/Ramp-0.7.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/salfel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "salfel/library/ArduinoPusher/0.0.1/ArduinoPusher-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoPusher-0.0.1.tar.gz",
+    "size_bytes": 2488,
+    "sha256": "eae33ab9898764b139d71a472c9cb842c6dd144c5787fb80679cbb63059686a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/salfel/library/ArduinoPusher/0.0.1/ArduinoPusher-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/salfel/library/ArduinoPusher/0.0.1/ArduinoPusher-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

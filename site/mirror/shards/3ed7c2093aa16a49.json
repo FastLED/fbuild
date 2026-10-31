@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mkgeiger",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mkgeiger/library/RadiaCode/1.0.0/RadiaCode-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadiaCode-1.0.0.tar.gz",
+    "size_bytes": 31065,
+    "sha256": "882d1ab9ff18f9b89b734571696c294aba11b5e3e718092c4bca9c6523441c2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mkgeiger/library/RadiaCode/1.0.0/RadiaCode-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mkgeiger/library/RadiaCode/1.0.0/RadiaCode-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

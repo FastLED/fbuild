@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/enhancedradiodevices",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "enhancedradiodevices/library/DDS/1.0.3/DDS-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DDS-1.0.3.tar.gz",
+    "size_bytes": 6819,
+    "sha256": "02217209adda5b3dceeea34664cb3f8724f6d5c01335f6432830a6a9c4a9c4f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enhancedradiodevices/library/DDS/1.0.3/DDS-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/enhancedradiodevices/library/DDS/1.0.3/DDS-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "enhancedradiodevices/library/HamShield/1.1.4/HamShield-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HamShield-1.1.4.tar.gz",
+    "size_bytes": 263326,
+    "sha256": "07e52fe6cf15bc4522dcadb761ab4d448d89895d5fca33a5a9cfb76d5a02b514",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enhancedradiodevices/library/HamShield/1.1.4/HamShield-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/enhancedradiodevices/library/HamShield/1.1.4/HamShield-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "enhancedradiodevices/library/HamShield_KISS/1.0.6/HamShield_KISS-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HamShield_KISS-1.0.6.tar.gz",
+    "size_bytes": 11771,
+    "sha256": "bc7a5e15e283533e0c1587b9c7cde098cfaed05fd9edae62df693fe9a619be05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enhancedradiodevices/library/HamShield_KISS/1.0.6/HamShield_KISS-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/enhancedradiodevices/library/HamShield_KISS/1.0.6/HamShield_KISS-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

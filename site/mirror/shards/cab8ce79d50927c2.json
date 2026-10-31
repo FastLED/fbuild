@@ -1,0 +1,958 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/solderedelectronics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "solderedelectronics/library/16x2%20LCD%20Library/1.0.0/16x2LCDLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "16x2LCDLibrary-1.0.0.tar.gz",
+    "size_bytes": 18449,
+    "sha256": "26b9b4ebeace448143cbdcd7c9f1d9dd83f130afb7625a4d2f99511a1f459177",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/16x2%2520LCD%2520Library/1.0.0/16x2LCDLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/16x2%20LCD%20Library/1.0.0/16x2LCDLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/8x8%20Led%20Matrix%20Soldered/1.0.0/8x8LedMatrixSoldered-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "8x8LedMatrixSoldered-1.0.0.tar.gz",
+    "size_bytes": 78592,
+    "sha256": "d605afee64cf76272d1f05aebb278bb95df7e7d11ecb9311d2a9992934a20c43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/8x8%2520Led%2520Matrix%2520Soldered/1.0.0/8x8LedMatrixSoldered-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/8x8%20Led%20Matrix%20Soldered/1.0.0/8x8LedMatrixSoldered-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/ADS1219-SOLDERED/1.0.0/ADS1219-SOLDERED-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1219-SOLDERED-1.0.0.tar.gz",
+    "size_bytes": 19476,
+    "sha256": "189d5b8ba144d01680b9759131f3059f13750cb8c4111777bd6587bf98a517d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/ADS1219-SOLDERED/1.0.0/ADS1219-SOLDERED-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/ADS1219-SOLDERED/1.0.0/ADS1219-SOLDERED-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/APDS9960%20Arduino%20Library%20by%20Soldered/1.0.0/APDS9960ArduinoLibrarybySoldered-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APDS9960ArduinoLibrarybySoldered-1.0.0.tar.gz",
+    "size_bytes": 17194,
+    "sha256": "2da1623969d4c7b78329cfa76cd2a0469103114eef52c2a4871848ba94c36187",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/APDS9960%2520Arduino%2520Library%2520by%2520Soldered/1.0.0/APDS9960ArduinoLibrarybySoldered-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/APDS9960%20Arduino%20Library%20by%20Soldered/1.0.0/APDS9960ArduinoLibrarybySoldered-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/DHT11%20and%20DHT22%20Soldered%20Boards%20Arduino%20Library/1.0.0/DHT11andDHT22SolderedBoardsArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT11andDHT22SolderedBoardsArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 10777,
+    "sha256": "b966ce85ae29e325c094fe536d6661857d6622afe983fbc3f29874ab30ba57b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/DHT11%2520and%2520DHT22%2520Soldered%2520Boards%2520Arduino%2520Library/1.0.0/DHT11andDHT22SolderedBoardsArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/DHT11%20and%20DHT22%20Soldered%20Boards%20Arduino%20Library/1.0.0/DHT11andDHT22SolderedBoardsArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Electrochemical%20Gas%20Sensor%20Soldered/1.0.0/ElectrochemicalGasSensorSoldered-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElectrochemicalGasSensorSoldered-1.0.0.tar.gz",
+    "size_bytes": 37309,
+    "sha256": "3873ffb5bad2111e92a46836a22a89aed2fd4b421dc0aba3d35ea4ab10c688f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Electrochemical%2520Gas%2520Sensor%2520Soldered/1.0.0/ElectrochemicalGasSensorSoldered-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Electrochemical%20Gas%20Sensor%20Soldered/1.0.0/ElectrochemicalGasSensorSoldered-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/HUSB238%20Soldered/0.1.0/HUSB238Soldered-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HUSB238Soldered-0.1.0.tar.gz",
+    "size_bytes": 17149,
+    "sha256": "6f3d65285bb14bb4cf8054af5bb5c20e40c109a5c9addf12898d7a70dec2157b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/HUSB238%2520Soldered/0.1.0/HUSB238Soldered-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/HUSB238%20Soldered/0.1.0/HUSB238Soldered-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Inkplate%20LVGL%20Library/1.1.0/InkplateLVGLLibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InkplateLVGLLibrary-1.1.0.tar.gz",
+    "size_bytes": 6991657,
+    "sha256": "ae3f60faf2179ce8897c554a3a87162c45980e2787e40a38259dba60196b62a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Inkplate%2520LVGL%2520Library/1.1.0/InkplateLVGLLibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Inkplate%20LVGL%20Library/1.1.0/InkplateLVGLLibrary-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Inkplate%20LVGL%20Library/1.1.1/InkplateLVGLLibrary-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InkplateLVGLLibrary-1.1.1.tar.gz",
+    "size_bytes": 6987503,
+    "sha256": "3144c9d88709816dc153716e2ee399f6c6bbe2381c7004dc10871cf932505924",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Inkplate%2520LVGL%2520Library/1.1.1/InkplateLVGLLibrary-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Inkplate%20LVGL%20Library/1.1.1/InkplateLVGLLibrary-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Inkplate%20LVGL%20Library/1.1.2/InkplateLVGLLibrary-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InkplateLVGLLibrary-1.1.2.tar.gz",
+    "size_bytes": 6960844,
+    "sha256": "466d719510d70edba3432d940c2218a8d6b940042999570dbc60b3e14a0e5dd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Inkplate%2520LVGL%2520Library/1.1.2/InkplateLVGLLibrary-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Inkplate%20LVGL%20Library/1.1.2/InkplateLVGLLibrary-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Inkplate%20LVGL%20Library/1.1.3/InkplateLVGLLibrary-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InkplateLVGLLibrary-1.1.3.tar.gz",
+    "size_bytes": 6962229,
+    "sha256": "deef8cce61c32cbcf0746ff4561318e2e0227590f9b5f403294056ca132ff54a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Inkplate%2520LVGL%2520Library/1.1.3/InkplateLVGLLibrary-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Inkplate%20LVGL%20Library/1.1.3/InkplateLVGLLibrary-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Inkplate%20Motion%20Library/1.1.0/InkplateMotionLibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InkplateMotionLibrary-1.1.0.tar.gz",
+    "size_bytes": 15111363,
+    "sha256": "d3ff34d14fbc161dad1017e8c5c6a20a46a4258b7bf9ec94ee2045c827fa7eee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Inkplate%2520Motion%2520Library/1.1.0/InkplateMotionLibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Inkplate%20Motion%20Library/1.1.0/InkplateMotionLibrary-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Inkplate%20Motion%20Library/1.1.1/InkplateMotionLibrary-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InkplateMotionLibrary-1.1.1.tar.gz",
+    "size_bytes": 15111154,
+    "sha256": "31bc65077c5e3f17e09be6df38193d9c86ec3a0ef8a8c439bf6fcaa6d4a2df43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Inkplate%2520Motion%2520Library/1.1.1/InkplateMotionLibrary-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Inkplate%20Motion%20Library/1.1.1/InkplateMotionLibrary-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Inkplate%20Motion%20Library/1.2.0/InkplateMotionLibrary-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InkplateMotionLibrary-1.2.0.tar.gz",
+    "size_bytes": 15113879,
+    "sha256": "5a7ed9ad826393204cb36814453f70ea461a38697fa68d7323736c2643ee37fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Inkplate%2520Motion%2520Library/1.2.0/InkplateMotionLibrary-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Inkplate%20Motion%20Library/1.2.0/InkplateMotionLibrary-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20ADS-B%20Receiver/1.0.0/SolderedADS-BReceiver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedADS-BReceiver-1.0.0.tar.gz",
+    "size_bytes": 30620,
+    "sha256": "f2a9e2b7c9c6e5f818dc99cc70a46294a5aac72d55198db8aef71bb7885a72ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520ADS-B%2520Receiver/1.0.0/SolderedADS-BReceiver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20ADS-B%20Receiver/1.0.0/SolderedADS-BReceiver-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20ADS1015%20and%20ADS1115%20EasyC%20Library/1.0.0/SolderedADS1015andADS1115EasyCLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedADS1015andADS1115EasyCLibrary-1.0.0.tar.gz",
+    "size_bytes": 13037,
+    "sha256": "31529aa63d66632e920aa282e6f04f85754bc909c78f6f5c544e2152d1f486c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520ADS1015%2520and%2520ADS1115%2520EasyC%2520Library/1.0.0/SolderedADS1015andADS1115EasyCLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20ADS1015%20and%20ADS1115%20EasyC%20Library/1.0.0/SolderedADS1015andADS1115EasyCLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20AS3935%20Lightning%20sensor%20library/1.0.0/SolderedAS3935Lightningsensorlibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedAS3935Lightningsensorlibrary-1.0.0.tar.gz",
+    "size_bytes": 17064,
+    "sha256": "747a6a7c898a00b2b7ee81a80a5a31fa960633081350e868c269ca097971f00e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520AS3935%2520Lightning%2520sensor%2520library/1.0.0/SolderedAS3935Lightningsensorlibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20AS3935%20Lightning%20sensor%20library/1.0.0/SolderedAS3935Lightningsensorlibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20BHI385%20IMU/1.0.0/SolderedBHI385IMU-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedBHI385IMU-1.0.0.tar.gz",
+    "size_bytes": 1039832,
+    "sha256": "8a9bda69502cdebe94d2e87bc4086e64a6482df933b6aeb0f7f5109392229287",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520BHI385%2520IMU/1.0.0/SolderedBHI385IMU-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20BHI385%20IMU/1.0.0/SolderedBHI385IMU-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20BMA400%20Accelerometer/1.0.0/SolderedBMA400Accelerometer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedBMA400Accelerometer-1.0.0.tar.gz",
+    "size_bytes": 53461,
+    "sha256": "0957afc93dd0256cc7ca77e080fbd0ee5ef1aeeb14ed4104527382e39a324f26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520BMA400%2520Accelerometer/1.0.0/SolderedBMA400Accelerometer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20BMA400%20Accelerometer/1.0.0/SolderedBMA400Accelerometer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20BME280%20and%20BME680%20EasyC%20Library/1.0.0/SolderedBME280andBME680EasyCLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedBME280andBME680EasyCLibrary-1.0.0.tar.gz",
+    "size_bytes": 106839,
+    "sha256": "53497b0d97b9e3f1ec27c334cf49745aee035e1cd62e3043cb530fee9ed27569",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520BME280%2520and%2520BME680%2520EasyC%2520Library/1.0.0/SolderedBME280andBME680EasyCLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20BME280%20and%20BME680%20EasyC%20Library/1.0.0/SolderedBME280andBME680EasyCLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20BME688%20Library/1.0.0/SolderedBME688Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedBME688Library-1.0.0.tar.gz",
+    "size_bytes": 43335,
+    "sha256": "a820015a84b7a56c6b042ad64b12b6f8ce14a9f76e27fa0494da1b86fb47f5a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520BME688%2520Library/1.0.0/SolderedBME688Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20BME688%20Library/1.0.0/SolderedBME688Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20BME690%20Arduino%20Library/1.0.0/SolderedBME690ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedBME690ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 46240,
+    "sha256": "dc65037c5ece2826e56f4a1cdb4b75b5e4d39f93fbdcaa714ee089378f952a31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520BME690%2520Arduino%2520Library/1.0.0/SolderedBME690ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20BME690%20Arduino%20Library/1.0.0/SolderedBME690ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20BMM350%20Geomagnetic%20Sensor/1.0.0/SolderedBMM350GeomagneticSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedBMM350GeomagneticSensor-1.0.0.tar.gz",
+    "size_bytes": 46074,
+    "sha256": "9e8d7c6d9136af8162c55e6aceffdd3e5fb3255b9fef498848726e42a6b6ec24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520BMM350%2520Geomagnetic%2520Sensor/1.0.0/SolderedBMM350GeomagneticSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20BMM350%20Geomagnetic%20Sensor/1.0.0/SolderedBMM350GeomagneticSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20BMP280%20Arduino%20Library/1.0.0/SolderedBMP280ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedBMP280ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 27591,
+    "sha256": "629c5ecd5d7c18124d5e00264c2c1f20ec4060d347514bcf62a95a498eb09e3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520BMP280%2520Arduino%2520Library/1.0.0/SolderedBMP280ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20BMP280%20Arduino%20Library/1.0.0/SolderedBMP280ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20BMP388%20Arduino%20Library/1.0.0/SolderedBMP388ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedBMP388ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 36727,
+    "sha256": "ef7a8af7934746d4a03822dd5a3507b35c87abad459eb51a932acc33990fc0ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520BMP388%2520Arduino%2520Library/1.0.0/SolderedBMP388ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20BMP388%20Arduino%20Library/1.0.0/SolderedBMP388ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20BMP585%20Barometric%20Pressure%20Sensor/1.1.0/SolderedBMP585BarometricPressureSensor-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedBMP585BarometricPressureSensor-1.1.0.tar.gz",
+    "size_bytes": 39282,
+    "sha256": "66da1c09440fb378fca9d14870467c092b65a8c85befe02b14b5c4ba758fdb98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520BMP585%2520Barometric%2520Pressure%2520Sensor/1.1.0/SolderedBMP585BarometricPressureSensor-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20BMP585%20Barometric%20Pressure%20Sensor/1.1.0/SolderedBMP585BarometricPressureSensor-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20Basic%20Stepper%20Driver%20Arduino%20Library/1.0.0/SolderedBasicStepperDriverArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedBasicStepperDriverArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 34830,
+    "sha256": "33a89f5a63372fe521c75e934953f4ba95f3c62bf6dcefb063c3a3a48aa7abd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520Basic%2520Stepper%2520Driver%2520Arduino%2520Library/1.0.0/SolderedBasicStepperDriverArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20Basic%20Stepper%20Driver%20Arduino%20Library/1.0.0/SolderedBasicStepperDriverArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20Button%20LED%20Buzzer%20Board%20Arduino%20Library/1.0.0/SolderedButtonLEDBuzzerBoardArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedButtonLEDBuzzerBoardArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 17051,
+    "sha256": "369cd39d35cfe7f016c919df2e031cdfb5102414469c7b2758d134b80bce305b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520Button%2520LED%2520Buzzer%2520Board%2520Arduino%2520Library/1.0.0/SolderedButtonLEDBuzzerBoardArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20Button%20LED%20Buzzer%20Board%20Arduino%20Library/1.0.0/SolderedButtonLEDBuzzerBoardArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20CAN%20Bus%20Breakout%20Arduino%20Library/1.1.0/SolderedCANBusBreakoutArduinoLibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedCANBusBreakoutArduinoLibrary-1.1.0.tar.gz",
+    "size_bytes": 32427,
+    "sha256": "1ff9da74128b27bcc6b755243c6fd321437d1d8b5951d16f72c10cd8a6d121b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520CAN%2520Bus%2520Breakout%2520Arduino%2520Library/1.1.0/SolderedCANBusBreakoutArduinoLibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20CAN%20Bus%20Breakout%20Arduino%20Library/1.1.0/SolderedCANBusBreakoutArduinoLibrary-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20CAN%20Bus%20Breakout%20Arduino%20Library/1.1.1/SolderedCANBusBreakoutArduinoLibrary-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedCANBusBreakoutArduinoLibrary-1.1.1.tar.gz",
+    "size_bytes": 33242,
+    "sha256": "6591780a1b7adda8b7bdcf47548f3dafd3f9769293b4a6ca47fa35b628147724",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520CAN%2520Bus%2520Breakout%2520Arduino%2520Library/1.1.1/SolderedCANBusBreakoutArduinoLibrary-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20CAN%20Bus%20Breakout%20Arduino%20Library/1.1.1/SolderedCANBusBreakoutArduinoLibrary-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20Compass%20AK09918/1.0.0/SolderedCompassAK09918-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedCompassAK09918-1.0.0.tar.gz",
+    "size_bytes": 20183,
+    "sha256": "7b877c84a7d673889c583ccce5a510f6b656f94ae627af3ebbc9667861a8df3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520Compass%2520AK09918/1.0.0/SolderedCompassAK09918-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20Compass%20AK09918/1.0.0/SolderedCompassAK09918-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20DE2120/1.0.0/SolderedDE2120-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedDE2120-1.0.0.tar.gz",
+    "size_bytes": 21836,
+    "sha256": "3aa7d3f403a98e8e16fdee0973783c25b387a407a8027d0c77653d1ce3033bb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520DE2120/1.0.0/SolderedDE2120-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20DE2120/1.0.0/SolderedDE2120-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20DS3234%20RTC/1.0.0/SolderedDS3234RTC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedDS3234RTC-1.0.0.tar.gz",
+    "size_bytes": 16983,
+    "sha256": "c2beb9551fef04ef3cba4e350718d57bf4537081fd329872907d6858e6036da2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520DS3234%2520RTC/1.0.0/SolderedDS3234RTC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20DS3234%20RTC/1.0.0/SolderedDS3234RTC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20Digital%20Light%20Sensor/1.0.0/SolderedDigitalLightSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedDigitalLightSensor-1.0.0.tar.gz",
+    "size_bytes": 17746,
+    "sha256": "158a469c07f6eae5268ef50dc2fb47220ce6f52f9c50180fd8a3bb31376fb371",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520Digital%2520Light%2520Sensor/1.0.0/SolderedDigitalLightSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20Digital%20Light%20Sensor/1.0.0/SolderedDigitalLightSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20Fingerprint%20Sensor/1.0.0/SolderedFingerprintSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedFingerprintSensor-1.0.0.tar.gz",
+    "size_bytes": 14981,
+    "sha256": "89185988307f97dbbd29f9e365798b4d5656e9d9a509f0dcbc4bdb5c1fd76326",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520Fingerprint%2520Sensor/1.0.0/SolderedFingerprintSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20Fingerprint%20Sensor/1.0.0/SolderedFingerprintSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20Hall%20Effect%20Arduino%20Library/1.0.1/SolderedHallEffectArduinoLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedHallEffectArduinoLibrary-1.0.1.tar.gz",
+    "size_bytes": 18799,
+    "sha256": "67c0fbdb52ec97b497683564a3ce7664b7df4700601097a8cb17ab1b829a2ccf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520Hall%2520Effect%2520Arduino%2520Library/1.0.1/SolderedHallEffectArduinoLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20Hall%20Effect%20Arduino%20Library/1.0.1/SolderedHallEffectArduinoLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20I2S%20Digital%20Audio%20Amplifier%20Arduino%20Library/1.0.0/SolderedI2SDigitalAudioAmplifierArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedI2SDigitalAudioAmplifierArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 923639,
+    "sha256": "b3ec4f6e97e0e08af10bdda5e4182b9cfea29b5544590b9e8f4ae0c213c379d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520I2S%2520Digital%2520Audio%2520Amplifier%2520Arduino%2520Library/1.0.0/SolderedI2SDigitalAudioAmplifierArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20I2S%20Digital%20Audio%20Amplifier%20Arduino%20Library/1.0.0/SolderedI2SDigitalAudioAmplifierArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20IIS2DULPXTR%20Accelerometer/1.0.0/SolderedIIS2DULPXTRAccelerometer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedIIS2DULPXTRAccelerometer-1.0.0.tar.gz",
+    "size_bytes": 49282,
+    "sha256": "ad74c75a49b79d8ee2b4955695068118a7b4569f7fb384dcb7780c785d23938f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520IIS2DULPXTR%2520Accelerometer/1.0.0/SolderedIIS2DULPXTRAccelerometer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20IIS2DULPXTR%20Accelerometer/1.0.0/SolderedIIS2DULPXTRAccelerometer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20INA219%20Board%20Arduino%20Library/1.0.1/SolderedINA219BoardArduinoLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedINA219BoardArduinoLibrary-1.0.1.tar.gz",
+    "size_bytes": 30775,
+    "sha256": "816e01c2e9ce18371b3d294de4e743b6cbeaccf0c8b8618b41abdd58419af8b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520INA219%2520Board%2520Arduino%2520Library/1.0.1/SolderedINA219BoardArduinoLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20INA219%20Board%20Arduino%20Library/1.0.1/SolderedINA219BoardArduinoLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20Inputronic%20BRIDGE%20Library/1.0.0/SolderedInputronicBRIDGELibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedInputronicBRIDGELibrary-1.0.0.tar.gz",
+    "size_bytes": 23691,
+    "sha256": "e61945199a8f29e728343676a6acce4e080ec4ea0bc102ea381dbdfd97da978f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520Inputronic%2520BRIDGE%2520Library/1.0.0/SolderedInputronicBRIDGELibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20Inputronic%20BRIDGE%20Library/1.0.0/SolderedInputronicBRIDGELibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20Inputronic%20GRID/1.0.0/SolderedInputronicGRID-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedInputronicGRID-1.0.0.tar.gz",
+    "size_bytes": 18780,
+    "sha256": "8eacf27b56bddd0a4c65554d5584c8f85a78263a5e69d2765aadb6b0ad8b44d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520Inputronic%2520GRID/1.0.0/SolderedInputronicGRID-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20Inputronic%20GRID/1.0.0/SolderedInputronicGRID-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20Inputronic%20Keyboard/1.0.0/SolderedInputronicKeyboard-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedInputronicKeyboard-1.0.0.tar.gz",
+    "size_bytes": 28844,
+    "sha256": "96e6a3c7e038ab197ef71c929407091225a87d16c77eada0c8f224bf9c04091a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520Inputronic%2520Keyboard/1.0.0/SolderedInputronicKeyboard-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20Inputronic%20Keyboard/1.0.0/SolderedInputronicKeyboard-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20L86%20M33%20GNSS%20Library/1.0.0/SolderedL86M33GNSSLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedL86M33GNSSLibrary-1.0.0.tar.gz",
+    "size_bytes": 46908,
+    "sha256": "2f7c20ccaa24614a2713be6018fa39de621473c7d57f75024fbfb8911f07fd33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520L86%2520M33%2520GNSS%2520Library/1.0.0/SolderedL86M33GNSSLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20L86%20M33%20GNSS%20Library/1.0.0/SolderedL86M33GNSSLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20LCD%20Arduino%20Librray/1.0.1/SolderedLCDArduinoLibrray-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedLCDArduinoLibrray-1.0.1.tar.gz",
+    "size_bytes": 20943,
+    "sha256": "5e7595cec000237a83404ad22f91b3a885cc594ed9850b763b40d3ab205785bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520LCD%2520Arduino%2520Librray/1.0.1/SolderedLCDArduinoLibrray-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20LCD%20Arduino%20Librray/1.0.1/SolderedLCDArduinoLibrray-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20LSM6DS3%20Arduino%20library/1.0.0/SolderedLSM6DS3Arduinolibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedLSM6DS3Arduinolibrary-1.0.0.tar.gz",
+    "size_bytes": 51948,
+    "sha256": "da603302b5a5590d086ac8bb79a2dc0b23b42de391b49a43169bd4162b5a2e02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520LSM6DS3%2520Arduino%2520library/1.0.0/SolderedLSM6DS3Arduinolibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20LSM6DS3%20Arduino%20library/1.0.0/SolderedLSM6DS3Arduinolibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20LSM6DSO%20Arduino%20Library/1.0.0/SolderedLSM6DSOArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedLSM6DSOArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 75675,
+    "sha256": "98c4459bc30259f3aa838c0daa4a3538f80f1aa01c620133a0c0cd7b7475c0cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520LSM6DSO%2520Arduino%2520Library/1.0.0/SolderedLSM6DSOArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20LSM6DSO%20Arduino%20Library/1.0.0/SolderedLSM6DSOArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20LSM9DS1TR%20Arduino%20Library/1.0.0/SolderedLSM9DS1TRArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedLSM9DS1TRArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 39742,
+    "sha256": "543dcd7b588ff61380aadc3734cdd1e2d55092777f875d3946451e07b2c12f5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520LSM9DS1TR%2520Arduino%2520Library/1.0.0/SolderedLSM9DS1TRArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20LSM9DS1TR%20Arduino%20Library/1.0.0/SolderedLSM9DS1TRArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20MCP23017%20Arduino%20Library/1.0.1/SolderedMCP23017ArduinoLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedMCP23017ArduinoLibrary-1.0.1.tar.gz",
+    "size_bytes": 10041,
+    "sha256": "108a9c2060703279c1c0c33ab21e5d99a024bfa8cd3013fc1ce82218d4ba1099",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520MCP23017%2520Arduino%2520Library/1.0.1/SolderedMCP23017ArduinoLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20MCP23017%20Arduino%20Library/1.0.1/SolderedMCP23017ArduinoLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20MCP4018%20Arduino%20Library/1.0.1/SolderedMCP4018ArduinoLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedMCP4018ArduinoLibrary-1.0.1.tar.gz",
+    "size_bytes": 17278,
+    "sha256": "3bf689438dd380c7ada34f64fce4e8931a603a372a46e93e7b1ed3ca251069c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520MCP4018%2520Arduino%2520Library/1.0.1/SolderedMCP4018ArduinoLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20MCP4018%20Arduino%20Library/1.0.1/SolderedMCP4018ArduinoLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20MCP47A1%20DAC%20library/1.0.0/SolderedMCP47A1DAClibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedMCP47A1DAClibrary-1.0.0.tar.gz",
+    "size_bytes": 17537,
+    "sha256": "4b8b9e15c461365133ec6c345ecb4ca943f9c290a731ba41e8c9d7a8ce37c8d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520MCP47A1%2520DAC%2520library/1.0.0/SolderedMCP47A1DAClibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20MCP47A1%20DAC%20library/1.0.0/SolderedMCP47A1DAClibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20MQ-X%20Gas%20Sensor%20Arduino%20Library/1.1.0/SolderedMQ-XGasSensorArduinoLibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedMQ-XGasSensorArduinoLibrary-1.1.0.tar.gz",
+    "size_bytes": 25378,
+    "sha256": "706edbb0ec4e10d0a49d10838632418bdcb3b94406f8f1d4cf60fe6053f2a204",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520MQ-X%2520Gas%2520Sensor%2520Arduino%2520Library/1.1.0/SolderedMQ-XGasSensorArduinoLibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20MQ-X%20Gas%20Sensor%20Arduino%20Library/1.1.0/SolderedMQ-XGasSensorArduinoLibrary-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20Microphone%20SPK0641HT%20Library/1.0.0/SolderedMicrophoneSPK0641HTLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedMicrophoneSPK0641HTLibrary-1.0.0.tar.gz",
+    "size_bytes": 25567,
+    "sha256": "0122ccf141dcef8e67e6e7464e72de94b159fbe3a9b806caefa120521b6d03e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520Microphone%2520SPK0641HT%2520Library/1.0.0/SolderedMicrophoneSPK0641HTLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20Microphone%20SPK0641HT%20Library/1.0.0/SolderedMicrophoneSPK0641HTLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20OLED%20Display%20Arduino%20Library/1.0.1/SolderedOLEDDisplayArduinoLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedOLEDDisplayArduinoLibrary-1.0.1.tar.gz",
+    "size_bytes": 342691,
+    "sha256": "7f3b99e0885bd9db19725c2494f45baaa68f69edc63380a705c2591a004fd61e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520OLED%2520Display%2520Arduino%2520Library/1.0.1/SolderedOLEDDisplayArduinoLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20OLED%20Display%20Arduino%20Library/1.0.1/SolderedOLEDDisplayArduinoLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20Obstacle%20Sensor%20Arduino%20Library/1.0.1/SolderedObstacleSensorArduinoLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedObstacleSensorArduinoLibrary-1.0.1.tar.gz",
+    "size_bytes": 16856,
+    "sha256": "2aae240d173042726a0ba58a79f29d546805be51deba7927e978c2822c0652d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520Obstacle%2520Sensor%2520Arduino%2520Library/1.0.1/SolderedObstacleSensorArduinoLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20Obstacle%20Sensor%20Arduino%20Library/1.0.1/SolderedObstacleSensorArduinoLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20OpenAI%20Library/1.0.0/SolderedOpenAILibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedOpenAILibrary-1.0.0.tar.gz",
+    "size_bytes": 24586,
+    "sha256": "237b2835e09ecc2d154d878f486858824136c5484c1b8bf05b26cde51249c08e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520OpenAI%2520Library/1.0.0/SolderedOpenAILibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20OpenAI%20Library/1.0.0/SolderedOpenAILibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20PCA9685%20PWM%20Servo%20Driver/1.0.0/SolderedPCA9685PWMServoDriver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedPCA9685PWMServoDriver-1.0.0.tar.gz",
+    "size_bytes": 17756,
+    "sha256": "65c92e34985081e3c4b4c441649ece74359bb862d0083a09d665ba0784cf395f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520PCA9685%2520PWM%2520Servo%2520Driver/1.0.0/SolderedPCA9685PWMServoDriver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20PCA9685%20PWM%20Servo%20Driver/1.0.0/SolderedPCA9685PWMServoDriver-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20PCAL6416A%20IO%20expander%20library/1.0.0/SolderedPCAL6416AIOexpanderlibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedPCAL6416AIOexpanderlibrary-1.0.0.tar.gz",
+    "size_bytes": 19878,
+    "sha256": "26ef2ad9bc2e20112fb4da99f34276fe70e56c945eead38d16b90d537eb17196",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520PCAL6416A%2520IO%2520expander%2520library/1.0.0/SolderedPCAL6416AIOexpanderlibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20PCAL6416A%20IO%20expander%20library/1.0.0/SolderedPCAL6416AIOexpanderlibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20PCF85063A%20RTC%20Library/1.0.0/SolderedPCF85063ARTCLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedPCF85063ARTCLibrary-1.0.0.tar.gz",
+    "size_bytes": 19575,
+    "sha256": "893e6dd8b115b26cad45ae602144dee44533c0034296c288ad8cdc2d4cd1bf1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520PCF85063A%2520RTC%2520Library/1.0.0/SolderedPCF85063ARTCLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20PCF85063A%20RTC%20Library/1.0.0/SolderedPCF85063ARTCLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20PMS7003%20Arduino%20Library/1.0.0/SolderedPMS7003ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedPMS7003ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 13533,
+    "sha256": "e721101d19f0d71878fe480f2bdd3ff29b315b625359533546ee233ca4e1737d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520PMS7003%2520Arduino%2520Library/1.0.0/SolderedPMS7003ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20PMS7003%20Arduino%20Library/1.0.0/SolderedPMS7003ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20Rotary%20Encoder%20with%20EasyC/1.0.0/SolderedRotaryEncoderwithEasyC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedRotaryEncoderwithEasyC-1.0.0.tar.gz",
+    "size_bytes": 18867,
+    "sha256": "7745cb78f6cea39dd7b45ccb38f242bdded6db7496e08c80453a7efa21124156",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520Rotary%2520Encoder%2520with%2520EasyC/1.0.0/SolderedRotaryEncoderwithEasyC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20Rotary%20Encoder%20with%20EasyC/1.0.0/SolderedRotaryEncoderwithEasyC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20SIM7020%20NB-IoT%20Library/1.0.0/SolderedSIM7020NB-IoTLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedSIM7020NB-IoTLibrary-1.0.0.tar.gz",
+    "size_bytes": 32737,
+    "sha256": "5cb55988b342e98e8e57d23c7277cc8b83c4f16e98837742efd2333b8d690ed7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520SIM7020%2520NB-IoT%2520Library/1.0.0/SolderedSIM7020NB-IoTLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20SIM7020%20NB-IoT%20Library/1.0.0/SolderedSIM7020NB-IoTLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20SIM800L%20Arduino%20Library/1.0.0/SolderedSIM800LArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedSIM800LArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 77175,
+    "sha256": "bf15e3acdc1ddd4e550532408ccb22ec0a6bb3e3509ab376ce0ed0d0ac05f6e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520SIM800L%2520Arduino%2520Library/1.0.0/SolderedSIM800LArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20SIM800L%20Arduino%20Library/1.0.0/SolderedSIM800LArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20Slider%20Potentiometer%20with%20easyC/1.0.0/SolderedSliderPotentiometerwitheasyC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedSliderPotentiometerwitheasyC-1.0.0.tar.gz",
+    "size_bytes": 16367,
+    "sha256": "a144c754a17bd04ce581306a7bedef8797ed404670219837c6db7e201396e674",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520Slider%2520Potentiometer%2520with%2520easyC/1.0.0/SolderedSliderPotentiometerwitheasyC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20Slider%20Potentiometer%20with%20easyC/1.0.0/SolderedSliderPotentiometerwitheasyC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20TCA9548A%20Multiplexer%20Arduino%20Library/1.0.0/SolderedTCA9548AMultiplexerArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedTCA9548AMultiplexerArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 13827,
+    "sha256": "a98a29b752643a2c83db103e31a37ce57c7c0249cb5b1202bf7f14001f0ca921",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520TCA9548A%2520Multiplexer%2520Arduino%2520Library/1.0.0/SolderedTCA9548AMultiplexerArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20TCA9548A%20Multiplexer%20Arduino%20Library/1.0.0/SolderedTCA9548AMultiplexerArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20TMP117/1.0.0/SolderedTMP117-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedTMP117-1.0.0.tar.gz",
+    "size_bytes": 21134,
+    "sha256": "eca42e4b30adb705baa1e1093742bcb2b1bec81214ac847bfbaab9a5b561bbbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520TMP117/1.0.0/SolderedTMP117-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20TMP117/1.0.0/SolderedTMP117-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20Thermocouple%20Sensor%20AD8495%20Library/1.0.0/SolderedThermocoupleSensorAD8495Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedThermocoupleSensorAD8495Library-1.0.0.tar.gz",
+    "size_bytes": 16131,
+    "sha256": "7a94ae673c7c789ab133842076ab720c1a6db6b4d6d6d195765535fa4a29a371",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520Thermocouple%2520Sensor%2520AD8495%2520Library/1.0.0/SolderedThermocoupleSensorAD8495Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20Thermocouple%20Sensor%20AD8495%20Library/1.0.0/SolderedThermocoupleSensorAD8495Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20Ultrasonic%20Distance%20Sensor%20Arduino%20library/1.0.1/SolderedUltrasonicDistanceSensorArduinolibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedUltrasonicDistanceSensorArduinolibrary-1.0.1.tar.gz",
+    "size_bytes": 16797,
+    "sha256": "8febcc8d761106b5d050c8f31517ddc28776c1a3f98d2e32438cb189dbec64dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520Ultrasonic%2520Distance%2520Sensor%2520Arduino%2520library/1.0.1/SolderedUltrasonicDistanceSensorArduinolibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20Ultrasonic%20Distance%20Sensor%20Arduino%20library/1.0.1/SolderedUltrasonicDistanceSensorArduinolibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20WS2812B%20Grid/1.0.0/SolderedWS2812BGrid-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedWS2812BGrid-1.0.0.tar.gz",
+    "size_bytes": 81695,
+    "sha256": "728c719110b8a78d2c8e6b5e9a3abb498a7eb7df2b8a069c015b886387a928e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520WS2812B%2520Grid/1.0.0/SolderedWS2812BGrid-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20WS2812B%20Grid/1.0.0/SolderedWS2812BGrid-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20microSD%20Card%20Breakout%20Arduino%20library/1.0.0/SolderedmicroSDCardBreakoutArduinolibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderedmicroSDCardBreakoutArduinolibrary-1.0.0.tar.gz",
+    "size_bytes": 237271,
+    "sha256": "2e5ea0e6a05b3975af33deb4deb069d8ed61fc5ae6616be71323dfaf433d0b22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520microSD%2520Card%2520Breakout%2520Arduino%2520library/1.0.0/SolderedmicroSDCardBreakoutArduinolibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20microSD%20Card%20Breakout%20Arduino%20library/1.0.0/SolderedmicroSDCardBreakoutArduinolibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20nRF24%20Arduino%20Library/1.0.1/SolderednRF24ArduinoLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolderednRF24ArduinoLibrary-1.0.1.tar.gz",
+    "size_bytes": 62170,
+    "sha256": "2d13d749356177d3e361ecd2eb6c90c5a7b70fffb8ba1ee950833ed083f338fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520nRF24%2520Arduino%2520Library/1.0.1/SolderednRF24ArduinoLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20nRF24%20Arduino%20Library/1.0.1/SolderednRF24ArduinoLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered%20u-blox%20GPS%20GNSS/1.0.0/Solderedu-bloxGPSGNSS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Solderedu-bloxGPSGNSS-1.0.0.tar.gz",
+    "size_bytes": 265372,
+    "sha256": "6a155655665084b08fd7fe6f588b65af88f1d81257ca003d308237d67956aaea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered%2520u-blox%2520GPS%2520GNSS/1.0.0/Solderedu-bloxGPSGNSS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered%20u-blox%20GPS%20GNSS/1.0.0/Solderedu-bloxGPSGNSS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered-SCD43/1.0.0/Soldered-SCD43-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Soldered-SCD43-1.0.0.tar.gz",
+    "size_bytes": 41965,
+    "sha256": "d7d42ad131ab17d4e232ff9b656f3f32dd578839473f13107283762530819f9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered-SCD43/1.0.0/Soldered-SCD43-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered-SCD43/1.0.0/Soldered-SCD43-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solderedelectronics/library/Soldered-Simple-Sensor-Arduino-Library/1.0.0/Soldered-Simple-Sensor-Arduino-Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Soldered-Simple-Sensor-Arduino-Library-1.0.0.tar.gz",
+    "size_bytes": 21233,
+    "sha256": "4f55b4c5b45e3665709a22aa6cb6278101cb4a98bd88306a6a8aa567d59ccd42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solderedelectronics/library/Soldered-Simple-Sensor-Arduino-Library/1.0.0/Soldered-Simple-Sensor-Arduino-Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solderedelectronics/library/Soldered-Simple-Sensor-Arduino-Library/1.0.0/Soldered-Simple-Sensor-Arduino-Library-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

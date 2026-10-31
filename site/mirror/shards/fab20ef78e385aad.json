@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arnab8820",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arnab8820/library/ESPWifiAssist/1.0.0/ESPWifiAssist-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPWifiAssist-1.0.0.tar.gz",
+    "size_bytes": 8995,
+    "sha256": "e48093fad14e2e7f751a4f0738813c899a13b9dd7ac0e6cd0aead7e56869b650",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arnab8820/library/ESPWifiAssist/1.0.0/ESPWifiAssist-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arnab8820/library/ESPWifiAssist/1.0.0/ESPWifiAssist-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arnab8820/library/ESPWifiAssist/1.0.1/ESPWifiAssist-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPWifiAssist-1.0.1.tar.gz",
+    "size_bytes": 9705,
+    "sha256": "acf882e4b2d566be8d8789d2341f158f9d4eb5fb6045da5d078e3b37a67d0ff2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arnab8820/library/ESPWifiAssist/1.0.1/ESPWifiAssist-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arnab8820/library/ESPWifiAssist/1.0.1/ESPWifiAssist-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arnab8820/library/ESPWifiAssist/1.0.2/ESPWifiAssist-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPWifiAssist-1.0.2.tar.gz",
+    "size_bytes": 9728,
+    "sha256": "248346f0a4ef313ee8bb5078a45c85d93a3ed073871ca6519a1a94e58e7e0545",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arnab8820/library/ESPWifiAssist/1.0.2/ESPWifiAssist-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arnab8820/library/ESPWifiAssist/1.0.2/ESPWifiAssist-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arnab8820/library/ESPWifiAssist/1.0.3/ESPWifiAssist-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPWifiAssist-1.0.3.tar.gz",
+    "size_bytes": 10100,
+    "sha256": "a7b088c8e5ba0e00d6a937fefd5fb7329dd68128d6d944111f884a73f553eabd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arnab8820/library/ESPWifiAssist/1.0.3/ESPWifiAssist-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arnab8820/library/ESPWifiAssist/1.0.3/ESPWifiAssist-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arnab8820/library/SmartTime/1.0.0/SmartTime-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartTime-1.0.0.tar.gz",
+    "size_bytes": 2560,
+    "sha256": "2f847fe90f649505ce91cbe0d81147a30785ee0e0636f945c5ff2102fddc2cfa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arnab8820/library/SmartTime/1.0.0/SmartTime-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arnab8820/library/SmartTime/1.0.0/SmartTime-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arnab8820/library/SmartTime/1.0.1/SmartTime-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartTime-1.0.1.tar.gz",
+    "size_bytes": 2606,
+    "sha256": "5baa7d5b3722c75c03644e1dd225647d8545fb1a805316dafa4e37807067c4b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arnab8820/library/SmartTime/1.0.1/SmartTime-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arnab8820/library/SmartTime/1.0.1/SmartTime-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

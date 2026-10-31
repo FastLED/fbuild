@@ -1,0 +1,295 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alfredosystems",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alfredosystems/library/Alfredo-NoU2/2.0.8/Alfredo-NoU2-2.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Alfredo-NoU2-2.0.8.tar.gz",
+    "size_bytes": 22525,
+    "sha256": "3e3fd1441a6562f27983d7823b203be1afb285ff53b38bc4912c13d062db5fc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/Alfredo-NoU2/2.0.8/Alfredo-NoU2-2.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/Alfredo-NoU2/2.0.8/Alfredo-NoU2-2.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/Alfredo-NoU3/1.0.12/Alfredo-NoU3-1.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Alfredo-NoU3-1.0.12.tar.gz",
+    "size_bytes": 41096,
+    "sha256": "3fa3b8f68dcb2a7400eb95e80ddea26828be14384d796622a94421cbb29b5f43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/Alfredo-NoU3/1.0.12/Alfredo-NoU3-1.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/Alfredo-NoU3/1.0.12/Alfredo-NoU3-1.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/Alfredo-NoU3/1.0.9/Alfredo-NoU3-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Alfredo-NoU3-1.0.9.tar.gz",
+    "size_bytes": 40760,
+    "sha256": "ca79117630a8a1c1df59ac32dc29332fd7759c7503a7bd4eedcb944315e40e39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/Alfredo-NoU3/1.0.9/Alfredo-NoU3-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/Alfredo-NoU3/1.0.9/Alfredo-NoU3-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/Alfredo-NoU3/1.13/Alfredo-NoU3-1.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Alfredo-NoU3-1.13.tar.gz",
+    "size_bytes": 41526,
+    "sha256": "12a6733c51582adfaebb7393f9bc3d392f2bef7f71800bce662ee69ad756a6c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/Alfredo-NoU3/1.13/Alfredo-NoU3-1.13.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/Alfredo-NoU3/1.13/Alfredo-NoU3-1.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/Alfredo-NoU3/2.0/Alfredo-NoU3-2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Alfredo-NoU3-2.0.tar.gz",
+    "size_bytes": 60544,
+    "sha256": "5ea9a74682a19ab20ddd3ab43f9855878128e752e7097353a98827972c76cb47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/Alfredo-NoU3/2.0/Alfredo-NoU3-2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/Alfredo-NoU3/2.0/Alfredo-NoU3-2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/Alfredo-NoU3/3.0/Alfredo-NoU3-3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Alfredo-NoU3-3.0.tar.gz",
+    "size_bytes": 36955,
+    "sha256": "7f239fdef5f16aa474b9ef20a76dfc4484ee7ae7412932114253f8fcc8340652",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/Alfredo-NoU3/3.0/Alfredo-NoU3-3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/Alfredo-NoU3/3.0/Alfredo-NoU3-3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/AlfredoCRSF/1.0.1/AlfredoCRSF-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlfredoCRSF-1.0.1.tar.gz",
+    "size_bytes": 22130,
+    "sha256": "0266bd16d26e48ca9657dbddea123948d12b3c7d1cc6142d8da8680b6d8b4472",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/AlfredoCRSF/1.0.1/AlfredoCRSF-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/AlfredoCRSF/1.0.1/AlfredoCRSF-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/AlfredoCRSF/2.0.0/AlfredoCRSF-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlfredoCRSF-2.0.0.tar.gz",
+    "size_bytes": 37423,
+    "sha256": "40cb7d81f7c61a8f108c786a1d341bdf16415cb1a23927e9acb3dab7d6d1a563",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/AlfredoCRSF/2.0.0/AlfredoCRSF-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/AlfredoCRSF/2.0.0/AlfredoCRSF-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/AlfredoCRSF/2.2/AlfredoCRSF-2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlfredoCRSF-2.2.tar.gz",
+    "size_bytes": 41448,
+    "sha256": "4d6eb937816f941b4556d7709cfc748e30785a8bedbbeaeb4b584095808172b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/AlfredoCRSF/2.2/AlfredoCRSF-2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/AlfredoCRSF/2.2/AlfredoCRSF-2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/AlfredoCRSF/2.3/AlfredoCRSF-2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlfredoCRSF-2.3.tar.gz",
+    "size_bytes": 51707,
+    "sha256": "2fcba57990df3ed98a651422b2a7faed50b00d5b8da925ab4d7cd0d25e0dc17c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/AlfredoCRSF/2.3/AlfredoCRSF-2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/AlfredoCRSF/2.3/AlfredoCRSF-2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/AlfredoCRSF/2.4/AlfredoCRSF-2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlfredoCRSF-2.4.tar.gz",
+    "size_bytes": 52668,
+    "sha256": "a315eb34510dfa96d3a862b775921aada62dedef24781940e5fffc421545618c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/AlfredoCRSF/2.4/AlfredoCRSF-2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/AlfredoCRSF/2.4/AlfredoCRSF-2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/AlfredoCRSF/2.5/AlfredoCRSF-2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlfredoCRSF-2.5.tar.gz",
+    "size_bytes": 55078,
+    "sha256": "9cf34ba5a0363811e00ba0f4ad963b04c1f5a1864b5cfba393e6db5c4ae34f69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/AlfredoCRSF/2.5/AlfredoCRSF-2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/AlfredoCRSF/2.5/AlfredoCRSF-2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/AlfredoConnect-Receive/1.0.0/AlfredoConnect-Receive-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlfredoConnect-Receive-1.0.0.tar.gz",
+    "size_bytes": 20279,
+    "sha256": "954cb804bb16a78193e3350f1ffa7c710b43203c88ab8041c924de8907402362",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/AlfredoConnect-Receive/1.0.0/AlfredoConnect-Receive-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/AlfredoConnect-Receive/1.0.0/AlfredoConnect-Receive-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/AlfredoDShot/1.0.0/AlfredoDShot-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlfredoDShot-1.0.0.tar.gz",
+    "size_bytes": 29300,
+    "sha256": "fa8e986e82f534e1d69f30076b26e8f48ff1fb3e3ca7bbf5d6ffb082fac6c461",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/AlfredoDShot/1.0.0/AlfredoDShot-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/AlfredoDShot/1.0.0/AlfredoDShot-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/AlfredoDShot/1.1/AlfredoDShot-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlfredoDShot-1.1.tar.gz",
+    "size_bytes": 34302,
+    "sha256": "ffc96c663c65a77d816296f6f3b2d41f7c87d96f4922907a741b1c6bcb255766",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/AlfredoDShot/1.1/AlfredoDShot-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/AlfredoDShot/1.1/AlfredoDShot-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/AlfredoFusion/1.0/AlfredoFusion-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlfredoFusion-1.0.tar.gz",
+    "size_bytes": 36715,
+    "sha256": "f3589c2b7e40b6921a0d4d9d7290e240d3b8f879908b95f564e5da1bfffd5c65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/AlfredoFusion/1.0/AlfredoFusion-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/AlfredoFusion/1.0/AlfredoFusion-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/AlfredoTelemetry/1.0/AlfredoTelemetry-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlfredoTelemetry-1.0.tar.gz",
+    "size_bytes": 28859,
+    "sha256": "97f2a520754c94664003d675cb3930af1e7a354ffbcd30b444d78fceaa110d1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/AlfredoTelemetry/1.0/AlfredoTelemetry-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/AlfredoTelemetry/1.0/AlfredoTelemetry-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/PestoLink-Receive/1.0.10/PestoLink-Receive-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PestoLink-Receive-1.0.10.tar.gz",
+    "size_bytes": 17609,
+    "sha256": "6e049f8157fb371d64fea1832aceff9934efea5f6f0d1dc4ac4402cd7a6654d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/PestoLink-Receive/1.0.10/PestoLink-Receive-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/PestoLink-Receive/1.0.10/PestoLink-Receive-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/PestoLink-Receive/1.0.11/PestoLink-Receive-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PestoLink-Receive-1.0.11.tar.gz",
+    "size_bytes": 17688,
+    "sha256": "1e305a820000987ddb370adda535e906f0a66d78709104cd32426d3a8bb5231f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/PestoLink-Receive/1.0.11/PestoLink-Receive-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/PestoLink-Receive/1.0.11/PestoLink-Receive-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/PestoLink-Receive/1.0.12/PestoLink-Receive-1.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PestoLink-Receive-1.0.12.tar.gz",
+    "size_bytes": 17245,
+    "sha256": "fbbc52f9aaeef0049ad101a2a7a1648877e7aefeb5b7adf735acfaf37a87f62f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/PestoLink-Receive/1.0.12/PestoLink-Receive-1.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/PestoLink-Receive/1.0.12/PestoLink-Receive-1.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/SimpleMelt/1.0.0/SimpleMelt-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleMelt-1.0.0.tar.gz",
+    "size_bytes": 141582,
+    "sha256": "942eb2aaf3041b0e9c682f9501c5349aa161c40cf63b7ea525ae5b6dc0d8b68f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/SimpleMelt/1.0.0/SimpleMelt-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/SimpleMelt/1.0.0/SimpleMelt-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfredosystems/library/SimpleMelt/2.0.0/SimpleMelt-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleMelt-2.0.0.tar.gz",
+    "size_bytes": 31783,
+    "sha256": "1bb1f18cd4cd31a1a70d9e8294eb48ae982cdd3897eba3f7742191e1bbeacca5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfredosystems/library/SimpleMelt/2.0.0/SimpleMelt-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alfredosystems/library/SimpleMelt/2.0.0/SimpleMelt-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

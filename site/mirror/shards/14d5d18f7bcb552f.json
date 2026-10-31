@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-drob",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-drob/library/TinyGPS/0.0.0+sha.44bee9056857/TinyGPS-0.0.0+sha.44bee9056857.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyGPS-0.0.0+sha.44bee9056857.tar.gz",
+    "size_bytes": 5720,
+    "sha256": "d340f9908c014949d27204a9188b518af122d514d9c02bdd7778afac5fabe8ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-drob/library/TinyGPS/0.0.0%2Bsha.44bee9056857/TinyGPS-0.0.0%2Bsha.44bee9056857.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-drob/library/TinyGPS/0.0.0%2Bsha.44bee9056857/TinyGPS-0.0.0%2Bsha.44bee9056857.tar.gz"
+    ]
+   }
+  }
+ ]
+}

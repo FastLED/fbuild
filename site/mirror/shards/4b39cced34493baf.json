@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/esicoe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "esicoe/library/BME280_LITE/2.0.0/BME280_LITE-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280_LITE-2.0.0.tar.gz",
+    "size_bytes": 5657,
+    "sha256": "c1c4e6a100af0b43ae47940729be53fc5d070407d84fabab000afbb7de9a13c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esicoe/library/BME280_LITE/2.0.0/BME280_LITE-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esicoe/library/BME280_LITE/2.0.0/BME280_LITE-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esicoe/library/BME280_LITE/2.0.1/BME280_LITE-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280_LITE-2.0.1.tar.gz",
+    "size_bytes": 6108,
+    "sha256": "9b19811d8df8ef7225cd49c213c61287c7fc2f027212c4a937dbda6e7a9d36c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esicoe/library/BME280_LITE/2.0.1/BME280_LITE-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esicoe/library/BME280_LITE/2.0.1/BME280_LITE-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

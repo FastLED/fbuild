@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ams-osram",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ams-osram/library/OSP%20ReusableApps%20aoapps/0.4.0/OSPReusableAppsaoapps-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPReusableAppsaoapps-0.4.0.tar.gz",
+    "size_bytes": 30618,
+    "sha256": "8775d9c6ccb1e3ea6a4b7c75af21f1846b6b17c1387a1a66001a42ba2adbd81f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram/library/OSP%2520ReusableApps%2520aoapps/0.4.0/OSPReusableAppsaoapps-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram/library/OSP%20ReusableApps%20aoapps/0.4.0/OSPReusableAppsaoapps-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ams-osram/library/OSP%20ReusableApps%20aoapps/0.4.1/OSPReusableAppsaoapps-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPReusableAppsaoapps-0.4.1.tar.gz",
+    "size_bytes": 30676,
+    "sha256": "e52f66d59e18b3ada17ac0dc701483d281ea22048635d98ea6525fa1f8854c68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram/library/OSP%2520ReusableApps%2520aoapps/0.4.1/OSPReusableAppsaoapps-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram/library/OSP%20ReusableApps%20aoapps/0.4.1/OSPReusableAppsaoapps-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ams-osram/library/OSP%20ToplevelSketches%20aotop/0.5.0/OSPToplevelSketchesaotop-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPToplevelSketchesaotop-0.5.0.tar.gz",
+    "size_bytes": 34714,
+    "sha256": "50c63c69cbbbcfe0406b16af0be520fb686362fb467c42ce01f2601f0e3993c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram/library/OSP%2520ToplevelSketches%2520aotop/0.5.0/OSPToplevelSketchesaotop-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram/library/OSP%20ToplevelSketches%20aotop/0.5.0/OSPToplevelSketchesaotop-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ams-osram/library/OSP%20ToplevelSketches%20aotop/0.6.0/OSPToplevelSketchesaotop-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPToplevelSketchesaotop-0.6.0.tar.gz",
+    "size_bytes": 78202,
+    "sha256": "1730813a3a828b8b0fc62d419e2a8dc55ef47fe265c3f64f629fcc080c418df5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram/library/OSP%2520ToplevelSketches%2520aotop/0.6.0/OSPToplevelSketchesaotop-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram/library/OSP%20ToplevelSketches%20aotop/0.6.0/OSPToplevelSketchesaotop-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ams-osram/library/OSP%20ToplevelSketches%20aotop/0.7.0/OSPToplevelSketchesaotop-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPToplevelSketchesaotop-0.7.0.tar.gz",
+    "size_bytes": 78534,
+    "sha256": "221cfdf46c3cfe2500cdfd2d81890b008f6a94a6c8c472e2117de1faee2b2a95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ams-osram/library/OSP%2520ToplevelSketches%2520aotop/0.7.0/OSPToplevelSketchesaotop-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ams-osram/library/OSP%20ToplevelSketches%20aotop/0.7.0/OSPToplevelSketchesaotop-0.7.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

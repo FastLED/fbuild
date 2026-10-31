@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nguyenhieu11",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nguyenhieu11/library/Mlt_DIO/1.1.3/Mlt_DIO-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mlt_DIO-1.1.3.tar.gz",
+    "size_bytes": 2719,
+    "sha256": "908a0b4a42b04e258ab5fd2202125fd9cab18fa8fae0460c6b6dcc9591345010",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nguyenhieu11/library/Mlt_DIO/1.1.3/Mlt_DIO-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nguyenhieu11/library/Mlt_DIO/1.1.3/Mlt_DIO-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nguyenhieu11/library/Mlt_DS1307/1.0.4/Mlt_DS1307-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mlt_DS1307-1.0.4.tar.gz",
+    "size_bytes": 2833,
+    "sha256": "a63a44e650c4939696fd5431bedce16cb025c2ac8984f7a49162ab530c7c7b25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nguyenhieu11/library/Mlt_DS1307/1.0.4/Mlt_DS1307-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nguyenhieu11/library/Mlt_DS1307/1.0.4/Mlt_DS1307-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nguyenhieu11/library/Mlt_ESP32Ntp/1.0.4/Mlt_ESP32Ntp-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mlt_ESP32Ntp-1.0.4.tar.gz",
+    "size_bytes": 1941,
+    "sha256": "4dd593b09906abd8e0dfd2c2a5bc84198232d845007bb0ca7c2ffdbf425abdc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nguyenhieu11/library/Mlt_ESP32Ntp/1.0.4/Mlt_ESP32Ntp-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nguyenhieu11/library/Mlt_ESP32Ntp/1.0.4/Mlt_ESP32Ntp-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nguyenhieu11/library/Mlt_ESP32OTA/1.1.2/Mlt_ESP32OTA-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mlt_ESP32OTA-1.1.2.tar.gz",
+    "size_bytes": 5210,
+    "sha256": "65c21cd38e71cdb1aedf31f21799a1e0016e943e2161aa60daa358d998e437f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nguyenhieu11/library/Mlt_ESP32OTA/1.1.2/Mlt_ESP32OTA-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nguyenhieu11/library/Mlt_ESP32OTA/1.1.2/Mlt_ESP32OTA-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nguyenhieu11/library/Mlt_ESP32Paring/1.1.4/Mlt_ESP32Paring-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mlt_ESP32Paring-1.1.4.tar.gz",
+    "size_bytes": 9099,
+    "sha256": "52bbe048b07f5ba7b503654eddf4be85eee562160f8f7dbce8681b5ce83cb83f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nguyenhieu11/library/Mlt_ESP32Paring/1.1.4/Mlt_ESP32Paring-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nguyenhieu11/library/Mlt_ESP32Paring/1.1.4/Mlt_ESP32Paring-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nguyenhieu11/library/Mlt_ESP8266Ntp/1.0.0/Mlt_ESP8266Ntp-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mlt_ESP8266Ntp-1.0.0.tar.gz",
+    "size_bytes": 1980,
+    "sha256": "9d847be4d29efc720633c9c1a27e9163d29f32767d1650b5802bc9ea46dd3a2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nguyenhieu11/library/Mlt_ESP8266Ntp/1.0.0/Mlt_ESP8266Ntp-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nguyenhieu11/library/Mlt_ESP8266Ntp/1.0.0/Mlt_ESP8266Ntp-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nguyenhieu11/library/Mlt_ESP8266OTA/1.0.3/Mlt_ESP8266OTA-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mlt_ESP8266OTA-1.0.3.tar.gz",
+    "size_bytes": 5122,
+    "sha256": "3631ce7656648d7546f805e3f0a791f342b292ccb1dbc10b416624cd165c12e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nguyenhieu11/library/Mlt_ESP8266OTA/1.0.3/Mlt_ESP8266OTA-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nguyenhieu11/library/Mlt_ESP8266OTA/1.0.3/Mlt_ESP8266OTA-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nguyenhieu11/library/Mlt_ESP8266Paring/1.1.6/Mlt_ESP8266Paring-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mlt_ESP8266Paring-1.1.6.tar.gz",
+    "size_bytes": 7802,
+    "sha256": "57819ff4c2a5198f61b0c35c1b7f1fbd8035b20641a8b5b6de31126477f11d2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nguyenhieu11/library/Mlt_ESP8266Paring/1.1.6/Mlt_ESP8266Paring-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nguyenhieu11/library/Mlt_ESP8266Paring/1.1.6/Mlt_ESP8266Paring-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nguyenhieu11/library/Mlt_ESP8266Schedule/1.0.0/Mlt_ESP8266Schedule-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mlt_ESP8266Schedule-1.0.0.tar.gz",
+    "size_bytes": 4976,
+    "sha256": "e0b4c05240d3dbf84ba6d1dac0399efd00ab553e0f564ae90d5fadf8600953c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nguyenhieu11/library/Mlt_ESP8266Schedule/1.0.0/Mlt_ESP8266Schedule-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nguyenhieu11/library/Mlt_ESP8266Schedule/1.0.0/Mlt_ESP8266Schedule-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nguyenhieu11/library/Mlt_RtuNpk/1.0.3/Mlt_RtuNpk-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mlt_RtuNpk-1.0.3.tar.gz",
+    "size_bytes": 2128,
+    "sha256": "f9f49098f6e5fda65d96522b89047e083e25d25d8454785b92256d44d8a570db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nguyenhieu11/library/Mlt_RtuNpk/1.0.3/Mlt_RtuNpk-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nguyenhieu11/library/Mlt_RtuNpk/1.0.3/Mlt_RtuNpk-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nguyenhieu11/library/Mlt_Schedule/1.2.0/Mlt_Schedule-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mlt_Schedule-1.2.0.tar.gz",
+    "size_bytes": 6085,
+    "sha256": "29968b0246adf993c2ae833fd1ddca9301307ff6d66dbd314134e0f0cae8040c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nguyenhieu11/library/Mlt_Schedule/1.2.0/Mlt_Schedule-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nguyenhieu11/library/Mlt_Schedule/1.2.0/Mlt_Schedule-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ingarage",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ingarage/library/Maker%20PlayGround%20Device/1.0.0/MakerPlayGroundDevice-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MakerPlayGroundDevice-1.0.0.tar.gz",
+    "size_bytes": 340229,
+    "sha256": "415fe044bb06d4694cdb20971cd33251a99552a220059be5f042463d006b8fee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ingarage/library/Maker%2520PlayGround%2520Device/1.0.0/MakerPlayGroundDevice-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ingarage/library/Maker%20PlayGround%20Device/1.0.0/MakerPlayGroundDevice-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

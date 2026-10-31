@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/martinverges",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "martinverges/library/ESP32%20OTA%20Update%20Manager/1.0.0/ESP32OTAUpdateManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32OTAUpdateManager-1.0.0.tar.gz",
+    "size_bytes": 18952,
+    "sha256": "6754036df46f111d8b26d5a751745e6581bf537da5ede7f82d06ff1f5929e4f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinverges/library/ESP32%2520OTA%2520Update%2520Manager/1.0.0/ESP32OTAUpdateManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/martinverges/library/ESP32%20OTA%20Update%20Manager/1.0.0/ESP32OTAUpdateManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinverges/library/ESP32%20Wifi%20Manager/1.5.0/ESP32WifiManager-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32WifiManager-1.5.0.tar.gz",
+    "size_bytes": 32524,
+    "sha256": "bb33728d9f9290ce36c0f749af29ab452279ce1147727ba9e782d669e4e69901",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinverges/library/ESP32%2520Wifi%2520Manager/1.5.0/ESP32WifiManager-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/martinverges/library/ESP32%20Wifi%20Manager/1.5.0/ESP32WifiManager-1.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

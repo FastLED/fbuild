@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marcel-naderer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marcel-naderer/library/Lexo/1.0.0/Lexo-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lexo-1.0.0.tar.gz",
+    "size_bytes": 3400,
+    "sha256": "bd4cf1f35244924b46b504e8ebea289c4f20933a5671222f4b7f2af4a39451c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marcel-naderer/library/Lexo/1.0.0/Lexo-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marcel-naderer/library/Lexo/1.0.0/Lexo-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

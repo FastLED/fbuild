@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tonia",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tonia/library/HeatpumpIR/1.0.20/HeatpumpIR-1.0.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeatpumpIR-1.0.20.tar.gz",
+    "size_bytes": 61912,
+    "sha256": "e5d2019f4534c9847452db0ea35c185e4cf0be53f68caff138c566239a15ee1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonia/library/HeatpumpIR/1.0.20/HeatpumpIR-1.0.20.tar.gz",
+     "https://dl.registry.platformio.org/download/tonia/library/HeatpumpIR/1.0.20/HeatpumpIR-1.0.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tonia/library/HeatpumpIR/1.0.23/HeatpumpIR-1.0.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeatpumpIR-1.0.23.tar.gz",
+    "size_bytes": 63624,
+    "sha256": "dfce4b2c403edba587ffd214f60f872165d5029f48aa6b61cecec2c80ab40f3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonia/library/HeatpumpIR/1.0.23/HeatpumpIR-1.0.23.tar.gz",
+     "https://dl.registry.platformio.org/download/tonia/library/HeatpumpIR/1.0.23/HeatpumpIR-1.0.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tonia/library/HeatpumpIR/1.0.27/HeatpumpIR-1.0.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeatpumpIR-1.0.27.tar.gz",
+    "size_bytes": 68850,
+    "sha256": "3a23bb12f31cd4dffc6a814d32215d6ddfc40360d634deca2e45fc5979ef3a73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonia/library/HeatpumpIR/1.0.27/HeatpumpIR-1.0.27.tar.gz",
+     "https://dl.registry.platformio.org/download/tonia/library/HeatpumpIR/1.0.27/HeatpumpIR-1.0.27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tonia/library/HeatpumpIR/1.0.32/HeatpumpIR-1.0.32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeatpumpIR-1.0.32.tar.gz",
+    "size_bytes": 72875,
+    "sha256": "c869bb0b2c636ef0bc5488bd853ba7750baa7a4b90ec49cec9ebd4ef03c25bc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonia/library/HeatpumpIR/1.0.32/HeatpumpIR-1.0.32.tar.gz",
+     "https://dl.registry.platformio.org/download/tonia/library/HeatpumpIR/1.0.32/HeatpumpIR-1.0.32.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tonia/library/HeatpumpIR/1.0.35/HeatpumpIR-1.0.35.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeatpumpIR-1.0.35.tar.gz",
+    "size_bytes": 76143,
+    "sha256": "5c1f45d253ccaaf46a606b385c2d29e3452525f4300709de9cb78717c726beb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonia/library/HeatpumpIR/1.0.35/HeatpumpIR-1.0.35.tar.gz",
+     "https://dl.registry.platformio.org/download/tonia/library/HeatpumpIR/1.0.35/HeatpumpIR-1.0.35.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tonia/library/HeatpumpIR/1.0.37/HeatpumpIR-1.0.37.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeatpumpIR-1.0.37.tar.gz",
+    "size_bytes": 76188,
+    "sha256": "3352e0f291a14e836d601caf81a3dd496ec13e31527691585e9ed579a928ec67",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonia/library/HeatpumpIR/1.0.37/HeatpumpIR-1.0.37.tar.gz",
+     "https://dl.registry.platformio.org/download/tonia/library/HeatpumpIR/1.0.37/HeatpumpIR-1.0.37.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tonia/library/HeatpumpIR/1.0.39/HeatpumpIR-1.0.39.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeatpumpIR-1.0.39.tar.gz",
+    "size_bytes": 76726,
+    "sha256": "61dbf5e7e5da4a9e059e5d29147a9e1a513b8241a5ab1b00c6e48d594ae6975b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonia/library/HeatpumpIR/1.0.39/HeatpumpIR-1.0.39.tar.gz",
+     "https://dl.registry.platformio.org/download/tonia/library/HeatpumpIR/1.0.39/HeatpumpIR-1.0.39.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tonia/library/HeatpumpIR/1.0.40/HeatpumpIR-1.0.40.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeatpumpIR-1.0.40.tar.gz",
+    "size_bytes": 77797,
+    "sha256": "e5ff00cf813f33209ebac3d3419ff4e813a3a09face85428139eb64eade3a977",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonia/library/HeatpumpIR/1.0.40/HeatpumpIR-1.0.40.tar.gz",
+     "https://dl.registry.platformio.org/download/tonia/library/HeatpumpIR/1.0.40/HeatpumpIR-1.0.40.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tonia/library/HeatpumpIR/1.0.41/HeatpumpIR-1.0.41.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeatpumpIR-1.0.41.tar.gz",
+    "size_bytes": 77840,
+    "sha256": "f67c649164d5e36a4c04aee94bb94fb8d8c783744301755fa160bceee593eb56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonia/library/HeatpumpIR/1.0.41/HeatpumpIR-1.0.41.tar.gz",
+     "https://dl.registry.platformio.org/download/tonia/library/HeatpumpIR/1.0.41/HeatpumpIR-1.0.41.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tonia/library/HeatpumpIR/1.0.42/HeatpumpIR-1.0.42.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeatpumpIR-1.0.42.tar.gz",
+    "size_bytes": 78169,
+    "sha256": "25f1a9903e1aa5078d0e0f624b9ebd1adf39624cbeeaf1d75d42dc5c28fc2558",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tonia/library/HeatpumpIR/1.0.42/HeatpumpIR-1.0.42.tar.gz",
+     "https://dl.registry.platformio.org/download/tonia/library/HeatpumpIR/1.0.42/HeatpumpIR-1.0.42.tar.gz"
+    ]
+   }
+  }
+ ]
+}

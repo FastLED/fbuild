@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/miceuz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "miceuz/library/I2CSoilMoistureSensor/1.1.5/I2CSoilMoistureSensor-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2CSoilMoistureSensor-1.1.5.tar.gz",
+    "size_bytes": 6489,
+    "sha256": "bbbf9341a05d9d65ee7d1dfb5fff1dc4db8104fd91515930aadb3717464918d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miceuz/library/I2CSoilMoistureSensor/1.1.5/I2CSoilMoistureSensor-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/miceuz/library/I2CSoilMoistureSensor/1.1.5/I2CSoilMoistureSensor-1.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

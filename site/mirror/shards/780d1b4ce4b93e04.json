@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dennyem",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dennyem/library/PCF8583_rtc/0.0.0+sha.3291c1f0b986/PCF8583_rtc-0.0.0+sha.3291c1f0b986.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8583_rtc-0.0.0+sha.3291c1f0b986.tar.gz",
+    "size_bytes": 5732,
+    "sha256": "94c5de5e15d947304035c22d8e3627468930f2536b0b05d81b89b9d728dfc6d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dennyem/library/PCF8583_rtc/0.0.0%2Bsha.3291c1f0b986/PCF8583_rtc-0.0.0%2Bsha.3291c1f0b986.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dennyem/library/PCF8583_rtc/0.0.0%2Bsha.3291c1f0b986/PCF8583_rtc-0.0.0%2Bsha.3291c1f0b986.tar.gz"
+    ]
+   }
+  }
+ ]
+}

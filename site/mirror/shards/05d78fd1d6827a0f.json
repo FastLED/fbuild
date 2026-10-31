@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hrk-yas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hrk-yas/library/HM01B0_CPUfree_Camera/1.0.0/HM01B0_CPUfree_Camera-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HM01B0_CPUfree_Camera-1.0.0.tar.gz",
+    "size_bytes": 17127,
+    "sha256": "94e322b64843e19e49b974e371893613258f357af3329b0c5cbc3d170f7b51e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hrk-yas/library/HM01B0_CPUfree_Camera/1.0.0/HM01B0_CPUfree_Camera-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hrk-yas/library/HM01B0_CPUfree_Camera/1.0.0/HM01B0_CPUfree_Camera-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hrk-yas/library/OV7725_Camera_Library/1.0.0/OV7725_Camera_Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OV7725_Camera_Library-1.0.0.tar.gz",
+    "size_bytes": 15482,
+    "sha256": "471db75cb1a60ffbee6f01f40f322d9b9025b1e1b055135ccee13eed1fac4b1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hrk-yas/library/OV7725_Camera_Library/1.0.0/OV7725_Camera_Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hrk-yas/library/OV7725_Camera_Library/1.0.0/OV7725_Camera_Library-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

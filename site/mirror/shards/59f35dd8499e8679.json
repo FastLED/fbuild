@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/janthefischer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "janthefischer/library/SerialVariable/1.0.1/SerialVariable-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialVariable-1.0.1.tar.gz",
+    "size_bytes": 3751,
+    "sha256": "2009eeb2334aae43bfaba945b98710f0f876bed2456dea870d74df4b9a98c810",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janthefischer/library/SerialVariable/1.0.1/SerialVariable-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/janthefischer/library/SerialVariable/1.0.1/SerialVariable-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

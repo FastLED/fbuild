@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vtqnhi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vtqnhi/library/DCMotorControl/0.0.0+sha.90137e94bed0/DCMotorControl-0.0.0+sha.90137e94bed0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCMotorControl-0.0.0+sha.90137e94bed0.tar.gz",
+    "size_bytes": 2247,
+    "sha256": "bc40aeac60c976dfa5ee5cbfa96930df9126e4d816365609349480e9662ad0a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vtqnhi/library/DCMotorControl/0.0.0%2Bsha.90137e94bed0/DCMotorControl-0.0.0%2Bsha.90137e94bed0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vtqnhi/library/DCMotorControl/0.0.0%2Bsha.90137e94bed0/DCMotorControl-0.0.0%2Bsha.90137e94bed0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-vtqnhi/library/ServoMotorControl/0.0.0+sha.22a971e060ed/ServoMotorControl-0.0.0+sha.22a971e060ed.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoMotorControl-0.0.0+sha.22a971e060ed.tar.gz",
+    "size_bytes": 1304,
+    "sha256": "4319dcbf687b9ee45bdf07357f5fd46dd4493a070f830e78b7d4de6a48ccd4c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vtqnhi/library/ServoMotorControl/0.0.0%2Bsha.22a971e060ed/ServoMotorControl-0.0.0%2Bsha.22a971e060ed.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vtqnhi/library/ServoMotorControl/0.0.0%2Bsha.22a971e060ed/ServoMotorControl-0.0.0%2Bsha.22a971e060ed.tar.gz"
+    ]
+   }
+  }
+ ]
+}

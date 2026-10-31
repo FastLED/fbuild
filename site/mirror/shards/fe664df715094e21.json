@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/r89m",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "r89m/library/MPR121Button/1.0.0/MPR121Button-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPR121Button-1.0.0.tar.gz",
+    "size_bytes": 4932,
+    "sha256": "9a3f45629d8dc667453d9406c98d13ba708a1dffa72d9a2248c090d3ed9287b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/r89m/library/MPR121Button/1.0.0/MPR121Button-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/r89m/library/MPR121Button/1.0.0/MPR121Button-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "r89m/library/Transition/1.0.0/Transition-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Transition-1.0.0.tar.gz",
+    "size_bytes": 4860,
+    "sha256": "ce2ec112be909efc4a471372543e7e10b8e374ac35e3407eeac28691f8e5a102",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/r89m/library/Transition/1.0.0/Transition-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/r89m/library/Transition/1.0.0/Transition-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "r89m/library/r89m%20Buttons/2.0.1/r89mButtons-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "r89mButtons-2.0.1.tar.gz",
+    "size_bytes": 6585,
+    "sha256": "1f4912f10685b72c36d24951a49043171c85cc081cf713b8e82d8b8314ce2928",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/r89m/library/r89m%2520Buttons/2.0.1/r89mButtons-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/r89m/library/r89m%20Buttons/2.0.1/r89mButtons-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "r89m/library/r89m%20CapacitiveButton/1.0.0/r89mCapacitiveButton-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "r89mCapacitiveButton-1.0.0.tar.gz",
+    "size_bytes": 5011,
+    "sha256": "d5998b99ee650112cd8d2484126886169eaa452718c92a4032f8f9f433603632",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/r89m/library/r89m%2520CapacitiveButton/1.0.0/r89mCapacitiveButton-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/r89m/library/r89m%20CapacitiveButton/1.0.0/r89mCapacitiveButton-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "r89m/library/r89m%20PushButton/1.0.1/r89mPushButton-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "r89mPushButton-1.0.1.tar.gz",
+    "size_bytes": 4919,
+    "sha256": "ce6f5a97b4415b6146bf83eb72d80b36d827369433372352d4f48d6b5cd9cd26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/r89m/library/r89m%2520PushButton/1.0.1/r89mPushButton-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/r89m/library/r89m%20PushButton/1.0.1/r89mPushButton-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

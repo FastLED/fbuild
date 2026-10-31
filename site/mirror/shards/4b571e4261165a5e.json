@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/colomax",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "colomax/library/ADC121S101x/0.8.1/ADC121S101x-0.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADC121S101x-0.8.1.tar.gz",
+    "size_bytes": 15061,
+    "sha256": "0ba4af00f1a70e37ab38980d2490803babdd690bc8780ce0928386e6c2acec36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/colomax/library/ADC121S101x/0.8.1/ADC121S101x-0.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/colomax/library/ADC121S101x/0.8.1/ADC121S101x-0.8.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

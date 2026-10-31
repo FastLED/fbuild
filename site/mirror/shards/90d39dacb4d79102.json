@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/justin-pl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "justin-pl/library/PCA9685_LED_DRIVER/1.0/PCA9685_LED_DRIVER-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9685_LED_DRIVER-1.0.tar.gz",
+    "size_bytes": 5512,
+    "sha256": "8c0db230547632ef258a6637e45792b3a0d0a1ef21e82f1eb332d3b0adfe255b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/justin-pl/library/PCA9685_LED_DRIVER/1.0/PCA9685_LED_DRIVER-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/justin-pl/library/PCA9685_LED_DRIVER/1.0/PCA9685_LED_DRIVER-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "justin-pl/library/PCA9698/1.0/PCA9698-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9698-1.0.tar.gz",
+    "size_bytes": 5302,
+    "sha256": "aa1c679cf00cc220fb4426ddc01ed801b6bc09fa64ccd3b8910240eb379ce21e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/justin-pl/library/PCA9698/1.0/PCA9698-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/justin-pl/library/PCA9698/1.0/PCA9698-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-emma",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-emma/library/MQTT/0.0.0+sha.ba32a33d6867/MQTT-0.0.0+sha.ba32a33d6867.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTT-0.0.0+sha.ba32a33d6867.tar.gz",
+    "size_bytes": 22234,
+    "sha256": "25a5baaa59468b97db6371f41845509839aa22fc8e0479752bad5336249f5c70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-emma/library/MQTT/0.0.0%2Bsha.ba32a33d6867/MQTT-0.0.0%2Bsha.ba32a33d6867.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-emma/library/MQTT/0.0.0%2Bsha.ba32a33d6867/MQTT-0.0.0%2Bsha.ba32a33d6867.tar.gz"
+    ]
+   }
+  }
+ ]
+}

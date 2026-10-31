@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dmitryp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dmitryp/library/VodafoneUSBModem/0.0.0+sha.5fac418852e0/VodafoneUSBModem-0.0.0+sha.5fac418852e0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VodafoneUSBModem-0.0.0+sha.5fac418852e0.tar.gz",
+    "size_bytes": 33737,
+    "sha256": "409542441f0677fff534b085633d43c5adda51cf4f167392b3817c8d8b9ee7bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dmitryp/library/VodafoneUSBModem/0.0.0%2Bsha.5fac418852e0/VodafoneUSBModem-0.0.0%2Bsha.5fac418852e0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dmitryp/library/VodafoneUSBModem/0.0.0%2Bsha.5fac418852e0/VodafoneUSBModem-0.0.0%2Bsha.5fac418852e0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

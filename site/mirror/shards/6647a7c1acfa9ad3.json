@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/flashstacks06",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "flashstacks06/library/SimpleMenu/1.0.1/SimpleMenu-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleMenu-1.0.1.tar.gz",
+    "size_bytes": 3837,
+    "sha256": "d576545ddc4c982691c6c7e39e9c0c8fada44c839b352c0242bd113398ce9920",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flashstacks06/library/SimpleMenu/1.0.1/SimpleMenu-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/flashstacks06/library/SimpleMenu/1.0.1/SimpleMenu-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

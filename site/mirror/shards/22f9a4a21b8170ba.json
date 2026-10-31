@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/santerilindfors",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "santerilindfors/library/BL0942/1.0.1/BL0942-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BL0942-1.0.1.tar.gz",
+    "size_bytes": 7757,
+    "sha256": "2a7a3993d0e4b6db66c2d68a67da4b3d101eddddc2ac9352c5e30ae21bd0854e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/santerilindfors/library/BL0942/1.0.1/BL0942-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/santerilindfors/library/BL0942/1.0.1/BL0942-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "santerilindfors/library/WiFiProvisioner/1.0.0/WiFiProvisioner-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiProvisioner-1.0.0.tar.gz",
+    "size_bytes": 18429,
+    "sha256": "ff15eb6de56bc3f539981d8d6e7c8095f730baa31ea998798753b05429a0d1f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/santerilindfors/library/WiFiProvisioner/1.0.0/WiFiProvisioner-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/santerilindfors/library/WiFiProvisioner/1.0.0/WiFiProvisioner-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "santerilindfors/library/WiFiProvisioner/2.0.0/WiFiProvisioner-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiProvisioner-2.0.0.tar.gz",
+    "size_bytes": 33176,
+    "sha256": "57cfcc0b074495c0bf4c93f3996bbbf83d05838efc40f3d557938ed3ed002522",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/santerilindfors/library/WiFiProvisioner/2.0.0/WiFiProvisioner-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/santerilindfors/library/WiFiProvisioner/2.0.0/WiFiProvisioner-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

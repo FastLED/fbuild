@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-switches",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-switches/library/Adafruit_FeatherOLED/0.0.0+sha.a267f00528be/Adafruit_FeatherOLED-0.0.0+sha.a267f00528be.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_FeatherOLED-0.0.0+sha.a267f00528be.tar.gz",
+    "size_bytes": 10554,
+    "sha256": "7e759ea1fd99e0204b3f68e9cf2ea4b31c066ab8a68463a395374767f38f2a30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-switches/library/Adafruit_FeatherOLED/0.0.0%2Bsha.a267f00528be/Adafruit_FeatherOLED-0.0.0%2Bsha.a267f00528be.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-switches/library/Adafruit_FeatherOLED/0.0.0%2Bsha.a267f00528be/Adafruit_FeatherOLED-0.0.0%2Bsha.a267f00528be.tar.gz"
+    ]
+   }
+  }
+ ]
+}

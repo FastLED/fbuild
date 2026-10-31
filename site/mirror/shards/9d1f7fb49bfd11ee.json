@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shortbloke",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shortbloke/library/SNMP%20Manager/1.1.13/SNMPManager-1.1.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SNMPManager-1.1.13.tar.gz",
+    "size_bytes": 19368,
+    "sha256": "a1983241c0d6578a50a2e06db32291ab6902b88a4b5d939b2e6bad348e6ae337",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shortbloke/library/SNMP%2520Manager/1.1.13/SNMPManager-1.1.13.tar.gz",
+     "https://dl.registry.platformio.org/download/shortbloke/library/SNMP%20Manager/1.1.13/SNMPManager-1.1.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shortbloke/library/SNMP%20Manager/1.2.1/SNMPManager-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SNMPManager-1.2.1.tar.gz",
+    "size_bytes": 31171,
+    "sha256": "3b20070393736305caf14c427bbc8b3216cd4ed3d34466864e0751664ffeabc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shortbloke/library/SNMP%2520Manager/1.2.1/SNMPManager-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/shortbloke/library/SNMP%20Manager/1.2.1/SNMPManager-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shortbloke/library/SNMP%20Manager/2.0.0/SNMPManager-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SNMPManager-2.0.0.tar.gz",
+    "size_bytes": 70501,
+    "sha256": "03ea2da3fa1014cd84ca95fc270087da8438a4eedf1d7c3d8ab6b8ba9c077096",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shortbloke/library/SNMP%2520Manager/2.0.0/SNMPManager-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shortbloke/library/SNMP%20Manager/2.0.0/SNMPManager-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

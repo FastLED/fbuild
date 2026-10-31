@@ -1,0 +1,490 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lewisxhe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lewisxhe/library/AXP202X_Library/1.1.2/AXP202X_Library-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AXP202X_Library-1.1.2.tar.gz",
+    "size_bytes": 18071,
+    "sha256": "09d683ab36a571b2572b41ef5e744f429c63bb023fccbc2e6d042cd154baca28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/AXP202X_Library/1.1.2/AXP202X_Library-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/AXP202X_Library/1.1.2/AXP202X_Library-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/AXP202X_Library/1.1.3/AXP202X_Library-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AXP202X_Library-1.1.3.tar.gz",
+    "size_bytes": 22161,
+    "sha256": "4758e4ec933cff2919713179c996ca9243f284302b27b36714673a013dc57c27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/AXP202X_Library/1.1.3/AXP202X_Library-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/AXP202X_Library/1.1.3/AXP202X_Library-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/Acsip%20S7xG%20Library/1.0.0/AcsipS7xGLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AcsipS7xGLibrary-1.0.0.tar.gz",
+    "size_bytes": 24897,
+    "sha256": "fecf06804511a0bfc6b6d796811518878b5c5bdb6d17d43e1faa9c9cdd24b94a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/Acsip%2520S7xG%2520Library/1.0.0/AcsipS7xGLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/Acsip%20S7xG%20Library/1.0.0/AcsipS7xGLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/ArduinoBIGIOT/1.1.0/ArduinoBIGIOT-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBIGIOT-1.1.0.tar.gz",
+    "size_bytes": 56678,
+    "sha256": "aff12514fb29a9d8462fff1cfadee74b951bdcc1c858ad33b044d3b1443baed1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/ArduinoBIGIOT/1.1.0/ArduinoBIGIOT-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/ArduinoBIGIOT/1.1.0/ArduinoBIGIOT-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/CoinMarketCapApi2/1.0.0/CoinMarketCapApi2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoinMarketCapApi2-1.0.0.tar.gz",
+    "size_bytes": 3331,
+    "sha256": "f7b5c7d30925b847acea6851cdc47e92e0d6fe26a47264b28eb19d93f5991693",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/CoinMarketCapApi2/1.0.0/CoinMarketCapApi2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/CoinMarketCapApi2/1.0.0/CoinMarketCapApi2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/FocalTech_Library/1.0.1/FocalTech_Library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FocalTech_Library-1.0.1.tar.gz",
+    "size_bytes": 3695,
+    "sha256": "800bafd658a93a988e2400676cbbe7cd4a45efaffd119abcda1215ffbdc66587",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/FocalTech_Library/1.0.1/FocalTech_Library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/FocalTech_Library/1.0.1/FocalTech_Library-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/PCF8563_Library/1.0.1/PCF8563_Library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8563_Library-1.0.1.tar.gz",
+    "size_bytes": 5733,
+    "sha256": "b294fcc10e6a1a202592f5d5492449e22b469c6e9543a4cf415ea9f1a175e914",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/PCF8563_Library/1.0.1/PCF8563_Library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/PCF8563_Library/1.0.1/PCF8563_Library-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/ST25R3916-NFC-RFAL/1.0.0/ST25R3916-NFC-RFAL-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST25R3916-NFC-RFAL-1.0.0.tar.gz",
+    "size_bytes": 280615,
+    "sha256": "ff3b33ca7f200b08d574f10e94643208b08959f7554da5d9d77bc3219c09624c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/ST25R3916-NFC-RFAL/1.0.0/ST25R3916-NFC-RFAL-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/ST25R3916-NFC-RFAL/1.0.0/ST25R3916-NFC-RFAL-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/ST25R3916-NFC-RFAL/1.0.1/ST25R3916-NFC-RFAL-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST25R3916-NFC-RFAL-1.0.1.tar.gz",
+    "size_bytes": 279870,
+    "sha256": "e86813a3a14c0d1fbad4771760926673c9d6ca219817fdef582a61738f64291d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/ST25R3916-NFC-RFAL/1.0.1/ST25R3916-NFC-RFAL-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/ST25R3916-NFC-RFAL/1.0.1/ST25R3916-NFC-RFAL-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.1.8/SensorLib-0.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.1.8.tar.gz",
+    "size_bytes": 283485,
+    "sha256": "3ae80955b883578c4c5a322fc4b40933d7653e379eab4c1852ff5323a311a899",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.1.8/SensorLib-0.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.1.8/SensorLib-0.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.1.9/SensorLib-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.1.9.tar.gz",
+    "size_bytes": 283694,
+    "sha256": "a986da780f90d62d8aa49d96fe889badffea45b8dd40b79672cf60c09aace918",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.1.9/SensorLib-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.1.9/SensorLib-0.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.2.0/SensorLib-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.2.0.tar.gz",
+    "size_bytes": 283744,
+    "sha256": "bb64f158523c9a3eaa196e57faec6e2c522380763223e86c5c68d759e89389b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.2.0/SensorLib-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.2.0/SensorLib-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.2.1/SensorLib-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.2.1.tar.gz",
+    "size_bytes": 1258098,
+    "sha256": "9303119e6e567fbc1e467fa9d621669694c9a3980dc81c18bb3fe08ab56863c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.2.1/SensorLib-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.2.1/SensorLib-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.2.2/SensorLib-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.2.2.tar.gz",
+    "size_bytes": 1273056,
+    "sha256": "86c31ab1d68ac1ececc0af107738c1ed8bdec4c9c59f2f239a9227a7f8da3939",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.2.2/SensorLib-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.2.2/SensorLib-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.2.3/SensorLib-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.2.3.tar.gz",
+    "size_bytes": 1660447,
+    "sha256": "2dfff7604b04b0fcdd7df50f8d2bb742f3c3eed152e57591a0637b846205baf4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.2.3/SensorLib-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.2.3/SensorLib-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.2.4/SensorLib-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.2.4.tar.gz",
+    "size_bytes": 1661548,
+    "sha256": "a7db21d34175ff09a7a91566d3bde15da084fea9d1ed566a121df81a9b06ce0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.2.4/SensorLib-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.2.4/SensorLib-0.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.2.6/SensorLib-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.2.6.tar.gz",
+    "size_bytes": 1793830,
+    "sha256": "f6537800b549bd9a0e908d6da57b6d80e8ce6f1600c670b48337672124d701b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.2.6/SensorLib-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.2.6/SensorLib-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.3.1/SensorLib-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.3.1.tar.gz",
+    "size_bytes": 7821826,
+    "sha256": "d7e02af48d705d4ff54cb4eba1adc81fd16001a37fa8ba73b6113e859fc88e77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.3.1/SensorLib-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.3.1/SensorLib-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.3.2/SensorLib-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.3.2.tar.gz",
+    "size_bytes": 7825895,
+    "sha256": "114b5ecf1bca65a0a928df7e57ba952d1951636a349ac2cbc3ad4b0cbb3c52a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.3.2/SensorLib-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.3.2/SensorLib-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.3.3/SensorLib-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.3.3.tar.gz",
+    "size_bytes": 7827468,
+    "sha256": "b9ddf896733f9bf750a495261c919c31a411d79b53cd93210ed3bfa94e7c4763",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.3.3/SensorLib-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.3.3/SensorLib-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.3.4/SensorLib-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.3.4.tar.gz",
+    "size_bytes": 7839202,
+    "sha256": "e8d21fb1b429a9dbcf866cabaa7a9ffdec793ba664ee51974b07206edfc11359",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.3.4/SensorLib-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.3.4/SensorLib-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.4.0/SensorLib-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.4.0.tar.gz",
+    "size_bytes": 14466843,
+    "sha256": "d3f20093840c0941960731aff23d33c25eeef09fcc61f2c6ad2a0294256c2fc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.4.0/SensorLib-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.4.0/SensorLib-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.4.1/SensorLib-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.4.1.tar.gz",
+    "size_bytes": 14490567,
+    "sha256": "de1939cb62c49d9c6fb11f329e0347cc5a91ece5c59f29fc2a3200ca2aa060c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.4.1/SensorLib-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.4.1/SensorLib-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.5.0/SensorLib-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.5.0.tar.gz",
+    "size_bytes": 10314280,
+    "sha256": "890ac9ed7531a43bc5c9efe0232392fd73b34083b8582ff127a5674ec0e43757",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.5.0/SensorLib-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.5.0/SensorLib-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/SensorLib/0.5.1/SensorLib-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorLib-0.5.1.tar.gz",
+    "size_bytes": 10731681,
+    "sha256": "861c7e42a796a0385d474b85c748a2b9e578fa35268af7fd990d1595b09d55fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/SensorLib/0.5.1/SensorLib-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/SensorLib/0.5.1/SensorLib-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/XPowersLib/0.1.8/XPowersLib-0.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPowersLib-0.1.8.tar.gz",
+    "size_bytes": 79779,
+    "sha256": "99e016c887579af3e7f14d0af0ca6db72f9ef3367e14daac33db051302cc3f8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/XPowersLib/0.1.8/XPowersLib-0.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/XPowersLib/0.1.8/XPowersLib-0.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/XPowersLib/0.1.9/XPowersLib-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPowersLib-0.1.9.tar.gz",
+    "size_bytes": 80485,
+    "sha256": "dfc2b4f72b65a7a743f0e63d20e543c3bf0f9bd90816bd58cf9a2b1fc13c5a04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/XPowersLib/0.1.9/XPowersLib-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/XPowersLib/0.1.9/XPowersLib-0.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/XPowersLib/0.2.1/XPowersLib-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPowersLib-0.2.1.tar.gz",
+    "size_bytes": 83735,
+    "sha256": "d58e2841bdedb2b7f0640b114bbb49f920c4666db59fdf9cd18635c88bf57eb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/XPowersLib/0.2.1/XPowersLib-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/XPowersLib/0.2.1/XPowersLib-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/XPowersLib/0.2.4/XPowersLib-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPowersLib-0.2.4.tar.gz",
+    "size_bytes": 94141,
+    "sha256": "88fc46db48c36e89ec54bba50fbd98ca74a308d21c6209ad8909fd55546045e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/XPowersLib/0.2.4/XPowersLib-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/XPowersLib/0.2.4/XPowersLib-0.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/XPowersLib/0.2.6/XPowersLib-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPowersLib-0.2.6.tar.gz",
+    "size_bytes": 99918,
+    "sha256": "e8fc1f3cadb00de0823202941bb3a7ea29d3d577dfaa098418a85af49c3ed8b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/XPowersLib/0.2.6/XPowersLib-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/XPowersLib/0.2.6/XPowersLib-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/XPowersLib/0.2.7/XPowersLib-0.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPowersLib-0.2.7.tar.gz",
+    "size_bytes": 107802,
+    "sha256": "18a002caaedfe3e583dba2eb180f199e66f90ded44ad7ec282576d8f06db1d14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/XPowersLib/0.2.7/XPowersLib-0.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/XPowersLib/0.2.7/XPowersLib-0.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/XPowersLib/0.2.9/XPowersLib-0.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPowersLib-0.2.9.tar.gz",
+    "size_bytes": 108337,
+    "sha256": "18a6060c81e9d523e2c9bc73cdd86084c8cdf3b41cbe8aa942bbcf54d2615290",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/XPowersLib/0.2.9/XPowersLib-0.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/XPowersLib/0.2.9/XPowersLib-0.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/XPowersLib/0.3.0/XPowersLib-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPowersLib-0.3.0.tar.gz",
+    "size_bytes": 109477,
+    "sha256": "dc0ee3e613479cff40812c7e7d037dfde0291bb4adc91fcbbf2d1ce80ec0914c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/XPowersLib/0.3.0/XPowersLib-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/XPowersLib/0.3.0/XPowersLib-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/XPowersLib/0.3.1/XPowersLib-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPowersLib-0.3.1.tar.gz",
+    "size_bytes": 109579,
+    "sha256": "cbd6c85424286f3d7a8d23f0168366b7055607840f11016135c0a2429c37a2b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/XPowersLib/0.3.1/XPowersLib-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/XPowersLib/0.3.1/XPowersLib-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/XPowersLib/0.3.2/XPowersLib-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPowersLib-0.3.2.tar.gz",
+    "size_bytes": 110161,
+    "sha256": "3750a06bab4d1ec5d9c5fc8989d688eefd535290c57a169a3ce814ad76e60041",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/XPowersLib/0.3.2/XPowersLib-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/XPowersLib/0.3.2/XPowersLib-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/XPowersLib/0.3.3/XPowersLib-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPowersLib-0.3.3.tar.gz",
+    "size_bytes": 101720,
+    "sha256": "a2fe2a606f7e7869f26c28187dcdf2b0283194bbdbf26b65646f07d38bd451b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/XPowersLib/0.3.3/XPowersLib-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/XPowersLib/0.3.3/XPowersLib-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lewisxhe/library/YahooWeatherAPI/1.0.0/YahooWeatherAPI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YahooWeatherAPI-1.0.0.tar.gz",
+    "size_bytes": 7128,
+    "sha256": "75bca4a0ec414914096f3c2d0e8ef51b4637b96a2474c7419c6570a57ce2ffec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewisxhe/library/YahooWeatherAPI/1.0.0/YahooWeatherAPI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lewisxhe/library/YahooWeatherAPI/1.0.0/YahooWeatherAPI-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

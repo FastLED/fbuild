@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/soburi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "soburi/library/IoTivity-Lite_Arduino-porting/0.0.1/IoTivity-Lite_Arduino-porting-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTivity-Lite_Arduino-porting-0.0.1.tar.gz",
+    "size_bytes": 35508,
+    "sha256": "094d7a7a61b02ec02859132ae474bc04390aca78db57e184236592d1901ce843",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soburi/library/IoTivity-Lite_Arduino-porting/0.0.1/IoTivity-Lite_Arduino-porting-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soburi/library/IoTivity-Lite_Arduino-porting/0.0.1/IoTivity-Lite_Arduino-porting-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soburi/library/TinyCBOR/0.5.3-arduino2/TinyCBOR-0.5.3-arduino2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyCBOR-0.5.3-arduino2.tar.gz",
+    "size_bytes": 67120,
+    "sha256": "2fca30e6c9193753dabb79bc172d7211145ea66719a24055da98e28cad0b191f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soburi/library/TinyCBOR/0.5.3-arduino2/TinyCBOR-0.5.3-arduino2.tar.gz",
+     "https://dl.registry.platformio.org/download/soburi/library/TinyCBOR/0.5.3-arduino2/TinyCBOR-0.5.3-arduino2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

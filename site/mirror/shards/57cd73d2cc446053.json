@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gatcode",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gatcode/library/ScaleStabilizer/1.1.3/ScaleStabilizer-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScaleStabilizer-1.1.3.tar.gz",
+    "size_bytes": 5644,
+    "sha256": "c5ad9c5993f37e44b27ea24db110a8d8cf2c8909c23306922465f403886af79c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gatcode/library/ScaleStabilizer/1.1.3/ScaleStabilizer-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gatcode/library/ScaleStabilizer/1.1.3/ScaleStabilizer-1.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

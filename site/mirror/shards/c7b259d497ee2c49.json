@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aymenturki0",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aymenturki0/library/Aerobotix_Arduino_nav/1.0.0/Aerobotix_Arduino_nav-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Aerobotix_Arduino_nav-1.0.0.tar.gz",
+    "size_bytes": 7731,
+    "sha256": "0ae3c7f0040b2c3bdf2f1d12cab3b806ff0ffb35a8a478571e4d20412b13ebc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aymenturki0/library/Aerobotix_Arduino_nav/1.0.0/Aerobotix_Arduino_nav-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aymenturki0/library/Aerobotix_Arduino_nav/1.0.0/Aerobotix_Arduino_nav-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

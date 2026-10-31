@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-feb11",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-feb11/library/BigInt/0.0.0+sha.94e26bcd229d/BigInt-0.0.0+sha.94e26bcd229d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BigInt-0.0.0+sha.94e26bcd229d.tar.gz",
+    "size_bytes": 4889,
+    "sha256": "7442b1dd9249e053ea2b71f68dec2b8ec31e810a79537b740408c5fa302ce5ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-feb11/library/BigInt/0.0.0%2Bsha.94e26bcd229d/BigInt-0.0.0%2Bsha.94e26bcd229d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-feb11/library/BigInt/0.0.0%2Bsha.94e26bcd229d/BigInt-0.0.0%2Bsha.94e26bcd229d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-feb11/library/CircularBuffer/0.0.0+sha.8204677dc3c4/CircularBuffer-0.0.0+sha.8204677dc3c4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircularBuffer-0.0.0+sha.8204677dc3c4.tar.gz",
+    "size_bytes": 1486,
+    "sha256": "d93417a0ece8d23b0ef7350a93b55949702343462ace1b7ce4f6b60693347879",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-feb11/library/CircularBuffer/0.0.0%2Bsha.8204677dc3c4/CircularBuffer-0.0.0%2Bsha.8204677dc3c4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-feb11/library/CircularBuffer/0.0.0%2Bsha.8204677dc3c4/CircularBuffer-0.0.0%2Bsha.8204677dc3c4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-feb11/library/Crypto/0.0.0+sha.f04410cef037/Crypto-0.0.0+sha.f04410cef037.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Crypto-0.0.0+sha.f04410cef037.tar.gz",
+    "size_bytes": 18513,
+    "sha256": "95901bce7904a1bfcd097a199b37f60b456bbc22b1aaf108fef9a9c9c0c155c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-feb11/library/Crypto/0.0.0%2Bsha.f04410cef037/Crypto-0.0.0%2Bsha.f04410cef037.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-feb11/library/Crypto/0.0.0%2Bsha.f04410cef037/Crypto-0.0.0%2Bsha.f04410cef037.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-feb11/library/HTTPSClient/0.0.0+sha.18af58231990/HTTPSClient-0.0.0+sha.18af58231990.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPSClient-0.0.0+sha.18af58231990.tar.gz",
+    "size_bytes": 2662,
+    "sha256": "1f01e9752e4c91e9b8ad405a63b402f22f1175d6104bb791ca20360b40886585",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-feb11/library/HTTPSClient/0.0.0%2Bsha.18af58231990/HTTPSClient-0.0.0%2Bsha.18af58231990.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-feb11/library/HTTPSClient/0.0.0%2Bsha.18af58231990/HTTPSClient-0.0.0%2Bsha.18af58231990.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-feb11/library/HTTPSClient_cyassl/0.0.0+sha.1abc65a0f50b/HTTPSClient_cyassl-0.0.0+sha.1abc65a0f50b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPSClient_cyassl-0.0.0+sha.1abc65a0f50b.tar.gz",
+    "size_bytes": 2637,
+    "sha256": "789d53c1f2b6440020f1fff71247a73b70317cf49debe2ae2b348e7cf40599a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-feb11/library/HTTPSClient_cyassl/0.0.0%2Bsha.1abc65a0f50b/HTTPSClient_cyassl-0.0.0%2Bsha.1abc65a0f50b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-feb11/library/HTTPSClient_cyassl/0.0.0%2Bsha.1abc65a0f50b/HTTPSClient_cyassl-0.0.0%2Bsha.1abc65a0f50b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-feb11/library/RNG/0.0.0+sha.2eb90943983b/RNG-0.0.0+sha.2eb90943983b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RNG-0.0.0+sha.2eb90943983b.tar.gz",
+    "size_bytes": 1112,
+    "sha256": "76a6632d4f53257703ce2590d733c9d4392d383793c94cfcbcfea75b10f8b9bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-feb11/library/RNG/0.0.0%2Bsha.2eb90943983b/RNG-0.0.0%2Bsha.2eb90943983b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-feb11/library/RNG/0.0.0%2Bsha.2eb90943983b/RNG-0.0.0%2Bsha.2eb90943983b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-feb11/library/TLS_axTLS/0.0.0+sha.85fceccc1a7c/TLS_axTLS-0.0.0+sha.85fceccc1a7c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLS_axTLS-0.0.0+sha.85fceccc1a7c.tar.gz",
+    "size_bytes": 77098,
+    "sha256": "941d1d233a185749f8a8793b6c7e1fa93928b3d6760c757533b6b438c1975b04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-feb11/library/TLS_axTLS/0.0.0%2Bsha.85fceccc1a7c/TLS_axTLS-0.0.0%2Bsha.85fceccc1a7c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-feb11/library/TLS_axTLS/0.0.0%2Bsha.85fceccc1a7c/TLS_axTLS-0.0.0%2Bsha.85fceccc1a7c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-feb11/library/cyassl-lib/0.0.0+sha.f377303c41be/cyassl-lib-0.0.0+sha.f377303c41be.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cyassl-lib-0.0.0+sha.f377303c41be.tar.gz",
+    "size_bytes": 397178,
+    "sha256": "c0df42d34b0b43d2b2ee2fd2e1f63e1430cf9c6acdd111802bfef5b3d6dfd049",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-feb11/library/cyassl-lib/0.0.0%2Bsha.f377303c41be/cyassl-lib-0.0.0%2Bsha.f377303c41be.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-feb11/library/cyassl-lib/0.0.0%2Bsha.f377303c41be/cyassl-lib-0.0.0%2Bsha.f377303c41be.tar.gz"
+    ]
+   }
+  }
+ ]
+}

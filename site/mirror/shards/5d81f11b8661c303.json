@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-danilob",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-danilob/library/queue/0.0.0+sha.8b473c4a0afc/queue-0.0.0+sha.8b473c4a0afc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "queue-0.0.0+sha.8b473c4a0afc.tar.gz",
+    "size_bytes": 2269,
+    "sha256": "3927c75487ae60885f3ce67f264cbba51ae55aea5a101a7caaf349736290423e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-danilob/library/queue/0.0.0%2Bsha.8b473c4a0afc/queue-0.0.0%2Bsha.8b473c4a0afc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-danilob/library/queue/0.0.0%2Bsha.8b473c4a0afc/queue-0.0.0%2Bsha.8b473c4a0afc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

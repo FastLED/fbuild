@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kurt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kurt/library/pspad/0.0.0+sha.0a62d4621fb0/pspad-0.0.0+sha.0a62d4621fb0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pspad-0.0.0+sha.0a62d4621fb0.tar.gz",
+    "size_bytes": 3211,
+    "sha256": "c5d0d99467db9155f4cca20d4b9497c340d6f164a8c4556ae82e800023e4bfd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kurt/library/pspad/0.0.0%2Bsha.0a62d4621fb0/pspad-0.0.0%2Bsha.0a62d4621fb0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kurt/library/pspad/0.0.0%2Bsha.0a62d4621fb0/pspad-0.0.0%2Bsha.0a62d4621fb0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

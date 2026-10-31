@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-smartcharge",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-smartcharge/library/Watchdog/0.0.0+sha.562d4888be2f/Watchdog-0.0.0+sha.562d4888be2f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Watchdog-0.0.0+sha.562d4888be2f.tar.gz",
+    "size_bytes": 2796,
+    "sha256": "09c8b0af53dc6600ab5023c7d009dea3d79eabe1d0da449bc6f7d1a270694d71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-smartcharge/library/Watchdog/0.0.0%2Bsha.562d4888be2f/Watchdog-0.0.0%2Bsha.562d4888be2f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-smartcharge/library/Watchdog/0.0.0%2Bsha.562d4888be2f/Watchdog-0.0.0%2Bsha.562d4888be2f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

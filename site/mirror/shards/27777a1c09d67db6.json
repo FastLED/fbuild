@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ppetrov-dev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ppetrov-dev/library/BroButton/1.0.7/BroButton-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BroButton-1.0.7.tar.gz",
+    "size_bytes": 4001,
+    "sha256": "464ee814c530805f968b5598d3a6c7680c8ce574eb743ef34203e089bfd23db0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ppetrov-dev/library/BroButton/1.0.7/BroButton-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/ppetrov-dev/library/BroButton/1.0.7/BroButton-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ppetrov-dev/library/BroConverters/2.0.0/BroConverters-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BroConverters-2.0.0.tar.gz",
+    "size_bytes": 2174,
+    "sha256": "4c49312003d8081ba1206ed5f182ae2de2fcfed299a0c53f6bfa1e9310b91c51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ppetrov-dev/library/BroConverters/2.0.0/BroConverters-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ppetrov-dev/library/BroConverters/2.0.0/BroConverters-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ppetrov-dev/library/BroRotaryEncoder/2.0.2/BroRotaryEncoder-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BroRotaryEncoder-2.0.2.tar.gz",
+    "size_bytes": 5566,
+    "sha256": "6bb52ba2ebdf2fc33833653de844a8abf2e477dce3bd58e401883090a7a85e28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ppetrov-dev/library/BroRotaryEncoder/2.0.2/BroRotaryEncoder-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ppetrov-dev/library/BroRotaryEncoder/2.0.2/BroRotaryEncoder-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ppetrov-dev/library/BroTimer/2.0.2/BroTimer-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BroTimer-2.0.2.tar.gz",
+    "size_bytes": 2636,
+    "sha256": "9cd147cc9b13b68858ec73ac6d407e824193193ad1d4f5d266f8bbf3c80029ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ppetrov-dev/library/BroTimer/2.0.2/BroTimer-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ppetrov-dev/library/BroTimer/2.0.2/BroTimer-2.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dcs-team",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dcs-team/library/GPRS-server/0.0.0+sha.698c04e25c6b/GPRS-server-0.0.0+sha.698c04e25c6b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPRS-server-0.0.0+sha.698c04e25c6b.tar.gz",
+    "size_bytes": 7982,
+    "sha256": "cec29097365fe38c36a6e8b02a187ebba6be5a56100b9bdd1d11e0b1f6111597",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dcs-team/library/GPRS-server/0.0.0%2Bsha.698c04e25c6b/GPRS-server-0.0.0%2Bsha.698c04e25c6b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dcs-team/library/GPRS-server/0.0.0%2Bsha.698c04e25c6b/GPRS-server-0.0.0%2Bsha.698c04e25c6b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dcs-team/library/GPR_Interface/0.0.0+sha.8c55dfcc9a7c/GPR_Interface-0.0.0+sha.8c55dfcc9a7c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPR_Interface-0.0.0+sha.8c55dfcc9a7c.tar.gz",
+    "size_bytes": 8306,
+    "sha256": "8ea97f99dcae8198bb64d5a6ee7706019f555c1a118888d8c99b620eeb4833bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dcs-team/library/GPR_Interface/0.0.0%2Bsha.8c55dfcc9a7c/GPR_Interface-0.0.0%2Bsha.8c55dfcc9a7c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dcs-team/library/GPR_Interface/0.0.0%2Bsha.8c55dfcc9a7c/GPR_Interface-0.0.0%2Bsha.8c55dfcc9a7c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

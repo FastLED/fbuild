@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sstaub",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sstaub/library/C12832A1Z/0.0.0-alpha+sha.41800273e715/C12832A1Z-0.0.0-alpha+sha.41800273e715.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C12832A1Z-0.0.0-alpha+sha.41800273e715.tar.gz",
+    "size_bytes": 7321,
+    "sha256": "daf721f91973bcceb6b425cb74c61e6c6a8d8fecb54c1610dcf255349c4a035d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sstaub/library/C12832A1Z/0.0.0-alpha%2Bsha.41800273e715/C12832A1Z-0.0.0-alpha%2Bsha.41800273e715.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sstaub/library/C12832A1Z/0.0.0-alpha%2Bsha.41800273e715/C12832A1Z-0.0.0-alpha%2Bsha.41800273e715.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sstaub/library/EADOG/0.0.0+sha.03129e57a003/EADOG-0.0.0+sha.03129e57a003.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EADOG-0.0.0+sha.03129e57a003.tar.gz",
+    "size_bytes": 7723,
+    "sha256": "83c96a9b23e4dacb5abdaf75b1042d0a4c3c8c838745d33389c28dcc9548a82a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sstaub/library/EADOG/0.0.0%2Bsha.03129e57a003/EADOG-0.0.0%2Bsha.03129e57a003.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sstaub/library/EADOG/0.0.0%2Bsha.03129e57a003/EADOG-0.0.0%2Bsha.03129e57a003.tar.gz"
+    ]
+   }
+  }
+ ]
+}

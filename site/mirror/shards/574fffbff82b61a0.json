@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sporniket",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sporniket/library/AnimatedValues/0.0.3/AnimatedValues-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnimatedValues-0.0.3.tar.gz",
+    "size_bytes": 14630,
+    "sha256": "bc452da934215cad9956109026bd73d00088d7c7981757ec46a4568759875723",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sporniket/library/AnimatedValues/0.0.3/AnimatedValues-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sporniket/library/AnimatedValues/0.0.3/AnimatedValues-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sporniket/library/FeedbackLed/0.0.1/FeedbackLed-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FeedbackLed-0.0.1.tar.gz",
+    "size_bytes": 14406,
+    "sha256": "39dc7f28bb79050f923be8abede1825cc76d95d009db2d2ebfd93071d954128c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sporniket/library/FeedbackLed/0.0.1/FeedbackLed-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sporniket/library/FeedbackLed/0.0.1/FeedbackLed-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sporniket/library/GpioAbstractionLayer-espressif32-espidf/0.0.2/GpioAbstractionLayer-espressif32-espidf-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GpioAbstractionLayer-espressif32-espidf-0.0.2.tar.gz",
+    "size_bytes": 14300,
+    "sha256": "8df5e180291637e6863477b3e16a84f9869e038e3d490e6d911f2e161d7849be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sporniket/library/GpioAbstractionLayer-espressif32-espidf/0.0.2/GpioAbstractionLayer-espressif32-espidf-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sporniket/library/GpioAbstractionLayer-espressif32-espidf/0.0.2/GpioAbstractionLayer-espressif32-espidf-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sporniket/library/GpioAbstractionLayer/0.0.1/GpioAbstractionLayer-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GpioAbstractionLayer-0.0.1.tar.gz",
+    "size_bytes": 14209,
+    "sha256": "cc0e4c874b1322e6955f6af71aab62c725e2c3fcb268f30d90e514f537d50b41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sporniket/library/GpioAbstractionLayer/0.0.1/GpioAbstractionLayer-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sporniket/library/GpioAbstractionLayer/0.0.1/GpioAbstractionLayer-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sporniket/library/InputButton/0.0.1/InputButton-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InputButton-0.0.1.tar.gz",
+    "size_bytes": 15088,
+    "sha256": "7317bc17b8e62eae3cc4306edbb3d151ec4f745a39b39eff9ca4a2df6b25df20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sporniket/library/InputButton/0.0.1/InputButton-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sporniket/library/InputButton/0.0.1/InputButton-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sporniket/library/SevenSegments-by-sporniket/0.0.3/SevenSegments-by-sporniket-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSegments-by-sporniket-0.0.3.tar.gz",
+    "size_bytes": 15960,
+    "sha256": "b14627a10ff0819e16f79a36b4ea9f72b65a23137fc45aff1cf8d0fcbd68915c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sporniket/library/SevenSegments-by-sporniket/0.0.3/SevenSegments-by-sporniket-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sporniket/library/SevenSegments-by-sporniket/0.0.3/SevenSegments-by-sporniket-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sporniket/library/SpiSimplist/0.0.2.1/SpiSimplist-0.0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpiSimplist-0.0.2.1.tar.gz",
+    "size_bytes": 15777,
+    "sha256": "daa671a479055a12efff9acfc71397d301ccec65087c3801447fa7645031ddc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sporniket/library/SpiSimplist/0.0.2.1/SpiSimplist-0.0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sporniket/library/SpiSimplist/0.0.2.1/SpiSimplist-0.0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sporniket/library/SpiSimplistEsp32/0.0.2/SpiSimplistEsp32-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpiSimplistEsp32-0.0.2.tar.gz",
+    "size_bytes": 16163,
+    "sha256": "17772bca23939c8ed6242689a1a15c6da28a53b677a7343ab12b080588fb9a6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sporniket/library/SpiSimplistEsp32/0.0.2/SpiSimplistEsp32-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sporniket/library/SpiSimplistEsp32/0.0.2/SpiSimplistEsp32-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sporniket/library/St7789-by-sporniket/0.0.1/St7789-by-sporniket-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "St7789-by-sporniket-0.0.1.tar.gz",
+    "size_bytes": 16688,
+    "sha256": "3c8df1837ed0ad6bad629ea320d4ea747c37679efe5678013bbe20dff0f87c49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sporniket/library/St7789-by-sporniket/0.0.1/St7789-by-sporniket-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sporniket/library/St7789-by-sporniket/0.0.1/St7789-by-sporniket-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sporniket/library/St7789Esp32/0.0.1/St7789Esp32-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "St7789Esp32-0.0.1.tar.gz",
+    "size_bytes": 16927,
+    "sha256": "16f78d5dc71797ffd179d829ccc8dce6d5429fed4506658d67ebca231bf63506",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sporniket/library/St7789Esp32/0.0.1/St7789Esp32-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sporniket/library/St7789Esp32/0.0.1/St7789Esp32-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sporniket/library/Task-espressif32-espidf/0.0.2/Task-espressif32-espidf-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Task-espressif32-espidf-0.0.2.tar.gz",
+    "size_bytes": 6844,
+    "sha256": "225cf4f4e337a26814779f923b57cfbd0022576962a1aa2f8c11aa4c1239dc9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sporniket/library/Task-espressif32-espidf/0.0.2/Task-espressif32-espidf-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sporniket/library/Task-espressif32-espidf/0.0.2/Task-espressif32-espidf-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sporniket/library/Tm1637-by-sporniket/0.0.3/Tm1637-by-sporniket-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tm1637-by-sporniket-0.0.3.tar.gz",
+    "size_bytes": 15271,
+    "sha256": "5bb890a85a77143e07e5a75e07f80b5e9099927d8d27aef683e1e4587858883e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sporniket/library/Tm1637-by-sporniket/0.0.3/Tm1637-by-sporniket-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sporniket/library/Tm1637-by-sporniket/0.0.3/Tm1637-by-sporniket-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sporniket/library/Tm1637Esp32-by-sporniket/0.0.3/Tm1637Esp32-by-sporniket-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tm1637Esp32-by-sporniket-0.0.3.tar.gz",
+    "size_bytes": 15589,
+    "sha256": "e637283d09b2409310e4f2bdc869aec03d329bf33a051e521020dfd56dd032ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sporniket/library/Tm1637Esp32-by-sporniket/0.0.3/Tm1637Esp32-by-sporniket-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sporniket/library/Tm1637Esp32-by-sporniket/0.0.3/Tm1637Esp32-by-sporniket-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

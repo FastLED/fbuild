@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-s-meika",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-s-meika/library/flex_sensor/0.0.0+sha.689bf33a6c3f/flex_sensor-0.0.0+sha.689bf33a6c3f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "flex_sensor-0.0.0+sha.689bf33a6c3f.tar.gz",
+    "size_bytes": 1046,
+    "sha256": "316cb574d0a0c4f346d75e719c5c4134781212be9793ee3b107978d08ecdec39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-s-meika/library/flex_sensor/0.0.0%2Bsha.689bf33a6c3f/flex_sensor-0.0.0%2Bsha.689bf33a6c3f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-s-meika/library/flex_sensor/0.0.0%2Bsha.689bf33a6c3f/flex_sensor-0.0.0%2Bsha.689bf33a6c3f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

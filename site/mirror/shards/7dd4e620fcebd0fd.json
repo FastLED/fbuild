@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jw-control",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jw-control/library/JWMatrixButtons/1.0.0/JWMatrixButtons-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JWMatrixButtons-1.0.0.tar.gz",
+    "size_bytes": 11924,
+    "sha256": "50dd8df80de7908c915f45cd3e6c3ebace23abc1d901404f9c20fb5ae29e0d40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jw-control/library/JWMatrixButtons/1.0.0/JWMatrixButtons-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jw-control/library/JWMatrixButtons/1.0.0/JWMatrixButtons-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jw-control/library/JW_DWIN_RS485/1.0.0/JW_DWIN_RS485-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JW_DWIN_RS485-1.0.0.tar.gz",
+    "size_bytes": 4365,
+    "sha256": "bbe5ca3dfd0ce8f619e66a452722d5cf551bcc85fa95011f11ddc7192ec1a215",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jw-control/library/JW_DWIN_RS485/1.0.0/JW_DWIN_RS485-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jw-control/library/JW_DWIN_RS485/1.0.0/JW_DWIN_RS485-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jw-control/library/JW_FRAM/1.0.1/JW_FRAM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JW_FRAM-1.0.1.tar.gz",
+    "size_bytes": 8930,
+    "sha256": "6e2596a5896638484893b510614df02787c40f9dc038e0a9e79c66bf22fa8023",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jw-control/library/JW_FRAM/1.0.1/JW_FRAM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jw-control/library/JW_FRAM/1.0.1/JW_FRAM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jw-control/library/JW_FRAM/1.0.2/JW_FRAM-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JW_FRAM-1.0.2.tar.gz",
+    "size_bytes": 9636,
+    "sha256": "6376663a8091e6a6281f5dcf28f7ccc41a76ead25e5d8d15c03f14a65f945541",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jw-control/library/JW_FRAM/1.0.2/JW_FRAM-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jw-control/library/JW_FRAM/1.0.2/JW_FRAM-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jw-control/library/JW_FRAM/1.0.3/JW_FRAM-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JW_FRAM-1.0.3.tar.gz",
+    "size_bytes": 10628,
+    "sha256": "7fba911c2c7f043797af93e71b131178204822f68062c44d1e0b28ed14eb29b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jw-control/library/JW_FRAM/1.0.3/JW_FRAM-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jw-control/library/JW_FRAM/1.0.3/JW_FRAM-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jw-control/library/JW_MatrixButtons/1.0.3/JW_MatrixButtons-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JW_MatrixButtons-1.0.3.tar.gz",
+    "size_bytes": 13442,
+    "sha256": "495a4ba39d4a5d6d1b1146a4056f44b1116a066c030d62a499e2f2ba67414183",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jw-control/library/JW_MatrixButtons/1.0.3/JW_MatrixButtons-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jw-control/library/JW_MatrixButtons/1.0.3/JW_MatrixButtons-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jw-control/library/JW_MatrixButtons/1.0.4/JW_MatrixButtons-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JW_MatrixButtons-1.0.4.tar.gz",
+    "size_bytes": 14122,
+    "sha256": "aa0d38e09f9037f49e5debc3c5e73372edc56223e6423030a9d0d363f3b6e72b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jw-control/library/JW_MatrixButtons/1.0.4/JW_MatrixButtons-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/jw-control/library/JW_MatrixButtons/1.0.4/JW_MatrixButtons-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jw-control/library/JW_MatrixButtons/1.0.5/JW_MatrixButtons-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JW_MatrixButtons-1.0.5.tar.gz",
+    "size_bytes": 14036,
+    "sha256": "4e8bb40c5360c0ccba3f1e0097c2bdaa605f9162039fb3e93d543cb20b71520c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jw-control/library/JW_MatrixButtons/1.0.5/JW_MatrixButtons-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/jw-control/library/JW_MatrixButtons/1.0.5/JW_MatrixButtons-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jw-control/library/JW_RTC/1.0.2/JW_RTC-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JW_RTC-1.0.2.tar.gz",
+    "size_bytes": 9967,
+    "sha256": "468af11adcb69947f974fe000a8edce189b216581102341f21ec810f21072219",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jw-control/library/JW_RTC/1.0.2/JW_RTC-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jw-control/library/JW_RTC/1.0.2/JW_RTC-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jw-control/library/JW_SD/1.0.2/JW_SD-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JW_SD-1.0.2.tar.gz",
+    "size_bytes": 7029,
+    "sha256": "a240626fc8815e1bf95733199c0bc8bc11f695ed37425355776f0d757009a43d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jw-control/library/JW_SD/1.0.2/JW_SD-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jw-control/library/JW_SD/1.0.2/JW_SD-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

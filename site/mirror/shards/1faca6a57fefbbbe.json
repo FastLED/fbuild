@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/afpineda",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "afpineda/library/ESP32-RGB-LEDStrip/1.0.0/ESP32-RGB-LEDStrip-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-RGB-LEDStrip-1.0.0.tar.gz",
+    "size_bytes": 27804,
+    "sha256": "d80dd9df6cf409ce3d8b6df22f73cdb01bb7310b2d0922a5d9c932f23a526697",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/afpineda/library/ESP32-RGB-LEDStrip/1.0.0/ESP32-RGB-LEDStrip-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/afpineda/library/ESP32-RGB-LEDStrip/1.0.0/ESP32-RGB-LEDStrip-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "afpineda/library/ESP32-RGB-LEDStrip/2.1.0/ESP32-RGB-LEDStrip-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-RGB-LEDStrip-2.1.0.tar.gz",
+    "size_bytes": 36830,
+    "sha256": "978c69a7af82862930df1ce4deab848146f59866caf1257cfb5fd0465d9561c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/afpineda/library/ESP32-RGB-LEDStrip/2.1.0/ESP32-RGB-LEDStrip-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/afpineda/library/ESP32-RGB-LEDStrip/2.1.0/ESP32-RGB-LEDStrip-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "afpineda/library/ESP32-RGB-LEDStrip/2.2.1/ESP32-RGB-LEDStrip-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-RGB-LEDStrip-2.2.1.tar.gz",
+    "size_bytes": 37013,
+    "sha256": "c068504dd11d610b977269c68648eebaef04225bed26136c3b6002e0c1ba81aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/afpineda/library/ESP32-RGB-LEDStrip/2.2.1/ESP32-RGB-LEDStrip-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/afpineda/library/ESP32-RGB-LEDStrip/2.2.1/ESP32-RGB-LEDStrip-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "afpineda/library/MeanAndVarOnTheFly/1.1.0/MeanAndVarOnTheFly-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeanAndVarOnTheFly-1.1.0.tar.gz",
+    "size_bytes": 6698,
+    "sha256": "a1a75efb7f0218708c30f0ccb15b7e5d1d78a3d67e43993eff8e4684d62420f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/afpineda/library/MeanAndVarOnTheFly/1.1.0/MeanAndVarOnTheFly-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/afpineda/library/MeanAndVarOnTheFly/1.1.0/MeanAndVarOnTheFly-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "afpineda/library/NuS-NimBLE-Serial/4.1.1/NuS-NimBLE-Serial-4.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NuS-NimBLE-Serial-4.1.1.tar.gz",
+    "size_bytes": 48472,
+    "sha256": "2f0570da0956dc8b18631f1ee61f3c979382bf2ff5255d05334b53f74d3d1448",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/afpineda/library/NuS-NimBLE-Serial/4.1.1/NuS-NimBLE-Serial-4.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/afpineda/library/NuS-NimBLE-Serial/4.1.1/NuS-NimBLE-Serial-4.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "afpineda/library/NuS-NimBLE-Serial/4.1.2/NuS-NimBLE-Serial-4.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NuS-NimBLE-Serial-4.1.2.tar.gz",
+    "size_bytes": 48813,
+    "sha256": "90b1d83ecbc4f468d6bf64f3904c078bab7397243dde1d331702afa56358de81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/afpineda/library/NuS-NimBLE-Serial/4.1.2/NuS-NimBLE-Serial-4.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/afpineda/library/NuS-NimBLE-Serial/4.1.2/NuS-NimBLE-Serial-4.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "afpineda/library/NuS-NimBLE-Serial/4.2.1/NuS-NimBLE-Serial-4.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NuS-NimBLE-Serial-4.2.1.tar.gz",
+    "size_bytes": 50276,
+    "sha256": "2492d250ce801f887959db18cfbe8ec5a3ab34bdd620c282010c554eeea59631",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/afpineda/library/NuS-NimBLE-Serial/4.2.1/NuS-NimBLE-Serial-4.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/afpineda/library/NuS-NimBLE-Serial/4.2.1/NuS-NimBLE-Serial-4.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

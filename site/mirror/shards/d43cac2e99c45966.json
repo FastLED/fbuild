@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tuda-must",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tuda-must/library/ADS1X58/0.1.0/ADS1X58-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1X58-0.1.0.tar.gz",
+    "size_bytes": 19398,
+    "sha256": "b6d6a46669937bb3291fbdaf9fa9fd5065e667750acb6dd129c5a08d5028e13c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tuda-must/library/ADS1X58/0.1.0/ADS1X58-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tuda-must/library/ADS1X58/0.1.0/ADS1X58-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tuda-must/library/ADS1X58/1.0.0/ADS1X58-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1X58-1.0.0.tar.gz",
+    "size_bytes": 18039,
+    "sha256": "729ec02dc80353b2a6b4a5e9baa2ec43ac59fddd1bbb20f4f9772631c41b4119",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tuda-must/library/ADS1X58/1.0.0/ADS1X58-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tuda-must/library/ADS1X58/1.0.0/ADS1X58-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tuda-must/library/ResenseHEX/1.0.1/ResenseHEX-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ResenseHEX-1.0.1.tar.gz",
+    "size_bytes": 8388,
+    "sha256": "e4c84cfa5109cb4ff5419bb4a69d9079c7127ea8d0ee61e9b0aa2d95b09c5b77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tuda-must/library/ResenseHEX/1.0.1/ResenseHEX-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tuda-must/library/ResenseHEX/1.0.1/ResenseHEX-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

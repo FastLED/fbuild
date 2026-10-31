@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jihun-kang",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jihun-kang/library/OrbiSyncNode/1.0.0/OrbiSyncNode-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OrbiSyncNode-1.0.0.tar.gz",
+    "size_bytes": 14420,
+    "sha256": "ab0c28cf827f0ae8d190e8c3a9ec25c7212ddd3856f44e91096782b39317bb30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jihun-kang/library/OrbiSyncNode/1.0.0/OrbiSyncNode-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jihun-kang/library/OrbiSyncNode/1.0.0/OrbiSyncNode-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jihun-kang/library/OrbiSyncNode/1.1.2/OrbiSyncNode-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OrbiSyncNode-1.1.2.tar.gz",
+    "size_bytes": 17698,
+    "sha256": "8d91f487303ce386ca8ec9ebdf05e0acf2fc6116e0834e76b69a686d00012b5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jihun-kang/library/OrbiSyncNode/1.1.2/OrbiSyncNode-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jihun-kang/library/OrbiSyncNode/1.1.2/OrbiSyncNode-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jihun-kang/library/OrbiSyncNode/1.2.1/OrbiSyncNode-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OrbiSyncNode-1.2.1.tar.gz",
+    "size_bytes": 34988,
+    "sha256": "d36d18bc1704a9440814ca4e705b21961a4583a75b6457969a325b3a0ec57459",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jihun-kang/library/OrbiSyncNode/1.2.1/OrbiSyncNode-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jihun-kang/library/OrbiSyncNode/1.2.1/OrbiSyncNode-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jihun-kang/library/OrbiSyncNode/1.2.3/OrbiSyncNode-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OrbiSyncNode-1.2.3.tar.gz",
+    "size_bytes": 28609,
+    "sha256": "6ab8c05d6f7c4836b842a48393ff141564845c97ee0bc3d8e21df0906d45a64b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jihun-kang/library/OrbiSyncNode/1.2.3/OrbiSyncNode-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jihun-kang/library/OrbiSyncNode/1.2.3/OrbiSyncNode-1.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/happy12",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "happy12/library/SPL06-001/1.0.0/SPL06-001-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPL06-001-1.0.0.tar.gz",
+    "size_bytes": 9331,
+    "sha256": "1ae2210463375d9bb08d0eb9c4e11f37155e9e515c6dedcfb7330995746988b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/happy12/library/SPL06-001/1.0.0/SPL06-001-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/happy12/library/SPL06-001/1.0.0/SPL06-001-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

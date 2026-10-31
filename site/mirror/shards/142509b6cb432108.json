@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nthnn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nthnn/library/Anomalia/1.0.0/Anomalia-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Anomalia-1.0.0.tar.gz",
+    "size_bytes": 3266,
+    "sha256": "ca6d212b8870d368f847b68f28d5b2472f4656a24a8334fd7a7a5153734593db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nthnn/library/Anomalia/1.0.0/Anomalia-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nthnn/library/Anomalia/1.0.0/Anomalia-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nthnn/library/Navigador/1.0.0/Navigador-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Navigador-1.0.0.tar.gz",
+    "size_bytes": 4858,
+    "sha256": "e36b29620b110623d5dfc687be39c3d215f8e3c3cca927340f3e075fa7304a28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nthnn/library/Navigador/1.0.0/Navigador-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nthnn/library/Navigador/1.0.0/Navigador-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nthnn/library/PH4502C-Sensor/1.1.1/PH4502C-Sensor-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PH4502C-Sensor-1.1.1.tar.gz",
+    "size_bytes": 36480,
+    "sha256": "b9b323585a48ac024b60cad594deb645e3d92aeba6f94138de4aee12501767a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nthnn/library/PH4502C-Sensor/1.1.1/PH4502C-Sensor-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nthnn/library/PH4502C-Sensor/1.1.1/PH4502C-Sensor-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nthnn/library/PortaMob/1.0.0/PortaMob-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PortaMob-1.0.0.tar.gz",
+    "size_bytes": 41858,
+    "sha256": "ddc000212b8294835976186e616102ed72d78086867906312ad584e7abb4d174",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nthnn/library/PortaMob/1.0.0/PortaMob-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nthnn/library/PortaMob/1.0.0/PortaMob-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nthnn/library/SIM900/1.0.0/SIM900-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIM900-1.0.0.tar.gz",
+    "size_bytes": 48094,
+    "sha256": "c6729b1123429ff0e60743ecd3dc295d589240ab9550096572c8b37c1906ed6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nthnn/library/SIM900/1.0.0/SIM900-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nthnn/library/SIM900/1.0.0/SIM900-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nthnn/library/TCS3200/1.0.3/TCS3200-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCS3200-1.0.3.tar.gz",
+    "size_bytes": 49206,
+    "sha256": "c4fa6d946aac181cfd5a94c10e27eb74e7ddb5942c0efad5f846a52ccd031121",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nthnn/library/TCS3200/1.0.3/TCS3200-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nthnn/library/TCS3200/1.0.3/TCS3200-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nthnn/library/diwa/0.0.7/diwa-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "diwa-0.0.7.tar.gz",
+    "size_bytes": 65954,
+    "sha256": "ddde8115e8dd3731cd6a4d2913ffb73ec30d412a3ece53d507a6a4b97967b160",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nthnn/library/diwa/0.0.7/diwa-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/nthnn/library/diwa/0.0.7/diwa-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nthnn/library/dynaconfig/0.0.1/dynaconfig-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dynaconfig-0.0.1.tar.gz",
+    "size_bytes": 40800,
+    "sha256": "b9a1ac5b4dcfdfdabefe0def11b70c6f4fdbdec758caa7df070babbad346d02e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nthnn/library/dynaconfig/0.0.1/dynaconfig-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nthnn/library/dynaconfig/0.0.1/dynaconfig-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nthnn/library/goblin3d/0.0.1/goblin3d-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "goblin3d-0.0.1.tar.gz",
+    "size_bytes": 43496,
+    "sha256": "0d811aa4f9a2313028d159c25c0adb266d0f539fedcc98122d84568c7d383f5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nthnn/library/goblin3d/0.0.1/goblin3d-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nthnn/library/goblin3d/0.0.1/goblin3d-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nthnn/library/mdif/1.0.1/mdif-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mdif-1.0.1.tar.gz",
+    "size_bytes": 18253,
+    "sha256": "ef51f986d60ca02f51e37cace1ed6f7a13eaee75ff319a81a5087ecbfbb6c510",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nthnn/library/mdif/1.0.1/mdif-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nthnn/library/mdif/1.0.1/mdif-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nthnn/library/microlzw/1.0.0/microlzw-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microlzw-1.0.0.tar.gz",
+    "size_bytes": 4528,
+    "sha256": "c14bbf9aca2c300d837d2eccaaeab88d946d523e2d2e33b8f217d4018962cdc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nthnn/library/microlzw/1.0.0/microlzw-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nthnn/library/microlzw/1.0.0/microlzw-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nthnn/library/n2cmu-arduino/0.0.2/n2cmu-arduino-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "n2cmu-arduino-0.0.2.tar.gz",
+    "size_bytes": 51970,
+    "sha256": "c7949e56f390c491e2b328c86b28675fc0efc2795af369a0a17a8345831c5b4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nthnn/library/n2cmu-arduino/0.0.2/n2cmu-arduino-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nthnn/library/n2cmu-arduino/0.0.2/n2cmu-arduino-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ayashki",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ayashki/library/ESP32%20I2C%20Slave/0.1.0/ESP32I2CSlave-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32I2CSlave-0.1.0.tar.gz",
+    "size_bytes": 21129,
+    "sha256": "0bd0f3fa7790214b88991f656155d837503280ca4aaa481d7cdc9b53b7e23f2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayashki/library/ESP32%2520I2C%2520Slave/0.1.0/ESP32I2CSlave-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ayashki/library/ESP32%20I2C%20Slave/0.1.0/ESP32I2CSlave-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayashki/library/Plotter/2.4.1/Plotter-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plotter-2.4.1.tar.gz",
+    "size_bytes": 12445,
+    "sha256": "073c16d3f3e44bed3bd6238aa61ee589f64fee23b3f5d5e817530c6f0a3b0ec5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayashki/library/Plotter/2.4.1/Plotter-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ayashki/library/Plotter/2.4.1/Plotter-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayashki/library/pr_i2c_test_library/0.0.0/pr_i2c_test_library-0.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pr_i2c_test_library-0.0.0.tar.gz",
+    "size_bytes": 1761,
+    "sha256": "f50192a3ae176a6cf704b4c9ab5de795644dc0bc9bf411a4a42e0bb8cb665eed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayashki/library/pr_i2c_test_library/0.0.0/pr_i2c_test_library-0.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ayashki/library/pr_i2c_test_library/0.0.0/pr_i2c_test_library-0.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ayashki/library/pr_test_libraries/1.0.9/pr_test_libraries-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pr_test_libraries-1.0.9.tar.gz",
+    "size_bytes": 1266,
+    "sha256": "3b31e2570b8957fb90c32abe6ca8849c1d4eace9deb3f1f880b5bb1b3d39ff53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ayashki/library/pr_test_libraries/1.0.9/pr_test_libraries-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/ayashki/library/pr_test_libraries/1.0.9/pr_test_libraries-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mauro-midolo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mauro-midolo/library/ESP32%20Heltec%20OLED%20Logger/1.3.15/ESP32HeltecOLEDLogger-1.3.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32HeltecOLEDLogger-1.3.15.tar.gz",
+    "size_bytes": 6625,
+    "sha256": "e533b5c365468dcd59be2f4bce53c3fa1b0604d95b10acc380f80e4b64d6fd6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mauro-midolo/library/ESP32%2520Heltec%2520OLED%2520Logger/1.3.15/ESP32HeltecOLEDLogger-1.3.15.tar.gz",
+     "https://dl.registry.platformio.org/download/mauro-midolo/library/ESP32%20Heltec%20OLED%20Logger/1.3.15/ESP32HeltecOLEDLogger-1.3.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mauro-midolo/library/ESP32%20Heltec%20OLED%20Logger/1.3.16/ESP32HeltecOLEDLogger-1.3.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32HeltecOLEDLogger-1.3.16.tar.gz",
+    "size_bytes": 6757,
+    "sha256": "3c224e69e971a10cdbc1802cef190f87b7eb0584e61a8b5e70ec37a2fe082dc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mauro-midolo/library/ESP32%2520Heltec%2520OLED%2520Logger/1.3.16/ESP32HeltecOLEDLogger-1.3.16.tar.gz",
+     "https://dl.registry.platformio.org/download/mauro-midolo/library/ESP32%20Heltec%20OLED%20Logger/1.3.16/ESP32HeltecOLEDLogger-1.3.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mauro-midolo/library/ESP32%20Heltec%20OLED%20Logger/1.3.17/ESP32HeltecOLEDLogger-1.3.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32HeltecOLEDLogger-1.3.17.tar.gz",
+    "size_bytes": 6751,
+    "sha256": "477dbade8717915c5ade7ffec7c255aac71aa3e5fcd3d38581fe63614bb158a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mauro-midolo/library/ESP32%2520Heltec%2520OLED%2520Logger/1.3.17/ESP32HeltecOLEDLogger-1.3.17.tar.gz",
+     "https://dl.registry.platformio.org/download/mauro-midolo/library/ESP32%20Heltec%20OLED%20Logger/1.3.17/ESP32HeltecOLEDLogger-1.3.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mauro-midolo/library/ESP32%20Heltec%20OLED%20Logger/1.3.18/ESP32HeltecOLEDLogger-1.3.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32HeltecOLEDLogger-1.3.18.tar.gz",
+    "size_bytes": 7731,
+    "sha256": "a7de9d18c8de33c67e51bbfe2b4e82657b5744ca668c1fb8e399b63186a380e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mauro-midolo/library/ESP32%2520Heltec%2520OLED%2520Logger/1.3.18/ESP32HeltecOLEDLogger-1.3.18.tar.gz",
+     "https://dl.registry.platformio.org/download/mauro-midolo/library/ESP32%20Heltec%20OLED%20Logger/1.3.18/ESP32HeltecOLEDLogger-1.3.18.tar.gz"
+    ]
+   }
+  }
+ ]
+}

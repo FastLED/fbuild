@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aaronbeckmann",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aaronbeckmann/library/ESP-DashboardPlus/1.0.0/ESP-DashboardPlus-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DashboardPlus-1.0.0.tar.gz",
+    "size_bytes": 708266,
+    "sha256": "8dbdfc3bed21b19f4db54b0a49dbd45d5a6ee8289512029fd30e7b1351249242",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aaronbeckmann/library/ESP-DashboardPlus/1.0.0/ESP-DashboardPlus-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aaronbeckmann/library/ESP-DashboardPlus/1.0.0/ESP-DashboardPlus-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aaronbeckmann/library/ESP-DashboardPlus/1.1.0/ESP-DashboardPlus-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DashboardPlus-1.1.0.tar.gz",
+    "size_bytes": 720993,
+    "sha256": "d1932be0385a1f1f916bc524a6e9f5cada0d263cd1762f027925efb0ae94d953",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aaronbeckmann/library/ESP-DashboardPlus/1.1.0/ESP-DashboardPlus-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aaronbeckmann/library/ESP-DashboardPlus/1.1.0/ESP-DashboardPlus-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

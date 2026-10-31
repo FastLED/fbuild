@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/clank",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "clank/library/JSY-MK-194/1.0.0/JSY-MK-194-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JSY-MK-194-1.0.0.tar.gz",
+    "size_bytes": 3737,
+    "sha256": "77f006a85ee0373bbd5aa054b45c73f8dfc7d8e286d145d8017d7dc401858483",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clank/library/JSY-MK-194/1.0.0/JSY-MK-194-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/clank/library/JSY-MK-194/1.0.0/JSY-MK-194-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

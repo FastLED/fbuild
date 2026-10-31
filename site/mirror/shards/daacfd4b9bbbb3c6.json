@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/exmgr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "exmgr/library/IPFSClientESP32/0.1.1/IPFSClientESP32-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IPFSClientESP32-0.1.1.tar.gz",
+    "size_bytes": 10176,
+    "sha256": "cd55b61511f08919f2c05095f310a206a0bb7bd7028e116a546f39fe8213ffd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exmgr/library/IPFSClientESP32/0.1.1/IPFSClientESP32-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/exmgr/library/IPFSClientESP32/0.1.1/IPFSClientESP32-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robo-space",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robo-space/library/RoboClock/1.0.0/RoboClock-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboClock-1.0.0.tar.gz",
+    "size_bytes": 4566,
+    "sha256": "b3af22386507caf0fb1f1cda928868d2d3a32f78ad2f1777457c0692fcaefc18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robo-space/library/RoboClock/1.0.0/RoboClock-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robo-space/library/RoboClock/1.0.0/RoboClock-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robo-space/library/RoboGoofy/1.2.1/RoboGoofy-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboGoofy-1.2.1.tar.gz",
+    "size_bytes": 57929,
+    "sha256": "24b73ba279cc009500e8634080d19724c983b51a691e5c9dac420469f7e8deed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robo-space/library/RoboGoofy/1.2.1/RoboGoofy-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robo-space/library/RoboGoofy/1.2.1/RoboGoofy-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

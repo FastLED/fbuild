@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alloyrobotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alloyrobotics/library/AlloyLogger/0.5.0/AlloyLogger-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlloyLogger-0.5.0.tar.gz",
+    "size_bytes": 1560438,
+    "sha256": "843cca19d332935ceb7378ad849904c17a55404fa411500e90c9167d8efea00f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alloyrobotics/library/AlloyLogger/0.5.0/AlloyLogger-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alloyrobotics/library/AlloyLogger/0.5.0/AlloyLogger-0.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

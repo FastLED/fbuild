@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/goodgod",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "goodgod/library/ld2450/1.0.1/ld2450-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ld2450-1.0.1.tar.gz",
+    "size_bytes": 7739,
+    "sha256": "fb91e4332e0458796121fc10f916153af273de57771256d79770dd563b810bcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/goodgod/library/ld2450/1.0.1/ld2450-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/goodgod/library/ld2450/1.0.1/ld2450-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}
