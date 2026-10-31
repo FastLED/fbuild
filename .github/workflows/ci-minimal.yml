@@ -104,7 +104,7 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
-      - uses: zackees/setup-soldr@9337570234850b50322e696037127fa3cf8ac703 # setup-soldr#629 S3 remote cache
+      - uses: zackees/setup-soldr@45175ff1f8602ea18680729b6f3d2a225a76182a # canary: setup-soldr main (soldr 0.9.47, Dylint 6.2.0)
         with:
           s3-bucket: forge-ci-cache
           s3-endpoint: sfo3.digitaloceanspaces.com

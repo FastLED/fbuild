@@ -97,7 +97,7 @@ jobs:
       - name: Setup soldr
         id: setup-soldr
         timeout-minutes: 10
-        uses: zackees/setup-soldr@v0
+        uses: zackees/setup-soldr@45175ff1f8602ea18680729b6f3d2a225a76182a # canary: setup-soldr main (soldr 0.9.47, Dylint 6.2.0)
         with:
           cache: true
           build-cache: true
