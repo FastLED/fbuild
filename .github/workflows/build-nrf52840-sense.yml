@@ -22,6 +22,7 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/template_build.yml
+    secrets: inherit
     with:
       workflow-name: "Adafruit Feather nRF52840 Sense"
       test-dir: "tests/platform/adafruit_feather_nrf52840_sense"

@@ -22,6 +22,7 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/template_build.yml
+    secrets: inherit
     with:
       workflow-name: "Teensy 3.5"
       test-dir: "tests/platform/teensy35"

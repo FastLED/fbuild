@@ -22,6 +22,7 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/template_build.yml
+    secrets: inherit
     with:
       workflow-name: "Ambiq Apollo3 Red"
       test-dir: "tests/platform/apollo3_red"

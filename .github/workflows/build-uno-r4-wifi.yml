@@ -22,6 +22,7 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/template_build.yml
+    secrets: inherit
     with:
       workflow-name: "Arduino Uno R4 WiFi"
       test-dir: "tests/platform/uno_r4_wifi"

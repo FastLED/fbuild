@@ -22,6 +22,7 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/template_build.yml
+    secrets: inherit
     with:
       workflow-name: "CH32X035"
       test-dir: "tests/platform/ch32x035"

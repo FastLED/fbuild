@@ -22,6 +22,7 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/template_build.yml
+    secrets: inherit
     with:
       workflow-name: "SparkFun Thing Plus Matter"
       test-dir: "tests/platform/sparkfun_thingplusmatter"
