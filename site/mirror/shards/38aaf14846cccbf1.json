@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/danforever",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "danforever/library/DF-Print/0.1.2/DF-Print-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DF-Print-0.1.2.tar.gz",
+    "size_bytes": 4124,
+    "sha256": "876b613067c8acce20bde3946b09f61b20af3d6207a1e1e3ef98ba0ce8f17ef0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danforever/library/DF-Print/0.1.2/DF-Print-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/danforever/library/DF-Print/0.1.2/DF-Print-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danforever/library/SimpleSmooth/1.0.0/SimpleSmooth-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleSmooth-1.0.0.tar.gz",
+    "size_bytes": 1722,
+    "sha256": "7bd8655e8ab93cf27d967ea0e691515f7edd8f2cd9a614413a6787eaab2cf73b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danforever/library/SimpleSmooth/1.0.0/SimpleSmooth-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danforever/library/SimpleSmooth/1.0.0/SimpleSmooth-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

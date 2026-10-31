@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gypsyrobot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gypsyrobot/library/CuteBuzzerSounds/1.0.0/CuteBuzzerSounds-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CuteBuzzerSounds-1.0.0.tar.gz",
+    "size_bytes": 4519,
+    "sha256": "d4ce299ed8203530ff1b148e42fd64d2df428a16becd428703eca824be2c25b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gypsyrobot/library/CuteBuzzerSounds/1.0.0/CuteBuzzerSounds-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gypsyrobot/library/CuteBuzzerSounds/1.0.0/CuteBuzzerSounds-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gypsyrobot/library/Formulinha/1.0.0/Formulinha-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Formulinha-1.0.0.tar.gz",
+    "size_bytes": 9688,
+    "sha256": "69fde8122c0482b00eecdaaac3138a5ea2a8bcd9e9fad52020acc34add1a12d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gypsyrobot/library/Formulinha/1.0.0/Formulinha-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gypsyrobot/library/Formulinha/1.0.0/Formulinha-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gypsyrobot/library/MusicBuzzer/1.0.0/MusicBuzzer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MusicBuzzer-1.0.0.tar.gz",
+    "size_bytes": 16196,
+    "sha256": "04ded6b53d35a5b79547d1af5b5b7b3af709542ac29ac43a1b8d389a11d069f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gypsyrobot/library/MusicBuzzer/1.0.0/MusicBuzzer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gypsyrobot/library/MusicBuzzer/1.0.0/MusicBuzzer-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

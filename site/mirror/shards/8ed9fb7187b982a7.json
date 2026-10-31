@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/homecontrolas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "homecontrolas/library/homecontrol-mqtt/1.0.0/homecontrol-mqtt-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "homecontrol-mqtt-1.0.0.tar.gz",
+    "size_bytes": 24174,
+    "sha256": "d9c93d558a5a33962250d28a2823522430bfb2d32d06d5b80a7309df3fc5ffb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/homecontrolas/library/homecontrol-mqtt/1.0.0/homecontrol-mqtt-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/homecontrolas/library/homecontrol-mqtt/1.0.0/homecontrol-mqtt-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

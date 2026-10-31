@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nekoneko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nekoneko/library/AM2302_Lib_for_uBit/0.0.0+sha.942fc346b1df/AM2302_Lib_for_uBit-0.0.0+sha.942fc346b1df.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AM2302_Lib_for_uBit-0.0.0+sha.942fc346b1df.tar.gz",
+    "size_bytes": 2155,
+    "sha256": "46587b862fbf07b03443bdb025d766bb06a7c6179c2433d14f57984a85c9d9ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nekoneko/library/AM2302_Lib_for_uBit/0.0.0%2Bsha.942fc346b1df/AM2302_Lib_for_uBit-0.0.0%2Bsha.942fc346b1df.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nekoneko/library/AM2302_Lib_for_uBit/0.0.0%2Bsha.942fc346b1df/AM2302_Lib_for_uBit-0.0.0%2Bsha.942fc346b1df.tar.gz"
+    ]
+   }
+  }
+ ]
+}

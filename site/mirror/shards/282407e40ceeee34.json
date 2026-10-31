@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gto2013",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gto2013/library/EMUSerial/1.0.2/EMUSerial-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EMUSerial-1.0.2.tar.gz",
+    "size_bytes": 2859,
+    "sha256": "a67b2de5eb2316bb1019b8fe1943cca0b70f0881bc5d0da8e7da3d1586d9b3e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gto2013/library/EMUSerial/1.0.2/EMUSerial-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gto2013/library/EMUSerial/1.0.2/EMUSerial-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

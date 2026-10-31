@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/plutphil",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "plutphil/library/CH422G_Wire/1.0.0/CH422G_Wire-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH422G_Wire-1.0.0.tar.gz",
+    "size_bytes": 1832,
+    "sha256": "b86e747837d447dd01afb68ca92607a07e552b00a9b6426cac416fca13d77008",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plutphil/library/CH422G_Wire/1.0.0/CH422G_Wire-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/plutphil/library/CH422G_Wire/1.0.0/CH422G_Wire-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plutphil/library/SWUARTSerial/1.0.0/SWUARTSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SWUARTSerial-1.0.0.tar.gz",
+    "size_bytes": 1987,
+    "sha256": "78fe1be8d6d6de526760ad027edce3e0ee9126e26fdb817e9478c1e140ee3726",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plutphil/library/SWUARTSerial/1.0.0/SWUARTSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/plutphil/library/SWUARTSerial/1.0.0/SWUARTSerial-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

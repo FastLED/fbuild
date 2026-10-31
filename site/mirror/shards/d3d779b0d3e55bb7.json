@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mabrobotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mabrobotics/library/Candleduino/1.0.0/Candleduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Candleduino-1.0.0.tar.gz",
+    "size_bytes": 8907,
+    "sha256": "22b7639eeecab7f7d0a1f744caf68a5492316f3673b5538478b80e58f20ca092",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabrobotics/library/Candleduino/1.0.0/Candleduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mabrobotics/library/Candleduino/1.0.0/Candleduino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabrobotics/library/Candleduino/1.1.0/Candleduino-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Candleduino-1.1.0.tar.gz",
+    "size_bytes": 12341,
+    "sha256": "56fc2c6a8679ffea1e01a956b48241cb8d881a6e5c2943335d9e8ac228a44f74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabrobotics/library/Candleduino/1.1.0/Candleduino-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mabrobotics/library/Candleduino/1.1.0/Candleduino-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabrobotics/library/Candleduino/1.1.1/Candleduino-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Candleduino-1.1.1.tar.gz",
+    "size_bytes": 12510,
+    "sha256": "4ce79df83854a71acd4c37e248b93c00345e6b8aeb24c12dc466492fa078e498",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabrobotics/library/Candleduino/1.1.1/Candleduino-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mabrobotics/library/Candleduino/1.1.1/Candleduino-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

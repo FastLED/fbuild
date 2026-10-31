@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/charlie731",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "charlie731/library/Simple_Esp32WiFiManager/1.0.0/Simple_Esp32WiFiManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Simple_Esp32WiFiManager-1.0.0.tar.gz",
+    "size_bytes": 5526,
+    "sha256": "616d43967e3473ceb4b40d647798bda3b1562deff78765d061ff182f59a0c021",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/charlie731/library/Simple_Esp32WiFiManager/1.0.0/Simple_Esp32WiFiManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/charlie731/library/Simple_Esp32WiFiManager/1.0.0/Simple_Esp32WiFiManager-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

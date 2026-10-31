@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/meta-pytorch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "meta-pytorch/library/ExecuTorch/0.1.0/ExecuTorch-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExecuTorch-0.1.0.tar.gz",
+    "size_bytes": 873122,
+    "sha256": "02dab03526ca4433a3951ce7ab136b9b86cd386a3d6eefa7e17d3f6b6e37dcc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/meta-pytorch/library/ExecuTorch/0.1.0/ExecuTorch-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/meta-pytorch/library/ExecuTorch/0.1.0/ExecuTorch-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "meta-pytorch/library/ExecuTorch/0.2.0/ExecuTorch-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExecuTorch-0.2.0.tar.gz",
+    "size_bytes": 878311,
+    "sha256": "b9e885d9c7bc2e4ba1fe9cd19472abd8fbeec7723105b6815b819c26be0eb052",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/meta-pytorch/library/ExecuTorch/0.2.0/ExecuTorch-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/meta-pytorch/library/ExecuTorch/0.2.0/ExecuTorch-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "meta-pytorch/library/ExecuTorch/1.5.1/ExecuTorch-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExecuTorch-1.5.1.tar.gz",
+    "size_bytes": 882412,
+    "sha256": "a71d491dde433017f97f09814d57fe7379eb80d67b6f733bcd83cf2b11648a3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/meta-pytorch/library/ExecuTorch/1.5.1/ExecuTorch-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/meta-pytorch/library/ExecuTorch/1.5.1/ExecuTorch-1.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

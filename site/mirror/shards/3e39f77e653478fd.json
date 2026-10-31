@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/julio22011",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "julio22011/library/EasyOledUI/0.9.5/EasyOledUI-0.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyOledUI-0.9.5.tar.gz",
+    "size_bytes": 15385,
+    "sha256": "969e80d8b1d1b9eaba05e32cb68327ab1305fbac6cdf354526b8d1347ed832af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/julio22011/library/EasyOledUI/0.9.5/EasyOledUI-0.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/julio22011/library/EasyOledUI/0.9.5/EasyOledUI-0.9.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

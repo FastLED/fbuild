@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mhotchin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mhotchin/library/Balboa%20Spa%20communications/1.0.3/BalboaSpacommunications-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BalboaSpacommunications-1.0.3.tar.gz",
+    "size_bytes": 16232,
+    "sha256": "7bb14d03a269a8fb3686afd6797f0dffdd3b876896865ac6eedec0b94ee3d9ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mhotchin/library/Balboa%2520Spa%2520communications/1.0.3/BalboaSpacommunications-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mhotchin/library/Balboa%20Spa%20communications/1.0.3/BalboaSpacommunications-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mhotchin/library/RLEBitmap/1.2.0/RLEBitmap-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RLEBitmap-1.2.0.tar.gz",
+    "size_bytes": 507337,
+    "sha256": "f4b580b2cbd977579ea8cdc380fac5a0a183050bd5caa35f0cad29565934c5db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mhotchin/library/RLEBitmap/1.2.0/RLEBitmap-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mhotchin/library/RLEBitmap/1.2.0/RLEBitmap-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mhotchin/library/Waveshare%204%20Inch%20Tft%20Touchscreen/1.0.3/Waveshare4InchTftTouchscreen-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Waveshare4InchTftTouchscreen-1.0.3.tar.gz",
+    "size_bytes": 13829,
+    "sha256": "33dd0917d55d9a3045775207b14635a0fcb242f02f0a403edc6ab19fd45dab2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mhotchin/library/Waveshare%25204%2520Inch%2520Tft%2520Touchscreen/1.0.3/Waveshare4InchTftTouchscreen-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mhotchin/library/Waveshare%204%20Inch%20Tft%20Touchscreen/1.0.3/Waveshare4InchTftTouchscreen-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mhotchin/library/YAAWS/1.0.0/YAAWS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YAAWS-1.0.0.tar.gz",
+    "size_bytes": 32139,
+    "sha256": "6af741f796da471adb8f763eec242fb79eb7fae7944fe0e9f754df0e2abcc319",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mhotchin/library/YAAWS/1.0.0/YAAWS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mhotchin/library/YAAWS/1.0.0/YAAWS-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

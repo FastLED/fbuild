@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/brianrho",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "brianrho/library/FPM/2.0.0/FPM-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FPM-2.0.0.tar.gz",
+    "size_bytes": 20666,
+    "sha256": "e4a627595200d4dec2f5256c67d766795791796308793bf1a03c65be27e574e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brianrho/library/FPM/2.0.0/FPM-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/brianrho/library/FPM/2.0.0/FPM-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "brianrho/library/GT5X/1.0/GT5X-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GT5X-1.0.tar.gz",
+    "size_bytes": 7156,
+    "sha256": "0a44460ef6be7f57c55677d0211e68056decff5e98aeb89174a35d8ea33ab81c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brianrho/library/GT5X/1.0/GT5X-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/brianrho/library/GT5X/1.0/GT5X-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "brianrho/library/M590/1.0.0/M590-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M590-1.0.0.tar.gz",
+    "size_bytes": 9051,
+    "sha256": "76943de507814d5e67b197fb1614a0dd5f869051e34644d6d0e0a1eeaa5bc9b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brianrho/library/M590/1.0.0/M590-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/brianrho/library/M590/1.0.0/M590-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "brianrho/library/SIM800/1.0.0/SIM800-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIM800-1.0.0.tar.gz",
+    "size_bytes": 10207,
+    "sha256": "ff4a34277dc0015774101bd466bdb38c0342b3ba0ab10b27eb448c56c8cfea2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brianrho/library/SIM800/1.0.0/SIM800-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/brianrho/library/SIM800/1.0.0/SIM800-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

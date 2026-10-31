@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sinricpro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sinricpro/library/SinricPro/2.11.1/SinricPro-2.11.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SinricPro-2.11.1.tar.gz",
+    "size_bytes": 58887,
+    "sha256": "692cf3541d73b437bf8ba52478a81122d8ba6ff984a40e15831ce7e00fcef92e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sinricpro/library/SinricPro/2.11.1/SinricPro-2.11.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sinricpro/library/SinricPro/2.11.1/SinricPro-2.11.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sinricpro/library/SinricPro/3.1.0/SinricPro-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SinricPro-3.1.0.tar.gz",
+    "size_bytes": 110089,
+    "sha256": "9fc83358edbc1c1537db4808f2701b488d1e544222b869acfbb206f2689d4e2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sinricpro/library/SinricPro/3.1.0/SinricPro-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sinricpro/library/SinricPro/3.1.0/SinricPro-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sinricpro/library/SinricPro/3.5.0/SinricPro-3.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SinricPro-3.5.0.tar.gz",
+    "size_bytes": 128356,
+    "sha256": "7a0ba2b8e632f0bd2d9ba5a4aae5b07eb33c0c32eb8422913f6890bd0020f395",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sinricpro/library/SinricPro/3.5.0/SinricPro-3.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sinricpro/library/SinricPro/3.5.0/SinricPro-3.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sinricpro/library/SinricPro/3.5.2/SinricPro-3.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SinricPro-3.5.2.tar.gz",
+    "size_bytes": 126879,
+    "sha256": "4bc7b18abdb7683277d7b6d9df39a885291d365380ef402342ea1c6bdf409e45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sinricpro/library/SinricPro/3.5.2/SinricPro-3.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sinricpro/library/SinricPro/3.5.2/SinricPro-3.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sinricpro/library/SinricPro/5.0.0/SinricPro-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SinricPro-5.0.0.tar.gz",
+    "size_bytes": 134360,
+    "sha256": "52a646cf727fca6d9e0eaace7501d65c423fdc513f63c5f7f4f72f79ebbcd212",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sinricpro/library/SinricPro/5.0.0/SinricPro-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sinricpro/library/SinricPro/5.0.0/SinricPro-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sinricpro/library/SinricPro/5.1.0/SinricPro-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SinricPro-5.1.0.tar.gz",
+    "size_bytes": 140826,
+    "sha256": "43a06d3b2c80bf7f86228ad16a5aeb89e24bd96453fdecc1e82f4a1bc5aa877d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sinricpro/library/SinricPro/5.1.0/SinricPro-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sinricpro/library/SinricPro/5.1.0/SinricPro-5.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sinricpro/library/SinricProBusinessSdk/1.1.5/SinricProBusinessSdk-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SinricProBusinessSdk-1.1.5.tar.gz",
+    "size_bytes": 23075,
+    "sha256": "16f04df7edac41eac820b4c3be5c8ff206006ce566a3af8180f133e98423a819",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sinricpro/library/SinricProBusinessSdk/1.1.5/SinricProBusinessSdk-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sinricpro/library/SinricProBusinessSdk/1.1.5/SinricProBusinessSdk-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sinricpro/library/SinricProWebRTC/0.2.1/SinricProWebRTC-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SinricProWebRTC-0.2.1.tar.gz",
+    "size_bytes": 9484232,
+    "sha256": "36968352a01ea76de7c49b93ef18a6c751c2d7b9610ca6ac00823d415e6596b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sinricpro/library/SinricProWebRTC/0.2.1/SinricProWebRTC-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sinricpro/library/SinricProWebRTC/0.2.1/SinricProWebRTC-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sinricpro/library/SinricPro_Renesas/1.0.0/SinricPro_Renesas-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SinricPro_Renesas-1.0.0.tar.gz",
+    "size_bytes": 36390,
+    "sha256": "348bdde7351dd612e17c594b57687b850f4f622c5d3d19c50d85f18162ba4b6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sinricpro/library/SinricPro_Renesas/1.0.0/SinricPro_Renesas-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sinricpro/library/SinricPro_Renesas/1.0.0/SinricPro_Renesas-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sinricpro/library/SinricTeleport/1.2.1/SinricTeleport-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SinricTeleport-1.2.1.tar.gz",
+    "size_bytes": 4023650,
+    "sha256": "7b165269dd62dbae2a92ae678ca7cc207aaacb629fff0d15fbc73ea94e31345e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sinricpro/library/SinricTeleport/1.2.1/SinricTeleport-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sinricpro/library/SinricTeleport/1.2.1/SinricTeleport-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

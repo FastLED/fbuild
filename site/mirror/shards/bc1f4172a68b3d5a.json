@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/serifpersia",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "serifpersia/library/ESP32MidiPlayer/1.0.0/ESP32MidiPlayer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32MidiPlayer-1.0.0.tar.gz",
+    "size_bytes": 12677,
+    "sha256": "20fc2e7ac3577270e8e1bfca819c71651e5f9e32c219ddfc0f2b060abb502df3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/serifpersia/library/ESP32MidiPlayer/1.0.0/ESP32MidiPlayer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/serifpersia/library/ESP32MidiPlayer/1.0.0/ESP32MidiPlayer-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

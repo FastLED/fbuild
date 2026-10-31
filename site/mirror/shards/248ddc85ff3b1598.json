@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/project-sparthan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "project-sparthan/library/Sparthan%20Module/1.0/SparthanModule-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparthanModule-1.0.tar.gz",
+    "size_bytes": 6012,
+    "sha256": "48e81e6a3a17daf1f39076af560b351bd6e5d61c55b65a00ab8bfd5addd8baa3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/project-sparthan/library/Sparthan%2520Module/1.0/SparthanModule-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/project-sparthan/library/Sparthan%20Module/1.0/SparthanModule-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "project-sparthan/library/Sparthan%20Myo/0.1/SparthanMyo-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparthanMyo-0.1.tar.gz",
+    "size_bytes": 8429,
+    "sha256": "3672c3a7e3f9dd05a8bf3279005ab48a274917313453875d5b63354c6a9ae720",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/project-sparthan/library/Sparthan%2520Myo/0.1/SparthanMyo-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/project-sparthan/library/Sparthan%20Myo/0.1/SparthanMyo-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "project-sparthan/library/Sparthan%20gForce/1.0/SparthangForce-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparthangForce-1.0.tar.gz",
+    "size_bytes": 4599,
+    "sha256": "2a67a5546d4d7e84c29ace1c7fec34a01e5590112c734c0f75559418e03ffaa8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/project-sparthan/library/Sparthan%2520gForce/1.0/SparthangForce-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/project-sparthan/library/Sparthan%20gForce/1.0/SparthangForce-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

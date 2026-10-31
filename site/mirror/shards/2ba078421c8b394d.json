@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rainerraul",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rainerraul/library/atterm/0.0.0+sha.0ee37a450b12/atterm-0.0.0+sha.0ee37a450b12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "atterm-0.0.0+sha.0ee37a450b12.tar.gz",
+    "size_bytes": 1904,
+    "sha256": "209f81807009338a0f1c07353469741e860210b69c9c286a278c7bfbf57ed6d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rainerraul/library/atterm/0.0.0%2Bsha.0ee37a450b12/atterm-0.0.0%2Bsha.0ee37a450b12.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rainerraul/library/atterm/0.0.0%2Bsha.0ee37a450b12/atterm-0.0.0%2Bsha.0ee37a450b12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rainerraul/library/hc_05/0.0.0+sha.444cd587d30b/hc_05-0.0.0+sha.444cd587d30b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hc_05-0.0.0+sha.444cd587d30b.tar.gz",
+    "size_bytes": 2497,
+    "sha256": "2aeec801e66527f43b04a6bf35643867afac2e1342a971af4e687955cd92077d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rainerraul/library/hc_05/0.0.0%2Bsha.444cd587d30b/hc_05-0.0.0%2Bsha.444cd587d30b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rainerraul/library/hc_05/0.0.0%2Bsha.444cd587d30b/hc_05-0.0.0%2Bsha.444cd587d30b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,347 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mabartos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mabartos/library/BartOS-IR-online/0.0.3/BartOS-IR-online-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-IR-online-0.0.3.tar.gz",
+    "size_bytes": 1286,
+    "sha256": "d29e689eb61c358fbe24308c58d3499f27a2bc3b06188ac7102ef1630f2a65c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-IR-online/0.0.3/BartOS-IR-online-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-IR-online/0.0.3/BartOS-IR-online-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-IR/0.0.3/BartOS-IR-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-IR-0.0.3.tar.gz",
+    "size_bytes": 1745,
+    "sha256": "4f4fdb412c5ac7acd0741d08ca31d3b7a5c22e1a5dd1a8bf2b4f3ec2fb86d755",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-IR/0.0.3/BartOS-IR-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-IR/0.0.3/BartOS-IR-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-button-online/0.0.3/BartOS-button-online-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-button-online-0.0.3.tar.gz",
+    "size_bytes": 1535,
+    "sha256": "8d6c4b7bab475365343bd6a1921d6742e62c17db12d3c77136a27ed01e95f1a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-button-online/0.0.3/BartOS-button-online-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-button-online/0.0.3/BartOS-button-online-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-button/0.0.3/BartOS-button-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-button-0.0.3.tar.gz",
+    "size_bytes": 1591,
+    "sha256": "c093f714528296d10ee1f1067512f70501822bbd671b9bf8eeb7c0ddac21c19a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-button/0.0.3/BartOS-button-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-button/0.0.3/BartOS-button-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-core-online/0.0.4.1/BartOS-core-online-0.0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-core-online-0.0.4.1.tar.gz",
+    "size_bytes": 5254,
+    "sha256": "3f81cae41faaf2c93c9d53f52e967abacee270ad5854444013c560f69c00446d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-core-online/0.0.4.1/BartOS-core-online-0.0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-core-online/0.0.4.1/BartOS-core-online-0.0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-core/0.0.4/BartOS-core-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-core-0.0.4.tar.gz",
+    "size_bytes": 5840,
+    "sha256": "4cfce7db128748d5d3b8c936be702a1d1ce17436aab5a93187244bc6572009e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-core/0.0.4/BartOS-core-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-core/0.0.4/BartOS-core-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-device-online/0.0.2.2/BartOS-device-online-0.0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-device-online-0.0.2.2.tar.gz",
+    "size_bytes": 6070,
+    "sha256": "fc54ecb3b7419906ff45184ce405a5402eaf0ba2eaccb7887a6ca9355fd04aea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-device-online/0.0.2.2/BartOS-device-online-0.0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-device-online/0.0.2.2/BartOS-device-online-0.0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-http-client/0.0.3/BartOS-http-client-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-http-client-0.0.3.tar.gz",
+    "size_bytes": 2004,
+    "sha256": "32f2a115448f8d7984cf170325d20e3299cbc9f804ce0b78de2ac2efc360f8af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-http-client/0.0.3/BartOS-http-client-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-http-client/0.0.3/BartOS-http-client-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-http-manage/0.0.2.1/BartOS-http-manage-0.0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-http-manage-0.0.2.1.tar.gz",
+    "size_bytes": 2731,
+    "sha256": "456c35fe6b587cb7004e062c137d64226f9a2001d6ee45c5cb28aef7f18c71d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-http-manage/0.0.2.1/BartOS-http-manage-0.0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-http-manage/0.0.2.1/BartOS-http-manage-0.0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-http/0.0.2.1/BartOS-http-0.0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-http-0.0.2.1.tar.gz",
+    "size_bytes": 1861,
+    "sha256": "76827cf46b382b8592362c4b05a67ec6b78dd5926eb10e3937d22faef9cbde24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-http/0.0.2.1/BartOS-http-0.0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-http/0.0.2.1/BartOS-http-0.0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-humidity-online/0.0.3/BartOS-humidity-online-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-humidity-online-0.0.3.tar.gz",
+    "size_bytes": 1420,
+    "sha256": "7c0e27da21c38e4f2cb6f79c3a5602599e2fd4c082bf1d9883c8d7b1f803f924",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-humidity-online/0.0.3/BartOS-humidity-online-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-humidity-online/0.0.3/BartOS-humidity-online-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-humidity/0.0.3/BartOS-humidity-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-humidity-0.0.3.tar.gz",
+    "size_bytes": 1519,
+    "sha256": "20b0dad4ba060a688effe3b0ae1f6c309df83be8aeae18ff8abebf94afe0709d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-humidity/0.0.3/BartOS-humidity-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-humidity/0.0.3/BartOS-humidity-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-lights-online/0.0.3/BartOS-lights-online-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-lights-online-0.0.3.tar.gz",
+    "size_bytes": 1544,
+    "sha256": "b390543257a020c900ae83219edafb0ffd10ff187a43e3132a0691cde5819b46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-lights-online/0.0.3/BartOS-lights-online-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-lights-online/0.0.3/BartOS-lights-online-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-lights/0.0.3/BartOS-lights-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-lights-0.0.3.tar.gz",
+    "size_bytes": 2300,
+    "sha256": "ecd66eab23e0c48722636edc7fb3f2f73a66960dd82f21335d14784aabf7a410",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-lights/0.0.3/BartOS-lights-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-lights/0.0.3/BartOS-lights-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-motion-online/0.0.2.1/BartOS-motion-online-0.0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-motion-online-0.0.2.1.tar.gz",
+    "size_bytes": 1378,
+    "sha256": "1055ed7a92a5a0b9ca005328dbedfb48810da5dc31aae301313d6035dfd7b1e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-motion-online/0.0.2.1/BartOS-motion-online-0.0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-motion-online/0.0.2.1/BartOS-motion-online-0.0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-motion/0.0.2.1/BartOS-motion-0.0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-motion-0.0.2.1.tar.gz",
+    "size_bytes": 1238,
+    "sha256": "77e2037307d82f508669eba414cfb5e329e081c09ef839b9aaff60c996d32d2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-motion/0.0.2.1/BartOS-motion-0.0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-motion/0.0.2.1/BartOS-motion-0.0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-mqtt-broker/0.0.2.2/BartOS-mqtt-broker-0.0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-mqtt-broker-0.0.2.2.tar.gz",
+    "size_bytes": 1668,
+    "sha256": "b84bcdd9f84579aa7ae286ff968a9bae3850f26d3b454c6c61b0eb8a54e811fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-mqtt-broker/0.0.2.2/BartOS-mqtt-broker-0.0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-mqtt-broker/0.0.2.2/BartOS-mqtt-broker-0.0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-mqtt-data/0.0.2.3/BartOS-mqtt-data-0.0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-mqtt-data-0.0.2.3.tar.gz",
+    "size_bytes": 2378,
+    "sha256": "a944bfb873fae08a1599804e2875da8192862d4f8fa4849ed4461df32312cec6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-mqtt-data/0.0.2.3/BartOS-mqtt-data-0.0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-mqtt-data/0.0.2.3/BartOS-mqtt-data-0.0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-mqtt/0.0.3/BartOS-mqtt-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-mqtt-0.0.3.tar.gz",
+    "size_bytes": 2470,
+    "sha256": "01658682098507134e2d1a13860e78f1eba1b4412319b0f7ae58a1e2bc755e20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-mqtt/0.0.3/BartOS-mqtt-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-mqtt/0.0.3/BartOS-mqtt-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-powerable-online/0.0.3/BartOS-powerable-online-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-powerable-online-0.0.3.tar.gz",
+    "size_bytes": 1539,
+    "sha256": "27aef903f312d30bb333b93792af82b7323ef93134bd49926768a05d369c01a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-powerable-online/0.0.3/BartOS-powerable-online-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-powerable-online/0.0.3/BartOS-powerable-online-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-powerable/0.0.3/BartOS-powerable-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-powerable-0.0.3.tar.gz",
+    "size_bytes": 1476,
+    "sha256": "e9bd0d27162094035fef10902dafe10d36320010b037af3b677892d6f40d78cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-powerable/0.0.3/BartOS-powerable-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-powerable/0.0.3/BartOS-powerable-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-storage/0.0.2.1/BartOS-storage-0.0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-storage-0.0.2.1.tar.gz",
+    "size_bytes": 1880,
+    "sha256": "fac756d52ee531c590210e2b764e976db21a7263df270d7127133236cd49f228",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-storage/0.0.2.1/BartOS-storage-0.0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-storage/0.0.2.1/BartOS-storage-0.0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-temp-online/0.0.3/BartOS-temp-online-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-temp-online-0.0.3.tar.gz",
+    "size_bytes": 1485,
+    "sha256": "eff31827cc455db6b7298daf03416a038f5e93f5f7acd2595e39d533a35d25e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-temp-online/0.0.3/BartOS-temp-online-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-temp-online/0.0.3/BartOS-temp-online-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-temperature/0.0.3/BartOS-temperature-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-temperature-0.0.3.tar.gz",
+    "size_bytes": 1622,
+    "sha256": "f2da7bd7da5e7032a3bef4e2abbb9826452b05f87949cb2fa00e2d450b057eb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-temperature/0.0.3/BartOS-temperature-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-temperature/0.0.3/BartOS-temperature-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-wifi-basic/0.0.2.1/BartOS-wifi-basic-0.0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-wifi-basic-0.0.2.1.tar.gz",
+    "size_bytes": 1727,
+    "sha256": "1d2de48c4705038a92eb15de9d5c3357d51ff9aeb73d530fc798c0d030665933",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-wifi-basic/0.0.2.1/BartOS-wifi-basic-0.0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-wifi-basic/0.0.2.1/BartOS-wifi-basic-0.0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mabartos/library/BartOS-wifi-manager/0.0.2.1/BartOS-wifi-manager-0.0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BartOS-wifi-manager-0.0.2.1.tar.gz",
+    "size_bytes": 2051,
+    "sha256": "2537b24abaff7e7b25a05f3fc1cf0e021c26ffeb68eac5b051cb9aff40be32e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mabartos/library/BartOS-wifi-manager/0.0.2.1/BartOS-wifi-manager-0.0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mabartos/library/BartOS-wifi-manager/0.0.2.1/BartOS-wifi-manager-0.0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

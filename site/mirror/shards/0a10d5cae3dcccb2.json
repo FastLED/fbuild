@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/avamander",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "avamander/library/TVout/1.0.2/TVout-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TVout-1.0.2.tar.gz",
+    "size_bytes": 35958,
+    "sha256": "f71155765e01050035ada30dafcbed7f14c83a9416b10cf3d66586839d9a7595",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avamander/library/TVout/1.0.2/TVout-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/avamander/library/TVout/1.0.2/TVout-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

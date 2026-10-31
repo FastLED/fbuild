@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/duevil",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "duevil/library/ESPAsyncLogger/1.0.0/ESPAsyncLogger-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncLogger-1.0.0.tar.gz",
+    "size_bytes": 23797,
+    "sha256": "a40f6159b720c5d6b8c3f187eb8db22c68bec3d774ba522c93929c5a22e10307",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duevil/library/ESPAsyncLogger/1.0.0/ESPAsyncLogger-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/duevil/library/ESPAsyncLogger/1.0.0/ESPAsyncLogger-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "duevil/library/ESPAsyncLogger/1.0.1/ESPAsyncLogger-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncLogger-1.0.1.tar.gz",
+    "size_bytes": 24085,
+    "sha256": "2834ebfdd330ff152780d643f699acd2a1c3f142cd95217cfc94cbeed2d0ebac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duevil/library/ESPAsyncLogger/1.0.1/ESPAsyncLogger-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/duevil/library/ESPAsyncLogger/1.0.1/ESPAsyncLogger-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "duevil/library/ESPAsyncLogger/1.0.2/ESPAsyncLogger-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncLogger-1.0.2.tar.gz",
+    "size_bytes": 18112,
+    "sha256": "437e1fcd85bfa5165a9a9b9ddc5f036cd4359239614e173051d7642f82ea942c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duevil/library/ESPAsyncLogger/1.0.2/ESPAsyncLogger-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/duevil/library/ESPAsyncLogger/1.0.2/ESPAsyncLogger-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lowpowerlab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lowpowerlab/library/BMP180/0.0.0-alpha+sha.efac46bd8d/BMP180-0.0.0-alphasha.efac46bd8d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP180-0.0.0-alphasha.efac46bd8d.tar.gz",
+    "size_bytes": 7974,
+    "sha256": "cc20f9b6919ac85ee3cc36188c46f0217703fc7a9a5c81c904301bbd4d3c2309",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lowpowerlab/library/BMP180/0.0.0-alpha%2Bsha.efac46bd8d/BMP180-0.0.0-alphasha.efac46bd8d.tar.gz",
+     "https://dl.registry.platformio.org/download/lowpowerlab/library/BMP180/0.0.0-alpha%2Bsha.efac46bd8d/BMP180-0.0.0-alphasha.efac46bd8d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lowpowerlab/library/LowPower_LowPowerLab/2.2/LowPower_LowPowerLab-2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LowPower_LowPowerLab-2.2.tar.gz",
+    "size_bytes": 8266,
+    "sha256": "e129a1a271a05ec3cbb1aaaf5e92eca34b1aa7e5b1b1f26635450aa679590c4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lowpowerlab/library/LowPower_LowPowerLab/2.2/LowPower_LowPowerLab-2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lowpowerlab/library/LowPower_LowPowerLab/2.2/LowPower_LowPowerLab-2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lowpowerlab/library/RFM12B/0.0.0-alpha+sha.b1ff98905c/RFM12B-0.0.0-alphasha.b1ff98905c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFM12B-0.0.0-alphasha.b1ff98905c.tar.gz",
+    "size_bytes": 39392,
+    "sha256": "0d01e4db8f3d30e00301de96b2f77d0a44382132238c65201f3b61893e380451",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lowpowerlab/library/RFM12B/0.0.0-alpha%2Bsha.b1ff98905c/RFM12B-0.0.0-alphasha.b1ff98905c.tar.gz",
+     "https://dl.registry.platformio.org/download/lowpowerlab/library/RFM12B/0.0.0-alpha%2Bsha.b1ff98905c/RFM12B-0.0.0-alphasha.b1ff98905c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lowpowerlab/library/RFM69/1.6.0/RFM69-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFM69-1.6.0.tar.gz",
+    "size_bytes": 426034,
+    "sha256": "4ab67931106c7422d9d8219556ebdceabca89194074b349ae0db2a0271b9aa4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lowpowerlab/library/RFM69/1.6.0/RFM69-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lowpowerlab/library/RFM69/1.6.0/RFM69-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lowpowerlab/library/SPIFlash/101.1.3/SPIFlash-101.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPIFlash-101.1.3.tar.gz",
+    "size_bytes": 19641,
+    "sha256": "5ba59876573b49aecab92052a752109f034230bfe106a7f26260f023b160272f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lowpowerlab/library/SPIFlash/101.1.3/SPIFlash-101.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lowpowerlab/library/SPIFlash/101.1.3/SPIFlash-101.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lowpowerlab/library/Si7021/0.0.0-alpha+sha.06fadfb576/Si7021-0.0.0-alphasha.06fadfb576.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Si7021-0.0.0-alphasha.06fadfb576.tar.gz",
+    "size_bytes": 5089,
+    "sha256": "70d2cea7dffdab603c62b7cd76294b45cce052a56ec4e606122f18bef6253fe2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lowpowerlab/library/Si7021/0.0.0-alpha%2Bsha.06fadfb576/Si7021-0.0.0-alphasha.06fadfb576.tar.gz",
+     "https://dl.registry.platformio.org/download/lowpowerlab/library/Si7021/0.0.0-alpha%2Bsha.06fadfb576/Si7021-0.0.0-alphasha.06fadfb576.tar.gz"
+    ]
+   }
+  }
+ ]
+}

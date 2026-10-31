@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-corneliup",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-corneliup/library/DS1631/0.0.0+sha.962d50ad04f4/DS1631-0.0.0+sha.962d50ad04f4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1631-0.0.0+sha.962d50ad04f4.tar.gz",
+    "size_bytes": 2172,
+    "sha256": "7b35f10ba101c9b7e290e4ea4272cfb49ec2d10ba5d6f5fbc9a50c17f99e760b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-corneliup/library/DS1631/0.0.0%2Bsha.962d50ad04f4/DS1631-0.0.0%2Bsha.962d50ad04f4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-corneliup/library/DS1631/0.0.0%2Bsha.962d50ad04f4/DS1631-0.0.0%2Bsha.962d50ad04f4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

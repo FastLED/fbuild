@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-randrews33",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-randrews33/library/LSM9DS0/0.0.0+sha.e6a15dcba942/LSM9DS0-0.0.0+sha.e6a15dcba942.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM9DS0-0.0.0+sha.e6a15dcba942.tar.gz",
+    "size_bytes": 12223,
+    "sha256": "bda4c2e738c684b8eb1844d24ed1ea953bb2a1a5398519820a96cb29b91049a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-randrews33/library/LSM9DS0/0.0.0%2Bsha.e6a15dcba942/LSM9DS0-0.0.0%2Bsha.e6a15dcba942.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-randrews33/library/LSM9DS0/0.0.0%2Bsha.e6a15dcba942/LSM9DS0-0.0.0%2Bsha.e6a15dcba942.tar.gz"
+    ]
+   }
+  }
+ ]
+}

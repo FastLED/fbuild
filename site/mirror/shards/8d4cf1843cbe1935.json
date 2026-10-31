@@ -1,0 +1,243 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fbiego",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fbiego/library/CST816S/1.1.1/CST816S-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CST816S-1.1.1.tar.gz",
+    "size_bytes": 3411,
+    "sha256": "86af433785e2e630d1463ffe4a3f618068134cc6d6bf30cfd755f5a5a555f9cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/CST816S/1.1.1/CST816S-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/CST816S/1.1.1/CST816S-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/CST816S/1.3.0/CST816S-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CST816S-1.3.0.tar.gz",
+    "size_bytes": 6841,
+    "sha256": "311915fd8fb3f304f1645cc5c608262cbc33214e7492941065819c3b3152829f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/CST816S/1.3.0/CST816S-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/CST816S/1.3.0/CST816S-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/ChronosESP32/1.7.0/ChronosESP32-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChronosESP32-1.7.0.tar.gz",
+    "size_bytes": 20180,
+    "sha256": "0ac928087b90d99055cd95b66b913b8f36a74dac75360e53ba0474b096995d69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/ChronosESP32/1.7.0/ChronosESP32-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/ChronosESP32/1.7.0/ChronosESP32-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/ChronosESP32/1.8.2/ChronosESP32-1.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChronosESP32-1.8.2.tar.gz",
+    "size_bytes": 26666,
+    "sha256": "3b2584b77209aa3e6a719506083c3f6ebfc52c6ebf2162890f3971cb6a7b1d51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/ChronosESP32/1.8.2/ChronosESP32-1.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/ChronosESP32/1.8.2/ChronosESP32-1.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/ChronosESP32/1.9.0/ChronosESP32-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChronosESP32-1.9.0.tar.gz",
+    "size_bytes": 27735,
+    "sha256": "6caaf7eaee30759f44f73d2baf8cb87c931dd98f752043a2fffe7c5e39599e2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/ChronosESP32/1.9.0/ChronosESP32-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/ChronosESP32/1.9.0/ChronosESP32-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/ChronosESP32/1.9.1/ChronosESP32-1.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChronosESP32-1.9.1.tar.gz",
+    "size_bytes": 33799,
+    "sha256": "e8b619d546aea8ceff6bcde0a94d3cd0b6ac2e7380c52371ed14c5c2a738eb99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/ChronosESP32/1.9.1/ChronosESP32-1.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/ChronosESP32/1.9.1/ChronosESP32-1.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/ESP32Time/1.1.0/ESP32Time-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Time-1.1.0.tar.gz",
+    "size_bytes": 4659,
+    "sha256": "bef88e39d3442790d05f7084d949a1829b96d7ba6250cdddc39cff2cccb77d9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/ESP32Time/1.1.0/ESP32Time-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/ESP32Time/1.1.0/ESP32Time-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/ESP32Time/2.0.0/ESP32Time-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Time-2.0.0.tar.gz",
+    "size_bytes": 5319,
+    "sha256": "89ebcdd3c86f3f93d8142319e6e0dfd6ed882009cf070096a7534b79afb9aedc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/ESP32Time/2.0.0/ESP32Time-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/ESP32Time/2.0.0/ESP32Time-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/ESP32Time/2.0.6/ESP32Time-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Time-2.0.6.tar.gz",
+    "size_bytes": 5470,
+    "sha256": "35434217da0df154dc77b79c82067974a2391294dd9d57a0a4aaf38fe3a31050",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/ESP32Time/2.0.6/ESP32Time-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/ESP32Time/2.0.6/ESP32Time-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/ESPConfig/1.1.1/ESPConfig-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPConfig-1.1.1.tar.gz",
+    "size_bytes": 16293,
+    "sha256": "ebe4373f9f984ad517a9e3fbba6dfa5bb668a77530267e9468817a4eb2bd098a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/ESPConfig/1.1.1/ESPConfig-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/ESPConfig/1.1.1/ESPConfig-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/MpesaSTK/1.0.1/MpesaSTK-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MpesaSTK-1.0.1.tar.gz",
+    "size_bytes": 5075,
+    "sha256": "6b7d01e56f14ace412873c9b39ad8a31d4ed6954a4f6e0fe7b705b1f12bdc71d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/MpesaSTK/1.0.1/MpesaSTK-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/MpesaSTK/1.0.1/MpesaSTK-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/ParkingSensor2/1.0.0/ParkingSensor2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ParkingSensor2-1.0.0.tar.gz",
+    "size_bytes": 8999,
+    "sha256": "24d4b4ef6dc922a0c20e9c2ec38074f16334ba5f800edc1194832985faffa438",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/ParkingSensor2/1.0.0/ParkingSensor2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/ParkingSensor2/1.0.0/ParkingSensor2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/ParkingSensor2/1.1.0/ParkingSensor2-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ParkingSensor2-1.1.0.tar.gz",
+    "size_bytes": 9027,
+    "sha256": "69df1bcf665368681bbe82abc15adaedf438628a4a4881e7cf21b945f1695b0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/ParkingSensor2/1.1.0/ParkingSensor2-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/ParkingSensor2/1.1.0/ParkingSensor2-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/ParkingSensor2/2.0.0/ParkingSensor2-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ParkingSensor2-2.0.0.tar.gz",
+    "size_bytes": 4139088,
+    "sha256": "50a08c4eab6a189d4470759de7ecd5877a249376942f0dcce43d67cc1c1dda05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/ParkingSensor2/2.0.0/ParkingSensor2-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/ParkingSensor2/2.0.0/ParkingSensor2-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/ParkingSensor2/2.1.0/ParkingSensor2-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ParkingSensor2-2.1.0.tar.gz",
+    "size_bytes": 14622,
+    "sha256": "ca85631b996240c2f400a3e0e595f2c6f3e19b68b587c26a01621180ba470da4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/ParkingSensor2/2.1.0/ParkingSensor2-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/ParkingSensor2/2.1.0/ParkingSensor2-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/Timber/1.0.0/Timber-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timber-1.0.0.tar.gz",
+    "size_bytes": 3417,
+    "sha256": "c2886468c55f44963a15547e8c94afc1768997c46d3636a9f3cbd20f2750282f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/Timber/1.0.0/Timber-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/Timber/1.0.0/Timber-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/Timber/1.1.0/Timber-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timber-1.1.0.tar.gz",
+    "size_bytes": 3616,
+    "sha256": "14c4db8977d2137d53caa2ae6753f0612c08918d4f8d3af8aa7fea45198e10c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/Timber/1.1.0/Timber-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/Timber/1.1.0/Timber-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fbiego/library/Timber/2.0.0/Timber-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timber-2.0.0.tar.gz",
+    "size_bytes": 9244,
+    "sha256": "aa1d3c24b040fb37d75b3459f5be53b203c9bf109b988fba73661b543763ae35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fbiego/library/Timber/2.0.0/Timber-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fbiego/library/Timber/2.0.0/Timber-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

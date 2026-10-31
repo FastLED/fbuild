@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-babylonica",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-babylonica/library/AsyncSerial/0.0.0+sha.278f7f125495/AsyncSerial-0.0.0+sha.278f7f125495.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncSerial-0.0.0+sha.278f7f125495.tar.gz",
+    "size_bytes": 3391,
+    "sha256": "8ebb8f5915932474d9b0d7914cd0e9deb3e273e08bc242515ddaa2e431c42070",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-babylonica/library/AsyncSerial/0.0.0%2Bsha.278f7f125495/AsyncSerial-0.0.0%2Bsha.278f7f125495.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-babylonica/library/AsyncSerial/0.0.0%2Bsha.278f7f125495/AsyncSerial-0.0.0%2Bsha.278f7f125495.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-babylonica/library/AsyncStepper/0.0.0+sha.0f8209567b7d/AsyncStepper-0.0.0+sha.0f8209567b7d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncStepper-0.0.0+sha.0f8209567b7d.tar.gz",
+    "size_bytes": 2438,
+    "sha256": "50911a43db880a75aff730ef925c6db4b5a96bf58d80ea8b15108e8d04b41834",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-babylonica/library/AsyncStepper/0.0.0%2Bsha.0f8209567b7d/AsyncStepper-0.0.0%2Bsha.0f8209567b7d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-babylonica/library/AsyncStepper/0.0.0%2Bsha.0f8209567b7d/AsyncStepper-0.0.0%2Bsha.0f8209567b7d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-babylonica/library/FIFO/0.0.0+sha.137a7245f990/FIFO-0.0.0+sha.137a7245f990.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FIFO-0.0.0+sha.137a7245f990.tar.gz",
+    "size_bytes": 2272,
+    "sha256": "ac71b33cac05997c3a231a7ac7f1cffdc8d0b658b132ef6283d50fa399fcc1ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-babylonica/library/FIFO/0.0.0%2Bsha.137a7245f990/FIFO-0.0.0%2Bsha.137a7245f990.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-babylonica/library/FIFO/0.0.0%2Bsha.137a7245f990/FIFO-0.0.0%2Bsha.137a7245f990.tar.gz"
+    ]
+   }
+  }
+ ]
+}

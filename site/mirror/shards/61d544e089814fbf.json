@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jnesselr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jnesselr/library/RS485/0.0.9/RS485-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RS485-0.0.9.tar.gz",
+    "size_bytes": 15013,
+    "sha256": "3da9776492741f33e9e3c88f5cb9c8becf1761612c4de4cdbda961b4d9106633",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jnesselr/library/RS485/0.0.9/RS485-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/jnesselr/library/RS485/0.0.9/RS485-0.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/snappyxo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "snappyxo/library/MicroBlue/1.0.1/MicroBlue-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroBlue-1.0.1.tar.gz",
+    "size_bytes": 10915,
+    "sha256": "1cba26d7d34275e2376d2c722781e98cdd779cc8da8ff7f289fd207e9fba4048",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snappyxo/library/MicroBlue/1.0.1/MicroBlue-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/snappyxo/library/MicroBlue/1.0.1/MicroBlue-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "snappyxo/library/MicroBlue/1.1.0/MicroBlue-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroBlue-1.1.0.tar.gz",
+    "size_bytes": 12254,
+    "sha256": "d56e35a150a483ae8cfd0c54d521cded77f907162a510f857c08c15275969545",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snappyxo/library/MicroBlue/1.1.0/MicroBlue-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snappyxo/library/MicroBlue/1.1.0/MicroBlue-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "snappyxo/library/MicroBlue/1.2.0/MicroBlue-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroBlue-1.2.0.tar.gz",
+    "size_bytes": 12779,
+    "sha256": "46d2aaafea90049e4504feae1f8535c84f067a22883f1e7b46167b0e5f10817b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snappyxo/library/MicroBlue/1.2.0/MicroBlue-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snappyxo/library/MicroBlue/1.2.0/MicroBlue-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "snappyxo/library/MicroBlue/1.3.0/MicroBlue-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroBlue-1.3.0.tar.gz",
+    "size_bytes": 18846,
+    "sha256": "a7c1c25b77f713ceb53a6f9e7a4b302409c899dd31266fde1bbe0fa2756ea6ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snappyxo/library/MicroBlue/1.3.0/MicroBlue-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snappyxo/library/MicroBlue/1.3.0/MicroBlue-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "snappyxo/library/MicroBlue/2.0.0/MicroBlue-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroBlue-2.0.0.tar.gz",
+    "size_bytes": 19029,
+    "sha256": "8f3bf95e7ca8e559859fb09985d2f93b7dd27b8d87422deab8a6bf26d1dbbde0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snappyxo/library/MicroBlue/2.0.0/MicroBlue-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snappyxo/library/MicroBlue/2.0.0/MicroBlue-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "snappyxo/library/MicroBlue/2.1.0/MicroBlue-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroBlue-2.1.0.tar.gz",
+    "size_bytes": 25294,
+    "sha256": "9e924a5fb6e86d2145dec86d735a96fde381d73587873f008144cb07936e7268",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snappyxo/library/MicroBlue/2.1.0/MicroBlue-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snappyxo/library/MicroBlue/2.1.0/MicroBlue-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "snappyxo/library/SnappyXOExamples/3.0.0/SnappyXOExamples-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SnappyXOExamples-3.0.0.tar.gz",
+    "size_bytes": 14347,
+    "sha256": "af6654588613ecd1a0fbbe768ef6870a6e71c9f02313f34c1cba980bf5452889",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snappyxo/library/SnappyXOExamples/3.0.0/SnappyXOExamples-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snappyxo/library/SnappyXOExamples/3.0.0/SnappyXOExamples-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "snappyxo/library/SnappyXOExamples/3.1.0/SnappyXOExamples-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SnappyXOExamples-3.1.0.tar.gz",
+    "size_bytes": 18033,
+    "sha256": "a306d5abfcc8c705ddb68c992de90970d8915101f42af6569cc5565c6bc2975e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snappyxo/library/SnappyXOExamples/3.1.0/SnappyXOExamples-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snappyxo/library/SnappyXOExamples/3.1.0/SnappyXOExamples-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "snappyxo/library/SnappyXOShield/0.2.0/SnappyXOShield-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SnappyXOShield-0.2.0.tar.gz",
+    "size_bytes": 15378,
+    "sha256": "10c267cd14e7cf5ca6761ba741975df65a3564b5d88d512c9fae516547490f5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snappyxo/library/SnappyXOShield/0.2.0/SnappyXOShield-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snappyxo/library/SnappyXOShield/0.2.0/SnappyXOShield-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "snappyxo/library/SnappyXOShield/0.2.1/SnappyXOShield-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SnappyXOShield-0.2.1.tar.gz",
+    "size_bytes": 15875,
+    "sha256": "1211dc014e1b5e22bbdad513e98676b4dace454cc8cab6b037dc72f84478a423",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snappyxo/library/SnappyXOShield/0.2.1/SnappyXOShield-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/snappyxo/library/SnappyXOShield/0.2.1/SnappyXOShield-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "snappyxo/library/SnappyXOShield/0.3.0/SnappyXOShield-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SnappyXOShield-0.3.0.tar.gz",
+    "size_bytes": 8117,
+    "sha256": "5e726dda64a31d3483eb44f15713d53ffb251b74b26a633dbdf1c36bec25fa78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snappyxo/library/SnappyXOShield/0.3.0/SnappyXOShield-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snappyxo/library/SnappyXOShield/0.3.0/SnappyXOShield-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

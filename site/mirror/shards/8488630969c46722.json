@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dajtxx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dajtxx/library/ZeroTC45/1.1.0/ZeroTC45-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZeroTC45-1.1.0.tar.gz",
+    "size_bytes": 36597,
+    "sha256": "520e4749799b93dcc11aea345c9d04e906befeb3dbf8e851c8f1f6ada158020f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dajtxx/library/ZeroTC45/1.1.0/ZeroTC45-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dajtxx/library/ZeroTC45/1.1.0/ZeroTC45-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

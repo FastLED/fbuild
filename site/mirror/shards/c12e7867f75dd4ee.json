@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rabefrd5",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rabefrd5/library/my_OTA_Library/1.0.0/my_OTA_Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "my_OTA_Library-1.0.0.tar.gz",
+    "size_bytes": 2901,
+    "sha256": "9e30960fbfafa568c5a9785bec2472c813e8b27dfe12bac5a888ae4eeaae5898",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rabefrd5/library/my_OTA_Library/1.0.0/my_OTA_Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rabefrd5/library/my_OTA_Library/1.0.0/my_OTA_Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rabefrd5/library/my_TRACE_Library/1.0.0/my_TRACE_Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "my_TRACE_Library-1.0.0.tar.gz",
+    "size_bytes": 3253,
+    "sha256": "b72cfbea2e439e6f1b3a350a4ce281cb49c6ac35e9373c0cbd950e6260ff7a43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rabefrd5/library/my_TRACE_Library/1.0.0/my_TRACE_Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rabefrd5/library/my_TRACE_Library/1.0.0/my_TRACE_Library-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

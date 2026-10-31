@@ -1,0 +1,360 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nezaemmy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nezaemmy/library/Neza74HC165/2.0.0/Neza74HC165-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Neza74HC165-2.0.0.tar.gz",
+    "size_bytes": 3827,
+    "sha256": "f4710e1ecc94e3d5cff64b25139a714fb9f3560a2ff8768e673b1a6dc116178f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/Neza74HC165/2.0.0/Neza74HC165-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/Neza74HC165/2.0.0/Neza74HC165-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/Neza74HC165/2.0.1/Neza74HC165-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Neza74HC165-2.0.1.tar.gz",
+    "size_bytes": 3978,
+    "sha256": "08b562eaa6d33daafb7b6d0248e9cbefb7fef20226e37f753b487a2bdcc36b8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/Neza74HC165/2.0.1/Neza74HC165-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/Neza74HC165/2.0.1/Neza74HC165-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/Neza74HC165/2.0.2/Neza74HC165-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Neza74HC165-2.0.2.tar.gz",
+    "size_bytes": 3981,
+    "sha256": "40fc1fd042c2d79eb15b88db27ea22b225704c1a7db9a709b71e605178245326",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/Neza74HC165/2.0.2/Neza74HC165-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/Neza74HC165/2.0.2/Neza74HC165-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/Neza74HC165/2.0.3/Neza74HC165-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Neza74HC165-2.0.3.tar.gz",
+    "size_bytes": 4024,
+    "sha256": "45ec9367a197f239efb874d9673fa2e313692ab0f2199bd47da1b83ebec57500",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/Neza74HC165/2.0.3/Neza74HC165-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/Neza74HC165/2.0.3/Neza74HC165-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/Neza74HC165/2.0.4/Neza74HC165-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Neza74HC165-2.0.4.tar.gz",
+    "size_bytes": 4018,
+    "sha256": "e006c91983a5992844348e23e993f7cbcdab7ca1f630758217026679413c4743",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/Neza74HC165/2.0.4/Neza74HC165-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/Neza74HC165/2.0.4/Neza74HC165-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/Neza74HC165/2.0.5/Neza74HC165-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Neza74HC165-2.0.5.tar.gz",
+    "size_bytes": 5091,
+    "sha256": "b626a6d090b33e0966e32fc19c8c38ae8d3b6f0785b17ca0944bd07cd5ea8038",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/Neza74HC165/2.0.5/Neza74HC165-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/Neza74HC165/2.0.5/Neza74HC165-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/Neza74HC165/2.0.6/Neza74HC165-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Neza74HC165-2.0.6.tar.gz",
+    "size_bytes": 5408,
+    "sha256": "a584e4e7c212d3df7edd13648c5169efed782453c18310a7dd35cbb708837b04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/Neza74HC165/2.0.6/Neza74HC165-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/Neza74HC165/2.0.6/Neza74HC165-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/Neza74HC165/2.1.1/Neza74HC165-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Neza74HC165-2.1.1.tar.gz",
+    "size_bytes": 5450,
+    "sha256": "f44195c61da866f6146761ea7067ad5b814501abb06f0f24c6eff2a1d3fa123f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/Neza74HC165/2.1.1/Neza74HC165-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/Neza74HC165/2.1.1/Neza74HC165-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/Neza74HC595/1.0.0/Neza74HC595-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Neza74HC595-1.0.0.tar.gz",
+    "size_bytes": 2112,
+    "sha256": "8083c15e1f1afe537714d6d6706b12b843f8a592bd302e3dfd98cf6f230de6c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/Neza74HC595/1.0.0/Neza74HC595-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/Neza74HC595/1.0.0/Neza74HC595-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaButton/1.0.2/NezaButton-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaButton-1.0.2.tar.gz",
+    "size_bytes": 2241,
+    "sha256": "d2aa6ee36c6f1535aa9b2b2ed8db7da12559a02d3b430bbb77ae06ea775b4bb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaButton/1.0.2/NezaButton-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaButton/1.0.2/NezaButton-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaButton/1.0.4/NezaButton-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaButton-1.0.4.tar.gz",
+    "size_bytes": 2154,
+    "sha256": "d6be9ead17f9c0c56fd456b638908a24b8ecbcf7259af02f9b794651a5897d3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaButton/1.0.4/NezaButton-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaButton/1.0.4/NezaButton-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaButton/1.0.5/NezaButton-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaButton-1.0.5.tar.gz",
+    "size_bytes": 2580,
+    "sha256": "33f1bf5b9eb5640df9d3aa3ec374aaf65a1f3c5fc048b52383489057e9620d25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaButton/1.0.5/NezaButton-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaButton/1.0.5/NezaButton-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaButton/1.0.6/NezaButton-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaButton-1.0.6.tar.gz",
+    "size_bytes": 2713,
+    "sha256": "d5fe96bcab14b2505c63e77c0064a6164c04130f1301aea16db05740c6facda5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaButton/1.0.6/NezaButton-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaButton/1.0.6/NezaButton-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaButton/1.1.0/NezaButton-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaButton-1.1.0.tar.gz",
+    "size_bytes": 2399,
+    "sha256": "fb31f2962d8d24eaa71eb2a68ab232b61083a3b208380c45a04d183c723453ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaButton/1.1.0/NezaButton-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaButton/1.1.0/NezaButton-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaIR/1.0.2/NezaIR-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaIR-1.0.2.tar.gz",
+    "size_bytes": 70546,
+    "sha256": "43c9c44485e79074505a553d3106268784829fd4c90b249d26bbfd665e751a2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaIR/1.0.2/NezaIR-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaIR/1.0.2/NezaIR-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaIR/2.0.0/NezaIR-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaIR-2.0.0.tar.gz",
+    "size_bytes": 62218,
+    "sha256": "f56eb5330f266a6f43a6b6945d7260d6ba4fefc8411fb5b635638307132831a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaIR/2.0.0/NezaIR-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaIR/2.0.0/NezaIR-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaIR/2.1.0/NezaIR-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaIR-2.1.0.tar.gz",
+    "size_bytes": 62329,
+    "sha256": "7ab90ad41289bc22cbb8d52456679cb161a3f06cbccb02b7fbe195a86aec80b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaIR/2.1.0/NezaIR-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaIR/2.1.0/NezaIR-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaIR/2.1.2/NezaIR-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaIR-2.1.2.tar.gz",
+    "size_bytes": 65383,
+    "sha256": "e97583c4739963356e82df2a3f4fecb9294325eb5e32fbd187989fc4237a55f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaIR/2.1.2/NezaIR-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaIR/2.1.2/NezaIR-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaIR/2.1.3/NezaIR-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaIR-2.1.3.tar.gz",
+    "size_bytes": 65417,
+    "sha256": "66435e69c70d5584fa1025dd755b4bb27dfa7cf954699d004590775725ffd2a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaIR/2.1.3/NezaIR-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaIR/2.1.3/NezaIR-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaIR/2.2.0/NezaIR-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaIR-2.2.0.tar.gz",
+    "size_bytes": 60969,
+    "sha256": "300d6483dcc3f73f5a13affbb3aeace67cbc8b819f810e124a695377df455b26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaIR/2.2.0/NezaIR-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaIR/2.2.0/NezaIR-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaIR/2.2.1/NezaIR-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaIR-2.2.1.tar.gz",
+    "size_bytes": 65400,
+    "sha256": "916586eeb623e649849c234b9027a032337f6ea4c92ae9da8647d1824b22d411",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaIR/2.2.1/NezaIR-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaIR/2.2.1/NezaIR-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaIR/2.2.2/NezaIR-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaIR-2.2.2.tar.gz",
+    "size_bytes": 65310,
+    "sha256": "a5046e7e15879ceccfbeaced49883d2781ef48b779c1c3b44bc58cf87bcce420",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaIR/2.2.2/NezaIR-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaIR/2.2.2/NezaIR-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaIR/2.3.0/NezaIR-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaIR-2.3.0.tar.gz",
+    "size_bytes": 65287,
+    "sha256": "59a33a0ef11fd671c5ab207aca373058cdac73e1f6944ddda5b99e875383e1d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaIR/2.3.0/NezaIR-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaIR/2.3.0/NezaIR-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaIR/2.4.0/NezaIR-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaIR-2.4.0.tar.gz",
+    "size_bytes": 49602,
+    "sha256": "a57fdd0b480e3022e9e657841f384f5473f576324b55eb7c61d3d16ecdc94c29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaIR/2.4.0/NezaIR-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaIR/2.4.0/NezaIR-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaIR/2.5.0/NezaIR-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaIR-2.5.0.tar.gz",
+    "size_bytes": 49905,
+    "sha256": "01058abbcaeaec2c6a316e7ba6086420c5c183974999236c5a3cf0818bb20e8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaIR/2.5.0/NezaIR-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaIR/2.5.0/NezaIR-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaRTC/1.0.2/NezaRTC-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaRTC-1.0.2.tar.gz",
+    "size_bytes": 4397,
+    "sha256": "b41720b03b27fc2331961e935a865b9af85b8b319d39792b7fd8a4a417e0261e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaRTC/1.0.2/NezaRTC-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaRTC/1.0.2/NezaRTC-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nezaemmy/library/NezaWiFiPortal/1.0.0/NezaWiFiPortal-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NezaWiFiPortal-1.0.0.tar.gz",
+    "size_bytes": 4587,
+    "sha256": "d6ef3bd2e2d3a8f7577dd21a1b448386eec2aaac12724049d4cdbcfcbd727827",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nezaemmy/library/NezaWiFiPortal/1.0.0/NezaWiFiPortal-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nezaemmy/library/NezaWiFiPortal/1.0.0/NezaWiFiPortal-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

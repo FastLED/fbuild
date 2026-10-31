@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pokerobo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pokerobo/library/Pokerobo_ABC/0.1.0/Pokerobo_ABC-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pokerobo_ABC-0.1.0.tar.gz",
+    "size_bytes": 2994,
+    "sha256": "7e917351df0fba7cba7f2db51c686cf5064563962a7af12044a79ec67eb63552",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pokerobo/library/Pokerobo_ABC/0.1.0/Pokerobo_ABC-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pokerobo/library/Pokerobo_ABC/0.1.0/Pokerobo_ABC-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pokerobo/library/Pokerobo_Arm/0.1.0/Pokerobo_Arm-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pokerobo_Arm-0.1.0.tar.gz",
+    "size_bytes": 7962,
+    "sha256": "9320c812b270e08fd465a9ee895d927d32f9273ac35b7de503bdf395fe5379ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pokerobo/library/Pokerobo_Arm/0.1.0/Pokerobo_Arm-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pokerobo/library/Pokerobo_Arm/0.1.0/Pokerobo_Arm-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pokerobo/library/Pokerobo_Car/0.1.5-beta/Pokerobo_Car-0.1.5-beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pokerobo_Car-0.1.5-beta.tar.gz",
+    "size_bytes": 22985,
+    "sha256": "3574a4c648f14fecb04b6101c3e0b29f9505be33896758c702c8cc0c2dd68a40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pokerobo/library/Pokerobo_Car/0.1.5-beta/Pokerobo_Car-0.1.5-beta.tar.gz",
+     "https://dl.registry.platformio.org/download/pokerobo/library/Pokerobo_Car/0.1.5-beta/Pokerobo_Car-0.1.5-beta.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pokerobo/library/Pokerobo_I2C/0.1.0-beta/Pokerobo_I2C-0.1.0-beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pokerobo_I2C-0.1.0-beta.tar.gz",
+    "size_bytes": 3851,
+    "sha256": "514e7cc8f5e851a43e8095fc81541f2e3ee29422af6fd72889e97378ee4c0ffa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pokerobo/library/Pokerobo_I2C/0.1.0-beta/Pokerobo_I2C-0.1.0-beta.tar.gz",
+     "https://dl.registry.platformio.org/download/pokerobo/library/Pokerobo_I2C/0.1.0-beta/Pokerobo_I2C-0.1.0-beta.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pokerobo/library/Pokerobo_IRx/0.1.0-alpha/Pokerobo_IRx-0.1.0-alpha.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pokerobo_IRx-0.1.0-alpha.tar.gz",
+    "size_bytes": 5793,
+    "sha256": "fcaa717d5219b35ef260aa95fb07d0aea96a3f841d2334e322a2be0c6fea66b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pokerobo/library/Pokerobo_IRx/0.1.0-alpha/Pokerobo_IRx-0.1.0-alpha.tar.gz",
+     "https://dl.registry.platformio.org/download/pokerobo/library/Pokerobo_IRx/0.1.0-alpha/Pokerobo_IRx-0.1.0-alpha.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pokerobo/library/Pokerobo_Labs/0.1.14-beta/Pokerobo_Labs-0.1.14-beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pokerobo_Labs-0.1.14-beta.tar.gz",
+    "size_bytes": 61293,
+    "sha256": "2ac72e1b5577026554d74cc534e3c22bcb3fcf669688a5c9682cb9b1f81fda2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pokerobo/library/Pokerobo_Labs/0.1.14-beta/Pokerobo_Labs-0.1.14-beta.tar.gz",
+     "https://dl.registry.platformio.org/download/pokerobo/library/Pokerobo_Labs/0.1.14-beta/Pokerobo_Labs-0.1.14-beta.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pokerobo/library/Pokerobo_PSx/0.1.0-beta/Pokerobo_PSx-0.1.0-beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pokerobo_PSx-0.1.0-beta.tar.gz",
+    "size_bytes": 6555,
+    "sha256": "039a1fb80d32cd2c6ed4b0605f6432b9d557d986c0170846a340269794e9ac8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pokerobo/library/Pokerobo_PSx/0.1.0-beta/Pokerobo_PSx-0.1.0-beta.tar.gz",
+     "https://dl.registry.platformio.org/download/pokerobo/library/Pokerobo_PSx/0.1.0-beta/Pokerobo_PSx-0.1.0-beta.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pokerobo/library/Pokerobo_RCB/0.1.5-beta/Pokerobo_RCB-0.1.5-beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pokerobo_RCB-0.1.5-beta.tar.gz",
+    "size_bytes": 32378,
+    "sha256": "18af58f5c5c21326d9fe1acad5425bacecf4d96e2fe88f84c4e3bc4969c9b779",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pokerobo/library/Pokerobo_RCB/0.1.5-beta/Pokerobo_RCB-0.1.5-beta.tar.gz",
+     "https://dl.registry.platformio.org/download/pokerobo/library/Pokerobo_RCB/0.1.5-beta/Pokerobo_RCB-0.1.5-beta.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dualb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dualb/library/Melody/1.2.0/Melody-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Melody-1.2.0.tar.gz",
+    "size_bytes": 15768,
+    "sha256": "5dcab1563e2b97e77391caf10711010443d245665507fb6b4d7b0bf4df98a274",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dualb/library/Melody/1.2.0/Melody-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dualb/library/Melody/1.2.0/Melody-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dualb/library/Musician/1.2.1/Musician-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Musician-1.2.1.tar.gz",
+    "size_bytes": 6380,
+    "sha256": "ef5d79f7cd44e618db8b7d470522e51fb60e966f08205cd00cd2b0226a5692be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dualb/library/Musician/1.2.1/Musician-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dualb/library/Musician/1.2.1/Musician-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

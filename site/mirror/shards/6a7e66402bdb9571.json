@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/astuder",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "astuder/library/ICP-101xx%20Pressure%20Sensor%20Library/1.1.0/ICP-101xxPressureSensorLibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICP-101xxPressureSensorLibrary-1.1.0.tar.gz",
+    "size_bytes": 7088,
+    "sha256": "f3dbbef20a6f6880f55a093fa36a97f070f49e94516294ded6beb24d4bc0f118",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/astuder/library/ICP-101xx%2520Pressure%2520Sensor%2520Library/1.1.0/ICP-101xxPressureSensorLibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/astuder/library/ICP-101xx%20Pressure%20Sensor%20Library/1.1.0/ICP-101xxPressureSensorLibrary-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "astuder/library/SwarmTile/0.0.3/SwarmTile-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwarmTile-0.0.3.tar.gz",
+    "size_bytes": 10911,
+    "sha256": "d8b427ed17de123bd65c9c19f760ec47463cbeeecd85b433f1ad14906c8e879b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/astuder/library/SwarmTile/0.0.3/SwarmTile-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/astuder/library/SwarmTile/0.0.3/SwarmTile-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

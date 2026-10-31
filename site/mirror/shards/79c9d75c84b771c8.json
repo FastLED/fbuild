@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gism",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gism/library/AD7190/1.0.2/AD7190-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD7190-1.0.2.tar.gz",
+    "size_bytes": 21123,
+    "sha256": "d17e2db239ccbe51a79512c393bd4433b464017721cddd0dc828e3aa68175690",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gism/library/AD7190/1.0.2/AD7190-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gism/library/AD7190/1.0.2/AD7190-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

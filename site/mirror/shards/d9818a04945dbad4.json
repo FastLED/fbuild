@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lyniat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lyniat/library/nExtSP/1.0.5/nExtSP-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nExtSP-1.0.5.tar.gz",
+    "size_bytes": 4299,
+    "sha256": "153ddc5d2f5db62ec4abc01ebfa81e3d59b8cb603f77ab19e56c83eaffc5692c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lyniat/library/nExtSP/1.0.5/nExtSP-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lyniat/library/nExtSP/1.0.5/nExtSP-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

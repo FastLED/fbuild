@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-carlos-gomez",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-carlos-gomez/library/Joystick/0.0.0+sha.a3ad06277950/Joystick-0.0.0+sha.a3ad06277950.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Joystick-0.0.0+sha.a3ad06277950.tar.gz",
+    "size_bytes": 1686,
+    "sha256": "506cc1f7742f1c09ee8b8351508787e1aec00054c159d3a07a411f2b54b67f7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-carlos-gomez/library/Joystick/0.0.0%2Bsha.a3ad06277950/Joystick-0.0.0%2Bsha.a3ad06277950.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-carlos-gomez/library/Joystick/0.0.0%2Bsha.a3ad06277950/Joystick-0.0.0%2Bsha.a3ad06277950.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-carlos-gomez/library/LIFTING_WAVELET/0.0.0+sha.77b0f1316bb9/LIFTING_WAVELET-0.0.0+sha.77b0f1316bb9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIFTING_WAVELET-0.0.0+sha.77b0f1316bb9.tar.gz",
+    "size_bytes": 2370,
+    "sha256": "e6a1e3a884569447d37429bc9ad76f5136b327e45454c21d2133a8b478c0565a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-carlos-gomez/library/LIFTING_WAVELET/0.0.0%2Bsha.77b0f1316bb9/LIFTING_WAVELET-0.0.0%2Bsha.77b0f1316bb9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-carlos-gomez/library/LIFTING_WAVELET/0.0.0%2Bsha.77b0f1316bb9/LIFTING_WAVELET-0.0.0%2Bsha.77b0f1316bb9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-carlos-gomez/library/UTF8/0.0.0+sha.bbc6abbb8be5/UTF8-0.0.0+sha.bbc6abbb8be5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UTF8-0.0.0+sha.bbc6abbb8be5.tar.gz",
+    "size_bytes": 1838,
+    "sha256": "58bb7d873d9ca3b8c4336e5b4dd27aac467186080ce96efd6eb2c541fedf2ba2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-carlos-gomez/library/UTF8/0.0.0%2Bsha.bbc6abbb8be5/UTF8-0.0.0%2Bsha.bbc6abbb8be5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-carlos-gomez/library/UTF8/0.0.0%2Bsha.bbc6abbb8be5/UTF8-0.0.0%2Bsha.bbc6abbb8be5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-carlos-gomez/library/lcd1100/0.0.0+sha.d689e9c18cf8/lcd1100-0.0.0+sha.d689e9c18cf8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lcd1100-0.0.0+sha.d689e9c18cf8.tar.gz",
+    "size_bytes": 4342,
+    "sha256": "7c912e8e6bfc1b2a81952676e56d71a5180afb7c2027c9d8cf8317279b2008e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-carlos-gomez/library/lcd1100/0.0.0%2Bsha.d689e9c18cf8/lcd1100-0.0.0%2Bsha.d689e9c18cf8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-carlos-gomez/library/lcd1100/0.0.0%2Bsha.d689e9c18cf8/lcd1100-0.0.0%2Bsha.d689e9c18cf8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

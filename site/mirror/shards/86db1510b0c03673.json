@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chrisneukam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chrisneukam/library/MidiDmxBridge/1.0.0/MidiDmxBridge-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MidiDmxBridge-1.0.0.tar.gz",
+    "size_bytes": 17075,
+    "sha256": "67e045541520c152e72519998a1b384a79616f62fdd8debc17957f1e62b9ddce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisneukam/library/MidiDmxBridge/1.0.0/MidiDmxBridge-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisneukam/library/MidiDmxBridge/1.0.0/MidiDmxBridge-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

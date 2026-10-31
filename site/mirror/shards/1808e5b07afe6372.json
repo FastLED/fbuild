@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/flickerstrip",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "flickerstrip/library/FlashMemory/0.0.0-alpha+sha.53e24a42e0/FlashMemory-0.0.0-alphasha.53e24a42e0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashMemory-0.0.0-alphasha.53e24a42e0.tar.gz",
+    "size_bytes": 1943,
+    "sha256": "013e945252aa442eec0fdb3e0ad2d5fc79a335ec207b6b0a9ccfef49ae856594",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flickerstrip/library/FlashMemory/0.0.0-alpha%2Bsha.53e24a42e0/FlashMemory-0.0.0-alphasha.53e24a42e0.tar.gz",
+     "https://dl.registry.platformio.org/download/flickerstrip/library/FlashMemory/0.0.0-alpha%2Bsha.53e24a42e0/FlashMemory-0.0.0-alphasha.53e24a42e0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "flickerstrip/library/SoftwareSPI/0.0.0-alpha+sha.6f7e93171f/SoftwareSPI-0.0.0-alphasha.6f7e93171f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftwareSPI-0.0.0-alphasha.6f7e93171f.tar.gz",
+    "size_bytes": 1314,
+    "sha256": "9172c1b073a24ba673f7a2a534fa1edac32f0612e9d4c4c1e0770048cf94eb3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flickerstrip/library/SoftwareSPI/0.0.0-alpha%2Bsha.6f7e93171f/SoftwareSPI-0.0.0-alphasha.6f7e93171f.tar.gz",
+     "https://dl.registry.platformio.org/download/flickerstrip/library/SoftwareSPI/0.0.0-alpha%2Bsha.6f7e93171f/SoftwareSPI-0.0.0-alphasha.6f7e93171f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

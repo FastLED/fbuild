@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tunasha",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tunasha/library/FlowSensorLib/1.0.1/FlowSensorLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlowSensorLib-1.0.1.tar.gz",
+    "size_bytes": 3391,
+    "sha256": "6c9a2d6970f46c9c72af7cfee11ff3ed5ee74071546c59f74a6933939a1f1e9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tunasha/library/FlowSensorLib/1.0.1/FlowSensorLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tunasha/library/FlowSensorLib/1.0.1/FlowSensorLib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tunasha/library/PressureSensorLib/1.0.0/PressureSensorLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PressureSensorLib-1.0.0.tar.gz",
+    "size_bytes": 3739,
+    "sha256": "a1b2c2db36d9a0599f8c9f769bd535e892fd5c7abe5e3f9ddea420e5bd1156d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tunasha/library/PressureSensorLib/1.0.0/PressureSensorLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tunasha/library/PressureSensorLib/1.0.0/PressureSensorLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tunasha/library/PressureSensorLib/1.0.1/PressureSensorLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PressureSensorLib-1.0.1.tar.gz",
+    "size_bytes": 3786,
+    "sha256": "d3ba7690cefdc2f5f9b8e1909dab80a4d31edb4d2ad735e2fa6111f09c298e9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tunasha/library/PressureSensorLib/1.0.1/PressureSensorLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tunasha/library/PressureSensorLib/1.0.1/PressureSensorLib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tunasha/library/TunashaHydrostaticPressureSensor/0.0.1/TunashaHydrostaticPressureSensor-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TunashaHydrostaticPressureSensor-0.0.1.tar.gz",
+    "size_bytes": 2758,
+    "sha256": "f3f0558c04b193f7a4f875c36f5064f6108609bb97959984af9a35bc7384180c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tunasha/library/TunashaHydrostaticPressureSensor/0.0.1/TunashaHydrostaticPressureSensor-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tunasha/library/TunashaHydrostaticPressureSensor/0.0.1/TunashaHydrostaticPressureSensor-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

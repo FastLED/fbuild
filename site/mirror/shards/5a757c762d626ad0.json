@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kk4das",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kk4das/library/ICOM%20746%20CAT%20Control/1.0.3/ICOM746CATControl-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICOM746CATControl-1.0.3.tar.gz",
+    "size_bytes": 25470,
+    "sha256": "6df2e9625b237a2215d5bfee6792018d0028714e5fb1eef9b4ba74890477c5bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kk4das/library/ICOM%2520746%2520CAT%2520Control/1.0.3/ICOM746CATControl-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kk4das/library/ICOM%20746%20CAT%20Control/1.0.3/ICOM746CATControl-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

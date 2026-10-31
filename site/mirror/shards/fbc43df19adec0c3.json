@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wodji",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wodji/library/EEPROM/0.0.0+sha.3be39cc46001/EEPROM-0.0.0+sha.3be39cc46001.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM-0.0.0+sha.3be39cc46001.tar.gz",
+    "size_bytes": 3749,
+    "sha256": "3d6d4e41ab9d3d21247a162d27d5e7337d30b137de4f6ae12f509f734aa2c4d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wodji/library/EEPROM/0.0.0%2Bsha.3be39cc46001/EEPROM-0.0.0%2Bsha.3be39cc46001.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wodji/library/EEPROM/0.0.0%2Bsha.3be39cc46001/EEPROM-0.0.0%2Bsha.3be39cc46001.tar.gz"
+    ]
+   }
+  }
+ ]
+}

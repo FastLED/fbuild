@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pissanidis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pissanidis/library/MBEDminiproject/0.0.0+sha.6a9c4d7da3a1/MBEDminiproject-0.0.0+sha.6a9c4d7da3a1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MBEDminiproject-0.0.0+sha.6a9c4d7da3a1.tar.gz",
+    "size_bytes": 2786,
+    "sha256": "5f7edb0b9917e7a2183b87e7e540ef9a8d2aae42dcb423c268f06624087844c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pissanidis/library/MBEDminiproject/0.0.0%2Bsha.6a9c4d7da3a1/MBEDminiproject-0.0.0%2Bsha.6a9c4d7da3a1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pissanidis/library/MBEDminiproject/0.0.0%2Bsha.6a9c4d7da3a1/MBEDminiproject-0.0.0%2Bsha.6a9c4d7da3a1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

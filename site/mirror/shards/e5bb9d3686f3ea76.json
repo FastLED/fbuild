@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tommag",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tommag/library/DS2431/1.1/DS2431-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS2431-1.1.tar.gz",
+    "size_bytes": 3918,
+    "sha256": "a8fcdb17a4215da2abddf41508c1d1c64868abc97e4fd1ccaa354bc65905f6f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tommag/library/DS2431/1.1/DS2431-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tommag/library/DS2431/1.1/DS2431-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tommag/library/PCM51xx/1.1/PCM51xx-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCM51xx-1.1.tar.gz",
+    "size_bytes": 7462,
+    "sha256": "243615a82bc66008666d06c4fbd5d9857847e3b34d934e94b33d33c4d2798410",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tommag/library/PCM51xx/1.1/PCM51xx-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tommag/library/PCM51xx/1.1/PCM51xx-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tommag/library/TMC4210/1.1/TMC4210-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC4210-1.1.tar.gz",
+    "size_bytes": 7406,
+    "sha256": "844ac4bf87687311a4e40955ab71af1ff1d00d56e741c54aa6a7ac36fe6626fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tommag/library/TMC4210/1.1/TMC4210-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tommag/library/TMC4210/1.1/TMC4210-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tommag/library/TMC5160/1.1.0/TMC5160-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC5160-1.1.0.tar.gz",
+    "size_bytes": 27134,
+    "sha256": "df6120738654743c3801cf21bbc51250046fbab3c6cd70bb2219357bf0db4939",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tommag/library/TMC5160/1.1.0/TMC5160-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tommag/library/TMC5160/1.1.0/TMC5160-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tommag/library/Trinamic_TMC4210/1.0/Trinamic_TMC4210-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trinamic_TMC4210-1.0.tar.gz",
+    "size_bytes": 6937,
+    "sha256": "dc0ef7eacf4658da033a926a4eb3a73f6e0c5a954ee2fc920def759315c17692",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tommag/library/Trinamic_TMC4210/1.0/Trinamic_TMC4210-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tommag/library/Trinamic_TMC4210/1.0/Trinamic_TMC4210-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

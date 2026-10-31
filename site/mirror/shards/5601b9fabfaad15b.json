@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lysos-kit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lysos-kit/library/lysos-core-oss/1.0.0/lysos-core-oss-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lysos-core-oss-1.0.0.tar.gz",
+    "size_bytes": 14442,
+    "sha256": "a4ddbbbadc17b8e59ceba4fa0feac30b1ccbfb472228bc4dc4563bf91a6c0e75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lysos-kit/library/lysos-core-oss/1.0.0/lysos-core-oss-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lysos-kit/library/lysos-core-oss/1.0.0/lysos-core-oss-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

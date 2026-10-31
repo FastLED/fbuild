@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/markuslange",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "markuslange/library/DueRTC/2.1/DueRTC-2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DueRTC-2.1.tar.gz",
+    "size_bytes": 10881,
+    "sha256": "731de01c3f5862bfcd0bb36372af90acb7b45672001dd82013bce19ca058dc31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/markuslange/library/DueRTC/2.1/DueRTC-2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/markuslange/library/DueRTC/2.1/DueRTC-2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "markuslange/library/RTCDue/1.1.0/RTCDue-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTCDue-1.1.0.tar.gz",
+    "size_bytes": 5450,
+    "sha256": "3f6c0e7b6808386bd7b6fdbb72a459e97b8473411753c0f4f99f710ce5c9e6eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/markuslange/library/RTCDue/1.1.0/RTCDue-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/markuslange/library/RTCDue/1.1.0/RTCDue-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

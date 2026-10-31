@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bclaus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bclaus/library/HMC5883L/0.0.0+sha.942f760b563a/HMC5883L-0.0.0+sha.942f760b563a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC5883L-0.0.0+sha.942f760b563a.tar.gz",
+    "size_bytes": 3919,
+    "sha256": "24a85669a59e671eeed0c1c22419eb4644ac0524843f82bb8008e151b784679f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bclaus/library/HMC5883L/0.0.0%2Bsha.942f760b563a/HMC5883L-0.0.0%2Bsha.942f760b563a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bclaus/library/HMC5883L/0.0.0%2Bsha.942f760b563a/HMC5883L-0.0.0%2Bsha.942f760b563a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bclaus/library/L3GD20/0.0.0+sha.b45dbca259f8/L3GD20-0.0.0+sha.b45dbca259f8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L3GD20-0.0.0+sha.b45dbca259f8.tar.gz",
+    "size_bytes": 2998,
+    "sha256": "02a21424c66c5ad9076697dc930fb9869b5b3e43cde015d361d194a5d0d1867c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bclaus/library/L3GD20/0.0.0%2Bsha.b45dbca259f8/L3GD20-0.0.0%2Bsha.b45dbca259f8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bclaus/library/L3GD20/0.0.0%2Bsha.b45dbca259f8/L3GD20-0.0.0%2Bsha.b45dbca259f8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bclaus/library/LIS3MDL/0.0.0+sha.898554a35638/LIS3MDL-0.0.0+sha.898554a35638.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIS3MDL-0.0.0+sha.898554a35638.tar.gz",
+    "size_bytes": 5116,
+    "sha256": "b615011b9e7e90bd248a0d9c8044263c28e1d2efd2a276ba5230037f7170d52f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bclaus/library/LIS3MDL/0.0.0%2Bsha.898554a35638/LIS3MDL-0.0.0%2Bsha.898554a35638.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bclaus/library/LIS3MDL/0.0.0%2Bsha.898554a35638/LIS3MDL-0.0.0%2Bsha.898554a35638.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bclaus/library/LSM303D/0.0.0+sha.8cd0c3c11b48/LSM303D-0.0.0+sha.8cd0c3c11b48.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM303D-0.0.0+sha.8cd0c3c11b48.tar.gz",
+    "size_bytes": 2687,
+    "sha256": "110838928a43536bad2a7937b2f1092a0488f117720b7dc4b31556e5d91624e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bclaus/library/LSM303D/0.0.0%2Bsha.8cd0c3c11b48/LSM303D-0.0.0%2Bsha.8cd0c3c11b48.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bclaus/library/LSM303D/0.0.0%2Bsha.8cd0c3c11b48/LSM303D-0.0.0%2Bsha.8cd0c3c11b48.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bclaus/library/LSM6DS33/0.0.0+sha.4e7d663e26bd/LSM6DS33-0.0.0+sha.4e7d663e26bd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM6DS33-0.0.0+sha.4e7d663e26bd.tar.gz",
+    "size_bytes": 6082,
+    "sha256": "bcc90046684e77eec48cb84472289dacf2bf8682c24454100c316e25d718487d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bclaus/library/LSM6DS33/0.0.0%2Bsha.4e7d663e26bd/LSM6DS33-0.0.0%2Bsha.4e7d663e26bd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bclaus/library/LSM6DS33/0.0.0%2Bsha.4e7d663e26bd/LSM6DS33-0.0.0%2Bsha.4e7d663e26bd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bclaus/library/stats/0.0.0+sha.63c55a3cd73c/stats-0.0.0+sha.63c55a3cd73c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stats-0.0.0+sha.63c55a3cd73c.tar.gz",
+    "size_bytes": 1298,
+    "sha256": "ec0dd945bba52c10d965b2ecd430402ed6e2abde4a7b730d8c444452e4ded276",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bclaus/library/stats/0.0.0%2Bsha.63c55a3cd73c/stats-0.0.0%2Bsha.63c55a3cd73c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bclaus/library/stats/0.0.0%2Bsha.63c55a3cd73c/stats-0.0.0%2Bsha.63c55a3cd73c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

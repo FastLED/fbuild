@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-doctorura",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-doctorura/library/MagneWave/0.0.0+sha.486d9fde3e64/MagneWave-0.0.0+sha.486d9fde3e64.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MagneWave-0.0.0+sha.486d9fde3e64.tar.gz",
+    "size_bytes": 1528,
+    "sha256": "344be8001063f02ff9c753af35367d143cb12f3c629e74faa81b586d392514cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-doctorura/library/MagneWave/0.0.0%2Bsha.486d9fde3e64/MagneWave-0.0.0%2Bsha.486d9fde3e64.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-doctorura/library/MagneWave/0.0.0%2Bsha.486d9fde3e64/MagneWave-0.0.0%2Bsha.486d9fde3e64.tar.gz"
+    ]
+   }
+  }
+ ]
+}

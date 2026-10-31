@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/a-vision-software",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "a-vision-software/library/AVision_ESP8266/1.0.7/AVision_ESP8266-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AVision_ESP8266-1.0.7.tar.gz",
+    "size_bytes": 27950,
+    "sha256": "e5efb9a256409019944b689ed376a0d5ff7fe764f87c62485baf6d23c79d2c40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/a-vision-software/library/AVision_ESP8266/1.0.7/AVision_ESP8266-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/a-vision-software/library/AVision_ESP8266/1.0.7/AVision_ESP8266-1.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

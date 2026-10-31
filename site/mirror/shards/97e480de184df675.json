@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tttmmmsss",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tttmmmsss/library/ICM7218C/1.2.3/ICM7218C-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM7218C-1.2.3.tar.gz",
+    "size_bytes": 4679,
+    "sha256": "e64ca2b8104843a82762817c5a92378085623ca1de7aeeea3152a3159b76a987",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tttmmmsss/library/ICM7218C/1.2.3/ICM7218C-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tttmmmsss/library/ICM7218C/1.2.3/ICM7218C-1.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

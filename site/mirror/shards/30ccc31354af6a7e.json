@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-steniu01",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-steniu01/library/LPC1768_DMA/0.0.0+sha.86b13bfcbe46/LPC1768_DMA-0.0.0+sha.86b13bfcbe46.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LPC1768_DMA-0.0.0+sha.86b13bfcbe46.tar.gz",
+    "size_bytes": 2786,
+    "sha256": "3830bbb6fbdd880b829061439edb913582cf87dd81d1ec45d31638d19cb3bf3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-steniu01/library/LPC1768_DMA/0.0.0%2Bsha.86b13bfcbe46/LPC1768_DMA-0.0.0%2Bsha.86b13bfcbe46.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-steniu01/library/LPC1768_DMA/0.0.0%2Bsha.86b13bfcbe46/LPC1768_DMA-0.0.0%2Bsha.86b13bfcbe46.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-steniu01/library/mDMA/0.0.0+sha.9421d79fb372/mDMA-0.0.0+sha.9421d79fb372.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mDMA-0.0.0+sha.9421d79fb372.tar.gz",
+    "size_bytes": 8514,
+    "sha256": "b4c7a01d5d422e2df5596d1781fb58db6085f46d95966041a827814db0d1920a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-steniu01/library/mDMA/0.0.0%2Bsha.9421d79fb372/mDMA-0.0.0%2Bsha.9421d79fb372.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-steniu01/library/mDMA/0.0.0%2Bsha.9421d79fb372/mDMA-0.0.0%2Bsha.9421d79fb372.tar.gz"
+    ]
+   }
+  }
+ ]
+}

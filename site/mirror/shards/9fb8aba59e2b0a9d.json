@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/oatssss",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "oatssss/library/WiFiSelector/0.0.2/WiFiSelector-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiSelector-0.0.2.tar.gz",
+    "size_bytes": 60300,
+    "sha256": "6a5a42960174fbb498d0807009cc7a1ec28bc9f047a0ebb31f4faa5ee885410f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/oatssss/library/WiFiSelector/0.0.2/WiFiSelector-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/oatssss/library/WiFiSelector/0.0.2/WiFiSelector-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

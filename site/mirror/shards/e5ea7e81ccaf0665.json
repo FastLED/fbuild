@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rmin-code2005",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rmin-code2005/library/oled_graphic_assistance/2.1.1/oled_graphic_assistance-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "oled_graphic_assistance-2.1.1.tar.gz",
+    "size_bytes": 3603,
+    "sha256": "ec6086461b2cd5fcab30355dfba1672f41c03aaa9a7e620e3ba9673f96e8e5ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rmin-code2005/library/oled_graphic_assistance/2.1.1/oled_graphic_assistance-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rmin-code2005/library/oled_graphic_assistance/2.1.1/oled_graphic_assistance-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rmin-code2005/library/sparkey_gyro/1.0.0/king_Armin_sparkyTDAxis12_I2C_lib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "king_Armin_sparkyTDAxis12_I2C_lib-1.0.0.tar.gz",
+    "size_bytes": 2581,
+    "sha256": "0ecca19f4b20ba65ffc02d14bfef9d3758ed780639b21c86613a4fa1ba041cda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rmin-code2005/library/sparkey_gyro/1.0.0/king_Armin_sparkyTDAxis12_I2C_lib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rmin-code2005/library/sparkey_gyro/1.0.0/king_Armin_sparkyTDAxis12_I2C_lib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rmin-code2005/library/sparkey_gyro/1.1.0/sparkey_gyro-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sparkey_gyro-1.1.0.tar.gz",
+    "size_bytes": 3341,
+    "sha256": "7e0c18cec9113f1ed4f1cf7630a35b7f0acbf6e1950f28833965150f5dba09c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rmin-code2005/library/sparkey_gyro/1.1.0/sparkey_gyro-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rmin-code2005/library/sparkey_gyro/1.1.0/sparkey_gyro-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rmin-code2005/library/sparkey_gyro/1.2.1/sparkey_gyro-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sparkey_gyro-1.2.1.tar.gz",
+    "size_bytes": 4217,
+    "sha256": "5b9373200499d2919542a3d7282500104f1b703ee3d8c0899322b24d2905c37a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rmin-code2005/library/sparkey_gyro/1.2.1/sparkey_gyro-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rmin-code2005/library/sparkey_gyro/1.2.1/sparkey_gyro-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rmin-code2005/library/sparkey_gyro/1.3.1/sparkey_gyro-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sparkey_gyro-1.3.1.tar.gz",
+    "size_bytes": 4719,
+    "sha256": "bc99a33d5483417060658fa06a62814d0c67c681aea4d6317486a105c08f2dea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rmin-code2005/library/sparkey_gyro/1.3.1/sparkey_gyro-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rmin-code2005/library/sparkey_gyro/1.3.1/sparkey_gyro-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

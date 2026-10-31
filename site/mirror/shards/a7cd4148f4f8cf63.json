@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adminius",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adminius/library/Dimmer%20class%20for%20ATmega32U4/1.0.2/DimmerclassforATmega32U4-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DimmerclassforATmega32U4-1.0.2.tar.gz",
+    "size_bytes": 14845,
+    "sha256": "3a9872c0f4b1bb6e0ae4dc34fb8b197c7fcd7e56a5cf400842a90a9a3fff74aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adminius/library/Dimmer%2520class%2520for%2520ATmega32U4/1.0.2/DimmerclassforATmega32U4-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/adminius/library/Dimmer%20class%20for%20ATmega32U4/1.0.2/DimmerclassforATmega32U4-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adminius/library/Dimmer%20class%20for%20SAMD21/1.0.0/DimmerclassforSAMD21-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DimmerclassforSAMD21-1.0.0.tar.gz",
+    "size_bytes": 16251,
+    "sha256": "c2983a787e0139a1e1f2d815b33a61d96f2688b57748eb8d5e9a1c5c00459dd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adminius/library/Dimmer%2520class%2520for%2520SAMD21/1.0.0/DimmerclassforSAMD21-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adminius/library/Dimmer%20class%20for%20SAMD21/1.0.0/DimmerclassforSAMD21-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adminius/library/DimmerControl/1.2.0/DimmerControl-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DimmerControl-1.2.0.tar.gz",
+    "size_bytes": 17325,
+    "sha256": "15baca40a281ded38bfef95c778915b05881a3384f2817c3e42c2cfe4849966a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adminius/library/DimmerControl/1.2.0/DimmerControl-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adminius/library/DimmerControl/1.2.0/DimmerControl-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mattanimation",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mattanimation/library/Ezo_uart_lib/1.0.0/Ezo_uart_lib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ezo_uart_lib-1.0.0.tar.gz",
+    "size_bytes": 5506,
+    "sha256": "bf3b4cbad766d4ae50b406f51af9dfcf141a826037df1dabc3f9add4cd2211d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mattanimation/library/Ezo_uart_lib/1.0.0/Ezo_uart_lib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mattanimation/library/Ezo_uart_lib/1.0.0/Ezo_uart_lib-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

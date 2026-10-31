@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/namino-cc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "namino-cc/library/Namino_Industrial_Boards/1.0.18/Namino_Industrial_Boards-1.0.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Namino_Industrial_Boards-1.0.18.tar.gz",
+    "size_bytes": 14862,
+    "sha256": "ee274464fe10eb861c6d96565790fe8824380c6771c13cba9cc4a09e8e3018fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/namino-cc/library/Namino_Industrial_Boards/1.0.18/Namino_Industrial_Boards-1.0.18.tar.gz",
+     "https://dl.registry.platformio.org/download/namino-cc/library/Namino_Industrial_Boards/1.0.18/Namino_Industrial_Boards-1.0.18.tar.gz"
+    ]
+   }
+  }
+ ]
+}

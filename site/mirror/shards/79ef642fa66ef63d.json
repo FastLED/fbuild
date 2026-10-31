@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ysi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ysi/library/lib_LCD_i2c_SPTLYI/0.0.0+sha.b0c643bbf1fa/lib_LCD_i2c_SPTLYI-0.0.0+sha.b0c643bbf1fa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lib_LCD_i2c_SPTLYI-0.0.0+sha.b0c643bbf1fa.tar.gz",
+    "size_bytes": 3611,
+    "sha256": "9c65bb2f59357a4e04455e17988347e3ce3443d417145fd96ea55bfc7524031f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ysi/library/lib_LCD_i2c_SPTLYI/0.0.0%2Bsha.b0c643bbf1fa/lib_LCD_i2c_SPTLYI-0.0.0%2Bsha.b0c643bbf1fa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ysi/library/lib_LCD_i2c_SPTLYI/0.0.0%2Bsha.b0c643bbf1fa/lib_LCD_i2c_SPTLYI-0.0.0%2Bsha.b0c643bbf1fa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ysi/library/lib_LCD_oem/0.0.0+sha.02f5e2861a9b/lib_LCD_oem-0.0.0+sha.02f5e2861a9b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lib_LCD_oem-0.0.0+sha.02f5e2861a9b.tar.gz",
+    "size_bytes": 2657,
+    "sha256": "6096828d1baf4ce53832db7813d873283999394adcfc23ab07868d6a62a6e18e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ysi/library/lib_LCD_oem/0.0.0%2Bsha.02f5e2861a9b/lib_LCD_oem-0.0.0%2Bsha.02f5e2861a9b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ysi/library/lib_LCD_oem/0.0.0%2Bsha.02f5e2861a9b/lib_LCD_oem-0.0.0%2Bsha.02f5e2861a9b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ysi/library/lib_Mbed_LPS/0.0.0+sha.5e21f6f2e1f6/lib_Mbed_LPS-0.0.0+sha.5e21f6f2e1f6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lib_Mbed_LPS-0.0.0+sha.5e21f6f2e1f6.tar.gz",
+    "size_bytes": 1783,
+    "sha256": "15128e26fdfde3ed252b81703514847f0ee5a03c31528758950a507669cd9f89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ysi/library/lib_Mbed_LPS/0.0.0%2Bsha.5e21f6f2e1f6/lib_Mbed_LPS-0.0.0%2Bsha.5e21f6f2e1f6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ysi/library/lib_Mbed_LPS/0.0.0%2Bsha.5e21f6f2e1f6/lib_Mbed_LPS-0.0.0%2Bsha.5e21f6f2e1f6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ysi/library/lib_PwmOutAllPin/0.0.0+sha.0f5ad06f23c0/lib_PwmOutAllPin-0.0.0+sha.0f5ad06f23c0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lib_PwmOutAllPin-0.0.0+sha.0f5ad06f23c0.tar.gz",
+    "size_bytes": 2334,
+    "sha256": "9e06d674c9d9fa5732dca9141b9d5fc8a54efe3a644aae56c47c64a85ab54945",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ysi/library/lib_PwmOutAllPin/0.0.0%2Bsha.0f5ad06f23c0/lib_PwmOutAllPin-0.0.0%2Bsha.0f5ad06f23c0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ysi/library/lib_PwmOutAllPin/0.0.0%2Bsha.0f5ad06f23c0/lib_PwmOutAllPin-0.0.0%2Bsha.0f5ad06f23c0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ysi/library/lib_SHT11/0.0.0+sha.6b657f74b4e4/lib_SHT11-0.0.0+sha.6b657f74b4e4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lib_SHT11-0.0.0+sha.6b657f74b4e4.tar.gz",
+    "size_bytes": 2504,
+    "sha256": "cffe18877bac66ff8120d65b682ff7dbad8b01f1a14bcfc9d471d43ed0a1a3b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ysi/library/lib_SHT11/0.0.0%2Bsha.6b657f74b4e4/lib_SHT11-0.0.0%2Bsha.6b657f74b4e4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ysi/library/lib_SHT11/0.0.0%2Bsha.6b657f74b4e4/lib_SHT11-0.0.0%2Bsha.6b657f74b4e4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ysi/library/lib_SHT25/0.0.0+sha.21a50575cb79/lib_SHT25-0.0.0+sha.21a50575cb79.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lib_SHT25-0.0.0+sha.21a50575cb79.tar.gz",
+    "size_bytes": 2406,
+    "sha256": "295da2136299487287f3e00450543a7a2233589a6ff5deb4cc26d4633394143b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ysi/library/lib_SHT25/0.0.0%2Bsha.21a50575cb79/lib_SHT25-0.0.0%2Bsha.21a50575cb79.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ysi/library/lib_SHT25/0.0.0%2Bsha.21a50575cb79/lib_SHT25-0.0.0%2Bsha.21a50575cb79.tar.gz"
+    ]
+   }
+  }
+ ]
+}

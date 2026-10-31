@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-narendraj9",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-narendraj9/library/Motor/0.0.0+sha.118c5f0675da/Motor-0.0.0+sha.118c5f0675da.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor-0.0.0+sha.118c5f0675da.tar.gz",
+    "size_bytes": 2288,
+    "sha256": "7f29198d53d58796d43dff70ed71d69ec6228a316a2858dc113da54309c19e3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-narendraj9/library/Motor/0.0.0%2Bsha.118c5f0675da/Motor-0.0.0%2Bsha.118c5f0675da.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-narendraj9/library/Motor/0.0.0%2Bsha.118c5f0675da/Motor-0.0.0%2Bsha.118c5f0675da.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-narendraj9/library/Robo/0.0.0+sha.c31299ed92f1/Robo-0.0.0+sha.c31299ed92f1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Robo-0.0.0+sha.c31299ed92f1.tar.gz",
+    "size_bytes": 2381,
+    "sha256": "0343837ab96bc1eeaa7e72a33053bf127fe560c4bc82316494e7caab81bab8f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-narendraj9/library/Robo/0.0.0%2Bsha.c31299ed92f1/Robo-0.0.0%2Bsha.c31299ed92f1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-narendraj9/library/Robo/0.0.0%2Bsha.c31299ed92f1/Robo-0.0.0%2Bsha.c31299ed92f1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

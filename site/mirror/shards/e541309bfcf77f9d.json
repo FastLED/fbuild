@@ -1,0 +1,230 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/danilogcrf2-oss",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/1.0.0/ESP32Synth-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-1.0.0.tar.gz",
+    "size_bytes": 15131,
+    "sha256": "51b70c11d233c59beddf355ad9c22f9a2000ab54ce91f939f93a0eb0d8b72ae3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/1.0.0/ESP32Synth-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/1.0.0/ESP32Synth-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/1.2.0/ESP32Synth-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-1.2.0.tar.gz",
+    "size_bytes": 21176,
+    "sha256": "60879df03e244ff65097811e64e6a03e8cf54e792cf5ac3cb2e77a9fe1f0d580",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/1.2.0/ESP32Synth-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/1.2.0/ESP32Synth-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/2.0.5/ESP32Synth-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-2.0.5.tar.gz",
+    "size_bytes": 736873,
+    "sha256": "8a156422a0528055c9a33107bdaf742830d08a7660fa958966ffe29188cab144",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/2.0.5/ESP32Synth-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/2.0.5/ESP32Synth-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/2.2.0/ESP32Synth-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-2.2.0.tar.gz",
+    "size_bytes": 737823,
+    "sha256": "8de37dfa34c93872e5f709e17de558228c05d1314589a2107164488646b10826",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/2.2.0/ESP32Synth-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/2.2.0/ESP32Synth-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/2.3.0/ESP32Synth-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-2.3.0.tar.gz",
+    "size_bytes": 755404,
+    "sha256": "c7be33c4ae00b586cda8b05da27c7939f2b85a40a799de3ebc79a5c579498f0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/2.3.0/ESP32Synth-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/2.3.0/ESP32Synth-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/2.3.5/ESP32Synth-2.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-2.3.5.tar.gz",
+    "size_bytes": 766424,
+    "sha256": "e1ff747061bf217d5aa3576b84354bfe5881e0d72c30a7a27c737753f35eafc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/2.3.5/ESP32Synth-2.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/2.3.5/ESP32Synth-2.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/2.4.0/ESP32Synth-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-2.4.0.tar.gz",
+    "size_bytes": 1272168,
+    "sha256": "e10814d27d8c3f70f797dcec91a4785c6aa0b9c4129201422ba2ad757fd87d50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/2.4.0/ESP32Synth-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/2.4.0/ESP32Synth-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/2.4.1/ESP32Synth-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-2.4.1.tar.gz",
+    "size_bytes": 1280302,
+    "sha256": "88bde37a28208ba81033c53a5087b1dd4cbdac472ff7de80c5ec24f9d704e5f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/2.4.1/ESP32Synth-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/2.4.1/ESP32Synth-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/2.4.2/ESP32Synth-2.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-2.4.2.tar.gz",
+    "size_bytes": 1303410,
+    "sha256": "d96100476dc0b3b49a8a5b738f5ae70b6b0b9c9ef79e240aa3b3e0932b7960f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/2.4.2/ESP32Synth-2.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/2.4.2/ESP32Synth-2.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/2.4.3/ESP32Synth-2.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-2.4.3.tar.gz",
+    "size_bytes": 1303822,
+    "sha256": "6ad12e84f986da1d5487eb81c75d91f668c2669e993aacea4b90ae3bb9b937d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/2.4.3/ESP32Synth-2.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/2.4.3/ESP32Synth-2.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/2.4.4/ESP32Synth-2.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-2.4.4.tar.gz",
+    "size_bytes": 1314835,
+    "sha256": "f01216f260ef25ae3cd766bcf1ce9cf32a4a85b6840fc825a088391b30d85b88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/2.4.4/ESP32Synth-2.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/2.4.4/ESP32Synth-2.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/2.4.5/ESP32Synth-2.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-2.4.5.tar.gz",
+    "size_bytes": 1322022,
+    "sha256": "34054ad4d5a57970e3297b5a4432ad69e10cad002ddfb2f7858a83fdc63d209d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/2.4.5/ESP32Synth-2.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/2.4.5/ESP32Synth-2.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/2.4.6/ESP32Synth-2.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-2.4.6.tar.gz",
+    "size_bytes": 1322028,
+    "sha256": "a006b12fe616aa2005f3e3d970db9d7455251d585d692e4ccf46b40c03bef7e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/2.4.6/ESP32Synth-2.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/2.4.6/ESP32Synth-2.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/2.4.7/ESP32Synth-2.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-2.4.7.tar.gz",
+    "size_bytes": 1327564,
+    "sha256": "94e746204e5cdc053fa52a03e7f1ecbf119fad6270d96504b39657c479197d54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/2.4.7/ESP32Synth-2.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/2.4.7/ESP32Synth-2.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/2.5.0/ESP32Synth-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-2.5.0.tar.gz",
+    "size_bytes": 1399426,
+    "sha256": "17d2c770d854dde55aeb9ac845a29d98edff2e14133b3b8d55e8c52e1da70711",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/2.5.0/ESP32Synth-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/2.5.0/ESP32Synth-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/2.5.1/ESP32Synth-2.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-2.5.1.tar.gz",
+    "size_bytes": 1399406,
+    "sha256": "32d50240b42189a773befd120a03cffab811937825c8e978479e8b3541ce5736",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/2.5.1/ESP32Synth-2.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/2.5.1/ESP32Synth-2.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danilogcrf2-oss/library/ESP32Synth/2.5.2/ESP32Synth-2.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Synth-2.5.2.tar.gz",
+    "size_bytes": 1401582,
+    "sha256": "9efdedb4302b1b217192af0e45c02bd289976383692054d70ae45b4be34c7aae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danilogcrf2-oss/library/ESP32Synth/2.5.2/ESP32Synth-2.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/danilogcrf2-oss/library/ESP32Synth/2.5.2/ESP32Synth-2.5.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

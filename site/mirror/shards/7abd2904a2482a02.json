@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thomas-broussard",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thomas-broussard/library/Domokit%20ESP8266/1.0.0/DomokitESP8266-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomokitESP8266-1.0.0.tar.gz",
+    "size_bytes": 9346,
+    "sha256": "deeba08040938f5b68410da35cc0fee89edb2bc9d69257d017b3af33ff447345",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomas-broussard/library/Domokit%2520ESP8266/1.0.0/DomokitESP8266-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thomas-broussard/library/Domokit%20ESP8266/1.0.0/DomokitESP8266-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thomas-broussard/library/Domokit/1.0.1/Domokit-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Domokit-1.0.1.tar.gz",
+    "size_bytes": 10363,
+    "sha256": "45dcb3bbcba7c3702e7373dc7977fa888542fe947b808e31c94179014140691f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thomas-broussard/library/Domokit/1.0.1/Domokit-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thomas-broussard/library/Domokit/1.0.1/Domokit-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/harvie",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "harvie/library/RotaryDial/0.0.1/RotaryDial-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotaryDial-0.0.1.tar.gz",
+    "size_bytes": 2944,
+    "sha256": "cf4f11142d4885a09301e9229a9ddb69207f0ac86dd9ada1f6070848d6dce5d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harvie/library/RotaryDial/0.0.1/RotaryDial-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/harvie/library/RotaryDial/0.0.1/RotaryDial-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "harvie/library/ps2dev/0.0.4/ps2dev-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ps2dev-0.0.4.tar.gz",
+    "size_bytes": 9295,
+    "sha256": "da716ab9f858df9a526221bf95f492bcfc24848f0761316eb4879e8a8e4f6df7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harvie/library/ps2dev/0.0.4/ps2dev-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/harvie/library/ps2dev/0.0.4/ps2dev-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

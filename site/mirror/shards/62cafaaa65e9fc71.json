@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/the-randalorian",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "the-randalorian/library/Rando%20HX711%20Library/1.1.0/RandoHX711Library-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RandoHX711Library-1.1.0.tar.gz",
+    "size_bytes": 3979,
+    "sha256": "8444bc3ae20c8ed472aab80213ed2f62a41bc59b7e3e862df04b151666f2e7e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/the-randalorian/library/Rando%2520HX711%2520Library/1.1.0/RandoHX711Library-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/the-randalorian/library/Rando%20HX711%20Library/1.1.0/RandoHX711Library-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

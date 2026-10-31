@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rear16",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rear16/library/ESP-DOOM/1.0.0/ESP-DOOM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-DOOM-1.0.0.tar.gz",
+    "size_bytes": 2183383,
+    "sha256": "15a3da5d4391fb0c93bdbdb0ae085ce1153e0bf819b6f7e72d9bbd5a68072d4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rear16/library/ESP-DOOM/1.0.0/ESP-DOOM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rear16/library/ESP-DOOM/1.0.0/ESP-DOOM-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

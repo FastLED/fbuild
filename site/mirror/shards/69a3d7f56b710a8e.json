@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tstoegi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tstoegi/library/MicroWakeupper%20Wemos%20D1%20Mini%20Battery%20Shield/7.1.0/MicroWakeupperWemosD1MiniBatteryShield-7.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroWakeupperWemosD1MiniBatteryShield-7.1.0.tar.gz",
+    "size_bytes": 7348,
+    "sha256": "5d7229350eee0924c82a0408ab10fa5a58174fb7508d030aafdc57b6430dad0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tstoegi/library/MicroWakeupper%2520Wemos%2520D1%2520Mini%2520Battery%2520Shield/7.1.0/MicroWakeupperWemosD1MiniBatteryShield-7.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tstoegi/library/MicroWakeupper%20Wemos%20D1%20Mini%20Battery%20Shield/7.1.0/MicroWakeupperWemosD1MiniBatteryShield-7.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tstoegi/library/MicroWakeupper%20Wemos%20D1%20Mini%20Battery%20Shield/7.1.2/MicroWakeupperWemosD1MiniBatteryShield-7.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroWakeupperWemosD1MiniBatteryShield-7.1.2.tar.gz",
+    "size_bytes": 9156,
+    "sha256": "9a1e00cdaf6ac09cfef499edb97d8d2cde42fe16d93453f53d893ef80bed9bec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tstoegi/library/MicroWakeupper%2520Wemos%2520D1%2520Mini%2520Battery%2520Shield/7.1.2/MicroWakeupperWemosD1MiniBatteryShield-7.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tstoegi/library/MicroWakeupper%20Wemos%20D1%20Mini%20Battery%20Shield/7.1.2/MicroWakeupperWemosD1MiniBatteryShield-7.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

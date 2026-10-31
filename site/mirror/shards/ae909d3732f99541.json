@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fan4tix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fan4tix/library/DTS6012M/1.0.0/DTS6012M-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M-1.0.0.tar.gz",
+    "size_bytes": 3522,
+    "sha256": "19b39f3dd6250ff96fd5461abf5fd22d1ed07a36681732b9507b92c4cf9f5d6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fan4tix/library/DTS6012M/1.0.0/DTS6012M-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fan4tix/library/DTS6012M/1.0.0/DTS6012M-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fan4tix/library/DTS6012M/1.0.1/DTS6012M-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTS6012M-1.0.1.tar.gz",
+    "size_bytes": 3519,
+    "sha256": "47517369d53cd41e8a4446ad62d8d17d2ec525aa11f8e20548d07a46c728f83b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fan4tix/library/DTS6012M/1.0.1/DTS6012M-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fan4tix/library/DTS6012M/1.0.1/DTS6012M-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

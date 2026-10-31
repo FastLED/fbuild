@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-digixx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-digixx/library/ADXL345/0.0.0+sha.45faba962a46/ADXL345-0.0.0+sha.45faba962a46.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL345-0.0.0+sha.45faba962a46.tar.gz",
+    "size_bytes": 7126,
+    "sha256": "cd33dcf50ba2d5b4a9bc8fd8906ef0d3078007511b96f25cb5d61d7277ef07fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-digixx/library/ADXL345/0.0.0%2Bsha.45faba962a46/ADXL345-0.0.0%2Bsha.45faba962a46.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-digixx/library/ADXL345/0.0.0%2Bsha.45faba962a46/ADXL345-0.0.0%2Bsha.45faba962a46.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-digixx/library/FutabaSBUS/0.0.0+sha.e3c92fba87f2/FutabaSBUS-0.0.0+sha.e3c92fba87f2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FutabaSBUS-0.0.0+sha.e3c92fba87f2.tar.gz",
+    "size_bytes": 3838,
+    "sha256": "d8ab68e151940972267647846221ba265953feaedeb778bee4c4ae3ee8331b81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-digixx/library/FutabaSBUS/0.0.0%2Bsha.e3c92fba87f2/FutabaSBUS-0.0.0%2Bsha.e3c92fba87f2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-digixx/library/FutabaSBUS/0.0.0%2Bsha.e3c92fba87f2/FutabaSBUS-0.0.0%2Bsha.e3c92fba87f2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-digixx/library/HMC5843/0.0.0+sha.03b72060cd83/HMC5843-0.0.0+sha.03b72060cd83.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC5843-0.0.0+sha.03b72060cd83.tar.gz",
+    "size_bytes": 3057,
+    "sha256": "9099196adc4d290f714a75fd117c01a6218fd7af8c670ef8942d762f2a6f75d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-digixx/library/HMC5843/0.0.0%2Bsha.03b72060cd83/HMC5843-0.0.0%2Bsha.03b72060cd83.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-digixx/library/HMC5843/0.0.0%2Bsha.03b72060cd83/HMC5843-0.0.0%2Bsha.03b72060cd83.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-digixx/library/ITG3200/0.0.0+sha.8967cbe04d96/ITG3200-0.0.0+sha.8967cbe04d96.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ITG3200-0.0.0+sha.8967cbe04d96.tar.gz",
+    "size_bytes": 4342,
+    "sha256": "5bfe244ea2ac585e2fde2a1807f64e951f6bbb10f2f56803c71835a932845ad2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-digixx/library/ITG3200/0.0.0%2Bsha.8967cbe04d96/ITG3200-0.0.0%2Bsha.8967cbe04d96.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-digixx/library/ITG3200/0.0.0%2Bsha.8967cbe04d96/ITG3200-0.0.0%2Bsha.8967cbe04d96.tar.gz"
+    ]
+   }
+  }
+ ]
+}

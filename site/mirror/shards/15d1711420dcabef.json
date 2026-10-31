@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thewhobox",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thewhobox/library/BCD-Segment/0.0.3/BCD-Segment-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BCD-Segment-0.0.3.tar.gz",
+    "size_bytes": 3448,
+    "sha256": "6075baf76dc764fd3386de9cbd47387e46721b302c2775a8247aa3660bf021f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thewhobox/library/BCD-Segment/0.0.3/BCD-Segment-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/thewhobox/library/BCD-Segment/0.0.3/BCD-Segment-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thewhobox/library/Dali/0.0.7/Dali-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dali-0.0.7.tar.gz",
+    "size_bytes": 52469,
+    "sha256": "a32714b50696e93744326e6d606df0f58ba98a4468514b6f5b75082d5318f34e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thewhobox/library/Dali/0.0.7/Dali-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/thewhobox/library/Dali/0.0.7/Dali-0.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

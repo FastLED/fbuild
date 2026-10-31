@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/timpur",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "timpur/library/Homie%20ESP8266%20Nodes/0.1.0/HomieESP8266Nodes-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomieESP8266Nodes-0.1.0.tar.gz",
+    "size_bytes": 3751,
+    "sha256": "4c5e5901a3ba67af4dff35aaab3e402683060ae02c92e4119f1e3dfcffe08473",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/timpur/library/Homie%2520ESP8266%2520Nodes/0.1.0/HomieESP8266Nodes-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/timpur/library/Homie%20ESP8266%20Nodes/0.1.0/HomieESP8266Nodes-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

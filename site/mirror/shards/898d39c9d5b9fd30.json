@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/coderlane",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "coderlane/library/arduino-bluetooth/0.1.0/arduino-bluetooth-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-bluetooth-0.1.0.tar.gz",
+    "size_bytes": 5854,
+    "sha256": "30c06750625c4745abaa68eaf5c47a0e72d478ebbfe5d587bb7abfd63a43c79e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/coderlane/library/arduino-bluetooth/0.1.0/arduino-bluetooth-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/coderlane/library/arduino-bluetooth/0.1.0/arduino-bluetooth-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

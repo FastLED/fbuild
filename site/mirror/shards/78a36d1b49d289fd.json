@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robertgallup",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robertgallup/library/BobaBlox/2.2.0/BobaBlox-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BobaBlox-2.2.0.tar.gz",
+    "size_bytes": 10982,
+    "sha256": "03b7dbd193f6b2e5393555aa64f82eeee7ebe181c28eb92ad7e71b3961991450",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robertgallup/library/BobaBlox/2.2.0/BobaBlox-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robertgallup/library/BobaBlox/2.2.0/BobaBlox-2.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

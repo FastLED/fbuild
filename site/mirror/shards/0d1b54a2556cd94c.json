@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kennedy-kitoko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kennedy-kitoko/library/TerraSoil/2.0.0/TerraSoil-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TerraSoil-2.0.0.tar.gz",
+    "size_bytes": 20088,
+    "sha256": "bb264443de62e9271407498347ccf7a1f9e65f79454623360a610486982fdf9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kennedy-kitoko/library/TerraSoil/2.0.0/TerraSoil-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kennedy-kitoko/library/TerraSoil/2.0.0/TerraSoil-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

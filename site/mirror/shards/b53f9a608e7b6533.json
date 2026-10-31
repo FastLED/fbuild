@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jura",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jura/library/UnicViewAD-Lib/1.1.0/UnicViewAD-Lib-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UnicViewAD-Lib-1.1.0.tar.gz",
+    "size_bytes": 19640,
+    "sha256": "e3735ccb6cfad0fdc59babd4baefce57266646afdbdb71b6f1394a72785db112",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jura/library/UnicViewAD-Lib/1.1.0/UnicViewAD-Lib-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jura/library/UnicViewAD-Lib/1.1.0/UnicViewAD-Lib-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

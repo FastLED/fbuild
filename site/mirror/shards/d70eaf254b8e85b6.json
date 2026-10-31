@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cr0n0s20",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cr0n0s20/library/UltraSonidos/0.0.0+sha.42d7fd2a719e/UltraSonidos-0.0.0+sha.42d7fd2a719e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltraSonidos-0.0.0+sha.42d7fd2a719e.tar.gz",
+    "size_bytes": 1380,
+    "sha256": "7f8ae8bd377b5f215ad1f0d4cdfbe48ac8862e6dc08806e8036f5d721c6585f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cr0n0s20/library/UltraSonidos/0.0.0%2Bsha.42d7fd2a719e/UltraSonidos-0.0.0%2Bsha.42d7fd2a719e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cr0n0s20/library/UltraSonidos/0.0.0%2Bsha.42d7fd2a719e/UltraSonidos-0.0.0%2Bsha.42d7fd2a719e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

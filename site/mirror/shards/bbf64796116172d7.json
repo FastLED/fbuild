@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/breadsword",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "breadsword/library/TLSPSK/1.0/TLSPSK-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLSPSK-1.0.tar.gz",
+    "size_bytes": 9559,
+    "sha256": "30141b77d888aa2c81260473237a88f3ea98fd2fec9e82336489ce7d567cadc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/breadsword/library/TLSPSK/1.0/TLSPSK-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/breadsword/library/TLSPSK/1.0/TLSPSK-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "breadsword/library/gsl-lite/0.37.1/gsl-lite-0.37.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gsl-lite-0.37.1.tar.gz",
+    "size_bytes": 110767,
+    "sha256": "e906a689829cdb59a25903e8f4c07ca5616fe748ffc61d89cd45e68dd7a28922",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/breadsword/library/gsl-lite/0.37.1/gsl-lite-0.37.1.tar.gz",
+     "https://dl.registry.platformio.org/download/breadsword/library/gsl-lite/0.37.1/gsl-lite-0.37.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "breadsword/library/mbedtls-psk/0.1/mbedtls-psk-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbedtls-psk-0.1.tar.gz",
+    "size_bytes": 3388288,
+    "sha256": "039fdf18a1025880089cbf6625be645016208514b5e03201d2a3560d85e2b12c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/breadsword/library/mbedtls-psk/0.1/mbedtls-psk-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/breadsword/library/mbedtls-psk/0.1/mbedtls-psk-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

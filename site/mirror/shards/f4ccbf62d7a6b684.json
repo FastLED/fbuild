@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bafeigum",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bafeigum/library/DHT11/0.0.0-broken/DHT11-0.0.0-alphasha.74049ba230.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT11-0.0.0-alphasha.74049ba230.tar.gz",
+    "size_bytes": 521,
+    "sha256": "6976fc465d5745db374009750bfc22cea939727498d15b6a33a580058943a739",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bafeigum/library/DHT11/0.0.0-broken/DHT11-0.0.0-alphasha.74049ba230.tar.gz",
+     "https://dl.registry.platformio.org/download/bafeigum/library/DHT11/0.0.0-broken/DHT11-0.0.0-alphasha.74049ba230.tar.gz"
+    ]
+   }
+  }
+ ]
+}

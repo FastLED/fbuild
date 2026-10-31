@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/joshblancoj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "joshblancoj/library/TrueRMS/1.3/TrueRMS-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TrueRMS-1.3.tar.gz",
+    "size_bytes": 12979,
+    "sha256": "acad9f45abc6e894cb22da5d6860a9ec8c5b5d3ad0a043ce3224682f33351ca5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joshblancoj/library/TrueRMS/1.3/TrueRMS-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/joshblancoj/library/TrueRMS/1.3/TrueRMS-1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

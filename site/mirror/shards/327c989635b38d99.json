@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wini",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wini/library/SharkSSL-Lite/0.0.0+sha.d5e0e1dcf0d6/SharkSSL-Lite-0.0.0+sha.d5e0e1dcf0d6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SharkSSL-Lite-0.0.0+sha.d5e0e1dcf0d6.tar.gz",
+    "size_bytes": 316015,
+    "sha256": "b15de55c0a4dd3efa028412434ce414dea782116eb9424154fec8c4464bb6a59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wini/library/SharkSSL-Lite/0.0.0%2Bsha.d5e0e1dcf0d6/SharkSSL-Lite-0.0.0%2Bsha.d5e0e1dcf0d6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wini/library/SharkSSL-Lite/0.0.0%2Bsha.d5e0e1dcf0d6/SharkSSL-Lite-0.0.0%2Bsha.d5e0e1dcf0d6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

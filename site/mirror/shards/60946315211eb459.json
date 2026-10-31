@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yveaux",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yveaux/library/AC101/0.0.1/AC101-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AC101-0.0.1.tar.gz",
+    "size_bytes": 17176,
+    "sha256": "15c6385438a8da067863e8a5f8a4db7b7bf3b8bfe9e942892b30353d36deadc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yveaux/library/AC101/0.0.1/AC101-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yveaux/library/AC101/0.0.1/AC101-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-edutech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-edutech/library/MQTT/0.0.0+sha.05fe2e37b93d/MQTT-0.0.0+sha.05fe2e37b93d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTT-0.0.0+sha.05fe2e37b93d.tar.gz",
+    "size_bytes": 3468,
+    "sha256": "05dfaedf4198d3c1dbf310f1e392a1b591f199a88d5aa4fa0c49f9daf7f563f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-edutech/library/MQTT/0.0.0%2Bsha.05fe2e37b93d/MQTT-0.0.0%2Bsha.05fe2e37b93d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-edutech/library/MQTT/0.0.0%2Bsha.05fe2e37b93d/MQTT-0.0.0%2Bsha.05fe2e37b93d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-edutech/library/SI1145/0.0.0+sha.ba32b0098ee8/SI1145-0.0.0+sha.ba32b0098ee8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SI1145-0.0.0+sha.ba32b0098ee8.tar.gz",
+    "size_bytes": 2768,
+    "sha256": "cba8ee4567f4ea8f891226f2a58e48ce545a5813c6435a5dc0e9e508711ed071",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-edutech/library/SI1145/0.0.0%2Bsha.ba32b0098ee8/SI1145-0.0.0%2Bsha.ba32b0098ee8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-edutech/library/SI1145/0.0.0%2Bsha.ba32b0098ee8/SI1145-0.0.0%2Bsha.ba32b0098ee8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-edutech/library/StepperMotorUni/0.0.0+sha.950f1bb3ff9f/StepperMotorUni-0.0.0+sha.950f1bb3ff9f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperMotorUni-0.0.0+sha.950f1bb3ff9f.tar.gz",
+    "size_bytes": 3401,
+    "sha256": "4c042a8f0cf491650f48673b3dd251be955e8e6e4a0a80fa2afccb8f56d5099a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-edutech/library/StepperMotorUni/0.0.0%2Bsha.950f1bb3ff9f/StepperMotorUni-0.0.0%2Bsha.950f1bb3ff9f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-edutech/library/StepperMotorUni/0.0.0%2Bsha.950f1bb3ff9f/StepperMotorUni-0.0.0%2Bsha.950f1bb3ff9f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-edutech/library/TMP102/0.0.0+sha.640bac35614f/TMP102-0.0.0+sha.640bac35614f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMP102-0.0.0+sha.640bac35614f.tar.gz",
+    "size_bytes": 2023,
+    "sha256": "1a58dd029cc33a7620a79b6344eea1cdb2caf4145329f13a8486906a3b954344",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-edutech/library/TMP102/0.0.0%2Bsha.640bac35614f/TMP102-0.0.0%2Bsha.640bac35614f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-edutech/library/TMP102/0.0.0%2Bsha.640bac35614f/TMP102-0.0.0%2Bsha.640bac35614f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-edutech/library/weather_sense/0.0.0+sha.bd4cdd24731b/weather_sense-0.0.0+sha.bd4cdd24731b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "weather_sense-0.0.0+sha.bd4cdd24731b.tar.gz",
+    "size_bytes": 2613,
+    "sha256": "bbc88f92967cec6e3f600b878326a3f4a5ae4e86b87f4f8406ea40f866f5e1c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-edutech/library/weather_sense/0.0.0%2Bsha.bd4cdd24731b/weather_sense-0.0.0%2Bsha.bd4cdd24731b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-edutech/library/weather_sense/0.0.0%2Bsha.bd4cdd24731b/weather_sense-0.0.0%2Bsha.bd4cdd24731b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

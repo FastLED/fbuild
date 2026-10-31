@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gpstartechnologies",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gpstartechnologies/library/GPStar%20Audio%20Serial/1.0.0/GPStarAudioSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPStarAudioSerial-1.0.0.tar.gz",
+    "size_bytes": 283205,
+    "sha256": "c83073ce65b1ca757b92cd19a053dafa7cb3a33133af23a6ff8c022db2168565",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gpstartechnologies/library/GPStar%2520Audio%2520Serial/1.0.0/GPStarAudioSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gpstartechnologies/library/GPStar%20Audio%20Serial/1.0.0/GPStarAudioSerial-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

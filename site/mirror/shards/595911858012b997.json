@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rgb-argentum",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rgb-argentum/library/Dsmr/0.6/Dsmr-0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dsmr-0.6.tar.gz",
+    "size_bytes": 22573,
+    "sha256": "7f3816350f6b6c5ce2ca85874a4d003e231009c5cf798d88784b44234a4bb74d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rgb-argentum/library/Dsmr/0.6/Dsmr-0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/rgb-argentum/library/Dsmr/0.6/Dsmr-0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-goncaloc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-goncaloc/library/ADXL_I2C/0.0.0+sha.a5a2383a6e2f/ADXL_I2C-0.0.0+sha.a5a2383a6e2f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL_I2C-0.0.0+sha.a5a2383a6e2f.tar.gz",
+    "size_bytes": 5447,
+    "sha256": "84cce40e99d72bae0fe915ec6bde645b4654c1895e2ecf3c0e131cb64b3369a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-goncaloc/library/ADXL_I2C/0.0.0%2Bsha.a5a2383a6e2f/ADXL_I2C-0.0.0%2Bsha.a5a2383a6e2f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-goncaloc/library/ADXL_I2C/0.0.0%2Bsha.a5a2383a6e2f/ADXL_I2C-0.0.0%2Bsha.a5a2383a6e2f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-goncaloc/library/SMC02B/0.0.0+sha.420e977e37b6/SMC02B-0.0.0+sha.420e977e37b6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SMC02B-0.0.0+sha.420e977e37b6.tar.gz",
+    "size_bytes": 2362,
+    "sha256": "0df7085d9ab3b0e100ec2541d345ff9d51a34d6277b19ae26a14d9c924442d26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-goncaloc/library/SMC02B/0.0.0%2Bsha.420e977e37b6/SMC02B-0.0.0%2Bsha.420e977e37b6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-goncaloc/library/SMC02B/0.0.0%2Bsha.420e977e37b6/SMC02B-0.0.0%2Bsha.420e977e37b6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

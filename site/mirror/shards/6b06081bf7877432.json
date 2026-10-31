@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tomstewart89",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tomstewart89/library/BasicLinearAlgebra/3.7/BasicLinearAlgebra-3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BasicLinearAlgebra-3.7.tar.gz",
+    "size_bytes": 14535,
+    "sha256": "e962f3a1e48ceab9033e8b35c2a88fa408e63d3e8aff29f4e899db5fe85f7853",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tomstewart89/library/BasicLinearAlgebra/3.7/BasicLinearAlgebra-3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tomstewart89/library/BasicLinearAlgebra/3.7/BasicLinearAlgebra-3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tomstewart89/library/BasicLinearAlgebra/5.1/BasicLinearAlgebra-5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BasicLinearAlgebra-5.1.tar.gz",
+    "size_bytes": 15970,
+    "sha256": "1cfe246db06c8283032cab22b9d05d1a9b05cfd27389982313959e78d68e404b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tomstewart89/library/BasicLinearAlgebra/5.1/BasicLinearAlgebra-5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tomstewart89/library/BasicLinearAlgebra/5.1/BasicLinearAlgebra-5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tomstewart89/library/Callback/1.1/Callback-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Callback-1.1.tar.gz",
+    "size_bytes": 4396,
+    "sha256": "b8e77d4c060ab85369df047dde43a69f8fc395a0173219e078665c5349ea0db0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tomstewart89/library/Callback/1.1/Callback-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tomstewart89/library/Callback/1.1/Callback-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tomstewart89/library/Geometry/2.2/Geometry-2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Geometry-2.2.tar.gz",
+    "size_bytes": 14998,
+    "sha256": "c8f377ac293a8151161119b2972f8d2cec0ab0370dd60739b084ba64f80260c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tomstewart89/library/Geometry/2.2/Geometry-2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tomstewart89/library/Geometry/2.2/Geometry-2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tomstewart89/library/StateSpaceControl/1.1/StateSpaceControl-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StateSpaceControl-1.1.tar.gz",
+    "size_bytes": 37734,
+    "sha256": "5f686178b59e155a53bdd61b21a63c8ad5669d6040065d6bed581e1f3ee5c1a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tomstewart89/library/StateSpaceControl/1.1/StateSpaceControl-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tomstewart89/library/StateSpaceControl/1.1/StateSpaceControl-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

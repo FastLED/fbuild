@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shadowshahriar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shadowshahriar/library/Candle/1.0.0/Candle-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Candle-1.0.0.tar.gz",
+    "size_bytes": 34687,
+    "sha256": "98f84c99cef918fed8af3aad00bc15da700af025b230be7706138a0fa33706d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shadowshahriar/library/Candle/1.0.0/Candle-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shadowshahriar/library/Candle/1.0.0/Candle-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

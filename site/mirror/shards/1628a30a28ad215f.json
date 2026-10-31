@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/oskarlorenz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "oskarlorenz/library/NiboRoboLib-nibo2/3.4.0+1693931602/NiboRoboLib-nibo2-3.4.0+1693931602.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NiboRoboLib-nibo2-3.4.0+1693931602.tar.gz",
+    "size_bytes": 58798,
+    "sha256": "1b66f18476eacb8444fc1e123632ce3a453211b6b35e3d00f074748ca2532b24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/oskarlorenz/library/NiboRoboLib-nibo2/3.4.0%2B1693931602/NiboRoboLib-nibo2-3.4.0%2B1693931602.tar.gz",
+     "https://dl.registry.platformio.org/download/oskarlorenz/library/NiboRoboLib-nibo2/3.4.0%2B1693931602/NiboRoboLib-nibo2-3.4.0%2B1693931602.tar.gz"
+    ]
+   }
+  }
+ ]
+}

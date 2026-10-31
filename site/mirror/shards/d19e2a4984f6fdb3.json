@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/things4u",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "things4u/library/IBM%20LMIC%20framework%20v1.51%20for%20Arduino/1.51/IBMLMICframeworkv1.51forArduino-1.51.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IBMLMICframeworkv1.51forArduino-1.51.tar.gz",
+    "size_bytes": 59059,
+    "sha256": "c865f1e3e6673247e2e0f81733788f1d6dc4210ce342eca358c441bbdee8967e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/things4u/library/IBM%2520LMIC%2520framework%2520v1.51%2520for%2520Arduino/1.51/IBMLMICframeworkv1.51forArduino-1.51.tar.gz",
+     "https://dl.registry.platformio.org/download/things4u/library/IBM%20LMIC%20framework%20v1.51%20for%20Arduino/1.51/IBMLMICframeworkv1.51forArduino-1.51.tar.gz"
+    ]
+   }
+  }
+ ]
+}

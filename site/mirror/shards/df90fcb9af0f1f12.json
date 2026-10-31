@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/defvar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "defvar/library/ESP32%20TLC5940/1.0.3/ESP32TLC5940-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32TLC5940-1.0.3.tar.gz",
+    "size_bytes": 15808,
+    "sha256": "e7bed168068892d98296819659d588ad9e783956b53677d0c10b06b3c57caba0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/defvar/library/ESP32%2520TLC5940/1.0.3/ESP32TLC5940-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/defvar/library/ESP32%20TLC5940/1.0.3/ESP32TLC5940-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

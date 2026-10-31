@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/klenov",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "klenov/library/Buzzer/1.0.0/Buzzer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Buzzer-1.0.0.tar.gz",
+    "size_bytes": 10225,
+    "sha256": "97a9bf1b7f6fbd476e7cb84b4921bf783d34714c22f55c93c098f208450d2b11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klenov/library/Buzzer/1.0.0/Buzzer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/klenov/library/Buzzer/1.0.0/Buzzer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klenov/library/advancedSerial/1.2.4/advancedSerial-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "advancedSerial-1.2.4.tar.gz",
+    "size_bytes": 9985,
+    "sha256": "28d40a8c384cf6c8cebfe0825aaf8c88f79dd2d2f122ed9c582404e1733e436f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klenov/library/advancedSerial/1.2.4/advancedSerial-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/klenov/library/advancedSerial/1.2.4/advancedSerial-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "klenov/library/keyboardButton/1.0.1/keyboardButton-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "keyboardButton-1.0.1.tar.gz",
+    "size_bytes": 9121,
+    "sha256": "33c568be568f33bf04108c02d378617fabb3bc65d10aad2906fdcd899ecdb410",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/klenov/library/keyboardButton/1.0.1/keyboardButton-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/klenov/library/keyboardButton/1.0.1/keyboardButton-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

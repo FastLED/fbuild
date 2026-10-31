@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zefek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zefek/library/BelWattmeter/1.0.0/BelWattmeter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BelWattmeter-1.0.0.tar.gz",
+    "size_bytes": 6807,
+    "sha256": "dec632642e54b9fc5918ce054f5bd84127c9fc855616ed47f3c293407a7817b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zefek/library/BelWattmeter/1.0.0/BelWattmeter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zefek/library/BelWattmeter/1.0.0/BelWattmeter-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zefek/library/BelWattmeter/1.1.0/BelWattmeter-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BelWattmeter-1.1.0.tar.gz",
+    "size_bytes": 6946,
+    "sha256": "4fa77a9d99ed42ed2e0c81c633d160cf22133491b72d4d6d0d5e7e915279040a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zefek/library/BelWattmeter/1.1.0/BelWattmeter-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zefek/library/BelWattmeter/1.1.0/BelWattmeter-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zefek/library/MQTTESP8266/5.1.1/MQTTESP8266-5.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTESP8266-5.1.1.tar.gz",
+    "size_bytes": 14385,
+    "sha256": "d07b763f278aae1565dabc79852f56760afbd5d61fe606afd826638a776f9e14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zefek/library/MQTTESP8266/5.1.1/MQTTESP8266-5.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zefek/library/MQTTESP8266/5.1.1/MQTTESP8266-5.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zefek/library/MQTTESP8266/5.1.2/MQTTESP8266-5.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTESP8266-5.1.2.tar.gz",
+    "size_bytes": 15118,
+    "sha256": "bb3eda7b31c8cb836a52efaad31fd6d2c67844de126d2ebc13288bc2757f2001",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zefek/library/MQTTESP8266/5.1.2/MQTTESP8266-5.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/zefek/library/MQTTESP8266/5.1.2/MQTTESP8266-5.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zefek/library/TX07K-TXC/1.0.3/TX07K-TXC-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TX07K-TXC-1.0.3.tar.gz",
+    "size_bytes": 3516,
+    "sha256": "4c390fdcc25b34d85c32e0754a0a19e8a63678246f55eaedc3df1ab7290144b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zefek/library/TX07K-TXC/1.0.3/TX07K-TXC-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/zefek/library/TX07K-TXC/1.0.3/TX07K-TXC-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zefek/library/TX07K-TXC/1.0.4/TX07K-TXC-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TX07K-TXC-1.0.4.tar.gz",
+    "size_bytes": 5110,
+    "sha256": "1b3c34c25a379d63453800cec4935443e73e517d3f5590d9dbf290b34b8f5263",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zefek/library/TX07K-TXC/1.0.4/TX07K-TXC-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/zefek/library/TX07K-TXC/1.0.4/TX07K-TXC-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zefek/library/TX07K-TXC/1.0.5/TX07K-TXC-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TX07K-TXC-1.0.5.tar.gz",
+    "size_bytes": 5889,
+    "sha256": "1df355bf2a987c38dec72cb0bc950cbd5e0dabecf15733e02c1ad5dd89c15e96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zefek/library/TX07K-TXC/1.0.5/TX07K-TXC-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/zefek/library/TX07K-TXC/1.0.5/TX07K-TXC-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

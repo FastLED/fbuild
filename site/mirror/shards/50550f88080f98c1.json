@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ilvin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ilvin/library/QMan/1.0.2-beta/QMan-1.0.2-beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QMan-1.0.2-beta.tar.gz",
+    "size_bytes": 9583,
+    "sha256": "f61cdd2ec41ba929f71f8dce9a41c92aebe1099cac17c9938dc80fc67b177c4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ilvin/library/QMan/1.0.2-beta/QMan-1.0.2-beta.tar.gz",
+     "https://dl.registry.platformio.org/download/ilvin/library/QMan/1.0.2-beta/QMan-1.0.2-beta.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ilvin/library/QMan/1.0.3-beta/QMan-1.0.3-beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QMan-1.0.3-beta.tar.gz",
+    "size_bytes": 15976,
+    "sha256": "3bfc3938aff3e16e5c03a10aa72d65a2ba7a98ab1b714e75d6d8a7cdcd2908dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ilvin/library/QMan/1.0.3-beta/QMan-1.0.3-beta.tar.gz",
+     "https://dl.registry.platformio.org/download/ilvin/library/QMan/1.0.3-beta/QMan-1.0.3-beta.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ilvin/library/QMan/1.0.6-beta/QMan-1.0.6-beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QMan-1.0.6-beta.tar.gz",
+    "size_bytes": 19205,
+    "sha256": "74902623475ca00b79367127d5173ef9db7a2cdc6f360495db2268e2dcbdc355",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ilvin/library/QMan/1.0.6-beta/QMan-1.0.6-beta.tar.gz",
+     "https://dl.registry.platformio.org/download/ilvin/library/QMan/1.0.6-beta/QMan-1.0.6-beta.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ilvin/library/QMan/1.0.7-beta/QMan-1.0.7-beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QMan-1.0.7-beta.tar.gz",
+    "size_bytes": 23513,
+    "sha256": "616d7673dd509d498169bf6f551bc5ef78fe3f0bf96ef5d4d972f31e76e30b09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ilvin/library/QMan/1.0.7-beta/QMan-1.0.7-beta.tar.gz",
+     "https://dl.registry.platformio.org/download/ilvin/library/QMan/1.0.7-beta/QMan-1.0.7-beta.tar.gz"
+    ]
+   }
+  }
+ ]
+}

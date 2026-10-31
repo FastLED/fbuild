@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-2015-robotic-contest-arakawa-a",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-2015-robotic-contest-arakawa-a/library/fusion_Motor/0.0.0+sha.0d2b4508badd/fusion_Motor-0.0.0+sha.0d2b4508badd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fusion_Motor-0.0.0+sha.0d2b4508badd.tar.gz",
+    "size_bytes": 1739,
+    "sha256": "7b3aa00ddd193433520051f66a0c039bc02ca83326377458b069022621fdb208",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-2015-robotic-contest-arakawa-a/library/fusion_Motor/0.0.0%2Bsha.0d2b4508badd/fusion_Motor-0.0.0%2Bsha.0d2b4508badd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-2015-robotic-contest-arakawa-a/library/fusion_Motor/0.0.0%2Bsha.0d2b4508badd/fusion_Motor-0.0.0%2Bsha.0d2b4508badd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

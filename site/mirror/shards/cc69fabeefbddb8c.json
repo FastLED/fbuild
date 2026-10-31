@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/frdteknikelektro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "frdteknikelektro/library/AnalogPHMeter/0.2.4/AnalogPHMeter-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogPHMeter-0.2.4.tar.gz",
+    "size_bytes": 3531,
+    "sha256": "7bebce65ed3ff32fb0c5b28f302768f85106653f6ab4c683dcf503a8ce09debb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/frdteknikelektro/library/AnalogPHMeter/0.2.4/AnalogPHMeter-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/frdteknikelektro/library/AnalogPHMeter/0.2.4/AnalogPHMeter-0.2.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

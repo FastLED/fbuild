@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/peng-zhihui",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "peng-zhihui/library/CtrlApp/1.0/CtrlApp-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CtrlApp-1.0.tar.gz",
+    "size_bytes": 1906,
+    "sha256": "2f957cf851218108a4d6f04e05bf4b7f9a470b448f257e94172e684084f78d2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peng-zhihui/library/CtrlApp/1.0/CtrlApp-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/peng-zhihui/library/CtrlApp/1.0/CtrlApp-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peng-zhihui/library/FaceApp/1.0/FaceApp-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FaceApp-1.0.tar.gz",
+    "size_bytes": 2049,
+    "sha256": "5816145c27d9ddd7125b831a3b71a464405c2c0910f23be9a0fb381ea3242e4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peng-zhihui/library/FaceApp/1.0/FaceApp-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/peng-zhihui/library/FaceApp/1.0/FaceApp-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peng-zhihui/library/TraceApp/1.0/TraceApp-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TraceApp-1.0.tar.gz",
+    "size_bytes": 1619,
+    "sha256": "8d974fcc1402a133f6fd47ccccac837761c477ac9fcaee2a5da3799fae496ea5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peng-zhihui/library/TraceApp/1.0/TraceApp-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/peng-zhihui/library/TraceApp/1.0/TraceApp-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

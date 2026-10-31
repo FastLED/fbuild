@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kim1212",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kim1212/library/BMP280/0.0.0+sha.a65c7f637b1e/BMP280-0.0.0+sha.a65c7f637b1e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP280-0.0.0+sha.a65c7f637b1e.tar.gz",
+    "size_bytes": 2317,
+    "sha256": "855bac32213216a19ec8642eb4dd68a8ab51412d2e0eba8db5a96d56243bdd4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kim1212/library/BMP280/0.0.0%2Bsha.a65c7f637b1e/BMP280-0.0.0%2Bsha.a65c7f637b1e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kim1212/library/BMP280/0.0.0%2Bsha.a65c7f637b1e/BMP280-0.0.0%2Bsha.a65c7f637b1e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kim1212/library/BMX055/0.0.0+sha.e25b321f54ba/BMX055-0.0.0+sha.e25b321f54ba.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMX055-0.0.0+sha.e25b321f54ba.tar.gz",
+    "size_bytes": 2555,
+    "sha256": "3236c8da9951473ff5e78681ed917c09e4f3d053111b22ad3710e14e7bb7b4d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kim1212/library/BMX055/0.0.0%2Bsha.e25b321f54ba/BMX055-0.0.0%2Bsha.e25b321f54ba.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kim1212/library/BMX055/0.0.0%2Bsha.e25b321f54ba/BMX055-0.0.0%2Bsha.e25b321f54ba.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kim1212/library/GPS_Interface/0.0.0+sha.2bd79a04305a/GPS_Interface-0.0.0+sha.2bd79a04305a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPS_Interface-0.0.0+sha.2bd79a04305a.tar.gz",
+    "size_bytes": 2520,
+    "sha256": "88d728df5a5447d8fd25dc3e25a98bc6d37797c4a35a0cb00e6bd98c43169709",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kim1212/library/GPS_Interface/0.0.0%2Bsha.2bd79a04305a/GPS_Interface-0.0.0%2Bsha.2bd79a04305a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kim1212/library/GPS_Interface/0.0.0%2Bsha.2bd79a04305a/GPS_Interface-0.0.0%2Bsha.2bd79a04305a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kim1212/library/IM920/0.0.0+sha.4d4bdea0e93d/IM920-0.0.0+sha.4d4bdea0e93d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IM920-0.0.0+sha.4d4bdea0e93d.tar.gz",
+    "size_bytes": 1706,
+    "sha256": "ed444e7e87f8cf17bc26b6246bee1e8cb6d6589993403d045df9ed38243e47b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kim1212/library/IM920/0.0.0%2Bsha.4d4bdea0e93d/IM920-0.0.0%2Bsha.4d4bdea0e93d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kim1212/library/IM920/0.0.0%2Bsha.4d4bdea0e93d/IM920-0.0.0%2Bsha.4d4bdea0e93d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kim1212/library/ublox_UBX/0.0.0+sha.5992db47f3c3/ublox_UBX-0.0.0+sha.5992db47f3c3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ublox_UBX-0.0.0+sha.5992db47f3c3.tar.gz",
+    "size_bytes": 2715,
+    "sha256": "2adf31e94be4df8e58737cfed57093244f59bbddca851fe1ab4ff83c7c7f4207",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kim1212/library/ublox_UBX/0.0.0%2Bsha.5992db47f3c3/ublox_UBX-0.0.0%2Bsha.5992db47f3c3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kim1212/library/ublox_UBX/0.0.0%2Bsha.5992db47f3c3/ublox_UBX-0.0.0%2Bsha.5992db47f3c3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/michael-uray",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "michael-uray/library/muTimer/0.1.1/muTimer-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "muTimer-0.1.1.tar.gz",
+    "size_bytes": 15021,
+    "sha256": "1ac0e8688098df8e7d7d4567ae82c371678f374fde292485e69f5c33de7ad9f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/michael-uray/library/muTimer/0.1.1/muTimer-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/michael-uray/library/muTimer/0.1.1/muTimer-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

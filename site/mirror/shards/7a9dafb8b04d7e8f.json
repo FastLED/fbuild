@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/giocip",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "giocip/library/num7/1.0.0/num7-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "num7-1.0.0.tar.gz",
+    "size_bytes": 57834,
+    "sha256": "72de009404d87c4e97e8dc10587469dd7e172812998381e17fcf1724550b1b05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/giocip/library/num7/1.0.0/num7-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/giocip/library/num7/1.0.0/num7-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

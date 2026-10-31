@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/christux",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "christux/library/Christux%20Utils/1.0.0/ChristuxUtils-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChristuxUtils-1.0.0.tar.gz",
+    "size_bytes": 5036,
+    "sha256": "dc549a9980817176d6bae659cbafe0c1d50825080aef524aefe99b4cff539e3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/christux/library/Christux%2520Utils/1.0.0/ChristuxUtils-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/christux/library/Christux%20Utils/1.0.0/ChristuxUtils-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ronbentley1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ronbentley1/library/ez_SIPO8_lib/1.0.8/ez_SIPO8_lib-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ez_SIPO8_lib-1.0.8.tar.gz",
+    "size_bytes": 14771,
+    "sha256": "46a5e9eecb3d3244ddbd63e586fb8056e35d6d42fd35fd2fac8da2d4d4c38536",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ronbentley1/library/ez_SIPO8_lib/1.0.8/ez_SIPO8_lib-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/ronbentley1/library/ez_SIPO8_lib/1.0.8/ez_SIPO8_lib-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ronbentley1/library/ez_switch_lib/3.0.0/ez_switch_lib-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ez_switch_lib-3.0.0.tar.gz",
+    "size_bytes": 21366,
+    "sha256": "a15d3c691dd5a468d7c748db92d8f3e11c3cb73df2c84dfe1ffd96784c126f0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ronbentley1/library/ez_switch_lib/3.0.0/ez_switch_lib-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ronbentley1/library/ez_switch_lib/3.0.0/ez_switch_lib-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

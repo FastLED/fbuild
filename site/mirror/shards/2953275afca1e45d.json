@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fruit-vale",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fruit-vale/library/FruitVale/1.0.0/FruitVale-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FruitVale-1.0.0.tar.gz",
+    "size_bytes": 16449,
+    "sha256": "a082d001e14ab1490b51096ef05ec0ddc883117f43563f3cdb352283641dc2b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fruit-vale/library/FruitVale/1.0.0/FruitVale-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fruit-vale/library/FruitVale/1.0.0/FruitVale-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

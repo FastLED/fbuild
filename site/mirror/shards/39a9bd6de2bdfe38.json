@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/willguimont",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "willguimont/library/CanControl/1.2.0/CanControl-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CanControl-1.2.0.tar.gz",
+    "size_bytes": 116520,
+    "sha256": "d77389290fb5934a1a089c7488c738de83c3779b0b76d8a6758d92e20321a90e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/willguimont/library/CanControl/1.2.0/CanControl-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/willguimont/library/CanControl/1.2.0/CanControl-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "willguimont/library/CanControl/1.2.1/CanControl-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CanControl-1.2.1.tar.gz",
+    "size_bytes": 116630,
+    "sha256": "d0ae60e18470ba5e154ebf758aad31d4d7508b30b0babffc847ee48deb94ddce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/willguimont/library/CanControl/1.2.1/CanControl-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/willguimont/library/CanControl/1.2.1/CanControl-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "willguimont/library/CanControl/1.3.0/CanControl-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CanControl-1.3.0.tar.gz",
+    "size_bytes": 117067,
+    "sha256": "f41feaedb02592238df9819afb3b36651a5b7b6cd4fe61c03bf4b8b0952e1fc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/willguimont/library/CanControl/1.3.0/CanControl-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/willguimont/library/CanControl/1.3.0/CanControl-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "willguimont/library/CanControl/1.3.1/CanControl-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CanControl-1.3.1.tar.gz",
+    "size_bytes": 117063,
+    "sha256": "c444c3e6a7c62a679b2c944efb6fa5f75d72f0078f1f4ae2b51e791a9a845c29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/willguimont/library/CanControl/1.3.1/CanControl-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/willguimont/library/CanControl/1.3.1/CanControl-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "willguimont/library/CanControl/1.3.2/CanControl-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CanControl-1.3.2.tar.gz",
+    "size_bytes": 116119,
+    "sha256": "200c780ddbd7fa05c7efe662439b190535bdb43699f368d7906ea1798ef2207f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/willguimont/library/CanControl/1.3.2/CanControl-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/willguimont/library/CanControl/1.3.2/CanControl-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "willguimont/library/Revduino/0.1.0/Revduino-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Revduino-0.1.0.tar.gz",
+    "size_bytes": 21368,
+    "sha256": "264f57378682ad1258c315e379492dcd39354eb13a2b2fe551c759238d5c6c5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/willguimont/library/Revduino/0.1.0/Revduino-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/willguimont/library/Revduino/0.1.0/Revduino-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "willguimont/library/Revduino/0.1.1/Revduino-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Revduino-0.1.1.tar.gz",
+    "size_bytes": 22197,
+    "sha256": "6d6019e4f1b1a8d402a1124ccf70cae7553a32f9f37fa26cfebf77bf1c70ef91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/willguimont/library/Revduino/0.1.1/Revduino-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/willguimont/library/Revduino/0.1.1/Revduino-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

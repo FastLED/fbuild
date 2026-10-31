@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/innuvatech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "innuvatech/library/PatchugoLite%20Arduino%20Library%20Test/0.0.2/PatchugoLiteArduinoLibraryTest-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PatchugoLiteArduinoLibraryTest-0.0.2.tar.gz",
+    "size_bytes": 10268,
+    "sha256": "84a4f122d6fbfc5956958e2745a4c313a8138be7d026206fd5280501b29428df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/innuvatech/library/PatchugoLite%2520Arduino%2520Library%2520Test/0.0.2/PatchugoLiteArduinoLibraryTest-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/innuvatech/library/PatchugoLite%20Arduino%20Library%20Test/0.0.2/PatchugoLiteArduinoLibraryTest-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jnagendran3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jnagendran3/library/AT42QT1010/0.0.0+sha.401cf3c2dffc/AT42QT1010-0.0.0+sha.401cf3c2dffc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT42QT1010-0.0.0+sha.401cf3c2dffc.tar.gz",
+    "size_bytes": 1296,
+    "sha256": "3fd40f93f795e9821a229f3b43ba5c6787f6fbf136602ea39d52f00810fc31ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jnagendran3/library/AT42QT1010/0.0.0%2Bsha.401cf3c2dffc/AT42QT1010-0.0.0%2Bsha.401cf3c2dffc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jnagendran3/library/AT42QT1010/0.0.0%2Bsha.401cf3c2dffc/AT42QT1010-0.0.0%2Bsha.401cf3c2dffc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

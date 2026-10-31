@@ -1,0 +1,230 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/josuemorais",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "josuemorais/library/iikit_lib/0.0.10/iikit_lib-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikit_lib-0.0.10.tar.gz",
+    "size_bytes": 13635,
+    "sha256": "9f476ed5f7f9dfd98f8d2741b8b24c5d0fcc21782f773af8bbba6b1855d82ebc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikit_lib/0.0.10/iikit_lib-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikit_lib/0.0.10/iikit_lib-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikit_lib/0.0.11/iikit_lib-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikit_lib-0.0.11.tar.gz",
+    "size_bytes": 13637,
+    "sha256": "aa18c08f5c68d40697796cf49c3ecb374f2749cab638a334bedd9ae813a08231",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikit_lib/0.0.11/iikit_lib-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikit_lib/0.0.11/iikit_lib-0.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikit_lib/0.0.12/iikit_lib-0.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikit_lib-0.0.12.tar.gz",
+    "size_bytes": 13976,
+    "sha256": "9caf8cfa57e889e4b3f261632f7dce16681c4f84d83592dd956897338b5b3e94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikit_lib/0.0.12/iikit_lib-0.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikit_lib/0.0.12/iikit_lib-0.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikit_lib/0.0.13/iikit_lib-0.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikit_lib-0.0.13.tar.gz",
+    "size_bytes": 13953,
+    "sha256": "cebea03c75bd88c3ca760a38968f2cc7e287409a14e55e1639d4420c7ad06beb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikit_lib/0.0.13/iikit_lib-0.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikit_lib/0.0.13/iikit_lib-0.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikit_lib/0.0.14/iikit_lib-0.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikit_lib-0.0.14.tar.gz",
+    "size_bytes": 13732,
+    "sha256": "99e5d6fc42e58a9a1c6a7476343474cd007d87df93d3d918305c13f3f3ab8321",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikit_lib/0.0.14/iikit_lib-0.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikit_lib/0.0.14/iikit_lib-0.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikit_lib/0.0.15/iikit_lib-0.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikit_lib-0.0.15.tar.gz",
+    "size_bytes": 13877,
+    "sha256": "2d2ec3c371aea7697884a88e8875bb56faf53a36760605a9478261e0985b9eb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikit_lib/0.0.15/iikit_lib-0.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikit_lib/0.0.15/iikit_lib-0.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikit_lib/0.0.16/iikit_lib-0.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikit_lib-0.0.16.tar.gz",
+    "size_bytes": 13915,
+    "sha256": "982dd5efdfa078247719f14a497451ef9f4dbfdb5fa53aa0707c04ed68eef6ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikit_lib/0.0.16/iikit_lib-0.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikit_lib/0.0.16/iikit_lib-0.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikit_lib/0.0.17/iikit_lib-0.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikit_lib-0.0.17.tar.gz",
+    "size_bytes": 13919,
+    "sha256": "b71b59034b848b86d201f45ff67d5d6e017a81c3821131307966da36a80b13a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikit_lib/0.0.17/iikit_lib-0.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikit_lib/0.0.17/iikit_lib-0.0.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikit_lib/0.0.18/iikit_lib-0.0.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikit_lib-0.0.18.tar.gz",
+    "size_bytes": 14788,
+    "sha256": "7e27487c5546180ba6a8743d4f223f8716ba9e228e396b05b491f8881a70cfac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikit_lib/0.0.18/iikit_lib-0.0.18.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikit_lib/0.0.18/iikit_lib-0.0.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikit_lib/0.0.19/iikit_lib-0.0.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikit_lib-0.0.19.tar.gz",
+    "size_bytes": 11983,
+    "sha256": "83773e7800438b81f750117f9c5599b65e32545182abfcb4d8190fcecd91be31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikit_lib/0.0.19/iikit_lib-0.0.19.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikit_lib/0.0.19/iikit_lib-0.0.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikit_lib/0.0.20/iikit_lib-0.0.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikit_lib-0.0.20.tar.gz",
+    "size_bytes": 13280,
+    "sha256": "d854001355f6efeec5eae57e33f90957df03fc689f604598c5c43e4db227fb11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikit_lib/0.0.20/iikit_lib-0.0.20.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikit_lib/0.0.20/iikit_lib-0.0.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikit_lib/0.0.21/iikit_lib-0.0.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikit_lib-0.0.21.tar.gz",
+    "size_bytes": 13226,
+    "sha256": "b98f457795928ab78fc45057cc128b548a594c46db968e7ddfe6e2f6b06bf64e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikit_lib/0.0.21/iikit_lib-0.0.21.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikit_lib/0.0.21/iikit_lib-0.0.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikit_lib/0.0.7/iikit_lib-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikit_lib-0.0.7.tar.gz",
+    "size_bytes": 15264,
+    "sha256": "15598af41e07b01044473c5b1d154886463b8fd93647b69848234dcbd2000ca7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikit_lib/0.0.7/iikit_lib-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikit_lib/0.0.7/iikit_lib-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikit_lib/0.0.8/iikit_lib-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikit_lib-0.0.8.tar.gz",
+    "size_bytes": 15264,
+    "sha256": "d6975b7a56bcc46a785f18909f6b6cba5b1a57793bdfa4ee288c5066b0c8770b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikit_lib/0.0.8/iikit_lib-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikit_lib/0.0.8/iikit_lib-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikit_lib/0.0.9/iikit_lib-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikit_lib-0.0.9.tar.gz",
+    "size_bytes": 14474,
+    "sha256": "7e7e2c5a96ad684c321be8625780489022688af5f5cbe6998ab9364baec2490b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikit_lib/0.0.9/iikit_lib-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikit_lib/0.0.9/iikit_lib-0.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikitmini_lib/0.1.10/iikitmini_lib-0.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikitmini_lib-0.1.10.tar.gz",
+    "size_bytes": 11636,
+    "sha256": "25e4dab740ca3780f861872d70eeed5f2ac55d7886386b4a4dab29df6418c920",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikitmini_lib/0.1.10/iikitmini_lib-0.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikitmini_lib/0.1.10/iikitmini_lib-0.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josuemorais/library/iikitmini_lib/0.1.11/iikitmini_lib-0.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iikitmini_lib-0.1.11.tar.gz",
+    "size_bytes": 10690,
+    "sha256": "18c0471c879a059b5f688d95ca1838aa1912fe048b24cf76f805f10fb8a7ff8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josuemorais/library/iikitmini_lib/0.1.11/iikitmini_lib-0.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/josuemorais/library/iikitmini_lib/0.1.11/iikitmini_lib-0.1.11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

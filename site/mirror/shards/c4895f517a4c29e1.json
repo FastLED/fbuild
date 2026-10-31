@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-aimen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-aimen/library/AX12/0.0.0+sha.cb08e032ef91/AX12-0.0.0+sha.cb08e032ef91.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AX12-0.0.0+sha.cb08e032ef91.tar.gz",
+    "size_bytes": 5142,
+    "sha256": "a901b61b63ed797c221dba49df75e30cd8f978ea6f95a03c5c9a89e5683a5535",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aimen/library/AX12/0.0.0%2Bsha.cb08e032ef91/AX12-0.0.0%2Bsha.cb08e032ef91.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aimen/library/AX12/0.0.0%2Bsha.cb08e032ef91/AX12-0.0.0%2Bsha.cb08e032ef91.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-aimen/library/PIDPositionController/0.0.0+sha.6357f0f21a6b/PIDPositionController-0.0.0+sha.6357f0f21a6b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIDPositionController-0.0.0+sha.6357f0f21a6b.tar.gz",
+    "size_bytes": 671,
+    "sha256": "0d6193e0a2ab6bdc0536e9a9f62e754ceec001f483e91ec250d3295aa3f0003d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aimen/library/PIDPositionController/0.0.0%2Bsha.6357f0f21a6b/PIDPositionController-0.0.0%2Bsha.6357f0f21a6b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aimen/library/PIDPositionController/0.0.0%2Bsha.6357f0f21a6b/PIDPositionController-0.0.0%2Bsha.6357f0f21a6b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-aimen/library/SerialHalfDuplex/0.0.0+sha.5ecc72a47df0/SerialHalfDuplex-0.0.0+sha.5ecc72a47df0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialHalfDuplex-0.0.0+sha.5ecc72a47df0.tar.gz",
+    "size_bytes": 3613,
+    "sha256": "e8c70908ca65895bcf9accf6566e531fc703271235af2ca6c0c197fca80f5a8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aimen/library/SerialHalfDuplex/0.0.0%2Bsha.5ecc72a47df0/SerialHalfDuplex-0.0.0%2Bsha.5ecc72a47df0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aimen/library/SerialHalfDuplex/0.0.0%2Bsha.5ecc72a47df0/SerialHalfDuplex-0.0.0%2Bsha.5ecc72a47df0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

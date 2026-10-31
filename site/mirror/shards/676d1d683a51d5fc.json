@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/einararnason",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "einararnason/library/ArduinoQueue/1.2.5/ArduinoQueue-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoQueue-1.2.5.tar.gz",
+    "size_bytes": 6540,
+    "sha256": "727ae589c17ab04095374af34fb56ed1dcab5ceaed077c681306a90f3ea68052",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/einararnason/library/ArduinoQueue/1.2.5/ArduinoQueue-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/einararnason/library/ArduinoQueue/1.2.5/ArduinoQueue-1.2.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cheong2k",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cheong2k/library/BLE%20SDK%20for%20Arduino/1.0.1/BLESDKforArduino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLESDKforArduino-1.0.1.tar.gz",
+    "size_bytes": 334837,
+    "sha256": "b59c004c2e0fa7c7cb0c06df58483b87e44c5e3475bdf2639f15c0cac3b38e9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cheong2k/library/BLE%2520SDK%2520for%2520Arduino/1.0.1/BLESDKforArduino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cheong2k/library/BLE%20SDK%20for%20Arduino/1.0.1/BLESDKforArduino-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

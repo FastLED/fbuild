@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tcafiero",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tcafiero/library/TopView%20NBduino%20Library/0.20.0/TopViewNBduinoLibrary-0.20.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TopViewNBduinoLibrary-0.20.0.tar.gz",
+    "size_bytes": 6794,
+    "sha256": "baaaaa5192ff214fdc60a44d419706884816b8fa17dea6b6f67aa63129ff0f34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tcafiero/library/TopView%2520NBduino%2520Library/0.20.0/TopViewNBduinoLibrary-0.20.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tcafiero/library/TopView%20NBduino%20Library/0.20.0/TopViewNBduinoLibrary-0.20.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

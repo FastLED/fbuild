@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-chrisisthefish",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-chrisisthefish/library/MSGEQ7/0.0.0+sha.974a4855a7f8/MSGEQ7-0.0.0+sha.974a4855a7f8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MSGEQ7-0.0.0+sha.974a4855a7f8.tar.gz",
+    "size_bytes": 1586,
+    "sha256": "1b7e5cfda879d9ebe30968fbea0140eecd18fb724df26a7f9fd249b3af01b5c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-chrisisthefish/library/MSGEQ7/0.0.0%2Bsha.974a4855a7f8/MSGEQ7-0.0.0%2Bsha.974a4855a7f8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-chrisisthefish/library/MSGEQ7/0.0.0%2Bsha.974a4855a7f8/MSGEQ7-0.0.0%2Bsha.974a4855a7f8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

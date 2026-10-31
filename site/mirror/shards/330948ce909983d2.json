@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tyrkelko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tyrkelko/library/SN76489/1.0.0/SN76489-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SN76489-1.0.0.tar.gz",
+    "size_bytes": 17843,
+    "sha256": "bc02e04c0485b018c54b435873e5434b2bfa198495efd2676a840b2636e4c3e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tyrkelko/library/SN76489/1.0.0/SN76489-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tyrkelko/library/SN76489/1.0.0/SN76489-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

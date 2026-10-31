@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/h-kurosaki",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "h-kurosaki/library/UARDECS%20Library/2.0.2/UARDECSLibrary-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UARDECSLibrary-2.0.2.tar.gz",
+    "size_bytes": 34608,
+    "sha256": "bee70a554e35088f234326e50bf23bc70b3b2de038c5cb0c3f82ba8ea4f404b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h-kurosaki/library/UARDECS%2520Library/2.0.2/UARDECSLibrary-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/h-kurosaki/library/UARDECS%20Library/2.0.2/UARDECSLibrary-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h-kurosaki/library/UARDECS%20Library/2.0.3/UARDECSLibrary-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UARDECSLibrary-2.0.3.tar.gz",
+    "size_bytes": 28574,
+    "sha256": "ed47ae20eeb4a07d361198c1f5adfab40d825a51106c7d5aca6e105a2754513b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h-kurosaki/library/UARDECS%2520Library/2.0.3/UARDECSLibrary-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/h-kurosaki/library/UARDECS%20Library/2.0.3/UARDECSLibrary-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h-kurosaki/library/UARDECS_MEGA%20Library/2.0.2/UARDECS_MEGALibrary-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UARDECS_MEGALibrary-2.0.2.tar.gz",
+    "size_bytes": 34420,
+    "sha256": "b0563a92ddd913f10af8c9b06bf3270b037a6e353eb5b3a8e6d7b01b1a3a7546",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h-kurosaki/library/UARDECS_MEGA%2520Library/2.0.2/UARDECS_MEGALibrary-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/h-kurosaki/library/UARDECS_MEGA%20Library/2.0.2/UARDECS_MEGALibrary-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h-kurosaki/library/UARDECS_MEGA%20Library/2.0.3/UARDECS_MEGALibrary-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UARDECS_MEGALibrary-2.0.3.tar.gz",
+    "size_bytes": 33378,
+    "sha256": "09c2f74d9d61e6f84e32172069a8d73371baa0536e07d1dd1aaaa85de2d330fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h-kurosaki/library/UARDECS_MEGA%2520Library/2.0.3/UARDECS_MEGALibrary-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/h-kurosaki/library/UARDECS_MEGA%20Library/2.0.3/UARDECS_MEGALibrary-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h-kurosaki/library/UARDECS_PICO%20Library/1.0.3/UARDECS_PICOLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UARDECS_PICOLibrary-1.0.3.tar.gz",
+    "size_bytes": 55643,
+    "sha256": "4f30ee1d301aa020b534193a3d10a7c447c8077f1a6384a1aa0fb6ab26453c69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h-kurosaki/library/UARDECS_PICO%2520Library/1.0.3/UARDECS_PICOLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/h-kurosaki/library/UARDECS_PICO%20Library/1.0.3/UARDECS_PICOLibrary-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

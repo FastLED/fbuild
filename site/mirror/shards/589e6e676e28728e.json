@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jeronimonunes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jeronimonunes/library/AsyncEspAlexa/1.0.3/AsyncEspAlexa-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncEspAlexa-1.0.3.tar.gz",
+    "size_bytes": 12458,
+    "sha256": "ea7497a254f8143c6e13e3bc3d78c7225bd9ac8a305730c9df9b164c3e970983",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeronimonunes/library/AsyncEspAlexa/1.0.3/AsyncEspAlexa-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jeronimonunes/library/AsyncEspAlexa/1.0.3/AsyncEspAlexa-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

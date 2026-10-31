@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ugursayar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ugursayar/library/NessoLink/1.1.1/NessoLink-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NessoLink-1.1.1.tar.gz",
+    "size_bytes": 23676,
+    "sha256": "82924d885486f297846b46b5070815c3e8918531bf495c8513b99e16fa96e7ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ugursayar/library/NessoLink/1.1.1/NessoLink-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ugursayar/library/NessoLink/1.1.1/NessoLink-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ugursayar/library/NessoLink/1.1.2/NessoLink-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NessoLink-1.1.2.tar.gz",
+    "size_bytes": 24530,
+    "sha256": "ecbbcc4f0ab0635572ca2750526a5db77399b7794ff91cd2335e52ccb3296260",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ugursayar/library/NessoLink/1.1.2/NessoLink-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ugursayar/library/NessoLink/1.1.2/NessoLink-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ugursayar/library/NessoLink/1.3.0/NessoLink-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NessoLink-1.3.0.tar.gz",
+    "size_bytes": 29650,
+    "sha256": "f89faebc2ef12bb0713533714e8337f35619e61f9c1e9a34ea3a56ea8dc8f01f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ugursayar/library/NessoLink/1.3.0/NessoLink-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ugursayar/library/NessoLink/1.3.0/NessoLink-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ugursayar/library/NessoLink/1.4.0/NessoLink-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NessoLink-1.4.0.tar.gz",
+    "size_bytes": 30151,
+    "sha256": "ec660cfad795f9e2af3f124607fd31d3df098e48409f753a5a2040142c500f35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ugursayar/library/NessoLink/1.4.0/NessoLink-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ugursayar/library/NessoLink/1.4.0/NessoLink-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

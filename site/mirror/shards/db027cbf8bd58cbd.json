@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pascal2511",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pascal2511/library/TimerUtils/1.1.0/TimerUtils-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerUtils-1.1.0.tar.gz",
+    "size_bytes": 2168,
+    "sha256": "aa030511294729acfd737c1d41c2bd7cc0c9b58be46afb26cb2ac9df42e7ad43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pascal2511/library/TimerUtils/1.1.0/TimerUtils-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pascal2511/library/TimerUtils/1.1.0/TimerUtils-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

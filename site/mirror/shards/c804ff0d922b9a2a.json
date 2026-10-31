@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jcomas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jcomas/library/S8_UART/1.0.1/S8_UART-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "S8_UART-1.0.1.tar.gz",
+    "size_bytes": 15059,
+    "sha256": "2f007c825756de5e1772809a0dae407752529ba74f9556ea43cab9641a81dc4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcomas/library/S8_UART/1.0.1/S8_UART-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jcomas/library/S8_UART/1.0.1/S8_UART-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jcomas/library/S8_UART/1.0.2/S8_UART-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "S8_UART-1.0.2.tar.gz",
+    "size_bytes": 14865,
+    "sha256": "fbb3c5912c66fc8c1ee45e56e9dec7d37f2d5bf7854e639ba22725bf6201aef3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcomas/library/S8_UART/1.0.2/S8_UART-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jcomas/library/S8_UART/1.0.2/S8_UART-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

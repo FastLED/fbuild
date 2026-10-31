@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nfc-rfid-reader-sdk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nfc-rfid-reader-sdk/library/MFRC522_PN512/1.4.13/MFRC522_PN512-1.4.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MFRC522_PN512-1.4.13.tar.gz",
+    "size_bytes": 58027,
+    "sha256": "d4cbca8534deb2946fcbab6a49b0340bcf5790d81edc0735ec4c1b1c8b013605",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nfc-rfid-reader-sdk/library/MFRC522_PN512/1.4.13/MFRC522_PN512-1.4.13.tar.gz",
+     "https://dl.registry.platformio.org/download/nfc-rfid-reader-sdk/library/MFRC522_PN512/1.4.13/MFRC522_PN512-1.4.13.tar.gz"
+    ]
+   }
+  }
+ ]
+}

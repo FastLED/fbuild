@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kanewallmann",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kanewallmann/library/EEPROM%20%2824XX512%29/1.0.3/EEPROM24XX512-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM24XX512-1.0.3.tar.gz",
+    "size_bytes": 5261,
+    "sha256": "03a7d4e1e87f993eb8c7687ae9fad1d856d241590ddec1d8b4d8a2d080319c14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kanewallmann/library/EEPROM%2520%252824XX512%2529/1.0.3/EEPROM24XX512-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kanewallmann/library/EEPROM%20%2824XX512%29/1.0.3/EEPROM24XX512-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kanewallmann/library/LED%20Matrix/1.0.1/LEDMatrix-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEDMatrix-1.0.1.tar.gz",
+    "size_bytes": 5488,
+    "sha256": "fe02a9d0446d924f58e234260660248720f8ac9503d40bb013b20a310e472d36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kanewallmann/library/LED%2520Matrix/1.0.1/LEDMatrix-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kanewallmann/library/LED%20Matrix/1.0.1/LEDMatrix-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kanewallmann/library/RTCC%20%28MCP7940N%29/1.0.3/RTCCMCP7940N-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTCCMCP7940N-1.0.3.tar.gz",
+    "size_bytes": 7540,
+    "sha256": "3b82e8b323d634ceded719a0b86e99c75be1d21cb9774cb00672915a9875bb4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kanewallmann/library/RTCC%2520%2528MCP7940N%2529/1.0.3/RTCCMCP7940N-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kanewallmann/library/RTCC%20%28MCP7940N%29/1.0.3/RTCCMCP7940N-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

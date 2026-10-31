@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vean",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vean/library/FansElectronics_DMD32/1.0.0/FansElectronics_DMD32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FansElectronics_DMD32-1.0.0.tar.gz",
+    "size_bytes": 26328,
+    "sha256": "0cdb8d05471082d89292b3643fb03870431e64b6e9c7cfacbb4e4210774ce40b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vean/library/FansElectronics_DMD32/1.0.0/FansElectronics_DMD32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vean/library/FansElectronics_DMD32/1.0.0/FansElectronics_DMD32-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vean/library/FansElectronics_DMD32/1.1.0/FansElectronics_DMD32-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FansElectronics_DMD32-1.1.0.tar.gz",
+    "size_bytes": 30858,
+    "sha256": "95ef73c9d4cde7da83bbf603d7d8161b38ae5324b2177878ba1062a422e044fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vean/library/FansElectronics_DMD32/1.1.0/FansElectronics_DMD32-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vean/library/FansElectronics_DMD32/1.1.0/FansElectronics_DMD32-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vean/library/FansElectronics_DMD8266/1.0.0/FansElectronics_DMD8266-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FansElectronics_DMD8266-1.0.0.tar.gz",
+    "size_bytes": 26700,
+    "sha256": "bb205bf38a3db1d87c0a9494e342e7a0d885c0b9ae81b3c982f8d74f756d7ac2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vean/library/FansElectronics_DMD8266/1.0.0/FansElectronics_DMD8266-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vean/library/FansElectronics_DMD8266/1.0.0/FansElectronics_DMD8266-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vean/library/FansElectronics_DMD8266/1.0.1/FansElectronics_DMD8266-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FansElectronics_DMD8266-1.0.1.tar.gz",
+    "size_bytes": 26899,
+    "sha256": "d795f5b67c659ab08763fbcf5b0fc0b37bdffb0c41b07258fb81ab2eb620e421",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vean/library/FansElectronics_DMD8266/1.0.1/FansElectronics_DMD8266-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vean/library/FansElectronics_DMD8266/1.0.1/FansElectronics_DMD8266-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vean/library/FansElectronics_DMD8266/1.1.0/FansElectronics_DMD8266-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FansElectronics_DMD8266-1.1.0.tar.gz",
+    "size_bytes": 30688,
+    "sha256": "b201533863af7d743501bc4f402be363d7026524b291b0e4320942b6b4a2c86e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vean/library/FansElectronics_DMD8266/1.1.0/FansElectronics_DMD8266-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vean/library/FansElectronics_DMD8266/1.1.0/FansElectronics_DMD8266-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vean/library/FansElectronics_License/1.0.0/FansElectronicsLicense-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FansElectronicsLicense-1.0.0.tar.gz",
+    "size_bytes": 9113,
+    "sha256": "f9546245f9e1ac02c4bf9798f96ece5d8beb9bbcd5e7300f929c242948e78657",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vean/library/FansElectronics_License/1.0.0/FansElectronicsLicense-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vean/library/FansElectronics_License/1.0.0/FansElectronicsLicense-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vean/library/FansElectronics_License/1.0.1/FansElectronics_License-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FansElectronics_License-1.0.1.tar.gz",
+    "size_bytes": 15115,
+    "sha256": "b61bbfc6fdd141fe46876c3e2c6a86d2d824947e7daf9085cc2a667b91c04503",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vean/library/FansElectronics_License/1.0.1/FansElectronics_License-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vean/library/FansElectronics_License/1.0.1/FansElectronics_License-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vean/library/FansElectronics_License/1.0.2/FansElectronics_License-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FansElectronics_License-1.0.2.tar.gz",
+    "size_bytes": 15837,
+    "sha256": "defafd0715c55f4fb97986c06c995a5d88a106003aebe8e4da5f1b44b47219dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vean/library/FansElectronics_License/1.0.2/FansElectronics_License-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vean/library/FansElectronics_License/1.0.2/FansElectronics_License-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vean/library/FansElectronics_License/2.0.0/FansElectronics_License-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FansElectronics_License-2.0.0.tar.gz",
+    "size_bytes": 15800,
+    "sha256": "1107747e2728cbb279673558e9a12b7dd6c0a59e80a6b66baaf5ce796d27337d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vean/library/FansElectronics_License/2.0.0/FansElectronics_License-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vean/library/FansElectronics_License/2.0.0/FansElectronics_License-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vean/library/FansElectronics_License/2.0.1/FansElectronics_License-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FansElectronics_License-2.0.1.tar.gz",
+    "size_bytes": 17725,
+    "sha256": "b1c1d9305f771d320f4908e4372f7a6e0d6ae2c37307964fd8065f03d2192b07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vean/library/FansElectronics_License/2.0.1/FansElectronics_License-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vean/library/FansElectronics_License/2.0.1/FansElectronics_License-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vean/library/FansElectronics_License/2.1.0/FansElectronics_License-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FansElectronics_License-2.1.0.tar.gz",
+    "size_bytes": 22335,
+    "sha256": "ec3e7ce8bd5487e9371a19282675d974bb1136836c0f379832d8c7201c006ea3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vean/library/FansElectronics_License/2.1.0/FansElectronics_License-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vean/library/FansElectronics_License/2.1.0/FansElectronics_License-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vean/library/FansElectronics_License/2.1.1/FansElectronics_License-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FansElectronics_License-2.1.1.tar.gz",
+    "size_bytes": 22606,
+    "sha256": "bd5c2b71152e8cc0718af856c864ef6b38ccfe81a175e6a01c318d3a73013b28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vean/library/FansElectronics_License/2.1.1/FansElectronics_License-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vean/library/FansElectronics_License/2.1.1/FansElectronics_License-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vean/library/FansElectronics_License/2.2.0/FansElectronics_License-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FansElectronics_License-2.2.0.tar.gz",
+    "size_bytes": 22593,
+    "sha256": "b2060442534b204c915412a9e2d600f4749843277a424bff1e1e064c0b844117",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vean/library/FansElectronics_License/2.2.0/FansElectronics_License-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vean/library/FansElectronics_License/2.2.0/FansElectronics_License-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vean/library/FansElectronics_License/2.3.0/FansElectronics_License-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FansElectronics_License-2.3.0.tar.gz",
+    "size_bytes": 24764,
+    "sha256": "8507d5bf620475b1ea2de5d50366b7205900b2cfd5be7a8de2ee9be0224cc617",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vean/library/FansElectronics_License/2.3.0/FansElectronics_License-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vean/library/FansElectronics_License/2.3.0/FansElectronics_License-2.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

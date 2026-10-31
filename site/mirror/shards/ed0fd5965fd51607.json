@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cmsolomon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cmsolomon/library/lightweight-shell/1.0.1/lightweight-shell-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lightweight-shell-1.0.1.tar.gz",
+    "size_bytes": 84672,
+    "sha256": "dcfa710bc210e224d9c65928ee4fe763718280f238e7ba098166d5d6b6ac3899",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmsolomon/library/lightweight-shell/1.0.1/lightweight-shell-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cmsolomon/library/lightweight-shell/1.0.1/lightweight-shell-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/studio-poetics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "studio-poetics/library/ST77916_QSPI/2.0.0/ST77916_QSPI-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST77916_QSPI-2.0.0.tar.gz",
+    "size_bytes": 105922,
+    "sha256": "ecf11e201dfe4f092c44098b994efdab698888c15c529c228547e621ece917a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/studio-poetics/library/ST77916_QSPI/2.0.0/ST77916_QSPI-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/studio-poetics/library/ST77916_QSPI/2.0.0/ST77916_QSPI-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/a223d",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "a223d/library/Adafruit_4_01_ColourEPaper/1.0.0/Adafruit_4_01_ColourEPaper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_4_01_ColourEPaper-1.0.0.tar.gz",
+    "size_bytes": 20135,
+    "sha256": "230ca5279545ff883a332b4274811976ecee76a4673f7eddb7bbd640d2f522a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/a223d/library/Adafruit_4_01_ColourEPaper/1.0.0/Adafruit_4_01_ColourEPaper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/a223d/library/Adafruit_4_01_ColourEPaper/1.0.0/Adafruit_4_01_ColourEPaper-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "a223d/library/detaBaseArduinoESP32/1.0.0/detaBaseArduinoESP32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "detaBaseArduinoESP32-1.0.0.tar.gz",
+    "size_bytes": 19772,
+    "sha256": "68549d2e2393e6a659dd98f421ae93df13eb06cf59eb2d7115eba6367a0a632b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/a223d/library/detaBaseArduinoESP32/1.0.0/detaBaseArduinoESP32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/a223d/library/detaBaseArduinoESP32/1.0.0/detaBaseArduinoESP32-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hmfk03lst1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hmfk03lst1/library/L9110S/0.0.0+sha.5d8bf5144d8f/L9110S-0.0.0+sha.5d8bf5144d8f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L9110S-0.0.0+sha.5d8bf5144d8f.tar.gz",
+    "size_bytes": 3066,
+    "sha256": "1ca8dd49c0dff155a2d2ee11c52a37cee5e53e307916e9cb7ffa7cddb1798bac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hmfk03lst1/library/L9110S/0.0.0%2Bsha.5d8bf5144d8f/L9110S-0.0.0%2Bsha.5d8bf5144d8f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hmfk03lst1/library/L9110S/0.0.0%2Bsha.5d8bf5144d8f/L9110S-0.0.0%2Bsha.5d8bf5144d8f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hmfk03lst1/library/LSM303D_imu/0.0.0+sha.a55edecc96e2/LSM303D_imu-0.0.0+sha.a55edecc96e2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM303D_imu-0.0.0+sha.a55edecc96e2.tar.gz",
+    "size_bytes": 5159,
+    "sha256": "528a0ce86ac5d7b9aa97d490fd2d2351599664ddba6d6f2e9e3cbc0aaca8b6af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hmfk03lst1/library/LSM303D_imu/0.0.0%2Bsha.a55edecc96e2/LSM303D_imu-0.0.0%2Bsha.a55edecc96e2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hmfk03lst1/library/LSM303D_imu/0.0.0%2Bsha.a55edecc96e2/LSM303D_imu-0.0.0%2Bsha.a55edecc96e2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/datacute",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "datacute/library/DoubleResetDetector/1.0.3/DoubleResetDetector-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DoubleResetDetector-1.0.3.tar.gz",
+    "size_bytes": 2597,
+    "sha256": "021f89e5997b40d9d2830623ea32a306657a8fa0d5253167b3f99a619914c37b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/datacute/library/DoubleResetDetector/1.0.3/DoubleResetDetector-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/datacute/library/DoubleResetDetector/1.0.3/DoubleResetDetector-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "datacute/library/Tiny4kOLED/2.3.0/Tiny4kOLED-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tiny4kOLED-2.3.0.tar.gz",
+    "size_bytes": 55409,
+    "sha256": "301b21e94332ec64e0fcc18bec60077ceba3195e50a01229e1ea2e26862013b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/datacute/library/Tiny4kOLED/2.3.0/Tiny4kOLED-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/datacute/library/Tiny4kOLED/2.3.0/Tiny4kOLED-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "datacute/library/TinyNunchuk/1.0.0/TinyNunchuk-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyNunchuk-1.0.0.tar.gz",
+    "size_bytes": 12227,
+    "sha256": "e6c1cfdc4d0917137c332f364fc12a855375717a4784916650143ee4fac0bde5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/datacute/library/TinyNunchuk/1.0.0/TinyNunchuk-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/datacute/library/TinyNunchuk/1.0.0/TinyNunchuk-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "datacute/library/TinyOLED-Fonts/1.2.0/TinyOLED-Fonts-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyOLED-Fonts-1.2.0.tar.gz",
+    "size_bytes": 35964,
+    "sha256": "7df03038b5e09fa25e82c03bacea3a8c460bd1a427428fa262b70fd92a5357b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/datacute/library/TinyOLED-Fonts/1.2.0/TinyOLED-Fonts-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/datacute/library/TinyOLED-Fonts/1.2.0/TinyOLED-Fonts-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

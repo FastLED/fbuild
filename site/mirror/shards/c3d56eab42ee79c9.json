@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pikciu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pikciu/library/Interval/0.2.2/Interval-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Interval-0.2.2.tar.gz",
+    "size_bytes": 911,
+    "sha256": "83270a73e7b28fbbb04629bb52100b2ce0984e0572e68756904d3a110252215e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pikciu/library/Interval/0.2.2/Interval-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pikciu/library/Interval/0.2.2/Interval-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pikciu/library/Xiaomi%20Mi%20Flora/1.0.0/XiaomiMiFlora-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XiaomiMiFlora-1.0.0.tar.gz",
+    "size_bytes": 1554,
+    "sha256": "88993950810a6878affa5853e402a3449c9e7124f075b1baa10fe8949942b426",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pikciu/library/Xiaomi%2520Mi%2520Flora/1.0.0/XiaomiMiFlora-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pikciu/library/Xiaomi%20Mi%20Flora/1.0.0/XiaomiMiFlora-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

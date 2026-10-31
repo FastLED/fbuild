@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-janjongboom",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-janjongboom/library/Adafruit_GFX_1351/0.0.0+sha.a42316f33f7c/Adafruit_GFX_1351-0.0.0+sha.a42316f33f7c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_GFX_1351-0.0.0+sha.a42316f33f7c.tar.gz",
+    "size_bytes": 12816,
+    "sha256": "10f6c743968ef2cb27ba338b37ae58e97c5fcd2b679cebd538c37a3b74d7c831",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-janjongboom/library/Adafruit_GFX_1351/0.0.0%2Bsha.a42316f33f7c/Adafruit_GFX_1351-0.0.0%2Bsha.a42316f33f7c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-janjongboom/library/Adafruit_GFX_1351/0.0.0%2Bsha.a42316f33f7c/Adafruit_GFX_1351-0.0.0%2Bsha.a42316f33f7c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

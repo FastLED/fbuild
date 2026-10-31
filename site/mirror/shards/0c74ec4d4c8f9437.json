@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nhk-robocon2016-nagaoka-b-team",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nhk-robocon2016-nagaoka-b-team/library/FEP2/0.0.0+sha.ebbdde72b650/FEP2-0.0.0+sha.ebbdde72b650.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FEP2-0.0.0+sha.ebbdde72b650.tar.gz",
+    "size_bytes": 1500,
+    "sha256": "b1cb9e11f1c67a174f16ece1074a870d81136f25b0ec65b1a8f3cd91cf445789",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nhk-robocon2016-nagaoka-b-team/library/FEP2/0.0.0%2Bsha.ebbdde72b650/FEP2-0.0.0%2Bsha.ebbdde72b650.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nhk-robocon2016-nagaoka-b-team/library/FEP2/0.0.0%2Bsha.ebbdde72b650/FEP2-0.0.0%2Bsha.ebbdde72b650.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nhk-robocon2016-nagaoka-b-team/library/PS3/0.0.0+sha.78827486d24f/PS3-0.0.0+sha.78827486d24f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS3-0.0.0+sha.78827486d24f.tar.gz",
+    "size_bytes": 1870,
+    "sha256": "b890905eb1546bec647d63587b44e8e5d059a924f42d5dedaa9aa7c39123adea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nhk-robocon2016-nagaoka-b-team/library/PS3/0.0.0%2Bsha.78827486d24f/PS3-0.0.0%2Bsha.78827486d24f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nhk-robocon2016-nagaoka-b-team/library/PS3/0.0.0%2Bsha.78827486d24f/PS3-0.0.0%2Bsha.78827486d24f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nhk-robocon2016-nagaoka-b-team/library/ikarashiMDC_2byte_ver/0.0.0+sha.97bb662f1e1f/ikarashiMDC_2byte_ver-0.0.0+sha.97bb662f1e1f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ikarashiMDC_2byte_ver-0.0.0+sha.97bb662f1e1f.tar.gz",
+    "size_bytes": 1910,
+    "sha256": "b7fd2c077bf554990897854c733695f7dbc0d271c6a53fc950fafc139731b4f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nhk-robocon2016-nagaoka-b-team/library/ikarashiMDC_2byte_ver/0.0.0%2Bsha.97bb662f1e1f/ikarashiMDC_2byte_ver-0.0.0%2Bsha.97bb662f1e1f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nhk-robocon2016-nagaoka-b-team/library/ikarashiMDC_2byte_ver/0.0.0%2Bsha.97bb662f1e1f/ikarashiMDC_2byte_ver-0.0.0%2Bsha.97bb662f1e1f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

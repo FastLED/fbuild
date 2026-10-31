@@ -1,0 +1,308 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ulywae",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ulywae/library/ButtonPoll/1.0.1/ButtonPoll-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonPoll-1.0.1.tar.gz",
+    "size_bytes": 5499,
+    "sha256": "d5a8892c813b2efa2b907dcbbb748d0746f2e38aba17952be82c0fe26a65217f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/ButtonPoll/1.0.1/ButtonPoll-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/ButtonPoll/1.0.1/ButtonPoll-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/ButtonPoll/2.0.1/ButtonPoll-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonPoll-2.0.1.tar.gz",
+    "size_bytes": 7677,
+    "sha256": "57a0b8c317883f838e2afafda8fbacb54ab19a76833fa6f9e16f947076fad8d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/ButtonPoll/2.0.1/ButtonPoll-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/ButtonPoll/2.0.1/ButtonPoll-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuButton/1.0.0/NeuButton-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuButton-1.0.0.tar.gz",
+    "size_bytes": 5792,
+    "sha256": "20ad63d1c5edd075ad319135d5627f5500efe5f0b83af7be5131e097269b8b47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuButton/1.0.0/NeuButton-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuButton/1.0.0/NeuButton-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuButton/1.0.2/NeuButton-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuButton-1.0.2.tar.gz",
+    "size_bytes": 8936,
+    "sha256": "e708f3286107f5380994ecd494effaa07fb7645340a171733e84b96284bfa6c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuButton/1.0.2/NeuButton-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuButton/1.0.2/NeuButton-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuButton/2.0.1/NeuButton-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuButton-2.0.1.tar.gz",
+    "size_bytes": 9815,
+    "sha256": "991a442bc4473ba5580df0fcb118f0c8d7530a70f16ce964ed0dcf370a69cee0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuButton/2.0.1/NeuButton-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuButton/2.0.1/NeuButton-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuDB/1.0.0/NeuDB-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuDB-1.0.0.tar.gz",
+    "size_bytes": 21491,
+    "sha256": "dc8f6b843efde9cea17c9bbe43f781a4ef1a32514f97569f4ef478f33024d391",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuDB/1.0.0/NeuDB-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuDB/1.0.0/NeuDB-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuDB/1.2.1/NeuDB-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuDB-1.2.1.tar.gz",
+    "size_bytes": 33832,
+    "sha256": "3fc9ef661353da10e81b9cb01b44942b27ca4dffd3cbd581c60c69c6d84a233a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuDB/1.2.1/NeuDB-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuDB/1.2.1/NeuDB-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuDB/1.2.2/NeuDB-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuDB-1.2.2.tar.gz",
+    "size_bytes": 35012,
+    "sha256": "a6db2b5881daa6779a859dec80c3c215fee34835afa4e5765ed862b08e45e910",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuDB/1.2.2/NeuDB-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuDB/1.2.2/NeuDB-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuDB/2.1.0/NeuDB-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuDB-2.1.0.tar.gz",
+    "size_bytes": 61876,
+    "sha256": "30c472218fef4973e358428b542f6a882cd0e5779f5bc2527f3861e30eb22122",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuDB/2.1.0/NeuDB-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuDB/2.1.0/NeuDB-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuDB/2.1.1/NeuDB-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuDB-2.1.1.tar.gz",
+    "size_bytes": 62928,
+    "sha256": "58a8bfd474177b0cb014e54d258260ac3c28646c43ceee839491cb8cdb185765",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuDB/2.1.1/NeuDB-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuDB/2.1.1/NeuDB-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuDB/2.1.2/NeuDB-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuDB-2.1.2.tar.gz",
+    "size_bytes": 63044,
+    "sha256": "566809b938ce620a0e9261d8550324b5bfd09c375e9816263a501617d9db8452",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuDB/2.1.2/NeuDB-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuDB/2.1.2/NeuDB-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuDB/2.1.3/NeuDB-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuDB-2.1.3.tar.gz",
+    "size_bytes": 63535,
+    "sha256": "2531d998cbc48cd6938e2a1cefddb691655b0dbdd187e5a3369099cfadf7b142",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuDB/2.1.3/NeuDB-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuDB/2.1.3/NeuDB-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuEEPROM/1.0.0/NeuEEPROM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuEEPROM-1.0.0.tar.gz",
+    "size_bytes": 7768,
+    "sha256": "1071469f001aa86bd53078d53563e6938ed0d988f924ab26e0f4187aef049741",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuEEPROM/1.0.0/NeuEEPROM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuEEPROM/1.0.0/NeuEEPROM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuEEPROM/2.0.0/NeuEEPROM-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuEEPROM-2.0.0.tar.gz",
+    "size_bytes": 14214,
+    "sha256": "9e332fc57bd65f09bab005c9e4e1daea59851150503511eefc0817e83b1adbe7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuEEPROM/2.0.0/NeuEEPROM-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuEEPROM/2.0.0/NeuEEPROM-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuEEPROM/2.0.2/NeuEEPROM-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuEEPROM-2.0.2.tar.gz",
+    "size_bytes": 14232,
+    "sha256": "d8bdc105ae8907ac0fde04771d488c9eb4efc5c5b5db33616a1467a49f34bcb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuEEPROM/2.0.2/NeuEEPROM-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuEEPROM/2.0.2/NeuEEPROM-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuEEPROM/2.0.3/NeuEEPROM-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuEEPROM-2.0.3.tar.gz",
+    "size_bytes": 17525,
+    "sha256": "008ad5fd779c4c1d6695f978183a5f2bf95cab9bd7ac5ecd6a1f559822dde077",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuEEPROM/2.0.3/NeuEEPROM-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuEEPROM/2.0.3/NeuEEPROM-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuFrame/1.1.0/NeuFrame-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuFrame-1.1.0.tar.gz",
+    "size_bytes": 7959,
+    "sha256": "ea73706d1850179a37aca7089da92367bc8e586ca196f4ac13280db4fd480c57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuFrame/1.1.0/NeuFrame-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuFrame/1.1.0/NeuFrame-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuKV/1.0.0/NeuKV-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuKV-1.0.0.tar.gz",
+    "size_bytes": 8485,
+    "sha256": "d3f5f72629d628a34de20c3d391495fe22cc1d6916a52c785aec8ef438236c17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuKV/1.0.0/NeuKV-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuKV/1.0.0/NeuKV-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuNVS/1.2.0/NeuNVS-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuNVS-1.2.0.tar.gz",
+    "size_bytes": 11747,
+    "sha256": "ea2fc885c11626f0c012101882505da21fba607a489d601d880543f7beb4d1e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuNVS/1.2.0/NeuNVS-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuNVS/1.2.0/NeuNVS-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuNVS/2.0.1/NeuNVS-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuNVS-2.0.1.tar.gz",
+    "size_bytes": 15003,
+    "sha256": "f493ca2b0d9c370f138fe06a000673d03850eab8ff95d1b08f94ba9e1abad722",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuNVS/2.0.1/NeuNVS-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuNVS/2.0.1/NeuNVS-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuNVS/2.0.2/NeuNVS-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuNVS-2.0.2.tar.gz",
+    "size_bytes": 15087,
+    "sha256": "0f9ec43f62e97176021905b581f7d8987d2313d571c1a9b7f5f9cfd797ddf1fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuNVS/2.0.2/NeuNVS-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuNVS/2.0.2/NeuNVS-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuStorage/1.0.0/NeuStorage-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuStorage-1.0.0.tar.gz",
+    "size_bytes": 6790,
+    "sha256": "9d12494a166d4963666eab525098e2129660957fdb1b453f14a8cb3f1105ed9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuStorage/1.0.0/NeuStorage-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuStorage/1.0.0/NeuStorage-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ulywae/library/NeuWiFi/1.0.0/NeuWiFi-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuWiFi-1.0.0.tar.gz",
+    "size_bytes": 36300,
+    "sha256": "56d65890cf8514716648404a9d90ca0dd6aa0266f345c39347d44afbdc57290e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulywae/library/NeuWiFi/1.0.0/NeuWiFi-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ulywae/library/NeuWiFi/1.0.0/NeuWiFi-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

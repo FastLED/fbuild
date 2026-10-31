@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-66keg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-66keg/library/KXR94_2050/0.0.0+sha.1e4a75b43643/KXR94_2050-0.0.0+sha.1e4a75b43643.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KXR94_2050-0.0.0+sha.1e4a75b43643.tar.gz",
+    "size_bytes": 1117,
+    "sha256": "8cf519efdbf4ff84e437ddce73f17d59d2433a0bc78f7f5a439d044068505dc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-66keg/library/KXR94_2050/0.0.0%2Bsha.1e4a75b43643/KXR94_2050-0.0.0%2Bsha.1e4a75b43643.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-66keg/library/KXR94_2050/0.0.0%2Bsha.1e4a75b43643/KXR94_2050-0.0.0%2Bsha.1e4a75b43643.tar.gz"
+    ]
+   }
+  }
+ ]
+}

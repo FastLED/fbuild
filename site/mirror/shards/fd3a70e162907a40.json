@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-herizo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-herizo/library/Erreur/0.0.0+sha.d73485948caa/Erreur-0.0.0+sha.d73485948caa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Erreur-0.0.0+sha.d73485948caa.tar.gz",
+    "size_bytes": 759,
+    "sha256": "d60c92eab220e0c52e5cd51287bf6c41f22b315d53f8679d9e48b936ae026235",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-herizo/library/Erreur/0.0.0%2Bsha.d73485948caa/Erreur-0.0.0%2Bsha.d73485948caa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-herizo/library/Erreur/0.0.0%2Bsha.d73485948caa/Erreur-0.0.0%2Bsha.d73485948caa.tar.gz"
+    ]
+   }
+  }
+ ]
+}

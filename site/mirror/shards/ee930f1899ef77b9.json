@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bahr1k",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bahr1k/library/EspTunnel/1.0.0/EspTunnel-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspTunnel-1.0.0.tar.gz",
+    "size_bytes": 22469,
+    "sha256": "33cf2a3487948a2abb3c4e6fd6d3df8fc249147f6e94547c72507bb433b5169c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bahr1k/library/EspTunnel/1.0.0/EspTunnel-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bahr1k/library/EspTunnel/1.0.0/EspTunnel-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

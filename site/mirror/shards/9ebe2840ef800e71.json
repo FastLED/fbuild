@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/toastmanau",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "toastmanau/library/TelegramSerial/1.0.0/TelegramSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TelegramSerial-1.0.0.tar.gz",
+    "size_bytes": 8428,
+    "sha256": "e17023181d43f9ca66fc6e5d6d77404f4d0e7f4978a1268a0925dac2c61e363a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toastmanau/library/TelegramSerial/1.0.0/TelegramSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/toastmanau/library/TelegramSerial/1.0.0/TelegramSerial-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

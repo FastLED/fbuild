@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gioblu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gioblu/library/Agenda/1.0/Agenda-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Agenda-1.0.tar.gz",
+    "size_bytes": 3266,
+    "sha256": "729453eea9a9d14b9d6f2db295033782b030d8fa16ba135da8b6c6fd5420db06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gioblu/library/Agenda/1.0/Agenda-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gioblu/library/Agenda/1.0/Agenda-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gioblu/library/Cape/3.0/Cape-3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Cape-3.0.tar.gz",
+    "size_bytes": 4747,
+    "sha256": "af8465fcc674d686132ceea3d532d9616188e4975b4aebf8fe1b4d4db17c4b20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gioblu/library/Cape/3.0/Cape-3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gioblu/library/Cape/3.0/Cape-3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gioblu/library/OSPREY/1.0/OSPREY-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSPREY-1.0.tar.gz",
+    "size_bytes": 14825,
+    "sha256": "bccdf24d17a6f57fef878a33d74a7c39349ce5c5abf5cb2eda7a216c82a4f967",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gioblu/library/OSPREY/1.0/OSPREY-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gioblu/library/OSPREY/1.0/OSPREY-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gioblu/library/PJON/13.1/PJON-13.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PJON-13.1.tar.gz",
+    "size_bytes": 327595,
+    "sha256": "040f4b3aa1ab5975c9670bb374c851a1ab646c5278706c9ea43ee6b027a3397b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gioblu/library/PJON/13.1/PJON-13.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gioblu/library/PJON/13.1/PJON-13.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gioblu/library/PJON_ASK/1.0/PJON_ASK-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PJON_ASK-1.0.tar.gz",
+    "size_bytes": 11092,
+    "sha256": "552ed72c8c77dde5585facc637fca8a131ba5648247fe3ece407aa5553a07644",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gioblu/library/PJON_ASK/1.0/PJON_ASK-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gioblu/library/PJON_ASK/1.0/PJON_ASK-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

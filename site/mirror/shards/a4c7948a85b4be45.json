@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/luni64",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "luni64/library/AttachInterruptEx/0.1.3/AttachInterruptEx-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AttachInterruptEx-0.1.3.tar.gz",
+    "size_bytes": 4372,
+    "sha256": "67d227d648e25b7735a31feb8cf6cb6ac36b271c9a25ca5086e1e883473278d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luni64/library/AttachInterruptEx/0.1.3/AttachInterruptEx-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/luni64/library/AttachInterruptEx/0.1.3/AttachInterruptEx-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luni64/library/CallbackHelper/0.1.2/CallbackHelper-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CallbackHelper-0.1.2.tar.gz",
+    "size_bytes": 5278,
+    "sha256": "20e75938a22d7c55b315d2c3b149e7a12c689a9889d54a3ffbc07b86ad1684f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luni64/library/CallbackHelper/0.1.2/CallbackHelper-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/luni64/library/CallbackHelper/0.1.2/CallbackHelper-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luni64/library/EncoderTool/3.2.2/EncoderTool-3.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EncoderTool-3.2.2.tar.gz",
+    "size_bytes": 1430821,
+    "sha256": "c2f224d4732947e8373bcf001589d9fd8c3fdbdce851b92f6c12dce44efd5c4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luni64/library/EncoderTool/3.2.2/EncoderTool-3.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/luni64/library/EncoderTool/3.2.2/EncoderTool-3.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luni64/library/IntervalTimerEx/0.1.0/IntervalTimerEx-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IntervalTimerEx-0.1.0.tar.gz",
+    "size_bytes": 2941,
+    "sha256": "1280e0355a22186e8bc1c37e10dc9ccfb49faa1e415adb122265a9119f25ec6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luni64/library/IntervalTimerEx/0.1.0/IntervalTimerEx-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luni64/library/IntervalTimerEx/0.1.0/IntervalTimerEx-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luni64/library/TeensyStep/2.1/TeensyStep-2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeensyStep-2.1.tar.gz",
+    "size_bytes": 25216,
+    "sha256": "bb7138828aa7879b4fc963c1982f1606b97d042c8dbf7a5b92c6951fb122767f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luni64/library/TeensyStep/2.1/TeensyStep-2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/luni64/library/TeensyStep/2.1/TeensyStep-2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luni64/library/TeensyTimerTool/1.4.1/TeensyTimerTool-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeensyTimerTool-1.4.1.tar.gz",
+    "size_bytes": 40219,
+    "sha256": "90c802b3727c834408fe3a93d806f0851e47d1a3a39e5ec2a0dcfde5ea5d336e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luni64/library/TeensyTimerTool/1.4.1/TeensyTimerTool-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/luni64/library/TeensyTimerTool/1.4.1/TeensyTimerTool-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luni64/library/staticFunctional/0.1.0/staticFunctional-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "staticFunctional-0.1.0.tar.gz",
+    "size_bytes": 8075,
+    "sha256": "de5be0acb8e64dfee2cdb68b924445205af2a6f17b26da3ab651325d8d8f5a71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luni64/library/staticFunctional/0.1.0/staticFunctional-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luni64/library/staticFunctional/0.1.0/staticFunctional-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

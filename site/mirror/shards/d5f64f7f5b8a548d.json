@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-warwickracing",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-warwickracing/library/Debounced/0.0.0+sha.8992c13bbb9b/Debounced-0.0.0+sha.8992c13bbb9b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Debounced-0.0.0+sha.8992c13bbb9b.tar.gz",
+    "size_bytes": 1610,
+    "sha256": "b4e3d4b76d512c4332ea489a98d1ad2b68a4e3fba69b766a5664073c8899a7ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-warwickracing/library/Debounced/0.0.0%2Bsha.8992c13bbb9b/Debounced-0.0.0%2Bsha.8992c13bbb9b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-warwickracing/library/Debounced/0.0.0%2Bsha.8992c13bbb9b/Debounced-0.0.0%2Bsha.8992c13bbb9b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/esptiny86",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "esptiny86/library/espsynth86/0.0.1/espsynth86-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espsynth86-0.0.1.tar.gz",
+    "size_bytes": 1387056,
+    "sha256": "923bc49f76885456832fad169062f3518889ee197fcd944ff8927970fe6f3f48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esptiny86/library/espsynth86/0.0.1/espsynth86-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esptiny86/library/espsynth86/0.0.1/espsynth86-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rowlandtechnology",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rowlandtechnology/library/MultiUART/1.0.1/MultiUART-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiUART-1.0.1.tar.gz",
+    "size_bytes": 9574,
+    "sha256": "d909d34b5fda0fd9323154f88879d0b182e6de70e2da468c4098f55879e0cb96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rowlandtechnology/library/MultiUART/1.0.1/MultiUART-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rowlandtechnology/library/MultiUART/1.0.1/MultiUART-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

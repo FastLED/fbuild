@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jimhazer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jimhazer/library/D6TArduino/0.1.1/D6TArduino-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "D6TArduino-0.1.1.tar.gz",
+    "size_bytes": 1290,
+    "sha256": "d7b0e760c10b544f4eed32f77420af10f2ce6196b8aed75afddd817c87d38988",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jimhazer/library/D6TArduino/0.1.1/D6TArduino-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jimhazer/library/D6TArduino/0.1.1/D6TArduino-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jimhazer/library/SensorUnifyer/0.1.3/SensorUnifyer-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorUnifyer-0.1.3.tar.gz",
+    "size_bytes": 1413,
+    "sha256": "9fab9bb0033743e775c26937fb52a81b194f513a6faf001d68e0c74524ca8c01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jimhazer/library/SensorUnifyer/0.1.3/SensorUnifyer-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jimhazer/library/SensorUnifyer/0.1.3/SensorUnifyer-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jimhazer/library/p_tb67h/0.1.4/p_tb67h-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "p_tb67h-0.1.4.tar.gz",
+    "size_bytes": 1481,
+    "sha256": "d3d88345fcb5816c89a6714efed84b86cb7a6306f4fedc4c07d91ba2bb69b060",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jimhazer/library/p_tb67h/0.1.4/p_tb67h-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/jimhazer/library/p_tb67h/0.1.4/p_tb67h-0.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

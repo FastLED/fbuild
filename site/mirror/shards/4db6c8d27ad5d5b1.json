@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andrey-val-rodin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andrey-val-rodin/library/BLECommands/1.0.0/BLECommands-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLECommands-1.0.0.tar.gz",
+    "size_bytes": 4914,
+    "sha256": "dcd1da71658b994da9a0cc3f0164a4e90d2b7b45ed8c52803e9d4ab17f57259f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrey-val-rodin/library/BLECommands/1.0.0/BLECommands-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andrey-val-rodin/library/BLECommands/1.0.0/BLECommands-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andrey-val-rodin/library/BLECommands/1.0.1/BLECommands-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLECommands-1.0.1.tar.gz",
+    "size_bytes": 5424,
+    "sha256": "cdce6103b116b01d24b6ed11627f63f5aec64a155ff3f51307f8aebb6e79332f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrey-val-rodin/library/BLECommands/1.0.1/BLECommands-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/andrey-val-rodin/library/BLECommands/1.0.1/BLECommands-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andrey-val-rodin/library/BLECommands/1.1.0/BLECommands-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLECommands-1.1.0.tar.gz",
+    "size_bytes": 5642,
+    "sha256": "0f073b2845a4f5bb52bc0011c41fcb99f109b83ef18b6b056942662459dd439c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrey-val-rodin/library/BLECommands/1.1.0/BLECommands-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andrey-val-rodin/library/BLECommands/1.1.0/BLECommands-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andrey-val-rodin/library/BLECommands/1.1.1/BLECommands-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLECommands-1.1.1.tar.gz",
+    "size_bytes": 5638,
+    "sha256": "01ca261d501fb9c4c311b7d30b3999d613f14dcda3a6510171ab97258976a006",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrey-val-rodin/library/BLECommands/1.1.1/BLECommands-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/andrey-val-rodin/library/BLECommands/1.1.1/BLECommands-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

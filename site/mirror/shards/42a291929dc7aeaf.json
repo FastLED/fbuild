@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-armand",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-armand/library/Comms/0.0.0+sha.7d01a895b45d/Comms-0.0.0+sha.7d01a895b45d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Comms-0.0.0+sha.7d01a895b45d.tar.gz",
+    "size_bytes": 2266,
+    "sha256": "1fd39e02b7027f7786ccfc0ae88b87f0db3a4b7ec1bfbd6a4d50655134846b06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-armand/library/Comms/0.0.0%2Bsha.7d01a895b45d/Comms-0.0.0%2Bsha.7d01a895b45d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-armand/library/Comms/0.0.0%2Bsha.7d01a895b45d/Comms-0.0.0%2Bsha.7d01a895b45d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-armand/library/L298HBridge/0.0.0+sha.475a5d0fb152/L298HBridge-0.0.0+sha.475a5d0fb152.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L298HBridge-0.0.0+sha.475a5d0fb152.tar.gz",
+    "size_bytes": 2108,
+    "sha256": "b698a8d99fc6d9f0f7c41474f55cffe3242bd448c5761c360ebfb5657445a19e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-armand/library/L298HBridge/0.0.0%2Bsha.475a5d0fb152/L298HBridge-0.0.0%2Bsha.475a5d0fb152.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-armand/library/L298HBridge/0.0.0%2Bsha.475a5d0fb152/L298HBridge-0.0.0%2Bsha.475a5d0fb152.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-armand/library/Stepper/0.0.0+sha.82951e628d6a/Stepper-0.0.0+sha.82951e628d6a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stepper-0.0.0+sha.82951e628d6a.tar.gz",
+    "size_bytes": 2639,
+    "sha256": "b1a6053beb2aa651747b7c58763ca1a08f64b2abb9c40bb22b9f477c5e877f8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-armand/library/Stepper/0.0.0%2Bsha.82951e628d6a/Stepper-0.0.0%2Bsha.82951e628d6a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-armand/library/Stepper/0.0.0%2Bsha.82951e628d6a/Stepper-0.0.0%2Bsha.82951e628d6a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

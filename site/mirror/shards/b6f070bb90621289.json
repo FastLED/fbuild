@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cassyarduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cassyarduino/library/UIPEthernet/0.0.0-alpha+sha.deeb00b81c/UIPEthernet-0.0.0-alphasha.deeb00b81c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UIPEthernet-0.0.0-alphasha.deeb00b81c.tar.gz",
+    "size_bytes": 98942,
+    "sha256": "d343cff0d81f0b70c216aa1bb95cc6046685f0bcdbf1608c2d6a01525e821577",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cassyarduino/library/UIPEthernet/0.0.0-alpha%2Bsha.deeb00b81c/UIPEthernet-0.0.0-alphasha.deeb00b81c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cassyarduino/library/UIPEthernet/0.0.0-alpha%2Bsha.deeb00b81c/UIPEthernet-0.0.0-alphasha.deeb00b81c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

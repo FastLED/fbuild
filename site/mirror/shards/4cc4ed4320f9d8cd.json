@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ekojs999",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ekojs999/library/simpleLog/1.0.1/simpleLog-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "simpleLog-1.0.1.tar.gz",
+    "size_bytes": 1215,
+    "sha256": "e18d7264e18a527cad42429274876ed0f3c17598e6571a43bd3a6a5904d7d539",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekojs999/library/simpleLog/1.0.1/simpleLog-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ekojs999/library/simpleLog/1.0.1/simpleLog-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ekojs999/library/simpleTask/1.1.5/simpleTask-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "simpleTask-1.1.5.tar.gz",
+    "size_bytes": 3489,
+    "sha256": "2581c0f2d462550e5d29bd5d975bb79755d547d88f2db327a400aacb5ff020e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ekojs999/library/simpleTask/1.1.5/simpleTask-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ekojs999/library/simpleTask/1.1.5/simpleTask-1.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

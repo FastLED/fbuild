@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lamihck",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lamihck/library/DigoleSerialDisp/1.0/DigoleSerialDisp-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigoleSerialDisp-1.0.tar.gz",
+    "size_bytes": 82866,
+    "sha256": "70934c5440dfaedd93fa69f21a3bb7ea101f248b4a64f5393ce1c557b7d85795",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lamihck/library/DigoleSerialDisp/1.0/DigoleSerialDisp-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lamihck/library/DigoleSerialDisp/1.0/DigoleSerialDisp-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

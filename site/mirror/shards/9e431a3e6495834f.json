@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/neurosity",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "neurosity/library/PTW-Arduino-Assert/1.1.1/PTW-Arduino-Assert-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PTW-Arduino-Assert-1.1.1.tar.gz",
+    "size_bytes": 8025,
+    "sha256": "f20c2fe26c8ba3bfe1dbbec94c1ba3b39ee49b3a6e182425281bbf8028740ba1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neurosity/library/PTW-Arduino-Assert/1.1.1/PTW-Arduino-Assert-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/neurosity/library/PTW-Arduino-Assert/1.1.1/PTW-Arduino-Assert-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

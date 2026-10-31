@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lucasso",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lucasso/library/ModbusRTU_Slave_RS485/1.0.2/ModbusRTU_Slave_RS485-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusRTU_Slave_RS485-1.0.2.tar.gz",
+    "size_bytes": 19415,
+    "sha256": "c3a5804537f727b6fd70cca7978c7b38c15a44f408b73e368dd77a51c1441a2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucasso/library/ModbusRTU_Slave_RS485/1.0.2/ModbusRTU_Slave_RS485-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lucasso/library/ModbusRTU_Slave_RS485/1.0.2/ModbusRTU_Slave_RS485-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

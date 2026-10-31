@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-9604launchpad",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.0/Iridium9604LaunchPad-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Iridium9604LaunchPad-2.0.0.tar.gz",
+    "size_bytes": 143090,
+    "sha256": "39f8f0e23c79cf34cf78c86de18c789067db37b6fca80f3d19b9af80e06e15a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.0/Iridium9604LaunchPad-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.0/Iridium9604LaunchPad-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.3/Iridium9604LaunchPad-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Iridium9604LaunchPad-2.0.3.tar.gz",
+    "size_bytes": 143601,
+    "sha256": "63bae8ab0519eff61e0d92a4445b26212d5496050d01d3dc410f07ebda65f323",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.3/Iridium9604LaunchPad-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.3/Iridium9604LaunchPad-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.4/Iridium9604LaunchPad-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Iridium9604LaunchPad-2.0.4.tar.gz",
+    "size_bytes": 144132,
+    "sha256": "bfd5690c0bd728a34785ca64e9ed1a2ae67189d3c179fa8cc24c7909b4c9c2d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.4/Iridium9604LaunchPad-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.4/Iridium9604LaunchPad-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.5/Iridium9604LaunchPad-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Iridium9604LaunchPad-2.0.5.tar.gz",
+    "size_bytes": 145293,
+    "sha256": "e6dbbcca6acdb54675dcf69a903df6b92b6cf81c965b1211a0efe196e6d1f42f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.5/Iridium9604LaunchPad-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.5/Iridium9604LaunchPad-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.6/Iridium9604LaunchPad-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Iridium9604LaunchPad-2.0.6.tar.gz",
+    "size_bytes": 145571,
+    "sha256": "6322edceb1c53ce453db145222c2d237dbe88181ca41ee50e7e65f3c7175d3a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.6/Iridium9604LaunchPad-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.6/Iridium9604LaunchPad-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.7/Iridium9604LaunchPad-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Iridium9604LaunchPad-2.0.7.tar.gz",
+    "size_bytes": 145342,
+    "sha256": "d8e22c779e9b114742f0a086104c0ff5e16cc3474945f695243dfd956d85619e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.7/Iridium9604LaunchPad-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.7/Iridium9604LaunchPad-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.9/Iridium9604LaunchPad-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Iridium9604LaunchPad-2.0.9.tar.gz",
+    "size_bytes": 145324,
+    "sha256": "414767c7fc1b3f65e831a7508ab95a92acaebbb0db9f311eaa48a0ac2130d27f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.9/Iridium9604LaunchPad-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-9604launchpad/library/Iridium9604LaunchPad/2.0.9/Iridium9604LaunchPad-2.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

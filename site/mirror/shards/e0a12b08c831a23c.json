@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/f4goj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "f4goj/library/AD9850SPI/1.0.2/AD9850SPI-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD9850SPI-1.0.2.tar.gz",
+    "size_bytes": 4881,
+    "sha256": "f968c6ee414e4520300078edaa5dc5c2514bc22b88b930c0b3ed0ff48bad3c0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/f4goj/library/AD9850SPI/1.0.2/AD9850SPI-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/f4goj/library/AD9850SPI/1.0.2/AD9850SPI-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

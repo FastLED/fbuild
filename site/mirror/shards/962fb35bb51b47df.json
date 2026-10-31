@@ -1,0 +1,256 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sam-grove",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sam-grove/library/ADIS16488/0.0.0+sha.e2e5e40668bf/ADIS16488-0.0.0+sha.e2e5e40668bf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADIS16488-0.0.0+sha.e2e5e40668bf.tar.gz",
+    "size_bytes": 2779,
+    "sha256": "e3b891befb92767da73441a0e5d176364838ffa69e7dc97ea7a5005a0d18f446",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/ADIS16488/0.0.0%2Bsha.e2e5e40668bf/ADIS16488-0.0.0%2Bsha.e2e5e40668bf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/ADIS16488/0.0.0%2Bsha.e2e5e40668bf/ADIS16488-0.0.0%2Bsha.e2e5e40668bf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/Buffer/0.0.0+sha.89564915f2a7/Buffer-0.0.0+sha.89564915f2a7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Buffer-0.0.0+sha.89564915f2a7.tar.gz",
+    "size_bytes": 2448,
+    "sha256": "a470e577c07ee79bcb5cfd01e563779362a4f62284bc41a6e8e313caa111c256",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/Buffer/0.0.0%2Bsha.89564915f2a7/Buffer-0.0.0%2Bsha.89564915f2a7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/Buffer/0.0.0%2Bsha.89564915f2a7/Buffer-0.0.0%2Bsha.89564915f2a7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/BufferedSerial/0.0.0+sha.7e5e866edd3d/BufferedSerial-0.0.0+sha.7e5e866edd3d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BufferedSerial-0.0.0+sha.7e5e866edd3d.tar.gz",
+    "size_bytes": 3875,
+    "sha256": "4189a62ee5a16f96d226ffef1e260d805d44ea83481218a185a1ca17eb4184d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/BufferedSerial/0.0.0%2Bsha.7e5e866edd3d/BufferedSerial-0.0.0%2Bsha.7e5e866edd3d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/BufferedSerial/0.0.0%2Bsha.7e5e866edd3d/BufferedSerial-0.0.0%2Bsha.7e5e866edd3d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/CRC/0.0.0+sha.ec8513f94d23/CRC-0.0.0+sha.ec8513f94d23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRC-0.0.0+sha.ec8513f94d23.tar.gz",
+    "size_bytes": 1466,
+    "sha256": "58e7c6c73d3f7ed26afc95922926e5a7013ce0cb0038602a3edfdd2050631acb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/CRC/0.0.0%2Bsha.ec8513f94d23/CRC-0.0.0%2Bsha.ec8513f94d23.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/CRC/0.0.0%2Bsha.ec8513f94d23/CRC-0.0.0%2Bsha.ec8513f94d23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/CommHandler/0.0.0+sha.1a76d4848462/CommHandler-0.0.0+sha.1a76d4848462.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CommHandler-0.0.0+sha.1a76d4848462.tar.gz",
+    "size_bytes": 2802,
+    "sha256": "a5a66f995323eeacdc51397052ec86c98a9b11aa269e8d59ac0eb2c1ad9f7d2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/CommHandler/0.0.0%2Bsha.1a76d4848462/CommHandler-0.0.0%2Bsha.1a76d4848462.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/CommHandler/0.0.0%2Bsha.1a76d4848462/CommHandler-0.0.0%2Bsha.1a76d4848462.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/FP/0.0.0+sha.3c62ba1807ac/FP-0.0.0+sha.3c62ba1807ac.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FP-0.0.0+sha.3c62ba1807ac.tar.gz",
+    "size_bytes": 2401,
+    "sha256": "9ed510f5e72a8917276da0a2b76d94b19f979109c3df2002cb44af4c9d044ae9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/FP/0.0.0%2Bsha.3c62ba1807ac/FP-0.0.0%2Bsha.3c62ba1807ac.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/FP/0.0.0%2Bsha.3c62ba1807ac/FP-0.0.0%2Bsha.3c62ba1807ac.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/LinkedList/0.0.0+sha.a7956e9c2bf5/LinkedList-0.0.0+sha.a7956e9c2bf5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LinkedList-0.0.0+sha.a7956e9c2bf5.tar.gz",
+    "size_bytes": 2942,
+    "sha256": "1d32d8438946a9f3c454303396670895fe9517f84a9e374b3a335843aa49c4ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/LinkedList/0.0.0%2Bsha.a7956e9c2bf5/LinkedList-0.0.0%2Bsha.a7956e9c2bf5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/LinkedList/0.0.0%2Bsha.a7956e9c2bf5/LinkedList-0.0.0%2Bsha.a7956e9c2bf5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/LogUtil/0.0.0+sha.ef45bd2cd9bb/LogUtil-0.0.0+sha.ef45bd2cd9bb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LogUtil-0.0.0+sha.ef45bd2cd9bb.tar.gz",
+    "size_bytes": 1867,
+    "sha256": "a019b3e6b1386dcf7b8170c20f963bec3c576a77eb7be5ee824855873b64b54d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/LogUtil/0.0.0%2Bsha.ef45bd2cd9bb/LogUtil-0.0.0%2Bsha.ef45bd2cd9bb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/LogUtil/0.0.0%2Bsha.ef45bd2cd9bb/LogUtil-0.0.0%2Bsha.ef45bd2cd9bb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/MMA845x/0.0.0+sha.9d1e3a344e4f/MMA845x-0.0.0+sha.9d1e3a344e4f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA845x-0.0.0+sha.9d1e3a344e4f.tar.gz",
+    "size_bytes": 3806,
+    "sha256": "2096a8445db39ebc70ba5e98242a5fba5ac170d3e861f90dc80a948b4bc6745b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/MMA845x/0.0.0%2Bsha.9d1e3a344e4f/MMA845x-0.0.0%2Bsha.9d1e3a344e4f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/MMA845x/0.0.0%2Bsha.9d1e3a344e4f/MMA845x-0.0.0%2Bsha.9d1e3a344e4f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/MPR121/0.0.0+sha.eb4012317732/MPR121-0.0.0+sha.eb4012317732.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPR121-0.0.0+sha.eb4012317732.tar.gz",
+    "size_bytes": 4647,
+    "sha256": "e47e1987b9c47d5335a96254c5ea24bae9ef69fecdb2c9fe92fe69f7339dd472",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/MPR121/0.0.0%2Bsha.eb4012317732/MPR121-0.0.0%2Bsha.eb4012317732.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/MPR121/0.0.0%2Bsha.eb4012317732/MPR121-0.0.0%2Bsha.eb4012317732.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/OEM615/0.0.0+sha.d55471d8417e/OEM615-0.0.0+sha.d55471d8417e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OEM615-0.0.0+sha.d55471d8417e.tar.gz",
+    "size_bytes": 2755,
+    "sha256": "62202efc3f044275b4d5103190134ee571fca0c156f164b7c22f475fb37ff97f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/OEM615/0.0.0%2Bsha.d55471d8417e/OEM615-0.0.0%2Bsha.d55471d8417e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/OEM615/0.0.0%2Bsha.d55471d8417e/OEM615-0.0.0%2Bsha.d55471d8417e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/PCA9534/0.0.0+sha.fe2b1519a978/PCA9534-0.0.0+sha.fe2b1519a978.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9534-0.0.0+sha.fe2b1519a978.tar.gz",
+    "size_bytes": 1291,
+    "sha256": "79242c75a6224fe29553b9d15547a2ef7277f45906e0bb605ba1261e381826ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/PCA9534/0.0.0%2Bsha.fe2b1519a978/PCA9534-0.0.0%2Bsha.fe2b1519a978.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/PCA9534/0.0.0%2Bsha.fe2b1519a978/PCA9534-0.0.0%2Bsha.fe2b1519a978.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/S401M16KR/0.0.0+sha.eb13032e5355/S401M16KR-0.0.0+sha.eb13032e5355.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "S401M16KR-0.0.0+sha.eb13032e5355.tar.gz",
+    "size_bytes": 2519,
+    "sha256": "87c20339075cc0614f18e3795ed9aaef4ded08dd8aeacbb051a1b53fd467d20c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/S401M16KR/0.0.0%2Bsha.eb13032e5355/S401M16KR-0.0.0%2Bsha.eb13032e5355.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/S401M16KR/0.0.0%2Bsha.eb13032e5355/S401M16KR-0.0.0%2Bsha.eb13032e5355.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/SDShell/0.0.0+sha.6c520cfc50b2/SDShell-0.0.0+sha.6c520cfc50b2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDShell-0.0.0+sha.6c520cfc50b2.tar.gz",
+    "size_bytes": 4467,
+    "sha256": "8bbcdc88996aa90c82caea20a92f7190f936fa5e590e7ad240156764548c23c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/SDShell/0.0.0%2Bsha.6c520cfc50b2/SDShell-0.0.0%2Bsha.6c520cfc50b2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/SDShell/0.0.0%2Bsha.6c520cfc50b2/SDShell-0.0.0%2Bsha.6c520cfc50b2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/TLV320AIC1110/0.0.0+sha.174f94df7624/TLV320AIC1110-0.0.0+sha.174f94df7624.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLV320AIC1110-0.0.0+sha.174f94df7624.tar.gz",
+    "size_bytes": 2830,
+    "sha256": "2c898e82d324a888487daa782a1e22ca75d498cdcafee55f6913f94c99942b41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/TLV320AIC1110/0.0.0%2Bsha.174f94df7624/TLV320AIC1110-0.0.0%2Bsha.174f94df7624.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/TLV320AIC1110/0.0.0%2Bsha.174f94df7624/TLV320AIC1110-0.0.0%2Bsha.174f94df7624.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/USBSerial/0.0.0+sha.2d90573426d7/USBSerial-0.0.0+sha.2d90573426d7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBSerial-0.0.0+sha.2d90573426d7.tar.gz",
+    "size_bytes": 5736,
+    "sha256": "29cbb4297979a799bc055404cb3c351f0eaa923f444610988521b4b4cbb4f6fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/USBSerial/0.0.0%2Bsha.2d90573426d7/USBSerial-0.0.0%2Bsha.2d90573426d7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/USBSerial/0.0.0%2Bsha.2d90573426d7/USBSerial-0.0.0%2Bsha.2d90573426d7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/atoh/0.0.0+sha.c590c304b2fa/atoh-0.0.0+sha.c590c304b2fa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "atoh-0.0.0+sha.c590c304b2fa.tar.gz",
+    "size_bytes": 2049,
+    "sha256": "e8fde6d8f8758a39b74291e4d439cc51cc07f20adc29b3e0507a8486668fe634",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/atoh/0.0.0%2Bsha.c590c304b2fa/atoh-0.0.0%2Bsha.c590c304b2fa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/atoh/0.0.0%2Bsha.c590c304b2fa/atoh-0.0.0%2Bsha.c590c304b2fa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/checksum/0.0.0+sha.ace4b3aef52b/checksum-0.0.0+sha.ace4b3aef52b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "checksum-0.0.0+sha.ace4b3aef52b.tar.gz",
+    "size_bytes": 1838,
+    "sha256": "22222eeb482aae402b57b88ae3e7296cefe4db74d580bef7544b47eecbaa6503",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/checksum/0.0.0%2Bsha.ace4b3aef52b/checksum-0.0.0%2Bsha.ace4b3aef52b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/checksum/0.0.0%2Bsha.ace4b3aef52b/checksum-0.0.0%2Bsha.ace4b3aef52b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sam-grove/library/open_mbed/0.0.0+sha.736ec17a4e05/open_mbed-0.0.0+sha.736ec17a4e05.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "open_mbed-0.0.0+sha.736ec17a4e05.tar.gz",
+    "size_bytes": 1050,
+    "sha256": "8b19bae7482d1af099a9eca649cfd3d5015096f215045e40ffa2bc96311b78c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sam-grove/library/open_mbed/0.0.0%2Bsha.736ec17a4e05/open_mbed-0.0.0%2Bsha.736ec17a4e05.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sam-grove/library/open_mbed/0.0.0%2Bsha.736ec17a4e05/open_mbed-0.0.0%2Bsha.736ec17a4e05.tar.gz"
+    ]
+   }
+  }
+ ]
+}

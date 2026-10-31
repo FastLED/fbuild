@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gsteiert",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gsteiert/library/MAX14661/0.0.0+sha.c3525ee2d636/MAX14661-0.0.0+sha.c3525ee2d636.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX14661-0.0.0+sha.c3525ee2d636.tar.gz",
+    "size_bytes": 2090,
+    "sha256": "1721c54f29e939467a7cdd91b76ff65984ef51de348d336cf9e284fc0dec2639",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gsteiert/library/MAX14661/0.0.0%2Bsha.c3525ee2d636/MAX14661-0.0.0%2Bsha.c3525ee2d636.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gsteiert/library/MAX14661/0.0.0%2Bsha.c3525ee2d636/MAX14661-0.0.0%2Bsha.c3525ee2d636.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gsteiert/library/PmodInterface/0.0.0+sha.0c22013818d7/PmodInterface-0.0.0+sha.0c22013818d7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PmodInterface-0.0.0+sha.0c22013818d7.tar.gz",
+    "size_bytes": 3423,
+    "sha256": "c51815fabb1fb83190374e75c6a4b8d8f78d53eed260b51697b449d5d9ea4a66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gsteiert/library/PmodInterface/0.0.0%2Bsha.0c22013818d7/PmodInterface-0.0.0%2Bsha.0c22013818d7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gsteiert/library/PmodInterface/0.0.0%2Bsha.0c22013818d7/PmodInterface-0.0.0%2Bsha.0c22013818d7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gsteiert/library/mbd2pmd/0.0.0+sha.0b4eb5eb8c18/mbd2pmd-0.0.0+sha.0b4eb5eb8c18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbd2pmd-0.0.0+sha.0b4eb5eb8c18.tar.gz",
+    "size_bytes": 1775,
+    "sha256": "f5a277736de41b6bc94de4a3617677607ae2eb17cfd7f76bdc62b25ed5b807d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gsteiert/library/mbd2pmd/0.0.0%2Bsha.0b4eb5eb8c18/mbd2pmd-0.0.0%2Bsha.0b4eb5eb8c18.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gsteiert/library/mbd2pmd/0.0.0%2Bsha.0b4eb5eb8c18/mbd2pmd-0.0.0%2Bsha.0b4eb5eb8c18.tar.gz"
+    ]
+   }
+  }
+ ]
+}

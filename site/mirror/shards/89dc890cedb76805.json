@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iotize-sas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iotize-sas/library/ArdTap/1.1.1/ArdTap-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArdTap-1.1.1.tar.gz",
+    "size_bytes": 10254,
+    "sha256": "05dea1ea4effe5db9a9c43d81454b9e56fc2b3656d90248a6d55e7771f578a79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iotize-sas/library/ArdTap/1.1.1/ArdTap-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iotize-sas/library/ArdTap/1.1.1/ArdTap-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

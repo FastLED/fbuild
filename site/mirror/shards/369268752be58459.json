@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robotutor-tech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robotutor-tech/library/LCD/1.0.1/LCD-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD-1.0.1.tar.gz",
+    "size_bytes": 2147,
+    "sha256": "4e5271f036789d7dd09f55db053d592061c48289c7149be3be2ae69010c1abe6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotutor-tech/library/LCD/1.0.1/LCD-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robotutor-tech/library/LCD/1.0.1/LCD-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotutor-tech/library/MqttClient/1.0.1/MqttClient-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MqttClient-1.0.1.tar.gz",
+    "size_bytes": 7428,
+    "sha256": "bdc5282d47f48826ecd696d1b70b73e07788112d016d72c5e52691e79706295b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotutor-tech/library/MqttClient/1.0.1/MqttClient-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robotutor-tech/library/MqttClient/1.0.1/MqttClient-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotutor-tech/library/MqttClient/1.0.2/MqttClient-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MqttClient-1.0.2.tar.gz",
+    "size_bytes": 9085,
+    "sha256": "235e445b16986cf979edd731a27cab012ca9e6ebdcac1f012e3f59d59c534119",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotutor-tech/library/MqttClient/1.0.2/MqttClient-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/robotutor-tech/library/MqttClient/1.0.2/MqttClient-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotutor-tech/library/MqttClient/1.0.3/MqttClient-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MqttClient-1.0.3.tar.gz",
+    "size_bytes": 10944,
+    "sha256": "c4a03e84ccae84898abd431308f6b95d5924830a898da04d3f9e3fcc247cd8e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotutor-tech/library/MqttClient/1.0.3/MqttClient-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/robotutor-tech/library/MqttClient/1.0.3/MqttClient-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

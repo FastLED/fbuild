@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/souviksaha97",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "souviksaha97/library/DAC7611/1.0.2/DAC7611-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DAC7611-1.0.2.tar.gz",
+    "size_bytes": 3052,
+    "sha256": "bb3ab3961ff440e95aa86e1d3f384e17943de0e38117cdc5e24b0d73f749e0e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/souviksaha97/library/DAC7611/1.0.2/DAC7611-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/souviksaha97/library/DAC7611/1.0.2/DAC7611-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "souviksaha97/library/MCP3202/1.0.2/MCP3202-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP3202-1.0.2.tar.gz",
+    "size_bytes": 2711,
+    "sha256": "273755afa91c622a55de75b29e951062a08acef041fccf83dce11678857db0ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/souviksaha97/library/MCP3202/1.0.2/MCP3202-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/souviksaha97/library/MCP3202/1.0.2/MCP3202-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

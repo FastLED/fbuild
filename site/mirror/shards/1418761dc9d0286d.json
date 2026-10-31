@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gemi254",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gemi254/library/ConfigAssist/2.8.7/ConfigAssist-2.8.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConfigAssist-2.8.7.tar.gz",
+    "size_bytes": 59041,
+    "sha256": "933b3a3dbc1ede745e46941baf56a3ae9490580504b31d9fdbb1652e69c7f91c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gemi254/library/ConfigAssist/2.8.7/ConfigAssist-2.8.7.tar.gz",
+     "https://dl.registry.platformio.org/download/gemi254/library/ConfigAssist/2.8.7/ConfigAssist-2.8.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gemi254/library/ControlAssist/1.1.6/ControlAssist-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ControlAssist-1.1.6.tar.gz",
+    "size_bytes": 209247,
+    "sha256": "e8a8088bcfa97d9ef118d2f09631f860d8702d29959c8937b5c62497b29d5c98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gemi254/library/ControlAssist/1.1.6/ControlAssist-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gemi254/library/ControlAssist/1.1.6/ControlAssist-1.1.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

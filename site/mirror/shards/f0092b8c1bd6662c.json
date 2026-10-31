@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bhumphries",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bhumphries/library/MicroLabProject/0.0.0+sha.590e2aa7aa04/MicroLabProject-0.0.0+sha.590e2aa7aa04.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroLabProject-0.0.0+sha.590e2aa7aa04.tar.gz",
+    "size_bytes": 4307,
+    "sha256": "2293ef68c61fc1b33a9e8b7a8020235c4ae6b444d5da878300766179f8e71168",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bhumphries/library/MicroLabProject/0.0.0%2Bsha.590e2aa7aa04/MicroLabProject-0.0.0%2Bsha.590e2aa7aa04.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bhumphries/library/MicroLabProject/0.0.0%2Bsha.590e2aa7aa04/MicroLabProject-0.0.0%2Bsha.590e2aa7aa04.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/blueandi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "blueandi/library/ArduinoNative/0.2.2/ArduinoNative-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoNative-0.2.2.tar.gz",
+    "size_bytes": 10767,
+    "sha256": "e98c5787941b1498ff2d2f1ce07320f7fa06004e2e16b5180ca4a5f7fee8cba2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blueandi/library/ArduinoNative/0.2.2/ArduinoNative-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/blueandi/library/ArduinoNative/0.2.2/ArduinoNative-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blueandi/library/ZumoHALATmega32u4/1.3.0/ZumoHALATmega32u4-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZumoHALATmega32u4-1.3.0.tar.gz",
+    "size_bytes": 20738,
+    "sha256": "b0526b47a61e0fb02671b5c57bfaabfe6fd31627136f11f1d12557c6ffdbbf26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blueandi/library/ZumoHALATmega32u4/1.3.0/ZumoHALATmega32u4-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blueandi/library/ZumoHALATmega32u4/1.3.0/ZumoHALATmega32u4-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blueandi/library/ZumoHALATmega32u4/1.4.0/ZumoHALATmega32u4-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZumoHALATmega32u4-1.4.0.tar.gz",
+    "size_bytes": 20785,
+    "sha256": "f408994bd7c18bb72e692accdce1700e33b39d8d17326298784860541d57b282",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blueandi/library/ZumoHALATmega32u4/1.4.0/ZumoHALATmega32u4-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blueandi/library/ZumoHALATmega32u4/1.4.0/ZumoHALATmega32u4-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blueandi/library/ZumoHALInterfaces/1.3.0/ZumoHALInterfaces-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZumoHALInterfaces-1.3.0.tar.gz",
+    "size_bytes": 9216,
+    "sha256": "351dd3baaab0aaff3c12b44207fe71e5d50eae55d6ba2bfc2a9c553c0c57c6dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blueandi/library/ZumoHALInterfaces/1.3.0/ZumoHALInterfaces-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blueandi/library/ZumoHALInterfaces/1.3.0/ZumoHALInterfaces-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blueandi/library/ZumoHALInterfaces/1.4.0/ZumoHALInterfaces-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZumoHALInterfaces-1.4.0.tar.gz",
+    "size_bytes": 9613,
+    "sha256": "9f1c656b78d30299ead05b4cc1905c0060783265b68586dc79f75f7530491e98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blueandi/library/ZumoHALInterfaces/1.4.0/ZumoHALInterfaces-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blueandi/library/ZumoHALInterfaces/1.4.0/ZumoHALInterfaces-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blueandi/library/ZumoHALRP2040/0.5.0/ZumoHALRP2040-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZumoHALRP2040-0.5.0.tar.gz",
+    "size_bytes": 58297,
+    "sha256": "ddaa5a93753c0dc293217f7740005d6aa8f444cad9d60c0414505ee3658aa098",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blueandi/library/ZumoHALRP2040/0.5.0/ZumoHALRP2040-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blueandi/library/ZumoHALRP2040/0.5.0/ZumoHALRP2040-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blueandi/library/ZumoHALRP2040/1.0.0/ZumoHALRP2040-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZumoHALRP2040-1.0.0.tar.gz",
+    "size_bytes": 58462,
+    "sha256": "2a8957e838d3dfd69e5e4407dbc546b5fe50fbcad24dc733959578b2d7cd5979",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blueandi/library/ZumoHALRP2040/1.0.0/ZumoHALRP2040-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blueandi/library/ZumoHALRP2040/1.0.0/ZumoHALRP2040-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blueandi/library/ZumoHALRP2040/1.0.1/ZumoHALRP2040-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZumoHALRP2040-1.0.1.tar.gz",
+    "size_bytes": 59222,
+    "sha256": "832d40f05d3697e4ae66c6e8dbc199683284f54e48e37aa7f2885e0ee7e26ea8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blueandi/library/ZumoHALRP2040/1.0.1/ZumoHALRP2040-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/blueandi/library/ZumoHALRP2040/1.0.1/ZumoHALRP2040-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blueandi/library/ZumoHALWebots/1.6.0/ZumoHALWebots-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZumoHALWebots-1.6.0.tar.gz",
+    "size_bytes": 52843,
+    "sha256": "4d06534237d3c7ee7036de5fd6b5a4ad881b66dda3836971cdcbde7c104a1cf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blueandi/library/ZumoHALWebots/1.6.0/ZumoHALWebots-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blueandi/library/ZumoHALWebots/1.6.0/ZumoHALWebots-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blueandi/library/vscp-arduino/2.3.0/vscp-arduino-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vscp-arduino-2.3.0.tar.gz",
+    "size_bytes": 186219,
+    "sha256": "b6311dbbebb986bd5b2d7d9ed4b449e61bdca68d27a93005dc3cbc144c7e0f62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blueandi/library/vscp-arduino/2.3.0/vscp-arduino-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blueandi/library/vscp-arduino/2.3.0/vscp-arduino-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blueandi/library/vscp-bootloader/3.0.0/vscp-bootloader-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vscp-bootloader-3.0.0.tar.gz",
+    "size_bytes": 15904,
+    "sha256": "cbf92ab91f46ea289a02c763f42df5c307d9f8b1b8647ac32f84872c18edf816",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blueandi/library/vscp-bootloader/3.0.0/vscp-bootloader-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blueandi/library/vscp-bootloader/3.0.0/vscp-bootloader-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blueandi/library/vscp-framework/2.3.0/vscp-framework-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vscp-framework-2.3.0.tar.gz",
+    "size_bytes": 647969,
+    "sha256": "5e093a5378f6c2a2804ee9db4ede7e089c2786a0407b5200e7bfe4015da8faa5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blueandi/library/vscp-framework/2.3.0/vscp-framework-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blueandi/library/vscp-framework/2.3.0/vscp-framework-2.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

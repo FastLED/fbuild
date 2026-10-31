@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/5orenso",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "5orenso/library/Bme280Sensor/1.0.1/Bme280Sensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bme280Sensor-1.0.1.tar.gz",
+    "size_bytes": 2139,
+    "sha256": "0ccae9510e6a2681017177069482056889a8122e4f9b325ab7438a04cdf55500",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/5orenso/library/Bme280Sensor/1.0.1/Bme280Sensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/5orenso/library/Bme280Sensor/1.0.1/Bme280Sensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "5orenso/library/Co2SensorMHZ19/1.0.1/Co2SensorMHZ19-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Co2SensorMHZ19-1.0.1.tar.gz",
+    "size_bytes": 2207,
+    "sha256": "4bfd9e544a9a6db2ff3cdeb091b7432d5074553a652a0620b7c1fcac46280365",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/5orenso/library/Co2SensorMHZ19/1.0.1/Co2SensorMHZ19-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/5orenso/library/Co2SensorMHZ19/1.0.1/Co2SensorMHZ19-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "5orenso/library/GenericAnalogSensor/1.0.1/GenericAnalogSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GenericAnalogSensor-1.0.1.tar.gz",
+    "size_bytes": 1886,
+    "sha256": "eb7780d504ae994d553fe24cd7755dd1c30c586db3e407abab2e766a8b48451f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/5orenso/library/GenericAnalogSensor/1.0.1/GenericAnalogSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/5orenso/library/GenericAnalogSensor/1.0.1/GenericAnalogSensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "5orenso/library/MqttUtil/1.0.0/MqttUtil-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MqttUtil-1.0.0.tar.gz",
+    "size_bytes": 3795,
+    "sha256": "26c6f19c8bd78ceb7a91c65005bc249c184487dfcfca8d11cfabfef11f77e205",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/5orenso/library/MqttUtil/1.0.0/MqttUtil-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/5orenso/library/MqttUtil/1.0.0/MqttUtil-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "5orenso/library/PirSensor/1.0.1/PirSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PirSensor-1.0.1.tar.gz",
+    "size_bytes": 1972,
+    "sha256": "67d49449677821a09fb34102be3d2578c6cb419b82e97d3b79cbb35c03b611c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/5orenso/library/PirSensor/1.0.1/PirSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/5orenso/library/PirSensor/1.0.1/PirSensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "5orenso/library/SwitchSensor/1.0.1/SwitchSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwitchSensor-1.0.1.tar.gz",
+    "size_bytes": 2029,
+    "sha256": "852900956e34f14a60c2bcac6836611af754e16bd0f2ec07d58ebe25f9d8f473",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/5orenso/library/SwitchSensor/1.0.1/SwitchSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/5orenso/library/SwitchSensor/1.0.1/SwitchSensor-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

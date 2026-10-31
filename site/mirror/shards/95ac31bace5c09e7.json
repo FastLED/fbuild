@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-alex89-2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-alex89-2/library/Joystick/0.0.0+sha.beeaa40d49fa/Joystick-0.0.0+sha.beeaa40d49fa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Joystick-0.0.0+sha.beeaa40d49fa.tar.gz",
+    "size_bytes": 2128,
+    "sha256": "4e1c69121099c254adb33f85fd154edabf930211ebd40cabfd9ccbe900214d96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alex89-2/library/Joystick/0.0.0%2Bsha.beeaa40d49fa/Joystick-0.0.0%2Bsha.beeaa40d49fa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alex89-2/library/Joystick/0.0.0%2Bsha.beeaa40d49fa/Joystick-0.0.0%2Bsha.beeaa40d49fa.tar.gz"
+    ]
+   }
+  }
+ ]
+}

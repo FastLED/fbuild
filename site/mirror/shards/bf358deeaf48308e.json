@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pacocatech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pacocatech/library/LedUtil/1.0.0/LedUtil-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedUtil-1.0.0.tar.gz",
+    "size_bytes": 13721,
+    "sha256": "6fe45333933f6ce766b51446ea33e22401d52843f081297392b73b1ac2fe0f44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pacocatech/library/LedUtil/1.0.0/LedUtil-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pacocatech/library/LedUtil/1.0.0/LedUtil-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

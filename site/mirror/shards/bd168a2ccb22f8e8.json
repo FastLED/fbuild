@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/atc1441",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "atc1441/library/NETSGPClient/2.0.1/NETSGPClient-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NETSGPClient-2.0.1.tar.gz",
+    "size_bytes": 9301,
+    "sha256": "d8c10b8bb4f9c997adabcaed3c330a12de16fc6a9d7b1877a40a206e93ab1126",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/atc1441/library/NETSGPClient/2.0.1/NETSGPClient-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/atc1441/library/NETSGPClient/2.0.1/NETSGPClient-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/antonioprevitali",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "antonioprevitali/library/ApJSY163T/1.0.0/ApJSY163T-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ApJSY163T-1.0.0.tar.gz",
+    "size_bytes": 15722,
+    "sha256": "6d86d97e84cd2b5d5e638831f337ad9fcffa720f81285960a25d6edc4cff3fb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/antonioprevitali/library/ApJSY163T/1.0.0/ApJSY163T-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/antonioprevitali/library/ApJSY163T/1.0.0/ApJSY163T-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "antonioprevitali/library/ApJSY194T/1.0.0/ApJSY194T-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ApJSY194T-1.0.0.tar.gz",
+    "size_bytes": 16773,
+    "sha256": "ec6ceedaee443f1693d5c459b283a00bf313eeab434dd2acb4c554a441fa5351",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/antonioprevitali/library/ApJSY194T/1.0.0/ApJSY194T-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/antonioprevitali/library/ApJSY194T/1.0.0/ApJSY194T-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "antonioprevitali/library/ApJSY333/1.0.0/ApJSY333-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ApJSY333-1.0.0.tar.gz",
+    "size_bytes": 19756,
+    "sha256": "cdc1f300d3ab181921e0f6219bd4c956624a8f60eb36307037159489c8094889",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/antonioprevitali/library/ApJSY333/1.0.0/ApJSY333-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/antonioprevitali/library/ApJSY333/1.0.0/ApJSY333-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "antonioprevitali/library/ApSDM120/1.0.0/ApSDM120-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ApSDM120-1.0.0.tar.gz",
+    "size_bytes": 16175,
+    "sha256": "319789d9b18038a10e8217361b00107a8d9d12c8147b9974c7c2e5af87884e37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/antonioprevitali/library/ApSDM120/1.0.0/ApSDM120-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/antonioprevitali/library/ApSDM120/1.0.0/ApSDM120-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "antonioprevitali/library/DueAdcFast/1.2.0/DueAdcFast-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DueAdcFast-1.2.0.tar.gz",
+    "size_bytes": 43843,
+    "sha256": "62e25e55a4171650d204b336a3797eb3fbd1482b45b61c1547b36c7e5fb01374",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/antonioprevitali/library/DueAdcFast/1.2.0/DueAdcFast-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/antonioprevitali/library/DueAdcFast/1.2.0/DueAdcFast-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

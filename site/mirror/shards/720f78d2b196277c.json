@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sarahbest",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sarahbest/library/ICM20602_I2C/0.0.0+sha.74690f762c0f/ICM20602_I2C-0.0.0+sha.74690f762c0f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM20602_I2C-0.0.0+sha.74690f762c0f.tar.gz",
+    "size_bytes": 3538,
+    "sha256": "9ab39cb22b843b2b2ad1eef8134fc2d5db228d748e703b9d705ed654d95e4054",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sarahbest/library/ICM20602_I2C/0.0.0%2Bsha.74690f762c0f/ICM20602_I2C-0.0.0%2Bsha.74690f762c0f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sarahbest/library/ICM20602_I2C/0.0.0%2Bsha.74690f762c0f/ICM20602_I2C-0.0.0%2Bsha.74690f762c0f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sarahbest/library/QMC5883L/0.0.0+sha.6aac221b613d/QMC5883L-0.0.0+sha.6aac221b613d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QMC5883L-0.0.0+sha.6aac221b613d.tar.gz",
+    "size_bytes": 3868,
+    "sha256": "279e40e2b3a6a9fa28461d7a2d3adec87e60223553c6c99b26a9658a4e8b343f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sarahbest/library/QMC5883L/0.0.0%2Bsha.6aac221b613d/QMC5883L-0.0.0%2Bsha.6aac221b613d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sarahbest/library/QMC5883L/0.0.0%2Bsha.6aac221b613d/QMC5883L-0.0.0%2Bsha.6aac221b613d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

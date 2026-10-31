@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ctron",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ctron/library/Eclipse-Hawkbit-OTA-Client/0.5.1/Eclipse-Hawkbit-OTA-Client-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Eclipse-Hawkbit-OTA-Client-0.5.1.tar.gz",
+    "size_bytes": 12882,
+    "sha256": "5ec937bcd33753d74b308422b03709a122ecfb4c3d9e7c23d0d2c247343eb482",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ctron/library/Eclipse-Hawkbit-OTA-Client/0.5.1/Eclipse-Hawkbit-OTA-Client-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ctron/library/Eclipse-Hawkbit-OTA-Client/0.5.1/Eclipse-Hawkbit-OTA-Client-0.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/matthewturner",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "matthewturner/library/Eventually2/2.1.0/Eventually2-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Eventually2-2.1.0.tar.gz",
+    "size_bytes": 11471,
+    "sha256": "c7c2b304b1a9cf347fe1493bee19c58b9a2c72e79ec636fee0d883bcbdd43a83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthewturner/library/Eventually2/2.1.0/Eventually2-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthewturner/library/Eventually2/2.1.0/Eventually2-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthewturner/library/EventuallyCommand/0.4.0/EventuallyCommand-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EventuallyCommand-0.4.0.tar.gz",
+    "size_bytes": 4593,
+    "sha256": "6141b72681d08b265daaef8b10631a40cc8a79c81ff55eb9de9f1c48bea0db4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthewturner/library/EventuallyCommand/0.4.0/EventuallyCommand-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthewturner/library/EventuallyCommand/0.4.0/EventuallyCommand-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "matthewturner/library/EventuallyStateMachine/0.3.0/EventuallyStateMachine-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EventuallyStateMachine-0.3.0.tar.gz",
+    "size_bytes": 4523,
+    "sha256": "fac35d09aa2e4b8a033c7db2d1125e664f5d2528480fb8c15a2c9814a5620681",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matthewturner/library/EventuallyStateMachine/0.3.0/EventuallyStateMachine-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/matthewturner/library/EventuallyStateMachine/0.3.0/EventuallyStateMachine-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zivoy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zivoy/library/AdaptiveMapping/1.0.1/AdaptiveMapping-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdaptiveMapping-1.0.1.tar.gz",
+    "size_bytes": 3677,
+    "sha256": "401adf8de9bb2c02bec7f025d7861d825991b211e0fba12810899837ac478140",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zivoy/library/AdaptiveMapping/1.0.1/AdaptiveMapping-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zivoy/library/AdaptiveMapping/1.0.1/AdaptiveMapping-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

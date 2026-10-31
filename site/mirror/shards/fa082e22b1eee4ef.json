@@ -1,0 +1,347 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jgromes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jgromes/library/LoRaLib/8.2.0/LoRaLib-8.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaLib-8.2.0.tar.gz",
+    "size_bytes": 73538,
+    "sha256": "1c3377ca6c7fefb7cd40802f46f5b1297c1de6b9b4eb662b79158af075cf2d4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/LoRaLib/8.2.0/LoRaLib-8.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/LoRaLib/8.2.0/LoRaLib-8.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioBoards/1.0.0/RadioBoards-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioBoards-1.0.0.tar.gz",
+    "size_bytes": 7724,
+    "sha256": "8bdc67fcf49070d6a74e934426aa67e42a7daab8ea1dc9c062f62f3151049771",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioBoards/1.0.0/RadioBoards-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioBoards/1.0.0/RadioBoards-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/5.6.0/RadioLib-5.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-5.6.0.tar.gz",
+    "size_bytes": 280937,
+    "sha256": "5e53cef5245be97726301058a97198fa95970fbfc362e8e6c6ff907089142fa7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/5.6.0/RadioLib-5.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/5.6.0/RadioLib-5.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/5.7.0/RadioLib-5.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-5.7.0.tar.gz",
+    "size_bytes": 310061,
+    "sha256": "27b04196182a9111705603f64ba2395c0e273e6ff5ddc00843636f7ced101bff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/5.7.0/RadioLib-5.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/5.7.0/RadioLib-5.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/6.0.0/RadioLib-6.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-6.0.0.tar.gz",
+    "size_bytes": 323193,
+    "sha256": "c6688204b373a495c34268efe0ca7b7cacb220d374839422bbc8a743cfaa93ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/6.0.0/RadioLib-6.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/6.0.0/RadioLib-6.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/6.1.0/RadioLib-6.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-6.1.0.tar.gz",
+    "size_bytes": 350892,
+    "sha256": "013e4673ea963683c711cf511f037696bbe01f83083d21c41670b5589f144bca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/6.1.0/RadioLib-6.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/6.1.0/RadioLib-6.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/6.2.0/RadioLib-6.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-6.2.0.tar.gz",
+    "size_bytes": 382398,
+    "sha256": "0726415477e4a0ed07501c19c52ba23f5afd7854751643141b206a27c128ac4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/6.2.0/RadioLib-6.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/6.2.0/RadioLib-6.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/6.3.0/RadioLib-6.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-6.3.0.tar.gz",
+    "size_bytes": 397100,
+    "sha256": "1c89d5093f733b547108d89177a2d5c254fcdd3ef768f5f8294ede22506f6990",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/6.3.0/RadioLib-6.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/6.3.0/RadioLib-6.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/6.4.0/RadioLib-6.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-6.4.0.tar.gz",
+    "size_bytes": 405831,
+    "sha256": "1016ab4e6b716ea843527144b57ac14579d27550ad3d87c9d581c80722dffcca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/6.4.0/RadioLib-6.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/6.4.0/RadioLib-6.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/6.4.2/RadioLib-6.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-6.4.2.tar.gz",
+    "size_bytes": 410133,
+    "sha256": "cd16c9b22729d9e40911b9ed4c3580e77507621e641d10ba7ec30d5fe732f7d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/6.4.2/RadioLib-6.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/6.4.2/RadioLib-6.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/6.5.0/RadioLib-6.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-6.5.0.tar.gz",
+    "size_bytes": 418455,
+    "sha256": "f520f37daa3641312bbae6eafa7a66bf063f450eebd63cdcc69d9270c3658e81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/6.5.0/RadioLib-6.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/6.5.0/RadioLib-6.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/6.6.0/RadioLib-6.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-6.6.0.tar.gz",
+    "size_bytes": 4136918,
+    "sha256": "12aa2649d7843e222487994e2ec49e8bf1e2a246e8b032e2a607a84ab198c5ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/6.6.0/RadioLib-6.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/6.6.0/RadioLib-6.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/7.0.2/RadioLib-7.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-7.0.2.tar.gz",
+    "size_bytes": 4154211,
+    "sha256": "9a87ae89af759e5eaf2e79e89ada200930c49c674387b5e42e420e61e4d534a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/7.0.2/RadioLib-7.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/7.0.2/RadioLib-7.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/7.1.0/RadioLib-7.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-7.1.0.tar.gz",
+    "size_bytes": 4173758,
+    "sha256": "cbd659642d7d81db9b854506bcc2ae7381fdb9368e743155c5907f590d7aab93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/7.1.0/RadioLib-7.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/7.1.0/RadioLib-7.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/7.1.2/RadioLib-7.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-7.1.2.tar.gz",
+    "size_bytes": 4162584,
+    "sha256": "c166a8626928b14b34e8a5257632848bdf8da6510ff16e9bddfd0ff070c4a419",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/7.1.2/RadioLib-7.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/7.1.2/RadioLib-7.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/7.2.0/RadioLib-7.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-7.2.0.tar.gz",
+    "size_bytes": 4179509,
+    "sha256": "877d04ff5e87a22d322cfba27aa848d04490ffd51d10b0d015495308ddf6a5c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/7.2.0/RadioLib-7.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/7.2.0/RadioLib-7.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/7.2.1/RadioLib-7.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-7.2.1.tar.gz",
+    "size_bytes": 4168034,
+    "sha256": "b88ca71f852f288d4ca70550df9c444410a39c7cbfdbc498368f754a815e5e0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/7.2.1/RadioLib-7.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/7.2.1/RadioLib-7.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/7.3.0/RadioLib-7.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-7.3.0.tar.gz",
+    "size_bytes": 4174722,
+    "sha256": "2eb991b8963576f0242d3a0be700d9c8ecc30585598629e42e85e3ecdb13d4dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/7.3.0/RadioLib-7.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/7.3.0/RadioLib-7.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/7.4.0/RadioLib-7.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-7.4.0.tar.gz",
+    "size_bytes": 4176751,
+    "sha256": "2c0f6030ae124e185698156bc16a3489e3d2123c1dc2956705bb7ebf20a37005",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/7.4.0/RadioLib-7.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/7.4.0/RadioLib-7.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/7.5.0/RadioLib-7.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-7.5.0.tar.gz",
+    "size_bytes": 4179963,
+    "sha256": "4f79c057071ed08586715ee47eb922c49e762b16ed0c2e02619a51e0b71911fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/7.5.0/RadioLib-7.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/7.5.0/RadioLib-7.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/7.6.0/RadioLib-7.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-7.6.0.tar.gz",
+    "size_bytes": 4232435,
+    "sha256": "94f4f26e4940cc4a2d7168cea33e29fd1be86fa4810758349144a8b3841ef874",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/7.6.0/RadioLib-7.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/7.6.0/RadioLib-7.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/7.7.0/RadioLib-7.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-7.7.0.tar.gz",
+    "size_bytes": 4256799,
+    "sha256": "a52358bc245d1a942716fbb0ecba78ce7626b2f2440e4cdc49bdf78656353601",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/7.7.0/RadioLib-7.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/7.7.0/RadioLib-7.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/7.7.1/RadioLib-7.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-7.7.1.tar.gz",
+    "size_bytes": 4257050,
+    "sha256": "01210a9fbb75b54e9c131d28bc7f0b42095dd046b7c05900545229b944d6d3a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/7.7.1/RadioLib-7.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/7.7.1/RadioLib-7.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/7.8.0/RadioLib-7.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-7.8.0.tar.gz",
+    "size_bytes": 5053097,
+    "sha256": "b4bc9cadb8f039170398f465f685118cd26784636d47687e57a2ba8a763b584b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/7.8.0/RadioLib-7.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/7.8.0/RadioLib-7.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/RadioLib/7.8.1/RadioLib-7.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioLib-7.8.1.tar.gz",
+    "size_bytes": 5053120,
+    "sha256": "c1ab60d39b067ea26811765a577f5140c20b1d73a27d4f5ca78bd9f4f21810f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/RadioLib/7.8.1/RadioLib-7.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/RadioLib/7.8.1/RadioLib-7.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jgromes/library/TestLib/0.0.2/TestLib-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TestLib-0.0.2.tar.gz",
+    "size_bytes": 1577,
+    "sha256": "99877ccb947b02b704b5d20120540005999d4c6264695290360458139974ddf8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgromes/library/TestLib/0.0.2/TestLib-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jgromes/library/TestLib/0.0.2/TestLib-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

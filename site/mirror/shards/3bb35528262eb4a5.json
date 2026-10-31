@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-silabs-abakurs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-silabs-abakurs/library/BMP085/0.0.0+sha.33acd2e1edab/BMP085-0.0.0+sha.33acd2e1edab.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP085-0.0.0+sha.33acd2e1edab.tar.gz",
+    "size_bytes": 2274,
+    "sha256": "904b21374e6c27a7f95fb823687db85a3652f832af8025ed00fd8a5f2ccf64cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-silabs-abakurs/library/BMP085/0.0.0%2Bsha.33acd2e1edab/BMP085-0.0.0%2Bsha.33acd2e1edab.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-silabs-abakurs/library/BMP085/0.0.0%2Bsha.33acd2e1edab/BMP085-0.0.0%2Bsha.33acd2e1edab.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-silabs-abakurs/library/PwmSpeaker/0.0.0+sha.840bc39c112e/PwmSpeaker-0.0.0+sha.840bc39c112e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwmSpeaker-0.0.0+sha.840bc39c112e.tar.gz",
+    "size_bytes": 3378,
+    "sha256": "43f2e5b77c79ab2584bccc5660df18d2338661c4e6b9d92c9d9b28a5e80a6d08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-silabs-abakurs/library/PwmSpeaker/0.0.0%2Bsha.840bc39c112e/PwmSpeaker-0.0.0%2Bsha.840bc39c112e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-silabs-abakurs/library/PwmSpeaker/0.0.0%2Bsha.840bc39c112e/PwmSpeaker-0.0.0%2Bsha.840bc39c112e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-silabs-abakurs/library/WS2812_LED/0.0.0+sha.f1e39d76fbca/WS2812_LED-0.0.0+sha.f1e39d76fbca.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS2812_LED-0.0.0+sha.f1e39d76fbca.tar.gz",
+    "size_bytes": 1906,
+    "sha256": "fa6a8d76b6f7c583240946c06eb04cd9f0636c4cb19550aa898950ca95c1da5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-silabs-abakurs/library/WS2812_LED/0.0.0%2Bsha.f1e39d76fbca/WS2812_LED-0.0.0%2Bsha.f1e39d76fbca.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-silabs-abakurs/library/WS2812_LED/0.0.0%2Bsha.f1e39d76fbca/WS2812_LED-0.0.0%2Bsha.f1e39d76fbca.tar.gz"
+    ]
+   }
+  }
+ ]
+}

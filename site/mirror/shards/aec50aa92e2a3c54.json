@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tuya",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tuya/library/Tuya_BLE_MCU_SDK/0.0.2/Tuya_BLE_MCU_SDK-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tuya_BLE_MCU_SDK-0.0.2.tar.gz",
+    "size_bytes": 31298,
+    "sha256": "80a743b6640cd0a0b8c3eabdce1154e5ceae7b17c79698b0454a81815f0982a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tuya/library/Tuya_BLE_MCU_SDK/0.0.2/Tuya_BLE_MCU_SDK-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tuya/library/Tuya_BLE_MCU_SDK/0.0.2/Tuya_BLE_MCU_SDK-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tuya/library/Tuya_WiFi_MCU_SDK/0.0.3/Tuya_WiFi_MCU_SDK-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tuya_WiFi_MCU_SDK-0.0.3.tar.gz",
+    "size_bytes": 31405,
+    "sha256": "ccc33e9c44f065fb61e242e6c0d1feab5c86ab75dd81c413b51d5c7ca0e97669",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tuya/library/Tuya_WiFi_MCU_SDK/0.0.3/Tuya_WiFi_MCU_SDK-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tuya/library/Tuya_WiFi_MCU_SDK/0.0.3/Tuya_WiFi_MCU_SDK-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tuya/library/Tuya_ZIGBEE_MCU_SDK/0.0.3/Tuya_ZIGBEE_MCU_SDK-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tuya_ZIGBEE_MCU_SDK-0.0.3.tar.gz",
+    "size_bytes": 22144,
+    "sha256": "ba8928858e3321cae48dd43cda193aa2c352ee938c337ea92519784c8554f7a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tuya/library/Tuya_ZIGBEE_MCU_SDK/0.0.3/Tuya_ZIGBEE_MCU_SDK-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tuya/library/Tuya_ZIGBEE_MCU_SDK/0.0.3/Tuya_ZIGBEE_MCU_SDK-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

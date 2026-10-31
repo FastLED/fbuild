@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/whchun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "whchun/library/Waveshare_EPD/1.0.0/Waveshare_EPD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Waveshare_EPD-1.0.0.tar.gz",
+    "size_bytes": 5324,
+    "sha256": "4605123682181a41d5d5af2682a175a2ce424e854a85c844f8bbd00a7691de34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/whchun/library/Waveshare_EPD/1.0.0/Waveshare_EPD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/whchun/library/Waveshare_EPD/1.0.0/Waveshare_EPD-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

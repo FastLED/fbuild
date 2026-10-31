@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dmelendrez",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dmelendrez/library/EEPROM_UID/1.2.0/EEPROM_UID-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM_UID-1.2.0.tar.gz",
+    "size_bytes": 7447,
+    "sha256": "515aefb723fe9a4b73db815796f7b46f5953980ba906dd4c8b6a332fb3513669",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmelendrez/library/EEPROM_UID/1.2.0/EEPROM_UID-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dmelendrez/library/EEPROM_UID/1.2.0/EEPROM_UID-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

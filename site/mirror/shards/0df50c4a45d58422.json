@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hamyy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hamyy/library/Auto%20Home/0.0.0/AutoHome-0.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoHome-0.0.0.tar.gz",
+    "size_bytes": 1623,
+    "sha256": "405c14fdff78298fd38386710a42adaf596fe386bb24e3d1847660da41362739",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hamyy/library/Auto%2520Home/0.0.0/AutoHome-0.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hamyy/library/Auto%20Home/0.0.0/AutoHome-0.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

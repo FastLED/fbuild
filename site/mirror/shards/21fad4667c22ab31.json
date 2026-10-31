@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-iut-cachan-ge1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-iut-cachan-ge1/library/IHM_NBOARD/0.0.0+sha.ad91067e3f6d/IHM_NBOARD-0.0.0+sha.ad91067e3f6d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IHM_NBOARD-0.0.0+sha.ad91067e3f6d.tar.gz",
+    "size_bytes": 5555,
+    "sha256": "314f1683332008f0476056f5526f55a131e52ae8f5d79f6d6f067909e441e654",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-iut-cachan-ge1/library/IHM_NBOARD/0.0.0%2Bsha.ad91067e3f6d/IHM_NBOARD-0.0.0%2Bsha.ad91067e3f6d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-iut-cachan-ge1/library/IHM_NBOARD/0.0.0%2Bsha.ad91067e3f6d/IHM_NBOARD-0.0.0%2Bsha.ad91067e3f6d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

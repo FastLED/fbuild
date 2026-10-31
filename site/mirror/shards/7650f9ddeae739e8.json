@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-embedded-artists",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-embedded-artists/library/DMBasicGUI/0.0.0+sha.f0d00f29bfeb/DMBasicGUI-0.0.0+sha.f0d00f29bfeb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMBasicGUI-0.0.0+sha.f0d00f29bfeb.tar.gz",
+    "size_bytes": 152575,
+    "sha256": "1ba0de34d9d59b0d240510dbab008ff940ec3af38b89c0c248ade05312faefe4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-embedded-artists/library/DMBasicGUI/0.0.0%2Bsha.f0d00f29bfeb/DMBasicGUI-0.0.0%2Bsha.f0d00f29bfeb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-embedded-artists/library/DMBasicGUI/0.0.0%2Bsha.f0d00f29bfeb/DMBasicGUI-0.0.0%2Bsha.f0d00f29bfeb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-embedded-artists/library/DMemWin/0.0.0+sha.2847cc35a84f/DMemWin-0.0.0+sha.2847cc35a84f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMemWin-0.0.0+sha.2847cc35a84f.tar.gz",
+    "size_bytes": 7990,
+    "sha256": "651369631a8bfc8b933aba2264538143c2e4c6875938e54c2494524db1bb33c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-embedded-artists/library/DMemWin/0.0.0%2Bsha.2847cc35a84f/DMemWin-0.0.0%2Bsha.2847cc35a84f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-embedded-artists/library/DMemWin/0.0.0%2Bsha.2847cc35a84f/DMemWin-0.0.0%2Bsha.2847cc35a84f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

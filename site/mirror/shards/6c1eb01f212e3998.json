@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dbs06",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dbs06/library/CERP%20-%20DF-Robot%20Wireless%20GamePad%20V2.0%20for%20Arduino%20library/1.0.6/CERP-DF-RobotWirelessGamePadV2.0forArduinolibrary-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CERP-DF-RobotWirelessGamePadV2.0forArduinolibrary-1.0.6.tar.gz",
+    "size_bytes": 21415,
+    "sha256": "0cc8620bd2f9c8ad33c5c16b71b9b1565de5bed9d8654979274da9597f6fc3da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dbs06/library/CERP%2520-%2520DF-Robot%2520Wireless%2520GamePad%2520V2.0%2520for%2520Arduino%2520library/1.0.6/CERP-DF-RobotWirelessGamePadV2.0forArduinolibrary-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dbs06/library/CERP%20-%20DF-Robot%20Wireless%20GamePad%20V2.0%20for%20Arduino%20library/1.0.6/CERP-DF-RobotWirelessGamePadV2.0forArduinolibrary-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

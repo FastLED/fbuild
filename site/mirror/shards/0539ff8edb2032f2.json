@@ -1,0 +1,2934 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arduino-libraries",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arduino-libraries/library/AlPlc_Opta/1.3.0/AlPlc_Opta-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlPlc_Opta-1.3.0.tar.gz",
+    "size_bytes": 148455,
+    "sha256": "9e0d68f8b0dc1f80fe3e30bd28324c6ec17d3caa5c07aeff530b964e15ce7d6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/AlPlc_Opta/1.3.0/AlPlc_Opta-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/AlPlc_Opta/1.3.0/AlPlc_Opta-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/AlPlc_Opta/1.3.1/AlPlc_Opta-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlPlc_Opta-1.3.1.tar.gz",
+    "size_bytes": 148430,
+    "sha256": "d4647b36603453821ef7103c5b57c88baf7dcc294982bbc1fdcb1c1c7e3853b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/AlPlc_Opta/1.3.1/AlPlc_Opta-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/AlPlc_Opta/1.3.1/AlPlc_Opta-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/AlPlc_Opta/1.3.2/AlPlc_Opta-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlPlc_Opta-1.3.2.tar.gz",
+    "size_bytes": 148428,
+    "sha256": "74f7a2d4cb3b2ea4ddcc2355ec03688fd2892881fd7dce2a4f3f578d04554053",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/AlPlc_Opta/1.3.2/AlPlc_Opta-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/AlPlc_Opta/1.3.2/AlPlc_Opta-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/AlPlc_PMC/1.0.6/AlPlc_PMC-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlPlc_PMC-1.0.6.tar.gz",
+    "size_bytes": 155111,
+    "sha256": "7473b7855f91c8c1364d508c46f02c3e5d3d39074e091235304453268ce54fc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/AlPlc_PMC/1.0.6/AlPlc_PMC-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/AlPlc_PMC/1.0.6/AlPlc_PMC-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino%20Low%20Power/1.2.2/ArduinoLowPower-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoLowPower-1.2.2.tar.gz",
+    "size_bytes": 16697,
+    "sha256": "d898651934d48b4338eff54ea7fc78fa75b894db7962e4de353d0dcc8808c43a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino%2520Low%2520Power/1.2.2/ArduinoLowPower-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino%20Low%20Power/1.2.2/ArduinoLowPower-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino%20SigFox%20for%20MKRFox1200/1.0.5/ArduinoSigFoxforMKRFox1200-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoSigFoxforMKRFox1200-1.0.5.tar.gz",
+    "size_bytes": 12111,
+    "sha256": "7fab47991c1765c6d9c1c076c6f494aa9766d6b195c59157570faf45224ffafe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino%2520SigFox%2520for%2520MKRFox1200/1.0.5/ArduinoSigFoxforMKRFox1200-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino%20SigFox%20for%20MKRFox1200/1.0.5/ArduinoSigFoxforMKRFox1200-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino%20Uno%20WiFi%20Dev%20Ed%20Library/0.0.3/ArduinoUnoWiFiDevEdLibrary-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoUnoWiFiDevEdLibrary-0.0.3.tar.gz",
+    "size_bytes": 21078,
+    "sha256": "e229d6dfd902a129976069680d22b230dc5697f9fd38fbb9401b18927ed31cf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino%2520Uno%2520WiFi%2520Dev%2520Ed%2520Library/0.0.3/ArduinoUnoWiFiDevEdLibrary-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino%20Uno%20WiFi%20Dev%20Ed%20Library/0.0.3/ArduinoUnoWiFiDevEdLibrary-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoBLE/1.3.6/ArduinoBLE-1.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBLE-1.3.6.tar.gz",
+    "size_bytes": 78592,
+    "sha256": "b7516b73ea91b51c241258fff82e6b3cd672208d99f43eef2d229accc644cbc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoBLE/1.3.6/ArduinoBLE-1.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoBLE/1.3.6/ArduinoBLE-1.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoBLE/1.3.7/ArduinoBLE-1.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBLE-1.3.7.tar.gz",
+    "size_bytes": 80349,
+    "sha256": "61d7084fb1ae320ae2b48ca8d855347215fa25b0e79c360f68974de0d1d2cf60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoBLE/1.3.7/ArduinoBLE-1.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoBLE/1.3.7/ArduinoBLE-1.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoBLE/1.4.1/ArduinoBLE-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBLE-1.4.1.tar.gz",
+    "size_bytes": 82372,
+    "sha256": "975dd0e97f2f3d176e45e78e59863ec253d1d77db3ae3c90d703841cccc9c0e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoBLE/1.4.1/ArduinoBLE-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoBLE/1.4.1/ArduinoBLE-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoBLE/1.5.0/ArduinoBLE-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBLE-1.5.0.tar.gz",
+    "size_bytes": 84815,
+    "sha256": "86e122f408c999e8452220874c03e411952433920e03da39544777569ce42a4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoBLE/1.5.0/ArduinoBLE-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoBLE/1.5.0/ArduinoBLE-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoBLE/2.0.0/ArduinoBLE-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBLE-2.0.0.tar.gz",
+    "size_bytes": 85733,
+    "sha256": "c1081fc5d242af2186ecbd512447b6e4de875cc862e660f6cdfd995d5c9debad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoBLE/2.0.0/ArduinoBLE-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoBLE/2.0.0/ArduinoBLE-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoBLE/2.0.1/ArduinoBLE-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBLE-2.0.1.tar.gz",
+    "size_bytes": 85775,
+    "sha256": "eda333f7200511b439360d76dfef9aed2be22168cae600cd46b3d71b141ba45c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoBLE/2.0.1/ArduinoBLE-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoBLE/2.0.1/ArduinoBLE-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoBLE/2.0.2/ArduinoBLE-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBLE-2.0.2.tar.gz",
+    "size_bytes": 85813,
+    "sha256": "334e48b7053eb82c8f8ed03f5a0c939240cb7e4db2e4d5492d4bccc5d6e020e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoBLE/2.0.2/ArduinoBLE-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoBLE/2.0.2/ArduinoBLE-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoBLE/2.1.0/ArduinoBLE-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBLE-2.1.0.tar.gz",
+    "size_bytes": 85814,
+    "sha256": "590b42fbfa57803f8a635def1e664ce9f2719142c59e451075c526de2047cb6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoBLE/2.1.0/ArduinoBLE-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoBLE/2.1.0/ArduinoBLE-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoBearSSL/1.7.6/ArduinoBearSSL-1.7.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBearSSL-1.7.6.tar.gz",
+    "size_bytes": 430120,
+    "sha256": "89afa0968cf9104a6f78071b6838b34dcd85049296dce1421f397907e887afb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoBearSSL/1.7.6/ArduinoBearSSL-1.7.6.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoBearSSL/1.7.6/ArduinoBearSSL-1.7.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoBearSSL/1.7.7/ArduinoBearSSL-1.7.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBearSSL-1.7.7.tar.gz",
+    "size_bytes": 430770,
+    "sha256": "3dbedaa87e212785529bf90f73c1eee04658e19f596cc3c870dcf6ee3c393fdb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoBearSSL/1.7.7/ArduinoBearSSL-1.7.7.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoBearSSL/1.7.7/ArduinoBearSSL-1.7.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoBearSSL/1.7.8/ArduinoBearSSL-1.7.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBearSSL-1.7.8.tar.gz",
+    "size_bytes": 430765,
+    "sha256": "cc752589fda55e95816ca08a98cf3251288ff1aa575b25c51bac4cc1e91cfe91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoBearSSL/1.7.8/ArduinoBearSSL-1.7.8.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoBearSSL/1.7.8/ArduinoBearSSL-1.7.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoBearSSL/1.8.0/ArduinoBearSSL-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBearSSL-1.8.0.tar.gz",
+    "size_bytes": 430348,
+    "sha256": "6095f06a56bf309021abac2cac9f30caa33e7700636834537bc2f2c870798275",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoBearSSL/1.8.0/ArduinoBearSSL-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoBearSSL/1.8.0/ArduinoBearSSL-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoCloud/1.0.1/ArduinoCloud-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoCloud-1.0.1.tar.gz",
+    "size_bytes": 30528,
+    "sha256": "59c09d882b38c17f8ad000d555f24e707d2f5460e188b48eea0c9400859d7bdf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoCloud/1.0.1/ArduinoCloud-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoCloud/1.0.1/ArduinoCloud-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoCloudThing/1.7.3/ArduinoCloudThing-1.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoCloudThing-1.7.3.tar.gz",
+    "size_bytes": 77963,
+    "sha256": "82110c7d51380996350993bf78f86398e4740865086e476a324e8652528a37b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoCloudThing/1.7.3/ArduinoCloudThing-1.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoCloudThing/1.7.3/ArduinoCloudThing-1.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoDMX/1.0.1/ArduinoDMX-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoDMX-1.0.1.tar.gz",
+    "size_bytes": 2504,
+    "sha256": "1195899357eff698194c953ae55b061698688c5975640e1b42051426c7fb96f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoDMX/1.0.1/ArduinoDMX-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoDMX/1.0.1/ArduinoDMX-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoECCX08/1.3.9/ArduinoECCX08-1.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoECCX08-1.3.9.tar.gz",
+    "size_bytes": 29837,
+    "sha256": "1a80d34a97b83748858459a351d75e3957bee966b16d0235a8287834c00891e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoECCX08/1.3.9/ArduinoECCX08-1.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoECCX08/1.3.9/ArduinoECCX08-1.3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoECCX08/1.4.0/ArduinoECCX08-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoECCX08-1.4.0.tar.gz",
+    "size_bytes": 30014,
+    "sha256": "ad614de84a77a4893630813743c6532bc0b05b35a2ab9f38c6aee156aabe2bd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoECCX08/1.4.0/ArduinoECCX08-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoECCX08/1.4.0/ArduinoECCX08-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoECCX08/1.4.1/ArduinoECCX08-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoECCX08-1.4.1.tar.gz",
+    "size_bytes": 30121,
+    "sha256": "fdeff567e48cd08279adf073cec577fbc70a2c47870672ca3b6604f15eefdf5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoECCX08/1.4.1/ArduinoECCX08-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoECCX08/1.4.1/ArduinoECCX08-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoGraphics/1.1.4/ArduinoGraphics-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoGraphics-1.1.4.tar.gz",
+    "size_bytes": 18480,
+    "sha256": "66966e8d0067a4032ebcdeba745c8856a3412e5a498bd07d48efb8e4d04219f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoGraphics/1.1.4/ArduinoGraphics-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoGraphics/1.1.4/ArduinoGraphics-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoGraphics/1.1.5/ArduinoGraphics-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoGraphics-1.1.5.tar.gz",
+    "size_bytes": 18476,
+    "sha256": "3590e40262431f02afd8f0c20d5c673fc6d44eaec7485e1db64b6d2348694b14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoGraphics/1.1.5/ArduinoGraphics-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoGraphics/1.1.5/ArduinoGraphics-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoHttpClient/0.4.0/ArduinoHttpClient-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoHttpClient-0.4.0.tar.gz",
+    "size_bytes": 19715,
+    "sha256": "587ecd37dd62ec0c0c23564728db9bc6c1fae06a970b3c0662cb55e500125ce7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoHttpClient/0.4.0/ArduinoHttpClient-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoHttpClient/0.4.0/ArduinoHttpClient-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoHttpClient/0.5.0/ArduinoHttpClient-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoHttpClient-0.5.0.tar.gz",
+    "size_bytes": 22351,
+    "sha256": "6a5bc9cb85da80d918690d2462d77575b04f210f8154aa1a2957d8a83dab00e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoHttpClient/0.5.0/ArduinoHttpClient-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoHttpClient/0.5.0/ArduinoHttpClient-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoHttpClient/0.6.0/ArduinoHttpClient-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoHttpClient-0.6.0.tar.gz",
+    "size_bytes": 29242,
+    "sha256": "e9728ac593ba57e51e641e1fd90bba870f47cf9fe672a4f5c80513111225715b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoHttpClient/0.6.0/ArduinoHttpClient-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoHttpClient/0.6.0/ArduinoHttpClient-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoHttpClient/0.6.1/ArduinoHttpClient-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoHttpClient-0.6.1.tar.gz",
+    "size_bytes": 29298,
+    "sha256": "ac1fe106f76c13fec2eef1db53b3c0b2b1de2161b6fc04d80286bcc568778744",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoHttpClient/0.6.1/ArduinoHttpClient-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoHttpClient/0.6.1/ArduinoHttpClient-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoHttpClient/0.6.2/ArduinoHttpClient-0.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoHttpClient-0.6.2.tar.gz",
+    "size_bytes": 33413,
+    "sha256": "55344beae2eb98c2d2ddc0ccfdd5d157dfd7e1d68fae8e16634d9928fa7be1cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoHttpClient/0.6.2/ArduinoHttpClient-0.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoHttpClient/0.6.2/ArduinoHttpClient-0.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoIoTCloud/1.15.1/ArduinoIoTCloud-1.15.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoIoTCloud-1.15.1.tar.gz",
+    "size_bytes": 543985,
+    "sha256": "79c0cdee99140a1e359963b3577b8d250970349092a2611ad660b3c0650a73bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoIoTCloud/1.15.1/ArduinoIoTCloud-1.15.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoIoTCloud/1.15.1/ArduinoIoTCloud-1.15.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoIoTCloud/2.10.0/ArduinoIoTCloud-2.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoIoTCloud-2.10.0.tar.gz",
+    "size_bytes": 106310,
+    "sha256": "29098090e0be3915c50e03021388fab08c7cbca13d30ff2cae6c222faffd53c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoIoTCloud/2.10.0/ArduinoIoTCloud-2.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoIoTCloud/2.10.0/ArduinoIoTCloud-2.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoIoTCloud/2.8.0/ArduinoIoTCloud-2.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoIoTCloud-2.8.0.tar.gz",
+    "size_bytes": 107504,
+    "sha256": "f4ced9b452c6d58b8179b4635f556ab18728927ba037cf865db39d80e0d68208",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoIoTCloud/2.8.0/ArduinoIoTCloud-2.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoIoTCloud/2.8.0/ArduinoIoTCloud-2.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoIoTCloud/2.9.0/ArduinoIoTCloud-2.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoIoTCloud-2.9.0.tar.gz",
+    "size_bytes": 105213,
+    "sha256": "aaeece9c7467fd5ed2bc2200fe4c14687b26d6d4ec0b3122b4fd45fc72710e9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoIoTCloud/2.9.0/ArduinoIoTCloud-2.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoIoTCloud/2.9.0/ArduinoIoTCloud-2.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoIoTCloud/2.9.1/ArduinoIoTCloud-2.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoIoTCloud-2.9.1.tar.gz",
+    "size_bytes": 106037,
+    "sha256": "9583b818ce73cf38581b4b79a74a9868370b1dc5a188660d1d980c825d807646",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoIoTCloud/2.9.1/ArduinoIoTCloud-2.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoIoTCloud/2.9.1/ArduinoIoTCloud-2.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoIoTCloud/2.9.2/ArduinoIoTCloud-2.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoIoTCloud-2.9.2.tar.gz",
+    "size_bytes": 105979,
+    "sha256": "c9d800dfffe76f2598d66f4ae47a22a6a3406d2a7386ec6a09be016c0fa74557",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoIoTCloud/2.9.2/ArduinoIoTCloud-2.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoIoTCloud/2.9.2/ArduinoIoTCloud-2.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoIoTCloud/2.9.3/ArduinoIoTCloud-2.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoIoTCloud-2.9.3.tar.gz",
+    "size_bytes": 106013,
+    "sha256": "a0b531d3cff62edf70b771f73f9932757751a53f77e68e62998e537a78a4a13c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoIoTCloud/2.9.3/ArduinoIoTCloud-2.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoIoTCloud/2.9.3/ArduinoIoTCloud-2.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoIoTCloudBearSSL/1.1.2/ArduinoIoTCloudBearSSL-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoIoTCloudBearSSL-1.1.2.tar.gz",
+    "size_bytes": 342319,
+    "sha256": "ea473be9666651b2215e7d34f90cdedb59516769556f0d246208a5aee412821d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoIoTCloudBearSSL/1.1.2/ArduinoIoTCloudBearSSL-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoIoTCloudBearSSL/1.1.2/ArduinoIoTCloudBearSSL-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoMDNS/1.0.0/ArduinoMDNS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMDNS-1.0.0.tar.gz",
+    "size_bytes": 20665,
+    "sha256": "45062bd1592eaff73f4e747e8a3d067d068134346b5f2706dd3fc1af69da0c48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoMDNS/1.0.0/ArduinoMDNS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoMDNS/1.0.0/ArduinoMDNS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoMDNS/1.0.1/ArduinoMDNS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMDNS-1.0.1.tar.gz",
+    "size_bytes": 23455,
+    "sha256": "d68e7e6245bcee667d7a47f3236775f4aaeb2f02c0132ff4c9cc61b3d785c10b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoMDNS/1.0.1/ArduinoMDNS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoMDNS/1.0.1/ArduinoMDNS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoModbus/1.0.9/ArduinoModbus-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoModbus-1.0.9.tar.gz",
+    "size_bytes": 47388,
+    "sha256": "6f23e245474b35598c929e3bee4a9e08284244b2509a4aa5afbccf841c749681",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoModbus/1.0.9/ArduinoModbus-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoModbus/1.0.9/ArduinoModbus-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoMotorCarrier/2.0.3/ArduinoMotorCarrier-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMotorCarrier-2.0.3.tar.gz",
+    "size_bytes": 235075,
+    "sha256": "e740500ed928d232703e6076b27fbeea26b27f080eb8b3a258061ea5c94a8c3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoMotorCarrier/2.0.3/ArduinoMotorCarrier-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoMotorCarrier/2.0.3/ArduinoMotorCarrier-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoMqttClient/0.1.8/ArduinoMqttClient-0.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMqttClient-0.1.8.tar.gz",
+    "size_bytes": 22844,
+    "sha256": "a0d9bd4871c426311bbb17da86ba962cdde3ba8c4040d90174919ac7ee7dc30c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoMqttClient/0.1.8/ArduinoMqttClient-0.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoMqttClient/0.1.8/ArduinoMqttClient-0.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoRS485/1.1.0/ArduinoRS485-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoRS485-1.1.0.tar.gz",
+    "size_bytes": 15754,
+    "sha256": "7c0a606b6d523c165f69826bca668b6f766b7ecbd30bfce3a16e2b56302ca122",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoRS485/1.1.0/ArduinoRS485-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoRS485/1.1.0/ArduinoRS485-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoRS485/1.1.1/ArduinoRS485-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoRS485-1.1.1.tar.gz",
+    "size_bytes": 15805,
+    "sha256": "eef006ff9091d0c8198f592b7968939174bbd472f554ac8176c7f3706f332c21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoRS485/1.1.1/ArduinoRS485-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoRS485/1.1.1/ArduinoRS485-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/ArduinoSound/0.2.1/ArduinoSound-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoSound-0.2.1.tar.gz",
+    "size_bytes": 9676,
+    "sha256": "25b48cfe40bff0e336a024675bae14743443c668525aa1633605063967710ac8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/ArduinoSound/0.2.1/ArduinoSound-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/ArduinoSound/0.2.1/ArduinoSound-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_10BASE_T1S/0.1.1/Arduino_10BASE_T1S-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_10BASE_T1S-0.1.1.tar.gz",
+    "size_bytes": 812667,
+    "sha256": "11cc6b90598bf65bdc6ac4b8ea94610dbcd169405bca9c0f2fbaa2423a6c929b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_10BASE_T1S/0.1.1/Arduino_10BASE_T1S-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_10BASE_T1S/0.1.1/Arduino_10BASE_T1S-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_APA102/1.0.0/Arduino_APA102-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_APA102-1.0.0.tar.gz",
+    "size_bytes": 14541,
+    "sha256": "d1b3cd31a61881cb1d3401fd59db5210a3e635fc641453ca26e18b54a1d78c5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_APA102/1.0.0/Arduino_APA102-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_APA102/1.0.0/Arduino_APA102-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_APDS9960/1.0.4/Arduino_APDS9960-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_APDS9960-1.0.4.tar.gz",
+    "size_bytes": 16387,
+    "sha256": "4c0325680cdaf4fe815aba4ba60afcedf638f6fc32576b99d5b4fbd6516c4754",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_APDS9960/1.0.4/Arduino_APDS9960-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_APDS9960/1.0.4/Arduino_APDS9960-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_APDS9999/0.0.3/Arduino_APDS9999-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_APDS9999-0.0.3.tar.gz",
+    "size_bytes": 7753,
+    "sha256": "12f80912025df55c0506a73fabd7b99851caea3139ab59243853d63a1347a224",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_APDS9999/0.0.3/Arduino_APDS9999-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_APDS9999/0.0.3/Arduino_APDS9999-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_AVRSTL/1.2.5/Arduino_AVRSTL-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_AVRSTL-1.2.5.tar.gz",
+    "size_bytes": 93352,
+    "sha256": "d9443bacd01f728eb3777f2a3e35969b5a3b276dafa346af0fb1bc83f1fb73d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_AVRSTL/1.2.5/Arduino_AVRSTL-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_AVRSTL/1.2.5/Arduino_AVRSTL-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_AdvancedAnalog/1.5.0/Arduino_AdvancedAnalog-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_AdvancedAnalog-1.5.0.tar.gz",
+    "size_bytes": 30268,
+    "sha256": "2538d3848379ec8afb6fd8950d893ab1cf9b236b33260a8a540dc5da389e56be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_AdvancedAnalog/1.5.0/Arduino_AdvancedAnalog-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_AdvancedAnalog/1.5.0/Arduino_AdvancedAnalog-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Alvik/1.1.1/Arduino_Alvik-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Alvik-1.1.1.tar.gz",
+    "size_bytes": 22482,
+    "sha256": "fee99bf4b1711f2f4e2ff88457758d5b50b2461643890a6ce7106565428fa831",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Alvik/1.1.1/Arduino_Alvik-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Alvik/1.1.1/Arduino_Alvik-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_AlvikCarrier/1.1.1/Arduino_AlvikCarrier-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_AlvikCarrier-1.1.1.tar.gz",
+    "size_bytes": 27751,
+    "sha256": "fd25d088f5d5d19e7a6c09a13bb3a69802ad728b70ad78a46b372502a55e3d65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_AlvikCarrier/1.1.1/Arduino_AlvikCarrier-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_AlvikCarrier/1.1.1/Arduino_AlvikCarrier-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_BHY2/1.0.8/Arduino_BHY2-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_BHY2-1.0.8.tar.gz",
+    "size_bytes": 320605,
+    "sha256": "38a11c87d253cb6b33b97db6b7ebcc16951819ccc50e93943e7e321926f7d134",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_BHY2/1.0.8/Arduino_BHY2-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_BHY2/1.0.8/Arduino_BHY2-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_BHY2Host/1.0.9/Arduino_BHY2Host-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_BHY2Host-1.0.9.tar.gz",
+    "size_bytes": 27666,
+    "sha256": "e619cdceb82256117cd0e3259d3b154a25c3cea535e6315785d3aa9534811ee7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_BHY2Host/1.0.9/Arduino_BHY2Host-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_BHY2Host/1.0.9/Arduino_BHY2Host-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_BMI270_BMM150/1.2.1/Arduino_BMI270_BMM150-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_BMI270_BMM150-1.2.1.tar.gz",
+    "size_bytes": 194007,
+    "sha256": "e51b7f217425c2952208a5d2c895e33b51c1ffd9344598d062809163de0aba15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_BMI270_BMM150/1.2.1/Arduino_BMI270_BMM150-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_BMI270_BMM150/1.2.1/Arduino_BMI270_BMM150-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_BMI270_BMM150/1.2.2/Arduino_BMI270_BMM150-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_BMI270_BMM150-1.2.2.tar.gz",
+    "size_bytes": 194620,
+    "sha256": "13c5bbcedaa4d0df7f3957c16cd16b658416ce8c184bc8258fb88ec0ddf0dc2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_BMI270_BMM150/1.2.2/Arduino_BMI270_BMM150-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_BMI270_BMM150/1.2.2/Arduino_BMI270_BMM150-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_BMI270_BMM150/1.2.3/Arduino_BMI270_BMM150-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_BMI270_BMM150-1.2.3.tar.gz",
+    "size_bytes": 195046,
+    "sha256": "2bd89266e8fa19b4613193677457f99796da78f13794e768a1a17135a6042755",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_BMI270_BMM150/1.2.3/Arduino_BMI270_BMM150-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_BMI270_BMM150/1.2.3/Arduino_BMI270_BMM150-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_BMI270_BMM150/1.2.4/Arduino_BMI270_BMM150-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_BMI270_BMM150-1.2.4.tar.gz",
+    "size_bytes": 195054,
+    "sha256": "d83f8f0d2421194189cd94ad91b4b184501d64ee246827fb7520b026fc8e2a41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_BMI270_BMM150/1.2.4/Arduino_BMI270_BMM150-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_BMI270_BMM150/1.2.4/Arduino_BMI270_BMM150-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_BQ24195/0.9.2/Arduino_BQ24195-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_BQ24195-0.9.2.tar.gz",
+    "size_bytes": 21418,
+    "sha256": "b7700792e5f6c291a24b407f70b86bfc3f0a49f395ae03cf12e1f29a7ae304d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_BQ24195/0.9.2/Arduino_BQ24195-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_BQ24195/0.9.2/Arduino_BQ24195-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Braccio_plusplus/1.3.3/Arduino_Braccio_plusplus-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Braccio_plusplus-1.3.3.tar.gz",
+    "size_bytes": 1096279,
+    "sha256": "e6986f34e599226ec8d7b090bcce72d6db8508723b3a9f8b709dc818de2e0437",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Braccio_plusplus/1.3.3/Arduino_Braccio_plusplus-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Braccio_plusplus/1.3.3/Arduino_Braccio_plusplus-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_BuiltIn/1.0.0/Arduino_BuiltIn-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_BuiltIn-1.0.0.tar.gz",
+    "size_bytes": 4600,
+    "sha256": "f52b7925e6b8f769fcf47d1192ae4e001b5741b4e0118effc5d6c8102f2c989c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_BuiltIn/1.0.0/Arduino_BuiltIn-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_BuiltIn/1.0.0/Arduino_BuiltIn-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_CMSIS-DSP/0.0.1/Arduino_CMSIS-DSP-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_CMSIS-DSP-0.0.1.tar.gz",
+    "size_bytes": 609,
+    "sha256": "ed49d1a44d9be42b6642bb5b81f43fade367bb0be244db537f20198a5e08a3fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_CMSIS-DSP/0.0.1/Arduino_CMSIS-DSP-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_CMSIS-DSP/0.0.1/Arduino_CMSIS-DSP-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_CRC32/1.0.0/Arduino_CRC32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_CRC32-1.0.0.tar.gz",
+    "size_bytes": 5173,
+    "sha256": "788bdd91a11ea01318ed7b09eeb1fb25e81c28b692a03383b77a56c29f220575",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_CRC32/1.0.0/Arduino_CRC32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_CRC32/1.0.0/Arduino_CRC32-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_CapacitiveTouchUNO/1.4/Arduino_CapacitiveTouchUNO-1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_CapacitiveTouchUNO-1.4.tar.gz",
+    "size_bytes": 11883,
+    "sha256": "0fa82ae739f94596e284fd95db6b2cf5b1a9a902ada8db229be2e765fe048e8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_CapacitiveTouchUNO/1.4/Arduino_CapacitiveTouchUNO-1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_CapacitiveTouchUNO/1.4/Arduino_CapacitiveTouchUNO-1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Cellular/1.2.1/Arduino_Cellular-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Cellular-1.2.1.tar.gz",
+    "size_bytes": 22601,
+    "sha256": "3dea707937bae4a4dfd8c3cf83a36236414360dafc1cd5c44b12daa62c3263fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Cellular/1.2.1/Arduino_Cellular-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Cellular/1.2.1/Arduino_Cellular-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_CloudConnectionFeedback/0.2.0/Arduino_CloudConnectionFeedback-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_CloudConnectionFeedback-0.2.0.tar.gz",
+    "size_bytes": 7556,
+    "sha256": "e06c479dd5e400d9e992e19b19c9cad5c4d8823b39d8b7247030f2b3baca893e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_CloudConnectionFeedback/0.2.0/Arduino_CloudConnectionFeedback-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_CloudConnectionFeedback/0.2.0/Arduino_CloudConnectionFeedback-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_CloudUtils/1.1.1/Arduino_CloudUtils-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_CloudUtils-1.1.1.tar.gz",
+    "size_bytes": 153341,
+    "sha256": "37643b150dec26a1ffb4babfb1d858c4482143ce6b1f04c8090bfabe5bb75aa2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_CloudUtils/1.1.1/Arduino_CloudUtils-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_CloudUtils/1.1.1/Arduino_CloudUtils-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_CloudUtils/1.1.2/Arduino_CloudUtils-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_CloudUtils-1.1.2.tar.gz",
+    "size_bytes": 153390,
+    "sha256": "d3b316581d600bca0dd0f27c5c8e5958322748888673cbe24d58186a62e7d547",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_CloudUtils/1.1.2/Arduino_CloudUtils-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_CloudUtils/1.1.2/Arduino_CloudUtils-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_CloudUtils/1.1.3/Arduino_CloudUtils-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_CloudUtils-1.1.3.tar.gz",
+    "size_bytes": 153467,
+    "sha256": "c5fcc01f471847050419f76dc19d07313355f3b622ed0856883196167232f99d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_CloudUtils/1.1.3/Arduino_CloudUtils-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_CloudUtils/1.1.3/Arduino_CloudUtils-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_CloudUtils/1.2.0/Arduino_CloudUtils-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_CloudUtils-1.2.0.tar.gz",
+    "size_bytes": 153570,
+    "sha256": "3065edc8924c5b6646ada9ccdeda1842506ff97d358386c444c68ca83b6e126f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_CloudUtils/1.2.0/Arduino_CloudUtils-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_CloudUtils/1.2.0/Arduino_CloudUtils-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_CloudUtils/1.2.1/Arduino_CloudUtils-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_CloudUtils-1.2.1.tar.gz",
+    "size_bytes": 153571,
+    "sha256": "6859d63639d111cc125f4bab037f4c7702181bedacd51056b973858732bbb57c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_CloudUtils/1.2.1/Arduino_CloudUtils-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_CloudUtils/1.2.1/Arduino_CloudUtils-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_ConnectionHandler/0.8.1/Arduino_ConnectionHandler-0.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_ConnectionHandler-0.8.1.tar.gz",
+    "size_bytes": 26531,
+    "sha256": "10e6b6ba67fa55a23e01e225f4abfc6fb1a190004ce16176071bf46cc7db7233",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_ConnectionHandler/0.8.1/Arduino_ConnectionHandler-0.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_ConnectionHandler/0.8.1/Arduino_ConnectionHandler-0.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_ConnectionHandler/1.2.0/Arduino_ConnectionHandler-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_ConnectionHandler-1.2.0.tar.gz",
+    "size_bytes": 37607,
+    "sha256": "aa65ff12165b0117ff95a9ed5bce2b1956b5a057e3a70513c069363e8196bc1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_ConnectionHandler/1.2.0/Arduino_ConnectionHandler-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_ConnectionHandler/1.2.0/Arduino_ConnectionHandler-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_ConnectionHandler/1.3.0/Arduino_ConnectionHandler-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_ConnectionHandler-1.3.0.tar.gz",
+    "size_bytes": 27806,
+    "sha256": "d6c477272aa196d6cef2de65850011552172ad6407cb0c9db4bdff24e398b65f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_ConnectionHandler/1.3.0/Arduino_ConnectionHandler-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_ConnectionHandler/1.3.0/Arduino_ConnectionHandler-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_DebugUtils/1.4.0/Arduino_DebugUtils-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_DebugUtils-1.4.0.tar.gz",
+    "size_bytes": 19970,
+    "sha256": "4be10e3da70e04b5a18fb622f9a379661df1d2ab720757abd4928980009659e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_DebugUtils/1.4.0/Arduino_DebugUtils-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_DebugUtils/1.4.0/Arduino_DebugUtils-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_DebugUtils/1.5.0/Arduino_DebugUtils-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_DebugUtils-1.5.0.tar.gz",
+    "size_bytes": 12870,
+    "sha256": "fd097b29924b4e5bd9b95673b08c86788af36de218731dba3804b496ec6c11dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_DebugUtils/1.5.0/Arduino_DebugUtils-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_DebugUtils/1.5.0/Arduino_DebugUtils-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_EMBRYO_2/0.1.0/Arduino_EMBRYO_2-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_EMBRYO_2-0.1.0.tar.gz",
+    "size_bytes": 22941,
+    "sha256": "507f54685592d09f7b96a19249a6db8f2a3a4ed17ec7d3bac237349e46bf9a5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_EMBRYO_2/0.1.0/Arduino_EMBRYO_2-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_EMBRYO_2/0.1.0/Arduino_EMBRYO_2-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_ESP32_OTA/0.3.1/Arduino_ESP32_OTA-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_ESP32_OTA-0.3.1.tar.gz",
+    "size_bytes": 402555,
+    "sha256": "ef5438a8fd5ede35c3a55bfaed5de894d2b5fe8e3d848efc4b54f586a9509e85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_ESP32_OTA/0.3.1/Arduino_ESP32_OTA-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_ESP32_OTA/0.3.1/Arduino_ESP32_OTA-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_EdgeControl/0.2.0/Arduino_EdgeControl-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_EdgeControl-0.2.0.tar.gz",
+    "size_bytes": 70205,
+    "sha256": "e21f56f5f945e017618933fe2c4d7b5e8b273e406235041f8f10149539041eb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_EdgeControl/0.2.0/Arduino_EdgeControl-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_EdgeControl/0.2.0/Arduino_EdgeControl-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_GigaDisplay/1.0.2/Arduino_GigaDisplay-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_GigaDisplay-1.0.2.tar.gz",
+    "size_bytes": 257299,
+    "sha256": "50b86553aeaba5e1e6f6b85d9d601f233c9371bcbb1bfed2227d5c41870b8381",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_GigaDisplay/1.0.2/Arduino_GigaDisplay-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_GigaDisplay/1.0.2/Arduino_GigaDisplay-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_GigaDisplay/1.1.0/Arduino_GigaDisplay-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_GigaDisplay-1.1.0.tar.gz",
+    "size_bytes": 265780,
+    "sha256": "c47197f684c2b793cd48d5f851c7a57f122355805b1b74ad236ad8aec0e484f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_GigaDisplay/1.1.0/Arduino_GigaDisplay-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_GigaDisplay/1.1.0/Arduino_GigaDisplay-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_GigaDisplay/1.1.1/Arduino_GigaDisplay-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_GigaDisplay-1.1.1.tar.gz",
+    "size_bytes": 265793,
+    "sha256": "e38689190ec884b830fd611eb54b4757c143f0e804c57fefc41f60ee2e3a55a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_GigaDisplay/1.1.1/Arduino_GigaDisplay-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_GigaDisplay/1.1.1/Arduino_GigaDisplay-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_GigaDisplayTouch/1.0.1/Arduino_GigaDisplayTouch-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_GigaDisplayTouch-1.0.1.tar.gz",
+    "size_bytes": 6970,
+    "sha256": "210af5a10b8085485303b9bc68af08841642997921dcb72cd567d089212abce2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_GigaDisplayTouch/1.0.1/Arduino_GigaDisplayTouch-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_GigaDisplayTouch/1.0.1/Arduino_GigaDisplayTouch-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_GigaDisplayTouch/1.1.0/Arduino_GigaDisplayTouch-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_GigaDisplayTouch-1.1.0.tar.gz",
+    "size_bytes": 11306,
+    "sha256": "ce0f9ae118ae30b606f66195fc57a5dd102716f0ec4504c187ad667786bfbaf9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_GigaDisplayTouch/1.1.0/Arduino_GigaDisplayTouch-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_GigaDisplayTouch/1.1.0/Arduino_GigaDisplayTouch-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_GigaDisplayTouch/1.1.1/Arduino_GigaDisplayTouch-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_GigaDisplayTouch-1.1.1.tar.gz",
+    "size_bytes": 11341,
+    "sha256": "aa9550659a6f5ed33caa5066b750e2649ff615d16757f1d956c04d851890fcf5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_GigaDisplayTouch/1.1.1/Arduino_GigaDisplayTouch-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_GigaDisplayTouch/1.1.1/Arduino_GigaDisplayTouch-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_GigaDisplayTouch/1.1.2/Arduino_GigaDisplayTouch-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_GigaDisplayTouch-1.1.2.tar.gz",
+    "size_bytes": 11362,
+    "sha256": "197472454b8948fd471f7e99d255d89d3c845e1e43ec8dd48e9d754a3b5deeb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_GigaDisplayTouch/1.1.2/Arduino_GigaDisplayTouch-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_GigaDisplayTouch/1.1.2/Arduino_GigaDisplayTouch-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_GigaDisplay_GFX/1.1.0/Arduino_GigaDisplay_GFX-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_GigaDisplay_GFX-1.1.0.tar.gz",
+    "size_bytes": 9793,
+    "sha256": "c06f0e79d0953552ff7c43837d7d9948e0100cb290a3ac7db89408f31216ca63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_GigaDisplay_GFX/1.1.0/Arduino_GigaDisplay_GFX-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_GigaDisplay_GFX/1.1.0/Arduino_GigaDisplay_GFX-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_GigaDisplay_GFX/1.2.0/Arduino_GigaDisplay_GFX-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_GigaDisplay_GFX-1.2.0.tar.gz",
+    "size_bytes": 13600,
+    "sha256": "4fae239336cf860edf37e19130187dac842c27801a8b074f9688b7554cb5bcb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_GigaDisplay_GFX/1.2.0/Arduino_GigaDisplay_GFX-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_GigaDisplay_GFX/1.2.0/Arduino_GigaDisplay_GFX-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_GroveI2C_Ultrasonic/1.0.0/Arduino_GroveI2C_Ultrasonic-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_GroveI2C_Ultrasonic-1.0.0.tar.gz",
+    "size_bytes": 11200,
+    "sha256": "68161f87c452d4ce3729aa6e1e2190af4545b1c05e0621a9b76c3c06fa5532ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_GroveI2C_Ultrasonic/1.0.0/Arduino_GroveI2C_Ultrasonic-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_GroveI2C_Ultrasonic/1.0.0/Arduino_GroveI2C_Ultrasonic-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_HS300x/1.0.0/Arduino_HS300x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_HS300x-1.0.0.tar.gz",
+    "size_bytes": 2943,
+    "sha256": "590c4440f4d74e6ebe6b70cac04b6c3260ddb7e988b578ba183dbc390f0b25c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_HS300x/1.0.0/Arduino_HS300x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_HS300x/1.0.0/Arduino_HS300x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_HS300x/1.0.1/Arduino_HS300x-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_HS300x-1.0.1.tar.gz",
+    "size_bytes": 11974,
+    "sha256": "117de12dec8c4f539b3aa5c68d07ead5549bf0da2f26560d4f4a71fb0d5a4667",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_HS300x/1.0.1/Arduino_HS300x-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_HS300x/1.0.1/Arduino_HS300x-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_HTS221/1.0.0/Arduino_HTS221-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_HTS221-1.0.0.tar.gz",
+    "size_bytes": 3042,
+    "sha256": "ea4af16b5d00d82c8a9970e00416a06c93da086128ae85379e15074e94638c03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_HTS221/1.0.0/Arduino_HTS221-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_HTS221/1.0.0/Arduino_HTS221-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_HardwareServo/0.0.1/Arduino_HardwareServo-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_HardwareServo-0.0.1.tar.gz",
+    "size_bytes": 11561,
+    "sha256": "a0f3aecf1a27df273354b4579a737f3ee4db75f805e7842325fb4cd466f5e21b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_HardwareServo/0.0.1/Arduino_HardwareServo-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_HardwareServo/0.0.1/Arduino_HardwareServo-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_JSON/0.1.0/Arduino_JSON-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_JSON-0.1.0.tar.gz",
+    "size_bytes": 23211,
+    "sha256": "afc787a006bb0a242164873614af342d54106f20890d5811f996646e8e1b9ea2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_JSON/0.1.0/Arduino_JSON-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_JSON/0.1.0/Arduino_JSON-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_JSON/0.2.0/Arduino_JSON-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_JSON-0.2.0.tar.gz",
+    "size_bytes": 37734,
+    "sha256": "3a807e005fb552a2ab2d03171d46e048d9a63a454b10d035047d4a9ea02d71b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_JSON/0.2.0/Arduino_JSON-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_JSON/0.2.0/Arduino_JSON-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_JSON/0.2.1/Arduino_JSON-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_JSON-0.2.1.tar.gz",
+    "size_bytes": 37876,
+    "sha256": "8c9b3be731177b53afb7fddd6631ee3dbfa5cdd5c3d59ead20de38da59211235",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_JSON/0.2.1/Arduino_JSON-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_JSON/0.2.1/Arduino_JSON-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_JSON/0.2.2/Arduino_JSON-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_JSON-0.2.2.tar.gz",
+    "size_bytes": 37875,
+    "sha256": "bff1331091ffcd49b44567c61ce9d70ce8500705e598c7749d1ceae3c5140ff1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_JSON/0.2.2/Arduino_JSON-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_JSON/0.2.2/Arduino_JSON-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_KNN/0.1.0/Arduino_KNN-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_KNN-0.1.0.tar.gz",
+    "size_bytes": 14651,
+    "sha256": "c18227214842e48af46128a18e66179d361ff09d87b0bb456f664128205ae5f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_KNN/0.1.0/Arduino_KNN-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_KNN/0.1.0/Arduino_KNN-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_KVStore/1.0.1/Arduino_KVStore-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_KVStore-1.0.1.tar.gz",
+    "size_bytes": 21618,
+    "sha256": "565a2a4ebdf1fe11b1e29466d1fe0c649b4d3215c0f147e7fe4a9226cc8f4662",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_KVStore/1.0.1/Arduino_KVStore-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_KVStore/1.0.1/Arduino_KVStore-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_LPS22HB/1.0.2/Arduino_LPS22HB-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_LPS22HB-1.0.2.tar.gz",
+    "size_bytes": 13502,
+    "sha256": "bc2db33295efb4c8829c81f5ecd1b1cbb626d0acc11d1e709450e554aac9d681",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_LPS22HB/1.0.2/Arduino_LPS22HB-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_LPS22HB/1.0.2/Arduino_LPS22HB-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_LPS22HB/1.0.3/Arduino_LPS22HB-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_LPS22HB-1.0.3.tar.gz",
+    "size_bytes": 15070,
+    "sha256": "73d1737fb8066a1c350cb8ab73b5efe87fb743a6321ff719bb3baef56ff5fcea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_LPS22HB/1.0.3/Arduino_LPS22HB-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_LPS22HB/1.0.3/Arduino_LPS22HB-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_LSM6DS3/1.0.3/Arduino_LSM6DS3-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_LSM6DS3-1.0.3.tar.gz",
+    "size_bytes": 15812,
+    "sha256": "a91cd327fbe54aed968a15bed57782aec06cce94f5020ff2f7661866cc993799",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_LSM6DS3/1.0.3/Arduino_LSM6DS3-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_LSM6DS3/1.0.3/Arduino_LSM6DS3-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_LSM6DS3/1.1.0/Arduino_LSM6DS3-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_LSM6DS3-1.1.0.tar.gz",
+    "size_bytes": 16148,
+    "sha256": "7ce074e3daef87186e47d7ec4e665b7a414391a0d24828c113f5f2b6c184a9b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_LSM6DS3/1.1.0/Arduino_LSM6DS3-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_LSM6DS3/1.1.0/Arduino_LSM6DS3-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_LSM6DSOX/1.1.2/Arduino_LSM6DSOX-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_LSM6DSOX-1.1.2.tar.gz",
+    "size_bytes": 15702,
+    "sha256": "8b5dbf126a7fee9aa6b893ca45a1ea79fcbf94a79ef1b72f1360bdde860a2ba6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_LSM6DSOX/1.1.2/Arduino_LSM6DSOX-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_LSM6DSOX/1.1.2/Arduino_LSM6DSOX-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_LSM9DS1/1.1.1/Arduino_LSM9DS1-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_LSM9DS1-1.1.1.tar.gz",
+    "size_bytes": 15724,
+    "sha256": "1c1f5e6b36514aeee7487d76321c17466f40f608187ea79ff9e207303375013d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_LSM9DS1/1.1.1/Arduino_LSM9DS1-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_LSM9DS1/1.1.1/Arduino_LSM9DS1-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_LTR381RGB/1.0.0/Arduino_LTR381RGB-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_LTR381RGB-1.0.0.tar.gz",
+    "size_bytes": 14177,
+    "sha256": "5b5e4c075eb9e1817862b787ae50ef6f14fe06f539e894404b341bf846ac6bb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_LTR381RGB/1.0.0/Arduino_LTR381RGB-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_LTR381RGB/1.0.0/Arduino_LTR381RGB-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_LTR381RGB/1.0.1/Arduino_LTR381RGB-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_LTR381RGB-1.0.1.tar.gz",
+    "size_bytes": 14502,
+    "sha256": "a73def5da37f7a0f1a676bf1bb228ce76dde0e5c5b9556d0e21da5e50f074c45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_LTR381RGB/1.0.1/Arduino_LTR381RGB-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_LTR381RGB/1.0.1/Arduino_LTR381RGB-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_LowPowerPortentaC33/1.0.1/Arduino_LowPowerPortentaC33-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_LowPowerPortentaC33-1.0.1.tar.gz",
+    "size_bytes": 15083,
+    "sha256": "bfe16e43827537fb8b8c3bfcea30a738fc1e1955cf953062e9cc64a6ec6fb043",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_LowPowerPortentaC33/1.0.1/Arduino_LowPowerPortentaC33-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_LowPowerPortentaC33/1.0.1/Arduino_LowPowerPortentaC33-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_LowPowerPortentaH7/1.1.0/Arduino_LowPowerPortentaH7-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_LowPowerPortentaH7-1.1.0.tar.gz",
+    "size_bytes": 21903,
+    "sha256": "4ec1cef1be95fd654ce571c9d200539a616eba3cbdf3f4a7c073fc9ae775f2a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_LowPowerPortentaH7/1.1.0/Arduino_LowPowerPortentaH7-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_LowPowerPortentaH7/1.1.0/Arduino_LowPowerPortentaH7-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_MAX17332/1.0.1/Arduino_MAX17332-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_MAX17332-1.0.1.tar.gz",
+    "size_bytes": 12350,
+    "sha256": "eb37ce05ec3d89f9de0eb6859159345c038baa9b2d12d54372a7a746adf4ba32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_MAX17332/1.0.1/Arduino_MAX17332-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_MAX17332/1.0.1/Arduino_MAX17332-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_MCHPTouch/1.2.3/Arduino_MCHPTouch-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_MCHPTouch-1.2.3.tar.gz",
+    "size_bytes": 43105,
+    "sha256": "046283876935dab6590b027f1c16d1d14364e724813ef58ebe3b0e50a1eb8cb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_MCHPTouch/1.2.3/Arduino_MCHPTouch-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_MCHPTouch/1.2.3/Arduino_MCHPTouch-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_MKRENV/1.2.1/Arduino_MKRENV-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_MKRENV-1.2.1.tar.gz",
+    "size_bytes": 15637,
+    "sha256": "24bbb215b332692abf585368c8caf2095ac18ad28b46ac5d044f2054ba949919",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_MKRENV/1.2.1/Arduino_MKRENV-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_MKRENV/1.2.1/Arduino_MKRENV-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_MKRGPS/1.0.0/Arduino_MKRGPS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_MKRGPS-1.0.0.tar.gz",
+    "size_bytes": 11391,
+    "sha256": "25d001dcefc63a6a1be6b733176989ccdc63bd9a0c73c39cf085d3b358c70228",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_MKRGPS/1.0.0/Arduino_MKRGPS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_MKRGPS/1.0.0/Arduino_MKRGPS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_MKRIoTCarrier/2.1.0/Arduino_MKRIoTCarrier-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_MKRIoTCarrier-2.1.0.tar.gz",
+    "size_bytes": 69972,
+    "sha256": "1a50f6815bcfab933982e8f490c97c87f94067df48c18641c030edb3f35ceea3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_MKRIoTCarrier/2.1.0/Arduino_MKRIoTCarrier-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_MKRIoTCarrier/2.1.0/Arduino_MKRIoTCarrier-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_MKRMEM/1.1.0/Arduino_MKRMEM-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_MKRMEM-1.1.0.tar.gz",
+    "size_bytes": 64190,
+    "sha256": "b953bac9afbf55306aba3bd0e9d18632d327d5bc71093f5b7c36cb39945a1999",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_MKRMEM/1.1.0/Arduino_MKRMEM-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_MKRMEM/1.1.0/Arduino_MKRMEM-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_MKRRGB/1.1.0/Arduino_MKRRGB-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_MKRRGB-1.1.0.tar.gz",
+    "size_bytes": 15704,
+    "sha256": "37c979a7a94633fd642eaf21259b2fd4944ead3adf7c6b97d2b02f402336facc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_MKRRGB/1.1.0/Arduino_MKRRGB-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_MKRRGB/1.1.0/Arduino_MKRRGB-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_MKRTHERM/1.0.0/Arduino_MKRTHERM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_MKRTHERM-1.0.0.tar.gz",
+    "size_bytes": 2577,
+    "sha256": "7b4279a773cec3c5fe92c0d270f86a8ad13eab280318e964d6fc55a200183253",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_MKRTHERM/1.0.0/Arduino_MKRTHERM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_MKRTHERM/1.0.0/Arduino_MKRTHERM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_MachineControl/1.1.2/Arduino_MachineControl-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_MachineControl-1.1.2.tar.gz",
+    "size_bytes": 57041,
+    "sha256": "390d290d60a65a92aac0993a260edf4ebec8fbf03cd646844d32bfc9edbdeb47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_MachineControl/1.1.2/Arduino_MachineControl-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_MachineControl/1.1.2/Arduino_MachineControl-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Modulino/0.10.0/Arduino_Modulino-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Modulino-0.10.0.tar.gz",
+    "size_bytes": 122322,
+    "sha256": "4bade6147a95cfa4d9b4bd42da99395d42f9ce5729db5e53ce1219090f348c2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Modulino/0.10.0/Arduino_Modulino-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Modulino/0.10.0/Arduino_Modulino-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Modulino/0.6.1/Arduino_Modulino-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Modulino-0.6.1.tar.gz",
+    "size_bytes": 33483,
+    "sha256": "9291dae0663f8bc7185a5a845bcc41915bb3fe7903c6e11593758c5e25e10643",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Modulino/0.6.1/Arduino_Modulino-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Modulino/0.6.1/Arduino_Modulino-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Modulino/0.7.0/Arduino_Modulino-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Modulino-0.7.0.tar.gz",
+    "size_bytes": 64483,
+    "sha256": "44ed429e164fc3cc138ae7d97da0a8047602105d863911e2362009de521090c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Modulino/0.7.0/Arduino_Modulino-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Modulino/0.7.0/Arduino_Modulino-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Modulino/0.8.0/Arduino_Modulino-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Modulino-0.8.0.tar.gz",
+    "size_bytes": 90367,
+    "sha256": "f28165ddb6b0545509cefa191e092adbcf31ca2a02b5d25551d0f4336bd7b5b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Modulino/0.8.0/Arduino_Modulino-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Modulino/0.8.0/Arduino_Modulino-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Modulino/0.9.0/Arduino_Modulino-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Modulino-0.9.0.tar.gz",
+    "size_bytes": 122527,
+    "sha256": "43596cc0b89d078b0f49ddb8b40aa71cfeca23044149d72ad5a14f42d455e626",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Modulino/0.9.0/Arduino_Modulino-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Modulino/0.9.0/Arduino_Modulino-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Modulino/0.9.1/Arduino_Modulino-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Modulino-0.9.1.tar.gz",
+    "size_bytes": 122629,
+    "sha256": "db051d0a4321f9e7babdc6267fa39cdb90d48fb29709e88308549516cd1e0ac8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Modulino/0.9.1/Arduino_Modulino-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Modulino/0.9.1/Arduino_Modulino-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_MultiWiFi/1.0.0/Arduino_MultiWiFi-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_MultiWiFi-1.0.0.tar.gz",
+    "size_bytes": 7900,
+    "sha256": "fbe6bcc42904354182edfdc8d84a8f9259bff5f502f2939ffb0104ccb6becb1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_MultiWiFi/1.0.0/Arduino_MultiWiFi-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_MultiWiFi/1.0.0/Arduino_MultiWiFi-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_NetworkConfigurator/0.4.1/Arduino_NetworkConfigurator-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_NetworkConfigurator-0.4.1.tar.gz",
+    "size_bytes": 47412,
+    "sha256": "34296a9819ebeb710474fd3893217bc49b342950065fe67ad938e6cb4de94704",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_NetworkConfigurator/0.4.1/Arduino_NetworkConfigurator-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_NetworkConfigurator/0.4.1/Arduino_NetworkConfigurator-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_NetworkConfigurator/0.5.0/Arduino_NetworkConfigurator-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_NetworkConfigurator-0.5.0.tar.gz",
+    "size_bytes": 47476,
+    "sha256": "2091cead676c5b3811ca5425d522cea974fd9dbfdc909a2e0f62fb97312a4564",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_NetworkConfigurator/0.5.0/Arduino_NetworkConfigurator-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_NetworkConfigurator/0.5.0/Arduino_NetworkConfigurator-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_NetworkConfigurator/0.5.1/Arduino_NetworkConfigurator-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_NetworkConfigurator-0.5.1.tar.gz",
+    "size_bytes": 47485,
+    "sha256": "5b7a78453ec3f405337e3175333058df9624cf4c06f803ea734e3b94a82b8225",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_NetworkConfigurator/0.5.1/Arduino_NetworkConfigurator-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_NetworkConfigurator/0.5.1/Arduino_NetworkConfigurator-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_NiclaSenseEnv/1.0.1/Arduino_NiclaSenseEnv-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_NiclaSenseEnv-1.0.1.tar.gz",
+    "size_bytes": 26477,
+    "sha256": "be50e67473e3195c05da11d3b1d9c163fdb0770bdc3ad237dc4d1d59f22f2ba3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_NiclaSenseEnv/1.0.1/Arduino_NiclaSenseEnv-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_NiclaSenseEnv/1.0.1/Arduino_NiclaSenseEnv-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_NineAxesMotion/1.1.2/Arduino_NineAxesMotion-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_NineAxesMotion-1.1.2.tar.gz",
+    "size_bytes": 72272,
+    "sha256": "8e5d998af3606cd02331225803c877f17767dc89df4c78fbf173bc0b344a1111",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_NineAxesMotion/1.1.2/Arduino_NineAxesMotion-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_NineAxesMotion/1.1.2/Arduino_NineAxesMotion-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_OAuth/0.1.0/Arduino_OAuth-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_OAuth-0.1.0.tar.gz",
+    "size_bytes": 5987,
+    "sha256": "a6b1a87d3d94dec4ff0f71e3c8979953b6bf5bbf620ce438eef3114b9a3c2499",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_OAuth/0.1.0/Arduino_OAuth-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_OAuth/0.1.0/Arduino_OAuth-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_OPC_UA/0.1.2/Arduino_OPC_UA-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_OPC_UA-0.1.2.tar.gz",
+    "size_bytes": 677924,
+    "sha256": "23c656fe12bfe01b3ec1bb499f2966779d392b8f94bf97d51b12a87104379d1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_OPC_UA/0.1.2/Arduino_OPC_UA-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_OPC_UA/0.1.2/Arduino_OPC_UA-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_OV767X/0.0.2/Arduino_OV767X-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_OV767X-0.0.2.tar.gz",
+    "size_bytes": 29400,
+    "sha256": "d3f835185be22e52e2dd5099eca43447f69317548fac277b85da0e9b529502cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_OV767X/0.0.2/Arduino_OV767X-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_OV767X/0.0.2/Arduino_OV767X-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_OplaUI/1.2.0/Arduino_OplaUI-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_OplaUI-1.2.0.tar.gz",
+    "size_bytes": 15223,
+    "sha256": "a0edc8eaa06c4aefe36a79f10322c8bcc9b2f7a03cf60b25be22ba2241ae14d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_OplaUI/1.2.0/Arduino_OplaUI-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_OplaUI/1.2.0/Arduino_OplaUI-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Opta_Blueprint/0.2.8/Arduino_Opta_Blueprint-0.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Opta_Blueprint-0.2.8.tar.gz",
+    "size_bytes": 288052,
+    "sha256": "d88b538b12120f20bde2aa20f1092b3e4fd207b6ce8cd016e3399fd6fc7020cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Opta_Blueprint/0.2.8/Arduino_Opta_Blueprint-0.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Opta_Blueprint/0.2.8/Arduino_Opta_Blueprint-0.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Opta_Blueprint/0.2.9/Arduino_Opta_Blueprint-0.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Opta_Blueprint-0.2.9.tar.gz",
+    "size_bytes": 295557,
+    "sha256": "b3ce43b9df7b88bbda4e58aa75035b1d1beee3e52db1afa6cc7440d0988a9d9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Opta_Blueprint/0.2.9/Arduino_Opta_Blueprint-0.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Opta_Blueprint/0.2.9/Arduino_Opta_Blueprint-0.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_PF1550/0.3.1/Arduino_PF1550-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_PF1550-0.3.1.tar.gz",
+    "size_bytes": 23665,
+    "sha256": "ad629f5c417e8dbb06a2400a199bf473922d5ba26b7cad2f4af236eac429bad8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_PF1550/0.3.1/Arduino_PF1550-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_PF1550/0.3.1/Arduino_PF1550-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_POSIXStorage/1.2.1/Arduino_POSIXStorage-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_POSIXStorage-1.2.1.tar.gz",
+    "size_bytes": 21151,
+    "sha256": "572329a80132a8b5f2d4a717ed80f754a303ac0b1cb225af1ff2773136d242d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_POSIXStorage/1.2.1/Arduino_POSIXStorage-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_POSIXStorage/1.2.1/Arduino_POSIXStorage-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_PortentaBreakout/1.1.0/Arduino_PortentaBreakout-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_PortentaBreakout-1.1.0.tar.gz",
+    "size_bytes": 22775,
+    "sha256": "8ed0f96d6f66d5f60cdfbf792e3650f8cdc059f1d5df2777a34536125704695d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_PortentaBreakout/1.1.0/Arduino_PortentaBreakout-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_PortentaBreakout/1.1.0/Arduino_PortentaBreakout-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_PortentaMachineControl/1.0.4/Arduino_PortentaMachineControl-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_PortentaMachineControl-1.0.4.tar.gz",
+    "size_bytes": 60364,
+    "sha256": "6551b0c3064a6a25942af64fbc991eebe7c25c936491355dc2878100c0ae5235",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_PortentaMachineControl/1.0.4/Arduino_PortentaMachineControl-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_PortentaMachineControl/1.0.4/Arduino_PortentaMachineControl-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_PortentaMachineControl/1.0.5/Arduino_PortentaMachineControl-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_PortentaMachineControl-1.0.5.tar.gz",
+    "size_bytes": 60522,
+    "sha256": "9d059dcca7cfea32521f6ffc7b400fcbefb3aed2b63dfba0a86140bd2371288a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_PortentaMachineControl/1.0.5/Arduino_PortentaMachineControl-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_PortentaMachineControl/1.0.5/Arduino_PortentaMachineControl-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Portenta_OTA/1.2.1/Arduino_Portenta_OTA-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Portenta_OTA-1.2.1.tar.gz",
+    "size_bytes": 109541,
+    "sha256": "079ce13e69d1113d9a739e7182d52588cd334c0da9ec6a41998c1ce99d682a6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Portenta_OTA/1.2.1/Arduino_Portenta_OTA-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Portenta_OTA/1.2.1/Arduino_Portenta_OTA-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_PowerManagement/1.0.0/Arduino_PowerManagement-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_PowerManagement-1.0.0.tar.gz",
+    "size_bytes": 33695,
+    "sha256": "bbfbf6e50a6d886925a971c732333b8192d98ec7237c1bf3698efc9b072e63da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_PowerManagement/1.0.0/Arduino_PowerManagement-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_PowerManagement/1.0.0/Arduino_PowerManagement-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Pro_Tutorials/1.0.6/Arduino_Pro_Tutorials-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Pro_Tutorials-1.0.6.tar.gz",
+    "size_bytes": 14353,
+    "sha256": "c4b7800a71f79188a7712b90548ed488b55d1db1d2bf74162e2b6db5dbbcebee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Pro_Tutorials/1.0.6/Arduino_Pro_Tutorials-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Pro_Tutorials/1.0.6/Arduino_Pro_Tutorials-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_QTouch/1.0.0/Arduino_QTouch-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_QTouch-1.0.0.tar.gz",
+    "size_bytes": 34568,
+    "sha256": "60bf64fd47d35606666a3a23fa0943e9672abb5b33a5b16f2ce5c2a100fd5b66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_QTouch/1.0.0/Arduino_QTouch-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_QTouch/1.0.0/Arduino_QTouch-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_SE05X/0.0.1/Arduino_SE05X-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_SE05X-0.0.1.tar.gz",
+    "size_bytes": 72096,
+    "sha256": "5f2964b7c64459b907eb39633ecda6432375f18ff9ff9324385d6bdc880b1d8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_SE05X/0.0.1/Arduino_SE05X-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_SE05X/0.0.1/Arduino_SE05X-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_SE05X/0.0.2/Arduino_SE05X-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_SE05X-0.0.2.tar.gz",
+    "size_bytes": 72159,
+    "sha256": "eb5a08b8df6fad9ede625aa5e865bba286d20cab4f6ada579a7f43fd1210b40f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_SE05X/0.0.2/Arduino_SE05X-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_SE05X/0.0.2/Arduino_SE05X-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_ScienceJournal/1.3.0/Arduino_ScienceJournal-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_ScienceJournal-1.3.0.tar.gz",
+    "size_bytes": 16329,
+    "sha256": "7c07177901c21b6be92cd7f18e7b45a2a70d637a9c8d99f529af23e9feb927bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_ScienceJournal/1.3.0/Arduino_ScienceJournal-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_ScienceJournal/1.3.0/Arduino_ScienceJournal-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_ScienceKitCarrier/1.0.0/Arduino_ScienceKitCarrier-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_ScienceKitCarrier-1.0.0.tar.gz",
+    "size_bytes": 26608,
+    "sha256": "86b1e735bfeb1b77b15be6cc75ddc1079ad79a5b6133f4495b613d5b81f642e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_ScienceKitCarrier/1.0.0/Arduino_ScienceKitCarrier-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_ScienceKitCarrier/1.0.0/Arduino_ScienceKitCarrier-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_SecureElement/0.4.0/Arduino_SecureElement-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_SecureElement-0.4.0.tar.gz",
+    "size_bytes": 22487,
+    "sha256": "20484ed32c53e6a748011455adfd01750030cb2a66f872bb84ee1ab2aa817fb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_SecureElement/0.4.0/Arduino_SecureElement-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_SecureElement/0.4.0/Arduino_SecureElement-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_SecureElement/1.0.0/Arduino_SecureElement-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_SecureElement-1.0.0.tar.gz",
+    "size_bytes": 22614,
+    "sha256": "7c768fcc9798e9dfa51b33d92aa75ea029bc3146567f1e3160d942b218ce688e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_SecureElement/1.0.0/Arduino_SecureElement-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_SecureElement/1.0.0/Arduino_SecureElement-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_SecureElement/1.0.1/Arduino_SecureElement-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_SecureElement-1.0.1.tar.gz",
+    "size_bytes": 22621,
+    "sha256": "6b2cac10624f2c506b02af4d84dbab05ceac32eac9c711f234fa4ba138ef0007",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_SecureElement/1.0.1/Arduino_SecureElement-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_SecureElement/1.0.1/Arduino_SecureElement-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Sensorkit/1.4.0/Arduino_Sensorkit-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Sensorkit-1.4.0.tar.gz",
+    "size_bytes": 10374430,
+    "sha256": "1dc303a6118b8a82f1417ef217d2a5302cb2b6a80b1ae0cb6dcfb42fe6974453",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Sensorkit/1.4.0/Arduino_Sensorkit-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Sensorkit/1.4.0/Arduino_Sensorkit-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_SerialUpdater/0.0.1/Arduino_SerialUpdater-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_SerialUpdater-0.0.1.tar.gz",
+    "size_bytes": 26302,
+    "sha256": "f1a8ea0eee11ab62d466731695833df5df88588e0994cedf327dc39276058be2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_SerialUpdater/0.0.1/Arduino_SerialUpdater-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_SerialUpdater/0.0.1/Arduino_SerialUpdater-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_SpiNINA/0.0.1/Arduino_SpiNINA-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_SpiNINA-0.0.1.tar.gz",
+    "size_bytes": 13446,
+    "sha256": "1fde01d3bbe137fb87adec74acc793af202d6c596a851f3c4ebd628416f350d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_SpiNINA/0.0.1/Arduino_SpiNINA-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_SpiNINA/0.0.1/Arduino_SpiNINA-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_SpiNINA/0.0.2/Arduino_SpiNINA-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_SpiNINA-0.0.2.tar.gz",
+    "size_bytes": 13444,
+    "sha256": "1e248cee8793d310d2f46e348a41080797ca68111ca144de3c8008d763aebeff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_SpiNINA/0.0.2/Arduino_SpiNINA-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_SpiNINA/0.0.2/Arduino_SpiNINA-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Threads/0.3.0/Arduino_Threads-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Threads-0.3.0.tar.gz",
+    "size_bytes": 34009,
+    "sha256": "d6adf8c815ae0572bf82f2c1328a5c97959d8f795368592b71705d56875acf51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Threads/0.3.0/Arduino_Threads-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Threads/0.3.0/Arduino_Threads-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_TinyGL/0.0.1/Arduino_TinyGL-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_TinyGL-0.0.1.tar.gz",
+    "size_bytes": 73393,
+    "sha256": "89031eebeb93cb0fbc03bbdcda4d771066b8e1387caadc9c0f38b0523782d6b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_TinyGL/0.0.1/Arduino_TinyGL-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_TinyGL/0.0.1/Arduino_TinyGL-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_USBHIDHost/1.0.0/Arduino_USBHIDHost-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_USBHIDHost-1.0.0.tar.gz",
+    "size_bytes": 16546,
+    "sha256": "a2b9c5ce7b38f2bcd2d77204bde4de6d521d1feb4ba995ff02626c9dccd35590",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_USBHIDHost/1.0.0/Arduino_USBHIDHost-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_USBHIDHost/1.0.0/Arduino_USBHIDHost-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_UnifiedStorage/1.1.2/Arduino_UnifiedStorage-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_UnifiedStorage-1.1.2.tar.gz",
+    "size_bytes": 36544,
+    "sha256": "c268011cc01c1463cbea1cfd30af0b49d81dace6ca95aa0cdf4084f3cce4af95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_UnifiedStorage/1.1.2/Arduino_UnifiedStorage-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_UnifiedStorage/1.1.2/Arduino_UnifiedStorage-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_UnifiedStorage/1.2.1/Arduino_UnifiedStorage-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_UnifiedStorage-1.2.1.tar.gz",
+    "size_bytes": 36737,
+    "sha256": "c80fd052a3b18fd3a508f58d1639c0517a005d2003c82bf92337b3196cc5f7ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_UnifiedStorage/1.2.1/Arduino_UnifiedStorage-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_UnifiedStorage/1.2.1/Arduino_UnifiedStorage-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_UniqueHWId/0.0.1/Arduino_UniqueHWId-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_UniqueHWId-0.0.1.tar.gz",
+    "size_bytes": 12724,
+    "sha256": "43f7468018f44b130458ad127a725f25d8dc39a404c381215350da3ed396ab29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_UniqueHWId/0.0.1/Arduino_UniqueHWId-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_UniqueHWId/0.0.1/Arduino_UniqueHWId-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_UniqueHWId/0.1.0/Arduino_UniqueHWId-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_UniqueHWId-0.1.0.tar.gz",
+    "size_bytes": 12739,
+    "sha256": "37dd4a497804ac61cec3615a9c45f13f1d8d8d46e9dad4ef91d31e636a7c6830",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_UniqueHWId/0.1.0/Arduino_UniqueHWId-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_UniqueHWId/0.1.0/Arduino_UniqueHWId-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Video/1.0.0/Arduino_Video-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Video-1.0.0.tar.gz",
+    "size_bytes": 217310,
+    "sha256": "b68d471ff988bd107f690a12662f5d51d686514a4ae03f5ad4a8e0cd8e6889ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Video/1.0.0/Arduino_Video-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Video/1.0.0/Arduino_Video-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Video/1.0.1/Arduino_Video-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Video-1.0.1.tar.gz",
+    "size_bytes": 217431,
+    "sha256": "842517a9443dd082a2b411f144abf0129d5c841ea2dedda660bde965d6f676f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Video/1.0.1/Arduino_Video-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Video/1.0.1/Arduino_Video-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Video/1.0.2/Arduino_Video-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Video-1.0.2.tar.gz",
+    "size_bytes": 217660,
+    "sha256": "4ec0a655fa05eb3ff2de0e0dfcf9c09c6a2e711ae90e4ed82c57a2807aff36f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Video/1.0.2/Arduino_Video-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Video/1.0.2/Arduino_Video-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Video/1.0.3/Arduino_Video-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Video-1.0.3.tar.gz",
+    "size_bytes": 217713,
+    "sha256": "a3eb9e5598c7bbae7f3b519ba9027f5d2a4e0edc8a65e274d66a55cfeeb57217",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Video/1.0.3/Arduino_Video-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Video/1.0.3/Arduino_Video-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Arduino_Video/1.1.0/Arduino_Video-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_Video-1.1.0.tar.gz",
+    "size_bytes": 220012,
+    "sha256": "f5c8105ab4f255a437d5296ab6ff1d0c87d08d10f433bac755df9ee3125aef89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Arduino_Video/1.1.0/Arduino_Video-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Arduino_Video/1.1.0/Arduino_Video-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Audio/1.0.6/Audio-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Audio-1.0.6.tar.gz",
+    "size_bytes": 16493,
+    "sha256": "a942cfcf91c138071c5e15b2976b04f7d52bd221887717a62755ead8da5ff6c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Audio/1.0.6/Audio-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Audio/1.0.6/Audio-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/AudioFrequencyMeter/1.0.3/AudioFrequencyMeter-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AudioFrequencyMeter-1.0.3.tar.gz",
+    "size_bytes": 4918,
+    "sha256": "807bc5488b9c16eb0bad0de2cafbd9b4cf2fd0281d0cc6961cd4d7a59c9c46b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/AudioFrequencyMeter/1.0.3/AudioFrequencyMeter-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/AudioFrequencyMeter/1.0.3/AudioFrequencyMeter-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/AudioZero/1.1.2/AudioZero-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AudioZero-1.1.2.tar.gz",
+    "size_bytes": 6620,
+    "sha256": "b189ed7e6a5ff568a79fb27062fcfb683d039f0acb7c1bf8197e89e7ce9e8574",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/AudioZero/1.1.2/AudioZero-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/AudioZero/1.1.2/AudioZero-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/AzureIoTHub/1.6.1/AzureIoTHub-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureIoTHub-1.6.1.tar.gz",
+    "size_bytes": 373737,
+    "sha256": "2cebcf54e363044817b3bb263df30a2942217815861bd10a42c8cbd42eb66fc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/AzureIoTHub/1.6.1/AzureIoTHub-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/AzureIoTHub/1.6.1/AzureIoTHub-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/BNO055/1.2.1/BNO055-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BNO055-1.2.1.tar.gz",
+    "size_bytes": 35103,
+    "sha256": "fbc5eeb14b3b59fcb33cbbf82c2b34c484435894fd8c38be37bb4e9fe3b7ddfe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/BNO055/1.2.1/BNO055-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/BNO055/1.2.1/BNO055-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Braccio/2.0.4/Braccio-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Braccio-2.0.4.tar.gz",
+    "size_bytes": 8083,
+    "sha256": "6cede810d0084dcf7dd316a55c0c8b2b81ef6cfd9106cc3eb4959bbe3318e953",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Braccio/2.0.4/Braccio-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Braccio/2.0.4/Braccio-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Bridge/1.7.0/Bridge-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bridge-1.7.0.tar.gz",
+    "size_bytes": 25409,
+    "sha256": "affd407014a21c76d91a680a75a2417091846ff711878adedc28c7ca40da60ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Bridge/1.7.0/Bridge-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Bridge/1.7.0/Bridge-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/CTC%20GO%20CORE/1.4.0/CTCGOCORE-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CTCGOCORE-1.4.0.tar.gz",
+    "size_bytes": 11060,
+    "sha256": "396b9d1dc075111f56b6337510a0e230f3b5a9f5c4f8665ac61dd8c0f9e9af48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/CTC%2520GO%2520CORE/1.4.0/CTCGOCORE-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/CTC%20GO%20CORE/1.4.0/CTCGOCORE-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/CTC%20GO%20MOTIONS/1.0.0/CTCGOMOTIONS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CTCGOMOTIONS-1.0.0.tar.gz",
+    "size_bytes": 5504,
+    "sha256": "f6bbfe262d7ac4377e7edead1daa5ca9220caa9e6f1362c73ed5fe110fd55722",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/CTC%2520GO%2520MOTIONS/1.0.0/CTCGOMOTIONS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/CTC%20GO%20MOTIONS/1.0.0/CTCGOMOTIONS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Ciao/0.1.1/Ciao-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ciao-0.1.1.tar.gz",
+    "size_bytes": 9197,
+    "sha256": "9f20a96fa4ff0de56c1f0655993e163f486444b0d748a46fea0506ab349d750d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Ciao/0.1.1/Ciao-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Ciao/0.1.1/Ciao-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Esplora/1.0.4/Esplora-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Esplora-1.0.4.tar.gz",
+    "size_bytes": 12475,
+    "sha256": "701c6d6a412cf387a8baf9b3ff2e6b0c5143824b6c5fa6c5b34bcefb5661f140",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Esplora/1.0.4/Esplora-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Esplora/1.0.4/Esplora-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Ethernet/2.0.2/Ethernet-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ethernet-2.0.2.tar.gz",
+    "size_bytes": 41264,
+    "sha256": "db440fe0cceaead795d031ebf68b4b74802fa281a0d0d3c6f33b6701b83a8680",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Ethernet/2.0.2/Ethernet-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Ethernet/2.0.2/Ethernet-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/GSM/1.0.6/GSM-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSM-1.0.6.tar.gz",
+    "size_bytes": 58415,
+    "sha256": "abb3b6a887e1ea1b2f24d4c9d1930ae347ec8d653a938d3f1e328aee3e58ea56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/GSM/1.0.6/GSM-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/GSM/1.0.6/GSM-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Keyboard/1.0.6/Keyboard-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Keyboard-1.0.6.tar.gz",
+    "size_bytes": 14412,
+    "sha256": "3a55cad217e79d60e7af7aea6aa0f903cec375efa15a66ecc0c521bb4252a258",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Keyboard/1.0.6/Keyboard-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Keyboard/1.0.6/Keyboard-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Keyboard/1.0.7/Keyboard-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Keyboard-1.0.7.tar.gz",
+    "size_bytes": 14944,
+    "sha256": "7bf9b7fd08e60c5ef622ed8173dcad2ba2569e6761cadda5bb957940f7ef86df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Keyboard/1.0.7/Keyboard-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Keyboard/1.0.7/Keyboard-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/LiquidCrystal/1.0.7/LiquidCrystal-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidCrystal-1.0.7.tar.gz",
+    "size_bytes": 7863,
+    "sha256": "378863266803a00aee95201af8b83f2c0acffcac51e29c5267ee471ee61d3bec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/LiquidCrystal/1.0.7/LiquidCrystal-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/LiquidCrystal/1.0.7/LiquidCrystal-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/LoRa%20Node/1.0.1/LoRaNode-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaNode-1.0.1.tar.gz",
+    "size_bytes": 186708,
+    "sha256": "28b38299673ec0c2747ae1dd8f4ed4a857e1a4ec8803ce3f35014ca55ef79db0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/LoRa%2520Node/1.0.1/LoRaNode-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/LoRa%20Node/1.0.1/LoRaNode-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Lucky%20Shield/1.0.3/LuckyShield-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LuckyShield-1.0.3.tar.gz",
+    "size_bytes": 22504,
+    "sha256": "a94177d07a01af92aeaccd24773253cbadee2907ac65243b66dc111e22730d1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Lucky%2520Shield/1.0.3/LuckyShield-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Lucky%20Shield/1.0.3/LuckyShield-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/MIDIUSB/1.0.5/MIDIUSB-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MIDIUSB-1.0.5.tar.gz",
+    "size_bytes": 52481,
+    "sha256": "d1f0e30073d6fc8d6e0665a18cd7cd551dd9268dd586b54418748a40e5e5959c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/MIDIUSB/1.0.5/MIDIUSB-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/MIDIUSB/1.0.5/MIDIUSB-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/MKRGSM/1.5.0/MKRGSM-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKRGSM-1.5.0.tar.gz",
+    "size_bytes": 67099,
+    "sha256": "bd1c225205673f75832789300e3b89091d83c298d9ca5b67b03f38e7db6bac87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/MKRGSM/1.5.0/MKRGSM-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/MKRGSM/1.5.0/MKRGSM-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/MKRIMU/1.0.0/MKRIMU-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKRIMU-1.0.0.tar.gz",
+    "size_bytes": 3833,
+    "sha256": "a9e4f9aceb6328a77299034e25d7513adfc933270900f9152a50a2467ace0b22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/MKRIMU/1.0.0/MKRIMU-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/MKRIMU/1.0.0/MKRIMU-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/MKRNB/1.6.0/MKRNB-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKRNB-1.6.0.tar.gz",
+    "size_bytes": 52385,
+    "sha256": "66923e781c9e27eb61d8ad6c43194752128bb6cab7232aa138cb4443d2258cd7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/MKRNB/1.6.0/MKRNB-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/MKRNB/1.6.0/MKRNB-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/MKRWAN/1.1.2/MKRWAN-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKRWAN-1.1.2.tar.gz",
+    "size_bytes": 115128,
+    "sha256": "ffcaead74a0530928713f88f56dddb1559466168c47fb9e2bdf2c8430fe1c3c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/MKRWAN/1.1.2/MKRWAN-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/MKRWAN/1.1.2/MKRWAN-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/MKRWAN_v2/1.3.2/MKRWAN_v2-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MKRWAN_v2-1.3.2.tar.gz",
+    "size_bytes": 174216,
+    "sha256": "be980a4007a470a22e2a7a78c301b9e31dab812a9bfca1d533eeae2fcde37108",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/MKRWAN_v2/1.3.2/MKRWAN_v2-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/MKRWAN_v2/1.3.2/MKRWAN_v2-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Madgwick/1.2.0/Madgwick-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Madgwick-1.2.0.tar.gz",
+    "size_bytes": 4536,
+    "sha256": "6a10238b64b2df8b8f8ef31bba54cfa760dbc1f7db3082d9283810a03ebedd7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Madgwick/1.2.0/Madgwick-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Madgwick/1.2.0/Madgwick-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Mouse/1.0.1/Mouse-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mouse-1.0.1.tar.gz",
+    "size_bytes": 2389,
+    "sha256": "8d40df34001c882a53149d070cbb3c60cc7a634d186e6d60ae1382bd6a007341",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Mouse/1.0.1/Mouse-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Mouse/1.0.1/Mouse-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/NTPClient/3.1.0/NTPClient-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTPClient-3.1.0.tar.gz",
+    "size_bytes": 4675,
+    "sha256": "31e6305bc69f555c0be6012f7ccfbcaeac4704592ac971fb4e2c572be3957ec4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/NTPClient/3.1.0/NTPClient-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/NTPClient/3.1.0/NTPClient-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/NTPClient/3.2.1/NTPClient-3.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTPClient-3.2.1.tar.gz",
+    "size_bytes": 8020,
+    "sha256": "0f068a52a18012beb6b60babd923cbe1bcfa2b70caea71076b183150bc751750",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/NTPClient/3.2.1/NTPClient-3.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/NTPClient/3.2.1/NTPClient-3.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/PhysicsLabFirmware/1.0.0/PhysicsLabFirmware-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PhysicsLabFirmware-1.0.0.tar.gz",
+    "size_bytes": 3790,
+    "sha256": "590791f8b2c98e4d80ebe3708e4287c8a3190dd448b108385222c378fd9ce956",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/PhysicsLabFirmware/1.0.0/PhysicsLabFirmware-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/PhysicsLabFirmware/1.0.0/PhysicsLabFirmware-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/RTCZero/1.6.0/RTCZero-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTCZero-1.6.0.tar.gz",
+    "size_bytes": 5949,
+    "sha256": "980b5bfd7b03aed8e4a44ed693d6b1112bb6f4fcb1733932f1885b349a7d6fa1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/RTCZero/1.6.0/RTCZero-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/RTCZero/1.6.0/RTCZero-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Robot%20Control/1.0.4/RobotControl-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobotControl-1.0.4.tar.gz",
+    "size_bytes": 80229,
+    "sha256": "a0ceb2eda3d6d83f3da98eb6e74c40658f9eb349a04489fb73ae62c00842135d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Robot%2520Control/1.0.4/RobotControl-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Robot%20Control/1.0.4/RobotControl-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Robot%20IR%20Remote/2.0.0/RobotIRRemote-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobotIRRemote-2.0.0.tar.gz",
+    "size_bytes": 10421,
+    "sha256": "42b64e3a7de953c229f7a25fafcd829fc5b79346099182f33c6eb768256a5b61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Robot%2520IR%2520Remote/2.0.0/RobotIRRemote-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Robot%20IR%20Remote/2.0.0/RobotIRRemote-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Robot%20Motor/1.0.3/RobotMotor-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobotMotor-1.0.3.tar.gz",
+    "size_bytes": 8023,
+    "sha256": "3140023052b4a6524dedd208399688cacdbaa9891c9799c9e98eec66dc2819ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Robot%2520Motor/1.0.3/RobotMotor-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Robot%20Motor/1.0.3/RobotMotor-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/SD/1.2.4/SD-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SD-1.2.4.tar.gz",
+    "size_bytes": 50100,
+    "sha256": "109571df623a85f274d5c8222f228f074a655f3a3cdea264812f530ed8bdfa36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/SD/1.2.4/SD-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/SD/1.2.4/SD-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/SD/1.3.0/SD-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SD-1.3.0.tar.gz",
+    "size_bytes": 64124,
+    "sha256": "7ee0deade221d194e575aa63fd468357d3022467254428d5d018b406253c9b23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/SD/1.3.0/SD-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/SD/1.3.0/SD-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Scheduler/0.4.4/Scheduler-0.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Scheduler-0.4.4.tar.gz",
+    "size_bytes": 3470,
+    "sha256": "e387ada6911b5aa044c82ab38c3d25d8ece5221648de158eb741c28412dac132",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Scheduler/0.4.4/Scheduler-0.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Scheduler/0.4.4/Scheduler-0.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Servo/1.1.8/Servo-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Servo-1.1.8.tar.gz",
+    "size_bytes": 108548,
+    "sha256": "1297e0d5febf9abc57b3dbe9c36d8b65f84621959051efb3c5b2682da16f685a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Servo/1.1.8/Servo-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Servo/1.1.8/Servo-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Servo/1.2.1/Servo-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Servo-1.2.1.tar.gz",
+    "size_bytes": 31394,
+    "sha256": "999875087c42052479edbc7dcd7d0f58a4b0d8398ae09dc30f1527f7733b5e5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Servo/1.2.1/Servo-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Servo/1.2.1/Servo-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Servo/1.2.2/Servo-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Servo-1.2.2.tar.gz",
+    "size_bytes": 34573,
+    "sha256": "e1de7da33ca046c1f7119761564c3cbe5b8c2641c17bd622af2a1712a0f90d32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Servo/1.2.2/Servo-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Servo/1.2.2/Servo-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Servo/1.3.0/Servo-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Servo-1.3.0.tar.gz",
+    "size_bytes": 36482,
+    "sha256": "a37ad91520f6cce63682cab1e8c8a382982f2121e77e20f5bd99898a4df5f420",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Servo/1.3.0/Servo-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Servo/1.3.0/Servo-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Stepper/1.1.3/Stepper-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stepper-1.1.3.tar.gz",
+    "size_bytes": 5051,
+    "sha256": "13dff41de952173348fe02f4c49ce1142f69619809c5ac99f9747e845fb9ab97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Stepper/1.1.3/Stepper-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Stepper/1.1.3/Stepper-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/TFT/1.0.6/TFT-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT-1.0.6.tar.gz",
+    "size_bytes": 27526,
+    "sha256": "47032e2f6ec9c5283b8a1771ba86a9807e52735364696bf4b7db367ca2797a78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/TFT/1.0.6/TFT-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/TFT/1.0.6/TFT-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/Temboo/1.2.1/Temboo-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Temboo-1.2.1.tar.gz",
+    "size_bytes": 98783,
+    "sha256": "39c6e9bc6fc1cc4cb57f9475064f546ea92d052eb5e66fb741dbf19dda920ad5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/Temboo/1.2.1/Temboo-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/Temboo/1.2.1/Temboo-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/USBHost/1.0.5/USBHost-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBHost-1.0.5.tar.gz",
+    "size_bytes": 40518,
+    "sha256": "b936c9417500b8c038e1aaa60389ee393209bc5b6d94c03c615bc282ef6f5d0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/USBHost/1.0.5/USBHost-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/USBHost/1.0.5/USBHost-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/WiFi%20Link/1.0.1/WiFiLink-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiLink-1.0.1.tar.gz",
+    "size_bytes": 34914,
+    "sha256": "7d4bd6cbeffdbadfa59d2169aabbab750685df6e8f40af3a0732eaa9a94e587a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/WiFi%2520Link/1.0.1/WiFiLink-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/WiFi%20Link/1.0.1/WiFiLink-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/WiFi/1.2.7/WiFi-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFi-1.2.7.tar.gz",
+    "size_bytes": 24249,
+    "sha256": "5066ecebc724dd03f933b8e819b820b76fe3b639c1c49d2baacb93871a561411",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/WiFi/1.2.7/WiFi-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/WiFi/1.2.7/WiFi-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/WiFi101/0.16.1/WiFi101-0.16.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFi101-0.16.1.tar.gz",
+    "size_bytes": 169596,
+    "sha256": "b9f5a8900360e51887ce1fa4079be03cb8cfcce059df0319a3cca70fb6af7180",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/WiFi101/0.16.1/WiFi101-0.16.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/WiFi101/0.16.1/WiFi101-0.16.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/WiFi101OTA/1.1.0/WiFi101OTA-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFi101OTA-1.1.0.tar.gz",
+    "size_bytes": 6564,
+    "sha256": "014f6237b3d92a60e23339c8dafbabf1f41b0694fa4442739817929733e1c604",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/WiFi101OTA/1.1.0/WiFi101OTA-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/WiFi101OTA/1.1.0/WiFi101OTA-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/WiFiNINA/1.9.1/WiFiNINA-1.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiNINA-1.9.1.tar.gz",
+    "size_bytes": 46390,
+    "sha256": "7836b9b4042c6ecd60e5e60b3bae4c04f6e2342816fd4250dac811edf4957627",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/WiFiNINA/1.9.1/WiFiNINA-1.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/WiFiNINA/1.9.1/WiFiNINA-1.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/WiFiNINA/2.0.0/WiFiNINA-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiNINA-2.0.0.tar.gz",
+    "size_bytes": 62383,
+    "sha256": "c3d55f51014e353aeee192c8957634c88086e045433666d2d8df363e5dd6440b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/WiFiNINA/2.0.0/WiFiNINA-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/WiFiNINA/2.0.0/WiFiNINA-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/WiFiNINA/2.0.1/WiFiNINA-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiNINA-2.0.1.tar.gz",
+    "size_bytes": 62381,
+    "sha256": "559363de685125fcf4c105c3b34440e4414a3a077a2ef874e21f15b845a0b86a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/WiFiNINA/2.0.1/WiFiNINA-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/WiFiNINA/2.0.1/WiFiNINA-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/WiFiNINA/2.1.0/WiFiNINA-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiNINA-2.1.0.tar.gz",
+    "size_bytes": 62498,
+    "sha256": "01a53d83e0830537d4a328a11679166dfaf83dd988b276feba62fc2e4d796d2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/WiFiNINA/2.1.0/WiFiNINA-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/WiFiNINA/2.1.0/WiFiNINA-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduino-libraries/library/WiFiNINA/2.1.1/WiFiNINA-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiNINA-2.1.1.tar.gz",
+    "size_bytes": 62497,
+    "sha256": "3bf6dbdc802c7274cc4019dde03c8aef006d151e053d38f018b2e1d2fb28318e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduino-libraries/library/WiFiNINA/2.1.1/WiFiNINA-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduino-libraries/library/WiFiNINA/2.1.1/WiFiNINA-2.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

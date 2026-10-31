@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stejsoftware",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stejsoftware/library/ArduinoLibrary/2.1.1/ArduinoLibrary-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoLibrary-2.1.1.tar.gz",
+    "size_bytes": 6241,
+    "sha256": "5b2dab52e344ce44b33ae489ab456f589fa6141092020f6445ebb8c2477cf885",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stejsoftware/library/ArduinoLibrary/2.1.1/ArduinoLibrary-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stejsoftware/library/ArduinoLibrary/2.1.1/ArduinoLibrary-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stejsoftware/library/ArduinoTimer/2.0.0/ArduinoTimer-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoTimer-2.0.0.tar.gz",
+    "size_bytes": 15136,
+    "sha256": "c13fa013154bb893f815bd2cb33d7507de0c3945a0e2c2660554e1d07f41d868",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stejsoftware/library/ArduinoTimer/2.0.0/ArduinoTimer-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stejsoftware/library/ArduinoTimer/2.0.0/ArduinoTimer-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stejsoftware/library/SerialVga/1.0.0/SerialVga-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialVga-1.0.0.tar.gz",
+    "size_bytes": 3467,
+    "sha256": "f32d864db25002ac593471e415e8438a01499df877299df8f2b95a9b78252bd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stejsoftware/library/SerialVga/1.0.0/SerialVga-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stejsoftware/library/SerialVga/1.0.0/SerialVga-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

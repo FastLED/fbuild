@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jakewritescode",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jakewritescode/library/Inventronix/1.0.0/Inventronix-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Inventronix-1.0.0.tar.gz",
+    "size_bytes": 13821,
+    "sha256": "0035eb81bd2ce856bafa5a0b0fce2ef15bde05d8c1fe9788bf05205f62ea9da9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jakewritescode/library/Inventronix/1.0.0/Inventronix-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jakewritescode/library/Inventronix/1.0.0/Inventronix-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jakewritescode/library/Inventronix/1.0.1/Inventronix-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Inventronix-1.0.1.tar.gz",
+    "size_bytes": 11960,
+    "sha256": "842eebaf61ecfb0c67b13bd9395c36ba40618dcf1eabfa0f156e8fd99268ad53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jakewritescode/library/Inventronix/1.0.1/Inventronix-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jakewritescode/library/Inventronix/1.0.1/Inventronix-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

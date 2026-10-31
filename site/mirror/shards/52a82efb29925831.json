@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rhyme",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rhyme/library/BME280/0.0.0+sha.7b525853bad0/BME280-0.0.0+sha.7b525853bad0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280-0.0.0+sha.7b525853bad0.tar.gz",
+    "size_bytes": 4989,
+    "sha256": "b601202370d13b22e0c21d01b80b05f105fa5f7c8f5f99cd11df77f11348286d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rhyme/library/BME280/0.0.0%2Bsha.7b525853bad0/BME280-0.0.0%2Bsha.7b525853bad0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rhyme/library/BME280/0.0.0%2Bsha.7b525853bad0/BME280-0.0.0%2Bsha.7b525853bad0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rhyme/library/BMI160/0.0.0+sha.93f16677f730/BMI160-0.0.0+sha.93f16677f730.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMI160-0.0.0+sha.93f16677f730.tar.gz",
+    "size_bytes": 6108,
+    "sha256": "a15270374bf99e050e782d38c1b026a3034e44213a795c5702bc7e2b40ddfaa5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rhyme/library/BMI160/0.0.0%2Bsha.93f16677f730/BMI160-0.0.0%2Bsha.93f16677f730.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rhyme/library/BMI160/0.0.0%2Bsha.93f16677f730/BMI160-0.0.0%2Bsha.93f16677f730.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rhyme/library/RTC8564/0.0.0+sha.6edcd7b8b324/RTC8564-0.0.0+sha.6edcd7b8b324.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC8564-0.0.0+sha.6edcd7b8b324.tar.gz",
+    "size_bytes": 4019,
+    "sha256": "aaba6496d7b75b4dd66d38c8b04212acdfdfbd5121a8a3a34693ee71b2a9e320",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rhyme/library/RTC8564/0.0.0%2Bsha.6edcd7b8b324/RTC8564-0.0.0%2Bsha.6edcd7b8b324.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rhyme/library/RTC8564/0.0.0%2Bsha.6edcd7b8b324/RTC8564-0.0.0%2Bsha.6edcd7b8b324.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rhyme/library/S11059/0.0.0+sha.cfdb96085fb7/S11059-0.0.0+sha.cfdb96085fb7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "S11059-0.0.0+sha.cfdb96085fb7.tar.gz",
+    "size_bytes": 3431,
+    "sha256": "31a61fd11e337f798c8069fe3a4a12bac3f318466291d0cb58f5b107c8aeb5d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rhyme/library/S11059/0.0.0%2Bsha.cfdb96085fb7/S11059-0.0.0%2Bsha.cfdb96085fb7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rhyme/library/S11059/0.0.0%2Bsha.cfdb96085fb7/S11059-0.0.0%2Bsha.cfdb96085fb7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rhyme/library/SPI_IS25LQ032B/0.0.0+sha.3f3dd929e3e5/SPI_IS25LQ032B-0.0.0+sha.3f3dd929e3e5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_IS25LQ032B-0.0.0+sha.3f3dd929e3e5.tar.gz",
+    "size_bytes": 1992,
+    "sha256": "42b9f3749f65a8f258893bd60056eb63277a7a071d9b399b0fd293aeff0b6a3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rhyme/library/SPI_IS25LQ032B/0.0.0%2Bsha.3f3dd929e3e5/SPI_IS25LQ032B-0.0.0%2Bsha.3f3dd929e3e5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rhyme/library/SPI_IS25LQ032B/0.0.0%2Bsha.3f3dd929e3e5/SPI_IS25LQ032B-0.0.0%2Bsha.3f3dd929e3e5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rhyme/library/SPI_M25PE20/0.0.0+sha.580b55070577/SPI_M25PE20-0.0.0+sha.580b55070577.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_M25PE20-0.0.0+sha.580b55070577.tar.gz",
+    "size_bytes": 1922,
+    "sha256": "5af505dfe8d5cf71c746dbac60faab8b7ec6c4c24c0384ad1b731a9368420cdf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rhyme/library/SPI_M25PE20/0.0.0%2Bsha.580b55070577/SPI_M25PE20-0.0.0%2Bsha.580b55070577.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rhyme/library/SPI_M25PE20/0.0.0%2Bsha.580b55070577/SPI_M25PE20-0.0.0%2Bsha.580b55070577.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rhyme/library/SPI_STMPE610/0.0.0+sha.6740dfc84a8c/SPI_STMPE610-0.0.0+sha.6740dfc84a8c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_STMPE610-0.0.0+sha.6740dfc84a8c.tar.gz",
+    "size_bytes": 4462,
+    "sha256": "f0171b3fdd35f83b51a46893181c579e96d8e0128805d15b51df9da117cdf6b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rhyme/library/SPI_STMPE610/0.0.0%2Bsha.6740dfc84a8c/SPI_STMPE610-0.0.0%2Bsha.6740dfc84a8c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rhyme/library/SPI_STMPE610/0.0.0%2Bsha.6740dfc84a8c/SPI_STMPE610-0.0.0%2Bsha.6740dfc84a8c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rhyme/library/SPI_TFT_ILI9341/0.0.0+sha.61fa73a34834/SPI_TFT_ILI9341-0.0.0+sha.61fa73a34834.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_TFT_ILI9341-0.0.0+sha.61fa73a34834.tar.gz",
+    "size_bytes": 11623,
+    "sha256": "f9d20532dae33d37256baa7bf1d6036d72ebf73e3405181172311f9bc490450a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rhyme/library/SPI_TFT_ILI9341/0.0.0%2Bsha.61fa73a34834/SPI_TFT_ILI9341-0.0.0%2Bsha.61fa73a34834.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rhyme/library/SPI_TFT_ILI9341/0.0.0%2Bsha.61fa73a34834/SPI_TFT_ILI9341-0.0.0%2Bsha.61fa73a34834.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rhyme/library/VCNL4010/0.0.0+sha.238c76a37054/VCNL4010-0.0.0+sha.238c76a37054.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VCNL4010-0.0.0+sha.238c76a37054.tar.gz",
+    "size_bytes": 3733,
+    "sha256": "3c463700d081d0b8a5185381c88eeb91ec3b08788b12e00eb693f594d1d0b35c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rhyme/library/VCNL4010/0.0.0%2Bsha.238c76a37054/VCNL4010-0.0.0%2Bsha.238c76a37054.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rhyme/library/VCNL4010/0.0.0%2Bsha.238c76a37054/VCNL4010-0.0.0%2Bsha.238c76a37054.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rhyme/library/vt100/0.0.0+sha.b7229a9eae1c/vt100-0.0.0+sha.b7229a9eae1c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vt100-0.0.0+sha.b7229a9eae1c.tar.gz",
+    "size_bytes": 3047,
+    "sha256": "4d7dbec9a1671fcb45e3a9ce545e63949efbeb21f92736e4f18e3639ba54065d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rhyme/library/vt100/0.0.0%2Bsha.b7229a9eae1c/vt100-0.0.0%2Bsha.b7229a9eae1c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rhyme/library/vt100/0.0.0%2Bsha.b7229a9eae1c/vt100-0.0.0%2Bsha.b7229a9eae1c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-phlb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-phlb/library/lepton-rtos/0.0.0+sha.c7f7ef59617b/lepton-rtos-0.0.0+sha.c7f7ef59617b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lepton-rtos-0.0.0+sha.c7f7ef59617b.tar.gz",
+    "size_bytes": 28614135,
+    "sha256": "4a7c93307aaff7c9109f484526a2a06d3958d4834d72e3191b7742d902948c4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-phlb/library/lepton-rtos/0.0.0%2Bsha.c7f7ef59617b/lepton-rtos-0.0.0%2Bsha.c7f7ef59617b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-phlb/library/lepton-rtos/0.0.0%2Bsha.c7f7ef59617b/lepton-rtos-0.0.0%2Bsha.c7f7ef59617b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

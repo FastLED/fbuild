@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mbed-tw-hoehoe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mbed-tw-hoehoe/library/MPU6050-DMP-Ian/0.0.0+sha.5ac867fee626/MPU6050-DMP-Ian-0.0.0+sha.5ac867fee626.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050-DMP-Ian-0.0.0+sha.5ac867fee626.tar.gz",
+    "size_bytes": 43165,
+    "sha256": "a1fd87e2012c6e740699489b5efddcbc2991bdafae15968f2b98202552068068",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed-tw-hoehoe/library/MPU6050-DMP-Ian/0.0.0%2Bsha.5ac867fee626/MPU6050-DMP-Ian-0.0.0%2Bsha.5ac867fee626.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed-tw-hoehoe/library/MPU6050-DMP-Ian/0.0.0%2Bsha.5ac867fee626/MPU6050-DMP-Ian-0.0.0%2Bsha.5ac867fee626.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mbed-tw-hoehoe/library/MPU6050_Mod/0.0.0+sha.696694693e79/MPU6050_Mod-0.0.0+sha.696694693e79.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050_Mod-0.0.0+sha.696694693e79.tar.gz",
+    "size_bytes": 4729,
+    "sha256": "2ef5682b9b7e3e53bda3b0737675c898f38653ba720f0cec985f1be73897f1ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed-tw-hoehoe/library/MPU6050_Mod/0.0.0%2Bsha.696694693e79/MPU6050_Mod-0.0.0%2Bsha.696694693e79.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed-tw-hoehoe/library/MPU6050_Mod/0.0.0%2Bsha.696694693e79/MPU6050_Mod-0.0.0%2Bsha.696694693e79.tar.gz"
+    ]
+   }
+  }
+ ]
+}

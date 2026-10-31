@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vanderhell",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vanderhell/library/loxdb/1.5.4/loxdb-1.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "loxdb-1.5.4.tar.gz",
+    "size_bytes": 385398,
+    "sha256": "dfc13e90981419fb65154bde0b05aa0a99557cccca45456b5282e2a10254b50c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vanderhell/library/loxdb/1.5.4/loxdb-1.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vanderhell/library/loxdb/1.5.4/loxdb-1.5.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

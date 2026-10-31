@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/amitesh-singh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "amitesh-singh/library/EspDDNS/0.0.2/EspDDNS-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspDDNS-0.0.2.tar.gz",
+    "size_bytes": 6190,
+    "sha256": "657769b93a6ec4fcc24e59bef97369fb9f4042b7771b13efb9ab9e9cc9a91bb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amitesh-singh/library/EspDDNS/0.0.2/EspDDNS-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/amitesh-singh/library/EspDDNS/0.0.2/EspDDNS-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

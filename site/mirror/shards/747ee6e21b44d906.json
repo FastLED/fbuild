@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/matjack1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "matjack1/library/Wiegand%20Protocol%20Library%20for%20Arduino%20-%20for%20esp-rfid/1.1.1/WiegandProtocolLibraryforArduino-foresp-rfid-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiegandProtocolLibraryforArduino-foresp-rfid-1.1.1.tar.gz",
+    "size_bytes": 4993,
+    "sha256": "08e18622758b79bb967893fe358d364cc48fb7de1fdfdc20508e46826a4cfbeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/matjack1/library/Wiegand%2520Protocol%2520Library%2520for%2520Arduino%2520-%2520for%2520esp-rfid/1.1.1/WiegandProtocolLibraryforArduino-foresp-rfid-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/matjack1/library/Wiegand%20Protocol%20Library%20for%20Arduino%20-%20for%20esp-rfid/1.1.1/WiegandProtocolLibraryforArduino-foresp-rfid-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

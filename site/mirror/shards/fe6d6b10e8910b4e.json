@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/quantumleaps",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "quantumleaps/library/qp-arduino/6.9.6/qp-arduino-6.9.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "qp-arduino-6.9.6.tar.gz",
+    "size_bytes": 145163,
+    "sha256": "9e5571686635740f1a7670e24ab43e7b23eea3b7550b98e7e4ba99395ca7f50e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/quantumleaps/library/qp-arduino/6.9.6/qp-arduino-6.9.6.tar.gz",
+     "https://dl.registry.platformio.org/download/quantumleaps/library/qp-arduino/6.9.6/qp-arduino-6.9.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "quantumleaps/library/qp-arduino/7.3.4/qp-arduino-7.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "qp-arduino-7.3.4.tar.gz",
+    "size_bytes": 232471,
+    "sha256": "435a77c8abff5bbf053465cad7d3c85415eaaa2f7fe466bb1211529b384118a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/quantumleaps/library/qp-arduino/7.3.4/qp-arduino-7.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/quantumleaps/library/qp-arduino/7.3.4/qp-arduino-7.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "quantumleaps/library/qpc/6.3.7/qpc-6.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "qpc-6.3.7.tar.gz",
+    "size_bytes": 8905426,
+    "sha256": "ad1702dbdd15a7bfafe923516ecb6f69fbe55f37f0a2890f171853061e3ffdf6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/quantumleaps/library/qpc/6.3.7/qpc-6.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/quantumleaps/library/qpc/6.3.7/qpc-6.3.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

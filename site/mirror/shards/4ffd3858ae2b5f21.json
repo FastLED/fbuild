@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mattegan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mattegan/library/lcd/0.0.0+sha.0db835052212/lcd-0.0.0+sha.0db835052212.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lcd-0.0.0+sha.0db835052212.tar.gz",
+    "size_bytes": 2786,
+    "sha256": "d60e5122fcc935e9dba3cebef4aa416de759c8fa6d4a1e60230d957c82e72266",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mattegan/library/lcd/0.0.0%2Bsha.0db835052212/lcd-0.0.0%2Bsha.0db835052212.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mattegan/library/lcd/0.0.0%2Bsha.0db835052212/lcd-0.0.0%2Bsha.0db835052212.tar.gz"
+    ]
+   }
+  }
+ ]
+}

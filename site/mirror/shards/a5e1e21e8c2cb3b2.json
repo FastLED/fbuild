@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/darrenjcosborne",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "darrenjcosborne/library/Nextion%20Serial%20String/1.0.0/NextionSerialString-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NextionSerialString-1.0.0.tar.gz",
+    "size_bytes": 101367,
+    "sha256": "f13a02905f76ef669d88fc665c9704b6b1ea33d6ca69f39814ac3cbdeea4279a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/darrenjcosborne/library/Nextion%2520Serial%2520String/1.0.0/NextionSerialString-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/darrenjcosborne/library/Nextion%20Serial%20String/1.0.0/NextionSerialString-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

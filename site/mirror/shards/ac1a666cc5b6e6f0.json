@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/slashdevin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "slashdevin/library/NeoBufferedPrint/1.0.0/NeoBufferedPrint-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoBufferedPrint-1.0.0.tar.gz",
+    "size_bytes": 15814,
+    "sha256": "33e34ad3554a84d81531a0c7e437f7c4a06e0a8e5d4fe2f3e9e25252daaced3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/slashdevin/library/NeoBufferedPrint/1.0.0/NeoBufferedPrint-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/slashdevin/library/NeoBufferedPrint/1.0.0/NeoBufferedPrint-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "slashdevin/library/NeoGPS/4.2.9/NeoGPS-4.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoGPS-4.2.9.tar.gz",
+    "size_bytes": 105681,
+    "sha256": "a9e4fe96e01d651811df95312ea3a613cec5873c069dc80b2c9e658117b9a82e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/slashdevin/library/NeoGPS/4.2.9/NeoGPS-4.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/slashdevin/library/NeoGPS/4.2.9/NeoGPS-4.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "slashdevin/library/NeoSWSerial/3.0.5/NeoSWSerial-3.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoSWSerial-3.0.5.tar.gz",
+    "size_bytes": 8003,
+    "sha256": "98026984a41b662ca7bd0e625b6c3acd23c2d94ee16b0b510cf448d88db5adfa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/slashdevin/library/NeoSWSerial/3.0.5/NeoSWSerial-3.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/slashdevin/library/NeoSWSerial/3.0.5/NeoSWSerial-3.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

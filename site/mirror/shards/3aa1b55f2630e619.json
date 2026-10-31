@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kdaniels-dev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kdaniels-dev/library/Stepper595/1.1.0/Stepper595-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stepper595-1.1.0.tar.gz",
+    "size_bytes": 15207,
+    "sha256": "581465f466734c1f30f4bc1a644c87a229060189593011c50fb2e5e69b5c48a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kdaniels-dev/library/Stepper595/1.1.0/Stepper595-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kdaniels-dev/library/Stepper595/1.1.0/Stepper595-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

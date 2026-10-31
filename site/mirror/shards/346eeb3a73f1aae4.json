@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/byrmeng",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "byrmeng/library/Deneyap%20Kart%20QRCodeReader/1.0.2/DeneyapKartQRCodeReader-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapKartQRCodeReader-1.0.2.tar.gz",
+    "size_bytes": 25986,
+    "sha256": "81a775c0147a3d63b8c7897b283cd569c332daa0f91885d841127112469216ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/byrmeng/library/Deneyap%2520Kart%2520QRCodeReader/1.0.2/DeneyapKartQRCodeReader-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/byrmeng/library/Deneyap%20Kart%20QRCodeReader/1.0.2/DeneyapKartQRCodeReader-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

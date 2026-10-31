@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chunkysteveo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chunkysteveo/library/FortniteAPI/1.0.1/FortniteAPI-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FortniteAPI-1.0.1.tar.gz",
+    "size_bytes": 14250,
+    "sha256": "a8278288a7967f577b965ff905e71a1a071f055a090a029fbff3735d2c47c014",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chunkysteveo/library/FortniteAPI/1.0.1/FortniteAPI-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chunkysteveo/library/FortniteAPI/1.0.1/FortniteAPI-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chunkysteveo/library/OctoPrintAPI/1.1.6/OctoPrintAPI-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OctoPrintAPI-1.1.6.tar.gz",
+    "size_bytes": 21968,
+    "sha256": "1dafdbde2dabcfe46b0e921c83acdb360a6942d399eacc764e9eaf9db309cce0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chunkysteveo/library/OctoPrintAPI/1.1.6/OctoPrintAPI-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/chunkysteveo/library/OctoPrintAPI/1.1.6/OctoPrintAPI-1.1.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/treboada",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "treboada/library/AsyncBlinker/1.0.2/AsyncBlinker-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncBlinker-1.0.2.tar.gz",
+    "size_bytes": 16770,
+    "sha256": "2ea590c55a3cbdef3e9498e34eb2adca41927c6135a03d2591d52b3135fdfb4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/treboada/library/AsyncBlinker/1.0.2/AsyncBlinker-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/treboada/library/AsyncBlinker/1.0.2/AsyncBlinker-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "treboada/library/Ds1307/1.0.2/Ds1307-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ds1307-1.0.2.tar.gz",
+    "size_bytes": 345857,
+    "sha256": "838f6860aee27dd25406a0d2c3555ab83ccca3876fc55932fee9835dae974857",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/treboada/library/Ds1307/1.0.2/Ds1307-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/treboada/library/Ds1307/1.0.2/Ds1307-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "treboada/library/LoopTicker/1.1.0/LoopTicker-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoopTicker-1.1.0.tar.gz",
+    "size_bytes": 16361,
+    "sha256": "4c83dbc1b1491106ec099ca647aec39d64738fa94ffb2c169465d1c584ffbcce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/treboada/library/LoopTicker/1.1.0/LoopTicker-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/treboada/library/LoopTicker/1.1.0/LoopTicker-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

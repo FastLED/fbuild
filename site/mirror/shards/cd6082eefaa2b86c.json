@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ece-4180",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ece-4180/library/Stepper_Motor_X27168/0.0.0+sha.c346170974bc/Stepper_Motor_X27168-0.0.0+sha.c346170974bc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stepper_Motor_X27168-0.0.0+sha.c346170974bc.tar.gz",
+    "size_bytes": 2580,
+    "sha256": "1c4be3d049e08d3088a5727f7d0618707f24cbc7e2af2a9df40504b681891923",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ece-4180/library/Stepper_Motor_X27168/0.0.0%2Bsha.c346170974bc/Stepper_Motor_X27168-0.0.0%2Bsha.c346170974bc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ece-4180/library/Stepper_Motor_X27168/0.0.0%2Bsha.c346170974bc/Stepper_Motor_X27168-0.0.0%2Bsha.c346170974bc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

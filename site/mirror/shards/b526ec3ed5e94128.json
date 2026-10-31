@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ilyngklip",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ilyngklip/library/Rfid/0.0.0+sha.051708395e3c/Rfid-0.0.0+sha.051708395e3c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rfid-0.0.0+sha.051708395e3c.tar.gz",
+    "size_bytes": 4972,
+    "sha256": "b10372c0fc5b8b5458f5290e40255949097c78c047721596c133cdae1756db09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ilyngklip/library/Rfid/0.0.0%2Bsha.051708395e3c/Rfid-0.0.0%2Bsha.051708395e3c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ilyngklip/library/Rfid/0.0.0%2Bsha.051708395e3c/Rfid-0.0.0%2Bsha.051708395e3c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ilyngklip/library/SDFileSystemv2/0.0.0+sha.7e57976a47d8/SDFileSystemv2-0.0.0+sha.7e57976a47d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDFileSystemv2-0.0.0+sha.7e57976a47d8.tar.gz",
+    "size_bytes": 5894,
+    "sha256": "cb71422aa13655153e572821fbe13630b5242b554be1c4fea145e01299ad5f63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ilyngklip/library/SDFileSystemv2/0.0.0%2Bsha.7e57976a47d8/SDFileSystemv2-0.0.0%2Bsha.7e57976a47d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ilyngklip/library/SDFileSystemv2/0.0.0%2Bsha.7e57976a47d8/SDFileSystemv2-0.0.0%2Bsha.7e57976a47d8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ilyngklip/library/SG90/0.0.0+sha.a62b163b1dbb/SG90-0.0.0+sha.a62b163b1dbb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SG90-0.0.0+sha.a62b163b1dbb.tar.gz",
+    "size_bytes": 1371,
+    "sha256": "d93d44f7116f4a5f4a8d13d591ea7908c17a38f8ef52cb05db2d8d3d7dfb11ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ilyngklip/library/SG90/0.0.0%2Bsha.a62b163b1dbb/SG90-0.0.0%2Bsha.a62b163b1dbb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ilyngklip/library/SG90/0.0.0%2Bsha.a62b163b1dbb/SG90-0.0.0%2Bsha.a62b163b1dbb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ilyngklip/library/hack_motor/0.0.0+sha.66a1feb3ba85/hack_motor-0.0.0+sha.66a1feb3ba85.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hack_motor-0.0.0+sha.66a1feb3ba85.tar.gz",
+    "size_bytes": 1261,
+    "sha256": "6ea11115bb529022e34d31c41667fe2729c18de368e2debb71ffbb5d6d77abdc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ilyngklip/library/hack_motor/0.0.0%2Bsha.66a1feb3ba85/hack_motor-0.0.0%2Bsha.66a1feb3ba85.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ilyngklip/library/hack_motor/0.0.0%2Bsha.66a1feb3ba85/hack_motor-0.0.0%2Bsha.66a1feb3ba85.tar.gz"
+    ]
+   }
+  }
+ ]
+}

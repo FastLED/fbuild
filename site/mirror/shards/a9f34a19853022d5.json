@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-thingerio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-thingerio/library/ThingerClient/0.0.0+sha.de51256455f7/ThingerClient-0.0.0+sha.de51256455f7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingerClient-0.0.0+sha.de51256455f7.tar.gz",
+    "size_bytes": 12987,
+    "sha256": "dea473ab2c112a000492c19d0b1f283d8dc53cd6f1cd6daf76e69d1bda7d874a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thingerio/library/ThingerClient/0.0.0%2Bsha.de51256455f7/ThingerClient-0.0.0%2Bsha.de51256455f7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thingerio/library/ThingerClient/0.0.0%2Bsha.de51256455f7/ThingerClient-0.0.0%2Bsha.de51256455f7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-thingerio/library/ThingerEthernetClient/0.0.0+sha.a38b8921ff2c/ThingerEthernetClient-0.0.0+sha.a38b8921ff2c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingerEthernetClient-0.0.0+sha.a38b8921ff2c.tar.gz",
+    "size_bytes": 1593,
+    "sha256": "9cddfa22717413617e18d19035c08f54128cf403e5fd4326b98b69f9e3bee1a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thingerio/library/ThingerEthernetClient/0.0.0%2Bsha.a38b8921ff2c/ThingerEthernetClient-0.0.0%2Bsha.a38b8921ff2c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thingerio/library/ThingerEthernetClient/0.0.0%2Bsha.a38b8921ff2c/ThingerEthernetClient-0.0.0%2Bsha.a38b8921ff2c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-thingerio/library/ThingerWIZnetClient/0.0.0+sha.98914de56323/ThingerWIZnetClient-0.0.0+sha.98914de56323.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingerWIZnetClient-0.0.0+sha.98914de56323.tar.gz",
+    "size_bytes": 1506,
+    "sha256": "0a36e8df2299e05f973c9ef9bdc00ab88c9bc35f83b090f7bdb0257219ced002",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thingerio/library/ThingerWIZnetClient/0.0.0%2Bsha.98914de56323/ThingerWIZnetClient-0.0.0%2Bsha.98914de56323.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thingerio/library/ThingerWIZnetClient/0.0.0%2Bsha.98914de56323/ThingerWIZnetClient-0.0.0%2Bsha.98914de56323.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/amperka",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "amperka/library/AmperkaFET/1.0.0/AmperkaFET-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmperkaFET-1.0.0.tar.gz",
+    "size_bytes": 2359,
+    "sha256": "096ed646e15ddbe7a225eef915ad0962a30cfc5396bdc1017d0355196abd64fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amperka/library/AmperkaFET/1.0.0/AmperkaFET-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/amperka/library/AmperkaFET/1.0.0/AmperkaFET-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amperka/library/Octofet/1.0.0/Octofet-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Octofet-1.0.0.tar.gz",
+    "size_bytes": 15787,
+    "sha256": "dacefb87ac4a21300fe0c2489acf59611e33f4776fae39e2e4bac0c4fc6d3629",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amperka/library/Octofet/1.0.0/Octofet-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/amperka/library/Octofet/1.0.0/Octofet-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amperka/library/Troyka-IMU/2.0.0/Troyka-IMU-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Troyka-IMU-2.0.0.tar.gz",
+    "size_bytes": 26011,
+    "sha256": "dcc9ed1d63daf77c8b6c3439d49526f259be71fd3213f7e8fc0fc7a5bde00006",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amperka/library/Troyka-IMU/2.0.0/Troyka-IMU-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/amperka/library/Troyka-IMU/2.0.0/Troyka-IMU-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amperka/library/TroykaAccelerometer/1.0.0/TroykaAccelerometer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TroykaAccelerometer-1.0.0.tar.gz",
+    "size_bytes": 3088,
+    "sha256": "d9276a44b091d8d1ad3a3b24b1c32f11bd7412d3ba2e3cc640df030e8c4d51ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amperka/library/TroykaAccelerometer/1.0.0/TroykaAccelerometer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/amperka/library/TroykaAccelerometer/1.0.0/TroykaAccelerometer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amperka/library/TroykaDHT/1.0.0/TroykaDHT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TroykaDHT-1.0.0.tar.gz",
+    "size_bytes": 3298,
+    "sha256": "1a6a915199aaa0d8dcc561671b40c5aec25da8520a05c4490547a084b827fb73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amperka/library/TroykaDHT/1.0.0/TroykaDHT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/amperka/library/TroykaDHT/1.0.0/TroykaDHT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amperka/library/TroykaGPS/1.0.0/TroykaGPS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TroykaGPS-1.0.0.tar.gz",
+    "size_bytes": 7401,
+    "sha256": "38e7299529f239eeb01e811b2bb0d80f3e01fd8d56cf4e60fe77255afc0a3965",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amperka/library/TroykaGPS/1.0.0/TroykaGPS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/amperka/library/TroykaGPS/1.0.0/TroykaGPS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amperka/library/TroykaI2CHub/1.0.0/TroykaI2CHub-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TroykaI2CHub-1.0.0.tar.gz",
+    "size_bytes": 2663,
+    "sha256": "3be02a3facbf5cd2fb51cceec5f3bbab5b10f105d4203b31de35fd7f317ad2d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amperka/library/TroykaI2CHub/1.0.0/TroykaI2CHub-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/amperka/library/TroykaI2CHub/1.0.0/TroykaI2CHub-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amperka/library/TroykaLight/1.0.0/TroykaLight-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TroykaLight-1.0.0.tar.gz",
+    "size_bytes": 2025,
+    "sha256": "3704c1a51b19f6b250cd7814f5fb8e444cb443bc3ec15279f6d3388801cc9fc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amperka/library/TroykaLight/1.0.0/TroykaLight-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/amperka/library/TroykaLight/1.0.0/TroykaLight-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amperka/library/TroykaMQ/1.0.0/TroykaMQ-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TroykaMQ-1.0.0.tar.gz",
+    "size_bytes": 7353,
+    "sha256": "1473475f5758ce0d546c0c1d3026b8d93a639f0e31d576e7c3507a21b8dde2f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amperka/library/TroykaMQ/1.0.0/TroykaMQ-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/amperka/library/TroykaMQ/1.0.0/TroykaMQ-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amperka/library/TroykaMQ/1.1/TroykaMQ-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TroykaMQ-1.1.tar.gz",
+    "size_bytes": 7419,
+    "sha256": "0382aab7421e61213065c5ceb25755df228874f88de24902936c750c041567a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amperka/library/TroykaMQ/1.1/TroykaMQ-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/amperka/library/TroykaMQ/1.1/TroykaMQ-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "amperka/library/TroykaThermometer/1.0.0/TroykaThermometer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TroykaThermometer-1.0.0.tar.gz",
+    "size_bytes": 2120,
+    "sha256": "552a76dd2adb853c945d48828e6f3220a7cc6a38c3e2bfb4f4ab50568dcf5277",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amperka/library/TroykaThermometer/1.0.0/TroykaThermometer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/amperka/library/TroykaThermometer/1.0.0/TroykaThermometer-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

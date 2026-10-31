@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-flatbird",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-flatbird/library/WebSocketServer/0.0.0+sha.db41b4e0d64b/WebSocketServer-0.0.0+sha.db41b4e0d64b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSocketServer-0.0.0+sha.db41b4e0d64b.tar.gz",
+    "size_bytes": 7669,
+    "sha256": "d19f048049ffa26ea021e73d20fd79e1161998e316d83f178157e42a74369276",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-flatbird/library/WebSocketServer/0.0.0%2Bsha.db41b4e0d64b/WebSocketServer-0.0.0%2Bsha.db41b4e0d64b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-flatbird/library/WebSocketServer/0.0.0%2Bsha.db41b4e0d64b/WebSocketServer-0.0.0%2Bsha.db41b4e0d64b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

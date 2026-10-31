@@ -1,0 +1,282 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tvz-mechatronics-team",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tvz-mechatronics-team/library/AutomationElements/0.0.0+sha.b9e11da0f2eb/AutomationElements-0.0.0+sha.b9e11da0f2eb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutomationElements-0.0.0+sha.b9e11da0f2eb.tar.gz",
+    "size_bytes": 3711,
+    "sha256": "de406719b8575659dea75e629f425eebd9aaed99b58de2820c98aae736774034",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/AutomationElements/0.0.0%2Bsha.b9e11da0f2eb/AutomationElements-0.0.0%2Bsha.b9e11da0f2eb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/AutomationElements/0.0.0%2Bsha.b9e11da0f2eb/AutomationElements-0.0.0%2Bsha.b9e11da0f2eb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/BLDCmotorDriver/0.0.0+sha.f56d1fb53d9b/BLDCmotorDriver-0.0.0+sha.f56d1fb53d9b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLDCmotorDriver-0.0.0+sha.f56d1fb53d9b.tar.gz",
+    "size_bytes": 2315,
+    "sha256": "6e0d1be3d39a33cbd896dec5a4d7582e84f36b039ae7a699af87e5697ade2eb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/BLDCmotorDriver/0.0.0%2Bsha.f56d1fb53d9b/BLDCmotorDriver-0.0.0%2Bsha.f56d1fb53d9b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/BLDCmotorDriver/0.0.0%2Bsha.f56d1fb53d9b/BLDCmotorDriver-0.0.0%2Bsha.f56d1fb53d9b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/Beepaj/0.0.0+sha.1843b5f93694/Beepaj-0.0.0+sha.1843b5f93694.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Beepaj-0.0.0+sha.1843b5f93694.tar.gz",
+    "size_bytes": 1045,
+    "sha256": "c677694a7441094c52a61b9be1ef8ff13f4ea0f4070accf70f36c05095bcbb55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/Beepaj/0.0.0%2Bsha.1843b5f93694/Beepaj-0.0.0%2Bsha.1843b5f93694.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/Beepaj/0.0.0%2Bsha.1843b5f93694/Beepaj-0.0.0%2Bsha.1843b5f93694.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/Blinker/0.0.0+sha.abcdbfe38247/Blinker-0.0.0+sha.abcdbfe38247.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blinker-0.0.0+sha.abcdbfe38247.tar.gz",
+    "size_bytes": 1671,
+    "sha256": "4e14a045bd8929ec6fc9ae97df9cddcaaa1887a2c507976fa214c2fc8a224b6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/Blinker/0.0.0%2Bsha.abcdbfe38247/Blinker-0.0.0%2Bsha.abcdbfe38247.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/Blinker/0.0.0%2Bsha.abcdbfe38247/Blinker-0.0.0%2Bsha.abcdbfe38247.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/Bomba/0.0.0+sha.6a7df3c69564/Bomba-0.0.0+sha.6a7df3c69564.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bomba-0.0.0+sha.6a7df3c69564.tar.gz",
+    "size_bytes": 1300,
+    "sha256": "725423b625fbf91f0705dd2b3e4ede6b0c1680bd1446384cc3a7197236a2ef5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/Bomba/0.0.0%2Bsha.6a7df3c69564/Bomba-0.0.0%2Bsha.6a7df3c69564.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/Bomba/0.0.0%2Bsha.6a7df3c69564/Bomba-0.0.0%2Bsha.6a7df3c69564.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/DRV8301/0.0.0+sha.f245fce762f6/DRV8301-0.0.0+sha.f245fce762f6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DRV8301-0.0.0+sha.f245fce762f6.tar.gz",
+    "size_bytes": 3981,
+    "sha256": "e5c912b1a3a8ec76207fdecd3ad70ffc801bbe9032fa59fcd9e1a2809f9c90de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/DRV8301/0.0.0%2Bsha.f245fce762f6/DRV8301-0.0.0%2Bsha.f245fce762f6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/DRV8301/0.0.0%2Bsha.f245fce762f6/DRV8301-0.0.0%2Bsha.f245fce762f6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/Flash/0.0.0+sha.0414cef3e9d6/Flash-0.0.0+sha.0414cef3e9d6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Flash-0.0.0+sha.0414cef3e9d6.tar.gz",
+    "size_bytes": 1911,
+    "sha256": "980410af005f31ac1176698570740564367cbd396045bb81d1efdb43f844c2a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/Flash/0.0.0%2Bsha.0414cef3e9d6/Flash-0.0.0%2Bsha.0414cef3e9d6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/Flash/0.0.0%2Bsha.0414cef3e9d6/Flash-0.0.0%2Bsha.0414cef3e9d6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/HBridgeDCMotor/0.0.0+sha.7016f3b1ec44/HBridgeDCMotor-0.0.0+sha.7016f3b1ec44.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HBridgeDCMotor-0.0.0+sha.7016f3b1ec44.tar.gz",
+    "size_bytes": 2336,
+    "sha256": "ad8b6247aaf1c9dc599cedf7a75e961b5a49ee51f8f27b121a6a2af1ed90e8b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/HBridgeDCMotor/0.0.0%2Bsha.7016f3b1ec44/HBridgeDCMotor-0.0.0%2Bsha.7016f3b1ec44.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/HBridgeDCMotor/0.0.0%2Bsha.7016f3b1ec44/HBridgeDCMotor-0.0.0%2Bsha.7016f3b1ec44.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/Heater/0.0.0+sha.eb243c2ffbfe/Heater-0.0.0+sha.eb243c2ffbfe.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Heater-0.0.0+sha.eb243c2ffbfe.tar.gz",
+    "size_bytes": 1518,
+    "sha256": "759b9eaee6466a2b9b98369efd3bd494e428422f44ea58b2584d8a1f8d1ee711",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/Heater/0.0.0%2Bsha.eb243c2ffbfe/Heater-0.0.0%2Bsha.eb243c2ffbfe.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/Heater/0.0.0%2Bsha.eb243c2ffbfe/Heater-0.0.0%2Bsha.eb243c2ffbfe.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/Kuhalo/0.0.0+sha.b2d57993ce40/Kuhalo-0.0.0+sha.b2d57993ce40.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Kuhalo-0.0.0+sha.b2d57993ce40.tar.gz",
+    "size_bytes": 1314,
+    "sha256": "06682a83dc11ff74c4610cea6d09edcabf843b82763f835b1d268c90f7e55455",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/Kuhalo/0.0.0%2Bsha.b2d57993ce40/Kuhalo-0.0.0%2Bsha.b2d57993ce40.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/Kuhalo/0.0.0%2Bsha.b2d57993ce40/Kuhalo-0.0.0%2Bsha.b2d57993ce40.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/Mikrovalna/0.0.0+sha.df735aa160f3/Mikrovalna-0.0.0+sha.df735aa160f3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mikrovalna-0.0.0+sha.df735aa160f3.tar.gz",
+    "size_bytes": 1433,
+    "sha256": "1a2eb3d87b0ca10d4caf1cfb6664d613ef060f45d13c645e7c7b0bb2c7da3044",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/Mikrovalna/0.0.0%2Bsha.df735aa160f3/Mikrovalna-0.0.0%2Bsha.df735aa160f3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/Mikrovalna/0.0.0%2Bsha.df735aa160f3/Mikrovalna-0.0.0%2Bsha.df735aa160f3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/RateLimiter/0.0.0+sha.d735360f91f9/RateLimiter-0.0.0+sha.d735360f91f9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RateLimiter-0.0.0+sha.d735360f91f9.tar.gz",
+    "size_bytes": 1405,
+    "sha256": "b5cb1e0141b4cbd23f5302b8890a233373e7ca8d7d6bc845c0b865e2fe6abb55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/RateLimiter/0.0.0%2Bsha.d735360f91f9/RateLimiter-0.0.0%2Bsha.d735360f91f9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/RateLimiter/0.0.0%2Bsha.d735360f91f9/RateLimiter-0.0.0%2Bsha.d735360f91f9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/SevenSegmentDisplay/0.0.0+sha.21f0a3289449/SevenSegmentDisplay-0.0.0+sha.21f0a3289449.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSegmentDisplay-0.0.0+sha.21f0a3289449.tar.gz",
+    "size_bytes": 1789,
+    "sha256": "a770b8dea09987c59dfae20cde9621c1a0a32ffeedfddff796d37699d489428e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/SevenSegmentDisplay/0.0.0%2Bsha.21f0a3289449/SevenSegmentDisplay-0.0.0%2Bsha.21f0a3289449.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/SevenSegmentDisplay/0.0.0%2Bsha.21f0a3289449/SevenSegmentDisplay-0.0.0%2Bsha.21f0a3289449.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/SinusGen/0.0.0+sha.3dddb6a52298/SinusGen-0.0.0+sha.3dddb6a52298.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SinusGen-0.0.0+sha.3dddb6a52298.tar.gz",
+    "size_bytes": 1398,
+    "sha256": "4d52d1709c12a215fc2759d24c9b00c3c15a1e932113c92dc5616464056b14f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/SinusGen/0.0.0%2Bsha.3dddb6a52298/SinusGen-0.0.0%2Bsha.3dddb6a52298.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/SinusGen/0.0.0%2Bsha.3dddb6a52298/SinusGen-0.0.0%2Bsha.3dddb6a52298.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/StepperDriver/0.0.0+sha.05586e7efd2b/StepperDriver-0.0.0+sha.05586e7efd2b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperDriver-0.0.0+sha.05586e7efd2b.tar.gz",
+    "size_bytes": 2232,
+    "sha256": "279efc81006bfc2bac9ea88a3174dd45319d87837f7f0f59657facbfe3f66480",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/StepperDriver/0.0.0%2Bsha.05586e7efd2b/StepperDriver-0.0.0%2Bsha.05586e7efd2b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/StepperDriver/0.0.0%2Bsha.05586e7efd2b/StepperDriver-0.0.0%2Bsha.05586e7efd2b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/Stoperica/0.0.0+sha.4be9b47b9af5/Stoperica-0.0.0+sha.4be9b47b9af5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stoperica-0.0.0+sha.4be9b47b9af5.tar.gz",
+    "size_bytes": 1269,
+    "sha256": "581bb3e2ffd597ddfcbdaf914fd0087c4ea4345f878e66663b6a8c06a87b87c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/Stoperica/0.0.0%2Bsha.4be9b47b9af5/Stoperica-0.0.0%2Bsha.4be9b47b9af5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/Stoperica/0.0.0%2Bsha.4be9b47b9af5/Stoperica-0.0.0%2Bsha.4be9b47b9af5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/Stoperica2/0.0.0+sha.315ad27c0acb/Stoperica2-0.0.0+sha.315ad27c0acb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stoperica2-0.0.0+sha.315ad27c0acb.tar.gz",
+    "size_bytes": 1321,
+    "sha256": "f0b63c6c78574e8dcbf7907bba6c02550759237e28689b7411e5c05394523f41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/Stoperica2/0.0.0%2Bsha.315ad27c0acb/Stoperica2-0.0.0%2Bsha.315ad27c0acb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/Stoperica2/0.0.0%2Bsha.315ad27c0acb/Stoperica2-0.0.0%2Bsha.315ad27c0acb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/Sviraj/0.0.0+sha.66329e66d1c9/Sviraj-0.0.0+sha.66329e66d1c9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sviraj-0.0.0+sha.66329e66d1c9.tar.gz",
+    "size_bytes": 1058,
+    "sha256": "716bd769f69c9157d68816942a79e3980ffe871faa5ce83d4d2ca461c4fe5d05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/Sviraj/0.0.0%2Bsha.66329e66d1c9/Sviraj-0.0.0%2Bsha.66329e66d1c9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/Sviraj/0.0.0%2Bsha.66329e66d1c9/Sviraj-0.0.0%2Bsha.66329e66d1c9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/TempSenzor/0.0.0+sha.af5927fceeb9/TempSenzor-0.0.0+sha.af5927fceeb9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TempSenzor-0.0.0+sha.af5927fceeb9.tar.gz",
+    "size_bytes": 1372,
+    "sha256": "9c510e970a537b440d337087ee2718cec6fb08a7764cfb25a031178c2b4c834c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/TempSenzor/0.0.0%2Bsha.af5927fceeb9/TempSenzor-0.0.0%2Bsha.af5927fceeb9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/TempSenzor/0.0.0%2Bsha.af5927fceeb9/TempSenzor-0.0.0%2Bsha.af5927fceeb9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/Temperatura/0.0.0+sha.c1c396a29e74/Temperatura-0.0.0+sha.c1c396a29e74.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Temperatura-0.0.0+sha.c1c396a29e74.tar.gz",
+    "size_bytes": 1616,
+    "sha256": "456cac2a4fba3eff24324d4b629e9f3b6a4aff753f5146dd4974f948f7435d48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/Temperatura/0.0.0%2Bsha.c1c396a29e74/Temperatura-0.0.0%2Bsha.c1c396a29e74.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/Temperatura/0.0.0%2Bsha.c1c396a29e74/Temperatura-0.0.0%2Bsha.c1c396a29e74.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tvz-mechatronics-team/library/TruePWM/0.0.0+sha.881243185b6a/TruePWM-0.0.0+sha.881243185b6a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TruePWM-0.0.0+sha.881243185b6a.tar.gz",
+    "size_bytes": 2492,
+    "sha256": "199ef4802a6210f006eab327e9e8892d719b26fb7699cd4bb1d23b9068729f04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tvz-mechatronics-team/library/TruePWM/0.0.0%2Bsha.881243185b6a/TruePWM-0.0.0%2Bsha.881243185b6a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tvz-mechatronics-team/library/TruePWM/0.0.0%2Bsha.881243185b6a/TruePWM-0.0.0%2Bsha.881243185b6a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

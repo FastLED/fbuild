@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/project-procrastinator",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "project-procrastinator/library/AW21036%20Arduino%20Library/1.0.0/AW21036ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AW21036ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 10870,
+    "sha256": "65d08b5da464fcfec8caa7f9cc86de0c675ec76f36521a491aa8e19704549f02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/project-procrastinator/library/AW21036%2520Arduino%2520Library/1.0.0/AW21036ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/project-procrastinator/library/AW21036%20Arduino%20Library/1.0.0/AW21036ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/abishur",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "abishur/library/MS5x/1.0.0/MS5x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MS5x-1.0.0.tar.gz",
+    "size_bytes": 24423,
+    "sha256": "48dc00bb0f518f557d21841f3e60c85fd469c0c4f35cca156690a8a942070641",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abishur/library/MS5x/1.0.0/MS5x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/abishur/library/MS5x/1.0.0/MS5x-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

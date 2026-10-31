@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mayuripathrabe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mayuripathrabe/library/Ambiq%20Apollo2%20Eval/1.0.0/AmbiqApollo2Eval-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmbiqApollo2Eval-1.0.0.tar.gz",
+    "size_bytes": 2423,
+    "sha256": "a43ca0c48b4d98f5b3bc26bcb9db6d8daabf8c3604f9197da2c38685229c24e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mayuripathrabe/library/Ambiq%2520Apollo2%2520Eval/1.0.0/AmbiqApollo2Eval-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mayuripathrabe/library/Ambiq%20Apollo2%20Eval/1.0.0/AmbiqApollo2Eval-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

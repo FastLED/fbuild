@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nbourre",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nbourre/library/MakeBlock%20Drive%20Updated/3.28.2/MakeBlockDriveUpdated-3.28.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MakeBlockDriveUpdated-3.28.2.tar.gz",
+    "size_bytes": 223670,
+    "sha256": "c96f82747a1dd2b1b1acd84426ed90b78926331103295c336a5836c3c5892709",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nbourre/library/MakeBlock%2520Drive%2520Updated/3.28.2/MakeBlockDriveUpdated-3.28.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nbourre/library/MakeBlock%20Drive%20Updated/3.28.2/MakeBlockDriveUpdated-3.28.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nbourre/library/MakeBlock%20Drive%20Updated/3.29.0/MakeBlockDriveUpdated-3.29.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MakeBlockDriveUpdated-3.29.0.tar.gz",
+    "size_bytes": 225856,
+    "sha256": "7b9aca18569a9c2c871b18f80d9ee65a01616d287559460dd649cb032878cee5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nbourre/library/MakeBlock%2520Drive%2520Updated/3.29.0/MakeBlockDriveUpdated-3.29.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nbourre/library/MakeBlock%20Drive%20Updated/3.29.0/MakeBlockDriveUpdated-3.29.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nbourre/library/MakeBlock%20Drive%20Updated/3.29.1/MakeBlockDriveUpdated-3.29.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MakeBlockDriveUpdated-3.29.1.tar.gz",
+    "size_bytes": 226618,
+    "sha256": "df36a3a19d10fa139accaee38bfca57dc888b3f9088612d4e3d4b59314638a2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nbourre/library/MakeBlock%2520Drive%2520Updated/3.29.1/MakeBlockDriveUpdated-3.29.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nbourre/library/MakeBlock%20Drive%20Updated/3.29.1/MakeBlockDriveUpdated-3.29.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nbourre/library/MakeBlock%20Drive%20Updated/3.30.0/MakeBlockDriveUpdated-3.30.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MakeBlockDriveUpdated-3.30.0.tar.gz",
+    "size_bytes": 230753,
+    "sha256": "ef868d24beac1665c62126521d6e8e6a25993f64dd3fdbfabea8b9630d274f68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nbourre/library/MakeBlock%2520Drive%2520Updated/3.30.0/MakeBlockDriveUpdated-3.30.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nbourre/library/MakeBlock%20Drive%20Updated/3.30.0/MakeBlockDriveUpdated-3.30.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nbourre/library/MakeBlock%20Drive%20Updated/3.31.0/MakeBlockDriveUpdated-3.31.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MakeBlockDriveUpdated-3.31.0.tar.gz",
+    "size_bytes": 231469,
+    "sha256": "b940b2420784d84bb59a27116e052c832fe5e631719b6fedee06eb1ae4b0d394",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nbourre/library/MakeBlock%2520Drive%2520Updated/3.31.0/MakeBlockDriveUpdated-3.31.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nbourre/library/MakeBlock%20Drive%20Updated/3.31.0/MakeBlockDriveUpdated-3.31.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

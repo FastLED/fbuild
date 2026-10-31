@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-khalaj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-khalaj/library/NOKIA_5110/0.0.0+sha.3b470a4bf5b2/NOKIA_5110-0.0.0+sha.3b470a4bf5b2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NOKIA_5110-0.0.0+sha.3b470a4bf5b2.tar.gz",
+    "size_bytes": 4384,
+    "sha256": "94b1dc812608726ca1d7d719eed3a86767492245899efe80b9c4d2dc27a99fbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-khalaj/library/NOKIA_5110/0.0.0%2Bsha.3b470a4bf5b2/NOKIA_5110-0.0.0%2Bsha.3b470a4bf5b2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-khalaj/library/NOKIA_5110/0.0.0%2Bsha.3b470a4bf5b2/NOKIA_5110-0.0.0%2Bsha.3b470a4bf5b2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

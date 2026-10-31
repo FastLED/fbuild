@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/danya0x07",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "danya0x07/library/DS18B20_SimpleLibrary/1.0.0/DS18B20_SimpleLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS18B20_SimpleLibrary-1.0.0.tar.gz",
+    "size_bytes": 34853,
+    "sha256": "4d3d3d12c1459cf99261359bf404b64cb73935a4759b23869dc56dd2d015f71e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danya0x07/library/DS18B20_SimpleLibrary/1.0.0/DS18B20_SimpleLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danya0x07/library/DS18B20_SimpleLibrary/1.0.0/DS18B20_SimpleLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danya0x07/library/NRF24L01_SimpleLibrary/1.0.0/NRF24L01_SimpleLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NRF24L01_SimpleLibrary-1.0.0.tar.gz",
+    "size_bytes": 47040,
+    "sha256": "b35839c10fb7a6d8959315b203dcf0fdd09de14db976e25e94f32f441228b109",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danya0x07/library/NRF24L01_SimpleLibrary/1.0.0/NRF24L01_SimpleLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danya0x07/library/NRF24L01_SimpleLibrary/1.0.0/NRF24L01_SimpleLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danya0x07/library/PCD8544_FlexibleLibrary/1.0.0/PCD8544_FlexibleLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCD8544_FlexibleLibrary-1.0.0.tar.gz",
+    "size_bytes": 38876,
+    "sha256": "48f603a012798efa412372558ca6e0cab68c13c4be1502344588a184ee1efb91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danya0x07/library/PCD8544_FlexibleLibrary/1.0.0/PCD8544_FlexibleLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danya0x07/library/PCD8544_FlexibleLibrary/1.0.0/PCD8544_FlexibleLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danya0x07/library/tm1637-simple-library/1.0.2/tm1637-simple-library-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tm1637-simple-library-1.0.2.tar.gz",
+    "size_bytes": 3723,
+    "sha256": "50d83363d51f10ef945c9fa6ab3109f73f9009d879b07aa66cef1df622ac6eda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danya0x07/library/tm1637-simple-library/1.0.2/tm1637-simple-library-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/danya0x07/library/tm1637-simple-library/1.0.2/tm1637-simple-library-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

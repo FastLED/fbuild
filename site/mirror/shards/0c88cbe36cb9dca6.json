@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dim-aka",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dim-aka/library/AY8912_ESP32/1.0.1/AY8912_ESP32-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AY8912_ESP32-1.0.1.tar.gz",
+    "size_bytes": 14467,
+    "sha256": "2fd6ff8ed2975bf95a72e19d8a8c54791f5f2437595049b8dd85ccb5bf232445",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dim-aka/library/AY8912_ESP32/1.0.1/AY8912_ESP32-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dim-aka/library/AY8912_ESP32/1.0.1/AY8912_ESP32-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

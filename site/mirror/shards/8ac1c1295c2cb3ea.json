@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-meurigp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-meurigp/library/Joystick/0.0.0+sha.ae04f59e274a/Joystick-0.0.0+sha.ae04f59e274a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Joystick-0.0.0+sha.ae04f59e274a.tar.gz",
+    "size_bytes": 1601,
+    "sha256": "7087dbdf366d9ba43db9ffc2af1618d7aa80c395332bfe11ec85fd53e2dcbcae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-meurigp/library/Joystick/0.0.0%2Bsha.ae04f59e274a/Joystick-0.0.0%2Bsha.ae04f59e274a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-meurigp/library/Joystick/0.0.0%2Bsha.ae04f59e274a/Joystick-0.0.0%2Bsha.ae04f59e274a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-meurigp/library/fsmMenu/0.0.0+sha.b5f4e9c759a9/fsmMenu-0.0.0+sha.b5f4e9c759a9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fsmMenu-0.0.0+sha.b5f4e9c759a9.tar.gz",
+    "size_bytes": 1084,
+    "sha256": "7a249c9961fe793287b08cebd80ebba1cbc479aeba7166af24fb6be8ba63d673",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-meurigp/library/fsmMenu/0.0.0%2Bsha.b5f4e9c759a9/fsmMenu-0.0.0%2Bsha.b5f4e9c759a9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-meurigp/library/fsmMenu/0.0.0%2Bsha.b5f4e9c759a9/fsmMenu-0.0.0%2Bsha.b5f4e9c759a9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

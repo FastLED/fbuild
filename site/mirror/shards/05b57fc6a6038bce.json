@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tylercorleone",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tylercorleone/library/Components/0.1/Components-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Components-0.1.tar.gz",
+    "size_bytes": 9836,
+    "sha256": "68927b8c77b02159a76d918273355f4fd4bfe2ca15c2f10e552cc8d24072aa0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tylercorleone/library/Components/0.1/Components-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tylercorleone/library/Components/0.1/Components-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tylercorleone/library/Gnulight/0.2/Gnulight-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gnulight-0.2.tar.gz",
+    "size_bytes": 17613,
+    "sha256": "2d7e268be688fe987d8ecd315547947a7a47ac7fb5fdfb2045cf8fe72e933356",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tylercorleone/library/Gnulight/0.2/Gnulight-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tylercorleone/library/Gnulight/0.2/Gnulight-0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

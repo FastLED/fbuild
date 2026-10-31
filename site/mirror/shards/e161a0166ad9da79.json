@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mohammedrashad",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mohammedrashad/library/ArduZ80/1.0.1/ArduZ80-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduZ80-1.0.1.tar.gz",
+    "size_bytes": 9495,
+    "sha256": "38a91c388653f7fb09148cc80cdd12e0f179389e84c2b79ba5aaa38e1647ad11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mohammedrashad/library/ArduZ80/1.0.1/ArduZ80-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mohammedrashad/library/ArduZ80/1.0.1/ArduZ80-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

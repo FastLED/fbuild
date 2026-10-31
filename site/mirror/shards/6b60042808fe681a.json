@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/plapointe6",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "plapointe6/library/EspHtmlTemplateProcessor/1.2.1/EspHtmlTemplateProcessor-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspHtmlTemplateProcessor-1.2.1.tar.gz",
+    "size_bytes": 16573,
+    "sha256": "042aba6791ef25491a61ec6c235691cb7d2c7918acaf0491b9c444c49716dc72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plapointe6/library/EspHtmlTemplateProcessor/1.2.1/EspHtmlTemplateProcessor-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/plapointe6/library/EspHtmlTemplateProcessor/1.2.1/EspHtmlTemplateProcessor-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plapointe6/library/EspMQTTClient/1.13.3/EspMQTTClient-1.13.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspMQTTClient-1.13.3.tar.gz",
+    "size_bytes": 25831,
+    "sha256": "070a478ad4245046a2430e63cb9c17ee137e71a6707eede2d470ec57a6772544",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plapointe6/library/EspMQTTClient/1.13.3/EspMQTTClient-1.13.3.tar.gz",
+     "https://dl.registry.platformio.org/download/plapointe6/library/EspMQTTClient/1.13.3/EspMQTTClient-1.13.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plapointe6/library/EspSimpleRemoteUpdate/0.1.0/EspSimpleRemoteUpdate-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspSimpleRemoteUpdate-0.1.0.tar.gz",
+    "size_bytes": 15887,
+    "sha256": "3e9cebe9d73b88b9c15a077a34e7c78c5c4bb94b3b1245f26a8218dfd49b743a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plapointe6/library/EspSimpleRemoteUpdate/0.1.0/EspSimpleRemoteUpdate-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/plapointe6/library/EspSimpleRemoteUpdate/0.1.0/EspSimpleRemoteUpdate-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plapointe6/library/EspSimpleWifiHandler/0.1.0/EspSimpleWifiHandler-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspSimpleWifiHandler-0.1.0.tar.gz",
+    "size_bytes": 16570,
+    "sha256": "f689de0faae1185fd846a36437fb5ff85842ed9c4031953b5b10fa471c1f2c85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plapointe6/library/EspSimpleWifiHandler/0.1.0/EspSimpleWifiHandler-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/plapointe6/library/EspSimpleWifiHandler/0.1.0/EspSimpleWifiHandler-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plapointe6/library/HAMqttDevice/1.4.1/HAMqttDevice-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HAMqttDevice-1.4.1.tar.gz",
+    "size_bytes": 15780,
+    "sha256": "a3ba58da09daf653f34d2e9d39c147615323112ef140b9a98864cd419cc39191",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plapointe6/library/HAMqttDevice/1.4.1/HAMqttDevice-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/plapointe6/library/HAMqttDevice/1.4.1/HAMqttDevice-1.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

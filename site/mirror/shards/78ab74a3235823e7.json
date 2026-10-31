@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lylavoie",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lylavoie/library/PersistSettings/1.0.1/PersistSettings-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PersistSettings-1.0.1.tar.gz",
+    "size_bytes": 4175,
+    "sha256": "3e20b474b6e2b28ae444ae1dde831e257f1edc34b513f61a54dabc3f0de1af52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lylavoie/library/PersistSettings/1.0.1/PersistSettings-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lylavoie/library/PersistSettings/1.0.1/PersistSettings-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lylavoie/library/WeatherFlow%20Local%20UDP/1.0.0/WeatherFlowLocalUDP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WeatherFlowLocalUDP-1.0.0.tar.gz",
+    "size_bytes": 10062,
+    "sha256": "72904c79caa1fdf1c719eafa924a487c0e5bb88602da2fd4e9b121bb57610895",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lylavoie/library/WeatherFlow%2520Local%2520UDP/1.0.0/WeatherFlowLocalUDP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lylavoie/library/WeatherFlow%20Local%20UDP/1.0.0/WeatherFlowLocalUDP-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

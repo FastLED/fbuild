@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pkoerber",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pkoerber/library/SMA%20SunnyBoy%20Reader/0.1.1/SMASunnyBoyReader-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SMASunnyBoyReader-0.1.1.tar.gz",
+    "size_bytes": 18782,
+    "sha256": "cccedaf8886e5605007dacfab7c82af689211accacaac57f237f6382e4c89208",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pkoerber/library/SMA%2520SunnyBoy%2520Reader/0.1.1/SMASunnyBoyReader-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pkoerber/library/SMA%20SunnyBoy%20Reader/0.1.1/SMASunnyBoyReader-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

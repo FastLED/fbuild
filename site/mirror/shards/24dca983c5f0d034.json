@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-elec2645-201920",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-elec2645-201920/library/ELEC2645_Project_el18rg/0.0.0+sha.6e6bcdd22159/ELEC2645_Project_el18rg-0.0.0+sha.6e6bcdd22159.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ELEC2645_Project_el18rg-0.0.0+sha.6e6bcdd22159.tar.gz",
+    "size_bytes": 6255,
+    "sha256": "fc9242ee322143fb6b2fbd6efa94ec07014da1dc6b47fa3669d28188fd80bcc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-elec2645-201920/library/ELEC2645_Project_el18rg/0.0.0%2Bsha.6e6bcdd22159/ELEC2645_Project_el18rg-0.0.0%2Bsha.6e6bcdd22159.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-elec2645-201920/library/ELEC2645_Project_el18rg/0.0.0%2Bsha.6e6bcdd22159/ELEC2645_Project_el18rg-0.0.0%2Bsha.6e6bcdd22159.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-elec2645-201920/library/ELEC2645_Project_el19tb/0.0.0+sha.3714af9caab6/ELEC2645_Project_el19tb-0.0.0+sha.3714af9caab6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ELEC2645_Project_el19tb-0.0.0+sha.3714af9caab6.tar.gz",
+    "size_bytes": 33077,
+    "sha256": "77e9ab3dbc8fb472f1f7f7bdc48d7530ef5a5c18fd06cfc8fe455a30a8c22410",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-elec2645-201920/library/ELEC2645_Project_el19tb/0.0.0%2Bsha.3714af9caab6/ELEC2645_Project_el19tb-0.0.0%2Bsha.3714af9caab6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-elec2645-201920/library/ELEC2645_Project_el19tb/0.0.0%2Bsha.3714af9caab6/ELEC2645_Project_el19tb-0.0.0%2Bsha.3714af9caab6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

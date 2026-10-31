@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rici4kubicek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rici4kubicek/library/SoftwareTimer/2.0.0/SoftwareTimer-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftwareTimer-2.0.0.tar.gz",
+    "size_bytes": 14573,
+    "sha256": "3c0ffbb032590160f8786ca9efb476e3eb4d4e814cf0201e6e725bf3959685e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rici4kubicek/library/SoftwareTimer/2.0.0/SoftwareTimer-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rici4kubicek/library/SoftwareTimer/2.0.0/SoftwareTimer-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rici4kubicek/library/Statistics/1.0.0/Statistics-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Statistics-1.0.0.tar.gz",
+    "size_bytes": 4492,
+    "sha256": "1e40280ea994e282b14b1fd057a8b6263a65087158efc93b503b71f531f19053",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rici4kubicek/library/Statistics/1.0.0/Statistics-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rici4kubicek/library/Statistics/1.0.0/Statistics-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rici4kubicek/library/Statistics/1.0.1/Statistics-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Statistics-1.0.1.tar.gz",
+    "size_bytes": 13226,
+    "sha256": "adf66ba4da6941440f43168272fdb3968f17a929d124df32dc4cac34373f852a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rici4kubicek/library/Statistics/1.0.1/Statistics-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rici4kubicek/library/Statistics/1.0.1/Statistics-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rici4kubicek/library/Statistics/1.0.2/Statistics-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Statistics-1.0.2.tar.gz",
+    "size_bytes": 13214,
+    "sha256": "70c82832f713766bbb9b655bbac6904ba3e44d87d38ac962bbb32b82a71bb9f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rici4kubicek/library/Statistics/1.0.2/Statistics-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rici4kubicek/library/Statistics/1.0.2/Statistics-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rici4kubicek/library/Statistics/1.0.3/Statistics-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Statistics-1.0.3.tar.gz",
+    "size_bytes": 13229,
+    "sha256": "d67bab297b5ed354404d82ca353f60bc331a3cc69883f33041c5192712772030",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rici4kubicek/library/Statistics/1.0.3/Statistics-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rici4kubicek/library/Statistics/1.0.3/Statistics-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rici4kubicek/library/Statistics/1.0.4/Statistics-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Statistics-1.0.4.tar.gz",
+    "size_bytes": 13526,
+    "sha256": "d6ba1a7be6313a863314da7ce703dc30eb95d8be8384e6809580ca91a80239f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rici4kubicek/library/Statistics/1.0.4/Statistics-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rici4kubicek/library/Statistics/1.0.4/Statistics-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rici4kubicek/library/Statistics/1.0.5/Statistics-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Statistics-1.0.5.tar.gz",
+    "size_bytes": 13790,
+    "sha256": "711cdd4de44e956071cb8bf162e65eff0b1524e2f93486a8ca5ca95c10e7bac1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rici4kubicek/library/Statistics/1.0.5/Statistics-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/rici4kubicek/library/Statistics/1.0.5/Statistics-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rici4kubicek/library/Statistics/1.1.0/Statistics-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Statistics-1.1.0.tar.gz",
+    "size_bytes": 16821,
+    "sha256": "a43a9a7abee5d19864974779916643716732818adffcc7484bd18dab4a5bd99f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rici4kubicek/library/Statistics/1.1.0/Statistics-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rici4kubicek/library/Statistics/1.1.0/Statistics-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rici4kubicek/library/Statistics/1.1.1/Statistics-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Statistics-1.1.1.tar.gz",
+    "size_bytes": 17493,
+    "sha256": "d0993cd025f3d3b48ba820f64e27775fda394cf06fc7783504ed318eb0c30dbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rici4kubicek/library/Statistics/1.1.1/Statistics-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rici4kubicek/library/Statistics/1.1.1/Statistics-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rici4kubicek/library/Statistics/1.2.0/Statistics-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Statistics-1.2.0.tar.gz",
+    "size_bytes": 19058,
+    "sha256": "66b4a3b2c81417794f8b6cbb1e1e0829ffae44e4980bdc12ebcbe9db8359897e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rici4kubicek/library/Statistics/1.2.0/Statistics-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rici4kubicek/library/Statistics/1.2.0/Statistics-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rici4kubicek/library/Statistics/1.3.0/Statistics-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Statistics-1.3.0.tar.gz",
+    "size_bytes": 21789,
+    "sha256": "284d649d1e09ac7f5b9cee536afb66f470610346dcf8b344de3bd7e9530ecb71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rici4kubicek/library/Statistics/1.3.0/Statistics-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rici4kubicek/library/Statistics/1.3.0/Statistics-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

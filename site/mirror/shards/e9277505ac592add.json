@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gizmo69the2nd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gizmo69the2nd/library/INA226/0.0.0+sha.3984961a3725/INA226-0.0.0+sha.3984961a3725.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA226-0.0.0+sha.3984961a3725.tar.gz",
+    "size_bytes": 2789,
+    "sha256": "222b20c264b9f6d81b56a3a7c385207047a5dd4e1b8e058c0a5785006c06b12f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gizmo69the2nd/library/INA226/0.0.0%2Bsha.3984961a3725/INA226-0.0.0%2Bsha.3984961a3725.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gizmo69the2nd/library/INA226/0.0.0%2Bsha.3984961a3725/INA226-0.0.0%2Bsha.3984961a3725.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gizmo69the2nd/library/LTC2990/0.0.0+sha.8cb0dbc1b2ba/LTC2990-0.0.0+sha.8cb0dbc1b2ba.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTC2990-0.0.0+sha.8cb0dbc1b2ba.tar.gz",
+    "size_bytes": 2867,
+    "sha256": "f1af98a5eba47849575734ecc9077f8fd7133855d8fbeba0c143e389a85d5081",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gizmo69the2nd/library/LTC2990/0.0.0%2Bsha.8cb0dbc1b2ba/LTC2990-0.0.0%2Bsha.8cb0dbc1b2ba.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gizmo69the2nd/library/LTC2990/0.0.0%2Bsha.8cb0dbc1b2ba/LTC2990-0.0.0%2Bsha.8cb0dbc1b2ba.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gizmo69the2nd/library/MAX44009/0.0.0+sha.726b77a319d8/MAX44009-0.0.0+sha.726b77a319d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX44009-0.0.0+sha.726b77a319d8.tar.gz",
+    "size_bytes": 2754,
+    "sha256": "33b203332e28a929da14b2c79027555544716432de4630886a43c00e5701a372",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gizmo69the2nd/library/MAX44009/0.0.0%2Bsha.726b77a319d8/MAX44009-0.0.0%2Bsha.726b77a319d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gizmo69the2nd/library/MAX44009/0.0.0%2Bsha.726b77a319d8/MAX44009-0.0.0%2Bsha.726b77a319d8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xairooo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xairooo/library/SimpleTime%20updated/1.1.0/SimpleTimeupdated-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleTimeupdated-1.1.0.tar.gz",
+    "size_bytes": 4290,
+    "sha256": "0b028132aee5c739da1223a65e7b37b5cffbd4fe5776fb1657222ca7405bde71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xairooo/library/SimpleTime%2520updated/1.1.0/SimpleTimeupdated-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xairooo/library/SimpleTime%20updated/1.1.0/SimpleTimeupdated-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

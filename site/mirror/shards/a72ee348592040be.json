@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tasos12",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tasos12/library/ev3-arduino/0.1.1/ev3-arduino-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ev3-arduino-0.1.1.tar.gz",
+    "size_bytes": 3240,
+    "sha256": "6c4c8ce6ee097083e3f81add85b24525126049b62c7c64e0dec3df1d6cd77a0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tasos12/library/ev3-arduino/0.1.1/ev3-arduino-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tasos12/library/ev3-arduino/0.1.1/ev3-arduino-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

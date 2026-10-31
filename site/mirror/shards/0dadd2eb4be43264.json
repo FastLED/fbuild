@@ -1,0 +1,2115 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lordmax2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.0.0/klevebrand-all-drone-controller-core-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.0.0.tar.gz",
+    "size_bytes": 14217,
+    "sha256": "0230f1732678a5f0214d70846220c6abff0875f208c6c9e5828d67fcce1004dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.0.0/klevebrand-all-drone-controller-core-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.0.0/klevebrand-all-drone-controller-core-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.0.1/klevebrand-all-drone-controller-core-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.0.1.tar.gz",
+    "size_bytes": 14244,
+    "sha256": "8707f55c04cd63c01dc2e1f12e1065603808f02469e3793ed2591b470962ef1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.0.1/klevebrand-all-drone-controller-core-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.0.1/klevebrand-all-drone-controller-core-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.0.2/klevebrand-all-drone-controller-core-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.0.2.tar.gz",
+    "size_bytes": 14556,
+    "sha256": "dba1ab16267e37bdf7b6de615866c25187768461cf4e5e4225bc20170c079f8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.0.2/klevebrand-all-drone-controller-core-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.0.2/klevebrand-all-drone-controller-core-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.0.3/klevebrand-all-drone-controller-core-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.0.3.tar.gz",
+    "size_bytes": 14466,
+    "sha256": "bd889e4efa72a1a4f4f3b2a1ff1f80172145b6771a423ee2973abe7fab856902",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.0.3/klevebrand-all-drone-controller-core-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.0.3/klevebrand-all-drone-controller-core-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.0.4/klevebrand-all-drone-controller-core-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.0.4.tar.gz",
+    "size_bytes": 14456,
+    "sha256": "85da96b5b172e3afc8994391cf23c1fba303a8ec11208ff06c33ea999e79b508",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.0.4/klevebrand-all-drone-controller-core-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.0.4/klevebrand-all-drone-controller-core-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.0.5/klevebrand-all-drone-controller-core-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.0.5.tar.gz",
+    "size_bytes": 14441,
+    "sha256": "b2178544cfa7e669f0a862d0652490616c7f5325b086fbcfbce0d03b5ded30f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.0.5/klevebrand-all-drone-controller-core-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.0.5/klevebrand-all-drone-controller-core-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.0.6/klevebrand-all-drone-controller-core-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.0.6.tar.gz",
+    "size_bytes": 14580,
+    "sha256": "085220229d3179633c91eb06d23ed48f81f516d24cbcc07ddebe04f0adc7e905",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.0.6/klevebrand-all-drone-controller-core-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.0.6/klevebrand-all-drone-controller-core-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.0.7/klevebrand-all-drone-controller-core-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.0.7.tar.gz",
+    "size_bytes": 14614,
+    "sha256": "bb36b6dcadcdba5d3386ed006be9b62d22e4ef7844e061afb7f40b131746d7c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.0.7/klevebrand-all-drone-controller-core-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.0.7/klevebrand-all-drone-controller-core-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.0.8/klevebrand-all-drone-controller-core-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.0.8.tar.gz",
+    "size_bytes": 14625,
+    "sha256": "301d11e558235e3dd8da6684fb8ca50c45480ff3804109b660328378b3e75b75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.0.8/klevebrand-all-drone-controller-core-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.0.8/klevebrand-all-drone-controller-core-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.1.0/klevebrand-all-drone-controller-core-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.1.0.tar.gz",
+    "size_bytes": 14645,
+    "sha256": "cea316d6cc0ce970ca4fc97050e1de28416587b951f30f15c063f1bf9036a351",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.1.0/klevebrand-all-drone-controller-core-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.1.0/klevebrand-all-drone-controller-core-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.1.1/klevebrand-all-drone-controller-core-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.1.1.tar.gz",
+    "size_bytes": 15426,
+    "sha256": "1a0917e5e4ff1b7a50a06cdd8bf29d1998bac181ea037103fe0205c829e660a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.1.1/klevebrand-all-drone-controller-core-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.1.1/klevebrand-all-drone-controller-core-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.1.2/klevebrand-all-drone-controller-core-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.1.2.tar.gz",
+    "size_bytes": 15467,
+    "sha256": "1d900f25cd43ddfc742aec189782dd06afa303cdcd60afd944b2b8a090d7e5bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.1.2/klevebrand-all-drone-controller-core-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.1.2/klevebrand-all-drone-controller-core-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.1.3/klevebrand-all-drone-controller-core-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.1.3.tar.gz",
+    "size_bytes": 15440,
+    "sha256": "3d577200616992033811393719d782358d14d3161ec038d6b42ac059e5bc7d7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.1.3/klevebrand-all-drone-controller-core-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.1.3/klevebrand-all-drone-controller-core-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.1.4/klevebrand-all-drone-controller-core-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.1.4.tar.gz",
+    "size_bytes": 15447,
+    "sha256": "a0291615fa1cc512a44544ab03c3ae301b69b3cbe1d98e152e00bd176d0cbc93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.1.4/klevebrand-all-drone-controller-core-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.1.4/klevebrand-all-drone-controller-core-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.1.5/klevebrand-all-drone-controller-core-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.1.5.tar.gz",
+    "size_bytes": 15486,
+    "sha256": "b229ce9b31bb6452a203a36ae021d75186e9a28142545fa545ec304eea2fa22f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.1.5/klevebrand-all-drone-controller-core-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.1.5/klevebrand-all-drone-controller-core-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.1.6/klevebrand-all-drone-controller-core-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.1.6.tar.gz",
+    "size_bytes": 15485,
+    "sha256": "9152d0b242e826d219492ed235c308a85866f427af2feb97df455ea3916c3ddb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.1.6/klevebrand-all-drone-controller-core-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.1.6/klevebrand-all-drone-controller-core-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.1.7/klevebrand-all-drone-controller-core-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.1.7.tar.gz",
+    "size_bytes": 15473,
+    "sha256": "f397f7aec7027b8ece053c0d9c77eb29ec4f0b42ebb14b1a6eac49cbb054ef37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.1.7/klevebrand-all-drone-controller-core-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.1.7/klevebrand-all-drone-controller-core-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.1.8/klevebrand-all-drone-controller-core-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.1.8.tar.gz",
+    "size_bytes": 15481,
+    "sha256": "467a20ddfd512ad02272334a16aaaa0c0afb65ddca789fb44fefd287c64bdd00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.1.8/klevebrand-all-drone-controller-core-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.1.8/klevebrand-all-drone-controller-core-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.1.9/klevebrand-all-drone-controller-core-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.1.9.tar.gz",
+    "size_bytes": 15605,
+    "sha256": "e2bbc5956bc0950e0346b4ccb174d5dee05dfc2b6323b37380e4187b31103823",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.1.9/klevebrand-all-drone-controller-core-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.1.9/klevebrand-all-drone-controller-core-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.2.0/klevebrand-all-drone-controller-core-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.2.0.tar.gz",
+    "size_bytes": 15610,
+    "sha256": "cbab50b86fcd9bde40a72eea346d317f02ee61d39e304b8717420f13eabdbcf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.2.0/klevebrand-all-drone-controller-core-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.2.0/klevebrand-all-drone-controller-core-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.2.1/klevebrand-all-drone-controller-core-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.2.1.tar.gz",
+    "size_bytes": 15576,
+    "sha256": "9cff427f9a1ac25c08c12137c678c68db1c65c3ba681537ed87efd538fc4ed9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.2.1/klevebrand-all-drone-controller-core-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.2.1/klevebrand-all-drone-controller-core-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.2.2/klevebrand-all-drone-controller-core-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.2.2.tar.gz",
+    "size_bytes": 15563,
+    "sha256": "2a21fe63f6f6ddedff5c5026c39d6b003e9059e79546f755a6d3d749f53de014",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.2.2/klevebrand-all-drone-controller-core-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.2.2/klevebrand-all-drone-controller-core-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.2.3/klevebrand-all-drone-controller-core-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.2.3.tar.gz",
+    "size_bytes": 15575,
+    "sha256": "587f73dec49be3c9d276dc46438efc095a9daae24a3c9dfe26c3816ecca9d571",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.2.3/klevebrand-all-drone-controller-core-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.2.3/klevebrand-all-drone-controller-core-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.3.0/klevebrand-all-drone-controller-core-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.3.0.tar.gz",
+    "size_bytes": 15739,
+    "sha256": "48e93fa04fa780815f274769efb0145ba0c03777acaa658a08e80c98858b16b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.3.0/klevebrand-all-drone-controller-core-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.3.0/klevebrand-all-drone-controller-core-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.3.1/klevebrand-all-drone-controller-core-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.3.1.tar.gz",
+    "size_bytes": 15784,
+    "sha256": "fec61cd4a528d1d8b64b2584105e95aa1e817d2fa7f497686ccacdc703c76916",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.3.1/klevebrand-all-drone-controller-core-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.3.1/klevebrand-all-drone-controller-core-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.3.2/klevebrand-all-drone-controller-core-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.3.2.tar.gz",
+    "size_bytes": 15774,
+    "sha256": "c2ef054bd71b85581c39b439a40b633748da9935532a3ee541f3b99ff86dc8b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.3.2/klevebrand-all-drone-controller-core-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.3.2/klevebrand-all-drone-controller-core-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.3.3/klevebrand-all-drone-controller-core-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.3.3.tar.gz",
+    "size_bytes": 15788,
+    "sha256": "a228503b26768182fba51248fa981a8b9540673eb36933437cc864dc079ad48b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.3.3/klevebrand-all-drone-controller-core-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.3.3/klevebrand-all-drone-controller-core-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.3.4/klevebrand-all-drone-controller-core-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.3.4.tar.gz",
+    "size_bytes": 15797,
+    "sha256": "2dfce78eacf4935b988b4f0244be23b5cd2ad2db460a5eefeec101cc174f572b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.3.4/klevebrand-all-drone-controller-core-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.3.4/klevebrand-all-drone-controller-core-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.4.0/klevebrand-all-drone-controller-core-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.4.0.tar.gz",
+    "size_bytes": 13388,
+    "sha256": "9bafa9c4c0f25c3c316ad9ad27e7462b8b69c38090941ffb0c9280b50ad51f1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.4.0/klevebrand-all-drone-controller-core-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.4.0/klevebrand-all-drone-controller-core-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.4.1/klevebrand-all-drone-controller-core-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.4.1.tar.gz",
+    "size_bytes": 13440,
+    "sha256": "ee40c9ae35c590417b4e40e6699251847405c150ad4835ec80b913d5f0c22a23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.4.1/klevebrand-all-drone-controller-core-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.4.1/klevebrand-all-drone-controller-core-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.4.2/klevebrand-all-drone-controller-core-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.4.2.tar.gz",
+    "size_bytes": 13392,
+    "sha256": "a5570a2036f9b1b372925195e7c1ed7591856b2e59ae71fcc979e1284168a9d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.4.2/klevebrand-all-drone-controller-core-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.4.2/klevebrand-all-drone-controller-core-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.4.3/klevebrand-all-drone-controller-core-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.4.3.tar.gz",
+    "size_bytes": 13504,
+    "sha256": "ed075d7c2e0ea158e9c3eba8c6f40be54935bccae4f2bd6ab505089da9f8a567",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.4.3/klevebrand-all-drone-controller-core-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.4.3/klevebrand-all-drone-controller-core-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.4.4/klevebrand-all-drone-controller-core-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.4.4.tar.gz",
+    "size_bytes": 13431,
+    "sha256": "7fd2c634711f2160a0b1b922c8cf38595cb57b487f99c94916bdebaa4bc2f7ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.4.4/klevebrand-all-drone-controller-core-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.4.4/klevebrand-all-drone-controller-core-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.4.5/klevebrand-all-drone-controller-core-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.4.5.tar.gz",
+    "size_bytes": 13439,
+    "sha256": "b8749ed43f92900cc5a8f6acd8acb3b3b8ea2117cf11d95d11caf9de8d32b7b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.4.5/klevebrand-all-drone-controller-core-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.4.5/klevebrand-all-drone-controller-core-1.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.4.6/klevebrand-all-drone-controller-core-1.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.4.6.tar.gz",
+    "size_bytes": 13464,
+    "sha256": "722685b8531829d321c52cc1ae8790c125de035d5ebe3a27f756cff934561dba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.4.6/klevebrand-all-drone-controller-core-1.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.4.6/klevebrand-all-drone-controller-core-1.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.4.7/klevebrand-all-drone-controller-core-1.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.4.7.tar.gz",
+    "size_bytes": 13336,
+    "sha256": "737165c2c2c2476098b501ed6ca97a549f8cd5296f5812fc4af79dae691c10cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.4.7/klevebrand-all-drone-controller-core-1.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.4.7/klevebrand-all-drone-controller-core-1.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.5.0/klevebrand-all-drone-controller-core-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.5.0.tar.gz",
+    "size_bytes": 14047,
+    "sha256": "ca353cfc6053ff33e682ac98433083ebd49dd4e9f4dda6403b0beda989d56b1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.5.0/klevebrand-all-drone-controller-core-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.5.0/klevebrand-all-drone-controller-core-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.5.1/klevebrand-all-drone-controller-core-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.5.1.tar.gz",
+    "size_bytes": 13881,
+    "sha256": "24121d88f1cf8bc6b7a68b39e09fcaf46c91cc233dac79dd205ada648fd745be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.5.1/klevebrand-all-drone-controller-core-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.5.1/klevebrand-all-drone-controller-core-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.5.2/klevebrand-all-drone-controller-core-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.5.2.tar.gz",
+    "size_bytes": 13863,
+    "sha256": "af8af89f17e4b51e3d80805108202e702de9f6c9505ae4b0c720f4c3f97f6664",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.5.2/klevebrand-all-drone-controller-core-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.5.2/klevebrand-all-drone-controller-core-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.5.3/klevebrand-all-drone-controller-core-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.5.3.tar.gz",
+    "size_bytes": 13854,
+    "sha256": "b3cfebcded688a283d7173165993dd24616645cc0279e524be1a2f4d254fc79d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.5.3/klevebrand-all-drone-controller-core-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.5.3/klevebrand-all-drone-controller-core-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.5.4/klevebrand-all-drone-controller-core-1.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.5.4.tar.gz",
+    "size_bytes": 14551,
+    "sha256": "b67e207a85dbad82b90afd714c0928222fc10d54a2fc2cbec0607faf50971606",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.5.4/klevebrand-all-drone-controller-core-1.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.5.4/klevebrand-all-drone-controller-core-1.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.6.0/klevebrand-all-drone-controller-core-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.6.0.tar.gz",
+    "size_bytes": 14678,
+    "sha256": "a213b046ab50cbffe4da0e01db437d62b71b169faac209722aa8150b3ab33d10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.6.0/klevebrand-all-drone-controller-core-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.6.0/klevebrand-all-drone-controller-core-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.6.1/klevebrand-all-drone-controller-core-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.6.1.tar.gz",
+    "size_bytes": 14918,
+    "sha256": "f082b8de9c5d58a455780b9d1881c183129a07ee449792ec7b863a4517e78277",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.6.1/klevebrand-all-drone-controller-core-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.6.1/klevebrand-all-drone-controller-core-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.6.2/klevebrand-all-drone-controller-core-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.6.2.tar.gz",
+    "size_bytes": 14961,
+    "sha256": "a60e4492e2ab5b0c5fc9163a3bc1471f3fc4b64a2753c54aa7e8f6d31936200f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.6.2/klevebrand-all-drone-controller-core-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.6.2/klevebrand-all-drone-controller-core-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.6.3/klevebrand-all-drone-controller-core-1.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.6.3.tar.gz",
+    "size_bytes": 14641,
+    "sha256": "a6214b5c7ed5a9a60e47de12c5b67ebbfef081dd8efb869a0d3bb5650c7716ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.6.3/klevebrand-all-drone-controller-core-1.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.6.3/klevebrand-all-drone-controller-core-1.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.7.0/klevebrand-all-drone-controller-core-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.7.0.tar.gz",
+    "size_bytes": 15217,
+    "sha256": "2115396de70d8e41a331c27e9a56007b999d9e2a3feb4eee1ffb2c82734154d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.7.0/klevebrand-all-drone-controller-core-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.7.0/klevebrand-all-drone-controller-core-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.7.1/klevebrand-all-drone-controller-core-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.7.1.tar.gz",
+    "size_bytes": 15210,
+    "sha256": "e8c24ef46867bf383669eb6013f7935db0b17e601f287e8f7bf9e7771332670c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.7.1/klevebrand-all-drone-controller-core-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.7.1/klevebrand-all-drone-controller-core-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.8.0/klevebrand-all-drone-controller-core-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.8.0.tar.gz",
+    "size_bytes": 15281,
+    "sha256": "46576da1f88d8b88fca2763b05477a86aa5792e6d1ca5a3379120c90d6be4407",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.8.0/klevebrand-all-drone-controller-core-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.8.0/klevebrand-all-drone-controller-core-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.8.1/klevebrand-all-drone-controller-core-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.8.1.tar.gz",
+    "size_bytes": 20298,
+    "sha256": "10aa4dcbf85dc078dca7d84d1636857a1875ad7ae8cf50078e1f7cca783012e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.8.1/klevebrand-all-drone-controller-core-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.8.1/klevebrand-all-drone-controller-core-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.8.2/klevebrand-all-drone-controller-core-1.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.8.2.tar.gz",
+    "size_bytes": 20465,
+    "sha256": "6207d4bbd50bb7811cb150ad3ea9b5978d75f9624c78dc60a17ce2f1ae08ec86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.8.2/klevebrand-all-drone-controller-core-1.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.8.2/klevebrand-all-drone-controller-core-1.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.9.0/klevebrand-all-drone-controller-core-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.9.0.tar.gz",
+    "size_bytes": 20783,
+    "sha256": "13a900bf5832a76d4717637a38fbe9dee1e3e65204f85b66810071c360a72e91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.9.0/klevebrand-all-drone-controller-core-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.9.0/klevebrand-all-drone-controller-core-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.9.1/klevebrand-all-drone-controller-core-1.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.9.1.tar.gz",
+    "size_bytes": 21032,
+    "sha256": "2f16a575e4c74a151651e46b831e08a69bad0c0851386fa81b564ada30b658d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.9.1/klevebrand-all-drone-controller-core-1.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.9.1/klevebrand-all-drone-controller-core-1.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.9.2/klevebrand-all-drone-controller-core-1.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.9.2.tar.gz",
+    "size_bytes": 21085,
+    "sha256": "1a84c3536933cae8be2c448f3109c03f115e6ec4d806cdaefa0213878ff3ac83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.9.2/klevebrand-all-drone-controller-core-1.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.9.2/klevebrand-all-drone-controller-core-1.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.9.3/klevebrand-all-drone-controller-core-1.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.9.3.tar.gz",
+    "size_bytes": 21680,
+    "sha256": "09ce8b537ee945fb33e4eef664eeff9f2136ca36927ab96b43a35cf251348af1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.9.3/klevebrand-all-drone-controller-core-1.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.9.3/klevebrand-all-drone-controller-core-1.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.9.4/klevebrand-all-drone-controller-core-1.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.9.4.tar.gz",
+    "size_bytes": 21870,
+    "sha256": "9efe5dc7856591587a532d662a67b5df52de4053bc1eeedc7759bba517a7765d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.9.4/klevebrand-all-drone-controller-core-1.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.9.4/klevebrand-all-drone-controller-core-1.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.9.5/klevebrand-all-drone-controller-core-1.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.9.5.tar.gz",
+    "size_bytes": 20955,
+    "sha256": "d33ba5747197ed63d06eef54b256bf3e7237029b853eee2e452caef2fdba1585",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.9.5/klevebrand-all-drone-controller-core-1.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.9.5/klevebrand-all-drone-controller-core-1.9.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.9.6/klevebrand-all-drone-controller-core-1.9.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.9.6.tar.gz",
+    "size_bytes": 21017,
+    "sha256": "428cc1e03ce598c8cd957cc92ebd9c506906c8fea177fe05163c51fd73bb6b17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.9.6/klevebrand-all-drone-controller-core-1.9.6.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.9.6/klevebrand-all-drone-controller-core-1.9.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.9.7/klevebrand-all-drone-controller-core-1.9.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.9.7.tar.gz",
+    "size_bytes": 21347,
+    "sha256": "0401ed89b4c1e9112445bb31fde5bb82cc864495b6a6e31af3268ca47e69b698",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.9.7/klevebrand-all-drone-controller-core-1.9.7.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.9.7/klevebrand-all-drone-controller-core-1.9.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.9.8/klevebrand-all-drone-controller-core-1.9.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.9.8.tar.gz",
+    "size_bytes": 21348,
+    "sha256": "a0e8ec730dcc40551a0c322a5127f4e3a860e177f54c277c9b8e524d2f6a802f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.9.8/klevebrand-all-drone-controller-core-1.9.8.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.9.8/klevebrand-all-drone-controller-core-1.9.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/1.9.9/klevebrand-all-drone-controller-core-1.9.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-1.9.9.tar.gz",
+    "size_bytes": 21324,
+    "sha256": "8640e7c00b7cd622ae0bcd54484ea0387f22845fa9ca23b2530bb93fb7129700",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/1.9.9/klevebrand-all-drone-controller-core-1.9.9.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/1.9.9/klevebrand-all-drone-controller-core-1.9.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.0.0/klevebrand-all-drone-controller-core-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.0.0.tar.gz",
+    "size_bytes": 21289,
+    "sha256": "1ff5fb162ac3e3ee2ee73b548ad22ffba98b35fd5a21fceb7c04ec1000a84f5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.0.0/klevebrand-all-drone-controller-core-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.0.0/klevebrand-all-drone-controller-core-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.0.1/klevebrand-all-drone-controller-core-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.0.1.tar.gz",
+    "size_bytes": 21430,
+    "sha256": "2d7c20ef9b36c9cd7b8821c41839adc11ceca3eb6e73920373ab8db4cacfb0cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.0.1/klevebrand-all-drone-controller-core-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.0.1/klevebrand-all-drone-controller-core-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.0.2/klevebrand-all-drone-controller-core-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.0.2.tar.gz",
+    "size_bytes": 21412,
+    "sha256": "53ae5e6eae771f2e800825dc38a4ad1c1559f39614a1e3b70b1d7817c9ad515a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.0.2/klevebrand-all-drone-controller-core-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.0.2/klevebrand-all-drone-controller-core-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.0.3/klevebrand-all-drone-controller-core-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.0.3.tar.gz",
+    "size_bytes": 21441,
+    "sha256": "f1d8e801cfc737ec48a3bd85d2515949d631e9ea2782b08571e32650b6bf43e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.0.3/klevebrand-all-drone-controller-core-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.0.3/klevebrand-all-drone-controller-core-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.0.4/klevebrand-all-drone-controller-core-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.0.4.tar.gz",
+    "size_bytes": 20517,
+    "sha256": "c52d00f9808f2917db9c617863af97bf2023d6b6bf1e4d38883ee0eba7c1068e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.0.4/klevebrand-all-drone-controller-core-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.0.4/klevebrand-all-drone-controller-core-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.0.5/klevebrand-all-drone-controller-core-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.0.5.tar.gz",
+    "size_bytes": 20573,
+    "sha256": "e85608b05dc3d298b1bc73b1d754b885ed29283d3001ca81ba33cbf15ffd390e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.0.5/klevebrand-all-drone-controller-core-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.0.5/klevebrand-all-drone-controller-core-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.0.6/klevebrand-all-drone-controller-core-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.0.6.tar.gz",
+    "size_bytes": 20619,
+    "sha256": "02280dcd07f4fddfbb8be6ca475b65ec4dd0a7a306d48fb7d9ca86ff548bb29d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.0.6/klevebrand-all-drone-controller-core-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.0.6/klevebrand-all-drone-controller-core-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.0.7/klevebrand-all-drone-controller-core-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.0.7.tar.gz",
+    "size_bytes": 20568,
+    "sha256": "75d2bae189dd29db0d2a5e861156beebdb1d9248e1a20005f5c55ef7ae504e31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.0.7/klevebrand-all-drone-controller-core-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.0.7/klevebrand-all-drone-controller-core-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.0.8/klevebrand-all-drone-controller-core-2.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.0.8.tar.gz",
+    "size_bytes": 20616,
+    "sha256": "633daaa590611f6b70189a3c7a9bf6d430ea730c6fd47d9b9a202020ada9a656",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.0.8/klevebrand-all-drone-controller-core-2.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.0.8/klevebrand-all-drone-controller-core-2.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.0.9/klevebrand-all-drone-controller-core-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.0.9.tar.gz",
+    "size_bytes": 22359,
+    "sha256": "e2c2d985a14118ef6fdfa5b2232886a8f73272ec57d833fedd49c09b01dee9fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.0.9/klevebrand-all-drone-controller-core-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.0.9/klevebrand-all-drone-controller-core-2.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.1.0/klevebrand-all-drone-controller-core-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.1.0.tar.gz",
+    "size_bytes": 22555,
+    "sha256": "92ad56ee1c3cab0fc78e8c6ab2cc0a97579dcd5589b22b5a69e387bc288598cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.1.0/klevebrand-all-drone-controller-core-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.1.0/klevebrand-all-drone-controller-core-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.1.1/klevebrand-all-drone-controller-core-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.1.1.tar.gz",
+    "size_bytes": 22529,
+    "sha256": "55e505ea2a4362e435b7970e48584a4c2b0b6db3c25952ef23c85a778a238c10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.1.1/klevebrand-all-drone-controller-core-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.1.1/klevebrand-all-drone-controller-core-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.1.2/klevebrand-all-drone-controller-core-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.1.2.tar.gz",
+    "size_bytes": 22556,
+    "sha256": "a81a63a5fd8bcd97c4aa61680833162e5e03563a51eb7156bcef031e1d3f0ac5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.1.2/klevebrand-all-drone-controller-core-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.1.2/klevebrand-all-drone-controller-core-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.2.1/klevebrand-all-drone-controller-core-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.2.1.tar.gz",
+    "size_bytes": 23588,
+    "sha256": "4b341bba6b43e38576f8e062cba8c3a55cea34c6f945f49813989dfded5d94bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.2.1/klevebrand-all-drone-controller-core-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.2.1/klevebrand-all-drone-controller-core-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.3.0/klevebrand-all-drone-controller-core-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.3.0.tar.gz",
+    "size_bytes": 23218,
+    "sha256": "eda0dfe024ba1ec2268a9b7f91b922a222e784c1a9e32328a1876856cf85cb22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.3.0/klevebrand-all-drone-controller-core-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.3.0/klevebrand-all-drone-controller-core-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.3.1/klevebrand-all-drone-controller-core-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.3.1.tar.gz",
+    "size_bytes": 22739,
+    "sha256": "425128363bc56e279579d283bed62af48eb6c3f240b75c87b64b1fd5acd9852f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.3.1/klevebrand-all-drone-controller-core-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.3.1/klevebrand-all-drone-controller-core-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.4.0/klevebrand-all-drone-controller-core-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.4.0.tar.gz",
+    "size_bytes": 21905,
+    "sha256": "9fef01b867193803121ab1ee573e62809084d0398ab60f96a09ac53101e713d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.4.0/klevebrand-all-drone-controller-core-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.4.0/klevebrand-all-drone-controller-core-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/2.4.1/klevebrand-all-drone-controller-core-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-2.4.1.tar.gz",
+    "size_bytes": 21918,
+    "sha256": "419d51f5e006eff68c3ba7a704e4bf8f2c3347dc7793d094a6d40f5eb4ef4f40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/2.4.1/klevebrand-all-drone-controller-core-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/2.4.1/klevebrand-all-drone-controller-core-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/3.0.0/klevebrand-all-drone-controller-core-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-3.0.0.tar.gz",
+    "size_bytes": 24543,
+    "sha256": "7969901687c67b888e12a989b7b57fe4f48e04b1f6e7e912857d0cf660408fd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/3.0.0/klevebrand-all-drone-controller-core-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/3.0.0/klevebrand-all-drone-controller-core-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/3.0.2/klevebrand-all-drone-controller-core-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-3.0.2.tar.gz",
+    "size_bytes": 26771,
+    "sha256": "08a4481a7eb3adca54a2771d2b7cd3a4f2ef86bf42ebc1875346cae10afd8647",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/3.0.2/klevebrand-all-drone-controller-core-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/3.0.2/klevebrand-all-drone-controller-core-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/3.0.3/klevebrand-all-drone-controller-core-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-3.0.3.tar.gz",
+    "size_bytes": 26932,
+    "sha256": "12c0e87b81ffbc9c8c3ef905db4161a8a881c652a9a1a63ae5d6ae7fa8cf107d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/3.0.3/klevebrand-all-drone-controller-core-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/3.0.3/klevebrand-all-drone-controller-core-3.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/3.0.4/klevebrand-all-drone-controller-core-3.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-3.0.4.tar.gz",
+    "size_bytes": 27099,
+    "sha256": "5677798ed608130da7a473b71cc9854d0e3587306ad68eb5abef55223528ec8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/3.0.4/klevebrand-all-drone-controller-core-3.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/3.0.4/klevebrand-all-drone-controller-core-3.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-all-drone-controller-core/3.0.5/klevebrand-all-drone-controller-core-3.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-all-drone-controller-core-3.0.5.tar.gz",
+    "size_bytes": 27067,
+    "sha256": "0fc91d93bbc6130d9092231941d06ed677e0319e945dcf947522294dd9cb947b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-all-drone-controller-core/3.0.5/klevebrand-all-drone-controller-core-3.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-all-drone-controller-core/3.0.5/klevebrand-all-drone-controller-core-3.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-gyro-bno085/1.0.1/klevebrand-drone-gyro-bno085-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-gyro-bno085-1.0.1.tar.gz",
+    "size_bytes": 7221,
+    "sha256": "3cbbfd3b8f3581328cb10389a107b875b22f80b1bafb3654d772b8922d179277",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-gyro-bno085/1.0.1/klevebrand-drone-gyro-bno085-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-gyro-bno085/1.0.1/klevebrand-drone-gyro-bno085-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-gyro-bno085/1.0.2/klevebrand-drone-gyro-bno085-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-gyro-bno085-1.0.2.tar.gz",
+    "size_bytes": 7153,
+    "sha256": "c2f6b9e74e18a21f63ad4af079abe0c20db2cdd478404c98e555baf5c311563c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-gyro-bno085/1.0.2/klevebrand-drone-gyro-bno085-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-gyro-bno085/1.0.2/klevebrand-drone-gyro-bno085-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-gyro-bno085/1.0.3/klevebrand-drone-gyro-bno085-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-gyro-bno085-1.0.3.tar.gz",
+    "size_bytes": 7636,
+    "sha256": "a5f615cd2ff3d949d054879785dd2221ac4477fd36cb36900ebdbc00107172f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-gyro-bno085/1.0.3/klevebrand-drone-gyro-bno085-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-gyro-bno085/1.0.3/klevebrand-drone-gyro-bno085-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-gyro-bno085/1.0.4/klevebrand-drone-gyro-bno085-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-gyro-bno085-1.0.4.tar.gz",
+    "size_bytes": 12714,
+    "sha256": "02dacd8a179473b4451802590e5989bd0838118e8665b5a3e25c5095d48885ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-gyro-bno085/1.0.4/klevebrand-drone-gyro-bno085-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-gyro-bno085/1.0.4/klevebrand-drone-gyro-bno085-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-gyro-bno085/1.0.5/klevebrand-drone-gyro-bno085-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-gyro-bno085-1.0.5.tar.gz",
+    "size_bytes": 13133,
+    "sha256": "d22cfe2999951dba86a8d3acdc98bac2af53e6279c2111a8b183a453e89054f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-gyro-bno085/1.0.5/klevebrand-drone-gyro-bno085-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-gyro-bno085/1.0.5/klevebrand-drone-gyro-bno085-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-gyro-bno085/3.0.0/klevebrand-drone-gyro-bno085-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-gyro-bno085-3.0.0.tar.gz",
+    "size_bytes": 14489,
+    "sha256": "6cd7858b8e0f7e26bcb44589ce313b19ba07a9ff8c9026a257097303496ed3ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-gyro-bno085/3.0.0/klevebrand-drone-gyro-bno085-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-gyro-bno085/3.0.0/klevebrand-drone-gyro-bno085-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-pid-eeprom-repository/1.0.1/klevebrand-drone-pid-eeprom-repository-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-pid-eeprom-repository-1.0.1.tar.gz",
+    "size_bytes": 6662,
+    "sha256": "c07911c2ed2f0952775287683b7e33ca5079f4ddd9c9ca1c78963423eac0be9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-pid-eeprom-repository/1.0.1/klevebrand-drone-pid-eeprom-repository-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-pid-eeprom-repository/1.0.1/klevebrand-drone-pid-eeprom-repository-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-pid-eeprom-repository/1.0.2/klevebrand-drone-pid-eeprom-repository-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-pid-eeprom-repository-1.0.2.tar.gz",
+    "size_bytes": 6615,
+    "sha256": "3935dc29cc66a5f78fe8adfbfe3a20ab4508274a52a12017b26c17b1204ea9b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-pid-eeprom-repository/1.0.2/klevebrand-drone-pid-eeprom-repository-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-pid-eeprom-repository/1.0.2/klevebrand-drone-pid-eeprom-repository-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-pid-repository-eeprom/1.0.2/klevebrand-drone-pid-repository-eeprom-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-pid-repository-eeprom-1.0.2.tar.gz",
+    "size_bytes": 12878,
+    "sha256": "305eaed8061c83b896444ffef370b6a313f30ca536901944c7c56175f03fbe3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-pid-repository-eeprom/1.0.2/klevebrand-drone-pid-repository-eeprom-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-pid-repository-eeprom/1.0.2/klevebrand-drone-pid-repository-eeprom-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-pid-repository-eeprom/1.1.0/klevebrand-drone-pid-repository-eeprom-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-pid-repository-eeprom-1.1.0.tar.gz",
+    "size_bytes": 3020,
+    "sha256": "c751023794073448c24e4040c5774087de93e835e0ff15bfd73a6b62dc9bbeba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-pid-repository-eeprom/1.1.0/klevebrand-drone-pid-repository-eeprom-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-pid-repository-eeprom/1.1.0/klevebrand-drone-pid-repository-eeprom-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-pid-repository-eeprom/1.1.1/klevebrand-drone-pid-repository-eeprom-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-pid-repository-eeprom-1.1.1.tar.gz",
+    "size_bytes": 3024,
+    "sha256": "a2dbd844cad136b1d8f66ae97f44d47f4e83c10dd1c29b09e77331770bd3363b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-pid-repository-eeprom/1.1.1/klevebrand-drone-pid-repository-eeprom-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-pid-repository-eeprom/1.1.1/klevebrand-drone-pid-repository-eeprom-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-position-bmp280-neom9n/1.0.0/klevebrand-drone-position-bmp280-neom9n-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-position-bmp280-neom9n-1.0.0.tar.gz",
+    "size_bytes": 14580,
+    "sha256": "56837f29936ec68b265c00718ba9635ae907929867d117d709a7d0e2811e19cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/1.0.0/klevebrand-drone-position-bmp280-neom9n-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/1.0.0/klevebrand-drone-position-bmp280-neom9n-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-position-bmp280-neom9n/1.0.1/klevebrand-drone-position-bmp280-neom9n-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-position-bmp280-neom9n-1.0.1.tar.gz",
+    "size_bytes": 12471,
+    "sha256": "401943bd5f7fbc369e7c8b2f06411a2f3515225ccc839b47b99cced9e5e5da64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/1.0.1/klevebrand-drone-position-bmp280-neom9n-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/1.0.1/klevebrand-drone-position-bmp280-neom9n-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.0.0/klevebrand-drone-position-bmp280-neom9n-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-position-bmp280-neom9n-3.0.0.tar.gz",
+    "size_bytes": 106240,
+    "sha256": "84576de581964e51640d54a5ce80677768c5b89f7c585e8c5b19f9118a4471ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.0.0/klevebrand-drone-position-bmp280-neom9n-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.0.0/klevebrand-drone-position-bmp280-neom9n-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.0.1/klevebrand-drone-position-bmp280-neom9n-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-position-bmp280-neom9n-3.0.1.tar.gz",
+    "size_bytes": 106580,
+    "sha256": "a4e8ee61c827d3f5dc30280e351e3aa23f0c296ae6ef37500fe391bbe400adc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.0.1/klevebrand-drone-position-bmp280-neom9n-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.0.1/klevebrand-drone-position-bmp280-neom9n-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.1.0/klevebrand-drone-position-bmp280-neom9n-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-position-bmp280-neom9n-3.1.0.tar.gz",
+    "size_bytes": 14440,
+    "sha256": "2bf57b42ece1be8528f89fd7a839fc29851762c2b43445fd70f96b2052aeb5ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.1.0/klevebrand-drone-position-bmp280-neom9n-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.1.0/klevebrand-drone-position-bmp280-neom9n-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.1.1/klevebrand-drone-position-bmp280-neom9n-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-position-bmp280-neom9n-3.1.1.tar.gz",
+    "size_bytes": 14491,
+    "sha256": "d4341c834eaf363c6bd89ecb6704b0c5520b034e4d387cae06862ab46bb97ac2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.1.1/klevebrand-drone-position-bmp280-neom9n-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.1.1/klevebrand-drone-position-bmp280-neom9n-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.1.2/klevebrand-drone-position-bmp280-neom9n-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-position-bmp280-neom9n-3.1.2.tar.gz",
+    "size_bytes": 14575,
+    "sha256": "3bcd2e5a234bbab579bef67631a6b53c316f704238ec176da61ab2c040158744",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.1.2/klevebrand-drone-position-bmp280-neom9n-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.1.2/klevebrand-drone-position-bmp280-neom9n-3.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.2.0/klevebrand-drone-position-bmp280-neom9n-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-drone-position-bmp280-neom9n-3.2.0.tar.gz",
+    "size_bytes": 14761,
+    "sha256": "73f6437ba75bd8fbdb337ef45fe44d1472f64ec525c6988f0c3cadbf1463bce9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.2.0/klevebrand-drone-position-bmp280-neom9n-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-drone-position-bmp280-neom9n/3.2.0/klevebrand-drone-position-bmp280-neom9n-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework-http-client/1.0.0/klevebrand-skywire-framework-http-client-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-http-client-1.0.0.tar.gz",
+    "size_bytes": 4403,
+    "sha256": "81676c8687b3768126f205026b348a839bfe318bf3495e0f60925d954e57dd73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework-http-client/1.0.0/klevebrand-skywire-framework-http-client-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework-http-client/1.0.0/klevebrand-skywire-framework-http-client-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework-http-stepper-client/1.0.0/klevebrand-skywire-framework-http-stepper-client-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-http-stepper-client-1.0.0.tar.gz",
+    "size_bytes": 4729,
+    "sha256": "cc3f2f57def70311c718ece692ba2c5a6e381e99b75ee46818ecada6d98a5a7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework-http-stepper-client/1.0.0/klevebrand-skywire-framework-http-stepper-client-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework-http-stepper-client/1.0.0/klevebrand-skywire-framework-http-stepper-client-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework-http-stepper-client/1.0.1/klevebrand-skywire-framework-http-stepper-client-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-http-stepper-client-1.0.1.tar.gz",
+    "size_bytes": 4729,
+    "sha256": "45d66fe0a4b1efec9e264ec590f427c1815d05fbc7db5d68846dc346e3a907aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework-http-stepper-client/1.0.1/klevebrand-skywire-framework-http-stepper-client-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework-http-stepper-client/1.0.1/klevebrand-skywire-framework-http-stepper-client-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework-http-stepper-client/1.0.3/klevebrand-skywire-framework-http-stepper-client-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-http-stepper-client-1.0.3.tar.gz",
+    "size_bytes": 4764,
+    "sha256": "c917b12d7c1abe8eab88115080f1b32eef873bb1003ea01589ac1cb7ebc45996",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework-http-stepper-client/1.0.3/klevebrand-skywire-framework-http-stepper-client-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework-http-stepper-client/1.0.3/klevebrand-skywire-framework-http-stepper-client-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework-http-stepper-client/1.0.4/klevebrand-skywire-framework-http-stepper-client-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-http-stepper-client-1.0.4.tar.gz",
+    "size_bytes": 4804,
+    "sha256": "49153fc1be37a4267abca6bbf9f204a73b5f20572ac39d96b7b727cb6ad88624",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework-http-stepper-client/1.0.4/klevebrand-skywire-framework-http-stepper-client-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework-http-stepper-client/1.0.4/klevebrand-skywire-framework-http-stepper-client-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework-tcp-client/1.0.0/klevebrand-skywire-framework-tcp-client-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-tcp-client-1.0.0.tar.gz",
+    "size_bytes": 4217,
+    "sha256": "909316fcd563aca1079c711d0177538a45b245e467a89e0959dffc00d3ec990e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework-tcp-client/1.0.0/klevebrand-skywire-framework-tcp-client-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework-tcp-client/1.0.0/klevebrand-skywire-framework-tcp-client-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework-tcp-client/1.0.1/klevebrand-skywire-framework-tcp-client-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-tcp-client-1.0.1.tar.gz",
+    "size_bytes": 4205,
+    "sha256": "3f6ba32ae5d0762a863f5b23100b6e28ce10dbbda0f5b67c870c65f7d8ca5c98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework-tcp-client/1.0.1/klevebrand-skywire-framework-tcp-client-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework-tcp-client/1.0.1/klevebrand-skywire-framework-tcp-client-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.0.0/klevebrand-skywire-framework-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.0.0.tar.gz",
+    "size_bytes": 6260,
+    "sha256": "8d48fb41a9b9167c2c73eb995ccdf2aaf5c76268caaecf8812d0b37c21260928",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.0.0/klevebrand-skywire-framework-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.0.0/klevebrand-skywire-framework-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.0.1/klevebrand-skywire-framework-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.0.1.tar.gz",
+    "size_bytes": 6275,
+    "sha256": "72c36eee9c9fc3b5316a09ffd6f5d0d08c0f620af1e80d55c4bc5e20e25a71b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.0.1/klevebrand-skywire-framework-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.0.1/klevebrand-skywire-framework-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.0.2/klevebrand-skywire-framework-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.0.2.tar.gz",
+    "size_bytes": 6284,
+    "sha256": "09b9088e508aaf13b6c24b8de22c9086c46eedad888edbeb727d133dcf0e9ea6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.0.2/klevebrand-skywire-framework-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.0.2/klevebrand-skywire-framework-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.0.3/klevebrand-skywire-framework-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.0.3.tar.gz",
+    "size_bytes": 6301,
+    "sha256": "a50963b5cfd3811b98c399c9c687cda2af69c9359668ab1ebc6dfd19ac503250",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.0.3/klevebrand-skywire-framework-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.0.3/klevebrand-skywire-framework-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.0.4/klevebrand-skywire-framework-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.0.4.tar.gz",
+    "size_bytes": 6582,
+    "sha256": "93376cde8217746e217a0bbf2f11f0fc02c9318de62ede27aac2fe79f0f53923",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.0.4/klevebrand-skywire-framework-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.0.4/klevebrand-skywire-framework-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.0.5/klevebrand-skywire-framework-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.0.5.tar.gz",
+    "size_bytes": 6641,
+    "sha256": "da2aeb7b2db2b8485baa1032079acf0c0c52ab4f5a7d955c95c3f3048f66b763",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.0.5/klevebrand-skywire-framework-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.0.5/klevebrand-skywire-framework-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.0.6/klevebrand-skywire-framework-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.0.6.tar.gz",
+    "size_bytes": 8277,
+    "sha256": "62ff68e597e3c3b69cd3dee2e510607743726ec4d376171e428c4571e36c0ba8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.0.6/klevebrand-skywire-framework-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.0.6/klevebrand-skywire-framework-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.0.7/klevebrand-skywire-framework-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.0.7.tar.gz",
+    "size_bytes": 9438,
+    "sha256": "322c2064fb57bf12acc7eb5b99f6ec7d5c2d35d129ac32d833d8f27abf324e4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.0.7/klevebrand-skywire-framework-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.0.7/klevebrand-skywire-framework-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.0.8/klevebrand-skywire-framework-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.0.8.tar.gz",
+    "size_bytes": 9813,
+    "sha256": "5dbffb6aef4da2bc88c5bdb6fafb250bbcc48bf02e0a1b103f980e6436558796",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.0.8/klevebrand-skywire-framework-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.0.8/klevebrand-skywire-framework-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.0.9/klevebrand-skywire-framework-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.0.9.tar.gz",
+    "size_bytes": 9804,
+    "sha256": "07a277c019861b1e2a8058c7a272450f97b4ffd743a72ad9e0553fd5f3a359e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.0.9/klevebrand-skywire-framework-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.0.9/klevebrand-skywire-framework-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.1.0/klevebrand-skywire-framework-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.1.0.tar.gz",
+    "size_bytes": 9843,
+    "sha256": "e518b26f536c835d8ba70167b63fdceda637ba031a92641e17030785119c81af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.1.0/klevebrand-skywire-framework-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.1.0/klevebrand-skywire-framework-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.1.1/klevebrand-skywire-framework-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.1.1.tar.gz",
+    "size_bytes": 9832,
+    "sha256": "5111a612455c5cdacb78d15a1fd8eaddc130cda07dc2d34176abe91e652e215d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.1.1/klevebrand-skywire-framework-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.1.1/klevebrand-skywire-framework-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.1.2/klevebrand-skywire-framework-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.1.2.tar.gz",
+    "size_bytes": 9874,
+    "sha256": "3eaee0549bff121ce1057990db8c6bbb469cb71c15e12d3ade369a92b93bef88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.1.2/klevebrand-skywire-framework-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.1.2/klevebrand-skywire-framework-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.1.3/klevebrand-skywire-framework-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.1.3.tar.gz",
+    "size_bytes": 9882,
+    "sha256": "50dd8e4d63320ca8644e74a1a4bbaafca7d80b608ffc5d4183ad942666586cff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.1.3/klevebrand-skywire-framework-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.1.3/klevebrand-skywire-framework-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.1.4/klevebrand-skywire-framework-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.1.4.tar.gz",
+    "size_bytes": 9878,
+    "sha256": "00420267bbc31752e7ec95c619beb5dfdc91e1742c555956269e4b47ce278a69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.1.4/klevebrand-skywire-framework-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.1.4/klevebrand-skywire-framework-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.1.5/klevebrand-skywire-framework-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.1.5.tar.gz",
+    "size_bytes": 9927,
+    "sha256": "fedc3f2b7b1a7129bb20ced46724cc90655c8a64b1114061e4e361a1b3e08ead",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.1.5/klevebrand-skywire-framework-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.1.5/klevebrand-skywire-framework-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.1.6/klevebrand-skywire-framework-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.1.6.tar.gz",
+    "size_bytes": 10060,
+    "sha256": "df43f09d35141ea72f3e2c37a43689af67550b42448d01bed06ce6b5971bb94b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.1.6/klevebrand-skywire-framework-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.1.6/klevebrand-skywire-framework-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.1.7/klevebrand-skywire-framework-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.1.7.tar.gz",
+    "size_bytes": 10033,
+    "sha256": "eaf17c53c016963f9a6669b331ebe5527132ad247fd51d4d1dc8da1d9560c210",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.1.7/klevebrand-skywire-framework-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.1.7/klevebrand-skywire-framework-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.2.0/klevebrand-skywire-framework-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.2.0.tar.gz",
+    "size_bytes": 9173,
+    "sha256": "ff9f99bbebae5e729d4b339842c6051bea10e4dc72eba5f78716a348a5c0f451",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.2.0/klevebrand-skywire-framework-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.2.0/klevebrand-skywire-framework-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.2.1/klevebrand-skywire-framework-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.2.1.tar.gz",
+    "size_bytes": 9170,
+    "sha256": "3cc5c6c70e31a458a9119ca950c212dd56eca0555918bf463ff9997c44963625",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.2.1/klevebrand-skywire-framework-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.2.1/klevebrand-skywire-framework-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.2.2/klevebrand-skywire-framework-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.2.2.tar.gz",
+    "size_bytes": 9136,
+    "sha256": "fe767abcd40ab112cbe6de0171f67d5a4bc94af65fdb15b2afb09f013fdf698f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.2.2/klevebrand-skywire-framework-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.2.2/klevebrand-skywire-framework-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.2.3/klevebrand-skywire-framework-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.2.3.tar.gz",
+    "size_bytes": 9150,
+    "sha256": "39c2a5ff0b09ee02a29a95cfa02e6cc8bbdc14c456c2ae832a8f446e46522cf7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.2.3/klevebrand-skywire-framework-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.2.3/klevebrand-skywire-framework-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.3.0/klevebrand-skywire-framework-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.3.0.tar.gz",
+    "size_bytes": 9734,
+    "sha256": "2794ad28558a6abff0c4223cfed767f97dbfb2ace402bfac3e10046daf372f37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.3.0/klevebrand-skywire-framework-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.3.0/klevebrand-skywire-framework-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.3.1/klevebrand-skywire-framework-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.3.1.tar.gz",
+    "size_bytes": 9929,
+    "sha256": "4f19aed125796007c59ed4f6d46c0e1d4c577055494086806301c19e243b3ad8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.3.1/klevebrand-skywire-framework-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.3.1/klevebrand-skywire-framework-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.3.2/klevebrand-skywire-framework-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.3.2.tar.gz",
+    "size_bytes": 9992,
+    "sha256": "c57f1a2c65726ed72af28b17bf95bdc1b794aea18b5fb12dbce1afe0f89e39a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.3.2/klevebrand-skywire-framework-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.3.2/klevebrand-skywire-framework-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.3.3/klevebrand-skywire-framework-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.3.3.tar.gz",
+    "size_bytes": 9998,
+    "sha256": "d917055d2cc261aa9c62800915ed00a7558e91a15395d9badb55805ed11ab7d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.3.3/klevebrand-skywire-framework-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.3.3/klevebrand-skywire-framework-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.4.0/klevebrand-skywire-framework-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.4.0.tar.gz",
+    "size_bytes": 9902,
+    "sha256": "e97dc86e1512807b5fe3d82184e42c63d0c84713eeaa371bc61ed8342df421ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.4.0/klevebrand-skywire-framework-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.4.0/klevebrand-skywire-framework-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.4.1/klevebrand-skywire-framework-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.4.1.tar.gz",
+    "size_bytes": 9993,
+    "sha256": "e4b4bd736e5cd0c6fc8d6ffde231e3d9f9efb233e60943a40210068ecb5dca96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.4.1/klevebrand-skywire-framework-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.4.1/klevebrand-skywire-framework-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.4.2/klevebrand-skywire-framework-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.4.2.tar.gz",
+    "size_bytes": 10017,
+    "sha256": "09a83f1d0db6ee41ab58a98439ec3939550bc28674772fb6605992761e896f0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.4.2/klevebrand-skywire-framework-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.4.2/klevebrand-skywire-framework-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.4.3/klevebrand-skywire-framework-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.4.3.tar.gz",
+    "size_bytes": 10016,
+    "sha256": "ca47473d748412a6cb6ed6e7d9b2c02ca339f83e1fb43a05e6eebc77af4d03e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.4.3/klevebrand-skywire-framework-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.4.3/klevebrand-skywire-framework-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.4.5/klevebrand-skywire-framework-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.4.5.tar.gz",
+    "size_bytes": 10230,
+    "sha256": "a3e551500421a2501da0103db27d1f8b422186bdb72dcf1834d74f0de47b39a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.4.5/klevebrand-skywire-framework-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.4.5/klevebrand-skywire-framework-1.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.4.6/klevebrand-skywire-framework-1.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.4.6.tar.gz",
+    "size_bytes": 10506,
+    "sha256": "eff8800fd77e34d377b0eebe2820653fff874cd24177494b734071b64c35318f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.4.6/klevebrand-skywire-framework-1.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.4.6/klevebrand-skywire-framework-1.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.5.0/klevebrand-skywire-framework-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.5.0.tar.gz",
+    "size_bytes": 10566,
+    "sha256": "b2536ece6a3dbedaa402cef0da61663e0b6feb5886593f3284cb058eeb40dc49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.5.0/klevebrand-skywire-framework-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.5.0/klevebrand-skywire-framework-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.6.0/klevebrand-skywire-framework-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.6.0.tar.gz",
+    "size_bytes": 10943,
+    "sha256": "c1b8eff809df8dc271c30b6222957dd484d058b7453dba211d4bb98e9c91efe3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.6.0/klevebrand-skywire-framework-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.6.0/klevebrand-skywire-framework-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.6.1/klevebrand-skywire-framework-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.6.1.tar.gz",
+    "size_bytes": 10994,
+    "sha256": "32d541c4294a7763df1f3aa1b578cb00855272bb541e1f540c51f81c81e8d08c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.6.1/klevebrand-skywire-framework-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.6.1/klevebrand-skywire-framework-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.6.2/klevebrand-skywire-framework-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.6.2.tar.gz",
+    "size_bytes": 10998,
+    "sha256": "c446e106ada35a77054d938811e9818074dd5f7937f5f3ff3e50379d265bc6df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.6.2/klevebrand-skywire-framework-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.6.2/klevebrand-skywire-framework-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.6.3/klevebrand-skywire-framework-1.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.6.3.tar.gz",
+    "size_bytes": 10959,
+    "sha256": "d636694418ad8de97d05feb2cb444765ab37a988bcb8ba9a4cc5c834b1c0f242",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.6.3/klevebrand-skywire-framework-1.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.6.3/klevebrand-skywire-framework-1.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.7.0/klevebrand-skywire-framework-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.7.0.tar.gz",
+    "size_bytes": 10965,
+    "sha256": "cbb9bea2c90d4426dfe268d5bf47ebfd703aa265491409efadc2bc52279ad339",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.7.0/klevebrand-skywire-framework-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.7.0/klevebrand-skywire-framework-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.7.1/klevebrand-skywire-framework-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.7.1.tar.gz",
+    "size_bytes": 16176,
+    "sha256": "bd365a56bdeab02fcaae2c82fd92b875db936b28d93f8548cbe99a1915d7272d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.7.1/klevebrand-skywire-framework-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.7.1/klevebrand-skywire-framework-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.7.2/klevebrand-skywire-framework-1.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.7.2.tar.gz",
+    "size_bytes": 16364,
+    "sha256": "533ed71d85f5ef3c22330080e107d66adc74533b836a56bd9952bcac726beed9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.7.2/klevebrand-skywire-framework-1.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.7.2/klevebrand-skywire-framework-1.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.7.3/klevebrand-skywire-framework-1.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.7.3.tar.gz",
+    "size_bytes": 16423,
+    "sha256": "0cd5dddd48e12452059204c9804471d7847cacc6943937688e03e59ea9a51072",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.7.3/klevebrand-skywire-framework-1.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.7.3/klevebrand-skywire-framework-1.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.7.4/klevebrand-skywire-framework-1.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.7.4.tar.gz",
+    "size_bytes": 16398,
+    "sha256": "7167b3143968885f28080de94ddc86d083e28319429dde1a9d07f152033d16d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.7.4/klevebrand-skywire-framework-1.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.7.4/klevebrand-skywire-framework-1.7.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.7.5/klevebrand-skywire-framework-1.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.7.5.tar.gz",
+    "size_bytes": 14689,
+    "sha256": "4e1496cad592ff2c72296390dab05130cdfc2316186c682a56541c04eeb5c751",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.7.5/klevebrand-skywire-framework-1.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.7.5/klevebrand-skywire-framework-1.7.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.7.6/klevebrand-skywire-framework-1.7.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.7.6.tar.gz",
+    "size_bytes": 14693,
+    "sha256": "5470bf1e5fc2eec8c9427cf5e9962489c4f184f186ca3b09b9a0c95970f53d0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.7.6/klevebrand-skywire-framework-1.7.6.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.7.6/klevebrand-skywire-framework-1.7.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.7.7/klevebrand-skywire-framework-1.7.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.7.7.tar.gz",
+    "size_bytes": 14750,
+    "sha256": "cf421b9dd875cfb39e26aa0abbe83c8e200204d32db1cc125cf5003ebace6c2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.7.7/klevebrand-skywire-framework-1.7.7.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.7.7/klevebrand-skywire-framework-1.7.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.8.0/klevebrand-skywire-framework-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.8.0.tar.gz",
+    "size_bytes": 20442,
+    "sha256": "5ce4a82538fd678303b4dbbdcfb9eba338de1e311b2d4f08b2f68e84dea8c844",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.8.0/klevebrand-skywire-framework-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.8.0/klevebrand-skywire-framework-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.8.1/klevebrand-skywire-framework-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.8.1.tar.gz",
+    "size_bytes": 21247,
+    "sha256": "895c9b156532fab6c986a582d38d79bc354600401c3a09a4a60adf54d453e7df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.8.1/klevebrand-skywire-framework-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.8.1/klevebrand-skywire-framework-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.8.2/klevebrand-skywire-framework-1.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.8.2.tar.gz",
+    "size_bytes": 21022,
+    "sha256": "ba1c96582c98b90c7b0f40d4a50387890e5da6ad26cb3918a90d5ecba0817c70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.8.2/klevebrand-skywire-framework-1.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.8.2/klevebrand-skywire-framework-1.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.9.0/klevebrand-skywire-framework-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.9.0.tar.gz",
+    "size_bytes": 21143,
+    "sha256": "87acb19dff26d243f24d45183caf0c85d760aaa448827bb44c70f3f24f291509",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.9.0/klevebrand-skywire-framework-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.9.0/klevebrand-skywire-framework-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.9.1/klevebrand-skywire-framework-1.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.9.1.tar.gz",
+    "size_bytes": 21634,
+    "sha256": "00d6189307346dc3e2a302c510f99bd38d1c1739657c4a9a95f682c65118f39a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.9.1/klevebrand-skywire-framework-1.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.9.1/klevebrand-skywire-framework-1.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/1.9.2/klevebrand-skywire-framework-1.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-1.9.2.tar.gz",
+    "size_bytes": 21649,
+    "sha256": "521b8f619f540cea4f6b92a81b40aa6e8e10c673d2124f8bdd0c21061f50fa08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/1.9.2/klevebrand-skywire-framework-1.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/1.9.2/klevebrand-skywire-framework-1.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/2.0.0/klevebrand-skywire-framework-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-2.0.0.tar.gz",
+    "size_bytes": 23016,
+    "sha256": "f0c2820deb6ee09d03168482f3976455309da35897493ad1fea7fc12eba6461c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/2.0.0/klevebrand-skywire-framework-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/2.0.0/klevebrand-skywire-framework-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lordmax2/library/klevebrand-skywire-framework/2.1.0/klevebrand-skywire-framework-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "klevebrand-skywire-framework-2.1.0.tar.gz",
+    "size_bytes": 22998,
+    "sha256": "b2fc4b76b7762028bd495a441d7e23a15952ef05e11c4dfc976f737b197b1552",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lordmax2/library/klevebrand-skywire-framework/2.1.0/klevebrand-skywire-framework-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lordmax2/library/klevebrand-skywire-framework/2.1.0/klevebrand-skywire-framework-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

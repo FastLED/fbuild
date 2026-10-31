@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/strathbogiebrewing",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "strathbogiebrewing/library/AceMenu/0.1.4/AceMenu-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AceMenu-0.1.4.tar.gz",
+    "size_bytes": 7621,
+    "sha256": "5955d001089cc257984d8defdc06dfcc9d38c08b2bd31a3e20e02c116c512859",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/strathbogiebrewing/library/AceMenu/0.1.4/AceMenu-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/strathbogiebrewing/library/AceMenu/0.1.4/AceMenu-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "strathbogiebrewing/library/TinBus/1.0.0/TinBus-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinBus-1.0.0.tar.gz",
+    "size_bytes": 4770,
+    "sha256": "0313837e4a58b338cbecd312f048e7216538b96eb27129aa5b92d27337f4b218",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/strathbogiebrewing/library/TinBus/1.0.0/TinBus-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/strathbogiebrewing/library/TinBus/1.0.0/TinBus-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "strathbogiebrewing/library/VEDirect/1.0.3/VEDirect-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEDirect-1.0.3.tar.gz",
+    "size_bytes": 3816,
+    "sha256": "cdb821fc9dc920beae50a45963750331c1962d29b1bd1b6b2a1605d887f6fecd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/strathbogiebrewing/library/VEDirect/1.0.3/VEDirect-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/strathbogiebrewing/library/VEDirect/1.0.3/VEDirect-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

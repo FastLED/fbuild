@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ponoor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ponoor/library/PI4IOE5V6416/0.2.0/PI4IOE5V6416-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PI4IOE5V6416-0.2.0.tar.gz",
+    "size_bytes": 3622,
+    "sha256": "16b73072683d80f24e497ec169fe15152124abf2743cc5efcffba7b0d226549d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ponoor/library/PI4IOE5V6416/0.2.0/PI4IOE5V6416-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ponoor/library/PI4IOE5V6416/0.2.0/PI4IOE5V6416-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ponoor/library/Ponoor%20L6470%20Library/1.0.0/PonoorL6470Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PonoorL6470Library-1.0.0.tar.gz",
+    "size_bytes": 34347,
+    "sha256": "07a3a0861f5ac5b5077e4c4ae473b2f31a844aca9be4ec014e539db4a4031c4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ponoor/library/Ponoor%2520L6470%2520Library/1.0.0/PonoorL6470Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ponoor/library/Ponoor%20L6470%20Library/1.0.0/PonoorL6470Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ponoor/library/Ponoor%20PowerSTEP01%20Library/1.1.0/PonoorPowerSTEP01Library-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PonoorPowerSTEP01Library-1.1.0.tar.gz",
+    "size_bytes": 28759,
+    "sha256": "53713c8e5979afe70005007588c40a05afbf8b7e09cf414c21051ef129e4feac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ponoor/library/Ponoor%2520PowerSTEP01%2520Library/1.1.0/PonoorPowerSTEP01Library-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ponoor/library/Ponoor%20PowerSTEP01%20Library/1.1.0/PonoorPowerSTEP01Library-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ponoor/library/Ponoor%20PowerSTEP01%20Library/1.2.0/PonoorPowerSTEP01Library-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PonoorPowerSTEP01Library-1.2.0.tar.gz",
+    "size_bytes": 42924,
+    "sha256": "67557c45f84fc306330c791897d5f3de3c98743d652d018259642fb18cde36be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ponoor/library/Ponoor%2520PowerSTEP01%2520Library/1.2.0/PonoorPowerSTEP01Library-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ponoor/library/Ponoor%20PowerSTEP01%20Library/1.2.0/PonoorPowerSTEP01Library-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

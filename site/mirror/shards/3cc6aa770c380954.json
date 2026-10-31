@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cibikomberi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cibikomberi/library/Rect/0.1.5/Rect-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rect-0.1.5.tar.gz",
+    "size_bytes": 4828,
+    "sha256": "c2845ebb62e0f79ec5697ffdc1ada8f560e83c50874c3e936ab0c7fbcce96f2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cibikomberi/library/Rect/0.1.5/Rect-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/cibikomberi/library/Rect/0.1.5/Rect-0.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

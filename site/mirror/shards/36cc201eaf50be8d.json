@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fpgaarcade",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fpgaarcade/library/FPGAArcade%20Replay%20MKR%20Vidor%204000/1.701/FPGAArcadeReplayMKRVidor4000-1.701.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FPGAArcadeReplayMKRVidor4000-1.701.tar.gz",
+    "size_bytes": 322072,
+    "sha256": "d75f6052fe39a0243e3ea0866a17248ebdf75ef827fc77eb6a89451584967148",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fpgaarcade/library/FPGAArcade%2520Replay%2520MKR%2520Vidor%25204000/1.701/FPGAArcadeReplayMKRVidor4000-1.701.tar.gz",
+     "https://dl.registry.platformio.org/download/fpgaarcade/library/FPGAArcade%20Replay%20MKR%20Vidor%204000/1.701/FPGAArcadeReplayMKRVidor4000-1.701.tar.gz"
+    ]
+   }
+  }
+ ]
+}

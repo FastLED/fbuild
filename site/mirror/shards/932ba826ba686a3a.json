@@ -1,0 +1,477 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gordonfeeman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gordonfeeman/library/EspWebUI/2.1.0/EspWebUI-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspWebUI-2.1.0.tar.gz",
+    "size_bytes": 5408,
+    "sha256": "5f231ceb03716584ea0a84404e6958a92c390b7f29b90203fdb6897d9c9ebdab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/EspWebUI/2.1.0/EspWebUI-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/EspWebUI/2.1.0/EspWebUI-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/EspWebUI/2.2.2/EspWebUI-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspWebUI-2.2.2.tar.gz",
+    "size_bytes": 5496,
+    "sha256": "52566be3759aba17fc001df4f0c442a39c3061616c574c15d1125e84be64db73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/EspWebUI/2.2.2/EspWebUI-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/EspWebUI/2.2.2/EspWebUI-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/EspWebUI/2.2.4/EspWebUI-2.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspWebUI-2.2.4.tar.gz",
+    "size_bytes": 5739,
+    "sha256": "2764d4632948e1d06e53a776cad958c3ba5759c7d3492137be36c3a1a02f143b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/EspWebUI/2.2.4/EspWebUI-2.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/EspWebUI/2.2.4/EspWebUI-2.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/FlowMeterModmagM1000/2.0.0/FlowMeterModmagM1000-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlowMeterModmagM1000-2.0.0.tar.gz",
+    "size_bytes": 1907,
+    "sha256": "e359e511842aaba0b5517ac0dfaab8847746ad3ae9757e221e39c6ef36093e44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/FlowMeterModmagM1000/2.0.0/FlowMeterModmagM1000-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/FlowMeterModmagM1000/2.0.0/FlowMeterModmagM1000-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/FlowMeterModmagM1000/2.0.1/FlowMeterModmagM1000-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlowMeterModmagM1000-2.0.1.tar.gz",
+    "size_bytes": 1901,
+    "sha256": "3991a50092221475f38b4d6b506b14b5259791c0e238ae2164ef9a4395cc3ce1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/FlowMeterModmagM1000/2.0.1/FlowMeterModmagM1000-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/FlowMeterModmagM1000/2.0.1/FlowMeterModmagM1000-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/FlowMeterModmagM1000/2.1.0/FlowMeterModmagM1000-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlowMeterModmagM1000-2.1.0.tar.gz",
+    "size_bytes": 1870,
+    "sha256": "2dee1ea0394a51b2ad332477951e4347cb82a102a6498bde00796a2af6b506d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/FlowMeterModmagM1000/2.1.0/FlowMeterModmagM1000-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/FlowMeterModmagM1000/2.1.0/FlowMeterModmagM1000-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/InverterSK500E/2.0.0/InverterSK500E-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InverterSK500E-2.0.0.tar.gz",
+    "size_bytes": 2536,
+    "sha256": "92b6baf90cb51ed0c5ba5f568fbe562d73dcec145e8de4d485725308c425b5ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/InverterSK500E/2.0.0/InverterSK500E-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/InverterSK500E/2.0.0/InverterSK500E-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/InverterSK500E/2.0.1/InverterSK500E-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InverterSK500E-2.0.1.tar.gz",
+    "size_bytes": 2575,
+    "sha256": "571a55ee4ee0a6fcc83baf96df4c5dfb1b1b67c7ce09edc37c5d5eb9509725ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/InverterSK500E/2.0.1/InverterSK500E-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/InverterSK500E/2.0.1/InverterSK500E-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/InverterSK500E/2.1.0/InverterSK500E-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InverterSK500E-2.1.0.tar.gz",
+    "size_bytes": 2583,
+    "sha256": "b12253e58f775503f39b34417499cc160017d45cff906962f5ea0813a8c77168",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/InverterSK500E/2.1.0/InverterSK500E-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/InverterSK500E/2.1.0/InverterSK500E-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/PID/2.0.0/PID-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PID-2.0.0.tar.gz",
+    "size_bytes": 1240,
+    "sha256": "b717ab80e6c85e9660e1ec83ff108eda857f084b0024fa818e2ec76a7197e879",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/PID/2.0.0/PID-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/PID/2.0.0/PID-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/PID/2.0.1/PID-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PID-2.0.1.tar.gz",
+    "size_bytes": 1270,
+    "sha256": "f450f2554a430add672d96cf821ab3d16f62fad047f71ed666ae94145eb4c35b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/PID/2.0.1/PID-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/PID/2.0.1/PID-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/PID/2.1.0/PID-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PID-2.1.0.tar.gz",
+    "size_bytes": 1269,
+    "sha256": "6c51055b57a74b0db688b129a22955b2f52b0a9a7d5e4788bb35d80daede3e29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/PID/2.1.0/PID-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/PID/2.1.0/PID-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/PressureTransmitterRS485/2.0.0/PressureTransmitterRS485-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PressureTransmitterRS485-2.0.0.tar.gz",
+    "size_bytes": 1440,
+    "sha256": "e4d7fba01cf11b50fac0bd6bcbb290f0a271f5cdb7c074219669a3a150b11c9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/PressureTransmitterRS485/2.0.0/PressureTransmitterRS485-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/PressureTransmitterRS485/2.0.0/PressureTransmitterRS485-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/PressureTransmitterRS485/2.0.1/PressureTransmitterRS485-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PressureTransmitterRS485-2.0.1.tar.gz",
+    "size_bytes": 1440,
+    "sha256": "a54f1eb597cc538ec17f972199f808f7d14de5f09d40d8078c325a3dfc5b1594",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/PressureTransmitterRS485/2.0.1/PressureTransmitterRS485-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/PressureTransmitterRS485/2.0.1/PressureTransmitterRS485-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/PressureTransmitterRS485/2.1.0/PressureTransmitterRS485-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PressureTransmitterRS485-2.1.0.tar.gz",
+    "size_bytes": 1409,
+    "sha256": "17deac16342f0c3fe62bb8900b0db1fb9bc6a7fc240544d66d349a1b3cf33b11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/PressureTransmitterRS485/2.1.0/PressureTransmitterRS485-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/PressureTransmitterRS485/2.1.0/PressureTransmitterRS485-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/PulseMeter/2.0.0/PulseMeter-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseMeter-2.0.0.tar.gz",
+    "size_bytes": 2240,
+    "sha256": "6ea6134aeaaa8641006c75e477ae007d8b9fe128141d0ae1fdc2415362b863e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/PulseMeter/2.0.0/PulseMeter-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/PulseMeter/2.0.0/PulseMeter-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/PulseMeter/2.0.1/PulseMeter-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseMeter-2.0.1.tar.gz",
+    "size_bytes": 2280,
+    "sha256": "590d1f46a079c3a31f05ecf270c76501d0953894c647987658d2cad204e73e42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/PulseMeter/2.0.1/PulseMeter-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/PulseMeter/2.0.1/PulseMeter-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/PulseMeter/2.0.2/PulseMeter-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseMeter-2.0.2.tar.gz",
+    "size_bytes": 2268,
+    "sha256": "72425634997e9ee44d8250bc2f6ccae143aeda4ba5118d95e9afdf042f93d13b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/PulseMeter/2.0.2/PulseMeter-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/PulseMeter/2.0.2/PulseMeter-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/PulseMeter/2.1.0/PulseMeter-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseMeter-2.1.0.tar.gz",
+    "size_bytes": 2283,
+    "sha256": "d7b118ebf16d553c71a9baebe3546d0c144dd02c924e38ea6769c4deebeac9b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/PulseMeter/2.1.0/PulseMeter-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/PulseMeter/2.1.0/PulseMeter-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/PwmOutput/2.0.0/PwmOutput-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwmOutput-2.0.0.tar.gz",
+    "size_bytes": 916,
+    "sha256": "374b9977d92569b91a3f049e96e607ac993a004f7ee194ea38838879614bd645",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/PwmOutput/2.0.0/PwmOutput-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/PwmOutput/2.0.0/PwmOutput-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/PwmOutput/2.0.1/PwmOutput-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwmOutput-2.0.1.tar.gz",
+    "size_bytes": 950,
+    "sha256": "881a6b868bb4218b54b666c2a56bd3002290847465c92de58f4304d4dc229c24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/PwmOutput/2.0.1/PwmOutput-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/PwmOutput/2.0.1/PwmOutput-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/PwmOutput/2.1.0/PwmOutput-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwmOutput-2.1.0.tar.gz",
+    "size_bytes": 961,
+    "sha256": "21a97d50854a1154af4a6b3bb419e982c180aeb4908f2636edb9f817614eae76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/PwmOutput/2.1.0/PwmOutput-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/PwmOutput/2.1.0/PwmOutput-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/RtcDS3231/2.0.0/RtcDS3231-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RtcDS3231-2.0.0.tar.gz",
+    "size_bytes": 1248,
+    "sha256": "50350cdcf2eb4ad6a9a8c667f8289fa6edb2c3641015c42b70e5d6f6d1700ce5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/RtcDS3231/2.0.0/RtcDS3231-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/RtcDS3231/2.0.0/RtcDS3231-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/RtcDS3231/2.0.1/RtcDS3231-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RtcDS3231-2.0.1.tar.gz",
+    "size_bytes": 1248,
+    "sha256": "5c702e309a1e45c8da4b01c2c8e641d605122ab680c80a8c21111f69041778e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/RtcDS3231/2.0.1/RtcDS3231-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/RtcDS3231/2.0.1/RtcDS3231-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/RtcDS3231/2.1.0/RtcDS3231-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RtcDS3231-2.1.0.tar.gz",
+    "size_bytes": 1240,
+    "sha256": "62d960163c360dc8fa8d18c7fdab47341a9fb4c3e77f8813ae0b521e790bed16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/RtcDS3231/2.1.0/RtcDS3231-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/RtcDS3231/2.1.0/RtcDS3231-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/SystemLed/2.0.0/SystemLed-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SystemLed-2.0.0.tar.gz",
+    "size_bytes": 1289,
+    "sha256": "5f5a32c6441198f012ae80f93558264ab28127797c7a3ca3f0d2ef861a483ca3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/SystemLed/2.0.0/SystemLed-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/SystemLed/2.0.0/SystemLed-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/SystemLed/2.0.1/SystemLed-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SystemLed-2.0.1.tar.gz",
+    "size_bytes": 1288,
+    "sha256": "03c7c1b02b73cb57ef9d2727b606222865d6d670e4f22e714c243e360655cdf6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/SystemLed/2.0.1/SystemLed-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/SystemLed/2.0.1/SystemLed-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/SystemLed/2.1.0/SystemLed-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SystemLed-2.1.0.tar.gz",
+    "size_bytes": 1516,
+    "sha256": "3d631424f07a18b0dda21beeb596aba5765ad4857487978581c945be140279be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/SystemLed/2.1.0/SystemLed-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/SystemLed/2.1.0/SystemLed-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/SystemLed/2.2.1/SystemLed-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SystemLed-2.2.1.tar.gz",
+    "size_bytes": 1536,
+    "sha256": "1848a5567560dae60202025f4b9ef1547d3effb8f8eeab19bdc91d661f8899d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/SystemLed/2.2.1/SystemLed-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/SystemLed/2.2.1/SystemLed-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/SystemLed/2.2.6/SystemLed-2.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SystemLed-2.2.6.tar.gz",
+    "size_bytes": 1558,
+    "sha256": "1a4fadb9f77e6e8a9dac9b5496a52306948a37930a0a120cb23ab65543c18332",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/SystemLed/2.2.6/SystemLed-2.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/SystemLed/2.2.6/SystemLed-2.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/SystemTime/2.0.0/SystemTime-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SystemTime-2.0.0.tar.gz",
+    "size_bytes": 1193,
+    "sha256": "0f0f92808dc732b76a6d6bb845149c8cca7cadbd2010b0100335fc9b1914af13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/SystemTime/2.0.0/SystemTime-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/SystemTime/2.0.0/SystemTime-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/SystemTime/2.0.1/SystemTime-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SystemTime-2.0.1.tar.gz",
+    "size_bytes": 1192,
+    "sha256": "ad16b7bff4626b49458664bd168093f3cf112bb9ab82b94a85cb1b6efa52622a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/SystemTime/2.0.1/SystemTime-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/SystemTime/2.0.1/SystemTime-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/SystemTime/2.1.0/SystemTime-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SystemTime-2.1.0.tar.gz",
+    "size_bytes": 1192,
+    "sha256": "8d5ccdcb17d5ecf63e73fb7a1c183f7c43b5acaf23da005a0cd178d314478b46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/SystemTime/2.1.0/SystemTime-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/SystemTime/2.1.0/SystemTime-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/Timer/2.0.0/Timer-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timer-2.0.0.tar.gz",
+    "size_bytes": 757,
+    "sha256": "408f5c1a9ee637eef9ad9be7c7dee6c6cc036ede9d7719dd293ec94597e9841d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/Timer/2.0.0/Timer-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/Timer/2.0.0/Timer-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/Timer/2.0.1/Timer-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timer-2.0.1.tar.gz",
+    "size_bytes": 794,
+    "sha256": "d0bb780a23e1a1a55a429dd6ce12e4758423c76a5ead95358ce7cad5179a346c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/Timer/2.0.1/Timer-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/Timer/2.0.1/Timer-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gordonfeeman/library/Timer/2.1.0/Timer-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timer-2.1.0.tar.gz",
+    "size_bytes": 803,
+    "sha256": "44baa9c7b7305398e27d11b8e08fe264ef1a06b728dd306d986b78ec6356277e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonfeeman/library/Timer/2.1.0/Timer-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonfeeman/library/Timer/2.1.0/Timer-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

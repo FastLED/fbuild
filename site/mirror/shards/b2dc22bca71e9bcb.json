@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/raheeb223",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "raheeb223/library/EasySensor/1.0.0/EasySensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasySensor-1.0.0.tar.gz",
+    "size_bytes": 10041,
+    "sha256": "ac648a21d79b712a124a9a261060a9e51d047719e290d1f7cb6a80702b0997c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/raheeb223/library/EasySensor/1.0.0/EasySensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/raheeb223/library/EasySensor/1.0.0/EasySensor-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

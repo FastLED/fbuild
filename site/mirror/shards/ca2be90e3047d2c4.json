@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/soonerrobotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "soonerrobotics/library/RobotLib/1.6.1/RobotLib-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobotLib-1.6.1.tar.gz",
+    "size_bytes": 119098,
+    "sha256": "e373fcc44a621def9769d6f54898d751c46841dfcc667683410d0a5692027e7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soonerrobotics/library/RobotLib/1.6.1/RobotLib-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soonerrobotics/library/RobotLib/1.6.1/RobotLib-1.6.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jenschn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jenschn/library/BME280/0.0.0+sha.9a1b27d03c97/BME280-0.0.0+sha.9a1b27d03c97.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280-0.0.0+sha.9a1b27d03c97.tar.gz",
+    "size_bytes": 5675,
+    "sha256": "7f89c3ace67ac144958792669058b6b998bb5c7703834ecff39e5c74800e1e8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jenschn/library/BME280/0.0.0%2Bsha.9a1b27d03c97/BME280-0.0.0%2Bsha.9a1b27d03c97.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jenschn/library/BME280/0.0.0%2Bsha.9a1b27d03c97/BME280-0.0.0%2Bsha.9a1b27d03c97.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jenschn/library/SI114x/0.0.0+sha.f84f3a3708cb/SI114x-0.0.0+sha.f84f3a3708cb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SI114x-0.0.0+sha.f84f3a3708cb.tar.gz",
+    "size_bytes": 10179,
+    "sha256": "c2d46422471316046a18d0f0a3756231198fbc1edea055f67a844a35af85508d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jenschn/library/SI114x/0.0.0%2Bsha.f84f3a3708cb/SI114x-0.0.0%2Bsha.f84f3a3708cb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jenschn/library/SI114x/0.0.0%2Bsha.f84f3a3708cb/SI114x-0.0.0%2Bsha.f84f3a3708cb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

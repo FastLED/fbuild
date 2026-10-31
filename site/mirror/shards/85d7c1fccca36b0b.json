@@ -1,0 +1,217 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/codezoo-ltd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "codezoo-ltd/library/ME310G1/0.1.10/ME310G1-0.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ME310G1-0.1.10.tar.gz",
+    "size_bytes": 106779,
+    "sha256": "a96448c9838e178a328b75d5721bee1d57c0f9b1126d6ab00b5ce8e78daf91d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/ME310G1/0.1.10/ME310G1-0.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/ME310G1/0.1.10/ME310G1-0.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codezoo-ltd/library/ME310G1/0.1.11/ME310G1-0.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ME310G1-0.1.11.tar.gz",
+    "size_bytes": 107974,
+    "sha256": "107bdc15bbfbc6d5e0abad985a25f3055a24bc97f589b283bfba860e368baa69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/ME310G1/0.1.11/ME310G1-0.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/ME310G1/0.1.11/ME310G1-0.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codezoo-ltd/library/ME310G1/0.1.12/ME310G1-0.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ME310G1-0.1.12.tar.gz",
+    "size_bytes": 108121,
+    "sha256": "8ab2d1d927f07a428f95ce3a8a1768896570e4cc233d84a0ce8573c16293b3a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/ME310G1/0.1.12/ME310G1-0.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/ME310G1/0.1.12/ME310G1-0.1.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codezoo-ltd/library/ME310G1/0.1.13/ME310G1-0.1.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ME310G1-0.1.13.tar.gz",
+    "size_bytes": 110925,
+    "sha256": "5f573634f7b4d7dd3ce432bb65531951572b5d7fc38d7ebc8dec2ccfdd168e29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/ME310G1/0.1.13/ME310G1-0.1.13.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/ME310G1/0.1.13/ME310G1-0.1.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codezoo-ltd/library/ME310G1/0.1.15/ME310G1-0.1.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ME310G1-0.1.15.tar.gz",
+    "size_bytes": 171119,
+    "sha256": "e60013b1d2875f9f3b4104dcd580c8f178a9daa29fadc718094d7787cf9cc817",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/ME310G1/0.1.15/ME310G1-0.1.15.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/ME310G1/0.1.15/ME310G1-0.1.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codezoo-ltd/library/ME310G1/0.1.16/ME310G1-0.1.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ME310G1-0.1.16.tar.gz",
+    "size_bytes": 176825,
+    "sha256": "352462fe6115070020d846322ed0b5039c79c67db4fbb77001670f0cce0dc5e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/ME310G1/0.1.16/ME310G1-0.1.16.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/ME310G1/0.1.16/ME310G1-0.1.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codezoo-ltd/library/ME310G1/0.1.17/ME310G1-0.1.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ME310G1-0.1.17.tar.gz",
+    "size_bytes": 181448,
+    "sha256": "5259830f5d91e85cf9b5328bb9dcf1d982fab8dbda7c012206d98d98e0ef7a8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/ME310G1/0.1.17/ME310G1-0.1.17.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/ME310G1/0.1.17/ME310G1-0.1.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codezoo-ltd/library/ME310G1/0.1.18/ME310G1-0.1.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ME310G1-0.1.18.tar.gz",
+    "size_bytes": 181632,
+    "sha256": "7ce908064e157171143f75f9240de37009ab13e3f8a09b4e46a0a3813a106542",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/ME310G1/0.1.18/ME310G1-0.1.18.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/ME310G1/0.1.18/ME310G1-0.1.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codezoo-ltd/library/ME310G1/0.1.3/ME310G1-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ME310G1-0.1.3.tar.gz",
+    "size_bytes": 89088,
+    "sha256": "08c4780052f07c23dc5c3d12acbc247a6604df21059ed9577874b8f7ab0f865b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/ME310G1/0.1.3/ME310G1-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/ME310G1/0.1.3/ME310G1-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codezoo-ltd/library/ME310G1/0.1.4/ME310G1-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ME310G1-0.1.4.tar.gz",
+    "size_bytes": 96409,
+    "sha256": "f52e12b5327ffec2baa13bcb237c78b33f69f430e4e657ea77af6c057386a21c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/ME310G1/0.1.4/ME310G1-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/ME310G1/0.1.4/ME310G1-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codezoo-ltd/library/ME310G1/0.1.5/ME310G1-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ME310G1-0.1.5.tar.gz",
+    "size_bytes": 101071,
+    "sha256": "0ddbe00f1dba86029cf947db0805e9d3e84c3d0e17e1a09cae09a58310359dee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/ME310G1/0.1.5/ME310G1-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/ME310G1/0.1.5/ME310G1-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codezoo-ltd/library/ME310G1/0.1.6/ME310G1-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ME310G1-0.1.6.tar.gz",
+    "size_bytes": 101187,
+    "sha256": "c0eaeeef55adb8b9dce9453e641c5c22cbd2ddc357dc0a00c75c6b9359ec599d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/ME310G1/0.1.6/ME310G1-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/ME310G1/0.1.6/ME310G1-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codezoo-ltd/library/ME310G1/0.1.7/ME310G1-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ME310G1-0.1.7.tar.gz",
+    "size_bytes": 104580,
+    "sha256": "14b5467cc71aaf1d1a2b177c73afd2baa5aa349bdb06683ee400613a34f68568",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/ME310G1/0.1.7/ME310G1-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/ME310G1/0.1.7/ME310G1-0.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codezoo-ltd/library/ME310G1/0.1.8/ME310G1-0.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ME310G1-0.1.8.tar.gz",
+    "size_bytes": 104717,
+    "sha256": "e10dd8f7deee938c024d90399a7b85a023678387f65ca3c14770fbcea3ffba60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/ME310G1/0.1.8/ME310G1-0.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/ME310G1/0.1.8/ME310G1-0.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codezoo-ltd/library/ME310G1/0.1.9/ME310G1-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ME310G1-0.1.9.tar.gz",
+    "size_bytes": 105951,
+    "sha256": "e751d93654476929ee6a064be1296259048bbfad8e5081e1c33dae671a105c48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/ME310G1/0.1.9/ME310G1-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/ME310G1/0.1.9/ME310G1-0.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codezoo-ltd/library/TLT/0.0.4/TLT-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLT-0.0.4.tar.gz",
+    "size_bytes": 45160,
+    "sha256": "0ff1a4fddf77bf0d04f2e8136b2fc2e84f4ccdf675263b2d737b6bfa92c1295c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codezoo-ltd/library/TLT/0.0.4/TLT-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codezoo-ltd/library/TLT/0.0.4/TLT-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

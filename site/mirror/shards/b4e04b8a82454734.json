@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/miguelbalboa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "miguelbalboa/library/MFRC522/1.4.10/MFRC522-1.4.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MFRC522-1.4.10.tar.gz",
+    "size_bytes": 60414,
+    "sha256": "72b59ae1b878bdddbde7fd79cb623921042567f1d99a7007b825b1d3b9e4c82c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miguelbalboa/library/MFRC522/1.4.10/MFRC522-1.4.10.tar.gz",
+     "https://dl.registry.platformio.org/download/miguelbalboa/library/MFRC522/1.4.10/MFRC522-1.4.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "miguelbalboa/library/MFRC522/1.4.11/MFRC522-1.4.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MFRC522-1.4.11.tar.gz",
+    "size_bytes": 60558,
+    "sha256": "599ae66cfa05f66cb96a3edb92c0762b32a8fa58aa43a320fb1011b2950ce354",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miguelbalboa/library/MFRC522/1.4.11/MFRC522-1.4.11.tar.gz",
+     "https://dl.registry.platformio.org/download/miguelbalboa/library/MFRC522/1.4.11/MFRC522-1.4.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "miguelbalboa/library/MFRC522/1.4.12/MFRC522-1.4.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MFRC522-1.4.12.tar.gz",
+    "size_bytes": 60565,
+    "sha256": "66defc2a202a6c67010c1e4872961f383b0ab98d2285d0b00bfb8e28dcc99657",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miguelbalboa/library/MFRC522/1.4.12/MFRC522-1.4.12.tar.gz",
+     "https://dl.registry.platformio.org/download/miguelbalboa/library/MFRC522/1.4.12/MFRC522-1.4.12.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/annem",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "annem/library/AD7193/1.0/AD7193-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD7193-1.0.tar.gz",
+    "size_bytes": 7204,
+    "sha256": "fe0896b2658876c8db10e5f9a78b7088ed41c6a64c9e51318e08281820a101a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/annem/library/AD7193/1.0/AD7193-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/annem/library/AD7193/1.0/AD7193-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "annem/library/ADXL362/1.5/ADXL362-1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL362-1.5.tar.gz",
+    "size_bytes": 6052,
+    "sha256": "3f1b38c6c51806983ecf750cfd0779584b8a71457b04381a4d43856bf330e563",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/annem/library/ADXL362/1.5/ADXL362-1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/annem/library/ADXL362/1.5/ADXL362-1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

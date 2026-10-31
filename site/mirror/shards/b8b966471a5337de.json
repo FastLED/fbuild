@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/billyg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "billyg/library/AD9910_basic_sine/0.0.0/AD9910_basic_sine-0.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD9910_basic_sine-0.0.0.tar.gz",
+    "size_bytes": 2424,
+    "sha256": "75275e5d541ce1047ca18e48958b538f6ce717030dccd0c55c91c69f3b9418b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/billyg/library/AD9910_basic_sine/0.0.0/AD9910_basic_sine-0.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/billyg/library/AD9910_basic_sine/0.0.0/AD9910_basic_sine-0.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tomlankhorst",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tomlankhorst/library/HIDScope/0.0.0+sha.d23c6edecc49/HIDScope-0.0.0+sha.d23c6edecc49.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HIDScope-0.0.0+sha.d23c6edecc49.tar.gz",
+    "size_bytes": 2307,
+    "sha256": "7bd8abfdec1a2cb1a88fe275fc79dfc833eb6931ce8ff57737b02ae7819b6921",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tomlankhorst/library/HIDScope/0.0.0%2Bsha.d23c6edecc49/HIDScope-0.0.0%2Bsha.d23c6edecc49.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tomlankhorst/library/HIDScope/0.0.0%2Bsha.d23c6edecc49/HIDScope-0.0.0%2Bsha.d23c6edecc49.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tomlankhorst/library/biquadFilter/0.0.0+sha.26861979d305/biquadFilter-0.0.0+sha.26861979d305.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "biquadFilter-0.0.0+sha.26861979d305.tar.gz",
+    "size_bytes": 3120,
+    "sha256": "acb2e9d62a1974cd4e2cf8695260f1b8f4b0d60d9ff1191d0d6356e97d8d218c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tomlankhorst/library/biquadFilter/0.0.0%2Bsha.26861979d305/biquadFilter-0.0.0%2Bsha.26861979d305.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tomlankhorst/library/biquadFilter/0.0.0%2Bsha.26861979d305/biquadFilter-0.0.0%2Bsha.26861979d305.tar.gz"
+    ]
+   }
+  }
+ ]
+}

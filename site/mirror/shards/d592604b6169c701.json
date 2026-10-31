@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eebothobby",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eebothobby/library/DAC7574/1.0.0/DAC7574-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DAC7574-1.0.0.tar.gz",
+    "size_bytes": 4899,
+    "sha256": "1f037f519ac05dab6932bbd0db4c69b0520e092c2ce75c228872919699a96056",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eebothobby/library/DAC7574/1.0.0/DAC7574-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eebothobby/library/DAC7574/1.0.0/DAC7574-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

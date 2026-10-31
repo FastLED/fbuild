@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zdw169",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zdw169/library/S6D0154X/1.0.0/S6D0154X-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "S6D0154X-1.0.0.tar.gz",
+    "size_bytes": 15611,
+    "sha256": "5afb4e257df0d225b5477ffcf60481ac7d7cd2caccf16cc2498249432bba2e3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zdw169/library/S6D0154X/1.0.0/S6D0154X-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zdw169/library/S6D0154X/1.0.0/S6D0154X-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

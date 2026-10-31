@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/luksal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "luksal/library/ESP32-DMX-RX/0.1.0/ESP32-DMX-RX-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-DMX-RX-0.1.0.tar.gz",
+    "size_bytes": 2871,
+    "sha256": "fa583c1676d8dd0aa925324cb78c848c965ab8b3b218f7e0ecc50ace1e1d34af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luksal/library/ESP32-DMX-RX/0.1.0/ESP32-DMX-RX-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luksal/library/ESP32-DMX-RX/0.1.0/ESP32-DMX-RX-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

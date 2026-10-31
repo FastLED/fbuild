@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tobyspark",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tobyspark/library/OSC/0.0.0+sha.63b72e393989/OSC-0.0.0+sha.63b72e393989.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OSC-0.0.0+sha.63b72e393989.tar.gz",
+    "size_bytes": 9066,
+    "sha256": "e90b40ba37ad63bae367c540e07f0f1625ccf04c47ab56a0aae73f8842f74303",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tobyspark/library/OSC/0.0.0%2Bsha.63b72e393989/OSC-0.0.0%2Bsha.63b72e393989.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tobyspark/library/OSC/0.0.0%2Bsha.63b72e393989/OSC-0.0.0%2Bsha.63b72e393989.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tobyspark/library/SPK-TVOne/0.0.0+sha.4eec37b8387e/SPK-TVOne-0.0.0+sha.4eec37b8387e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPK-TVOne-0.0.0+sha.4eec37b8387e.tar.gz",
+    "size_bytes": 12183,
+    "sha256": "e2c90f7780f4bb357f92fd0bac176b1bacef51864305485beb4e21f88795c5a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tobyspark/library/SPK-TVOne/0.0.0%2Bsha.4eec37b8387e/SPK-TVOne-0.0.0%2Bsha.4eec37b8387e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tobyspark/library/SPK-TVOne/0.0.0%2Bsha.4eec37b8387e/SPK-TVOne-0.0.0%2Bsha.4eec37b8387e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tobyspark/library/iniparser/0.0.0+sha.1a9f9f36242e/iniparser-0.0.0+sha.1a9f9f36242e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iniparser-0.0.0+sha.1a9f9f36242e.tar.gz",
+    "size_bytes": 9514,
+    "sha256": "c991d5364c95133ce1e9c8d5e760679b223750e3a680a22a4eb778319c66fe66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tobyspark/library/iniparser/0.0.0%2Bsha.1a9f9f36242e/iniparser-0.0.0%2Bsha.1a9f9f36242e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tobyspark/library/iniparser/0.0.0%2Bsha.1a9f9f36242e/iniparser-0.0.0%2Bsha.1a9f9f36242e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tobyspark/library/spk_oled_ssd1305/0.0.0+sha.0d518115e76c/spk_oled_ssd1305-0.0.0+sha.0d518115e76c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "spk_oled_ssd1305-0.0.0+sha.0d518115e76c.tar.gz",
+    "size_bytes": 5635,
+    "sha256": "cdafb29bb2ec61e6861b6302244a11b9975ccb2fda2228f06f8db634d1cafa7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tobyspark/library/spk_oled_ssd1305/0.0.0%2Bsha.0d518115e76c/spk_oled_ssd1305-0.0.0%2Bsha.0d518115e76c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tobyspark/library/spk_oled_ssd1305/0.0.0%2Bsha.0d518115e76c/spk_oled_ssd1305-0.0.0%2Bsha.0d518115e76c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

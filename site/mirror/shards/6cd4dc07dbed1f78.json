@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tl5915",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tl5915/library/Buehlmann%20ZHL-16C/1.0.1/BuehlmannZHL-16C-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BuehlmannZHL-16C-1.0.1.tar.gz",
+    "size_bytes": 5641,
+    "sha256": "066638284ee7c6f202502298df25f03de8e8fa8b949d4cf692d1cfe453d8391b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tl5915/library/Buehlmann%2520ZHL-16C/1.0.1/BuehlmannZHL-16C-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tl5915/library/Buehlmann%20ZHL-16C/1.0.1/BuehlmannZHL-16C-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tl5915/library/Buehlmann%20ZHL-16C/1.0.2/BuehlmannZHL-16C-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BuehlmannZHL-16C-1.0.2.tar.gz",
+    "size_bytes": 5666,
+    "sha256": "7560c5401030946b87c0b98fb97115015bf63ebc2f4e04dab152ed3c2adb37f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tl5915/library/Buehlmann%2520ZHL-16C/1.0.2/BuehlmannZHL-16C-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tl5915/library/Buehlmann%20ZHL-16C/1.0.2/BuehlmannZHL-16C-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tl5915/library/Buehlmann%20ZHL-16C/1.1.0/BuehlmannZHL-16C-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BuehlmannZHL-16C-1.1.0.tar.gz",
+    "size_bytes": 5690,
+    "sha256": "95d144cfed8242974843baf7fe76a42c0a876cb0d23653bae810b16783cfa0ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tl5915/library/Buehlmann%2520ZHL-16C/1.1.0/BuehlmannZHL-16C-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tl5915/library/Buehlmann%20ZHL-16C/1.1.0/BuehlmannZHL-16C-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tl5915/library/Buehlmann%20ZHL-16C/1.1.1/BuehlmannZHL-16C-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BuehlmannZHL-16C-1.1.1.tar.gz",
+    "size_bytes": 5688,
+    "sha256": "0fef998528db3245a947c29fb0f1f24e01a73a60a49de5e67148fa271d8bcdf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tl5915/library/Buehlmann%2520ZHL-16C/1.1.1/BuehlmannZHL-16C-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tl5915/library/Buehlmann%20ZHL-16C/1.1.1/BuehlmannZHL-16C-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tl5915/library/Buehlmann%20ZHL-16C/1.3.0/BuehlmannZHL-16C-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BuehlmannZHL-16C-1.3.0.tar.gz",
+    "size_bytes": 6599,
+    "sha256": "8e3ee3fc6d24a339190b8aabfff0510e90184e97d204b048d5fdc82eecdf121d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tl5915/library/Buehlmann%2520ZHL-16C/1.3.0/BuehlmannZHL-16C-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tl5915/library/Buehlmann%20ZHL-16C/1.3.0/BuehlmannZHL-16C-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tl5915/library/magnetometer_calibration/1.0.0/magnetometer_calibration-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "magnetometer_calibration-1.0.0.tar.gz",
+    "size_bytes": 157668,
+    "sha256": "f344cce5600fc83bed3dcbdae17396a873988b6c46d410026f6f61e006ff4a7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tl5915/library/magnetometer_calibration/1.0.0/magnetometer_calibration-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tl5915/library/magnetometer_calibration/1.0.0/magnetometer_calibration-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tl5915/library/magnetometer_calibration/1.1.0/magnetometer_calibration-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "magnetometer_calibration-1.1.0.tar.gz",
+    "size_bytes": 160034,
+    "sha256": "4636ca24a1ec40adb29ad27807d45efbbe0b42cd77b2afaa6ceb5fde2501bbf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tl5915/library/magnetometer_calibration/1.1.0/magnetometer_calibration-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tl5915/library/magnetometer_calibration/1.1.0/magnetometer_calibration-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tl5915/library/magnetometer_calibration/1.1.1/magnetometer_calibration-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "magnetometer_calibration-1.1.1.tar.gz",
+    "size_bytes": 3784798,
+    "sha256": "eb40f70116ddcb685bf805361fc69eef89b244a9a587a4b2110d0d081c8a3c3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tl5915/library/magnetometer_calibration/1.1.1/magnetometer_calibration-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tl5915/library/magnetometer_calibration/1.1.1/magnetometer_calibration-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tl5915/library/magnetometer_calibration/1.2.0/magnetometer_calibration-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "magnetometer_calibration-1.2.0.tar.gz",
+    "size_bytes": 161286,
+    "sha256": "30b4f66556a54fc622550a9bf4319333aa9b38eb7f018d707c9a6076055f9b53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tl5915/library/magnetometer_calibration/1.2.0/magnetometer_calibration-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tl5915/library/magnetometer_calibration/1.2.0/magnetometer_calibration-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tl5915/library/magnetometer_calibration/1.3.0/magnetometer_calibration-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "magnetometer_calibration-1.3.0.tar.gz",
+    "size_bytes": 160632,
+    "sha256": "e3ff042c33c602925c4471c24c34521b6ea66fba7ec2c6afa59fe375ca649305",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tl5915/library/magnetometer_calibration/1.3.0/magnetometer_calibration-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tl5915/library/magnetometer_calibration/1.3.0/magnetometer_calibration-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

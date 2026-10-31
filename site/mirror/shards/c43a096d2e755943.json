@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/carlosefr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "carlosefr/library/MagStripe/1.8.3/MagStripe-1.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MagStripe-1.8.3.tar.gz",
+    "size_bytes": 5766,
+    "sha256": "ebda35e4434a7fe9353a09026b0473522edf7aff87bb85041fa28a11cd81033b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/carlosefr/library/MagStripe/1.8.3/MagStripe-1.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/carlosefr/library/MagStripe/1.8.3/MagStripe-1.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "carlosefr/library/PCD8544/1.4.4/PCD8544-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCD8544-1.4.4.tar.gz",
+    "size_bytes": 8609,
+    "sha256": "8a5c6f2c4804512c5b2558a480022ddc928a8aaa80986ed7e0d470ba5fe97eff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/carlosefr/library/PCD8544/1.4.4/PCD8544-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/carlosefr/library/PCD8544/1.4.4/PCD8544-1.4.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

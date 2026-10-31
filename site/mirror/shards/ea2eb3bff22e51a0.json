@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hemming13",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hemming13/library/Smoker_Core/1.0.20/Smoker_Core-1.0.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Smoker_Core-1.0.20.tar.gz",
+    "size_bytes": 19676,
+    "sha256": "0e773f0b93fc157499c8be23f4d9bef80686914064c3228d11527a6e8b941356",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hemming13/library/Smoker_Core/1.0.20/Smoker_Core-1.0.20.tar.gz",
+     "https://dl.registry.platformio.org/download/hemming13/library/Smoker_Core/1.0.20/Smoker_Core-1.0.20.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/danielthu167",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "danielthu167/library/TMT_SmartConnect/1.0.0/TMT_SmartConnect-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMT_SmartConnect-1.0.0.tar.gz",
+    "size_bytes": 9194,
+    "sha256": "6f693a973e3c2a5f254ac4dce395a67e249e49b4e2ef789b71077fa4e4480b86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danielthu167/library/TMT_SmartConnect/1.0.0/TMT_SmartConnect-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danielthu167/library/TMT_SmartConnect/1.0.0/TMT_SmartConnect-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "danielthu167/library/TMT_SmartConnect/1.1.0/TMT_SmartConnect-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMT_SmartConnect-1.1.0.tar.gz",
+    "size_bytes": 10382,
+    "sha256": "7a1c9296a5007e895cdb0f07700136239297409910d4a7ce313b5a9a240ab0c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danielthu167/library/TMT_SmartConnect/1.1.0/TMT_SmartConnect-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/danielthu167/library/TMT_SmartConnect/1.1.0/TMT_SmartConnect-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

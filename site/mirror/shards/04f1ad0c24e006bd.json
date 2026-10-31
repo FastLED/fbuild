@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jtc9242",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jtc9242/library/esp-thingserver/0.2.0/esp-thingserver-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-thingserver-0.2.0.tar.gz",
+    "size_bytes": 24370,
+    "sha256": "c456e4553d062a6d560085d18322adc0dcfe50b174e6a98d9e11957c28eb13c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jtc9242/library/esp-thingserver/0.2.0/esp-thingserver-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jtc9242/library/esp-thingserver/0.2.0/esp-thingserver-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

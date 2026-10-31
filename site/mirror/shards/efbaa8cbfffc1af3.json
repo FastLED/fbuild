@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lime",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lime/library/utilitys/1.0.1/utilitys-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "utilitys-1.0.1.tar.gz",
+    "size_bytes": 3161,
+    "sha256": "fa7f0918aa86e63c3f4e73a9a2b96f390ca7a07e59e96853371431e947d8ea06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lime/library/utilitys/1.0.1/utilitys-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lime/library/utilitys/1.0.1/utilitys-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lime/library/utilitys2/1.0.1/utilitys2-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "utilitys2-1.0.1.tar.gz",
+    "size_bytes": 4075,
+    "sha256": "fe7861275b7d2a7050d8179f4209f4f24db5944a53e46e50801c4a49c300794c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lime/library/utilitys2/1.0.1/utilitys2-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lime/library/utilitys2/1.0.1/utilitys2-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-chatpeth",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-chatpeth/library/NX2003%20library/1.0.4/NX2003library-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NX2003library-1.0.4.tar.gz",
+    "size_bytes": 8328,
+    "sha256": "304e69c8e0205a6c4e175544cc03553a344d6740f8929e07a09754979ce6b13c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-chatpeth/library/NX2003%2520library/1.0.4/NX2003library-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-chatpeth/library/NX2003%20library/1.0.4/NX2003library-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

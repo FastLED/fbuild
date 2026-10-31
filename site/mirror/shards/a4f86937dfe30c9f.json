@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lenriquez389",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lenriquez389/library/Cachan_Homolog2018/0.0.0+sha.105ca010735c/Cachan_Homolog2018-0.0.0+sha.105ca010735c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Cachan_Homolog2018-0.0.0+sha.105ca010735c.tar.gz",
+    "size_bytes": 1667,
+    "sha256": "d530104f2c60dc85630819438e4a58ae13926bfbd9c5d64b86f508f93797a716",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lenriquez389/library/Cachan_Homolog2018/0.0.0%2Bsha.105ca010735c/Cachan_Homolog2018-0.0.0%2Bsha.105ca010735c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lenriquez389/library/Cachan_Homolog2018/0.0.0%2Bsha.105ca010735c/Cachan_Homolog2018-0.0.0%2Bsha.105ca010735c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

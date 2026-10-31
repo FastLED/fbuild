@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/coryjfowler",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "coryjfowler/library/mcp_can/1.5.1/mcp_can-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcp_can-1.5.1.tar.gz",
+    "size_bytes": 29057,
+    "sha256": "38a9d2ffa17ddbfe2756ae22ad4cab235b0905dea533f0c180f0a6ea1d5ec7e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/coryjfowler/library/mcp_can/1.5.1/mcp_can-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/coryjfowler/library/mcp_can/1.5.1/mcp_can-1.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thexperiments",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thexperiments/library/NukiClientESP/0.0.1/NukiClientESP-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NukiClientESP-0.0.1.tar.gz",
+    "size_bytes": 5387,
+    "sha256": "372fde80626f871fbbbd4879e7f32c2b2babd771402f337a238b20afcbe90362",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thexperiments/library/NukiClientESP/0.0.1/NukiClientESP-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thexperiments/library/NukiClientESP/0.0.1/NukiClientESP-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

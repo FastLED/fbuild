@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/codeynacke",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "codeynacke/library/WF100DPZ/0.1.0/WF100DPZ-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WF100DPZ-0.1.0.tar.gz",
+    "size_bytes": 14020,
+    "sha256": "3534bb987405c3c38cd429b9215da00fbe788c0e4b269e52896f5f145df5aeca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codeynacke/library/WF100DPZ/0.1.0/WF100DPZ-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codeynacke/library/WF100DPZ/0.1.0/WF100DPZ-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

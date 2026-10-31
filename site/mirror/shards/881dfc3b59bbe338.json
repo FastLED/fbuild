@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/josejuansanchez",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "josejuansanchez/library/NanoPlayBoard/0.1.1/NanoPlayBoard-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NanoPlayBoard-0.1.1.tar.gz",
+    "size_bytes": 52290,
+    "sha256": "3646fe27c1a8f572cf44555eda52fc970e31aa987ff3a83ff9db1bd01d64c394",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josejuansanchez/library/NanoPlayBoard/0.1.1/NanoPlayBoard-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/josejuansanchez/library/NanoPlayBoard/0.1.1/NanoPlayBoard-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

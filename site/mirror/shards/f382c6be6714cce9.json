@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pisco-de-luz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pisco-de-luz/library/Pisco-Code/1.1.0/Pisco-Code-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pisco-Code-1.1.0.tar.gz",
+    "size_bytes": 9315,
+    "sha256": "d81c688b989bf841b14f4b036a330f9c0c7a411763d4f3a5cb3472904b191fa5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pisco-de-luz/library/Pisco-Code/1.1.0/Pisco-Code-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pisco-de-luz/library/Pisco-Code/1.1.0/Pisco-Code-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pisco-de-luz/library/Pisco-Code/1.2.0/Pisco-Code-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pisco-Code-1.2.0.tar.gz",
+    "size_bytes": 11726,
+    "sha256": "693c0d5b94b9f4f6432ed225be6f27d32a13665ee87f348a23782553fac71433",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pisco-de-luz/library/Pisco-Code/1.2.0/Pisco-Code-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pisco-de-luz/library/Pisco-Code/1.2.0/Pisco-Code-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pisco-de-luz/library/Pisco-Code/1.3.0/Pisco-Code-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pisco-Code-1.3.0.tar.gz",
+    "size_bytes": 11872,
+    "sha256": "2ce798cfb1530a17611f1fa4f21ed6148be2199550910b6a30ee266b2ec40f4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pisco-de-luz/library/Pisco-Code/1.3.0/Pisco-Code-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pisco-de-luz/library/Pisco-Code/1.3.0/Pisco-Code-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pisco-de-luz/library/Pisco-Code/1.3.1/Pisco-Code-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pisco-Code-1.3.1.tar.gz",
+    "size_bytes": 12260,
+    "sha256": "aa5c541c48e8638f95b593d919cdd92bbb574583bf1388e9c4615d067999e06f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pisco-de-luz/library/Pisco-Code/1.3.1/Pisco-Code-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pisco-de-luz/library/Pisco-Code/1.3.1/Pisco-Code-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nicolito128",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nicolito128/library/DHT_N128/1.0.1/DHT_N128-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT_N128-1.0.1.tar.gz",
+    "size_bytes": 4923,
+    "sha256": "0453edd8274fb4dd7bce3a2273212e73d960a9925cea7bf4d0ff0ad453742f1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nicolito128/library/DHT_N128/1.0.1/DHT_N128-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nicolito128/library/DHT_N128/1.0.1/DHT_N128-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

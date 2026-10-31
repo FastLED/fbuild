@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mimil",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mimil/library/SenseClient/0.0.0+sha.0249701444ee/SenseClient-0.0.0+sha.0249701444ee.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SenseClient-0.0.0+sha.0249701444ee.tar.gz",
+    "size_bytes": 4852,
+    "sha256": "c85fc1be3ddefd6ed9890cd1fb223e096f92f8ebfd6f4d62bbcf5260be768ef1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mimil/library/SenseClient/0.0.0%2Bsha.0249701444ee/SenseClient-0.0.0%2Bsha.0249701444ee.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mimil/library/SenseClient/0.0.0%2Bsha.0249701444ee/SenseClient-0.0.0%2Bsha.0249701444ee.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mimil/library/Thermal/0.0.0+sha.fd2be7a1b59f/Thermal-0.0.0+sha.fd2be7a1b59f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Thermal-0.0.0+sha.fd2be7a1b59f.tar.gz",
+    "size_bytes": 3144,
+    "sha256": "8465e00813ef43c75245feb5ed13c12dedf9d739d5e0b8712681df2e0f3633a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mimil/library/Thermal/0.0.0%2Bsha.fd2be7a1b59f/Thermal-0.0.0%2Bsha.fd2be7a1b59f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mimil/library/Thermal/0.0.0%2Bsha.fd2be7a1b59f/Thermal-0.0.0%2Bsha.fd2be7a1b59f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mimil/library/aJSON/0.0.0+sha.ece3b5c4afed/aJSON-0.0.0+sha.ece3b5c4afed.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "aJSON-0.0.0+sha.ece3b5c4afed.tar.gz",
+    "size_bytes": 9500,
+    "sha256": "330a0184b10d85d0f2a37998d68563561b48bc8720f2f6a3ce8795f89239ee63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mimil/library/aJSON/0.0.0%2Bsha.ece3b5c4afed/aJSON-0.0.0%2Bsha.ece3b5c4afed.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mimil/library/aJSON/0.0.0%2Bsha.ece3b5c4afed/aJSON-0.0.0%2Bsha.ece3b5c4afed.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mimil/library/picojson/0.0.0+sha.2bb500b021e2/picojson-0.0.0+sha.2bb500b021e2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "picojson-0.0.0+sha.2bb500b021e2.tar.gz",
+    "size_bytes": 7050,
+    "sha256": "0c848a6a93bbef9213d2011b8454b8d4339f7946cb5adfdb67f0d782b049c3f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mimil/library/picojson/0.0.0%2Bsha.2bb500b021e2/picojson-0.0.0%2Bsha.2bb500b021e2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mimil/library/picojson/0.0.0%2Bsha.2bb500b021e2/picojson-0.0.0%2Bsha.2bb500b021e2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

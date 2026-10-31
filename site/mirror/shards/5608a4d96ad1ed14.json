@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tomergith",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tomergith/library/Gyro_Tomer/1.0.1/Gyro_Tomer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gyro_Tomer-1.0.1.tar.gz",
+    "size_bytes": 6672,
+    "sha256": "8b631e2a2e607b50b6ff2108616c50eec8f71a66d02527614a4ebaddc98520f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tomergith/library/Gyro_Tomer/1.0.1/Gyro_Tomer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tomergith/library/Gyro_Tomer/1.0.1/Gyro_Tomer-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

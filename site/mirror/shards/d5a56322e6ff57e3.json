@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ruevs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ruevs/library/MPU9250/0.0.0+sha.fc94c7336b7c/MPU9250-0.0.0+sha.fc94c7336b7c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9250-0.0.0+sha.fc94c7336b7c.tar.gz",
+    "size_bytes": 12180,
+    "sha256": "6f037ba8beb5d8d2893537d33a23f328f902c2c5bcaf16117b109060fc8dd080",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ruevs/library/MPU9250/0.0.0%2Bsha.fc94c7336b7c/MPU9250-0.0.0%2Bsha.fc94c7336b7c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ruevs/library/MPU9250/0.0.0%2Bsha.fc94c7336b7c/MPU9250-0.0.0%2Bsha.fc94c7336b7c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kingsmen732",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kingsmen732/library/RoboFace/1.0.0/RoboFace-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboFace-1.0.0.tar.gz",
+    "size_bytes": 2478,
+    "sha256": "342144840d983f5ed0a3f736f8a388617cd5b59c3f72d8f6e6ea53486d0323d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kingsmen732/library/RoboFace/1.0.0/RoboFace-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kingsmen732/library/RoboFace/1.0.0/RoboFace-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

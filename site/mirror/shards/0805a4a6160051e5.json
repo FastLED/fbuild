@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xoseperez",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xoseperez/library/DebounceEvent/2.0.5/DebounceEvent-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebounceEvent-2.0.5.tar.gz",
+    "size_bytes": 8443,
+    "sha256": "557a54504d5d29f9f7af9f35d95741ef5ebf3cded22e86cfff2815e945420324",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xoseperez/library/DebounceEvent/2.0.5/DebounceEvent-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/xoseperez/library/DebounceEvent/2.0.5/DebounceEvent-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xoseperez/library/EEPROM32_Rotate/0.9.5/EEPROM32_Rotate-0.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM32_Rotate-0.9.5.tar.gz",
+    "size_bytes": 41541,
+    "sha256": "5b02bd7ece23ff49fb3fd8e27ebb04025d6100fe6391c5e3b195671c14ce0fc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xoseperez/library/EEPROM32_Rotate/0.9.5/EEPROM32_Rotate-0.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/xoseperez/library/EEPROM32_Rotate/0.9.5/EEPROM32_Rotate-0.9.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xoseperez/library/EEPROM_Rotate/0.9.2/EEPROM_Rotate-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM_Rotate-0.9.2.tar.gz",
+    "size_bytes": 45685,
+    "sha256": "3ed7772deefece277ce3c03142287a22a757f97d737284c4e2c3df9e30d99ac0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xoseperez/library/EEPROM_Rotate/0.9.2/EEPROM_Rotate-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xoseperez/library/EEPROM_Rotate/0.9.2/EEPROM_Rotate-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xoseperez/library/HLW8012/1.1.2/HLW8012-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HLW8012-1.1.2.tar.gz",
+    "size_bytes": 382341,
+    "sha256": "4e5c5435f74a8ba37645fed623776d8de38ea0a5ae88268ea1a13a5987f36bd7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xoseperez/library/HLW8012/1.1.2/HLW8012-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xoseperez/library/HLW8012/1.1.2/HLW8012-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xoseperez/library/JustWifi/2.0.2/JustWifi-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JustWifi-2.0.2.tar.gz",
+    "size_bytes": 15851,
+    "sha256": "bbc4ff762643c10fa6882c7a22db9ffd5d7af9bbc2c5e129475d8db3f05588ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xoseperez/library/JustWifi/2.0.2/JustWifi-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xoseperez/library/JustWifi/2.0.2/JustWifi-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xoseperez/library/RPNlib/0.3.0/RPNlib-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RPNlib-0.3.0.tar.gz",
+    "size_bytes": 17868,
+    "sha256": "b46795e430d81940bc3d1f2bd74bcc202f5e14dbd1b9bb00ad960193807b191e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xoseperez/library/RPNlib/0.3.0/RPNlib-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xoseperez/library/RPNlib/0.3.0/RPNlib-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xoseperez/library/S7XG/0.1.0/S7XG-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "S7XG-0.1.0.tar.gz",
+    "size_bytes": 43914,
+    "sha256": "20291d37f5b78fb5ada56b4b9730df434b9ccf516ecd0be084b288f047e0d1d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xoseperez/library/S7XG/0.1.0/S7XG-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xoseperez/library/S7XG/0.1.0/S7XG-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xoseperez/library/SerialLink/0.1.0/SerialLink-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialLink-0.1.0.tar.gz",
+    "size_bytes": 14663,
+    "sha256": "071ed464690e85ad199da0b4677dbcce198eb607ced940de7500e275ff5f0004",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xoseperez/library/SerialLink/0.1.0/SerialLink-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xoseperez/library/SerialLink/0.1.0/SerialLink-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xoseperez/library/my9291/2.0.0/my9291-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "my9291-2.0.0.tar.gz",
+    "size_bytes": 17149,
+    "sha256": "b8d47f813d5a443981e73b9cbf500f1e160816af986f9a7d131ab4ae76a10844",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xoseperez/library/my9291/2.0.0/my9291-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xoseperez/library/my9291/2.0.0/my9291-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xoseperez/library/my92xx/3.0.3/my92xx-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "my92xx-3.0.3.tar.gz",
+    "size_bytes": 19657,
+    "sha256": "634e10e8aa3eb780fb3131ef1b09fd4cb39cb72f527f1a3f2cf1fb8ba7568baf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xoseperez/library/my92xx/3.0.3/my92xx-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/xoseperez/library/my92xx/3.0.3/my92xx-3.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eclipse",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eclipse/library/MQTTClient/1.0.0/MQTTClient-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTClient-1.0.0.tar.gz",
+    "size_bytes": 101807,
+    "sha256": "cbac3dc89c85ed185ac1757238b47be6e05b60b7c417a8adb82abe7cefae4d2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eclipse/library/MQTTClient/1.0.0/MQTTClient-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eclipse/library/MQTTClient/1.0.0/MQTTClient-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eclipse/library/Paho/1.0.0/Paho-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Paho-1.0.0.tar.gz",
+    "size_bytes": 26796,
+    "sha256": "abe64d3466bb471263ad7482351ad111dba8c1d4a1a3a70db491b244dbb8119b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eclipse/library/Paho/1.0.0/Paho-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eclipse/library/Paho/1.0.0/Paho-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

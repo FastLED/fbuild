@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/elongm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "elongm/library/PlatformIO%20Git%20Info%20Serial%20Print/1.8.1/PlatformIOGitInfoSerialPrint-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlatformIOGitInfoSerialPrint-1.8.1.tar.gz",
+    "size_bytes": 5695,
+    "sha256": "b1fe1e51d47130f4f085b6c5ef1b7cd09cfb65a01685895ce6e158068da437c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elongm/library/PlatformIO%2520Git%2520Info%2520Serial%2520Print/1.8.1/PlatformIOGitInfoSerialPrint-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/elongm/library/PlatformIO%20Git%20Info%20Serial%20Print/1.8.1/PlatformIOGitInfoSerialPrint-1.8.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

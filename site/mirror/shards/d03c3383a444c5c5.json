@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hompain",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hompain/library/SoftTimerAdvance/1.0.2/SoftTimerAdvance-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftTimerAdvance-1.0.2.tar.gz",
+    "size_bytes": 24818,
+    "sha256": "66f5597082415cc8c1f2f88e5069b7e4ea91393dc51c6fd5251adcbbf46117cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hompain/library/SoftTimerAdvance/1.0.2/SoftTimerAdvance-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hompain/library/SoftTimerAdvance/1.0.2/SoftTimerAdvance-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hompain/library/SoftTimerAdvance/1.0.3/SoftTimerAdvance-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftTimerAdvance-1.0.3.tar.gz",
+    "size_bytes": 25703,
+    "sha256": "44df0e3bd7c886db76456cb07c36606ebd580f377e883cddf393d45e584ea975",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hompain/library/SoftTimerAdvance/1.0.3/SoftTimerAdvance-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hompain/library/SoftTimerAdvance/1.0.3/SoftTimerAdvance-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hompain/library/SoftTimerAdvance/2.0.0/SoftTimerAdvance-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftTimerAdvance-2.0.0.tar.gz",
+    "size_bytes": 50234,
+    "sha256": "7eb050942713b655a527efddf736e07bcc413d829e0df9422fb68b715cc7d68c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hompain/library/SoftTimerAdvance/2.0.0/SoftTimerAdvance-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hompain/library/SoftTimerAdvance/2.0.0/SoftTimerAdvance-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

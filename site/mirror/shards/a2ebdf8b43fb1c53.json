@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/luciansabo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "luciansabo/library/Sharp%20GP2Y%20Dust%20Sensor/1.1.0/SharpGP2YDustSensor-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SharpGP2YDustSensor-1.1.0.tar.gz",
+    "size_bytes": 5635,
+    "sha256": "c89e92a54f3f02ae97d5df482cf91d48e566f11663353888f62353e1750e1e79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luciansabo/library/Sharp%2520GP2Y%2520Dust%2520Sensor/1.1.0/SharpGP2YDustSensor-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/luciansabo/library/Sharp%20GP2Y%20Dust%20Sensor/1.1.0/SharpGP2YDustSensor-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

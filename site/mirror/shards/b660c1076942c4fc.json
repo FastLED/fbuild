@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-xiaowei-sjtu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-xiaowei-sjtu/library/headfile/0.0.0+sha.bf537b79b3be/headfile-0.0.0+sha.bf537b79b3be.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "headfile-0.0.0+sha.bf537b79b3be.tar.gz",
+    "size_bytes": 5589,
+    "sha256": "0754093df83926ec3fc66269a57cf1f85146d06d514ac1af3074c0986f7fa6cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-xiaowei-sjtu/library/headfile/0.0.0%2Bsha.bf537b79b3be/headfile-0.0.0%2Bsha.bf537b79b3be.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-xiaowei-sjtu/library/headfile/0.0.0%2Bsha.bf537b79b3be/headfile-0.0.0%2Bsha.bf537b79b3be.tar.gz"
+    ]
+   }
+  }
+ ]
+}

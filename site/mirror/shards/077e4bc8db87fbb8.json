@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/clamepending",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "clamepending/library/ZirconLib/1.0.36/ZirconLib-1.0.36.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZirconLib-1.0.36.tar.gz",
+    "size_bytes": 4729,
+    "sha256": "e450477313a47384c0b45b5b4edc784063ff7e1752169ee182988d3f0cca5fac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clamepending/library/ZirconLib/1.0.36/ZirconLib-1.0.36.tar.gz",
+     "https://dl.registry.platformio.org/download/clamepending/library/ZirconLib/1.0.36/ZirconLib-1.0.36.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "clamepending/library/ZirconLib/1.0.37/ZirconLib-1.0.37.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZirconLib-1.0.37.tar.gz",
+    "size_bytes": 4738,
+    "sha256": "449d2c22d7c87fb3fc4656e17f5ca033670d643167617312281bf8d3b6f48d10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clamepending/library/ZirconLib/1.0.37/ZirconLib-1.0.37.tar.gz",
+     "https://dl.registry.platformio.org/download/clamepending/library/ZirconLib/1.0.37/ZirconLib-1.0.37.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "clamepending/library/ZirconLib/1.0.38/ZirconLib-1.0.38.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZirconLib-1.0.38.tar.gz",
+    "size_bytes": 4682,
+    "sha256": "8dead2ca95a8ac12da523943bab5dea5a762e903897099a8bf7b290d964163d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clamepending/library/ZirconLib/1.0.38/ZirconLib-1.0.38.tar.gz",
+     "https://dl.registry.platformio.org/download/clamepending/library/ZirconLib/1.0.38/ZirconLib-1.0.38.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "clamepending/library/ZirconLib/1.0.39/ZirconLib-1.0.39.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZirconLib-1.0.39.tar.gz",
+    "size_bytes": 4684,
+    "sha256": "8d0088a017ff029424c053f634e4f1528f4563faf44abce6c2c91427296eba13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clamepending/library/ZirconLib/1.0.39/ZirconLib-1.0.39.tar.gz",
+     "https://dl.registry.platformio.org/download/clamepending/library/ZirconLib/1.0.39/ZirconLib-1.0.39.tar.gz"
+    ]
+   }
+  }
+ ]
+}

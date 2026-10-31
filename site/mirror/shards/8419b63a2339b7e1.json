@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/viderspace",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "viderspace/library/SmoothAxis/1.0.0/SmoothAxis-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmoothAxis-1.0.0.tar.gz",
+    "size_bytes": 18082,
+    "sha256": "865cfaa4c1d398981bb3748ee784e26c656880b95775d0d281f830d47ee6d5aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/viderspace/library/SmoothAxis/1.0.0/SmoothAxis-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/viderspace/library/SmoothAxis/1.0.0/SmoothAxis-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "viderspace/library/SmoothAxis/1.0.2/SmoothAxis-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmoothAxis-1.0.2.tar.gz",
+    "size_bytes": 18102,
+    "sha256": "0130cc33df7859ca0b5a0238e7963066f8594a1d9f1c0c374762015b8a649f2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/viderspace/library/SmoothAxis/1.0.2/SmoothAxis-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/viderspace/library/SmoothAxis/1.0.2/SmoothAxis-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hiro99ma",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hiro99ma/library/RCS730/0.0.0+sha.bb5616cb01fb/RCS730-0.0.0+sha.bb5616cb01fb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RCS730-0.0.0+sha.bb5616cb01fb.tar.gz",
+    "size_bytes": 4766,
+    "sha256": "9305025628ec2ce6cece512e4396382f5dc2d9f2ecdecb9d3135fa9a17a77e32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hiro99ma/library/RCS730/0.0.0%2Bsha.bb5616cb01fb/RCS730-0.0.0%2Bsha.bb5616cb01fb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hiro99ma/library/RCS730/0.0.0%2Bsha.bb5616cb01fb/RCS730-0.0.0%2Bsha.bb5616cb01fb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

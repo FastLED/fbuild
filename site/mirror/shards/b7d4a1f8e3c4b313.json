@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rkimble",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rkimble/library/DacLtc2606/0.0.0+sha.d101ca4ae85e/DacLtc2606-0.0.0+sha.d101ca4ae85e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DacLtc2606-0.0.0+sha.d101ca4ae85e.tar.gz",
+    "size_bytes": 2162,
+    "sha256": "9e36e11b7e155a638a35fbedf3aee572085f9bab45dd255dc16eb2956088ad78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rkimble/library/DacLtc2606/0.0.0%2Bsha.d101ca4ae85e/DacLtc2606-0.0.0%2Bsha.d101ca4ae85e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rkimble/library/DacLtc2606/0.0.0%2Bsha.d101ca4ae85e/DacLtc2606-0.0.0%2Bsha.d101ca4ae85e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

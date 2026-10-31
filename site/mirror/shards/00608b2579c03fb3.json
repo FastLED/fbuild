@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/es4a",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "es4a/library/Relay/1.0.0/Relay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Relay-1.0.0.tar.gz",
+    "size_bytes": 3061,
+    "sha256": "672a9b033bbd0f3db7fd3efcea0eddedd38fa4f275acad8bfec2286e7a5b3480",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/es4a/library/Relay/1.0.0/Relay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/es4a/library/Relay/1.0.0/Relay-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cannedsans",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cannedsans/library/TimerEvents/1.0.0/TimerEvents-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerEvents-1.0.0.tar.gz",
+    "size_bytes": 2870,
+    "sha256": "3c32cfbd0e72d98b17288bb0014a7c8aa38e74ba2c4ba0dd828bdcb22c9e0f05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cannedsans/library/TimerEvents/1.0.0/TimerEvents-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cannedsans/library/TimerEvents/1.0.0/TimerEvents-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cannedsans/library/TimerEvents/1.0.1/TimerEvents-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerEvents-1.0.1.tar.gz",
+    "size_bytes": 2837,
+    "sha256": "517afd4ea465763079d35e52a31f49f642d9f6cd58d1e4677d96c9f899bd1661",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cannedsans/library/TimerEvents/1.0.1/TimerEvents-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cannedsans/library/TimerEvents/1.0.1/TimerEvents-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ryought",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ryought/library/crc32/0.0.0+sha.3a05b83a9a9f/crc32-0.0.0+sha.3a05b83a9a9f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "crc32-0.0.0+sha.3a05b83a9a9f.tar.gz",
+    "size_bytes": 2440,
+    "sha256": "42ca78c78bebbd3e2b167ed11fa72a28911db756d2bb3ffd55df9e099e9a3a8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ryought/library/crc32/0.0.0%2Bsha.3a05b83a9a9f/crc32-0.0.0%2Bsha.3a05b83a9a9f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ryought/library/crc32/0.0.0%2Bsha.3a05b83a9a9f/crc32-0.0.0%2Bsha.3a05b83a9a9f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

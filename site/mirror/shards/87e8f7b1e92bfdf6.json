@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-segundo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-segundo/library/AvailableMemory/0.0.0+sha.d00289c15c89/AvailableMemory-0.0.0+sha.d00289c15c89.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AvailableMemory-0.0.0+sha.d00289c15c89.tar.gz",
+    "size_bytes": 1565,
+    "sha256": "41c08e63f8c0480d3e6e961e9c8c7c97e145df2e7e173b34a5e93f3cb6411200",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-segundo/library/AvailableMemory/0.0.0%2Bsha.d00289c15c89/AvailableMemory-0.0.0%2Bsha.d00289c15c89.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-segundo/library/AvailableMemory/0.0.0%2Bsha.d00289c15c89/AvailableMemory-0.0.0%2Bsha.d00289c15c89.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cloud4rpi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cloud4rpi/library/cloud4rpi-esp-arduino/1.1.0/cloud4rpi-esp-arduino-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cloud4rpi-esp-arduino-1.1.0.tar.gz",
+    "size_bytes": 10598,
+    "sha256": "8e0be26b7a969f52d585b63a5a5cecdf4d986b51efb348993865ad778cfe8794",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cloud4rpi/library/cloud4rpi-esp-arduino/1.1.0/cloud4rpi-esp-arduino-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cloud4rpi/library/cloud4rpi-esp-arduino/1.1.0/cloud4rpi-esp-arduino-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

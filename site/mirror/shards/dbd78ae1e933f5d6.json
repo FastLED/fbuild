@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-alexferrara",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-alexferrara/library/4DGL-uLCD-SE/0.0.0+sha.d904fc771672/4DGL-uLCD-SE-0.0.0+sha.d904fc771672.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "4DGL-uLCD-SE-0.0.0+sha.d904fc771672.tar.gz",
+    "size_bytes": 8427,
+    "sha256": "746c8180b50b78de51881a895a16fdb524bc2c02aebcc74b6aca3d25334d5777",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alexferrara/library/4DGL-uLCD-SE/0.0.0%2Bsha.d904fc771672/4DGL-uLCD-SE-0.0.0%2Bsha.d904fc771672.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alexferrara/library/4DGL-uLCD-SE/0.0.0%2Bsha.d904fc771672/4DGL-uLCD-SE-0.0.0%2Bsha.d904fc771672.tar.gz"
+    ]
+   }
+  }
+ ]
+}

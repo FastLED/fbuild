@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ruleechen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ruleechen/library/HomeKit-ESP8266/1.2.1/HomeKit-ESP8266-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeKit-ESP8266-1.2.1.tar.gz",
+    "size_bytes": 478587,
+    "sha256": "bd8221a5e9f77a921916494cc0e88b18426b9e9afb9e93a2d7e34a24503268a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ruleechen/library/HomeKit-ESP8266/1.2.1/HomeKit-ESP8266-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ruleechen/library/HomeKit-ESP8266/1.2.1/HomeKit-ESP8266-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ruleechen/library/home-esp8266/0.9.21/home-esp8266-0.9.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "home-esp8266-0.9.21.tar.gz",
+    "size_bytes": 47388,
+    "sha256": "866a4f14007bbf3d3deeb0bc157614c9d489785c683b9b76fbfcc85f6668d792",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ruleechen/library/home-esp8266/0.9.21/home-esp8266-0.9.21.tar.gz",
+     "https://dl.registry.platformio.org/download/ruleechen/library/home-esp8266/0.9.21/home-esp8266-0.9.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ruleechen/library/mg5850b-client/0.0.2/mg5850b-client-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mg5850b-client-0.0.2.tar.gz",
+    "size_bytes": 4691,
+    "sha256": "4778d46f696e1d1e9fbd9d10d76d0bde81f1890438d8c70ee62ae9ae9bbd780f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ruleechen/library/mg5850b-client/0.0.2/mg5850b-client-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ruleechen/library/mg5850b-client/0.0.2/mg5850b-client-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

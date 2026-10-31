@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/flydroid",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "flydroid/library/ADS12-xx-Library/0.0.0-alpha+sha.b8260b99a2/ADS12-xx-Library-0.0.0-alphasha.b8260b99a2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS12-xx-Library-0.0.0-alphasha.b8260b99a2.tar.gz",
+    "size_bytes": 11054,
+    "sha256": "cf49112b8ac0ee1c3a0a70df67baf17dfaffda849c1c34b777e04f6865c3eca0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flydroid/library/ADS12-xx-Library/0.0.0-alpha%2Bsha.b8260b99a2/ADS12-xx-Library-0.0.0-alphasha.b8260b99a2.tar.gz",
+     "https://dl.registry.platformio.org/download/flydroid/library/ADS12-xx-Library/0.0.0-alpha%2Bsha.b8260b99a2/ADS12-xx-Library-0.0.0-alphasha.b8260b99a2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

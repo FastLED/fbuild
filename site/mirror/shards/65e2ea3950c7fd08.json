@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ebola-chan-bot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ebola-chan-bot/library/Quick_digital_IO_interrupt/3.0.0/Quick_digital_IO_interrupt-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Quick_digital_IO_interrupt-3.0.0.tar.gz",
+    "size_bytes": 20932,
+    "sha256": "fff35f7f6622dcac43912b5dc261a03427b7ad8da60522718a6df2efc276ad77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ebola-chan-bot/library/Quick_digital_IO_interrupt/3.0.0/Quick_digital_IO_interrupt-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ebola-chan-bot/library/Quick_digital_IO_interrupt/3.0.0/Quick_digital_IO_interrupt-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ebola-chan-bot/library/Quick_digital_IO_interrupt/3.0.1/Quick_digital_IO_interrupt-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Quick_digital_IO_interrupt-3.0.1.tar.gz",
+    "size_bytes": 20623,
+    "sha256": "b1a00e537edc9bb0eaf0a10beb8bd783b991f6d0885cb605ab9474bc59c2651b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ebola-chan-bot/library/Quick_digital_IO_interrupt/3.0.1/Quick_digital_IO_interrupt-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ebola-chan-bot/library/Quick_digital_IO_interrupt/3.0.1/Quick_digital_IO_interrupt-3.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

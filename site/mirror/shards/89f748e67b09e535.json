@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/joeybab3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "joeybab3/library/ArduinoLifxAPI/1.0/ArduinoLifxAPI-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoLifxAPI-1.0.tar.gz",
+    "size_bytes": 13594,
+    "sha256": "c33fce838913c579cff5aa8b9ffe3dc85567a05f21e57bd7f6cd435131af8ff8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joeybab3/library/ArduinoLifxAPI/1.0/ArduinoLifxAPI-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joeybab3/library/ArduinoLifxAPI/1.0/ArduinoLifxAPI-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

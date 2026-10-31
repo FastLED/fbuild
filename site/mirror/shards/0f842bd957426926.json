@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bsrahmat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bsrahmat/library/iotNetESP32/1.1.3/iotNetESP32-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iotNetESP32-1.1.3.tar.gz",
+    "size_bytes": 18359,
+    "sha256": "c85f1469221393f7f5b44cec8b1bbce0c6c17400d2d312498d564ddddc59ce3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bsrahmat/library/iotNetESP32/1.1.3/iotNetESP32-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/bsrahmat/library/iotNetESP32/1.1.3/iotNetESP32-1.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

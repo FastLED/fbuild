@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zserge",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zserge/library/jsmn/0.0.0-alpha+sha.053d3cd292/jsmn-0.0.0-alphasha.053d3cd292.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jsmn-0.0.0-alphasha.053d3cd292.tar.gz",
+    "size_bytes": 9623,
+    "sha256": "dfdb1cb68f0becd6b69393d5c2146f8fa52ac571f2a4813677257cfe6490c013",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zserge/library/jsmn/0.0.0-alpha%2Bsha.053d3cd292/jsmn-0.0.0-alphasha.053d3cd292.tar.gz",
+     "https://dl.registry.platformio.org/download/zserge/library/jsmn/0.0.0-alpha%2Bsha.053d3cd292/jsmn-0.0.0-alphasha.053d3cd292.tar.gz"
+    ]
+   }
+  }
+ ]
+}

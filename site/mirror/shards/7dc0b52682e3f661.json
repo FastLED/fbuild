@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fiskbil",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fiskbil/library/PressureTransducer/1.0.0/PressureTransducer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PressureTransducer-1.0.0.tar.gz",
+    "size_bytes": 4907,
+    "sha256": "6d754eba1f299c264a120d8c705e0e54b171e78c5cd8b52f0f8433d28fd4308b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fiskbil/library/PressureTransducer/1.0.0/PressureTransducer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fiskbil/library/PressureTransducer/1.0.0/PressureTransducer-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-multitech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-multitech/library/HTTPClient-SSL/0.0.0+sha.240f3b4f2733/HTTPClient-SSL-0.0.0+sha.240f3b4f2733.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPClient-SSL-0.0.0+sha.240f3b4f2733.tar.gz",
+    "size_bytes": 12697,
+    "sha256": "02509849a9888481dc93152f83be92b70c6df5c2ee42c19beb3ee519a04531c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-multitech/library/HTTPClient-SSL/0.0.0%2Bsha.240f3b4f2733/HTTPClient-SSL-0.0.0%2Bsha.240f3b4f2733.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-multitech/library/HTTPClient-SSL/0.0.0%2Bsha.240f3b4f2733/HTTPClient-SSL-0.0.0%2Bsha.240f3b4f2733.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-multitech/library/MTS-Cellular/0.0.0+sha.5b33b670adb7/MTS-Cellular-0.0.0+sha.5b33b670adb7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTS-Cellular-0.0.0+sha.5b33b670adb7.tar.gz",
+    "size_bytes": 24298,
+    "sha256": "e48e3e46cbae5f9860448c1c5e69cd2ebcbdfde8a761551c579a3b5cf530353b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-multitech/library/MTS-Cellular/0.0.0%2Bsha.5b33b670adb7/MTS-Cellular-0.0.0%2Bsha.5b33b670adb7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-multitech/library/MTS-Cellular/0.0.0%2Bsha.5b33b670adb7/MTS-Cellular-0.0.0%2Bsha.5b33b670adb7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-multitech/library/MTS-Serial/0.0.0+sha.643ad09fc0e0/MTS-Serial-0.0.0+sha.643ad09fc0e0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTS-Serial-0.0.0+sha.643ad09fc0e0.tar.gz",
+    "size_bytes": 5721,
+    "sha256": "1ca0bf3063421d84ea1c739c52fb4ed2390476af69e60278e5c45ed1a528886d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-multitech/library/MTS-Serial/0.0.0%2Bsha.643ad09fc0e0/MTS-Serial-0.0.0%2Bsha.643ad09fc0e0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-multitech/library/MTS-Serial/0.0.0%2Bsha.643ad09fc0e0/MTS-Serial-0.0.0%2Bsha.643ad09fc0e0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-multitech/library/MTS-Socket/0.0.0+sha.2b78cadc0894/MTS-Socket-0.0.0+sha.2b78cadc0894.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTS-Socket-0.0.0+sha.2b78cadc0894.tar.gz",
+    "size_bytes": 10540,
+    "sha256": "7a20e4bca2ee339bf2670b2c0394e47ec25ec4fc35fe059222c38ae4f894ac7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-multitech/library/MTS-Socket/0.0.0%2Bsha.2b78cadc0894/MTS-Socket-0.0.0%2Bsha.2b78cadc0894.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-multitech/library/MTS-Socket/0.0.0%2Bsha.2b78cadc0894/MTS-Socket-0.0.0%2Bsha.2b78cadc0894.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-multitech/library/MTS-Test/0.0.0+sha.cc03c4e85c69/MTS-Test-0.0.0+sha.cc03c4e85c69.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTS-Test-0.0.0+sha.cc03c4e85c69.tar.gz",
+    "size_bytes": 2713,
+    "sha256": "7166ce02a0ad807baf96de53f25e8b8d19f001909940c7c6d1d147ddb0fbc1af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-multitech/library/MTS-Test/0.0.0%2Bsha.cc03c4e85c69/MTS-Test-0.0.0%2Bsha.cc03c4e85c69.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-multitech/library/MTS-Test/0.0.0%2Bsha.cc03c4e85c69/MTS-Test-0.0.0%2Bsha.cc03c4e85c69.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-multitech/library/MTS-Utils/0.0.0+sha.ae12624eb600/MTS-Utils-0.0.0+sha.ae12624eb600.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTS-Utils-0.0.0+sha.ae12624eb600.tar.gz",
+    "size_bytes": 7830,
+    "sha256": "e902bad35a19063d6057c276335e5121b243faedae1e25c533ececdc289e39b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-multitech/library/MTS-Utils/0.0.0%2Bsha.ae12624eb600/MTS-Utils-0.0.0%2Bsha.ae12624eb600.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-multitech/library/MTS-Utils/0.0.0%2Bsha.ae12624eb600/MTS-Utils-0.0.0%2Bsha.ae12624eb600.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-multitech/library/SpiFlash25/0.0.0+sha.31c110c2536c/SpiFlash25-0.0.0+sha.31c110c2536c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpiFlash25-0.0.0+sha.31c110c2536c.tar.gz",
+    "size_bytes": 3160,
+    "sha256": "25e6938279e4182d23d45b2887cc8ab570b7d3db448733be12ceb74f44c09d2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-multitech/library/SpiFlash25/0.0.0%2Bsha.31c110c2536c/SpiFlash25-0.0.0%2Bsha.31c110c2536c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-multitech/library/SpiFlash25/0.0.0%2Bsha.31c110c2536c/SpiFlash25-0.0.0%2Bsha.31c110c2536c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-multitech/library/flash-fs/0.0.0+sha.7a3c79b0d570/flash-fs-0.0.0+sha.7a3c79b0d570.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "flash-fs-0.0.0+sha.7a3c79b0d570.tar.gz",
+    "size_bytes": 37978,
+    "sha256": "3bc2c78626152121c1500fdca603eb71141d4ba479f31d55d5d37dcb703f76e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-multitech/library/flash-fs/0.0.0%2Bsha.7a3c79b0d570/flash-fs-0.0.0%2Bsha.7a3c79b0d570.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-multitech/library/flash-fs/0.0.0%2Bsha.7a3c79b0d570/flash-fs-0.0.0%2Bsha.7a3c79b0d570.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-multitech/library/libmDot/0.0.0+sha.0da384ba484b/libmDot-0.0.0+sha.0da384ba484b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libmDot-0.0.0+sha.0da384ba484b.tar.gz",
+    "size_bytes": 197074,
+    "sha256": "ba6cd43f8f4cfe3e8ddf84fcada7c84d11f67335f89bc5924144d86a31765824",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-multitech/library/libmDot/0.0.0%2Bsha.0da384ba484b/libmDot-0.0.0%2Bsha.0da384ba484b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-multitech/library/libmDot/0.0.0%2Bsha.0da384ba484b/libmDot-0.0.0%2Bsha.0da384ba484b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-multitech/library/libxDot-dev-mbed5/0.0.0-alpha+sha.58f912128c/libxDot-dev-mbed5-0.0.0-alphasha.58f912128c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libxDot-dev-mbed5-0.0.0-alphasha.58f912128c.tar.gz",
+    "size_bytes": 2492070,
+    "sha256": "b4554f5e161a7eed047c79a78441b326481bbb1aeba7c653866799c2aa5bca57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-multitech/library/libxDot-dev-mbed5/0.0.0-alpha%2Bsha.58f912128c/libxDot-dev-mbed5-0.0.0-alphasha.58f912128c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-multitech/library/libxDot-dev-mbed5/0.0.0-alpha%2Bsha.58f912128c/libxDot-dev-mbed5-0.0.0-alphasha.58f912128c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-multitech/library/mtsas/0.0.0+sha.1667a524c7a3/mtsas-0.0.0+sha.1667a524c7a3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mtsas-0.0.0+sha.1667a524c7a3.tar.gz",
+    "size_bytes": 1521,
+    "sha256": "119790e7bf9b27736d68a2f86da9adad9b264c7d96c9f237fb05c750508dead5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-multitech/library/mtsas/0.0.0%2Bsha.1667a524c7a3/mtsas-0.0.0%2Bsha.1667a524c7a3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-multitech/library/mtsas/0.0.0%2Bsha.1667a524c7a3/mtsas-0.0.0%2Bsha.1667a524c7a3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

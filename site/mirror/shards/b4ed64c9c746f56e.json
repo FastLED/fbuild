@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-miguelcordero191",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-miguelcordero191/library/AD9854/0.0.0+sha.d81fca2297fb/AD9854-0.0.0+sha.d81fca2297fb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD9854-0.0.0+sha.d81fca2297fb.tar.gz",
+    "size_bytes": 6749,
+    "sha256": "c0ff292c75a96de6f87f6c9910b01ce6dcd74c712050c0b78c034123541ecb2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-miguelcordero191/library/AD9854/0.0.0%2Bsha.d81fca2297fb/AD9854-0.0.0%2Bsha.d81fca2297fb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-miguelcordero191/library/AD9854/0.0.0%2Bsha.d81fca2297fb/AD9854-0.0.0%2Bsha.d81fca2297fb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-miguelcordero191/library/I2CLCD/0.0.0+sha.0c291dbc7acc/I2CLCD-0.0.0+sha.0c291dbc7acc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2CLCD-0.0.0+sha.0c291dbc7acc.tar.gz",
+    "size_bytes": 2701,
+    "sha256": "3904066e58a1b15bbdc003ac4767add53db5cd576c8521e05912c7118b2931fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-miguelcordero191/library/I2CLCD/0.0.0%2Bsha.0c291dbc7acc/I2CLCD-0.0.0%2Bsha.0c291dbc7acc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-miguelcordero191/library/I2CLCD/0.0.0%2Bsha.0c291dbc7acc/I2CLCD-0.0.0%2Bsha.0c291dbc7acc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

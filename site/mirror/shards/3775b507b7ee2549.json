@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vidi-x",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vidi-x/library/VIDI-X_BQ24295/1.1.0/VIDI-X_BQ24295-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VIDI-X_BQ24295-1.1.0.tar.gz",
+    "size_bytes": 12850,
+    "sha256": "0a7026faeb587b03cabfc1c691f6253f0f227b8ed207dbc7e58ce877fa1ebad6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vidi-x/library/VIDI-X_BQ24295/1.1.0/VIDI-X_BQ24295-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vidi-x/library/VIDI-X_BQ24295/1.1.0/VIDI-X_BQ24295-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

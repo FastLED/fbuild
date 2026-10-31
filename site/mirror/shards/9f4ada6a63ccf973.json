@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-stm321",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-stm321/library/motorController2/0.0.0+sha.8d5c0d22d61d/motorController2-0.0.0+sha.8d5c0d22d61d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "motorController2-0.0.0+sha.8d5c0d22d61d.tar.gz",
+    "size_bytes": 15145,
+    "sha256": "a3ce08ef04ec95fd13c3277be4aa99c875622789d8cbcbf75b45ac4f0aed99cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stm321/library/motorController2/0.0.0%2Bsha.8d5c0d22d61d/motorController2-0.0.0%2Bsha.8d5c0d22d61d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stm321/library/motorController2/0.0.0%2Bsha.8d5c0d22d61d/motorController2-0.0.0%2Bsha.8d5c0d22d61d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

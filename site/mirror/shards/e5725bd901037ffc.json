@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hkarthik97",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hkarthik97/library/EG25Lib/1.0.0/EG25Lib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EG25Lib-1.0.0.tar.gz",
+    "size_bytes": 7857,
+    "sha256": "405eb59ef843adde2e9ff40fbc03da16f0938921ed4c0f4823c7861d6f0c8dfa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hkarthik97/library/EG25Lib/1.0.0/EG25Lib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hkarthik97/library/EG25Lib/1.0.0/EG25Lib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hkarthik97/library/WebSocketLib/1.0.1/WebSocketLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSocketLib-1.0.1.tar.gz",
+    "size_bytes": 8944,
+    "sha256": "73f3856d30ed595c7d7ca4987c8629c18ce9b79bc5cab44393fe5b5d4f46722e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hkarthik97/library/WebSocketLib/1.0.1/WebSocketLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hkarthik97/library/WebSocketLib/1.0.1/WebSocketLib-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

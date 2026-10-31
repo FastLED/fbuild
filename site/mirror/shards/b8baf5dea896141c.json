@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pairmand",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pairmand/library/DS1820/0.0.0+sha.29264b0a2c9f/DS1820-0.0.0+sha.29264b0a2c9f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1820-0.0.0+sha.29264b0a2c9f.tar.gz",
+    "size_bytes": 7506,
+    "sha256": "0f1e9f039feafa085747cebd6d3e38d460274bb468a166fe27a8055a945b0ef8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pairmand/library/DS1820/0.0.0%2Bsha.29264b0a2c9f/DS1820-0.0.0%2Bsha.29264b0a2c9f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pairmand/library/DS1820/0.0.0%2Bsha.29264b0a2c9f/DS1820-0.0.0%2Bsha.29264b0a2c9f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

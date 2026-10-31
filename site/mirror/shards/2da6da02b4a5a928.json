@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/schidstorm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "schidstorm/library/ld2410-lib/1.0.7/ld2410-lib-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ld2410-lib-1.0.7.tar.gz",
+    "size_bytes": 7711,
+    "sha256": "7483c67c77f477bd19e1fe8b0c4f279d5dae3914a9f4aef6c2ce1b237c2a12cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/schidstorm/library/ld2410-lib/1.0.7/ld2410-lib-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/schidstorm/library/ld2410-lib/1.0.7/ld2410-lib-1.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

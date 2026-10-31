@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-st-expansion-sw-team",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-st-expansion-sw-team/library/Flasher/0.0.0+sha.387ac37f128b/Flasher-0.0.0+sha.387ac37f128b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Flasher-0.0.0+sha.387ac37f128b.tar.gz",
+    "size_bytes": 3819,
+    "sha256": "ea9ec9598708480f2bd45d8fc35c6c2b76c72e138881ba6f5dcc2ca303a6ac9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st-expansion-sw-team/library/Flasher/0.0.0%2Bsha.387ac37f128b/Flasher-0.0.0%2Bsha.387ac37f128b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st-expansion-sw-team/library/Flasher/0.0.0%2Bsha.387ac37f128b/Flasher-0.0.0%2Bsha.387ac37f128b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st-expansion-sw-team/library/MQTT_JS/0.0.0+sha.f4dbe435e64c/MQTT_JS-0.0.0+sha.f4dbe435e64c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTT_JS-0.0.0+sha.f4dbe435e64c.tar.gz",
+    "size_bytes": 17743,
+    "sha256": "ca899efacbb90a1b29436121f4d877c420dd659b4f584edd42e19f40d39c3d54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st-expansion-sw-team/library/MQTT_JS/0.0.0%2Bsha.f4dbe435e64c/MQTT_JS-0.0.0%2Bsha.f4dbe435e64c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st-expansion-sw-team/library/MQTT_JS/0.0.0%2Bsha.f4dbe435e64c/MQTT_JS-0.0.0%2Bsha.f4dbe435e64c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st-expansion-sw-team/library/SPI_JS/0.0.0+sha.1e016cfcd06f/SPI_JS-0.0.0+sha.1e016cfcd06f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_JS-0.0.0+sha.1e016cfcd06f.tar.gz",
+    "size_bytes": 2499,
+    "sha256": "59729174cd3138882637c5b351b58957cac81777a9121a0a1724354eb1aff466",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st-expansion-sw-team/library/SPI_JS/0.0.0%2Bsha.1e016cfcd06f/SPI_JS-0.0.0%2Bsha.1e016cfcd06f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st-expansion-sw-team/library/SPI_JS/0.0.0%2Bsha.1e016cfcd06f/SPI_JS-0.0.0%2Bsha.1e016cfcd06f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st-expansion-sw-team/library/ST_SENSOR_JS/0.0.0+sha.df076f62de33/ST_SENSOR_JS-0.0.0+sha.df076f62de33.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST_SENSOR_JS-0.0.0+sha.df076f62de33.tar.gz",
+    "size_bytes": 1221,
+    "sha256": "2d7fda20e08801327ffdbb16ed7b25aca17a001965cb0e264764290662496352",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st-expansion-sw-team/library/ST_SENSOR_JS/0.0.0%2Bsha.df076f62de33/ST_SENSOR_JS-0.0.0%2Bsha.df076f62de33.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st-expansion-sw-team/library/ST_SENSOR_JS/0.0.0%2Bsha.df076f62de33/ST_SENSOR_JS-0.0.0%2Bsha.df076f62de33.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st-expansion-sw-team/library/VL53L1X/0.0.0+sha.f16727052990/VL53L1X-0.0.0+sha.f16727052990.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL53L1X-0.0.0+sha.f16727052990.tar.gz",
+    "size_bytes": 18654,
+    "sha256": "674ede671ec15db7d43d64d7f2dd185dc5601e9f616d83dd3f9d865761d784a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st-expansion-sw-team/library/VL53L1X/0.0.0%2Bsha.f16727052990/VL53L1X-0.0.0%2Bsha.f16727052990.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st-expansion-sw-team/library/VL53L1X/0.0.0%2Bsha.f16727052990/VL53L1X-0.0.0%2Bsha.f16727052990.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st-expansion-sw-team/library/VL53L1X_mbed/0.0.0+sha.744e8b1b9837/VL53L1X_mbed-0.0.0+sha.744e8b1b9837.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL53L1X_mbed-0.0.0+sha.744e8b1b9837.tar.gz",
+    "size_bytes": 20093,
+    "sha256": "30ab72022fe197799fa94306d9fc548a6f79245130ba0a2fbcb2bf4faeb408fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st-expansion-sw-team/library/VL53L1X_mbed/0.0.0%2Bsha.744e8b1b9837/VL53L1X_mbed-0.0.0%2Bsha.744e8b1b9837.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st-expansion-sw-team/library/VL53L1X_mbed/0.0.0%2Bsha.744e8b1b9837/VL53L1X_mbed-0.0.0%2Bsha.744e8b1b9837.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st-expansion-sw-team/library/eeprom_driver/0.0.0+sha.dd89565c6276/eeprom_driver-0.0.0+sha.dd89565c6276.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eeprom_driver-0.0.0+sha.dd89565c6276.tar.gz",
+    "size_bytes": 25075,
+    "sha256": "1a43d84795563b334d7b0b7405f36b6518e50a1fb1659b9c900c8c719c8ebcd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st-expansion-sw-team/library/eeprom_driver/0.0.0%2Bsha.dd89565c6276/eeprom_driver-0.0.0%2Bsha.dd89565c6276.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st-expansion-sw-team/library/eeprom_driver/0.0.0%2Bsha.dd89565c6276/eeprom_driver-0.0.0%2Bsha.dd89565c6276.tar.gz"
+    ]
+   }
+  }
+ ]
+}

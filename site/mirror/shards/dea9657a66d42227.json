@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/j-rios",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "j-rios/library/analogpad/1.0.1/analogpad-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "analogpad-1.0.1.tar.gz",
+    "size_bytes": 12496,
+    "sha256": "72edaa9fba4c9ba319531e145b2781ea481743cc3a11548f5760c0f0a4fd5900",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/j-rios/library/analogpad/1.0.1/analogpad-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/j-rios/library/analogpad/1.0.1/analogpad-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "j-rios/library/minbasecli/1.2.0/minbasecli-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "minbasecli-1.2.0.tar.gz",
+    "size_bytes": 77819,
+    "sha256": "5f8e97eb18df51e7ae29085642448e0fa7ced21670f07e5d46dd4b5b21304960",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/j-rios/library/minbasecli/1.2.0/minbasecli-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/j-rios/library/minbasecli/1.2.0/minbasecli-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "j-rios/library/mqtt_fuota_duino/1.0.1/mqtt_fuota_duino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mqtt_fuota_duino-1.0.1.tar.gz",
+    "size_bytes": 17891,
+    "sha256": "c41393cce25cb5c962ccedadbbe85b296b1f587e74e5a7b1cf79215aca14de97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/j-rios/library/mqtt_fuota_duino/1.0.1/mqtt_fuota_duino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/j-rios/library/mqtt_fuota_duino/1.0.1/mqtt_fuota_duino-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "j-rios/library/rgbled/1.0.1/rgbled-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rgbled-1.0.1.tar.gz",
+    "size_bytes": 12302,
+    "sha256": "77252d6957a44d425c664f154de701653e7dcdde9b5e249cfd47f2d788588810",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/j-rios/library/rgbled/1.0.1/rgbled-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/j-rios/library/rgbled/1.0.1/rgbled-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "j-rios/library/uTLGBotLib/1.0.3/uTLGBotLib-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uTLGBotLib-1.0.3.tar.gz",
+    "size_bytes": 2496966,
+    "sha256": "def60456db7de22f3188e864d48c1db343c33da1e7c027e07047483d62a4b2c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/j-rios/library/uTLGBotLib/1.0.3/uTLGBotLib-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/j-rios/library/uTLGBotLib/1.0.3/uTLGBotLib-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

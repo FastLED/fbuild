@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tanpitch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tanpitch/library/ButtonKing/1.2.0/ButtonKing-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonKing-1.2.0.tar.gz",
+    "size_bytes": 7273,
+    "sha256": "5ae94555f81b5a34234e1fa9b07f9377fb61ed77eab3759fb6558cebe20d318f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanpitch/library/ButtonKing/1.2.0/ButtonKing-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanpitch/library/ButtonKing/1.2.0/ButtonKing-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

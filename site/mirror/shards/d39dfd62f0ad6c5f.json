@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/broadwellconsultinginc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "broadwellconsultinginc/library/SerialWombat/2.2.12/SerialWombat-2.2.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWombat-2.2.12.tar.gz",
+    "size_bytes": 562285,
+    "sha256": "f3c5373c74207539ea10909f25f6ff9b8a9a4986c78d8705b3a5c73fe94e5bec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/broadwellconsultinginc/library/SerialWombat/2.2.12/SerialWombat-2.2.12.tar.gz",
+     "https://dl.registry.platformio.org/download/broadwellconsultinginc/library/SerialWombat/2.2.12/SerialWombat-2.2.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "broadwellconsultinginc/library/SerialWombat/2.2.20/SerialWombat-2.2.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWombat-2.2.20.tar.gz",
+    "size_bytes": 593756,
+    "sha256": "479c43e4c9612fef7f53f59c0a07ee62944970b19116bb793e0b5c55934578fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/broadwellconsultinginc/library/SerialWombat/2.2.20/SerialWombat-2.2.20.tar.gz",
+     "https://dl.registry.platformio.org/download/broadwellconsultinginc/library/SerialWombat/2.2.20/SerialWombat-2.2.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "broadwellconsultinginc/library/SerialWombat/2.2.21/SerialWombat-2.2.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWombat-2.2.21.tar.gz",
+    "size_bytes": 595416,
+    "sha256": "0b3ac11c83b969bd7e84d930d17b1d35ad5509f45adfc677a4af477d5de87b25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/broadwellconsultinginc/library/SerialWombat/2.2.21/SerialWombat-2.2.21.tar.gz",
+     "https://dl.registry.platformio.org/download/broadwellconsultinginc/library/SerialWombat/2.2.21/SerialWombat-2.2.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "broadwellconsultinginc/library/SerialWombat/2.2.22/SerialWombat-2.2.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWombat-2.2.22.tar.gz",
+    "size_bytes": 545409,
+    "sha256": "c84284939d2862c43fe742a41d4a0f891556d72232b0c47232cba83724743dee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/broadwellconsultinginc/library/SerialWombat/2.2.22/SerialWombat-2.2.22.tar.gz",
+     "https://dl.registry.platformio.org/download/broadwellconsultinginc/library/SerialWombat/2.2.22/SerialWombat-2.2.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "broadwellconsultinginc/library/SerialWombat/2.2.30/SerialWombat-2.2.30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWombat-2.2.30.tar.gz",
+    "size_bytes": 599719,
+    "sha256": "7a72000aa74f011f67feb077e2deb21042df5d6fe16c0bcb5fcd839c83dd7b19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/broadwellconsultinginc/library/SerialWombat/2.2.30/SerialWombat-2.2.30.tar.gz",
+     "https://dl.registry.platformio.org/download/broadwellconsultinginc/library/SerialWombat/2.2.30/SerialWombat-2.2.30.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "broadwellconsultinginc/library/SerialWombat/2.2.31/SerialWombat-2.2.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWombat-2.2.31.tar.gz",
+    "size_bytes": 599734,
+    "sha256": "4dd7fc51564fc7deb1a0ce92fcffca7876ab10e56f9c8a20861c9c9b74b27297",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/broadwellconsultinginc/library/SerialWombat/2.2.31/SerialWombat-2.2.31.tar.gz",
+     "https://dl.registry.platformio.org/download/broadwellconsultinginc/library/SerialWombat/2.2.31/SerialWombat-2.2.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "broadwellconsultinginc/library/SerialWombat/2.2.32/SerialWombat-2.2.32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWombat-2.2.32.tar.gz",
+    "size_bytes": 599977,
+    "sha256": "b9043f8925caf33d052f3dd97842894a815070c74065ec646ebe5222d9c5af84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/broadwellconsultinginc/library/SerialWombat/2.2.32/SerialWombat-2.2.32.tar.gz",
+     "https://dl.registry.platformio.org/download/broadwellconsultinginc/library/SerialWombat/2.2.32/SerialWombat-2.2.32.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "broadwellconsultinginc/library/SerialWombat/2.2.40/SerialWombat-2.2.40.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWombat-2.2.40.tar.gz",
+    "size_bytes": 600076,
+    "sha256": "b72501b88ea121ec6ad3b55e31749843f764336b3137893b4e1add30492efa15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/broadwellconsultinginc/library/SerialWombat/2.2.40/SerialWombat-2.2.40.tar.gz",
+     "https://dl.registry.platformio.org/download/broadwellconsultinginc/library/SerialWombat/2.2.40/SerialWombat-2.2.40.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "broadwellconsultinginc/library/SerialWombat/2.2.41/SerialWombat-2.2.41.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWombat-2.2.41.tar.gz",
+    "size_bytes": 614587,
+    "sha256": "62db6abc7657158c92d0cae60ba22d8406b48232babec36c9e05624ca734608a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/broadwellconsultinginc/library/SerialWombat/2.2.41/SerialWombat-2.2.41.tar.gz",
+     "https://dl.registry.platformio.org/download/broadwellconsultinginc/library/SerialWombat/2.2.41/SerialWombat-2.2.41.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "broadwellconsultinginc/library/SerialWombat/2.2.50/SerialWombat-2.2.50.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWombat-2.2.50.tar.gz",
+    "size_bytes": 615361,
+    "sha256": "f966d5fe2b08ffc70e6f90c2afffedc876b1b8bdf73ae7151e552bc366828c17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/broadwellconsultinginc/library/SerialWombat/2.2.50/SerialWombat-2.2.50.tar.gz",
+     "https://dl.registry.platformio.org/download/broadwellconsultinginc/library/SerialWombat/2.2.50/SerialWombat-2.2.50.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "broadwellconsultinginc/library/SerialWombat/2.2.60/SerialWombat-2.2.60.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWombat-2.2.60.tar.gz",
+    "size_bytes": 622625,
+    "sha256": "38d9aed46703a9048153d83563fec00ae4599ad4059e9472636197d353fec265",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/broadwellconsultinginc/library/SerialWombat/2.2.60/SerialWombat-2.2.60.tar.gz",
+     "https://dl.registry.platformio.org/download/broadwellconsultinginc/library/SerialWombat/2.2.60/SerialWombat-2.2.60.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "broadwellconsultinginc/library/SerialWombat18ABVGADriver/2.1.7/SerialWombat18ABVGADriver-2.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWombat18ABVGADriver-2.1.7.tar.gz",
+    "size_bytes": 1797,
+    "sha256": "62be272c9cbf048b71d29b387c07518c072349ac1996d3e83f16134734709463",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/broadwellconsultinginc/library/SerialWombat18ABVGADriver/2.1.7/SerialWombat18ABVGADriver-2.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/broadwellconsultinginc/library/SerialWombat18ABVGADriver/2.1.7/SerialWombat18ABVGADriver-2.1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

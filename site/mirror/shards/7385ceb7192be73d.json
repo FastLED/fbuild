@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fancyfoxgems",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fancyfoxgems/library/HalfStepper/1.0.0/HalfStepper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HalfStepper-1.0.0.tar.gz",
+    "size_bytes": 19147,
+    "sha256": "e74c2dd011adc0ca71ed3d059220bfe9c4349dd314ecfbe5502e4f8a58235d5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fancyfoxgems/library/HalfStepper/1.0.0/HalfStepper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fancyfoxgems/library/HalfStepper/1.0.0/HalfStepper-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fancyfoxgems/library/Itty%20Bitty/1.5.0/IttyBitty-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IttyBitty-1.5.0.tar.gz",
+    "size_bytes": 128214,
+    "sha256": "e38f459544a2e513f5a9d21d99e96c1d63b3ae078054fde78ab2c6e5a27b4864",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fancyfoxgems/library/Itty%2520Bitty/1.5.0/IttyBitty-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fancyfoxgems/library/Itty%20Bitty/1.5.0/IttyBitty-1.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/apllewelyn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "apllewelyn/library/SGTL5000%20Codec/1.0.0/SGTL5000Codec-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SGTL5000Codec-1.0.0.tar.gz",
+    "size_bytes": 53529,
+    "sha256": "f55f14b707729f7f340395effa3a544373ae69659ed77949442b3baf6cf3af79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apllewelyn/library/SGTL5000%2520Codec/1.0.0/SGTL5000Codec-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/apllewelyn/library/SGTL5000%20Codec/1.0.0/SGTL5000Codec-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-fujikenac",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-fujikenac/library/T_motor/0.0.0+sha.2759e619969a/T_motor-0.0.0+sha.2759e619969a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "T_motor-0.0.0+sha.2759e619969a.tar.gz",
+    "size_bytes": 1290,
+    "sha256": "957a235d2d497a23389eb6648b555cfa39fc88c6add61ff37fde79f5c7a320db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fujikenac/library/T_motor/0.0.0%2Bsha.2759e619969a/T_motor-0.0.0%2Bsha.2759e619969a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fujikenac/library/T_motor/0.0.0%2Bsha.2759e619969a/T_motor-0.0.0%2Bsha.2759e619969a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fujikenac/library/ds3_si/0.0.0+sha.5bb182ca2b07/ds3_si-0.0.0+sha.5bb182ca2b07.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ds3_si-0.0.0+sha.5bb182ca2b07.tar.gz",
+    "size_bytes": 1486,
+    "sha256": "07c6ed65d0f7ecdfd161ab6a767ce8f13d4cbac26a1efc03d9d7f711d9795094",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fujikenac/library/ds3_si/0.0.0%2Bsha.5bb182ca2b07/ds3_si-0.0.0%2Bsha.5bb182ca2b07.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fujikenac/library/ds3_si/0.0.0%2Bsha.5bb182ca2b07/ds3_si-0.0.0%2Bsha.5bb182ca2b07.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fujikenac/library/mecanum2017/0.0.0+sha.1a2fe21bfdb2/mecanum2017-0.0.0+sha.1a2fe21bfdb2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mecanum2017-0.0.0+sha.1a2fe21bfdb2.tar.gz",
+    "size_bytes": 1866,
+    "sha256": "61a46b31211d0332b936d69c3447a686b68c442f2f536635ca3a70a3dcf6f050",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fujikenac/library/mecanum2017/0.0.0%2Bsha.1a2fe21bfdb2/mecanum2017-0.0.0%2Bsha.1a2fe21bfdb2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fujikenac/library/mecanum2017/0.0.0%2Bsha.1a2fe21bfdb2/mecanum2017-0.0.0%2Bsha.1a2fe21bfdb2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-fujikenac/library/mecanum2017_2/0.0.0+sha.b92b7b117776/mecanum2017_2-0.0.0+sha.b92b7b117776.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mecanum2017_2-0.0.0+sha.b92b7b117776.tar.gz",
+    "size_bytes": 2064,
+    "sha256": "5fb5e3ab84c0ca5cc98de8994208f9f76f4adf7caf196bc0fd564ccd103c376f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-fujikenac/library/mecanum2017_2/0.0.0%2Bsha.b92b7b117776/mecanum2017_2-0.0.0%2Bsha.b92b7b117776.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-fujikenac/library/mecanum2017_2/0.0.0%2Bsha.b92b7b117776/mecanum2017_2-0.0.0%2Bsha.b92b7b117776.tar.gz"
+    ]
+   }
+  }
+ ]
+}

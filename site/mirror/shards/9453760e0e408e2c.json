@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aio-javeriana",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aio-javeriana/library/AIOModule/0.1.0/AIOModule-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AIOModule-0.1.0.tar.gz",
+    "size_bytes": 10961,
+    "sha256": "90eecb1b2d68a3f47a85f86fe7d315483f847b07c16bd82acad0fe36a58fa490",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aio-javeriana/library/AIOModule/0.1.0/AIOModule-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aio-javeriana/library/AIOModule/0.1.0/AIOModule-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

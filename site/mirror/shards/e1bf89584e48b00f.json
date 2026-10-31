@@ -1,0 +1,243 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/closedcube",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "closedcube/library/ClosedCube%20BME680/1.2.0/ClosedCubeBME680-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeBME680-1.2.0.tar.gz",
+    "size_bytes": 5911,
+    "sha256": "580cd84ee01aa695a639e9a07fc8298735efcac01452df5d5cb7b48b770d3676",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520BME680/1.2.0/ClosedCubeBME680-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20BME680/1.2.0/ClosedCubeBME680-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20HDC1010/1.2.2/ClosedCubeHDC1010-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeHDC1010-1.2.2.tar.gz",
+    "size_bytes": 3367,
+    "sha256": "a5cb3c6e00bde608f61d7227246f2a0106bb9142f5a51533ff3fae986dbfec3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520HDC1010/1.2.2/ClosedCubeHDC1010-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20HDC1010/1.2.2/ClosedCubeHDC1010-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20HDC1080/1.3.2/ClosedCubeHDC1080-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeHDC1080-1.3.2.tar.gz",
+    "size_bytes": 4201,
+    "sha256": "266b9601dcc4ae4bc9bfbcba70e63f1034c6a10460ad54860f344096f05b43c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520HDC1080/1.3.2/ClosedCubeHDC1080-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20HDC1080/1.3.2/ClosedCubeHDC1080-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20I2C%20Driver/2020.9.8/ClosedCubeI2CDriver-2020.9.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeI2CDriver-2020.9.8.tar.gz",
+    "size_bytes": 3699,
+    "sha256": "d8a325b7498b23210efd3885f3f2c1e7f09720607909dd27076fc3039e70ee62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520I2C%2520Driver/2020.9.8/ClosedCubeI2CDriver-2020.9.8.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20I2C%20Driver/2020.9.8/ClosedCubeI2CDriver-2020.9.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20LPS25HB/1.0.1/ClosedCubeLPS25HB-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeLPS25HB-1.0.1.tar.gz",
+    "size_bytes": 2645,
+    "sha256": "0fb0a7f619b0ce8b5a01b905ed73e8f3d82a0578c7dd4d2a06c3db45fe0c6ed3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520LPS25HB/1.0.1/ClosedCubeLPS25HB-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20LPS25HB/1.0.1/ClosedCubeLPS25HB-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20MAX30205/1.0.3/ClosedCubeMAX30205-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeMAX30205-1.0.3.tar.gz",
+    "size_bytes": 2293,
+    "sha256": "1c6540756b23fb1c5609f80a64895656fe886b1f398e5f1e567c347b5dd5f3ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520MAX30205/1.0.3/ClosedCubeMAX30205-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20MAX30205/1.0.3/ClosedCubeMAX30205-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20OPT3001/1.1.2/ClosedCubeOPT3001-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeOPT3001-1.1.2.tar.gz",
+    "size_bytes": 3562,
+    "sha256": "95d3878e32ead6be60ade8636e0de8758244f1386f7d643e9130e54b1f73d8b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520OPT3001/1.1.2/ClosedCubeOPT3001-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20OPT3001/1.1.2/ClosedCubeOPT3001-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20OPT3002/1.1.2/ClosedCubeOPT3002-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeOPT3002-1.1.2.tar.gz",
+    "size_bytes": 3499,
+    "sha256": "32e1e5339620098714322b9a0e34aa6b33d3a8bd02b6ab233b23ef6ee9fc2304",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520OPT3002/1.1.2/ClosedCubeOPT3002-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20OPT3002/1.1.2/ClosedCubeOPT3002-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20SHT31D/1.5.1/ClosedCubeSHT31D-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeSHT31D-1.5.1.tar.gz",
+    "size_bytes": 5775,
+    "sha256": "1eefbf9c6d9075af9463225a92c86d521482d1d8cc41584d5c565763feec89f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520SHT31D/1.5.1/ClosedCubeSHT31D-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20SHT31D/1.5.1/ClosedCubeSHT31D-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20SHTC3/2020.6.8/ClosedCubeSHTC3-2020.6.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeSHTC3-2020.6.8.tar.gz",
+    "size_bytes": 3642,
+    "sha256": "6dad9b6563b0f42c29602a241c1313edbc8eb4e940977452bc91e0fcf81a9998",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520SHTC3/2020.6.8/ClosedCubeSHTC3-2020.6.8.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20SHTC3/2020.6.8/ClosedCubeSHTC3-2020.6.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20STS35/2020.5.18/ClosedCubeSTS35-2020.5.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeSTS35-2020.5.18.tar.gz",
+    "size_bytes": 3594,
+    "sha256": "72ff21528e69516ae059619f39d5a23439aefcb5d831b7d32eba22cc8da900ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520STS35/2020.5.18/ClosedCubeSTS35-2020.5.18.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20STS35/2020.5.18/ClosedCubeSTS35-2020.5.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20Si7051/1.1.0/ClosedCubeSi7051-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeSi7051-1.1.0.tar.gz",
+    "size_bytes": 3166,
+    "sha256": "fdcc0eee380981b1de6255fb616093250f9a3e55444f12bb2226a6b62723409e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520Si7051/1.1.0/ClosedCubeSi7051-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20Si7051/1.1.0/ClosedCubeSi7051-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20Si7055/1.0.3/ClosedCubeSi7055-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeSi7055-1.0.3.tar.gz",
+    "size_bytes": 2354,
+    "sha256": "f1d25ec2b10d7cb2ab4029b0c86cbfa8ad81980110b279b8da9df5f52c4e45c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520Si7055/1.0.3/ClosedCubeSi7055-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20Si7055/1.0.3/ClosedCubeSi7055-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20TCA9538/1.1.3/ClosedCubeTCA9538-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeTCA9538-1.1.3.tar.gz",
+    "size_bytes": 2970,
+    "sha256": "32f2235cd495b58f93382dea50e0f4b2036fac2ae5fff8f949610d8d1fc7f585",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520TCA9538/1.1.3/ClosedCubeTCA9538-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20TCA9538/1.1.3/ClosedCubeTCA9538-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20TCA9546A/1.0.1/ClosedCubeTCA9546A-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeTCA9546A-1.0.1.tar.gz",
+    "size_bytes": 3349,
+    "sha256": "fbd19ed27d83d106c3a5f8a3db9082bcb045188ce474178246f6f1a5385ee423",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520TCA9546A/1.0.1/ClosedCubeTCA9546A-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20TCA9546A/1.0.1/ClosedCubeTCA9546A-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20TCA9548A/2020.5.21/ClosedCubeTCA9548A-2020.5.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeTCA9548A-2020.5.21.tar.gz",
+    "size_bytes": 3420,
+    "sha256": "e0203bc10bcc8bcbb061d023276fb8135046fe4e6623c86c5b4fc1d020061893",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520TCA9548A/2020.5.21/ClosedCubeTCA9548A-2020.5.21.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20TCA9548A/2020.5.21/ClosedCubeTCA9548A-2020.5.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20TMP116/1.0.2/ClosedCubeTMP116-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeTMP116-1.0.2.tar.gz",
+    "size_bytes": 3104,
+    "sha256": "a035ad8923b116c4c6dd26d234aff5390b13a128c2b8c99ac4277d691dcd0b93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520TMP116/1.0.2/ClosedCubeTMP116-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20TMP116/1.0.2/ClosedCubeTMP116-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "closedcube/library/ClosedCube%20TSYS01/2020.5.20/ClosedCubeTSYS01-2020.5.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClosedCubeTSYS01-2020.5.20.tar.gz",
+    "size_bytes": 3142,
+    "sha256": "ac4796356e3f0c2f596b7cd82c183c389bd05aec528678f860e9323cd2c27fd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/closedcube/library/ClosedCube%2520TSYS01/2020.5.20/ClosedCubeTSYS01-2020.5.20.tar.gz",
+     "https://dl.registry.platformio.org/download/closedcube/library/ClosedCube%20TSYS01/2020.5.20/ClosedCubeTSYS01-2020.5.20.tar.gz"
+    ]
+   }
+  }
+ ]
+}

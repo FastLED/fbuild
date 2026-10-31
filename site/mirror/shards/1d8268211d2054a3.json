@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mhoseini967",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mhoseini967/library/Advance%20Seven%20Segment/1.0.1/AdvanceSevenSegment-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdvanceSevenSegment-1.0.1.tar.gz",
+    "size_bytes": 3012,
+    "sha256": "5b4cf332665fe3da0a9476ad82c979aa146950d4300c1d92264d1975e84c1016",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mhoseini967/library/Advance%2520Seven%2520Segment/1.0.1/AdvanceSevenSegment-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mhoseini967/library/Advance%20Seven%20Segment/1.0.1/AdvanceSevenSegment-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-joe4465",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-joe4465/library/MovingAverageFilter/0.0.0+sha.21b70641f866/MovingAverageFilter-0.0.0+sha.21b70641f866.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MovingAverageFilter-0.0.0+sha.21b70641f866.tar.gz",
+    "size_bytes": 975,
+    "sha256": "1d59896f16ee4eadc5b1afe84e76ae82fef5353316a06556bb222f5bb4f75a54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joe4465/library/MovingAverageFilter/0.0.0%2Bsha.21b70641f866/MovingAverageFilter-0.0.0%2Bsha.21b70641f866.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joe4465/library/MovingAverageFilter/0.0.0%2Bsha.21b70641f866/MovingAverageFilter-0.0.0%2Bsha.21b70641f866.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-joe4465/library/PPM/0.0.0+sha.d13b9e50312f/PPM-0.0.0+sha.d13b9e50312f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PPM-0.0.0+sha.d13b9e50312f.tar.gz",
+    "size_bytes": 2276,
+    "sha256": "c5213b45fab5bbbccd44e066be444e8817a88d12aae1f9053cb5951ed9d84577",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joe4465/library/PPM/0.0.0%2Bsha.d13b9e50312f/PPM-0.0.0%2Bsha.d13b9e50312f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joe4465/library/PPM/0.0.0%2Bsha.d13b9e50312f/PPM-0.0.0%2Bsha.d13b9e50312f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-joe4465/library/beep/0.0.0+sha.372aa7360db7/beep-0.0.0+sha.372aa7360db7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "beep-0.0.0+sha.372aa7360db7.tar.gz",
+    "size_bytes": 1428,
+    "sha256": "b08f51b255344ff5a9782894fa0c38eaf4fcc226545752ecc121906d3a54c92e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joe4465/library/beep/0.0.0%2Bsha.372aa7360db7/beep-0.0.0%2Bsha.372aa7360db7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joe4465/library/beep/0.0.0%2Bsha.372aa7360db7/beep-0.0.0%2Bsha.372aa7360db7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-joe4465/library/filter/0.0.0+sha.9ce370b360ba/filter-0.0.0+sha.9ce370b360ba.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "filter-0.0.0+sha.9ce370b360ba.tar.gz",
+    "size_bytes": 1671,
+    "sha256": "b1ffcd8c4e6c4aa30278cb773607e88e155620fe0c79d429b7faf10ab3c1c64b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joe4465/library/filter/0.0.0%2Bsha.9ce370b360ba/filter-0.0.0%2Bsha.9ce370b360ba.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joe4465/library/filter/0.0.0%2Bsha.9ce370b360ba/filter-0.0.0%2Bsha.9ce370b360ba.tar.gz"
+    ]
+   }
+  }
+ ]
+}

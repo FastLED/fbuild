@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jlfrucot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jlfrucot/library/Debounced%20PushButtons/1.1.2/DebouncedPushButtons-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebouncedPushButtons-1.1.2.tar.gz",
+    "size_bytes": 10039,
+    "sha256": "1d24f87c85b5f0ff22913c81dd34f6b73014339d5a12b0e9888107900b77a9c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jlfrucot/library/Debounced%2520PushButtons/1.1.2/DebouncedPushButtons-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jlfrucot/library/Debounced%20PushButtons/1.1.2/DebouncedPushButtons-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

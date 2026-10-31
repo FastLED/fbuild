@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jmwanderer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jmwanderer/library/RYLR_LoRaAT/0.1.2/RYLR_LoRaAT-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RYLR_LoRaAT-0.1.2.tar.gz",
+    "size_bytes": 7307,
+    "sha256": "7ee193d16ae4b1c4eafb83f9c376510dfaa7747aa647073929fa14212efbb799",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jmwanderer/library/RYLR_LoRaAT/0.1.2/RYLR_LoRaAT-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jmwanderer/library/RYLR_LoRaAT/0.1.2/RYLR_LoRaAT-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jmwanderer/library/tlv/0.1.1/tlv-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tlv-0.1.1.tar.gz",
+    "size_bytes": 7906,
+    "sha256": "e98fcc61a58e6a2c86bb2cb34d1abf9e756abcb656943b5b4f70a332bdfe2640",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jmwanderer/library/tlv/0.1.1/tlv-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jmwanderer/library/tlv/0.1.1/tlv-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

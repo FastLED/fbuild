@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-modtronix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-modtronix/library/SX127x_modtronix/0.0.0+sha.3d148697c0d3/SX127x_modtronix-0.0.0+sha.3d148697c0d3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX127x_modtronix-0.0.0+sha.3d148697c0d3.tar.gz",
+    "size_bytes": 13918,
+    "sha256": "c0922244aa1041ef34691dfab0245988f4088e76ebcc6d09b0d93af005fae5a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-modtronix/library/SX127x_modtronix/0.0.0%2Bsha.3d148697c0d3/SX127x_modtronix-0.0.0%2Bsha.3d148697c0d3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-modtronix/library/SX127x_modtronix/0.0.0%2Bsha.3d148697c0d3/SX127x_modtronix-0.0.0%2Bsha.3d148697c0d3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-modtronix/library/modtronix_LCD2S/0.0.0+sha.fe0c1e27f362/modtronix_LCD2S-0.0.0+sha.fe0c1e27f362.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "modtronix_LCD2S-0.0.0+sha.fe0c1e27f362.tar.gz",
+    "size_bytes": 5969,
+    "sha256": "5efee6a5ca8158c57528dc23f170a4cd300ebf9f4bb0c8b4407474f3d018e6cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-modtronix/library/modtronix_LCD2S/0.0.0%2Bsha.fe0c1e27f362/modtronix_LCD2S-0.0.0%2Bsha.fe0c1e27f362.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-modtronix/library/modtronix_LCD2S/0.0.0%2Bsha.fe0c1e27f362/modtronix_LCD2S-0.0.0%2Bsha.fe0c1e27f362.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-modtronix/library/modtronix_NZ32S/0.0.0+sha.42ae82a8f571/modtronix_NZ32S-0.0.0+sha.42ae82a8f571.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "modtronix_NZ32S-0.0.0+sha.42ae82a8f571.tar.gz",
+    "size_bytes": 17937,
+    "sha256": "ea417bb3c3597418f36632e4a540cff4627d68762ad9e8b84f620066c3ee3a23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-modtronix/library/modtronix_NZ32S/0.0.0%2Bsha.42ae82a8f571/modtronix_NZ32S-0.0.0%2Bsha.42ae82a8f571.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-modtronix/library/modtronix_NZ32S/0.0.0%2Bsha.42ae82a8f571/modtronix_NZ32S-0.0.0%2Bsha.42ae82a8f571.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-modtronix/library/modtronix_inAir/0.0.0+sha.0bf8f2dbefb7/modtronix_inAir-0.0.0+sha.0bf8f2dbefb7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "modtronix_inAir-0.0.0+sha.0bf8f2dbefb7.tar.gz",
+    "size_bytes": 26771,
+    "sha256": "853d69155cbb3399cc5dd02488745f9b07c1eb8ccc19ee5f5531ca259a623656",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-modtronix/library/modtronix_inAir/0.0.0%2Bsha.0bf8f2dbefb7/modtronix_inAir-0.0.0%2Bsha.0bf8f2dbefb7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-modtronix/library/modtronix_inAir/0.0.0%2Bsha.0bf8f2dbefb7/modtronix_inAir-0.0.0%2Bsha.0bf8f2dbefb7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

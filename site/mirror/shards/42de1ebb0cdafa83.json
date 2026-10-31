@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rzuppur",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rzuppur/library/BLESomaControl/1.1.0/BLESomaControl-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLESomaControl-1.1.0.tar.gz",
+    "size_bytes": 24993,
+    "sha256": "cfc754aa1286458d94c28ad97f77fdde59689b7fa65b4e67fa1be5d43695124a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rzuppur/library/BLESomaControl/1.1.0/BLESomaControl-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rzuppur/library/BLESomaControl/1.1.0/BLESomaControl-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rzuppur/library/BLESomaControl_Arduino/1.1.0/BLESomaControl_Arduino-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLESomaControl_Arduino-1.1.0.tar.gz",
+    "size_bytes": 25069,
+    "sha256": "2ab1a0b86fe42000e97456ce37b260c5b1d44397ec461d11d14d4bc2b209adbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rzuppur/library/BLESomaControl_Arduino/1.1.0/BLESomaControl_Arduino-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rzuppur/library/BLESomaControl_Arduino/1.1.0/BLESomaControl_Arduino-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

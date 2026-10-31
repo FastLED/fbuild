@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kmpelectronics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kmpelectronics/library/KMP_MCP23S08/1.0.1/KMP_MCP23S08-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KMP_MCP23S08-1.0.1.tar.gz",
+    "size_bytes": 4686,
+    "sha256": "106c0e0440fb8a9c4e6a3c3440131780de17cd7defe0c006a8d98dbdba872182",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kmpelectronics/library/KMP_MCP23S08/1.0.1/KMP_MCP23S08-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kmpelectronics/library/KMP_MCP23S08/1.0.1/KMP_MCP23S08-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kmpelectronics/library/KMP_RS485/1.0.0/KMP_RS485-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KMP_RS485-1.0.0.tar.gz",
+    "size_bytes": 5032,
+    "sha256": "d125adcff15c66ffc66ab091113a927c72cba6494f21281bcabf6d10bd0e6618",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kmpelectronics/library/KMP_RS485/1.0.0/KMP_RS485-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kmpelectronics/library/KMP_RS485/1.0.0/KMP_RS485-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

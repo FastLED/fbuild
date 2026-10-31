@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jfitter",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jfitter/library/EAA_MLX90614/1.0.0/EAA_MLX90614-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EAA_MLX90614-1.0.0.tar.gz",
+    "size_bytes": 1404187,
+    "sha256": "7958cfeb9f10a8b0cc11604fa7497b9c5bacbf11e58f08f83877406dbc661880",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jfitter/library/EAA_MLX90614/1.0.0/EAA_MLX90614-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jfitter/library/EAA_MLX90614/1.0.0/EAA_MLX90614-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

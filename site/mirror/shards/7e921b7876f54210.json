@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wassfila",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wassfila/library/ConfigUtils/1.1.0/ConfigUtils-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConfigUtils-1.1.0.tar.gz",
+    "size_bytes": 2221,
+    "sha256": "f2036bd889b08685f2e399c3d1768588f5d4bc939c87cbaf9967e3fe3741595d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wassfila/library/ConfigUtils/1.1.0/ConfigUtils-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wassfila/library/ConfigUtils/1.1.0/ConfigUtils-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wassfila/library/ESPMeshWrapper/1.0.1/ESPMeshWrapper-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMeshWrapper-1.0.1.tar.gz",
+    "size_bytes": 6802,
+    "sha256": "5b41e9ff05b48f2a8211e187cba547878376ad824225a039e3024bf2f03dbbd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wassfila/library/ESPMeshWrapper/1.0.1/ESPMeshWrapper-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/wassfila/library/ESPMeshWrapper/1.0.1/ESPMeshWrapper-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wassfila/library/ESPNowWrapper/1.0.0/ESPNowWrapper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPNowWrapper-1.0.0.tar.gz",
+    "size_bytes": 4242,
+    "sha256": "e5b6744d52264efb1669eb334b737702ba082da472d9b74341d16a2cfd404b72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wassfila/library/ESPNowWrapper/1.0.0/ESPNowWrapper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wassfila/library/ESPNowWrapper/1.0.0/ESPNowWrapper-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wassfila/library/ESPStringUtils/1.0.0/ESPStringUtils-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPStringUtils-1.0.0.tar.gz",
+    "size_bytes": 2482,
+    "sha256": "d5cdefd988f50b670548b8d0ed45125c61ff573ae9f59b33f77c24f056bfed34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wassfila/library/ESPStringUtils/1.0.0/ESPStringUtils-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wassfila/library/ESPStringUtils/1.0.0/ESPStringUtils-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wassfila/library/ESPWiFiConfig/1.1.3/ESPWiFiConfig-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPWiFiConfig-1.1.3.tar.gz",
+    "size_bytes": 1857,
+    "sha256": "e5a9d32827016e55ed179b5ce5bfce029ad8ac54f7fdd0943fb7a600577b86a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wassfila/library/ESPWiFiConfig/1.1.3/ESPWiFiConfig-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/wassfila/library/ESPWiFiConfig/1.1.3/ESPWiFiConfig-1.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

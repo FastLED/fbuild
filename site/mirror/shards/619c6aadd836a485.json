@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/navidrashidian",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "navidrashidian/library/circular_buffer/1.1.1/circular_buffer-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "circular_buffer-1.1.1.tar.gz",
+    "size_bytes": 2968,
+    "sha256": "764c25c50c87622904799c24d5039e56835bac3b663390faa616537e779f40ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/navidrashidian/library/circular_buffer/1.1.1/circular_buffer-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/navidrashidian/library/circular_buffer/1.1.1/circular_buffer-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

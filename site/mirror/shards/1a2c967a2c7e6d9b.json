@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andrewmascolo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andrewmascolo/library/CountUpDownTimer/0.0.0-alpha+sha.3d5235dd2b/CountUpDownTimer-0.0.0-alphasha.3d5235dd2b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CountUpDownTimer-0.0.0-alphasha.3d5235dd2b.tar.gz",
+    "size_bytes": 3821,
+    "sha256": "ef4339d90639e8f62417b6454605dcce48ad5df20c1fdb51c262561c2009c6f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrewmascolo/library/CountUpDownTimer/0.0.0-alpha%2Bsha.3d5235dd2b/CountUpDownTimer-0.0.0-alphasha.3d5235dd2b.tar.gz",
+     "https://dl.registry.platformio.org/download/andrewmascolo/library/CountUpDownTimer/0.0.0-alpha%2Bsha.3d5235dd2b/CountUpDownTimer-0.0.0-alphasha.3d5235dd2b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

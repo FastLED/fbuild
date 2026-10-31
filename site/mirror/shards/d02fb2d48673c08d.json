@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/richardsibanda",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "richardsibanda/library/Nonblockingtimer/1.0.1/Nonblockingtimer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nonblockingtimer-1.0.1.tar.gz",
+    "size_bytes": 1682,
+    "sha256": "4e07710573beb585cd60a441c4e118b0e2f4da3d0e35c6cbd46de7225f8f5870",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/richardsibanda/library/Nonblockingtimer/1.0.1/Nonblockingtimer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/richardsibanda/library/Nonblockingtimer/1.0.1/Nonblockingtimer-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/freenove",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "freenove/library/Freenove%20IR%20Lib%20for%20ESP32/1.0.1/FreenoveIRLibforESP32-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreenoveIRLibforESP32-1.0.1.tar.gz",
+    "size_bytes": 6097,
+    "sha256": "29209e93ff6bc066fb7989a3f41c7c0be72432f7f402518290ed7c8ae4b01cb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/freenove/library/Freenove%2520IR%2520Lib%2520for%2520ESP32/1.0.1/FreenoveIRLibforESP32-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/freenove/library/Freenove%20IR%20Lib%20for%20ESP32/1.0.1/FreenoveIRLibforESP32-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "freenove/library/Freenove%20RFID%20Lib%20for%20Pico/1.0.2/FreenoveRFIDLibforPico-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreenoveRFIDLibforPico-1.0.2.tar.gz",
+    "size_bytes": 9913,
+    "sha256": "9c5354c8f8429d40bce7a1c6d604e56e17516c9c2136db9dbc42dfbe1e60da96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/freenove/library/Freenove%2520RFID%2520Lib%2520for%2520Pico/1.0.2/FreenoveRFIDLibforPico-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/freenove/library/Freenove%20RFID%20Lib%20for%20Pico/1.0.2/FreenoveRFIDLibforPico-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "freenove/library/Freenove%20VK16K33%20Lib/2.0.0/FreenoveVK16K33Lib-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreenoveVK16K33Lib-2.0.0.tar.gz",
+    "size_bytes": 8237,
+    "sha256": "1efa35ead1b650ff95cd3387080e1252a753a837d8d00b324b4cb8d29f02a364",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/freenove/library/Freenove%2520VK16K33%2520Lib/2.0.0/FreenoveVK16K33Lib-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/freenove/library/Freenove%20VK16K33%20Lib/2.0.0/FreenoveVK16K33Lib-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "freenove/library/Freenove%20WS2812%20Lib%20for%20ESP32/1.0.6/FreenoveWS2812LibforESP32-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreenoveWS2812LibforESP32-1.0.6.tar.gz",
+    "size_bytes": 6223,
+    "sha256": "590a1a1a8a21e5a3de73de22375de1c38ac16c12c2684c59ff43dd53247e0e6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/freenove/library/Freenove%2520WS2812%2520Lib%2520for%2520ESP32/1.0.6/FreenoveWS2812LibforESP32-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/freenove/library/Freenove%20WS2812%20Lib%20for%20ESP32/1.0.6/FreenoveWS2812LibforESP32-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "freenove/library/Freenove%20WS2812%20Lib%20for%20ESP32/2.0.1/FreenoveWS2812LibforESP32-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreenoveWS2812LibforESP32-2.0.1.tar.gz",
+    "size_bytes": 6423,
+    "sha256": "a8bca0462c5c2363b725b470143e0b1a04d99b509f80ada98e3d9df0278c9fa5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/freenove/library/Freenove%2520WS2812%2520Lib%2520for%2520ESP32/2.0.1/FreenoveWS2812LibforESP32-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/freenove/library/Freenove%20WS2812%20Lib%20for%20ESP32/2.0.1/FreenoveWS2812LibforESP32-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "freenove/library/Freenove%20WS2812B%20RGBLED%20Controller/1.0.3/FreenoveWS2812BRGBLEDController-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreenoveWS2812BRGBLEDController-1.0.3.tar.gz",
+    "size_bytes": 7186,
+    "sha256": "048750cf6f0c65858729b70d4c46c4aa234c85f88347e2bee2c238e476e19e10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/freenove/library/Freenove%2520WS2812B%2520RGBLED%2520Controller/1.0.3/FreenoveWS2812BRGBLEDController-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/freenove/library/Freenove%20WS2812B%20RGBLED%20Controller/1.0.3/FreenoveWS2812BRGBLEDController-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

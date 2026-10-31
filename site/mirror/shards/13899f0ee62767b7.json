@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/racoonx65",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "racoonx65/library/CalibrationLib/1.0.0/CalibrationLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CalibrationLib-1.0.0.tar.gz",
+    "size_bytes": 26013,
+    "sha256": "d9f0ca8688a7839c0c0b721132d5cac56cad64dae25dd30e1d2d3df63c50c5ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/racoonx65/library/CalibrationLib/1.0.0/CalibrationLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/racoonx65/library/CalibrationLib/1.0.0/CalibrationLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "racoonx65/library/ESP32WiFiEnterprise/1.0.0/ESP32WiFiEnterprise-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32WiFiEnterprise-1.0.0.tar.gz",
+    "size_bytes": 33684,
+    "sha256": "f6de256545308eb68a49d3a6d975ae9b0121b72af963e9b8b6b9b93e33c53f65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/racoonx65/library/ESP32WiFiEnterprise/1.0.0/ESP32WiFiEnterprise-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/racoonx65/library/ESP32WiFiEnterprise/1.0.0/ESP32WiFiEnterprise-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "racoonx65/library/ESP32WiFiEnterprise/2.0.0-beta.1/ESP32WiFiEnterprise-2.0.0-beta.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32WiFiEnterprise-2.0.0-beta.1.tar.gz",
+    "size_bytes": 35608,
+    "sha256": "17f7514458440616925bb746924df72e3af164454c3ee73470fbb2ae4bb4ffa9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/racoonx65/library/ESP32WiFiEnterprise/2.0.0-beta.1/ESP32WiFiEnterprise-2.0.0-beta.1.tar.gz",
+     "https://dl.registry.platformio.org/download/racoonx65/library/ESP32WiFiEnterprise/2.0.0-beta.1/ESP32WiFiEnterprise-2.0.0-beta.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "racoonx65/library/LightweightIoT/1.0.1/LightweightIoT-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightweightIoT-1.0.1.tar.gz",
+    "size_bytes": 12648,
+    "sha256": "f6adbfca848c63ef4a3db8d087546173808c7278d89c3d7676d035525844070e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/racoonx65/library/LightweightIoT/1.0.1/LightweightIoT-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/racoonx65/library/LightweightIoT/1.0.1/LightweightIoT-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

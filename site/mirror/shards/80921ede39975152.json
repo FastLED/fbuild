@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sparkfun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sparkfun/library/4DGL-uLCD-SE/0.0.0+sha.e39a44de229a/4DGL-uLCD-SE-0.0.0+sha.e39a44de229a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "4DGL-uLCD-SE-0.0.0+sha.e39a44de229a.tar.gz",
+    "size_bytes": 8561,
+    "sha256": "299068c68ffe9b4cb5ebfa8b571b2fbca37790ff54e3912d380d65884a1c54a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sparkfun/library/4DGL-uLCD-SE/0.0.0%2Bsha.e39a44de229a/4DGL-uLCD-SE-0.0.0%2Bsha.e39a44de229a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sparkfun/library/4DGL-uLCD-SE/0.0.0%2Bsha.e39a44de229a/4DGL-uLCD-SE-0.0.0%2Bsha.e39a44de229a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sparkfun/library/USBHost/0.0.0+sha.220cd93c9a5f/USBHost-0.0.0+sha.220cd93c9a5f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBHost-0.0.0+sha.220cd93c9a5f.tar.gz",
+    "size_bytes": 129007,
+    "sha256": "282c2ea9dc8472ac0e43d4abdb820d51f4253981dc2af66f79c3c64786093d8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sparkfun/library/USBHost/0.0.0%2Bsha.220cd93c9a5f/USBHost-0.0.0%2Bsha.220cd93c9a5f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sparkfun/library/USBHost/0.0.0%2Bsha.220cd93c9a5f/USBHost-0.0.0%2Bsha.220cd93c9a5f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sparkfun/library/wave_player/0.0.0+sha.acc3e18e77ad/wave_player-0.0.0+sha.acc3e18e77ad.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wave_player-0.0.0+sha.acc3e18e77ad.tar.gz",
+    "size_bytes": 3766,
+    "sha256": "ca6c116dbecc50c7f492c3f834a4c486e1f1888c52f27ac3bdbc07a6576f7185",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sparkfun/library/wave_player/0.0.0%2Bsha.acc3e18e77ad/wave_player-0.0.0%2Bsha.acc3e18e77ad.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sparkfun/library/wave_player/0.0.0%2Bsha.acc3e18e77ad/wave_player-0.0.0%2Bsha.acc3e18e77ad.tar.gz"
+    ]
+   }
+  }
+ ]
+}

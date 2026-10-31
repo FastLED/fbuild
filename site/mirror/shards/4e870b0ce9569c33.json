@@ -1,0 +1,243 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/board707",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "board707/library/DMD_STM32/1.2.1/DMD_STM32-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.1.tar.gz",
+    "size_bytes": 127668,
+    "sha256": "76df322baedfab61f2b4f9f4b04f9fe8161a7b738fc6c1a3db377f0b8ee3766b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.1/DMD_STM32-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.1/DMD_STM32-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.10/DMD_STM32-1.2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.10.tar.gz",
+    "size_bytes": 145270,
+    "sha256": "17261ac2c1cb4a09a465944ba7dcf12622a705317e4bb4879627538bb8a92b14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.10/DMD_STM32-1.2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.10/DMD_STM32-1.2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.11/DMD_STM32-1.2.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.11.tar.gz",
+    "size_bytes": 145178,
+    "sha256": "309e920814d7785f275d59933becab41598b7c844746a45e0db9f92a752ba243",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.11/DMD_STM32-1.2.11.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.11/DMD_STM32-1.2.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.13/DMD_STM32-1.2.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.13.tar.gz",
+    "size_bytes": 151653,
+    "sha256": "5643656b68f6961162ddebb75d0e67b6d7c0987098525eeecaddbef71b84ea4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.13/DMD_STM32-1.2.13.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.13/DMD_STM32-1.2.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.14/DMD_STM32-1.2.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.14.tar.gz",
+    "size_bytes": 154597,
+    "sha256": "77a0393411cf2b95c350df63e84df3c162f234013feeeea69bd47268115655b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.14/DMD_STM32-1.2.14.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.14/DMD_STM32-1.2.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.15/DMD_STM32-1.2.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.15.tar.gz",
+    "size_bytes": 154718,
+    "sha256": "9a5052ecac3a4c2aadd3c94e283d2f7e96a81b564c1b80919032a71f67cf6f5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.15/DMD_STM32-1.2.15.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.15/DMD_STM32-1.2.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.16/DMD_STM32-1.2.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.16.tar.gz",
+    "size_bytes": 209871,
+    "sha256": "4b4497b7d22b917a24942e8c2fe65830319c5532e0e9dd08c97d2d236e8fc490",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.16/DMD_STM32-1.2.16.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.16/DMD_STM32-1.2.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.17/DMD_STM32-1.2.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.17.tar.gz",
+    "size_bytes": 246091,
+    "sha256": "9d075f4ca056971f48fcfb3fa41b168cf25ee628f1b95522addb197244e6a753",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.17/DMD_STM32-1.2.17.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.17/DMD_STM32-1.2.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.18/DMD_STM32-1.2.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.18.tar.gz",
+    "size_bytes": 246028,
+    "sha256": "f08442ad6fb100597dbb2e798fd8829c799f66e9340263358eb8b135c3773e2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.18/DMD_STM32-1.2.18.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.18/DMD_STM32-1.2.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.2/DMD_STM32-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.2.tar.gz",
+    "size_bytes": 127831,
+    "sha256": "64728f36a6daa921fc7f6155f00909829270a88ce10ebf04e82bed3f2ab00de6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.2/DMD_STM32-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.2/DMD_STM32-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.3/DMD_STM32-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.3.tar.gz",
+    "size_bytes": 129954,
+    "sha256": "57c5688570c23d0086dd19a6a5d3eb7c7d1e98f90b4d29c9eb0600961130fab0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.3/DMD_STM32-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.3/DMD_STM32-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.4/DMD_STM32-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.4.tar.gz",
+    "size_bytes": 134244,
+    "sha256": "fd4b8581a026ff0381a5445ee8998b5fe9e020658761a77698f7a6642b781e44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.4/DMD_STM32-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.4/DMD_STM32-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.5/DMD_STM32-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.5.tar.gz",
+    "size_bytes": 140662,
+    "sha256": "46f7803c5bd1b5a56d07429c83b4e8d5da3073a2330d6916c80ffce5fa856248",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.5/DMD_STM32-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.5/DMD_STM32-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.5b/DMD_STM32-1.2.5b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.5b.tar.gz",
+    "size_bytes": 140753,
+    "sha256": "96bc73e823199890c9245d953b5f943704b3cdadc9d1cbd6b69a5519c51e07ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.5b/DMD_STM32-1.2.5b.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.5b/DMD_STM32-1.2.5b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.6/DMD_STM32-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.6.tar.gz",
+    "size_bytes": 142403,
+    "sha256": "f5f81881ac3bf748db739630bd0c61d8c811f939573d7aa9722f482d3d163729",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.6/DMD_STM32-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.6/DMD_STM32-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.7/DMD_STM32-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.7.tar.gz",
+    "size_bytes": 143906,
+    "sha256": "4b8075b602e0041fc306a67e848e5f9970dfaa1a06b5ec3e6b46bdf286c1bcdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.7/DMD_STM32-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.7/DMD_STM32-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.8/DMD_STM32-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.8.tar.gz",
+    "size_bytes": 144049,
+    "sha256": "f8e5d112cd7a139b97f73d67b6c6c861c727c24ebcad111fbb045e7a7e548fcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.8/DMD_STM32-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.8/DMD_STM32-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "board707/library/DMD_STM32/1.2.9/DMD_STM32-1.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_STM32-1.2.9.tar.gz",
+    "size_bytes": 145245,
+    "sha256": "4e56557801a5fd93193f44e0dd128961bf62c38bd092d89b0ec45b8164bb1f43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/board707/library/DMD_STM32/1.2.9/DMD_STM32-1.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/board707/library/DMD_STM32/1.2.9/DMD_STM32-1.2.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

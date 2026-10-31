@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-manoj036",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-manoj036/library/RTC-DS1307/0.0.0+sha.a174d791e946/RTC-DS1307-0.0.0+sha.a174d791e946.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC-DS1307-0.0.0+sha.a174d791e946.tar.gz",
+    "size_bytes": 5227,
+    "sha256": "31d1f30d4324850e16b837f0a654587c3d246bcf7f255b36e5d5d562d27525a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-manoj036/library/RTC-DS1307/0.0.0%2Bsha.a174d791e946/RTC-DS1307-0.0.0%2Bsha.a174d791e946.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-manoj036/library/RTC-DS1307/0.0.0%2Bsha.a174d791e946/RTC-DS1307-0.0.0%2Bsha.a174d791e946.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-manoj036/library/cmsis/0.0.0+sha.7e1da521ade1/cmsis-0.0.0+sha.7e1da521ade1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cmsis-0.0.0+sha.7e1da521ade1.tar.gz",
+    "size_bytes": 239967,
+    "sha256": "7f7cf9c68505de83ba4e4ea05f9a2a53df2df491d09e44aa408d34b879d2705f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-manoj036/library/cmsis/0.0.0%2Bsha.7e1da521ade1/cmsis-0.0.0%2Bsha.7e1da521ade1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-manoj036/library/cmsis/0.0.0%2Bsha.7e1da521ade1/cmsis-0.0.0%2Bsha.7e1da521ade1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

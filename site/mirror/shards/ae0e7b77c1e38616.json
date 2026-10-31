@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nuclei",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nuclei/platform/nuclei/1.0.11/nuclei-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nuclei-1.0.11.tar.gz",
+    "size_bytes": 144895,
+    "sha256": "c2132105691c2280ec3d4aab48a74639fd27a61fd24376df7bc0f07b9c1af779",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nuclei/platform/nuclei/1.0.11/nuclei-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/nuclei/platform/nuclei/1.0.11/nuclei-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nuclei/tool/framework-nuclei-sdk/0.3.0/framework-nuclei-sdk-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-nuclei-sdk-0.3.0.tar.gz",
+    "size_bytes": 11815202,
+    "sha256": "830226d7614a4f09427de6283924f75419e801e272156dca9d0e5f9ff566a678",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nuclei/tool/framework-nuclei-sdk/0.3.0/framework-nuclei-sdk-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nuclei/tool/framework-nuclei-sdk/0.3.0/framework-nuclei-sdk-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nuclei/tool/tool-openocd-nuclei/0.10.1/tool-openocd-nuclei-linux_x86_64-0.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-nuclei-linux_x86_64-0.10.1.tar.gz",
+    "size_bytes": 4241504,
+    "sha256": "c522dc01bc10e3549ec89e044cab6cb154a465c4e994920bd4f6697a986c2417",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nuclei/tool/tool-openocd-nuclei/0.10.1/tool-openocd-nuclei-linux_x86_64-0.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nuclei/tool/tool-openocd-nuclei/0.10.1/tool-openocd-nuclei-linux_x86_64-0.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nuclei/tool/tool-openocd-nuclei/0.10.1/tool-openocd-nuclei-windows_x86-0.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-openocd-nuclei-windows_x86-0.10.1.tar.gz",
+    "size_bytes": 1941064,
+    "sha256": "73e452e2838599e1cf72d2ad227c3a279d1c923d93a20584153573a8b04489ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nuclei/tool/tool-openocd-nuclei/0.10.1/tool-openocd-nuclei-windows_x86-0.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nuclei/tool/tool-openocd-nuclei/0.10.1/tool-openocd-nuclei-windows_x86-0.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nuclei/tool/toolchain-riscv-gcc-nuclei/9.2.1/toolchain-riscv-gcc-nuclei-linux_x86_64-9.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv-gcc-nuclei-linux_x86_64-9.2.1.tar.gz",
+    "size_bytes": 145071031,
+    "sha256": "50027469bf6ae2f6c9f8f7059776416de3ca40553939d1c83c6b9b3672ddccf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nuclei/tool/toolchain-riscv-gcc-nuclei/9.2.1/toolchain-riscv-gcc-nuclei-linux_x86_64-9.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nuclei/tool/toolchain-riscv-gcc-nuclei/9.2.1/toolchain-riscv-gcc-nuclei-linux_x86_64-9.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nuclei/tool/toolchain-riscv-gcc-nuclei/9.2.1/toolchain-riscv-gcc-nuclei-windows_x86-9.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "toolchain-riscv-gcc-nuclei-windows_x86-9.2.1.tar.gz",
+    "size_bytes": 135728360,
+    "sha256": "237123c1ca992c091ccc9b24b18a56fbb018fef62da9fbe404d822a6710e656d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nuclei/tool/toolchain-riscv-gcc-nuclei/9.2.1/toolchain-riscv-gcc-nuclei-windows_x86-9.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nuclei/tool/toolchain-riscv-gcc-nuclei/9.2.1/toolchain-riscv-gcc-nuclei-windows_x86-9.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

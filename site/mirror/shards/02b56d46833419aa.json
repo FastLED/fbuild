@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/anrijs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "anrijs/library/Aranet4/1.4.1/Aranet4-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Aranet4-1.4.1.tar.gz",
+    "size_bytes": 8687,
+    "sha256": "f668113cb128c85164b0ce468091d7384f69b54ad929a7c406ba3fdeee4f6d3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anrijs/library/Aranet4/1.4.1/Aranet4-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/anrijs/library/Aranet4/1.4.1/Aranet4-1.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/christophjurczyk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "christophjurczyk/library/AD7390%20DAC%20library/1.0.0/AD7390DAClibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD7390DAClibrary-1.0.0.tar.gz",
+    "size_bytes": 15715,
+    "sha256": "b9e0535f98e59b72bf14933f86b1095bf69aca062454344bdaf00650de9c22de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/christophjurczyk/library/AD7390%2520DAC%2520library/1.0.0/AD7390DAClibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/christophjurczyk/library/AD7390%20DAC%20library/1.0.0/AD7390DAClibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "christophjurczyk/library/LTC1392%20library/1.0.1/LTC1392library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTC1392library-1.0.1.tar.gz",
+    "size_bytes": 14928,
+    "sha256": "b7e62c71913169f102b4439140a14487756bcdf979fbbadc576225e381e78cd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/christophjurczyk/library/LTC1392%2520library/1.0.1/LTC1392library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/christophjurczyk/library/LTC1392%20library/1.0.1/LTC1392library-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

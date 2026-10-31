@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dupuyb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dupuyb/library/DS1621/0.0.0+sha.d6310fd6df8e/DS1621-0.0.0+sha.d6310fd6df8e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1621-0.0.0+sha.d6310fd6df8e.tar.gz",
+    "size_bytes": 2036,
+    "sha256": "beea0613643f263aebe3e003db3c6487543835ef339ee477bf2641685414e7cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dupuyb/library/DS1621/0.0.0%2Bsha.d6310fd6df8e/DS1621-0.0.0%2Bsha.d6310fd6df8e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dupuyb/library/DS1621/0.0.0%2Bsha.d6310fd6df8e/DS1621-0.0.0%2Bsha.d6310fd6df8e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dupuyb/library/GLCD/0.0.0+sha.e3bff63312e5/GLCD-0.0.0+sha.e3bff63312e5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GLCD-0.0.0+sha.e3bff63312e5.tar.gz",
+    "size_bytes": 6686,
+    "sha256": "a85525c3c9cdf356259f054bea6dbb378250dc7e7249fa0af982a92407db603b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dupuyb/library/GLCD/0.0.0%2Bsha.e3bff63312e5/GLCD-0.0.0%2Bsha.e3bff63312e5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dupuyb/library/GLCD/0.0.0%2Bsha.e3bff63312e5/GLCD-0.0.0%2Bsha.e3bff63312e5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

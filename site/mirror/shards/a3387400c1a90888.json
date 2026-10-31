@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/e12-io",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "e12-io/library/e12_protocol/0.0.1/e12_protocol-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "e12_protocol-0.0.1.tar.gz",
+    "size_bytes": 26531,
+    "sha256": "a8e5ae80a773810733494751153f38a45188ca4db6817b1e09ae239718c732e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/e12-io/library/e12_protocol/0.0.1/e12_protocol-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/e12-io/library/e12_protocol/0.0.1/e12_protocol-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

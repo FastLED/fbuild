@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ebm9991",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ebm9991/library/Grove%20IMU%209DOF%20ICM20600%20AK09918%20UNO%20R4/1.0.0/GroveIMU9DOFICM20600AK09918UNOR4-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveIMU9DOFICM20600AK09918UNOR4-1.0.0.tar.gz",
+    "size_bytes": 20408,
+    "sha256": "711804eb5cb26743b239953dba12a4653e080d8c7b81ab61127197b4becbf908",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ebm9991/library/Grove%2520IMU%25209DOF%2520ICM20600%2520AK09918%2520UNO%2520R4/1.0.0/GroveIMU9DOFICM20600AK09918UNOR4-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ebm9991/library/Grove%20IMU%209DOF%20ICM20600%20AK09918%20UNO%20R4/1.0.0/GroveIMU9DOFICM20600AK09918UNOR4-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ebm9991/library/Grove%20IMU%209DOF%20ICM20600%20AK09918%20UNO%20R4/1.0.1/GroveIMU9DOFICM20600AK09918UNOR4-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveIMU9DOFICM20600AK09918UNOR4-1.0.1.tar.gz",
+    "size_bytes": 20410,
+    "sha256": "bb70ebecc0f053905aaa81fa742fafc67d19d0abb8bf1c7bd0c8d833dd356d01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ebm9991/library/Grove%2520IMU%25209DOF%2520ICM20600%2520AK09918%2520UNO%2520R4/1.0.1/GroveIMU9DOFICM20600AK09918UNOR4-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ebm9991/library/Grove%20IMU%209DOF%20ICM20600%20AK09918%20UNO%20R4/1.0.1/GroveIMU9DOFICM20600AK09918UNOR4-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

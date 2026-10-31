@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/flmueller",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "flmueller/library/x1xcp_esp32/1.0.0/x1xcp_esp32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "x1xcp_esp32-1.0.0.tar.gz",
+    "size_bytes": 18412,
+    "sha256": "dd0bc99c79e3df17346b57fdbd6ddc91f1a9498f94a5b830646fe8c66d9c30ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flmueller/library/x1xcp_esp32/1.0.0/x1xcp_esp32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/flmueller/library/x1xcp_esp32/1.0.0/x1xcp_esp32-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "flmueller/library/x1xcp_esp8266/1.0.0/x1xcp_esp8266-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "x1xcp_esp8266-1.0.0.tar.gz",
+    "size_bytes": 17618,
+    "sha256": "89d5d475d9fd6e765862bc4fe66c9f9f0f8dfab883a7e29a39c883a44d73e458",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flmueller/library/x1xcp_esp8266/1.0.0/x1xcp_esp8266-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/flmueller/library/x1xcp_esp8266/1.0.0/x1xcp_esp8266-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "flmueller/library/x1xcp_serial/1.0.0/x1xcp_serial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "x1xcp_serial-1.0.0.tar.gz",
+    "size_bytes": 19502,
+    "sha256": "0ec6f3aafdbbd8a259c7058599041d88eccc41c7e3bcfa3449b7b8d6ed2e68df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flmueller/library/x1xcp_serial/1.0.0/x1xcp_serial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/flmueller/library/x1xcp_serial/1.0.0/x1xcp_serial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "flmueller/library/x1xcp_serial/1.1.1/x1xcp_serial-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "x1xcp_serial-1.1.1.tar.gz",
+    "size_bytes": 21505,
+    "sha256": "7c5f3b90a2b60ce34bfb271b74912f1ca7b1bed2db529163e745698e2b7b6b76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flmueller/library/x1xcp_serial/1.1.1/x1xcp_serial-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/flmueller/library/x1xcp_serial/1.1.1/x1xcp_serial-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

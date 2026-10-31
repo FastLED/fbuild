@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jaapdedood",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jaapdedood/library/ArxRobot%20Library/3.1.0/ArxRobotLibrary-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArxRobotLibrary-3.1.0.tar.gz",
+    "size_bytes": 29689,
+    "sha256": "5b42a9d2a33a7b9d4ed19d7a8a28c0197dac4909feeac7b20d18f33922e676fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaapdedood/library/ArxRobot%2520Library/3.1.0/ArxRobotLibrary-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jaapdedood/library/ArxRobot%20Library/3.1.0/ArxRobotLibrary-3.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

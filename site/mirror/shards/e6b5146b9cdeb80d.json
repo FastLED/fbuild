@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cymeria",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cymeria/library/LittleFSExplorer/1.0.0/LittleFSExplorer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LittleFSExplorer-1.0.0.tar.gz",
+    "size_bytes": 18129,
+    "sha256": "008b89a611861bc82c04e0e706672a4752fe2b24e670efe6a0bc4bdb4a0ee568",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cymeria/library/LittleFSExplorer/1.0.0/LittleFSExplorer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cymeria/library/LittleFSExplorer/1.0.0/LittleFSExplorer-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

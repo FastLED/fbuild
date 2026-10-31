@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rochat2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rochat2/library/v202_protocol/1.0.0/v202_protocol-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "v202_protocol-1.0.0.tar.gz",
+    "size_bytes": 7203,
+    "sha256": "ec23740917823dafec68f461b427441d34ad41e24f641c9f8f645b6a400396c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rochat2/library/v202_protocol/1.0.0/v202_protocol-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rochat2/library/v202_protocol/1.0.0/v202_protocol-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/antlu65",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "antlu65/library/TonkaCUtility/0.0.2/TonkaCUtility-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TonkaCUtility-0.0.2.tar.gz",
+    "size_bytes": 1094,
+    "sha256": "274553486697e5243b938ca7a0c5a2a0637d75cd718595656c407f58c451cb89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/antlu65/library/TonkaCUtility/0.0.2/TonkaCUtility-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/antlu65/library/TonkaCUtility/0.0.2/TonkaCUtility-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "antlu65/library/TonkaI2cSlave/0.0.11/TonkaI2cSlave-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TonkaI2cSlave-0.0.11.tar.gz",
+    "size_bytes": 1578,
+    "sha256": "3330c5a66b304eb10d13d479bd46b963aabd9193698b99f9a5b4549acd29b28b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/antlu65/library/TonkaI2cSlave/0.0.11/TonkaI2cSlave-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/antlu65/library/TonkaI2cSlave/0.0.11/TonkaI2cSlave-0.0.11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

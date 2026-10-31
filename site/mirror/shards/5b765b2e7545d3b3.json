@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/petani-koding",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "petani-koding/library/petanikoding/1.0.0/petanikoding-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "petanikoding-1.0.0.tar.gz",
+    "size_bytes": 14330,
+    "sha256": "2d2882b5c5d08c960cd10c396afd87ad4ea0b70131d4bfa008e8ed8e206b8c5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/petani-koding/library/petanikoding/1.0.0/petanikoding-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/petani-koding/library/petanikoding/1.0.0/petanikoding-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

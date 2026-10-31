@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/benjistokman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "benjistokman/library/FastRGB/0.1.1/FastRGB-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastRGB-0.1.1.tar.gz",
+    "size_bytes": 4687,
+    "sha256": "9c80fd1ae4d467a7024167d6fc668b44cbde158d37ad26627f1879bc60fa82db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benjistokman/library/FastRGB/0.1.1/FastRGB-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/benjistokman/library/FastRGB/0.1.1/FastRGB-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benjistokman/library/FastRGB/0.1.2/FastRGB-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastRGB-0.1.2.tar.gz",
+    "size_bytes": 5010,
+    "sha256": "e7c3c687feb850a6dae383138d7b267010253c69efbfc41242d7c2f74c2ead23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benjistokman/library/FastRGB/0.1.2/FastRGB-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/benjistokman/library/FastRGB/0.1.2/FastRGB-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benjistokman/library/FastRGB/0.2.0/FastRGB-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastRGB-0.2.0.tar.gz",
+    "size_bytes": 5304,
+    "sha256": "bb3340511dd0d917b03c893e691a889a97ea0d334ce6361b5376e5d1125ff487",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benjistokman/library/FastRGB/0.2.0/FastRGB-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/benjistokman/library/FastRGB/0.2.0/FastRGB-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benjistokman/library/FastRGB/0.3.0/FastRGB-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastRGB-0.3.0.tar.gz",
+    "size_bytes": 5431,
+    "sha256": "35bd137e417aa6495f033d1e91262681b94f17348718b6ca52d2389e83b820b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benjistokman/library/FastRGB/0.3.0/FastRGB-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/benjistokman/library/FastRGB/0.3.0/FastRGB-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benjistokman/library/FastRGB/0.4.0/FastRGB-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastRGB-0.4.0.tar.gz",
+    "size_bytes": 6016,
+    "sha256": "7266b4c6ed31f832b49c6da30ac53735a978a76135b4168c867fba0525cbf5d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benjistokman/library/FastRGB/0.4.0/FastRGB-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/benjistokman/library/FastRGB/0.4.0/FastRGB-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benjistokman/library/FastRGB/0.5.0/FastRGB-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastRGB-0.5.0.tar.gz",
+    "size_bytes": 6648,
+    "sha256": "80a651f9643cab9b5eaeeac214561698570b51c4a5f402614e7d2cdcc9bdb91b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benjistokman/library/FastRGB/0.5.0/FastRGB-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/benjistokman/library/FastRGB/0.5.0/FastRGB-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benjistokman/library/FastRGB/1.0.1/FastRGB-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastRGB-1.0.1.tar.gz",
+    "size_bytes": 7606,
+    "sha256": "26719815f79623d422625768ea2dcf20d08941774862a6a11f0987b7f94fadaf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benjistokman/library/FastRGB/1.0.1/FastRGB-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/benjistokman/library/FastRGB/1.0.1/FastRGB-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

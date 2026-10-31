@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/original2547",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "original2547/library/MCP-U/1.1.0/MCP-U-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP-U-1.1.0.tar.gz",
+    "size_bytes": 8131,
+    "sha256": "1f16539062b9086ea26f68d6cff81239c70e098a4d61bbd69903330d5c122bf4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/original2547/library/MCP-U/1.1.0/MCP-U-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/original2547/library/MCP-U/1.1.0/MCP-U-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "original2547/library/MCP-U/1.1.1/MCP-U-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP-U-1.1.1.tar.gz",
+    "size_bytes": 17988,
+    "sha256": "17a749bc91d6b64ff3a957eb3b16576c07a16e1b21e1993c5c30e08df4f60d22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/original2547/library/MCP-U/1.1.1/MCP-U-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/original2547/library/MCP-U/1.1.1/MCP-U-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "original2547/library/MCP-U/1.2.0/MCP-U-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP-U-1.2.0.tar.gz",
+    "size_bytes": 8327,
+    "sha256": "d3b2d00569dcb0e9a40ecf99d222d7c6b4271d50f94e51e586de3028d5cfef94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/original2547/library/MCP-U/1.2.0/MCP-U-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/original2547/library/MCP-U/1.2.0/MCP-U-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "original2547/library/McpIot/1.0.0/McpIot-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "McpIot-1.0.0.tar.gz",
+    "size_bytes": 6204,
+    "sha256": "43d14fff6c4b2bc1241c27780557382befc0fe107b13a0ebd9a926e6a3bed7ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/original2547/library/McpIot/1.0.0/McpIot-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/original2547/library/McpIot/1.0.0/McpIot-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "original2547/library/McpIot/1.1.0/McpIot-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "McpIot-1.1.0.tar.gz",
+    "size_bytes": 15098,
+    "sha256": "dc46bd679a76ca5afb672351283eb90648c909ee6e402d24ccf6c745bc313727",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/original2547/library/McpIot/1.1.0/McpIot-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/original2547/library/McpIot/1.1.0/McpIot-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

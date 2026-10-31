@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ssdotdev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ssdotdev/library/ESPLibs.SerialUtils/0.5.0/ESPLibs.SerialUtils-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPLibs.SerialUtils-0.5.0.tar.gz",
+    "size_bytes": 14039,
+    "sha256": "9b11173d09b8af3bbf8cd99053f960ad5f2ecbd676cb99bb8bd50c7e67e381ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssdotdev/library/ESPLibs.SerialUtils/0.5.0/ESPLibs.SerialUtils-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ssdotdev/library/ESPLibs.SerialUtils/0.5.0/ESPLibs.SerialUtils-0.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

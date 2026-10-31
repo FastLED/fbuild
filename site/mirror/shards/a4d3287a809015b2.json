@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-usna-es202",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-usna-es202/library/Tach/0.0.0+sha.b17c9f1d9d5c/Tach-0.0.0+sha.b17c9f1d9d5c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tach-0.0.0+sha.b17c9f1d9d5c.tar.gz",
+    "size_bytes": 1661,
+    "sha256": "45e00213f68bc1fc539ff04c23451eb78550f793d19f82e2962cc0039f17cb8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-usna-es202/library/Tach/0.0.0%2Bsha.b17c9f1d9d5c/Tach-0.0.0%2Bsha.b17c9f1d9d5c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-usna-es202/library/Tach/0.0.0%2Bsha.b17c9f1d9d5c/Tach-0.0.0%2Bsha.b17c9f1d9d5c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ql",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ql/library/qp/0.0.0+sha.ca2e6010d9e2/qp-0.0.0+sha.ca2e6010d9e2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "qp-0.0.0+sha.ca2e6010d9e2.tar.gz",
+    "size_bytes": 55374,
+    "sha256": "f2f45faaaffaa7778c1286aea188bee1999ec54f90bb9d1d99da5f5355cb6793",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ql/library/qp/0.0.0%2Bsha.ca2e6010d9e2/qp-0.0.0%2Bsha.ca2e6010d9e2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ql/library/qp/0.0.0%2Bsha.ca2e6010d9e2/qp-0.0.0%2Bsha.ca2e6010d9e2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

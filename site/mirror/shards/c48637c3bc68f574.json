@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ais-deviceinnovation",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ais-deviceinnovation/library/AIS_NB_BC95/1.1.0/AIS_NB_BC95-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AIS_NB_BC95-1.1.0.tar.gz",
+    "size_bytes": 12051,
+    "sha256": "36f2aaad2ded92eac2517904118c8b7096d5d7cb455046ee8509f923a755d7af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ais-deviceinnovation/library/AIS_NB_BC95/1.1.0/AIS_NB_BC95-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ais-deviceinnovation/library/AIS_NB_BC95/1.1.0/AIS_NB_BC95-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ais-deviceinnovation/library/Magellan/1.0.0/Magellan-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Magellan-1.0.0.tar.gz",
+    "size_bytes": 80443,
+    "sha256": "892ef79a243556dd254171bc73ce9ba871dcfb300202388fc4773e845e40df1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ais-deviceinnovation/library/Magellan/1.0.0/Magellan-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ais-deviceinnovation/library/Magellan/1.0.0/Magellan-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ais-deviceinnovation/library/Magellan_BC95/2.1.1/Magellan_BC95-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Magellan_BC95-2.1.1.tar.gz",
+    "size_bytes": 24173,
+    "sha256": "35b1bb8aa491892d0f96c0c44fe5c7e63b3cbd3eb7af24edac8c592beaa8fc46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ais-deviceinnovation/library/Magellan_BC95/2.1.1/Magellan_BC95-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ais-deviceinnovation/library/Magellan_BC95/2.1.1/Magellan_BC95-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ais-deviceinnovation/library/Magellan_BC95_lite/2.0.0/Magellan_BC95_lite-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Magellan_BC95_lite-2.0.0.tar.gz",
+    "size_bytes": 12945,
+    "sha256": "73b3ff9101acc995431f15e678cdb0d3b37557e7ce6b08bfacfe81425ce4169e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ais-deviceinnovation/library/Magellan_BC95_lite/2.0.0/Magellan_BC95_lite-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ais-deviceinnovation/library/Magellan_BC95_lite/2.0.0/Magellan_BC95_lite-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ais-deviceinnovation/library/Magellan_SIM7020E/1.5.1/Magellan_SIM7020E-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Magellan_SIM7020E-1.5.1.tar.gz",
+    "size_bytes": 28184,
+    "sha256": "01288996f9ee97e9ca3ddc2b7e8441fe4a38738deec532103cd0f82e32af4f46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ais-deviceinnovation/library/Magellan_SIM7020E/1.5.1/Magellan_SIM7020E-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ais-deviceinnovation/library/Magellan_SIM7020E/1.5.1/Magellan_SIM7020E-1.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

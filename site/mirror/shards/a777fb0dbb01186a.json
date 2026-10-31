@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/davidarmstrong",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "davidarmstrong/library/SCL3300/3.3.1/SCL3300-3.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCL3300-3.3.1.tar.gz",
+    "size_bytes": 10856,
+    "sha256": "043785702ae9307f173bdf128dc949c61e9de2d6333f2405a2906edd4daddce2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davidarmstrong/library/SCL3300/3.3.1/SCL3300-3.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/davidarmstrong/library/SCL3300/3.3.1/SCL3300-3.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "davidarmstrong/library/SiderealObjects/1.1.1/SiderealObjects-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SiderealObjects-1.1.1.tar.gz",
+    "size_bytes": 185707,
+    "sha256": "6c751d94babbbb2b6fafd414317d4bd870cda23a981a67313be22951031c886f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davidarmstrong/library/SiderealObjects/1.1.1/SiderealObjects-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/davidarmstrong/library/SiderealObjects/1.1.1/SiderealObjects-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "davidarmstrong/library/SiderealPlanets/1.6.0/SiderealPlanets-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SiderealPlanets-1.6.0.tar.gz",
+    "size_bytes": 37221,
+    "sha256": "caefe16b1c528719213e9ee115075a63595bd0468a92fcd98ad5b3407b2634d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davidarmstrong/library/SiderealPlanets/1.6.0/SiderealPlanets-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/davidarmstrong/library/SiderealPlanets/1.6.0/SiderealPlanets-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "davidarmstrong/library/WMM_Tinier/1.0.3/WMM_Tinier-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WMM_Tinier-1.0.3.tar.gz",
+    "size_bytes": 7769,
+    "sha256": "1134a1cbd8977eef7c02877de8e8c588a8b4f75c2b5faea1799529b543c45320",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/davidarmstrong/library/WMM_Tinier/1.0.3/WMM_Tinier-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/davidarmstrong/library/WMM_Tinier/1.0.3/WMM_Tinier-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

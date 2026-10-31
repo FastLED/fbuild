@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ardhitohfz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ardhitohfz/library/Antares%20ESP%20HTTP/1.5.0/AntaresESPHTTP-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AntaresESPHTTP-1.5.0.tar.gz",
+    "size_bytes": 757091,
+    "sha256": "a77684d2017a0462269eac35d7421220553c455b7b9e8d5d44a28e6cd5b3781b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardhitohfz/library/Antares%2520ESP%2520HTTP/1.5.0/AntaresESPHTTP-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardhitohfz/library/Antares%20ESP%20HTTP/1.5.0/AntaresESPHTTP-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardhitohfz/library/Antares%20ESP%20MQTT/1.0/AntaresESPMQTT-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AntaresESPMQTT-1.0.tar.gz",
+    "size_bytes": 700432,
+    "sha256": "a6f5a5bc7972eef7b044991390b2028422baad5cbfe300e16a8656bda2fcf545",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardhitohfz/library/Antares%2520ESP%2520MQTT/1.0/AntaresESPMQTT-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardhitohfz/library/Antares%20ESP%20MQTT/1.0/AntaresESPMQTT-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardhitohfz/library/Antares%20LoRaWAN/2.4.0/AntaresLoRaWAN-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AntaresLoRaWAN-2.4.0.tar.gz",
+    "size_bytes": 199210,
+    "sha256": "868c8e28f33b19267c1f6181fb375678dec8adb920cffb6df7e59ce5cb8bdb80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardhitohfz/library/Antares%2520LoRaWAN/2.4.0/AntaresLoRaWAN-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardhitohfz/library/Antares%20LoRaWAN/2.4.0/AntaresLoRaWAN-2.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stanleyhuangyc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stanleyhuangyc/library/FreematicsPlus/1.1/FreematicsPlus-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreematicsPlus-1.1.tar.gz",
+    "size_bytes": 57720,
+    "sha256": "de86d7bec606ca7610244361dfd5c050050ef1e2f6787702af0d16973b3429b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stanleyhuangyc/library/FreematicsPlus/1.1/FreematicsPlus-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stanleyhuangyc/library/FreematicsPlus/1.1/FreematicsPlus-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stanleyhuangyc/library/OBD/0.0.0-broken/OBD-0.0.0-alphasha.e79cda0d48.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OBD-0.0.0-alphasha.e79cda0d48.tar.gz",
+    "size_bytes": 451,
+    "sha256": "567e5d084ecdd9a940414927462d7a064c52deebb384e8e2e417a5c6f01c488f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stanleyhuangyc/library/OBD/0.0.0-broken/OBD-0.0.0-alphasha.e79cda0d48.tar.gz",
+     "https://dl.registry.platformio.org/download/stanleyhuangyc/library/OBD/0.0.0-broken/OBD-0.0.0-alphasha.e79cda0d48.tar.gz"
+    ]
+   }
+  }
+ ]
+}

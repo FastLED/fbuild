@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andreiop235",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andreiop235/library/24s02ya__M24SR02-Y/1.0.7/24s02ya__M24SR02-Y-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "24s02ya__M24SR02-Y-1.0.7.tar.gz",
+    "size_bytes": 20330,
+    "sha256": "ac22e3befaaa8f8ec6174d57f396f3898c015c2ad2898e35b1e18f03f3d59738",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andreiop235/library/24s02ya__M24SR02-Y/1.0.7/24s02ya__M24SR02-Y-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/andreiop235/library/24s02ya__M24SR02-Y/1.0.7/24s02ya__M24SR02-Y-1.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

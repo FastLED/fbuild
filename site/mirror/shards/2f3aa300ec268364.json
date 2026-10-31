@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zeed",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zeed/library/AsyncTCP/1.1.1/AsyncTCP-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-1.1.1.tar.gz",
+    "size_bytes": 17230,
+    "sha256": "2b7734e43444676101429d459356d9fb461c20a449926e4e198d971ec06fdcb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zeed/library/AsyncTCP/1.1.1/AsyncTCP-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zeed/library/AsyncTCP/1.1.1/AsyncTCP-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zeed/library/ESP%20Async%20WebServer/1.2.3/ESPAsyncWebServer-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-1.2.3.tar.gz",
+    "size_bytes": 74742,
+    "sha256": "ac970b55ba175410fc3a7e8f57ae37c34ac12e6e632e0fceb39f467c9a273d33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zeed/library/ESP%2520Async%2520WebServer/1.2.3/ESPAsyncWebServer-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/zeed/library/ESP%20Async%20WebServer/1.2.3/ESPAsyncWebServer-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zeed/library/webthing-arduino/0.12.0/webthing-arduino-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "webthing-arduino-0.12.0.tar.gz",
+    "size_bytes": 38676,
+    "sha256": "d55dbe90727902c2b941cf3e4ef465270750645ca3f7f71a6dcb8123c0dc0c6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zeed/library/webthing-arduino/0.12.0/webthing-arduino-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zeed/library/webthing-arduino/0.12.0/webthing-arduino-0.12.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

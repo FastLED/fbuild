@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leoyfm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leoyfm/library/Buzzer/1.0.0/Buzzer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Buzzer-1.0.0.tar.gz",
+    "size_bytes": 5030,
+    "sha256": "76a0b9c086d4ce747a8811a569a3982a92bf9abcf06403b13e047229e6f193a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leoyfm/library/Buzzer/1.0.0/Buzzer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leoyfm/library/Buzzer/1.0.0/Buzzer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leoyfm/library/Logger/1.0.0/Logger-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Logger-1.0.0.tar.gz",
+    "size_bytes": 7312,
+    "sha256": "b8ae04dc3d70cfa6b5fdbc3e155217ce3f51e3e4b4817221ef0242c978329385",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leoyfm/library/Logger/1.0.0/Logger-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leoyfm/library/Logger/1.0.0/Logger-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leoyfm/library/Settings/1.0.0/Settings-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settings-1.0.0.tar.gz",
+    "size_bytes": 8762,
+    "sha256": "592207e0fc9aa8ce18050a70ee254f346ed009eeebb088843a95bd638994967d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leoyfm/library/Settings/1.0.0/Settings-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leoyfm/library/Settings/1.0.0/Settings-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

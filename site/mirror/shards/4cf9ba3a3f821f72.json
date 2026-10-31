@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pingu-98",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pingu-98/library/LSM303D/0.0.0+sha.9e595dd5d97e/LSM303D-0.0.0+sha.9e595dd5d97e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM303D-0.0.0+sha.9e595dd5d97e.tar.gz",
+    "size_bytes": 2708,
+    "sha256": "38f696bcf158e7b838335afbd3c8338b011ec2045f8dfcebe2063ff69fa0cd78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pingu-98/library/LSM303D/0.0.0%2Bsha.9e595dd5d97e/LSM303D-0.0.0%2Bsha.9e595dd5d97e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pingu-98/library/LSM303D/0.0.0%2Bsha.9e595dd5d97e/LSM303D-0.0.0%2Bsha.9e595dd5d97e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

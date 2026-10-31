@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tetsuya256",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tetsuya256/library/AQM0802A/0.0.0+sha.5cc8d4df601d/AQM0802A-0.0.0+sha.5cc8d4df601d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AQM0802A-0.0.0+sha.5cc8d4df601d.tar.gz",
+    "size_bytes": 3356,
+    "sha256": "13d9223617df51c26252b57a0520743cbd7c59cf0e5bb9b739136c3463360a17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tetsuya256/library/AQM0802A/0.0.0%2Bsha.5cc8d4df601d/AQM0802A-0.0.0%2Bsha.5cc8d4df601d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tetsuya256/library/AQM0802A/0.0.0%2Bsha.5cc8d4df601d/AQM0802A-0.0.0%2Bsha.5cc8d4df601d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tetsuya256/library/RotaryEncoder/0.0.0+sha.fcf360069f17/RotaryEncoder-0.0.0+sha.fcf360069f17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotaryEncoder-0.0.0+sha.fcf360069f17.tar.gz",
+    "size_bytes": 3096,
+    "sha256": "cf6351fcddcf1a97ab5950c49d1bf059fc2c502d7686569302086765ecef4070",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tetsuya256/library/RotaryEncoder/0.0.0%2Bsha.fcf360069f17/RotaryEncoder-0.0.0%2Bsha.fcf360069f17.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tetsuya256/library/RotaryEncoder/0.0.0%2Bsha.fcf360069f17/RotaryEncoder-0.0.0%2Bsha.fcf360069f17.tar.gz"
+    ]
+   }
+  }
+ ]
+}

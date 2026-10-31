@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kickshawprogrammer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kickshawprogrammer/library/SerialHTML/0.0.1/SerialHTML-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialHTML-0.0.1.tar.gz",
+    "size_bytes": 6661,
+    "sha256": "8ffbce306956f0801c140f91e112e40a905f12909aabe254384b3e7ace6f7557",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kickshawprogrammer/library/SerialHTML/0.0.1/SerialHTML-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kickshawprogrammer/library/SerialHTML/0.0.1/SerialHTML-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

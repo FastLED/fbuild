@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fiooodooor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fiooodooor/library/HLK-LD245X/0.8.0/HLK-LD245X-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HLK-LD245X-0.8.0.tar.gz",
+    "size_bytes": 10576,
+    "sha256": "ecd1967ea1544472e696e66957ac74bdd71dad2a1668d1869a6969948357781c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fiooodooor/library/HLK-LD245X/0.8.0/HLK-LD245X-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fiooodooor/library/HLK-LD245X/0.8.0/HLK-LD245X-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fiooodooor/library/HLK-LD245X/0.9.5/HLK-LD245X-0.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HLK-LD245X-0.9.5.tar.gz",
+    "size_bytes": 26397,
+    "sha256": "79f74a069e6f7bb7d642e571ec74e0a8c8209d600351d363ccd500dbe8f3f1eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fiooodooor/library/HLK-LD245X/0.9.5/HLK-LD245X-0.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/fiooodooor/library/HLK-LD245X/0.9.5/HLK-LD245X-0.9.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

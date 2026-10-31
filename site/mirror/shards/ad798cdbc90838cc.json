@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-karpent",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-karpent/library/Graphics/0.0.0+sha.1ddc4aa1e5cb/Graphics-0.0.0+sha.1ddc4aa1e5cb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Graphics-0.0.0+sha.1ddc4aa1e5cb.tar.gz",
+    "size_bytes": 8214,
+    "sha256": "f88f75c1ab5ee78ed02e96b75f807de0608a298bc99bbf9e7f6ef2ddcd4f4ef7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-karpent/library/Graphics/0.0.0%2Bsha.1ddc4aa1e5cb/Graphics-0.0.0%2Bsha.1ddc4aa1e5cb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-karpent/library/Graphics/0.0.0%2Bsha.1ddc4aa1e5cb/Graphics-0.0.0%2Bsha.1ddc4aa1e5cb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

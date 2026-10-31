@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nickvantholen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nickvantholen/library/PCA9634%20Arduino%20Library/1.0.0/PCA9634ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9634ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 4495,
+    "sha256": "9968a4bbf7a2c722881d338282e0a24204d20f6a910e502a6348afb90cbe1901",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nickvantholen/library/PCA9634%2520Arduino%2520Library/1.0.0/PCA9634ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nickvantholen/library/PCA9634%20Arduino%20Library/1.0.0/PCA9634ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nickvantholen/library/Youless%20Arduino%20Library/1.0.0/YoulessArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YoulessArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 5171,
+    "sha256": "4748959fe838ca2993df09a02dfbf348d762ac59d53e2458387f34393717c950",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nickvantholen/library/Youless%2520Arduino%2520Library/1.0.0/YoulessArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nickvantholen/library/Youless%20Arduino%20Library/1.0.0/YoulessArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

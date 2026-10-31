@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/triadsemi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "triadsemi/library/TS4231%20Library/1.0.4/TS4231Library-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TS4231Library-1.0.4.tar.gz",
+    "size_bytes": 6526,
+    "sha256": "390a621b1309f7f1a827561b250937542f18a489f36292edef31113d6d9aaeeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/triadsemi/library/TS4231%2520Library/1.0.4/TS4231Library-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/triadsemi/library/TS4231%20Library/1.0.4/TS4231Library-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "triadsemi/library/TS8000%20Library/4.0.0-beta/TS8000Library-4.0.0-beta.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TS8000Library-4.0.0-beta.tar.gz",
+    "size_bytes": 9226,
+    "sha256": "1f29d43ae9f9c832ac2ca27203ebd9d10d64a3b720aa0d44344d795dbf888e29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/triadsemi/library/TS8000%2520Library/4.0.0-beta/TS8000Library-4.0.0-beta.tar.gz",
+     "https://dl.registry.platformio.org/download/triadsemi/library/TS8000%20Library/4.0.0-beta/TS8000Library-4.0.0-beta.tar.gz"
+    ]
+   }
+  }
+ ]
+}

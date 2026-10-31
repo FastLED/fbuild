@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-beanmachine44",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-beanmachine44/library/GT511C3/0.0.0+sha.8fa6daf39d91/GT511C3-0.0.0+sha.8fa6daf39d91.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GT511C3-0.0.0+sha.8fa6daf39d91.tar.gz",
+    "size_bytes": 4957,
+    "sha256": "d9becf7b6c94ed9d730a5cb03d98554d13ec6e1897a0b8c78e1066afb4c000d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-beanmachine44/library/GT511C3/0.0.0%2Bsha.8fa6daf39d91/GT511C3-0.0.0%2Bsha.8fa6daf39d91.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-beanmachine44/library/GT511C3/0.0.0%2Bsha.8fa6daf39d91/GT511C3-0.0.0%2Bsha.8fa6daf39d91.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-beanmachine44/library/LSM9DS1/0.0.0+sha.0e76f237c23d/LSM9DS1-0.0.0+sha.0e76f237c23d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM9DS1-0.0.0+sha.0e76f237c23d.tar.gz",
+    "size_bytes": 6514,
+    "sha256": "8096dc7a311acc9fdd13c59805ab1e73ce19a5a69200a3d42c4ca9523de481e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-beanmachine44/library/LSM9DS1/0.0.0%2Bsha.0e76f237c23d/LSM9DS1-0.0.0%2Bsha.0e76f237c23d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-beanmachine44/library/LSM9DS1/0.0.0%2Bsha.0e76f237c23d/LSM9DS1-0.0.0%2Bsha.0e76f237c23d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

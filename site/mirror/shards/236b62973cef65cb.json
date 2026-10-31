@@ -1,0 +1,334 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/avatarsd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "avatarsd/library/libtracer/0.10.0/libtracer-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.10.0.tar.gz",
+    "size_bytes": 656891,
+    "sha256": "32be2aa53cf4c25557463a37884c5075005295bf5f91533ab6523df5f28cb6e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.10.0/libtracer-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.10.0/libtracer-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.11.0/libtracer-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.11.0.tar.gz",
+    "size_bytes": 678617,
+    "sha256": "8008ecbd4cda97b9688d0f660a97d90186da3628d269f534fd22277ffb176926",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.11.0/libtracer-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.11.0/libtracer-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.12.0/libtracer-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.12.0.tar.gz",
+    "size_bytes": 727928,
+    "sha256": "76f2410150070ed3645e1999ff14866e73992f8d207baa90602828373b4a624d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.12.0/libtracer-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.12.0/libtracer-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.13.0/libtracer-0.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.13.0.tar.gz",
+    "size_bytes": 809835,
+    "sha256": "9bae3a8384c5c34e50e65b84fa8d091f002947a5cc8010a860405d01b868ae4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.13.0/libtracer-0.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.13.0/libtracer-0.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.14.0/libtracer-0.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.14.0.tar.gz",
+    "size_bytes": 939408,
+    "sha256": "2a96bb602c33a9787e0cf27179054d9d8e09693a604e44316f189b0b06765b18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.14.0/libtracer-0.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.14.0/libtracer-0.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.15.0/libtracer-0.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.15.0.tar.gz",
+    "size_bytes": 994793,
+    "sha256": "f191664c6876771909fb3b94f3a728cdc30db06b6c1baefa2c5fa53777ebb1a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.15.0/libtracer-0.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.15.0/libtracer-0.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.15.1/libtracer-0.15.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.15.1.tar.gz",
+    "size_bytes": 1000066,
+    "sha256": "04fb3fcd85a9234fa0f94174b0ab888a1a3c50d4043785fddf2278656a7db853",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.15.1/libtracer-0.15.1.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.15.1/libtracer-0.15.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.16.0/libtracer-0.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.16.0.tar.gz",
+    "size_bytes": 1052869,
+    "sha256": "9ff4b8e7ecf572f04d0b54e28774e23a936e5544c978412375e19b6fefbe418d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.16.0/libtracer-0.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.16.0/libtracer-0.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.16.1/libtracer-0.16.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.16.1.tar.gz",
+    "size_bytes": 1066586,
+    "sha256": "1da21338fb5e86c6e6a609e2b371318ba32a2fa5e6d10b7cfd51fe29720812aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.16.1/libtracer-0.16.1.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.16.1/libtracer-0.16.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.17.0/libtracer-0.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.17.0.tar.gz",
+    "size_bytes": 1104721,
+    "sha256": "45c0245df64810dd21225a3ecff9e067711fca836d7026d9fb7dcfd02ac7aa8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.17.0/libtracer-0.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.17.0/libtracer-0.17.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.18.0/libtracer-0.18.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.18.0.tar.gz",
+    "size_bytes": 1178710,
+    "sha256": "a5d3d68a78f3b6bafe20a843f00f95f876f8839b76feb71cbbf5af00a9c11431",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.18.0/libtracer-0.18.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.18.0/libtracer-0.18.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.18.1/libtracer-0.18.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.18.1.tar.gz",
+    "size_bytes": 1180974,
+    "sha256": "a6504decf673bf142d7247a856ac2072a7fe4de77379bcf39ea514b58d83b6cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.18.1/libtracer-0.18.1.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.18.1/libtracer-0.18.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.19.0/libtracer-0.19.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.19.0.tar.gz",
+    "size_bytes": 1257515,
+    "sha256": "3fc8b018be067e433e654cf3f5561ddb8e77143bd5eafe00913027e167e6276d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.19.0/libtracer-0.19.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.19.0/libtracer-0.19.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.19.1/libtracer-0.19.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.19.1.tar.gz",
+    "size_bytes": 1249019,
+    "sha256": "1d244b1ae7dc6bafee027afcf69040b1ecbcc8376283bd4c9ffc10e81f402215",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.19.1/libtracer-0.19.1.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.19.1/libtracer-0.19.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.20.0/libtracer-0.20.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.20.0.tar.gz",
+    "size_bytes": 1321464,
+    "sha256": "03a60853bbc37ccbe506bf1fc173765b1fe3d179eb2ee2788943510b22c8b688",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.20.0/libtracer-0.20.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.20.0/libtracer-0.20.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.21.0/libtracer-0.21.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.21.0.tar.gz",
+    "size_bytes": 1323850,
+    "sha256": "caf8a7ad3a629cac80c34df4c03fc92b2e80fbb16e5268a04a3555431f57581e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.21.0/libtracer-0.21.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.21.0/libtracer-0.21.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.3.0/libtracer-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.3.0.tar.gz",
+    "size_bytes": 226451,
+    "sha256": "e67886ea8cc408f00d7be440248e179fc227d380417a53353fca00dfc040d535",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.3.0/libtracer-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.3.0/libtracer-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.4.0/libtracer-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.4.0.tar.gz",
+    "size_bytes": 247412,
+    "sha256": "340499cdac2bce56921b09b8b88b694ac8cdddd4bb343a63cc05fb3bd5118f11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.4.0/libtracer-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.4.0/libtracer-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.5.0/libtracer-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.5.0.tar.gz",
+    "size_bytes": 306611,
+    "sha256": "251427fa3160c6521f7baf892c9211dc394f7cc70deb74e7f13ceb6fd6dee7f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.5.0/libtracer-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.5.0/libtracer-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.6.0/libtracer-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.6.0.tar.gz",
+    "size_bytes": 321483,
+    "sha256": "aef79a2fc000fb9188e5aa899c180678ae52d45a50e3b9dca1c3a3b7a8dfb619",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.6.0/libtracer-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.6.0/libtracer-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.7.0/libtracer-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.7.0.tar.gz",
+    "size_bytes": 452117,
+    "sha256": "8870f2f0293ae3a62fe78f62015a14cb0e79c69c8d649d266c391567dd08c7fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.7.0/libtracer-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.7.0/libtracer-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.7.1/libtracer-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.7.1.tar.gz",
+    "size_bytes": 517996,
+    "sha256": "2e36340f82a23ae830a6cb057b5314fbfbd3907b1a65f13b5e29cfc0e5aa8cc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.7.1/libtracer-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.7.1/libtracer-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.8.0/libtracer-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.8.0.tar.gz",
+    "size_bytes": 523056,
+    "sha256": "03a3f881cdd01d7336fcbec619747bb9ae7c0b6ef1dd8abdce37cc9bd874dfe1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.8.0/libtracer-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.8.0/libtracer-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.9.0/libtracer-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.9.0.tar.gz",
+    "size_bytes": 641223,
+    "sha256": "57850516f723d59443cc7684fe573a8906f705ca49ccb7058e7b16fdacd973dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.9.0/libtracer-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.9.0/libtracer-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "avatarsd/library/libtracer/0.9.1/libtracer-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtracer-0.9.1.tar.gz",
+    "size_bytes": 644810,
+    "sha256": "c5a937a5fe1b13fdff430bbff44d60c1347920cac737ea64f291f2d50e2735c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/avatarsd/library/libtracer/0.9.1/libtracer-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/avatarsd/library/libtracer/0.9.1/libtracer-0.9.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

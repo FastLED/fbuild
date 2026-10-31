@@ -1,0 +1,256 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sodaqmoja",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sodaqmoja/library/GPRSbee/1.9.2/GPRSbee-1.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPRSbee-1.9.2.tar.gz",
+    "size_bytes": 75986,
+    "sha256": "7d8a564d820f9dd7823ae067c97bf95487431ca54d9336c16b387d69104d173b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/GPRSbee/1.9.2/GPRSbee-1.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/GPRSbee/1.9.2/GPRSbee-1.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Microchip_RN487x/1.0.3/Microchip_RN487x-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Microchip_RN487x-1.0.3.tar.gz",
+    "size_bytes": 19736,
+    "sha256": "aa3aa5861f360a5fb66215e65f1898399b62bded29c3ab269673779e089f15a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Microchip_RN487x/1.0.3/Microchip_RN487x-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Microchip_RN487x/1.0.3/Microchip_RN487x-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/RTCTimer/1.0.0/RTCTimer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTCTimer-1.0.0.tar.gz",
+    "size_bytes": 18797,
+    "sha256": "8a135b768e80b65fbd7a1a8e571055b72c7852bf9ddec2ccd2d9541e13af7625",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/RTCTimer/1.0.0/RTCTimer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/RTCTimer/1.0.0/RTCTimer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_BMP085/1.4.1/Sodaq_BMP085-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_BMP085-1.4.1.tar.gz",
+    "size_bytes": 4829,
+    "sha256": "d6d7f4a3892c844c4a83f6c6fc49f365d61b3cb6c1bd9ee8881f78996c97dd0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_BMP085/1.4.1/Sodaq_BMP085-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_BMP085/1.4.1/Sodaq_BMP085-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_DS3231/1.2.2/Sodaq_DS3231-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_DS3231-1.2.2.tar.gz",
+    "size_bytes": 6780,
+    "sha256": "7dad140d4970879bb5d73fb1984fadaf9acd7f95bd004cdb055e547e1e14dc04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_DS3231/1.2.2/Sodaq_DS3231-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_DS3231/1.2.2/Sodaq_DS3231-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_HTS221/1.0.0/Sodaq_HTS221-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_HTS221-1.0.0.tar.gz",
+    "size_bytes": 4404,
+    "sha256": "6957d9a82c5e78a9c08e098095455c60ad53570f98082d916e4764501d8ab3b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_HTS221/1.0.0/Sodaq_HTS221-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_HTS221/1.0.0/Sodaq_HTS221-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_LIS3DE/1.1.0/Sodaq_LIS3DE-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_LIS3DE-1.1.0.tar.gz",
+    "size_bytes": 4054,
+    "sha256": "aef4c0f66b30b9e0c4f7e032cad826f2cae163392b1e83acd89f2f59fcdb8fcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_LIS3DE/1.1.0/Sodaq_LIS3DE-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_LIS3DE/1.1.0/Sodaq_LIS3DE-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_LPS22HB/1.0.0/Sodaq_LPS22HB-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_LPS22HB-1.0.0.tar.gz",
+    "size_bytes": 3621,
+    "sha256": "baa3d0c5c7d22f3dc75b7301af86507abcb254874f70ee6408b4f4f69dee6486",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_LPS22HB/1.0.0/Sodaq_LPS22HB-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_LPS22HB/1.0.0/Sodaq_LPS22HB-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_LSM303AGR/2.0.1/Sodaq_LSM303AGR-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_LSM303AGR-2.0.1.tar.gz",
+    "size_bytes": 8005,
+    "sha256": "9d2d4fb4a1298d3f3503f5a1a0364eb0eccb242062ccfe3c244168de582aa760",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_LSM303AGR/2.0.1/Sodaq_LSM303AGR-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_LSM303AGR/2.0.1/Sodaq_LSM303AGR-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_N2X/1.0.1/Sodaq_N2X-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_N2X-1.0.1.tar.gz",
+    "size_bytes": 12743,
+    "sha256": "f5135ba97267ebdeb5f937322dda72bc55e2806e1fe05cc07d3286aa0373f18b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_N2X/1.0.1/Sodaq_N2X-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_N2X/1.0.1/Sodaq_N2X-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_PcInt/1.2.0/Sodaq_PcInt-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_PcInt-1.2.0.tar.gz",
+    "size_bytes": 3263,
+    "sha256": "0912ea3846318748a1d3c0a80d6765190348c36fbaa219f116fd828df92cb91c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_PcInt/1.2.0/Sodaq_PcInt-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_PcInt/1.2.0/Sodaq_PcInt-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_R4X/2.2.1/Sodaq_R4X-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_R4X-2.2.1.tar.gz",
+    "size_bytes": 30495,
+    "sha256": "01de72ccdb6993a14b256137419045727fbd5bfb4a409d62530d469af72b6bea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_R4X/2.2.1/Sodaq_R4X-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_R4X/2.2.1/Sodaq_R4X-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_R4X_MQTT/1.0.1/Sodaq_R4X_MQTT-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_R4X_MQTT-1.0.1.tar.gz",
+    "size_bytes": 4752,
+    "sha256": "ec54583672d382382c9c1d5678f21690570d17d2de76f98b40d41e011177f0f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_R4X_MQTT/1.0.1/Sodaq_R4X_MQTT-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_R4X_MQTT/1.0.1/Sodaq_R4X_MQTT-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_RN2483/1.1.1/Sodaq_RN2483-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_RN2483-1.1.1.tar.gz",
+    "size_bytes": 16488,
+    "sha256": "0626933e63dbc737c1b661abb083d9908e4ff9f524091002046e459b6793361f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_RN2483/1.1.1/Sodaq_RN2483-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_RN2483/1.1.1/Sodaq_RN2483-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_SHT2x/1.2.0/Sodaq_SHT2x-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_SHT2x-1.2.0.tar.gz",
+    "size_bytes": 16845,
+    "sha256": "3c1b39383d57ac30bf9eaa783259b01517aaf38378dd1636c7e1ae88e604f6dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_SHT2x/1.2.0/Sodaq_SHT2x-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_SHT2x/1.2.0/Sodaq_SHT2x-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_UBlox_GPS/0.9.6/Sodaq_UBlox_GPS-0.9.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_UBlox_GPS-0.9.6.tar.gz",
+    "size_bytes": 8692,
+    "sha256": "1e4df1cc69ac3d6cb3dd2ba64cc64f39e9e23066c1da860f44e205022339e442",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_UBlox_GPS/0.9.6/Sodaq_UBlox_GPS-0.9.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_UBlox_GPS/0.9.6/Sodaq_UBlox_GPS-0.9.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_dataflash/1.0.3/Sodaq_dataflash-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_dataflash-1.0.3.tar.gz",
+    "size_bytes": 19195,
+    "sha256": "097d5b331d0243ab7e2353ef547afdedd3987bd2fa702a8d13d18fd3160e0a2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_dataflash/1.0.3/Sodaq_dataflash-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_dataflash/1.0.3/Sodaq_dataflash-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_nbIOT/2.0.2/Sodaq_nbIOT-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_nbIOT-2.0.2.tar.gz",
+    "size_bytes": 24101,
+    "sha256": "9d3e312b6809ac1e80c5eeb5daaf01c264ec3470cd99a0bb8a5b016b77b7ff8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_nbIOT/2.0.2/Sodaq_nbIOT-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_nbIOT/2.0.2/Sodaq_nbIOT-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sodaqmoja/library/Sodaq_wdt/1.0.2/Sodaq_wdt-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sodaq_wdt-1.0.2.tar.gz",
+    "size_bytes": 5592,
+    "sha256": "b2f7f0f4610187dbb755e9b406d976dc50073c3f402ec7794be56a125c46752a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sodaqmoja/library/Sodaq_wdt/1.0.2/Sodaq_wdt-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sodaqmoja/library/Sodaq_wdt/1.0.2/Sodaq_wdt-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

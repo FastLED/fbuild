@@ -1,0 +1,984 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mobizt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mobizt/library/ESP%20Line%20Notify/2.1.1/ESPLineNotify-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPLineNotify-2.1.1.tar.gz",
+    "size_bytes": 146470,
+    "sha256": "7d3afebfc64417bf788ecc8f567b80b4495edfd5b40faf3f9b8786c61d6d2e75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP%2520Line%2520Notify/2.1.1/ESPLineNotify-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP%20Line%20Notify/2.1.1/ESPLineNotify-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP%20Mail%20Client/2.8.0/ESPMailClient-2.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMailClient-2.8.0.tar.gz",
+    "size_bytes": 487145,
+    "sha256": "23df29cd577017ca73a99efd8580f101357e2d36a7975613f535b58c7a0599e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP%2520Mail%2520Client/2.8.0/ESPMailClient-2.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP%20Mail%20Client/2.8.0/ESPMailClient-2.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP%20Mail%20Client/3.4.24/ESPMailClient-3.4.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPMailClient-3.4.24.tar.gz",
+    "size_bytes": 970463,
+    "sha256": "0a84a7606c074077844f17a9b1232b028bd592289077b3b0f09be46ec20a7665",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP%2520Mail%2520Client/3.4.24/ESPMailClient-3.4.24.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP%20Mail%20Client/3.4.24/ESPMailClient-3.4.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP%20Signer/1.4.2/ESPSigner-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPSigner-1.4.2.tar.gz",
+    "size_bytes": 668101,
+    "sha256": "580f2a6b220bbdcd428a58e140104136f0022d3c94c833c0102ab7a3a98198fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP%2520Signer/1.4.2/ESPSigner-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP%20Signer/1.4.2/ESPSigner-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP-Google-Forms-Client/1.0.0/ESP-Google-Forms-Client-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-Google-Forms-Client-1.0.0.tar.gz",
+    "size_bytes": 204171,
+    "sha256": "6a18ad1b8d5e8336c4c88b908846a2ae167c015bde042094a4caf5225829905b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP-Google-Forms-Client/1.0.0/ESP-Google-Forms-Client-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP-Google-Forms-Client/1.0.0/ESP-Google-Forms-Client-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP-Google-Sheet-Client/1.4.11/ESP-Google-Sheet-Client-1.4.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-Google-Sheet-Client-1.4.11.tar.gz",
+    "size_bytes": 696512,
+    "sha256": "f0908fb647df3cc36fea55881e5c07f3f45a7c9e40da4857a0e7d0d06c960936",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP-Google-Sheet-Client/1.4.11/ESP-Google-Sheet-Client-1.4.11.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP-Google-Sheet-Client/1.4.11/ESP-Google-Sheet-Client-1.4.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP-Google-Sheet-Client/1.4.12/ESP-Google-Sheet-Client-1.4.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-Google-Sheet-Client-1.4.12.tar.gz",
+    "size_bytes": 696488,
+    "sha256": "c02ec819816162c2f189686b346ea8febad5d60e827b47d5292a96952df641ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP-Google-Sheet-Client/1.4.12/ESP-Google-Sheet-Client-1.4.12.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP-Google-Sheet-Client/1.4.12/ESP-Google-Sheet-Client-1.4.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP-Google-Sheet-Client/1.4.13/ESP-Google-Sheet-Client-1.4.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-Google-Sheet-Client-1.4.13.tar.gz",
+    "size_bytes": 144387,
+    "sha256": "ee9bcfaa0740c07b1dc79a989cb4dabc4a55153527c87657f72eb62915b99e5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP-Google-Sheet-Client/1.4.13/ESP-Google-Sheet-Client-1.4.13.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP-Google-Sheet-Client/1.4.13/ESP-Google-Sheet-Client-1.4.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP32%20Mail%20Client/2.1.6/ESP32MailClient-2.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32MailClient-2.1.6.tar.gz",
+    "size_bytes": 91821,
+    "sha256": "07720bc547285fe2f6a6d81d1dbfbbd37e51538dc0ac975205f261c508601928",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP32%2520Mail%2520Client/2.1.6/ESP32MailClient-2.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP32%20Mail%20Client/2.1.6/ESP32MailClient-2.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESPForm%20for%20Arduino/1.0.7/ESPFormforArduino-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPFormforArduino-1.0.7.tar.gz",
+    "size_bytes": 370050,
+    "sha256": "5b6d5d0cd11c72f2df4ab1c57c486a90df217d08879f0cc26b8002a1e8c29396",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESPForm%2520for%2520Arduino/1.0.7/ESPFormforArduino-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESPForm%20for%20Arduino/1.0.7/ESPFormforArduino-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP_SSLClient/2.2.3/ESP_SSLClient-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_SSLClient-2.2.3.tar.gz",
+    "size_bytes": 558684,
+    "sha256": "16dcf3180339534fd07532a07bb84df4db10b49e7fdfff446f5ee281c481b597",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP_SSLClient/2.2.3/ESP_SSLClient-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP_SSLClient/2.2.3/ESP_SSLClient-2.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP_SSLClient/3.0.0/ESP_SSLClient-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_SSLClient-3.0.0.tar.gz",
+    "size_bytes": 563076,
+    "sha256": "6c0c71dc8e50096ef7911e8fe2d4634e102ee781ae1c1a27bcb3b9afc28bf853",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP_SSLClient/3.0.0/ESP_SSLClient-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP_SSLClient/3.0.0/ESP_SSLClient-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP_SSLClient/3.0.1/ESP_SSLClient-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_SSLClient-3.0.1.tar.gz",
+    "size_bytes": 563674,
+    "sha256": "a41b8bf40c326fb7a466a52da62487d31e4a410ffddd94e4bdb51a621e5ac2ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP_SSLClient/3.0.1/ESP_SSLClient-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP_SSLClient/3.0.1/ESP_SSLClient-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP_SSLClient/3.0.2/ESP_SSLClient-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_SSLClient-3.0.2.tar.gz",
+    "size_bytes": 571997,
+    "sha256": "8b2f9ef3c0787d3b568322c0792f41215d8df1115b772d42f3f14a2b8f5f65bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP_SSLClient/3.0.2/ESP_SSLClient-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP_SSLClient/3.0.2/ESP_SSLClient-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP_SSLClient/3.0.3/ESP_SSLClient-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_SSLClient-3.0.3.tar.gz",
+    "size_bytes": 572893,
+    "sha256": "9d8230d6550e4e91eaadb089cc7589f8c5ff918beb0e3dad3e8d69d6e5fb25e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP_SSLClient/3.0.3/ESP_SSLClient-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP_SSLClient/3.0.3/ESP_SSLClient-3.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP_SSLClient/3.0.6/ESP_SSLClient-3.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_SSLClient-3.0.6.tar.gz",
+    "size_bytes": 573230,
+    "sha256": "22a03d8d30fff13a3905f7f52cca420b721a11eb9ae74f8f632aeedaeb1d1364",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP_SSLClient/3.0.6/ESP_SSLClient-3.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP_SSLClient/3.0.6/ESP_SSLClient-3.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP_SSLClient/3.1.0/ESP_SSLClient-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_SSLClient-3.1.0.tar.gz",
+    "size_bytes": 574870,
+    "sha256": "9e04dac38440f13868c5b98c1235af50fbee4522f24c5caf96a2046c66ac1c3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP_SSLClient/3.1.0/ESP_SSLClient-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP_SSLClient/3.1.0/ESP_SSLClient-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP_SSLClient/3.1.1/ESP_SSLClient-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_SSLClient-3.1.1.tar.gz",
+    "size_bytes": 574938,
+    "sha256": "af6a51602eb946ba4a54f4a9b3c666bccdf941bd72955d449ed495422ca5013b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP_SSLClient/3.1.1/ESP_SSLClient-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP_SSLClient/3.1.1/ESP_SSLClient-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP_SSLClient/3.1.2/ESP_SSLClient-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_SSLClient-3.1.2.tar.gz",
+    "size_bytes": 574931,
+    "sha256": "11fe42b05efbce81a212ff646310bd90c65123cd15c648f83ac4be3e8ecd6397",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP_SSLClient/3.1.2/ESP_SSLClient-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP_SSLClient/3.1.2/ESP_SSLClient-3.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ESP_SSLClient/3.1.3/ESP_SSLClient-3.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_SSLClient-3.1.3.tar.gz",
+    "size_bytes": 575127,
+    "sha256": "921786d8aa4dde9e2d48c2eef92d1f86284c35de279434df006005cc3e81bb80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ESP_SSLClient/3.1.3/ESP_SSLClient-3.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ESP_SSLClient/3.1.3/ESP_SSLClient-3.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/Firebase%20Arduino%20Client%20Library%20for%20ESP8266%20and%20ESP32/2.8.3/FirebaseArduinoClientLibraryforESP8266andESP32-2.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseArduinoClientLibraryforESP8266andESP32-2.8.3.tar.gz",
+    "size_bytes": 851754,
+    "sha256": "8dec7a7deb848e5539105955739a50ed0121ea02ec28cd3ead1b00e7345bee64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/Firebase%2520Arduino%2520Client%2520Library%2520for%2520ESP8266%2520and%2520ESP32/2.8.3/FirebaseArduinoClientLibraryforESP8266andESP32-2.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/Firebase%20Arduino%20Client%20Library%20for%20ESP8266%20and%20ESP32/2.8.3/FirebaseArduinoClientLibraryforESP8266andESP32-2.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/Firebase%20Arduino%20Client%20Library%20for%20ESP8266%20and%20ESP32/4.4.14/FirebaseArduinoClientLibraryforESP8266andESP32-4.4.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseArduinoClientLibraryforESP8266andESP32-4.4.14.tar.gz",
+    "size_bytes": 1346601,
+    "sha256": "d51f75dcc6b0f14cb0ac51d5bada510d434bab641f280f73038910f4eea0262c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/Firebase%2520Arduino%2520Client%2520Library%2520for%2520ESP8266%2520and%2520ESP32/4.4.14/FirebaseArduinoClientLibraryforESP8266andESP32-4.4.14.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/Firebase%20Arduino%20Client%20Library%20for%20ESP8266%20and%20ESP32/4.4.14/FirebaseArduinoClientLibraryforESP8266andESP32-4.4.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/Firebase%20Arduino%20Client%20Library%20for%20ESP8266%20and%20ESP32/4.4.17/FirebaseArduinoClientLibraryforESP8266andESP32-4.4.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseArduinoClientLibraryforESP8266andESP32-4.4.17.tar.gz",
+    "size_bytes": 1322059,
+    "sha256": "a6dc597ff1322b1a4448c0e6c90a92fce9db2ce18834ea6a241450a854af1523",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/Firebase%2520Arduino%2520Client%2520Library%2520for%2520ESP8266%2520and%2520ESP32/4.4.17/FirebaseArduinoClientLibraryforESP8266andESP32-4.4.17.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/Firebase%20Arduino%20Client%20Library%20for%20ESP8266%20and%20ESP32/4.4.17/FirebaseArduinoClientLibraryforESP8266andESP32-4.4.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/Firebase%20Arduino%20based%20on%20WiFi101/1.2.5/FirebaseArduinobasedonWiFi101-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseArduinobasedonWiFi101-1.2.5.tar.gz",
+    "size_bytes": 30276,
+    "sha256": "0c62076ff479865f68cfbe0edd62dd2934c52e98a9670be2730ada9196c93206",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/Firebase%2520Arduino%2520based%2520on%2520WiFi101/1.2.5/FirebaseArduinobasedonWiFi101-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/Firebase%20Arduino%20based%20on%20WiFi101/1.2.5/FirebaseArduinobasedonWiFi101-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/Firebase%20Arduino%20based%20on%20WiFiNINA/1.2.5/FirebaseArduinobasedonWiFiNINA-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseArduinobasedonWiFiNINA-1.2.5.tar.gz",
+    "size_bytes": 30398,
+    "sha256": "b2a56c20127b412948c7f7762d810cc604338707cc74bacbec988e5171890da9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/Firebase%2520Arduino%2520based%2520on%2520WiFiNINA/1.2.5/FirebaseArduinobasedonWiFiNINA-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/Firebase%20Arduino%20based%20on%20WiFiNINA/1.2.5/FirebaseArduinobasedonWiFiNINA-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/Firebase%20ESP32%20Client/3.17.6/FirebaseESP32Client-3.17.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseESP32Client-3.17.6.tar.gz",
+    "size_bytes": 283393,
+    "sha256": "3779e7fb4ad6265c9d8f0131ce7796c3b269f5a34119149eca74460da8650864",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/Firebase%2520ESP32%2520Client/3.17.6/FirebaseESP32Client-3.17.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/Firebase%20ESP32%20Client/3.17.6/FirebaseESP32Client-3.17.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/Firebase%20ESP32%20Client/4.4.14/FirebaseESP32Client-4.4.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseESP32Client-4.4.14.tar.gz",
+    "size_bytes": 874348,
+    "sha256": "77d265018902ababe614fcf21b17cf244f7481eb6d54e831e320a2c94682da25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/Firebase%2520ESP32%2520Client/4.4.14/FirebaseESP32Client-4.4.14.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/Firebase%20ESP32%20Client/4.4.14/FirebaseESP32Client-4.4.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/Firebase%20ESP32%20Client/4.4.17/FirebaseESP32Client-4.4.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseESP32Client-4.4.17.tar.gz",
+    "size_bytes": 852646,
+    "sha256": "3a6af4a98d28a3903f5ee9011538f748a1a3084356b0f88896bd42e6694badef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/Firebase%2520ESP32%2520Client/4.4.17/FirebaseESP32Client-4.4.17.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/Firebase%20ESP32%20Client/4.4.17/FirebaseESP32Client-4.4.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/Firebase%20ESP8266%20Client/4.4.17/FirebaseESP8266Client-4.4.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseESP8266Client-4.4.17.tar.gz",
+    "size_bytes": 853103,
+    "sha256": "b341fb5587d2e07bab52fbe4ba388519ac72b184ba2e20b723a74f79ddfe30f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/Firebase%2520ESP8266%2520Client/4.4.17/FirebaseESP8266Client-4.4.17.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/Firebase%20ESP8266%20Client/4.4.17/FirebaseESP8266Client-4.4.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/1.5.11/FirebaseClient-1.5.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-1.5.11.tar.gz",
+    "size_bytes": 906633,
+    "sha256": "b4574e3021ccdfb3626cae419f7364c924bdb75974667209eb4ed9054a97e35a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/1.5.11/FirebaseClient-1.5.11.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/1.5.11/FirebaseClient-1.5.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.0.3/FirebaseClient-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.0.3.tar.gz",
+    "size_bytes": 791317,
+    "sha256": "277b798b85f89e6317f85cbde2459ed1cf1704ed0b3e99c89a60d5119b138060",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.0.3/FirebaseClient-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.0.3/FirebaseClient-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.1.8/FirebaseClient-2.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.1.8.tar.gz",
+    "size_bytes": 750201,
+    "sha256": "f050e21deccdc0176ab4ce9ac2525e314dcd45d5b7c62524d857b537d6cc463a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.1.8/FirebaseClient-2.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.1.8/FirebaseClient-2.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.1.9/FirebaseClient-2.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.1.9.tar.gz",
+    "size_bytes": 752470,
+    "sha256": "ea8c11454ce87bc20b8322cf42a31755475f03d06c9687acb77005a416c5d3a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.1.9/FirebaseClient-2.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.1.9/FirebaseClient-2.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.2.1/FirebaseClient-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.2.1.tar.gz",
+    "size_bytes": 754760,
+    "sha256": "3c5b66494e8b917c55b2a4dc56b0b395220359006a1650a2c3d763fbc7c76ad9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.2.1/FirebaseClient-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.2.1/FirebaseClient-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.2.10/FirebaseClient-2.2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.2.10.tar.gz",
+    "size_bytes": 211898,
+    "sha256": "ff3e68926d64feec85f575431eb5df8f78da9e9653f801de19e72ba1af7ee9cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.2.10/FirebaseClient-2.2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.2.10/FirebaseClient-2.2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.2.11/FirebaseClient-2.2.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.2.11.tar.gz",
+    "size_bytes": 212397,
+    "sha256": "6ac22e6451cd95342f36ce0ae74c9026f057c93400ebb972b530b52fc5fc217b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.2.11/FirebaseClient-2.2.11.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.2.11/FirebaseClient-2.2.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.2.12/FirebaseClient-2.2.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.2.12.tar.gz",
+    "size_bytes": 212532,
+    "sha256": "cb5a90c3527b949caae6f86e3e02b8b58b929eec8fa3cd5ad3d54d99d0b65768",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.2.12/FirebaseClient-2.2.12.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.2.12/FirebaseClient-2.2.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.2.13/FirebaseClient-2.2.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.2.13.tar.gz",
+    "size_bytes": 213391,
+    "sha256": "4b79e2e7bcee60a712423989732b4c714bc88ed6531b1f8af44c583f54945760",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.2.13/FirebaseClient-2.2.13.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.2.13/FirebaseClient-2.2.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.2.2/FirebaseClient-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.2.2.tar.gz",
+    "size_bytes": 757083,
+    "sha256": "74ee233454c5d10c1d53e329c42ca94225d9ba5c0d00855846e9b2f93870a622",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.2.2/FirebaseClient-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.2.2/FirebaseClient-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.2.3/FirebaseClient-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.2.3.tar.gz",
+    "size_bytes": 757097,
+    "sha256": "81c70af49b2883cfb483c4a0bb06cb4396a3544d5a260e5367f9d462d1c97c0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.2.3/FirebaseClient-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.2.3/FirebaseClient-2.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.2.4/FirebaseClient-2.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.2.4.tar.gz",
+    "size_bytes": 758181,
+    "sha256": "826364ad5137b25a6516f4ace4d8657a257f03f1f6186e6323d328c981b9c1c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.2.4/FirebaseClient-2.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.2.4/FirebaseClient-2.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.2.5/FirebaseClient-2.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.2.5.tar.gz",
+    "size_bytes": 212277,
+    "sha256": "c41baade3166225a3755c58e3768b79ba6dcecfe4e5baf35d83d984a630f0462",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.2.5/FirebaseClient-2.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.2.5/FirebaseClient-2.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.2.6/FirebaseClient-2.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.2.6.tar.gz",
+    "size_bytes": 212556,
+    "sha256": "1c1540845d42bfadcee8440c19c28b11938faadb540dd70ecdf338ea2080cfec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.2.6/FirebaseClient-2.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.2.6/FirebaseClient-2.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.2.7/FirebaseClient-2.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.2.7.tar.gz",
+    "size_bytes": 211814,
+    "sha256": "caad35ec6a30f0acada254df2c82a7f4c7890756fd8190a7da98789e9da58f14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.2.7/FirebaseClient-2.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.2.7/FirebaseClient-2.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.2.8/FirebaseClient-2.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.2.8.tar.gz",
+    "size_bytes": 211849,
+    "sha256": "9ed814e995e99eafa71cb2dfa349e6f67fd1a67f5eb1ae6721d3825219efabd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.2.8/FirebaseClient-2.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.2.8/FirebaseClient-2.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseClient/2.2.9/FirebaseClient-2.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseClient-2.2.9.tar.gz",
+    "size_bytes": 211845,
+    "sha256": "dfeb72d436c622888973d21c5c3802986fb6635accafa70fbb2864fa7c441c3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseClient/2.2.9/FirebaseClient-2.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseClient/2.2.9/FirebaseClient-2.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/FirebaseJson/3.0.10/FirebaseJson-3.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseJson-3.0.10.tar.gz",
+    "size_bytes": 72310,
+    "sha256": "30699442fa1b5d9b9b5f41d3c275e2a237b07f3acafcc144cdfe2f77067ef68b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/FirebaseJson/3.0.10/FirebaseJson-3.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/FirebaseJson/3.0.10/FirebaseJson-3.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/HTTPClientESP32Ex/1.1.3/HTTPClientESP32Ex-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPClientESP32Ex-1.1.3.tar.gz",
+    "size_bytes": 11332,
+    "sha256": "2a0103fb3d8ce8f5b3ecdb06e144cf84dd2a6e9bd934d3aa3a0780aab5e3a90f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/HTTPClientESP32Ex/1.1.3/HTTPClientESP32Ex-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/HTTPClientESP32Ex/1.1.3/HTTPClientESP32Ex-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/Internal_Storage_OTA/0.0.1/Internal_Storage_OTA-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Internal_Storage_OTA-0.0.1.tar.gz",
+    "size_bytes": 2591,
+    "sha256": "f5083badee67f5bfcf28bb6ddf5a856bf119b81ccd59ff6d94ee083bb34784a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/Internal_Storage_OTA/0.0.1/Internal_Storage_OTA-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/Internal_Storage_OTA/0.0.1/Internal_Storage_OTA-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/NuSock/1.0.0/NuSock-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NuSock-1.0.0.tar.gz",
+    "size_bytes": 25914,
+    "sha256": "564fb266842a8dcf52ef99e7c3329f3ce49cd304d00683a5da468cec0cb8fd56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/NuSock/1.0.0/NuSock-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/NuSock/1.0.0/NuSock-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/NuSock/1.0.1/NuSock-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NuSock-1.0.1.tar.gz",
+    "size_bytes": 25913,
+    "sha256": "ee6ab7a2eb51146532d455c6cb3f911c33a70dfbc5173a26d8687842c42b9f6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/NuSock/1.0.1/NuSock-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/NuSock/1.0.1/NuSock-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/NuSock/1.0.2/NuSock-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NuSock-1.0.2.tar.gz",
+    "size_bytes": 26004,
+    "sha256": "e7a18f551c0808077bef4c6e6d714d72f6723afee3e819d9c46a79ee0556def0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/NuSock/1.0.2/NuSock-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/NuSock/1.0.2/NuSock-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/NuSock/1.0.3/NuSock-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NuSock-1.0.3.tar.gz",
+    "size_bytes": 26098,
+    "sha256": "4168107b70970c929661a3b63f0da4808cdedfd3066aafe6989452cad4172dc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/NuSock/1.0.3/NuSock-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/NuSock/1.0.3/NuSock-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/NuSock/1.0.5/NuSock-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NuSock-1.0.5.tar.gz",
+    "size_bytes": 34329,
+    "sha256": "d6e6d422f3a6278d7d66114a886e3069ce0572fc90435837ca191189434099f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/NuSock/1.0.5/NuSock-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/NuSock/1.0.5/NuSock-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/NuSock/1.0.6/NuSock-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NuSock-1.0.6.tar.gz",
+    "size_bytes": 34950,
+    "sha256": "5852ecd546d103b5d87e4d3b01063f78e06201cdbef5c1973731df4bcc0fe094",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/NuSock/1.0.6/NuSock-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/NuSock/1.0.6/NuSock-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/NuSock/1.0.7/NuSock-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NuSock-1.0.7.tar.gz",
+    "size_bytes": 38901,
+    "sha256": "4d39deab384c3340748790004be37604d3631f91cac583f7cb0c4ebebfcbfdde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/NuSock/1.0.7/NuSock-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/NuSock/1.0.7/NuSock-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/NuSock/2.0.0/NuSock-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NuSock-2.0.0.tar.gz",
+    "size_bytes": 51956,
+    "sha256": "199a601ddd4766e4350263111ba4a768b116fa463df2c563b518bdf65ce2aa67",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/NuSock/2.0.0/NuSock-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/NuSock/2.0.0/NuSock-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ReadyMail/0.3.10/ReadyMail-0.3.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReadyMail-0.3.10.tar.gz",
+    "size_bytes": 99969,
+    "sha256": "5f6971ce07a14b1318d4723eb07b8fdb582948317bbb759bede24f1551c1fce5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ReadyMail/0.3.10/ReadyMail-0.3.10.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ReadyMail/0.3.10/ReadyMail-0.3.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ReadyMail/0.3.6/ReadyMail-0.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReadyMail-0.3.6.tar.gz",
+    "size_bytes": 106229,
+    "sha256": "4e81724debe99d2d2ee5172edaab857dd17b2a7412e5ad9e5443aaa94d3cd5bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ReadyMail/0.3.6/ReadyMail-0.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ReadyMail/0.3.6/ReadyMail-0.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ReadyMail/0.3.7/ReadyMail-0.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReadyMail-0.3.7.tar.gz",
+    "size_bytes": 99668,
+    "sha256": "a57fee45ca921138738955e4550bf54097fe722f732236a8635b62c11d03fe6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ReadyMail/0.3.7/ReadyMail-0.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ReadyMail/0.3.7/ReadyMail-0.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ReadyMail/0.3.8/ReadyMail-0.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReadyMail-0.3.8.tar.gz",
+    "size_bytes": 99649,
+    "sha256": "a59abafea5be90d2289bbac3716b54f9a1244390463878a72a0ccd4237b20592",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ReadyMail/0.3.8/ReadyMail-0.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ReadyMail/0.3.8/ReadyMail-0.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ReadyMail/0.3.9/ReadyMail-0.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReadyMail-0.3.9.tar.gz",
+    "size_bytes": 99773,
+    "sha256": "0a443c00df3a169facb33b4ca820b2f69771172270cc5008498161f08cad6fbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ReadyMail/0.3.9/ReadyMail-0.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ReadyMail/0.3.9/ReadyMail-0.3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ReadyMail/0.4.0/ReadyMail-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReadyMail-0.4.0.tar.gz",
+    "size_bytes": 99968,
+    "sha256": "2a11b17c6adb7549fc3f1ba454797d602a6bc556a211c582dc0a4c4b0468994c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ReadyMail/0.4.0/ReadyMail-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ReadyMail/0.4.0/ReadyMail-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ReadyMail/0.4.1/ReadyMail-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReadyMail-0.4.1.tar.gz",
+    "size_bytes": 7800,
+    "sha256": "9fcdf74ff5f80cd9917a4966bb23299c15edb641a7b4d9808d13b052524b4434",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ReadyMail/0.4.1/ReadyMail-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ReadyMail/0.4.1/ReadyMail-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/ReadyMail/0.4.2/ReadyMail-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReadyMail-0.4.2.tar.gz",
+    "size_bytes": 100809,
+    "sha256": "e410fe9327cb774b2bb1bcbbacf30ecb0186727a82efee911b2552c28fa70ba8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/ReadyMail/0.4.2/ReadyMail-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/ReadyMail/0.4.2/ReadyMail-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/SerialNetworkBridge/1.0.0/SerialNetworkBridge-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialNetworkBridge-1.0.0.tar.gz",
+    "size_bytes": 33986,
+    "sha256": "c9cd644676f8d6864410d7cb188766211d4b2a3605ac2af4cf7b0b39e8650a46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/SerialNetworkBridge/1.0.0/SerialNetworkBridge-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/SerialNetworkBridge/1.0.0/SerialNetworkBridge-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/SerialNetworkBridge/1.0.1/SerialNetworkBridge-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialNetworkBridge-1.0.1.tar.gz",
+    "size_bytes": 34005,
+    "sha256": "a50985e0a18e0264a17795311f469b623f4f83b62fa51621f93cac712b56e8cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/SerialNetworkBridge/1.0.1/SerialNetworkBridge-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/SerialNetworkBridge/1.0.1/SerialNetworkBridge-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/SerialNetworkBridge/1.0.2/SerialNetworkBridge-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialNetworkBridge-1.0.2.tar.gz",
+    "size_bytes": 45163,
+    "sha256": "5ca87abab8d874889934e01d0160759be4306502e36500ec71d5b288efe6561c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/SerialNetworkBridge/1.0.2/SerialNetworkBridge-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/SerialNetworkBridge/1.0.2/SerialNetworkBridge-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/SerialNetworkBridge/1.0.3/SerialNetworkBridge-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialNetworkBridge-1.0.3.tar.gz",
+    "size_bytes": 52886,
+    "sha256": "8d08923adad2a3842842f2f7ead813f21361495184b6609fcdf93d440c954b46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/SerialNetworkBridge/1.0.3/SerialNetworkBridge-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/SerialNetworkBridge/1.0.3/SerialNetworkBridge-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/SerialNetworkBridge/1.0.4/SerialNetworkBridge-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialNetworkBridge-1.0.4.tar.gz",
+    "size_bytes": 59727,
+    "sha256": "75d7f6e9e2a819442d71016de2408c0d211dbcac1ddc1f5b13a6d735ceb38852",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/SerialNetworkBridge/1.0.4/SerialNetworkBridge-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/SerialNetworkBridge/1.0.4/SerialNetworkBridge-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/SerialNetworkBridge/2.0.0/SerialNetworkBridge-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialNetworkBridge-2.0.0.tar.gz",
+    "size_bytes": 81888,
+    "sha256": "0bfe358536f47f6a3d3fdce2068c38362e9f4ede6838e49788a91be7a67221c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/SerialNetworkBridge/2.0.0/SerialNetworkBridge-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/SerialNetworkBridge/2.0.0/SerialNetworkBridge-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/SerialTCPClient/0.0.2/SerialTCPClient-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialTCPClient-0.0.2.tar.gz",
+    "size_bytes": 25249,
+    "sha256": "cdd6d4b89a391f9585dfe36c8d8868ddbe421d51f3c5310761b48c69464d9466",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/SerialTCPClient/0.0.2/SerialTCPClient-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/SerialTCPClient/0.0.2/SerialTCPClient-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/SerialTCPClient/0.0.3/SerialTCPClient-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialTCPClient-0.0.3.tar.gz",
+    "size_bytes": 25256,
+    "sha256": "d28ba211b24891f22711887968c0ab0a973e5803252f2680267c6649262eb5cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/SerialTCPClient/0.0.3/SerialTCPClient-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/SerialTCPClient/0.0.3/SerialTCPClient-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/SerialTCPClient/0.0.4/SerialTCPClient-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialTCPClient-0.0.4.tar.gz",
+    "size_bytes": 32067,
+    "sha256": "80d8fdf2aee905a843564319f1492ad6b5a692b5b401835c4026681d8fdd1c73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/SerialTCPClient/0.0.4/SerialTCPClient-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/SerialTCPClient/0.0.4/SerialTCPClient-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mobizt/library/SerialTCPClient/0.0.5/SerialTCPClient-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialTCPClient-0.0.5.tar.gz",
+    "size_bytes": 31437,
+    "sha256": "1ce089627c1429e007d84bd7cedc768d3f1f345d7c88834782a21da5c1b8c7ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mobizt/library/SerialTCPClient/0.0.5/SerialTCPClient-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mobizt/library/SerialTCPClient/0.0.5/SerialTCPClient-0.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

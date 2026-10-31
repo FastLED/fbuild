@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aprilbrother",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aprilbrother/library/AB%20BLE/1.0.0/ABBLE-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ABBLE-1.0.0.tar.gz",
+    "size_bytes": 6268,
+    "sha256": "625fa4c27d5e8936fbb3ed5fcc27a9bd1515c16ed334be65515a83b156a4414a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aprilbrother/library/AB%2520BLE/1.0.0/ABBLE-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aprilbrother/library/AB%20BLE/1.0.0/ABBLE-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

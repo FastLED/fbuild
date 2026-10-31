@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/poddarrupak",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "poddarrupak/library/ConsumerKeyboard/1.0.0/ConsumerKeyboard-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConsumerKeyboard-1.0.0.tar.gz",
+    "size_bytes": 4287,
+    "sha256": "f7bc97fc013859573cea8323260de0e905601d2c800ecc73956bd23d724ab780",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/poddarrupak/library/ConsumerKeyboard/1.0.0/ConsumerKeyboard-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/poddarrupak/library/ConsumerKeyboard/1.0.0/ConsumerKeyboard-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "poddarrupak/library/Firebase/1.0.4/Firebase-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Firebase-1.0.4.tar.gz",
+    "size_bytes": 11033,
+    "sha256": "e7140f9d865a083a78fc5841fdb2416feb7da16d256d03d14e164f5741b83a74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/poddarrupak/library/Firebase/1.0.4/Firebase-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/poddarrupak/library/Firebase/1.0.4/Firebase-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "poddarrupak/library/Sonos/1.0.0/Sonos-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sonos-1.0.0.tar.gz",
+    "size_bytes": 8919,
+    "sha256": "dba195c15efde59fd17578cda6ddf5f180866aae96c17dd5e9205ae6f3d75d57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/poddarrupak/library/Sonos/1.0.0/Sonos-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/poddarrupak/library/Sonos/1.0.0/Sonos-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

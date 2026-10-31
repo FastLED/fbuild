@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-aolgu003",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-aolgu003/library/MS5837/0.0.0+sha.0c2c06ab8e72/MS5837-0.0.0+sha.0c2c06ab8e72.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MS5837-0.0.0+sha.0c2c06ab8e72.tar.gz",
+    "size_bytes": 2226,
+    "sha256": "541e69df78f5f6e28bade8c022580c3eb092531e86ac2d727cba74f2106bf084",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aolgu003/library/MS5837/0.0.0%2Bsha.0c2c06ab8e72/MS5837-0.0.0%2Bsha.0c2c06ab8e72.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aolgu003/library/MS5837/0.0.0%2Bsha.0c2c06ab8e72/MS5837-0.0.0%2Bsha.0c2c06ab8e72.tar.gz"
+    ]
+   }
+  }
+ ]
+}

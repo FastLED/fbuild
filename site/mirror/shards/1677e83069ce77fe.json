@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ouloutech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ouloutech/library/SSD1306/0.0.0+sha.3bfab336f638/SSD1306-0.0.0+sha.3bfab336f638.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1306-0.0.0+sha.3bfab336f638.tar.gz",
+    "size_bytes": 8106,
+    "sha256": "e1d5d992581b9b250c2b4b05b933ece7f29b1fe6d34f80043f352a9203c87367",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ouloutech/library/SSD1306/0.0.0%2Bsha.3bfab336f638/SSD1306-0.0.0%2Bsha.3bfab336f638.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ouloutech/library/SSD1306/0.0.0%2Bsha.3bfab336f638/SSD1306-0.0.0%2Bsha.3bfab336f638.tar.gz"
+    ]
+   }
+  }
+ ]
+}

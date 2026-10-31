@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rootfrogs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rootfrogs/library/GetInTouch/1.1.0/GetInTouch-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GetInTouch-1.1.0.tar.gz",
+    "size_bytes": 6811,
+    "sha256": "2d4e2e06a67f7e69485650a1d38a02a75de89a7be311aa55788586c43c5949b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rootfrogs/library/GetInTouch/1.1.0/GetInTouch-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rootfrogs/library/GetInTouch/1.1.0/GetInTouch-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

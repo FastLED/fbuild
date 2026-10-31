@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cwru-greener-pastures",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cwru-greener-pastures/library/Heltec_LoRa_OLED_Examples/0.8.1/Heltec_LoRa_OLED_Examples-0.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Heltec_LoRa_OLED_Examples-0.8.1.tar.gz",
+    "size_bytes": 8306,
+    "sha256": "488ea99ce0ef0f3466371f338e88cf63161b536157e8387dd2e4d5fcfd03f332",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cwru-greener-pastures/library/Heltec_LoRa_OLED_Examples/0.8.1/Heltec_LoRa_OLED_Examples-0.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cwru-greener-pastures/library/Heltec_LoRa_OLED_Examples/0.8.1/Heltec_LoRa_OLED_Examples-0.8.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

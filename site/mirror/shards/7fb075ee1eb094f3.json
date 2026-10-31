@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dang-gun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dang-gun/library/ButtonClickCheck/1.0.2/ButtonClickCheck-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonClickCheck-1.0.2.tar.gz",
+    "size_bytes": 13258,
+    "sha256": "b2a00c58f6b71e71924681690ffe3bbbd747783928b05058c1291fbc144936bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dang-gun/library/ButtonClickCheck/1.0.2/ButtonClickCheck-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dang-gun/library/ButtonClickCheck/1.0.2/ButtonClickCheck-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dang-gun/library/StepperAsync5/1.1.3/StepperAsync5-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperAsync5-1.1.3.tar.gz",
+    "size_bytes": 19520,
+    "sha256": "c298baf641db19174c7f1640622d7e96cd3d7520111d1d93a1baceb3d89cb4f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dang-gun/library/StepperAsync5/1.1.3/StepperAsync5-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dang-gun/library/StepperAsync5/1.1.3/StepperAsync5-1.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

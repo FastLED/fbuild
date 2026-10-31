@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/michaelkrzyzaniak",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "michaelkrzyzaniak/library/Dynamixel_Servo/2.1.0/Dynamixel_Servo-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dynamixel_Servo-2.1.0.tar.gz",
+    "size_bytes": 10759,
+    "sha256": "6a8ee81a91b195b513b8b07b4626e1110c03f0d99c9446d169352264897e25f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/michaelkrzyzaniak/library/Dynamixel_Servo/2.1.0/Dynamixel_Servo-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/michaelkrzyzaniak/library/Dynamixel_Servo/2.1.0/Dynamixel_Servo-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

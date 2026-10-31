@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dparson55",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dparson55/library/NRFLite/3.0.6/NRFLite-3.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NRFLite-3.0.6.tar.gz",
+    "size_bytes": 44734,
+    "sha256": "2df1b319bbc036ec62ef75e75116807a992411afa4fbce1c70ed44b819b06f34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dparson55/library/NRFLite/3.0.6/NRFLite-3.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dparson55/library/NRFLite/3.0.6/NRFLite-3.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dparson55/library/NRFLite/3.0.7/NRFLite-3.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NRFLite-3.0.7.tar.gz",
+    "size_bytes": 44728,
+    "sha256": "0612a605c492a42d319beb9c16e7d8c6e5b89a915408c33fe437cb15f76ac95e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dparson55/library/NRFLite/3.0.7/NRFLite-3.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dparson55/library/NRFLite/3.0.7/NRFLite-3.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dparson55/library/NRFLite/3.1.0/NRFLite-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NRFLite-3.1.0.tar.gz",
+    "size_bytes": 45532,
+    "sha256": "dbefb654881638ecd3675eef3140b28e77c3851862f1af9c883f184051a76100",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dparson55/library/NRFLite/3.1.0/NRFLite-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dparson55/library/NRFLite/3.1.0/NRFLite-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dparson55/library/NRFLite/3.1.1/NRFLite-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NRFLite-3.1.1.tar.gz",
+    "size_bytes": 45657,
+    "sha256": "3779d9e4e5b6f063f35a6d9bea953c6f55ff7b2cf6b0e3fdcd296be244c45fdf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dparson55/library/NRFLite/3.1.1/NRFLite-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dparson55/library/NRFLite/3.1.1/NRFLite-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dparson55/library/NRFLite/3.1.2/NRFLite-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NRFLite-3.1.2.tar.gz",
+    "size_bytes": 45682,
+    "sha256": "d33ca0000d2e22a7919ba57b575740bac42b2a07460e55d6864ebcc5ef591635",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dparson55/library/NRFLite/3.1.2/NRFLite-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dparson55/library/NRFLite/3.1.2/NRFLite-3.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

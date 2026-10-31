@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-karlmaxwell67",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-karlmaxwell67/library/TCS3472_I2C/0.0.0+sha.6d5bb4ad7d6e/TCS3472_I2C-0.0.0+sha.6d5bb4ad7d6e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCS3472_I2C-0.0.0+sha.6d5bb4ad7d6e.tar.gz",
+    "size_bytes": 4723,
+    "sha256": "f9be22a7fbb1fcb3f5a49cc854aa07a8ba56adeadc6963c2bc3b53205bcd3842",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-karlmaxwell67/library/TCS3472_I2C/0.0.0%2Bsha.6d5bb4ad7d6e/TCS3472_I2C-0.0.0%2Bsha.6d5bb4ad7d6e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-karlmaxwell67/library/TCS3472_I2C/0.0.0%2Bsha.6d5bb4ad7d6e/TCS3472_I2C-0.0.0%2Bsha.6d5bb4ad7d6e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-karlmaxwell67/library/TSL2561_I2C/0.0.0+sha.17fef2caa563/TSL2561_I2C-0.0.0+sha.17fef2caa563.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSL2561_I2C-0.0.0+sha.17fef2caa563.tar.gz",
+    "size_bytes": 3960,
+    "sha256": "23c977d0be435d188d426d5c2763406eefdd8ca4f0ccd356df537400df47afaa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-karlmaxwell67/library/TSL2561_I2C/0.0.0%2Bsha.17fef2caa563/TSL2561_I2C-0.0.0%2Bsha.17fef2caa563.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-karlmaxwell67/library/TSL2561_I2C/0.0.0%2Bsha.17fef2caa563/TSL2561_I2C-0.0.0%2Bsha.17fef2caa563.tar.gz"
+    ]
+   }
+  }
+ ]
+}

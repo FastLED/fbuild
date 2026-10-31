@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yhur",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yhur/library/ConfigPortal32/0.1.7/ConfigPortal32-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConfigPortal32-0.1.7.tar.gz",
+    "size_bytes": 6773,
+    "sha256": "e8f99ea7347cf825647fb245ff158249fc2fb497de84c884dedb010aff2f28e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yhur/library/ConfigPortal32/0.1.7/ConfigPortal32-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/yhur/library/ConfigPortal32/0.1.7/ConfigPortal32-0.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yhur/library/ConfigPortal8266/2.0.3/ConfigPortal8266-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConfigPortal8266-2.0.3.tar.gz",
+    "size_bytes": 6026,
+    "sha256": "3d1a0b0f72446b43fd1cd913f35c8a2566143a0c38b75ddd5617085836927b04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yhur/library/ConfigPortal8266/2.0.3/ConfigPortal8266-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/yhur/library/ConfigPortal8266/2.0.3/ConfigPortal8266-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yhur/library/ConfigPortal8266/2.0.4/ConfigPortal8266-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConfigPortal8266-2.0.4.tar.gz",
+    "size_bytes": 6035,
+    "sha256": "3a44aca876a0008aaa998896a83a00042dc43c96072beaebae1bcfd6a1966feb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yhur/library/ConfigPortal8266/2.0.4/ConfigPortal8266-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/yhur/library/ConfigPortal8266/2.0.4/ConfigPortal8266-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yhur/library/ConfigPortal8266/2.0.5/ConfigPortal8266-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConfigPortal8266-2.0.5.tar.gz",
+    "size_bytes": 6056,
+    "sha256": "dde5217f1fe8ef2bc22646cc4373c2108b98756c9102558dae3f7cbcb400e4da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yhur/library/ConfigPortal8266/2.0.5/ConfigPortal8266-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/yhur/library/ConfigPortal8266/2.0.5/ConfigPortal8266-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yhur/library/ConfigPortal8266/2.0.6/ConfigPortal8266-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConfigPortal8266-2.0.6.tar.gz",
+    "size_bytes": 6170,
+    "sha256": "bbf0874dab6fb3d48633c0f6cf778b287d51430a2e8a4379ea0f33575ee1576e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yhur/library/ConfigPortal8266/2.0.6/ConfigPortal8266-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/yhur/library/ConfigPortal8266/2.0.6/ConfigPortal8266-2.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

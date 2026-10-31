@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/squaresausage",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "squaresausage/library/Winbond%20W25N/0.2.5/WinbondW25N-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WinbondW25N-0.2.5.tar.gz",
+    "size_bytes": 5880,
+    "sha256": "00b4e74c6631fc0ac0dd9f0e7cf6ec1ea328bd726cd55f826aaaa90aba49d136",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/squaresausage/library/Winbond%2520W25N/0.2.5/WinbondW25N-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/squaresausage/library/Winbond%20W25N/0.2.5/WinbondW25N-0.2.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

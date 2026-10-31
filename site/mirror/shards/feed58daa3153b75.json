@@ -1,0 +1,425 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/infineon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "infineon/library/Digital-Pressure-Sensor/1.0.6/Digital-Pressure-Sensor-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Digital-Pressure-Sensor-1.0.6.tar.gz",
+    "size_bytes": 21205,
+    "sha256": "d633eda2278f346925f90adb399b085bb680602532d7010c2af004cee45128f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/Digital-Pressure-Sensor/1.0.6/Digital-Pressure-Sensor-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/Digital-Pressure-Sensor/1.0.6/Digital-Pressure-Sensor-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/DigitalPressureSensor/1.0.6/DigitalPressureSensor-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalPressureSensor-1.0.6.tar.gz",
+    "size_bytes": 20725,
+    "sha256": "0e5e42aad2e76612abe72e62227273318003bce0d5108ae94500baf6132987d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/DigitalPressureSensor/1.0.6/DigitalPressureSensor-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/DigitalPressureSensor/1.0.6/DigitalPressureSensor-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/Hall-Switch/2.1.0/Hall-Switch-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hall-Switch-2.1.0.tar.gz",
+    "size_bytes": 19631,
+    "sha256": "9d96527aeb505c322f0d50ea2fb6ae4fddf0099008c56b6788c5e9b11f984bf5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/Hall-Switch/2.1.0/Hall-Switch-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/Hall-Switch/2.1.0/Hall-Switch-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/High-Side-Switch/0.1.4/High-Side-Switch-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "High-Side-Switch-0.1.4.tar.gz",
+    "size_bytes": 28845,
+    "sha256": "ab459697a50721b77e2bc4beb71f743cd77bbbc5c350f8d00abff53522ac8d9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/High-Side-Switch/0.1.4/High-Side-Switch-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/High-Side-Switch/0.1.4/High-Side-Switch-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/IFX007T-Motor-Controller/1.0.0/IFX007T-Motor-Controller-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IFX007T-Motor-Controller-1.0.0.tar.gz",
+    "size_bytes": 13896,
+    "sha256": "c39ee52f60104ca70945ba4a10a48fd6045a84a251badcf3220585f6bb67b645",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/IFX007T-Motor-Controller/1.0.0/IFX007T-Motor-Controller-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/IFX007T-Motor-Controller/1.0.0/IFX007T-Motor-Controller-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/OPTIGA%20Trust%20X/1.0.5/OPTIGATrustX-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OPTIGATrustX-1.0.5.tar.gz",
+    "size_bytes": 174692,
+    "sha256": "1e721eb325d6f91bb8ba85f34246f3cf91a45917ad3c46042d24da7fe5c89950",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/OPTIGA%2520Trust%2520X/1.0.5/OPTIGATrustX-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/OPTIGA%20Trust%20X/1.0.5/OPTIGATrustX-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/OPTIGA-Trust-E-Security-Controller/1.0.0/OPTIGA-Trust-E-Security-Controller-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OPTIGA-Trust-E-Security-Controller-1.0.0.tar.gz",
+    "size_bytes": 21931,
+    "sha256": "597a688402916406d0d8c8f47b4cfc414d54f20153381091468bbd8b7449e6e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/OPTIGA-Trust-E-Security-Controller/1.0.0/OPTIGA-Trust-E-Security-Controller-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/OPTIGA-Trust-E-Security-Controller/1.0.0/OPTIGA-Trust-E-Security-Controller-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/RGB-LED-Lighting-Shield-XMC1202/1.0.1/RGB-LED-Lighting-Shield-XMC1202-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RGB-LED-Lighting-Shield-XMC1202-1.0.1.tar.gz",
+    "size_bytes": 13312,
+    "sha256": "6117de411a9fcd4b2a6b93bb5050a218ab728e7eeb4ecd9f001959b029b6beb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/RGB-LED-Lighting-Shield-XMC1202/1.0.1/RGB-LED-Lighting-Shield-XMC1202-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/RGB-LED-Lighting-Shield-XMC1202/1.0.1/RGB-LED-Lighting-Shield-XMC1202-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/RGB-LED-Lighting-Shield/1.0.1/RGB-LED-Lighting-Shield-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RGB-LED-Lighting-Shield-1.0.1.tar.gz",
+    "size_bytes": 11268,
+    "sha256": "b4b9ea1ad89b1e220e76270d4de54e3e3ddf65bfa0a4287a6ea5a877ebb43e57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/RGB-LED-Lighting-Shield/1.0.1/RGB-LED-Lighting-Shield-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/RGB-LED-Lighting-Shield/1.0.1/RGB-LED-Lighting-Shield-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/Stepper-Motor-Shield-IFX9201-XMC1300/1.0.0/Stepper-Motor-Shield-IFX9201-XMC1300-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stepper-Motor-Shield-IFX9201-XMC1300-1.0.0.tar.gz",
+    "size_bytes": 7533,
+    "sha256": "e6c70d007832fb7036b6fd5c0f028cdd1a42d0985e89b110cc0ddf5a88e256e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/Stepper-Motor-Shield-IFX9201-XMC1300/1.0.0/Stepper-Motor-Shield-IFX9201-XMC1300-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/Stepper-Motor-Shield-IFX9201-XMC1300/1.0.0/Stepper-Motor-Shield-IFX9201-XMC1300-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/TLE493D-Magnetic-Sensor/1.3.1/TLE493D-Magnetic-Sensor-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLE493D-Magnetic-Sensor-1.3.1.tar.gz",
+    "size_bytes": 20043,
+    "sha256": "e14d32f64f119931147c2f292f1ec6dc84dcbf2135411b669d03e7062cc4b8d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/TLE493D-Magnetic-Sensor/1.3.1/TLE493D-Magnetic-Sensor-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/TLE493D-Magnetic-Sensor/1.3.1/TLE493D-Magnetic-Sensor-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/TLE5012/3.1.1/TLE5012-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLE5012-3.1.1.tar.gz",
+    "size_bytes": 83240,
+    "sha256": "af48e06a42a91fc5a888e2f196e85fa3c2d6116d59ba9fcc1f38887d42184fac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/TLE5012/3.1.1/TLE5012-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/TLE5012/3.1.1/TLE5012-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/TLE94112/1.4.1/TLE94112-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLE94112-1.4.1.tar.gz",
+    "size_bytes": 16727,
+    "sha256": "17f46cf411fde29e5b092439ac4a65a0d6aeece8d6bc9d3e8d6d8e373c346a01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/TLE94112/1.4.1/TLE94112-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/TLE94112/1.4.1/TLE94112-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/TLE9879%20BLDC%20Motor%20Control%20Shield/1.1.0/TLE9879BLDCMotorControlShield-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLE9879BLDCMotorControlShield-1.1.0.tar.gz",
+    "size_bytes": 14838,
+    "sha256": "3dcc364b15dc552faf87c5a2d7af68d4a1ea5c6bbb20b8ae8ee223c8c5057f42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/TLE9879%2520BLDC%2520Motor%2520Control%2520Shield/1.1.0/TLE9879BLDCMotorControlShield-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/TLE9879%20BLDC%20Motor%20Control%20Shield/1.1.0/TLE9879BLDCMotorControlShield-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/TLI493D-Magnetic-Sensor/2.1.1/TLI493D-Magnetic-Sensor-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLI493D-Magnetic-Sensor-2.1.1.tar.gz",
+    "size_bytes": 23534,
+    "sha256": "4eb13446c3a8f3fb8528a2e83a89a35112a831b416551ed978e53aaa967c2534",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/TLI493D-Magnetic-Sensor/2.1.1/TLI493D-Magnetic-Sensor-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/TLI493D-Magnetic-Sensor/2.1.1/TLI493D-Magnetic-Sensor-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/TLI4970-D050T4-Current-Sensor/1.2.0/TLI4970-D050T4-Current-Sensor-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLI4970-D050T4-Current-Sensor-1.2.0.tar.gz",
+    "size_bytes": 5389,
+    "sha256": "d54da60f2d0f4a3ac565112e3834c5dec0b9b41ee6f053d2a9785565c8f8fea9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/TLI4970-D050T4-Current-Sensor/1.2.0/TLI4970-D050T4-Current-Sensor-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/TLI4970-D050T4-Current-Sensor/1.2.0/TLI4970-D050T4-Current-Sensor-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/TLI4971-Current-Sensor/1.1.2/TLI4971-Current-Sensor-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLI4971-Current-Sensor-1.1.2.tar.gz",
+    "size_bytes": 14829,
+    "sha256": "1b74cfb8a51c18bb96a313d5de904fe45bb345ba06f0125a55fe5992ab437730",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/TLI4971-Current-Sensor/1.1.2/TLI4971-Current-Sensor-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/TLI4971-Current-Sensor/1.1.2/TLI4971-Current-Sensor-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/TLV493D-Magnetic-Sensor/1.0.3/TLV493D-Magnetic-Sensor-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLV493D-Magnetic-Sensor-1.0.3.tar.gz",
+    "size_bytes": 1413191,
+    "sha256": "622c1a2e91b33f0fa48d4ca0de9ad3059c9540cb281682db6c92cac34ac89fa9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/TLV493D-Magnetic-Sensor/1.0.3/TLV493D-Magnetic-Sensor-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/TLV493D-Magnetic-Sensor/1.0.3/TLV493D-Magnetic-Sensor-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/TLV493D-Magnetic-Sensor/1.0.4/TLV493D-Magnetic-Sensor-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLV493D-Magnetic-Sensor-1.0.4.tar.gz",
+    "size_bytes": 1413993,
+    "sha256": "03ad866a2211d577a8f68a49f2e683491b86dd89a51a5c98a760e2f319f3dc0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/TLV493D-Magnetic-Sensor/1.0.4/TLV493D-Magnetic-Sensor-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/TLV493D-Magnetic-Sensor/1.0.4/TLV493D-Magnetic-Sensor-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/TLx4966-Direction-Speed-Sensor/1.1.1/TLx4966-Direction-Speed-Sensor-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLx4966-Direction-Speed-Sensor-1.1.1.tar.gz",
+    "size_bytes": 14595,
+    "sha256": "7af5bcb858a44e56ab5fed87a5ab94e42d4a4ce4560fc2a7425844fdd74e6cd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/TLx4966-Direction-Speed-Sensor/1.1.1/TLx4966-Direction-Speed-Sensor-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/TLx4966-Direction-Speed-Sensor/1.1.1/TLx4966-Direction-Speed-Sensor-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/XENSIV%203D%20Magnetic%20Sensor%20TLx493D/1.1.0/XENSIV3DMagneticSensorTLx493D-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XENSIV3DMagneticSensorTLx493D-1.1.0.tar.gz",
+    "size_bytes": 68811,
+    "sha256": "1a41e1755bf42c520341a0f72746502e18404fbb3a1b294fa0f56f9f3227b1cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/XENSIV%25203D%2520Magnetic%2520Sensor%2520TLx493D/1.1.0/XENSIV3DMagneticSensorTLx493D-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/XENSIV%203D%20Magnetic%20Sensor%20TLx493D/1.1.0/XENSIV3DMagneticSensorTLx493D-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/XENSIV%203D%20Magnetic%20Sensor%20TLx493D/1.1.2/XENSIV3DMagneticSensorTLx493D-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XENSIV3DMagneticSensorTLx493D-1.1.2.tar.gz",
+    "size_bytes": 73374,
+    "sha256": "7de4f8801673da6fa34864ea2d3c107a48a0195169194d1023ec0fbf7dfbca61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/XENSIV%25203D%2520Magnetic%2520Sensor%2520TLx493D/1.1.2/XENSIV3DMagneticSensorTLx493D-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/XENSIV%203D%20Magnetic%20Sensor%20TLx493D/1.1.2/XENSIV3DMagneticSensorTLx493D-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/XENSIV%20Angle%20Sensor%20TLx5012B/4.0.0/XENSIVAngleSensorTLx5012B-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XENSIVAngleSensorTLx5012B-4.0.0.tar.gz",
+    "size_bytes": 64175,
+    "sha256": "4aa8d491400aeca30325f15114383f65099ab9b8a6597f58b288dd54a73e0853",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/XENSIV%2520Angle%2520Sensor%2520TLx5012B/4.0.0/XENSIVAngleSensorTLx5012B-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/XENSIV%20Angle%20Sensor%20TLx5012B/4.0.0/XENSIVAngleSensorTLx5012B-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/XENSIV%20Digital%20Pressure%20Sensor/1.0.1/XENSIVDigitalPressureSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XENSIVDigitalPressureSensor-1.0.1.tar.gz",
+    "size_bytes": 16276,
+    "sha256": "03715069061f8e3a44ab43999d7df700cdb1797f42b6f3a9a0c7480adbbdd1d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/XENSIV%2520Digital%2520Pressure%2520Sensor/1.0.1/XENSIVDigitalPressureSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/XENSIV%20Digital%20Pressure%20Sensor/1.0.1/XENSIVDigitalPressureSensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/XENSIV%20PAS%20CO2/3.2.1/XENSIVPASCO2-3.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XENSIVPASCO2-3.2.1.tar.gz",
+    "size_bytes": 20733,
+    "sha256": "10a1ad424ff0a7e8f0cbd3dcf5b63e23347048c127662183693dcf1c36e5f41b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/XENSIV%2520PAS%2520CO2/3.2.1/XENSIVPASCO2-3.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/XENSIV%20PAS%20CO2/3.2.1/XENSIVPASCO2-3.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/XENSIV%20Radar%20Sensor%20BGT60TR13C/0.1.0/XENSIVRadarSensorBGT60TR13C-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XENSIVRadarSensorBGT60TR13C-0.1.0.tar.gz",
+    "size_bytes": 17531,
+    "sha256": "dd9c50c6ae27301c92763520f642cc86e7c5accb31b17ef07e3c9ae8952e30c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/XENSIV%2520Radar%2520Sensor%2520BGT60TR13C/0.1.0/XENSIVRadarSensorBGT60TR13C-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/XENSIV%20Radar%20Sensor%20BGT60TR13C/0.1.0/XENSIVRadarSensorBGT60TR13C-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/arduino-optiga-trust-m/1.1.0/arduino-optiga-trust-m-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-optiga-trust-m-1.1.0.tar.gz",
+    "size_bytes": 839374,
+    "sha256": "b71eb804b18d8901ccf9b8405d235e6b2032f5f591a1bf4d740ca68568b7b29c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/arduino-optiga-trust-m/1.1.0/arduino-optiga-trust-m-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/arduino-optiga-trust-m/1.1.0/arduino-optiga-trust-m-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/arduino-optiga-trust-x/1.0.5/arduino-optiga-trust-x-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-optiga-trust-x-1.0.5.tar.gz",
+    "size_bytes": 175081,
+    "sha256": "4d06707988cc29780fd2a9b6794b5b28312037a1210643027402455a2e4fc385",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/arduino-optiga-trust-x/1.0.5/arduino-optiga-trust-x-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/arduino-optiga-trust-x/1.0.5/arduino-optiga-trust-x-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/motix-btn99x0/1.1.0/motix-btn99x0-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "motix-btn99x0-1.1.0.tar.gz",
+    "size_bytes": 14374,
+    "sha256": "de7628c520f76f19c3efd3e5f5f29e89f3b144e440a5a55e4bdb1ae1637d4a91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/motix-btn99x0/1.1.0/motix-btn99x0-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/motix-btn99x0/1.1.0/motix-btn99x0-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/ottu-target/0.1.1/ottu-target-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ottu-target-0.1.1.tar.gz",
+    "size_bytes": 73481,
+    "sha256": "ea786fa58724664286449d6c04e25604637cab55e96de6e1dd959d85439ae0ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/ottu-target/0.1.1/ottu-target-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/ottu-target/0.1.1/ottu-target-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/library/radar-bgt60/1.1.2/radar-bgt60-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "radar-bgt60-1.1.2.tar.gz",
+    "size_bytes": 14369,
+    "sha256": "139ce754ea2c18a54dfd6f863a68a50ace752c011883552f4c33fa46c1642077",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/library/radar-bgt60/1.1.2/radar-bgt60-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/library/radar-bgt60/1.1.2/radar-bgt60-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "infineon/platform/infineonxmc/1.2.0/infineonxmc-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "infineonxmc-1.2.0.tar.gz",
+    "size_bytes": 716428,
+    "sha256": "b4039f3d67ebd3414868178f70439a117c038817c0368897b5dcea10fbe66799",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/infineon/platform/infineonxmc/1.2.0/infineonxmc-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/infineon/platform/infineonxmc/1.2.0/infineonxmc-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gcsalzburg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gcsalzburg/library/CAVE_Tasks/0.1.0/CAVE_Tasks-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CAVE_Tasks-0.1.0.tar.gz",
+    "size_bytes": 1514,
+    "sha256": "2d026564211be102a9d942b65b64cdc535ffa74aa0f417729bebe85876430896",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gcsalzburg/library/CAVE_Tasks/0.1.0/CAVE_Tasks-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gcsalzburg/library/CAVE_Tasks/0.1.0/CAVE_Tasks-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

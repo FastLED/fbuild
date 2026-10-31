@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-foxdie",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-foxdie/library/GMLAN/0.0.0+sha.4af02032daeb/GMLAN-0.0.0+sha.4af02032daeb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GMLAN-0.0.0+sha.4af02032daeb.tar.gz",
+    "size_bytes": 6854,
+    "sha256": "53d97cdd31cf959fb8dce6e295a929e103fec31d433c6596b2ef5a1ee880e461",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-foxdie/library/GMLAN/0.0.0%2Bsha.4af02032daeb/GMLAN-0.0.0%2Bsha.4af02032daeb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-foxdie/library/GMLAN/0.0.0%2Bsha.4af02032daeb/GMLAN-0.0.0%2Bsha.4af02032daeb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

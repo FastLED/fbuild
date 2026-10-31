@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-multiplemonomials",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-multiplemonomials/library/BNO080/0.0.0+sha.a121b6c8d662/BNO080-0.0.0+sha.a121b6c8d662.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BNO080-0.0.0+sha.a121b6c8d662.tar.gz",
+    "size_bytes": 25536,
+    "sha256": "d0dade9f441e3c6f9fd5ff0d0bf83a260ea914e55a03000f92269697d8c15aaa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-multiplemonomials/library/BNO080/0.0.0%2Bsha.a121b6c8d662/BNO080-0.0.0%2Bsha.a121b6c8d662.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-multiplemonomials/library/BNO080/0.0.0%2Bsha.a121b6c8d662/BNO080-0.0.0%2Bsha.a121b6c8d662.tar.gz"
+    ]
+   }
+  }
+ ]
+}

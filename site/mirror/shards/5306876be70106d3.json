@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andy4495",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andy4495/library/AY3891x/2.0.1/AY3891x-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AY3891x-2.0.1.tar.gz",
+    "size_bytes": 20225,
+    "sha256": "cb19bf555ed984cd53bb6bc18a2b29494f82a18f9901f91e43c309cb6ed48dc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andy4495/library/AY3891x/2.0.1/AY3891x-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/andy4495/library/AY3891x/2.0.1/AY3891x-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andy4495/library/Energia-EBP_MKII/1.0.1/Energia-EBP_MKII-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Energia-EBP_MKII-1.0.1.tar.gz",
+    "size_bytes": 47374,
+    "sha256": "97c1d4a976a258fafab8c121d7d8b70e996cf033dee443178553918d0f8b5992",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andy4495/library/Energia-EBP_MKII/1.0.1/Energia-EBP_MKII-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/andy4495/library/Energia-EBP_MKII/1.0.1/Energia-EBP_MKII-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andy4495/library/Energia-MultiTas/1.0.1/Energia-MultiTas-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Energia-MultiTas-1.0.1.tar.gz",
+    "size_bytes": 38295,
+    "sha256": "53a22a9ecc5c92db0a3d96ef1216787d4eeed271682c7b475df4fefc2e359034",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andy4495/library/Energia-MultiTas/1.0.1/Energia-MultiTas-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/andy4495/library/Energia-MultiTas/1.0.1/Energia-MultiTas-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andy4495/library/ICM7218/1.3.2/ICM7218-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM7218-1.3.2.tar.gz",
+    "size_bytes": 18487,
+    "sha256": "fa0f28d987a5ea4292fc41e234a32c8fd35751d187d5213a9a64c030be319a59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andy4495/library/ICM7218/1.3.2/ICM7218-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/andy4495/library/ICM7218/1.3.2/ICM7218-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andy4495/library/LCD_SharpBP_SPI/2.0.1/LCD_SharpBP_SPI-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_SharpBP_SPI-2.0.1.tar.gz",
+    "size_bytes": 12212,
+    "sha256": "e6d6ac1ec9479e1b966dc55f759bdb75ef9beaff92b14b315f18338e8fe71949",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andy4495/library/LCD_SharpBP_SPI/2.0.1/LCD_SharpBP_SPI-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/andy4495/library/LCD_SharpBP_SPI/2.0.1/LCD_SharpBP_SPI-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andy4495/library/LED744511/1.1.4/LED744511-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LED744511-1.1.4.tar.gz",
+    "size_bytes": 7265,
+    "sha256": "961612d0c33d6c8d529d89f255b9fc92faf86283364a955bad1dd6f297395e70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andy4495/library/LED744511/1.1.4/LED744511-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/andy4495/library/LED744511/1.1.4/LED744511-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andy4495/library/OneMsTaskTimer/1.0.1/OneMsTaskTimer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneMsTaskTimer-1.0.1.tar.gz",
+    "size_bytes": 7568,
+    "sha256": "d32f2c8a67763e48d297a44e1100a13ce8d77a5afc079ba33393f4346563f356",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andy4495/library/OneMsTaskTimer/1.0.1/OneMsTaskTimer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/andy4495/library/OneMsTaskTimer/1.0.1/OneMsTaskTimer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andy4495/library/SWI2C/2.0.3/SWI2C-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SWI2C-2.0.3.tar.gz",
+    "size_bytes": 14691,
+    "sha256": "e71ee305190db10a3f9d7546270a8fc63f3dadfe07901cb4a0f554741a79d2f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andy4495/library/SWI2C/2.0.3/SWI2C-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/andy4495/library/SWI2C/2.0.3/SWI2C-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andy4495/library/TIL306/1.0.0/TIL306-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TIL306-1.0.0.tar.gz",
+    "size_bytes": 7861,
+    "sha256": "9a544b3837026b5f9cea602dc53b02d0dc3415095ef2f9cc87fe976c28c1edd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andy4495/library/TIL306/1.0.0/TIL306-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andy4495/library/TIL306/1.0.0/TIL306-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andy4495/library/TLC591x/1.4.3/TLC591x-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLC591x-1.4.3.tar.gz",
+    "size_bytes": 9064,
+    "sha256": "d4c1fd43c77c8adfb873db1311c358b299cb809ece1061723e152e814adea550",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andy4495/library/TLC591x/1.4.3/TLC591x-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/andy4495/library/TLC591x/1.4.3/TLC591x-1.4.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

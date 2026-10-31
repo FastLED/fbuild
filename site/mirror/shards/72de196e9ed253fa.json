@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jlz3008",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jlz3008/library/apds9301/0.3.0/apds9301-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "apds9301-0.3.0.tar.gz",
+    "size_bytes": 6069,
+    "sha256": "1908211b236b844bacecefdffa5d5c9f7d6f4d94625b3147dbffa17fcba5fc3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jlz3008/library/apds9301/0.3.0/apds9301-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jlz3008/library/apds9301/0.3.0/apds9301-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

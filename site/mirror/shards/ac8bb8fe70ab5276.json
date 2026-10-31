@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tesa-klebeband",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tesa-klebeband/library/EasyDMX/1.2.1/EasyDMX-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyDMX-1.2.1.tar.gz",
+    "size_bytes": 19679,
+    "sha256": "0c25b9aec5e7c9cdbd5afaf41161710135bc68cdd5eae7bcef3085fc7fc30ebb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tesa-klebeband/library/EasyDMX/1.2.1/EasyDMX-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tesa-klebeband/library/EasyDMX/1.2.1/EasyDMX-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tesa-klebeband/library/TiBridge/1.0.1/TiBridge-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TiBridge-1.0.1.tar.gz",
+    "size_bytes": 32365,
+    "sha256": "4910c4dca3ff85d34dd6882eab5f99081e56452f6e5ada3ee72d4d6cb0af8239",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tesa-klebeband/library/TiBridge/1.0.1/TiBridge-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tesa-klebeband/library/TiBridge/1.0.1/TiBridge-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eaglesia",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eaglesia/library/eBoard%20shackle%20the%20Arduino/3.2.53/eBoardshackletheArduino-3.2.53.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "eBoardshackletheArduino-3.2.53.tar.gz",
+    "size_bytes": 48962,
+    "sha256": "67d04346ad7ad85ecbb775d62f649d1cd2dbfc3ed42649b0b9e59e14779220dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eaglesia/library/eBoard%2520shackle%2520the%2520Arduino/3.2.53/eBoardshackletheArduino-3.2.53.tar.gz",
+     "https://dl.registry.platformio.org/download/eaglesia/library/eBoard%20shackle%20the%20Arduino/3.2.53/eBoardshackletheArduino-3.2.53.tar.gz"
+    ]
+   }
+  }
+ ]
+}

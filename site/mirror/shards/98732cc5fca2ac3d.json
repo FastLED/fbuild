@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/annikken",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "annikken/library/Andee/3.3.2/Andee-3.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Andee-3.3.2.tar.gz",
+    "size_bytes": 55071,
+    "sha256": "207d5bc42fbc6a87e4eb775a2c9ca8d1d142b74095df6de7b509999efd81376f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/annikken/library/Andee/3.3.2/Andee-3.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/annikken/library/Andee/3.3.2/Andee-3.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "annikken/library/Andee101/1.2.4/Andee101-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Andee101-1.2.4.tar.gz",
+    "size_bytes": 35173,
+    "sha256": "15718fe1b59a42e9f0a37ba5ef9810a4d995ab291b0247ad782c78cd92adf59c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/annikken/library/Andee101/1.2.4/Andee101-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/annikken/library/Andee101/1.2.4/Andee101-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "annikken/library/AndeeMobile/1.0.2/AndeeMobile-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AndeeMobile-1.0.2.tar.gz",
+    "size_bytes": 12744,
+    "sha256": "d9366cd58b689e814c627394f0d35ff8fadd828a0596687ac19e4ca8bffa5e1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/annikken/library/AndeeMobile/1.0.2/AndeeMobile-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/annikken/library/AndeeMobile/1.0.2/AndeeMobile-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "annikken/library/EasyAndee/1.0.0/EasyAndee-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyAndee-1.0.0.tar.gz",
+    "size_bytes": 3307,
+    "sha256": "9bcb339b25ba4f4cbd37dbb3ca6c24c8bb704b9b8056dda000bb7ad88f2a79ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/annikken/library/EasyAndee/1.0.0/EasyAndee-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/annikken/library/EasyAndee/1.0.0/EasyAndee-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "annikken/library/EasyAndee101/1.0.0/EasyAndee101-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyAndee101-1.0.0.tar.gz",
+    "size_bytes": 4316,
+    "sha256": "9b331ef51fb787fd40db6482985396cc66eb3b3c52196c6b57336a7719513634",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/annikken/library/EasyAndee101/1.0.0/EasyAndee101-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/annikken/library/EasyAndee101/1.0.0/EasyAndee101-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

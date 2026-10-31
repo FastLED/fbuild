@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bkmzk111",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bkmzk111/library/ESPngine/0.0.1/ESPngine-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPngine-0.0.1.tar.gz",
+    "size_bytes": 4375,
+    "sha256": "4f72e1040860c40912eab514a78ff9033923f3fe9f548c98a2bf6d9809a87fcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bkmzk111/library/ESPngine/0.0.1/ESPngine-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bkmzk111/library/ESPngine/0.0.1/ESPngine-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

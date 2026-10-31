@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mrhornsby",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mrhornsby/library/MDNS/2.0.0/MDNS-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MDNS-2.0.0.tar.gz",
+    "size_bytes": 7607,
+    "sha256": "05a4ead2183967c8af712e0cbb7444c16fd24c22cccc9bb1542dd1b61e865ea0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrhornsby/library/MDNS/2.0.0/MDNS-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mrhornsby/library/MDNS/2.0.0/MDNS-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

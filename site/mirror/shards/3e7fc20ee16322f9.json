@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-guqinchen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-guqinchen/library/IMUfilter/0.0.0+sha.a2f4c5c123e6/IMUfilter-0.0.0+sha.a2f4c5c123e6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMUfilter-0.0.0+sha.a2f4c5c123e6.tar.gz",
+    "size_bytes": 3516,
+    "sha256": "f4a0f08660767cd8bac2990341c79de4a529450dbf62af632a8606f8994d0d72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-guqinchen/library/IMUfilter/0.0.0%2Bsha.a2f4c5c123e6/IMUfilter-0.0.0%2Bsha.a2f4c5c123e6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-guqinchen/library/IMUfilter/0.0.0%2Bsha.a2f4c5c123e6/IMUfilter-0.0.0%2Bsha.a2f4c5c123e6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

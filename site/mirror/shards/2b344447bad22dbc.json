@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shutch42",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shutch42/library/Modmata/0.1/Modmata-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modmata-0.1.tar.gz",
+    "size_bytes": 51710,
+    "sha256": "9715399d089532f43ff5b7a81ddfddd347b1318433c8f26efea00ad71725decd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shutch42/library/Modmata/0.1/Modmata-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/shutch42/library/Modmata/0.1/Modmata-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

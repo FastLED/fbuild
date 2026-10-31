@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gicking",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gicking/library/LIN%20master%20portable/1.9/LINmasterportable-1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LINmasterportable-1.9.tar.gz",
+    "size_bytes": 21427,
+    "sha256": "73d3049cf90b0ac6f9b585c79dd1b8a88e2f8772401cd18ede4517c58652d645",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gicking/library/LIN%2520master%2520portable/1.9/LINmasterportable-1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/gicking/library/LIN%20master%20portable/1.9/LINmasterportable-1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gicking/library/LIN%20master%20portable/2.0/LINmasterportable-2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LINmasterportable-2.0.tar.gz",
+    "size_bytes": 21677,
+    "sha256": "2317f6f3189c80f7e509a2dad0187ab6b747efb52f54d30b8f6f62781ad3ac3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gicking/library/LIN%2520master%2520portable/2.0/LINmasterportable-2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gicking/library/LIN%20master%20portable/2.0/LINmasterportable-2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gicking/library/LIN%20master%20portable/2.1/LINmasterportable-2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LINmasterportable-2.1.tar.gz",
+    "size_bytes": 21446,
+    "sha256": "9591528c71eb9daae52931fb8ba6cbf31b18464076434ff17be8cd3482ad9597",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gicking/library/LIN%2520master%2520portable/2.1/LINmasterportable-2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gicking/library/LIN%20master%20portable/2.1/LINmasterportable-2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gicking/library/LIN%20master%20portable/2.2/LINmasterportable-2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LINmasterportable-2.2.tar.gz",
+    "size_bytes": 21516,
+    "sha256": "f1103e29070e52c69f2b8648319539e7837f1d15995a94abdb66ec44d43a328d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gicking/library/LIN%2520master%2520portable/2.2/LINmasterportable-2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gicking/library/LIN%20master%20portable/2.2/LINmasterportable-2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gicking/library/LIN%20master/1.2/LINmaster-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LINmaster-1.2.tar.gz",
+    "size_bytes": 11920,
+    "sha256": "2727847f5605fb83e06f95ffd49e317786d6cb92376828e96bcf57e3f6b200c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gicking/library/LIN%2520master/1.2/LINmaster-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gicking/library/LIN%20master/1.2/LINmaster-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gicking/library/LIN%20slave%20portable/1.2/LINslaveportable-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LINslaveportable-1.2.tar.gz",
+    "size_bytes": 23606,
+    "sha256": "28d0df35b227dcd436a1d918e04243b625711968a4e20047f2773c8876b6a157",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gicking/library/LIN%2520slave%2520portable/1.2/LINslaveportable-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gicking/library/LIN%20slave%20portable/1.2/LINslaveportable-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gicking/library/NeoHWSerial/1.6.9/NeoHWSerial-1.6.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoHWSerial-1.6.9.tar.gz",
+    "size_bytes": 15696,
+    "sha256": "fa713f320b4a8144f46fd98b49ac3048a867a88cda3068c8ee2e8e0a80c37371",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gicking/library/NeoHWSerial/1.6.9/NeoHWSerial-1.6.9.tar.gz",
+     "https://dl.registry.platformio.org/download/gicking/library/NeoHWSerial/1.6.9/NeoHWSerial-1.6.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

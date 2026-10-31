@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/unical-a",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "unical-a/library/DashlyClient/1.0.0/DashlyClient-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DashlyClient-1.0.0.tar.gz",
+    "size_bytes": 6265,
+    "sha256": "cecb7498e7bb4b76aff5d147e03989ce879173b7491b663aa9029e470eabf765",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unical-a/library/DashlyClient/1.0.0/DashlyClient-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unical-a/library/DashlyClient/1.0.0/DashlyClient-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unical-a/library/DashlyClient/2.1.0/DashlyClient-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DashlyClient-2.1.0.tar.gz",
+    "size_bytes": 8074,
+    "sha256": "a4789b803fd156adbae11f3992496d44419c21f80ed9430f78ada46d6abb99c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unical-a/library/DashlyClient/2.1.0/DashlyClient-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unical-a/library/DashlyClient/2.1.0/DashlyClient-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

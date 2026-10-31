@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/berranremzi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "berranremzi/library/InterruptADC/1.0.0/InterruptADC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InterruptADC-1.0.0.tar.gz",
+    "size_bytes": 18819,
+    "sha256": "8321e361ed495b4ef0c307f367e7f4e865b6279cc7e57222989ea0f9e9e3b0ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/berranremzi/library/InterruptADC/1.0.0/InterruptADC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/berranremzi/library/InterruptADC/1.0.0/InterruptADC-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

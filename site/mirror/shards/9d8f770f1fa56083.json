@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mathworks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mathworks/library/ThingSpeak/2.1.1/ThingSpeak-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingSpeak-2.1.1.tar.gz",
+    "size_bytes": 35058,
+    "sha256": "d8ffb8b615a620c76a673a66fa860130ac372467905746bf91aff0e29283c7c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mathworks/library/ThingSpeak/2.1.1/ThingSpeak-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mathworks/library/ThingSpeak/2.1.1/ThingSpeak-2.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

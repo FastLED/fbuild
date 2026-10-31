@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rodolphemichel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rodolphemichel/library/DS18B20/0.0.0+sha.ddee20f8438d/DS18B20-0.0.0+sha.ddee20f8438d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS18B20-0.0.0+sha.ddee20f8438d.tar.gz",
+    "size_bytes": 3810,
+    "sha256": "cdd6d3bba2664998b11d2a71a6dd8e970e02bd8e9b759c9eec3c654d42d3dbca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rodolphemichel/library/DS18B20/0.0.0%2Bsha.ddee20f8438d/DS18B20-0.0.0%2Bsha.ddee20f8438d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rodolphemichel/library/DS18B20/0.0.0%2Bsha.ddee20f8438d/DS18B20-0.0.0%2Bsha.ddee20f8438d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

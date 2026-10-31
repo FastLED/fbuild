@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arsenier",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arsenier/library/argviz/0.1.1/argviz-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "argviz-0.1.1.tar.gz",
+    "size_bytes": 7445,
+    "sha256": "600ef317b0f582f3096e483edaeb257fd40fe2fd3716fec339e4de12d0a58325",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arsenier/library/argviz/0.1.1/argviz-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arsenier/library/argviz/0.1.1/argviz-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/snaildragon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "snaildragon/library/MightyOhmGeigerCounter/1.1.0/MightyOhmGeigerCounter-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MightyOhmGeigerCounter-1.1.0.tar.gz",
+    "size_bytes": 4146,
+    "sha256": "68a82cf7e6345cad2eb483647eda2db28de35d8cd24e9d538b7360817cac3f2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snaildragon/library/MightyOhmGeigerCounter/1.1.0/MightyOhmGeigerCounter-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snaildragon/library/MightyOhmGeigerCounter/1.1.0/MightyOhmGeigerCounter-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "snaildragon/library/MightyOhmGeigerCounter/1.2.0/MightyOhmGeigerCounter-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MightyOhmGeigerCounter-1.2.0.tar.gz",
+    "size_bytes": 4401,
+    "sha256": "a52bcce3e3b4dc8fbd74848adf2411c7bc332334e1b778c6940769f84bf38017",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snaildragon/library/MightyOhmGeigerCounter/1.2.0/MightyOhmGeigerCounter-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snaildragon/library/MightyOhmGeigerCounter/1.2.0/MightyOhmGeigerCounter-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

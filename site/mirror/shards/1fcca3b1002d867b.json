@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/witchcraftworks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "witchcraftworks/library/MCP2515-nb/0.1.0/MCP2515-nb-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP2515-nb-0.1.0.tar.gz",
+    "size_bytes": 18523,
+    "sha256": "1c923e800e8569d4be15e361e0e9e5a9e3a41c91d59a76d53c2969612972f440",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/witchcraftworks/library/MCP2515-nb/0.1.0/MCP2515-nb-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/witchcraftworks/library/MCP2515-nb/0.1.0/MCP2515-nb-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

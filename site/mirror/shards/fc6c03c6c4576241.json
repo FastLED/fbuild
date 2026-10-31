@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/galjonsfigur",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "galjonsfigur/library/DotMatrixDisplay/1.0.0/DotMatrixDisplay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DotMatrixDisplay-1.0.0.tar.gz",
+    "size_bytes": 5187,
+    "sha256": "d132727e2af57b1e20c5ad70535a29748b1ec9d5a5e3953a109c272f475b479d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/galjonsfigur/library/DotMatrixDisplay/1.0.0/DotMatrixDisplay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/galjonsfigur/library/DotMatrixDisplay/1.0.0/DotMatrixDisplay-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

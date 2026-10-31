@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chrisns",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chrisns/library/LoctekMotion_IoT_arduino/1.7.4/LoctekMotion_IoT_arduino-1.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoctekMotion_IoT_arduino-1.7.4.tar.gz",
+    "size_bytes": 2900,
+    "sha256": "f228c14cd1ccacd650d9eaa218e6cc0e50577308b90a708935bed260edc96754",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisns/library/LoctekMotion_IoT_arduino/1.7.4/LoctekMotion_IoT_arduino-1.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisns/library/LoctekMotion_IoT_arduino/1.7.4/LoctekMotion_IoT_arduino-1.7.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrisns/library/LoctekMotion_IoT_esphome/1.7.4/LoctekMotion_IoT_esphome-1.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoctekMotion_IoT_esphome-1.7.4.tar.gz",
+    "size_bytes": 6258,
+    "sha256": "7ab5fc5ba03efd6ebcc0ee3e539ef477969874e87bdfe5217decf8d14cda4b8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrisns/library/LoctekMotion_IoT_esphome/1.7.4/LoctekMotion_IoT_esphome-1.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/chrisns/library/LoctekMotion_IoT_esphome/1.7.4/LoctekMotion_IoT_esphome-1.7.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

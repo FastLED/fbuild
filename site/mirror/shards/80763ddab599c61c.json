@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kuba2k2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kuba2k2/library/BTstack/1.6.2-pkg.1/BTstack-1.6.2-pkg.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BTstack-1.6.2-pkg.1.tar.gz",
+    "size_bytes": 2004618,
+    "sha256": "571df6eade265482cccdbf8f0a02be97948c42c5b4a132484378af9cca1e6407",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kuba2k2/library/BTstack/1.6.2-pkg.1/BTstack-1.6.2-pkg.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kuba2k2/library/BTstack/1.6.2-pkg.1/BTstack-1.6.2-pkg.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kuba2k2/library/FlashDB/2024.12.30/FlashDB-2024.12.30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashDB-2024.12.30.tar.gz",
+    "size_bytes": 61109,
+    "sha256": "d60b6b12dcd243c40b1a0382335232885f3f279b7f552350662a6f979dfa734b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kuba2k2/library/FlashDB/2024.12.30/FlashDB-2024.12.30.tar.gz",
+     "https://dl.registry.platformio.org/download/kuba2k2/library/FlashDB/2024.12.30/FlashDB-2024.12.30.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kuba2k2/library/libserialport/2024.9.24/libserialport-2024.9.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libserialport-2024.9.24.tar.gz",
+    "size_bytes": 49444,
+    "sha256": "c123deb74efa26b7c61720c44c230a52a544812a64a0a228320319fcb3f38828",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kuba2k2/library/libserialport/2024.9.24/libserialport-2024.9.24.tar.gz",
+     "https://dl.registry.platformio.org/download/kuba2k2/library/libserialport/2024.9.24/libserialport-2024.9.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kuba2k2/library/uf2ota/5.0.0/uf2ota-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uf2ota-5.0.0.tar.gz",
+    "size_bytes": 7356,
+    "sha256": "892cd562ef6a93f3b360e4562a7f4520a0ccbd0aee5d9a00a756d25167676859",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kuba2k2/library/uf2ota/5.0.0/uf2ota-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kuba2k2/library/uf2ota/5.0.0/uf2ota-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kuba2k2/platform/libretiny/1.10.0/libretiny-1.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libretiny-1.10.0.tar.gz",
+    "size_bytes": 318569,
+    "sha256": "fcb673133a0785036abc94de3985b08c507489e048ae7411ab5ad9b6f507b8ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kuba2k2/platform/libretiny/1.10.0/libretiny-1.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kuba2k2/platform/libretiny/1.10.0/libretiny-1.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kuba2k2/platform/libretiny/1.13.0/libretiny-1.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libretiny-1.13.0.tar.gz",
+    "size_bytes": 346217,
+    "sha256": "69b12e07621fceadaa13be12614cee9a4473a4fce5ce539da2a89eb754f1b52e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kuba2k2/platform/libretiny/1.13.0/libretiny-1.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kuba2k2/platform/libretiny/1.13.0/libretiny-1.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kuba2k2/platform/libretiny/1.14.0/libretiny-1.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libretiny-1.14.0.tar.gz",
+    "size_bytes": 348963,
+    "sha256": "019c91c74a0ffad389ed0195f033b553d7c8240a142da5ba6f4c1c988b33f6d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kuba2k2/platform/libretiny/1.14.0/libretiny-1.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kuba2k2/platform/libretiny/1.14.0/libretiny-1.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kuba2k2/platform/libretiny/1.4.1/libretiny-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libretiny-1.4.1.tar.gz",
+    "size_bytes": 270181,
+    "sha256": "67b3d88cb0c539a9be09088cfa23af0e47b1e8461263bdea966013e1c009a32c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kuba2k2/platform/libretiny/1.4.1/libretiny-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kuba2k2/platform/libretiny/1.4.1/libretiny-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kuba2k2/platform/libretiny/1.7.0/libretiny-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libretiny-1.7.0.tar.gz",
+    "size_bytes": 277378,
+    "sha256": "b1505edc9667b92d5345bc85549ff485d9ae8ee08e315454214a988b8a4b7612",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kuba2k2/platform/libretiny/1.7.0/libretiny-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kuba2k2/platform/libretiny/1.7.0/libretiny-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kuba2k2/platform/libretiny/1.9.1/libretiny-1.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libretiny-1.9.1.tar.gz",
+    "size_bytes": 315989,
+    "sha256": "2927d6b1b599d84f50be04bb26d94d5f712a35e3a217012e626d2713aa276603",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kuba2k2/platform/libretiny/1.9.1/libretiny-1.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kuba2k2/platform/libretiny/1.9.1/libretiny-1.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kuba2k2/platform/libretiny/1.9.2/libretiny-1.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libretiny-1.9.2.tar.gz",
+    "size_bytes": 316986,
+    "sha256": "9960460d844e3a3417fc04da0ba4cba6c0ae674a6108edc93ac9601b498c8c97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kuba2k2/platform/libretiny/1.9.2/libretiny-1.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kuba2k2/platform/libretiny/1.9.2/libretiny-1.9.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

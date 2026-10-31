@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rassaifred",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rassaifred/library/GhostFieldLib/0.0.5/GhostFieldLib-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GhostFieldLib-0.0.5.tar.gz",
+    "size_bytes": 3544,
+    "sha256": "d888dbc1d45b3c291b352cac94d89ed6c24e599ce083b60637b60bc055f063c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rassaifred/library/GhostFieldLib/0.0.5/GhostFieldLib-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/rassaifred/library/GhostFieldLib/0.0.5/GhostFieldLib-0.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

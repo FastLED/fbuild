@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hitech-corporation",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hitech-corporation/library/HiTECH%20R4%20Wifi%20Manager/2026.6.13/HiTECHR4WifiManager-2026.6.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HiTECHR4WifiManager-2026.6.13.tar.gz",
+    "size_bytes": 21192,
+    "sha256": "a42af0a11e3608102846018e644e3eaaf0327ce831a0c5ab3d9e5e5cd61148e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hitech-corporation/library/HiTECH%2520R4%2520Wifi%2520Manager/2026.6.13/HiTECHR4WifiManager-2026.6.13.tar.gz",
+     "https://dl.registry.platformio.org/download/hitech-corporation/library/HiTECH%20R4%20Wifi%20Manager/2026.6.13/HiTECHR4WifiManager-2026.6.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hitech-corporation/library/HiTECH%20R4%20Wifi%20Manager/2026.6.20/HiTECHR4WifiManager-2026.6.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HiTECHR4WifiManager-2026.6.20.tar.gz",
+    "size_bytes": 22731,
+    "sha256": "a75d2db36e00ec403c90fe30d4c317ca02b0061a6d312233524a414c7b99bc43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hitech-corporation/library/HiTECH%2520R4%2520Wifi%2520Manager/2026.6.20/HiTECHR4WifiManager-2026.6.20.tar.gz",
+     "https://dl.registry.platformio.org/download/hitech-corporation/library/HiTECH%20R4%20Wifi%20Manager/2026.6.20/HiTECHR4WifiManager-2026.6.20.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fishwaldo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fishwaldo/library/esp_ghota/0.0.1/esp_ghota-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_ghota-0.0.1.tar.gz",
+    "size_bytes": 43391,
+    "sha256": "82fb4c57696fd17a488e4edcc96b9510d700aee37e808d258b978e668176c006",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fishwaldo/library/esp_ghota/0.0.1/esp_ghota-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fishwaldo/library/esp_ghota/0.0.1/esp_ghota-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

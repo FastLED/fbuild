@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/erhan-made",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "erhan-made/library/StepperControl/2.2.1/StepperControl-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperControl-2.2.1.tar.gz",
+    "size_bytes": 3281,
+    "sha256": "8809473de926cc6cd504f73711a47b63010cf92a9ff87ae67fb3dd302f1d72e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erhan-made/library/StepperControl/2.2.1/StepperControl-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/erhan-made/library/StepperControl/2.2.1/StepperControl-2.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

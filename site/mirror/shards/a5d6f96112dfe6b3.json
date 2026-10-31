@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tijofrancis12",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tijofrancis12/library/LCD/0.0.0+sha.6c3062de234b/LCD-0.0.0+sha.6c3062de234b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD-0.0.0+sha.6c3062de234b.tar.gz",
+    "size_bytes": 861,
+    "sha256": "1b0e589b6b0cecb22e5123c0afffae9fe681237cc56ea8ce37f3e0a05274f62a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tijofrancis12/library/LCD/0.0.0%2Bsha.6c3062de234b/LCD-0.0.0%2Bsha.6c3062de234b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tijofrancis12/library/LCD/0.0.0%2Bsha.6c3062de234b/LCD-0.0.0%2Bsha.6c3062de234b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jorgemvc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jorgemvc/library/MotoMama%20Library/1.0.1/MotoMamaLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotoMamaLibrary-1.0.1.tar.gz",
+    "size_bytes": 4565,
+    "sha256": "6a6e2574479114a7e1684b6b3fba66200ed00dbb6e58f860736564a6d4be7353",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgemvc/library/MotoMama%2520Library/1.0.1/MotoMamaLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgemvc/library/MotoMama%20Library/1.0.1/MotoMamaLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jorgemvc/library/S4ALib/1.0.5/S4ALib-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "S4ALib-1.0.5.tar.gz",
+    "size_bytes": 4763,
+    "sha256": "a731887d87eee489520cd1c0cfba046a4aa5ac11f67a9abe6df0ff4db3762102",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgemvc/library/S4ALib/1.0.5/S4ALib-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgemvc/library/S4ALib/1.0.5/S4ALib-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

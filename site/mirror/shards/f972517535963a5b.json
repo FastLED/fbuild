@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jeroen88",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jeroen88/library/EasyOpenTherm/1.2.0/EasyOpenTherm-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyOpenTherm-1.2.0.tar.gz",
+    "size_bytes": 65836,
+    "sha256": "0a1dc7342c39ddf193c31e2383992ca3a77614ba2fc4eab0da7f652b81e538a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeroen88/library/EasyOpenTherm/1.2.0/EasyOpenTherm-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jeroen88/library/EasyOpenTherm/1.2.0/EasyOpenTherm-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

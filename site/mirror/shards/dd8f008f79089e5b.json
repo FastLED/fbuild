@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/beirdo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "beirdo/library/FRAM_Cache/1.1.2/FRAM_Cache-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FRAM_Cache-1.1.2.tar.gz",
+    "size_bytes": 5103,
+    "sha256": "3fc374905b5da1e1ecbea4c12eb337dd19e4a028b9bc760ce5032acafab43684",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beirdo/library/FRAM_Cache/1.1.2/FRAM_Cache-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/beirdo/library/FRAM_Cache/1.1.2/FRAM_Cache-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beirdo/library/LINBus_stack/3.1.3/LINBus_stack-3.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LINBus_stack-3.1.3.tar.gz",
+    "size_bytes": 10747,
+    "sha256": "10610267e33181193365965c287f9d0334c60eb0caf43216c4a1b239c73cd361",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beirdo/library/LINBus_stack/3.1.3/LINBus_stack-3.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/beirdo/library/LINBus_stack/3.1.3/LINBus_stack-3.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beirdo/library/LM96163/1.0.0/LM96163-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM96163-1.0.0.tar.gz",
+    "size_bytes": 3614,
+    "sha256": "b58a498cda4905827e932288aac8b180675b6e58ea26d16e74fff5a30b090de7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beirdo/library/LM96163/1.0.0/LM96163-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beirdo/library/LM96163/1.0.0/LM96163-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beirdo/library/MultiWire/1.0.0/MultiWire-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiWire-1.0.0.tar.gz",
+    "size_bytes": 4077,
+    "sha256": "42bcaf645ac5bde02517e14142d881df9130f11e17c34395d88f21b3f1b0cc00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beirdo/library/MultiWire/1.0.0/MultiWire-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beirdo/library/MultiWire/1.0.0/MultiWire-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beirdo/library/PCA9536D/2.0.1/PCA9536D-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9536D-2.0.1.tar.gz",
+    "size_bytes": 6237,
+    "sha256": "2f7731c45e438ff7bb3d7948724e5635444fbe74c65a79e10fa2a21a621e3ba7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beirdo/library/PCA9536D/2.0.1/PCA9536D-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/beirdo/library/PCA9536D/2.0.1/PCA9536D-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beirdo/library/TCA9534-GPIO/1.1.0/TCA9534-GPIO-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCA9534-GPIO-1.1.0.tar.gz",
+    "size_bytes": 6393,
+    "sha256": "029b371a09a35a6b7075d580afc4cae9b1e03060e217498d9e184759c10fee40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beirdo/library/TCA9534-GPIO/1.1.0/TCA9534-GPIO-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beirdo/library/TCA9534-GPIO/1.1.0/TCA9534-GPIO-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

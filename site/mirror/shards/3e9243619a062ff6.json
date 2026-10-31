@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dokunewon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dokunewon/library/DokuFFTPACK/0.0.0+sha.d7215946c769/DokuFFTPACK-0.0.0+sha.d7215946c769.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DokuFFTPACK-0.0.0+sha.d7215946c769.tar.gz",
+    "size_bytes": 10464,
+    "sha256": "31eb6accdac9d2885fec34050210a7af19df698c87735372dc08f5c02b866c23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dokunewon/library/DokuFFTPACK/0.0.0%2Bsha.d7215946c769/DokuFFTPACK-0.0.0%2Bsha.d7215946c769.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dokunewon/library/DokuFFTPACK/0.0.0%2Bsha.d7215946c769/DokuFFTPACK-0.0.0%2Bsha.d7215946c769.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dokunewon/library/DokuUSBHostWithIso/0.0.0+sha.176143a0f4de/DokuUSBHostWithIso-0.0.0+sha.176143a0f4de.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DokuUSBHostWithIso-0.0.0+sha.176143a0f4de.tar.gz",
+    "size_bytes": 133406,
+    "sha256": "c1fe491eae14645a423298799840a5947d22b923b1118fa289f60616f0d17214",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dokunewon/library/DokuUSBHostWithIso/0.0.0%2Bsha.176143a0f4de/DokuUSBHostWithIso-0.0.0%2Bsha.176143a0f4de.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dokunewon/library/DokuUSBHostWithIso/0.0.0%2Bsha.176143a0f4de/DokuUSBHostWithIso-0.0.0%2Bsha.176143a0f4de.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dzarda",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dzarda/library/ChibiPIO-STM32F0/1.200303.0/ChibiPIO-STM32F0-1.200303.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChibiPIO-STM32F0-1.200303.0.tar.gz",
+    "size_bytes": 1653438,
+    "sha256": "50621aa1badac26ccb67b97c4b5784ed962b6c8a712b25a3c0c6dceb1c1d0c08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzarda/library/ChibiPIO-STM32F0/1.200303.0/ChibiPIO-STM32F0-1.200303.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dzarda/library/ChibiPIO-STM32F0/1.200303.0/ChibiPIO-STM32F0-1.200303.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dzarda/library/ChibiPIO-STM32L0/1.211102.0/ChibiPIO-STM32L0-1.211102.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChibiPIO-STM32L0-1.211102.0.tar.gz",
+    "size_bytes": 1841380,
+    "sha256": "f153a947b976fdedd2f16a3c03426f3f9f6f6f2574415e5e623892e19b6f21c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzarda/library/ChibiPIO-STM32L0/1.211102.0/ChibiPIO-STM32L0-1.211102.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dzarda/library/ChibiPIO-STM32L0/1.211102.0/ChibiPIO-STM32L0-1.211102.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

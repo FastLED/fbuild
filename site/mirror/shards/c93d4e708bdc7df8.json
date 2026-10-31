@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/legohead259",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "legohead259/library/ThetisLib/1.1.5/ThetisLib-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThetisLib-1.1.5.tar.gz",
+    "size_bytes": 29972,
+    "sha256": "31dbead0b2ed67082638e1697d2d0b31b91ab655a55ad75e2a146a72531a9bb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/legohead259/library/ThetisLib/1.1.5/ThetisLib-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/legohead259/library/ThetisLib/1.1.5/ThetisLib-1.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jingoro2112",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jingoro2112/library/wrench/6.0.19/wrench-6.0.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wrench-6.0.19.tar.gz",
+    "size_bytes": 335596,
+    "sha256": "056d7b5ab97cd18357b34ad9576cb0f678d75e10dd52a84b0488d45982936264",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jingoro2112/library/wrench/6.0.19/wrench-6.0.19.tar.gz",
+     "https://dl.registry.platformio.org/download/jingoro2112/library/wrench/6.0.19/wrench-6.0.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jingoro2112/library/wrench/6.0.20/wrench-6.0.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wrench-6.0.20.tar.gz",
+    "size_bytes": 336910,
+    "sha256": "fb36f844eabd9bb2be1d3d585f7a9ee715ceb5a688c1590250660b6702d67ff5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jingoro2112/library/wrench/6.0.20/wrench-6.0.20.tar.gz",
+     "https://dl.registry.platformio.org/download/jingoro2112/library/wrench/6.0.20/wrench-6.0.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jingoro2112/library/wrench/6.0.21/wrench-6.0.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wrench-6.0.21.tar.gz",
+    "size_bytes": 339267,
+    "sha256": "9c0dc8e60e90c2da4212513b9929ab1956e197d5c4523a7a1c7f6c0cf6ed3a69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jingoro2112/library/wrench/6.0.21/wrench-6.0.21.tar.gz",
+     "https://dl.registry.platformio.org/download/jingoro2112/library/wrench/6.0.21/wrench-6.0.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jingoro2112/library/wrench/7.2.0/wrench-7.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wrench-7.2.0.tar.gz",
+    "size_bytes": 356421,
+    "sha256": "9faf2b0b22a18151fcc51a745a3edafc64705465ed3a67a0420aac852374336f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jingoro2112/library/wrench/7.2.0/wrench-7.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jingoro2112/library/wrench/7.2.0/wrench-7.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

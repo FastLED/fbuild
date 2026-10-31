@@ -1,0 +1,386 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/h2zero",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "h2zero/library/NimBLE-Arduino/1.3.6/NimBLE-Arduino-1.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-1.3.6.tar.gz",
+    "size_bytes": 655059,
+    "sha256": "75bcd2112c19f27db32b472523f95452dd76eeb40558486a589c5a10c2c46dc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/1.3.6/NimBLE-Arduino-1.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/1.3.6/NimBLE-Arduino-1.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/1.3.8/NimBLE-Arduino-1.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-1.3.8.tar.gz",
+    "size_bytes": 657552,
+    "sha256": "8cd9a8140269485c116ca6066bd80b3c9a74d531bae5bd22763dc169df93499a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/1.3.8/NimBLE-Arduino-1.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/1.3.8/NimBLE-Arduino-1.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/1.4.0/NimBLE-Arduino-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-1.4.0.tar.gz",
+    "size_bytes": 937071,
+    "sha256": "bdcae23de2487cf40cd678649e705a7fab6f9a39b1879900cb425798b75ba0c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/1.4.0/NimBLE-Arduino-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/1.4.0/NimBLE-Arduino-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/1.4.1/NimBLE-Arduino-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-1.4.1.tar.gz",
+    "size_bytes": 941928,
+    "sha256": "53fc334fef8f4b31fb37a76e0d70a08f2ce21440f6e26a7d1d1aed78708fd18e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/1.4.1/NimBLE-Arduino-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/1.4.1/NimBLE-Arduino-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/1.4.2/NimBLE-Arduino-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-1.4.2.tar.gz",
+    "size_bytes": 940039,
+    "sha256": "f11fd3dff173ff1b26d196df6c5455947a0463952b1dbf75c90d364d0d990487",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/1.4.2/NimBLE-Arduino-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/1.4.2/NimBLE-Arduino-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/1.4.3/NimBLE-Arduino-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-1.4.3.tar.gz",
+    "size_bytes": 940429,
+    "sha256": "9b6e4cabf8c90133ee1d7bc9c10edff14f22632ef83fe186015c3d1721310efd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/1.4.3/NimBLE-Arduino-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/1.4.3/NimBLE-Arduino-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.1.0/NimBLE-Arduino-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.1.0.tar.gz",
+    "size_bytes": 1018047,
+    "sha256": "e7ea8081b6f8a6a19e94c2551a58b32c1b09b9ba6ffd96d64067319d5daf22d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.1.0/NimBLE-Arduino-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.1.0/NimBLE-Arduino-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.1.2/NimBLE-Arduino-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.1.2.tar.gz",
+    "size_bytes": 1019259,
+    "sha256": "92b2518bb93228f150c8cc670e6376cf95008d2fd8064f4926d6f94f6e0cbda8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.1.2/NimBLE-Arduino-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.1.2/NimBLE-Arduino-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.1.3/NimBLE-Arduino-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.1.3.tar.gz",
+    "size_bytes": 1019704,
+    "sha256": "ebf4480d54e0be932a46f30bb9e1843858debae65465dee3f66dd9c0ec93fba8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.1.3/NimBLE-Arduino-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.1.3/NimBLE-Arduino-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.2.1/NimBLE-Arduino-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.2.1.tar.gz",
+    "size_bytes": 1022359,
+    "sha256": "f99c3d7d523c34a9863494d1f286472bc5722c7c3b26cc2be933fa98e02e3224",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.2.1/NimBLE-Arduino-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.2.1/NimBLE-Arduino-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.2.3/NimBLE-Arduino-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.2.3.tar.gz",
+    "size_bytes": 1022021,
+    "sha256": "853bd6b6aa089700929630358e6a08ca6e67b8e6c9d8329968b95502245ca10a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.2.3/NimBLE-Arduino-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.2.3/NimBLE-Arduino-2.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.3.0/NimBLE-Arduino-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.3.0.tar.gz",
+    "size_bytes": 1094847,
+    "sha256": "f6643d0696ce09702658036fe31f39dfa40f78f3fa3bd7ae84cb4b368ea29658",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.3.0/NimBLE-Arduino-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.3.0/NimBLE-Arduino-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.3.2/NimBLE-Arduino-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.3.2.tar.gz",
+    "size_bytes": 1094641,
+    "sha256": "b840ac3a6ec194f8aaf15addaf404109bbf74698efff6901704b899d7349bcb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.3.2/NimBLE-Arduino-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.3.2/NimBLE-Arduino-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.3.4/NimBLE-Arduino-2.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.3.4.tar.gz",
+    "size_bytes": 1096078,
+    "sha256": "da8a2e75afa05b55d2baa3e0ee43a3322d59a9450bdf4b3e9c34e5577ab56fe0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.3.4/NimBLE-Arduino-2.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.3.4/NimBLE-Arduino-2.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.3.5/NimBLE-Arduino-2.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.3.5.tar.gz",
+    "size_bytes": 1096119,
+    "sha256": "55cbf59b9815112c89b8c5791327c5ec5e8f1cc167f97994f2ccf564b980b592",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.3.5/NimBLE-Arduino-2.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.3.5/NimBLE-Arduino-2.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.3.6/NimBLE-Arduino-2.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.3.6.tar.gz",
+    "size_bytes": 1096168,
+    "sha256": "a584fd44ce6704427449a85d9dbfe93c810be0a04683641a0805f741592d5a99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.3.6/NimBLE-Arduino-2.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.3.6/NimBLE-Arduino-2.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.3.7/NimBLE-Arduino-2.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.3.7.tar.gz",
+    "size_bytes": 1097194,
+    "sha256": "3cb4cf2751e3f76d87fcb6d6c0044968a9c4562fb694c5066df9e26724758dfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.3.7/NimBLE-Arduino-2.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.3.7/NimBLE-Arduino-2.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.3.8/NimBLE-Arduino-2.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.3.8.tar.gz",
+    "size_bytes": 1099706,
+    "sha256": "62875878bc7cbf245754f2d147c574f8e3d65165061ca515254f8a6093f0a453",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.3.8/NimBLE-Arduino-2.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.3.8/NimBLE-Arduino-2.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.3.9/NimBLE-Arduino-2.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.3.9.tar.gz",
+    "size_bytes": 1100322,
+    "sha256": "f87c05051afb61d1c14ff66736f0e38d27601f5f10ff1b68388c7bd87321ce99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.3.9/NimBLE-Arduino-2.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.3.9/NimBLE-Arduino-2.3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.4.0/NimBLE-Arduino-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.4.0.tar.gz",
+    "size_bytes": 1115511,
+    "sha256": "f4cc986be590d9c61eae94853019569b33f61ecd95670ea43382509e0eaca5c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.4.0/NimBLE-Arduino-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.4.0/NimBLE-Arduino-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.5.0/NimBLE-Arduino-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.5.0.tar.gz",
+    "size_bytes": 1122341,
+    "sha256": "2e1e0e99eb469bfc03e381c472f625301a4a0b8c4201863bf54c9d5fba1b5ad2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.5.0/NimBLE-Arduino-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.5.0/NimBLE-Arduino-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.5.1/NimBLE-Arduino-2.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.5.1.tar.gz",
+    "size_bytes": 1123523,
+    "sha256": "5a3aa3afab4e680ab9731cc0d83c731a74f9b3f7615acf0242e9b0422e239e02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.5.1/NimBLE-Arduino-2.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.5.1/NimBLE-Arduino-2.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLE-Arduino/2.5.2/NimBLE-Arduino-2.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLE-Arduino-2.5.2.tar.gz",
+    "size_bytes": 1123961,
+    "sha256": "fc70e2f49808479e5504d2d43de20153c295d9ddecb606f492dc486d649cba6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLE-Arduino/2.5.2/NimBLE-Arduino-2.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLE-Arduino/2.5.2/NimBLE-Arduino-2.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/NimBLEOta/0.2.0/NimBLEOta-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NimBLEOta-0.2.0.tar.gz",
+    "size_bytes": 12048,
+    "sha256": "ecd3ac74feb562dcf6c0d5f359e58ab8554ed0995ace006f775beb3595f5d70b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/NimBLEOta/0.2.0/NimBLEOta-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/NimBLEOta/0.2.0/NimBLEOta-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/esp-nimble-cpp/2.3.2/esp-nimble-cpp-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-nimble-cpp-2.3.2.tar.gz",
+    "size_bytes": 147609,
+    "sha256": "0aa882c0db82c57c448cfdf8dcc390e237abe799fe03a3f177ab5238216102f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/esp-nimble-cpp/2.3.2/esp-nimble-cpp-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/esp-nimble-cpp/2.3.2/esp-nimble-cpp-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/esp-nimble-cpp/2.3.4/esp-nimble-cpp-2.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-nimble-cpp-2.3.4.tar.gz",
+    "size_bytes": 149995,
+    "sha256": "f33e9072e1f91149de0514aed53d870999c4f0dc84288b0b54d79664f3556305",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/esp-nimble-cpp/2.3.4/esp-nimble-cpp-2.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/esp-nimble-cpp/2.3.4/esp-nimble-cpp-2.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/esp-nimble-cpp/2.4.0/esp-nimble-cpp-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-nimble-cpp-2.4.0.tar.gz",
+    "size_bytes": 167431,
+    "sha256": "5981bf9f31aab993e4e4ca16eb8caff3657ee6bb92d047a688ef62595424d3d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/esp-nimble-cpp/2.4.0/esp-nimble-cpp-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/esp-nimble-cpp/2.4.0/esp-nimble-cpp-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/esp-nimble-cpp/2.5.0/esp-nimble-cpp-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-nimble-cpp-2.5.0.tar.gz",
+    "size_bytes": 176752,
+    "sha256": "77cb729b4e7660cf3161761ccd44295cdef5dff7d04a450357d60d0258b025ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/esp-nimble-cpp/2.5.0/esp-nimble-cpp-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/esp-nimble-cpp/2.5.0/esp-nimble-cpp-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h2zero/library/esp-nimble-cpp/2.6.0/esp-nimble-cpp-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-nimble-cpp-2.6.0.tar.gz",
+    "size_bytes": 180699,
+    "sha256": "663bd845421dbdc0e1a3d6082b01dab2c475777df363ebffe2ecab025397a8f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h2zero/library/esp-nimble-cpp/2.6.0/esp-nimble-cpp-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/h2zero/library/esp-nimble-cpp/2.6.0/esp-nimble-cpp-2.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dajakov",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dajakov/library/DaedalusLink-ESP32/0.1.0/DaedalusLink-ESP32-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DaedalusLink-ESP32-0.1.0.tar.gz",
+    "size_bytes": 3726,
+    "sha256": "43d3858fb1ace09b3f8c03ebd062611262024ff5724cf3ffc4c7a437954e616a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dajakov/library/DaedalusLink-ESP32/0.1.0/DaedalusLink-ESP32-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dajakov/library/DaedalusLink-ESP32/0.1.0/DaedalusLink-ESP32-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

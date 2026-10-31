@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tona0516",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tona0516/library/LSM9DS1/0.0.0+sha.8e17d3584f99/LSM9DS1-0.0.0+sha.8e17d3584f99.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM9DS1-0.0.0+sha.8e17d3584f99.tar.gz",
+    "size_bytes": 2858,
+    "sha256": "64b00ad35bc4070245d2e015263e02c65665b35c97227fe819f43b75738bc831",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tona0516/library/LSM9DS1/0.0.0%2Bsha.8e17d3584f99/LSM9DS1-0.0.0%2Bsha.8e17d3584f99.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tona0516/library/LSM9DS1/0.0.0%2Bsha.8e17d3584f99/LSM9DS1-0.0.0%2Bsha.8e17d3584f99.tar.gz"
+    ]
+   }
+  }
+ ]
+}

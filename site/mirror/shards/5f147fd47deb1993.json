@@ -1,0 +1,3545 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sparkfun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sparkfun/library/BC127%20Breakout%20Board/1.0.0/BC127BreakoutBoard-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BC127BreakoutBoard-1.0.0.tar.gz",
+    "size_bytes": 14275,
+    "sha256": "9b5a307f3a921c67953b120bb8b86a874086e05882b9fd1f730633952c73ef40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/BC127%2520Breakout%2520Board/1.0.0/BC127BreakoutBoard-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/BC127%20Breakout%20Board/1.0.0/BC127BreakoutBoard-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/Canbus/5.1.0/Canbus-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Canbus-5.1.0.tar.gz",
+    "size_bytes": 16689,
+    "sha256": "372b04c590e1971f950ca66a7dce4972f65c64f8353a42f9e5435dc5f4387cf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/Canbus/5.1.0/Canbus-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/Canbus/5.1.0/Canbus-5.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/Fingerprint%20Scanner%20TTL/1.1.1/FingerprintScannerTTL-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FingerprintScannerTTL-1.1.1.tar.gz",
+    "size_bytes": 12217,
+    "sha256": "dd83b3c6993d82efbfc9b71629a3c3c42bad3259f5b6be8f67b18a2a33b9168d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/Fingerprint%2520Scanner%2520TTL/1.1.1/FingerprintScannerTTL-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/Fingerprint%20Scanner%20TTL/1.1.1/FingerprintScannerTTL-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/IridiumSBDi2c/3.1.0/IridiumSBDi2c-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IridiumSBDi2c-3.1.0.tar.gz",
+    "size_bytes": 54289,
+    "sha256": "56d82a46aaeb5edd0d7fbe6aa13585c901203573759398f8217065d7423f4a03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/IridiumSBDi2c/3.1.0/IridiumSBDi2c-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/IridiumSBDi2c/3.1.0/IridiumSBDi2c-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/Phant/2.2.0/Phant-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Phant-2.2.0.tar.gz",
+    "size_bytes": 4308,
+    "sha256": "71e4d14e4d8d48325aa446f1c3ff0d5868995f15cfbc759958a4475df7de64da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/Phant/2.2.0/Phant-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/Phant/2.2.0/Phant-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/RedBot/2.1.0/RedBot-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RedBot-2.1.0.tar.gz",
+    "size_bytes": 34430,
+    "sha256": "f56005c35c2f7e346bb5a042083d5b0496653a76d625cc7f54cbd786ee603895",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/RedBot/2.1.0/RedBot-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/RedBot/2.1.0/RedBot-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SX1509%20IO%20Expander/3.0.6/SX1509IOExpander-3.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX1509IOExpander-3.0.6.tar.gz",
+    "size_bytes": 24598,
+    "sha256": "f1d69cc4cced2a7b48e72a9cd4b584eda5ed81583f08a0ecdec1d589329de846",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SX1509%2520IO%2520Expander/3.0.6/SX1509IOExpander-3.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SX1509%20IO%20Expander/3.0.6/SX1509IOExpander-3.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/Serial%20Controlled%20Motor%20Driver/1.0.4/SerialControlledMotorDriver-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialControlledMotorDriver-1.0.4.tar.gz",
+    "size_bytes": 18500,
+    "sha256": "725eae1e452623f62c73a9b3d479832624ee89e0ba320673154d0dc97b2b29fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/Serial%2520Controlled%2520Motor%2520Driver/1.0.4/SerialControlledMotorDriver-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/Serial%20Controlled%20Motor%20Driver/1.0.4/SerialControlledMotorDriver-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SevSeg/1.0.2/SevSeg-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevSeg-1.0.2.tar.gz",
+    "size_bytes": 11354,
+    "sha256": "998c6bfc01fdfde81d1670b4a8e9e0d3b79ffdb4c556ff9e7b33d8884405dc6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SevSeg/1.0.2/SevSeg-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SevSeg/1.0.2/SevSeg-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%206DoF%20ISM330DHCX/1.0.6/SparkFun6DoFISM330DHCX-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFun6DoFISM330DHCX-1.0.6.tar.gz",
+    "size_bytes": 59656,
+    "sha256": "9a5462a1e093310f6f4a37624e3b6ddcc1369bf2ac8a727b70e83040948403f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%25206DoF%2520ISM330DHCX/1.0.6/SparkFun6DoFISM330DHCX-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%206DoF%20ISM330DHCX/1.0.6/SparkFun6DoFISM330DHCX-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%206DoF%20LSM6DSV16X/1.0.2/SparkFun6DoFLSM6DSV16X-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFun6DoFLSM6DSV16X-1.0.2.tar.gz",
+    "size_bytes": 67722,
+    "sha256": "f5f0b6405e0a81a9e30f965836dc3668d7463c167e7e2385920f90a46e6be0be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%25206DoF%2520LSM6DSV16X/1.0.2/SparkFun6DoFLSM6DSV16X-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%206DoF%20LSM6DSV16X/1.0.2/SparkFun6DoFLSM6DSV16X-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%209DoF%20IMU%20Breakout%20-%20ICM%2020948%20-%20Arduino%20Library/1.2.13/SparkFun9DoFIMUBreakout-ICM20948-ArduinoLibrary-1.2.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFun9DoFIMUBreakout-ICM20948-ArduinoLibrary-1.2.13.tar.gz",
+    "size_bytes": 135783,
+    "sha256": "2bd66c33f493f7477f353fe3fdbf71e9a23de67643ad4b318f4b59e192f9f519",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%25209DoF%2520IMU%2520Breakout%2520-%2520ICM%252020948%2520-%2520Arduino%2520Library/1.2.13/SparkFun9DoFIMUBreakout-ICM20948-ArduinoLibrary-1.2.13.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%209DoF%20IMU%20Breakout%20-%20ICM%2020948%20-%20Arduino%20Library/1.2.13/SparkFun9DoFIMUBreakout-ICM20948-ArduinoLibrary-1.2.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%209DoF%20IMU%20Breakout%20-%20ICM%2020948%20-%20Arduino%20Library/1.3.2/SparkFun9DoFIMUBreakout-ICM20948-ArduinoLibrary-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFun9DoFIMUBreakout-ICM20948-ArduinoLibrary-1.3.2.tar.gz",
+    "size_bytes": 135872,
+    "sha256": "07f11821745b3a9ec1470f6ccc449bf9e01e06171ff805f6795bc06857b7f899",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%25209DoF%2520IMU%2520Breakout%2520-%2520ICM%252020948%2520-%2520Arduino%2520Library/1.3.2/SparkFun9DoFIMUBreakout-ICM20948-ArduinoLibrary-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%209DoF%20IMU%20Breakout%20-%20ICM%2020948%20-%20Arduino%20Library/1.3.2/SparkFun9DoFIMUBreakout-ICM20948-ArduinoLibrary-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ACS37800%20Power%20Monitor%20Arduino%20Library/1.0.6/SparkFunACS37800PowerMonitorArduinoLibrary-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunACS37800PowerMonitorArduinoLibrary-1.0.6.tar.gz",
+    "size_bytes": 15990,
+    "sha256": "db4bc14a27fd85b6251e95dd9093aefa1ca7ff343c6c0cb72647c435abeb22fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ACS37800%2520Power%2520Monitor%2520Arduino%2520Library/1.0.6/SparkFunACS37800PowerMonitorArduinoLibrary-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ACS37800%20Power%20Monitor%20Arduino%20Library/1.0.6/SparkFunACS37800PowerMonitorArduinoLibrary-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20AD5330/1.2.3/SparkFunAD5330-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAD5330-1.2.3.tar.gz",
+    "size_bytes": 203711,
+    "sha256": "588c173ff5f6295453d6c5f98aeacd9573fcd52f5463c855771458a4c540bc5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520AD5330/1.2.3/SparkFunAD5330-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20AD5330/1.2.3/SparkFunAD5330-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ADE7953%20Arduino%20Library/1.0.0/SparkFunADE7953ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunADE7953ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 27181,
+    "sha256": "3afd16ffc01899f1c34a920dbb3b3f76b8be49a182e25302851d8af78c277742",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ADE7953%2520Arduino%2520Library/1.0.0/SparkFunADE7953ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ADE7953%20Arduino%20Library/1.0.0/SparkFunADE7953ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ADIN1110%20Arduino%20Library/1.0.0/SparkFunADIN1110ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunADIN1110ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 140265,
+    "sha256": "c0233aad9dc98ca3830170a4f366103a716b1c122cfe133edf5b2667a2eee794",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ADIN1110%2520Arduino%2520Library/1.0.0/SparkFunADIN1110ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ADIN1110%20Arduino%20Library/1.0.0/SparkFunADIN1110ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ADS1015%20Arduino%20Library/2.3.2/SparkFunADS1015ArduinoLibrary-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunADS1015ArduinoLibrary-2.3.2.tar.gz",
+    "size_bytes": 14708,
+    "sha256": "5668f69ef19cfac3b0179b136f3f37a54dba3024ba244dfdeb832018e4349fa3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ADS1015%2520Arduino%2520Library/2.3.2/SparkFunADS1015ArduinoLibrary-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ADS1015%20Arduino%20Library/2.3.2/SparkFunADS1015ArduinoLibrary-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ADS1219%20Arduino%20Library/1.0.4/SparkFunADS1219ArduinoLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunADS1219ArduinoLibrary-1.0.4.tar.gz",
+    "size_bytes": 11988,
+    "sha256": "576ae7c6a1e4dcb4d63ec4fa3023e82b1cbb2ddf1151d609e61a31971890eead",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ADS1219%2520Arduino%2520Library/1.0.4/SparkFunADS1219ArduinoLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ADS1219%20Arduino%20Library/1.0.4/SparkFunADS1219ArduinoLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ADS122C04%20ADC%20Arduino%20Library/1.0.4/SparkFunADS122C04ADCArduinoLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunADS122C04ADCArduinoLibrary-1.0.4.tar.gz",
+    "size_bytes": 17307,
+    "sha256": "18f1f5ed406dc9edc0897d371e62a60a7718beaa64f45313da2c7d219d1e5867",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ADS122C04%2520ADC%2520Arduino%2520Library/1.0.4/SparkFunADS122C04ADCArduinoLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ADS122C04%20ADC%20Arduino%20Library/1.0.4/SparkFunADS122C04ADCArduinoLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ADXL313%20Arduino%20Library/1.0.4/SparkFunADXL313ArduinoLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunADXL313ArduinoLibrary-1.0.4.tar.gz",
+    "size_bytes": 18246,
+    "sha256": "89ff07cb1d6264c0f0692ab23cb6501500524f63a640967ed478ae183bf2c36a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ADXL313%2520Arduino%2520Library/1.0.4/SparkFunADXL313ArduinoLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ADXL313%20Arduino%20Library/1.0.4/SparkFunADXL313ArduinoLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ADXL345%20Arduino%20Library/1.0.0/SparkFunADXL345ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunADXL345ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 13697,
+    "sha256": "e8b659bba41ebfb437d760678808e7adb7f0aefc053af8fbc7798e607090f0ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ADXL345%2520Arduino%2520Library/1.0.0/SparkFunADXL345ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ADXL345%20Arduino%20Library/1.0.0/SparkFunADXL345ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20AK975X%20Human%20Presence%20Sensor%20Library/1.0.6/SparkFunAK975XHumanPresenceSensorLibrary-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAK975XHumanPresenceSensorLibrary-1.0.6.tar.gz",
+    "size_bytes": 11455,
+    "sha256": "df82e96217594bb713672b8086c6a5f06be61eb01d84eb5a8b9359464c8b5cc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520AK975X%2520Human%2520Presence%2520Sensor%2520Library/1.0.6/SparkFunAK975XHumanPresenceSensorLibrary-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20AK975X%20Human%20Presence%20Sensor%20Library/1.0.6/SparkFunAK975XHumanPresenceSensorLibrary-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20APDS-9301%20Lux%20Sensor/1.0.0/SparkFunAPDS-9301LuxSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAPDS-9301LuxSensor-1.0.0.tar.gz",
+    "size_bytes": 5462,
+    "sha256": "1a2901a0751a55997740a8747804e1a6efe2923cd60aa1b1711aa4d5dc0504ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520APDS-9301%2520Lux%2520Sensor/1.0.0/SparkFunAPDS-9301LuxSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20APDS-9301%20Lux%20Sensor/1.0.0/SparkFunAPDS-9301LuxSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20APDS9960%20RGB%20and%20Gesture%20Sensor/1.4.3/SparkFunAPDS9960RGBandGestureSensor-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAPDS9960RGBandGestureSensor-1.4.3.tar.gz",
+    "size_bytes": 16684,
+    "sha256": "08d5d1debe04ad6482e21894bdac48b89e11b25fb68bf3ca9bb736dd98003c29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520APDS9960%2520RGB%2520and%2520Gesture%2520Sensor/1.4.3/SparkFunAPDS9960RGBandGestureSensor-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20APDS9960%20RGB%20and%20Gesture%20Sensor/1.4.3/SparkFunAPDS9960RGBandGestureSensor-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ARGOS%20ARTIC%20R2%20Arduino%20Library/1.1.2/SparkFunARGOSARTICR2ArduinoLibrary-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunARGOSARTICR2ArduinoLibrary-1.1.2.tar.gz",
+    "size_bytes": 242767,
+    "sha256": "a6163e4c0b923f852063ffba78b1ae2cc5588a60c899de44d3a863eca67b57a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ARGOS%2520ARTIC%2520R2%2520Arduino%2520Library/1.1.2/SparkFunARGOSARTICR2ArduinoLibrary-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ARGOS%20ARTIC%20R2%20Arduino%20Library/1.1.2/SparkFunARGOSARTICR2ArduinoLibrary-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20AS3935%20Lightning%20Detector%20Arduino%20Library/1.4.9/SparkFunAS3935LightningDetectorArduinoLibrary-1.4.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAS3935LightningDetectorArduinoLibrary-1.4.9.tar.gz",
+    "size_bytes": 14377,
+    "sha256": "80aeeab351cb94cb129c1c50715d1ee3fe2aa6dbb63737fa0416be1ec7d476d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520AS3935%2520Lightning%2520Detector%2520Arduino%2520Library/1.4.9/SparkFunAS3935LightningDetectorArduinoLibrary-1.4.9.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20AS3935%20Lightning%20Detector%20Arduino%20Library/1.4.9/SparkFunAS3935LightningDetectorArduinoLibrary-1.4.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20AS6212%20Qwiic%20Arduino%20Library/2.0.5/SparkFunAS6212QwiicArduinoLibrary-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAS6212QwiicArduinoLibrary-2.0.5.tar.gz",
+    "size_bytes": 11831,
+    "sha256": "5c2861d0cf28de5061c21382d124b0d0f6f1fe20f134bf29225772e2cbeec0f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520AS6212%2520Qwiic%2520Arduino%2520Library/2.0.5/SparkFunAS6212QwiicArduinoLibrary-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20AS6212%20Qwiic%20Arduino%20Library/2.0.5/SparkFunAS6212QwiicArduinoLibrary-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20AS726X/2.0.1/SparkFunAS726X-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAS726X-2.0.1.tar.gz",
+    "size_bytes": 10730,
+    "sha256": "ade8b9938d52a94a97562f7c6947c0f870f622c2cad84cfbb9d700b6d0b4cde8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520AS726X/2.0.1/SparkFunAS726X-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20AS726X/2.0.1/SparkFunAS726X-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20AS7331%20Arduino%20Library/2.2.0/SparkFunAS7331ArduinoLibrary-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAS7331ArduinoLibrary-2.2.0.tar.gz",
+    "size_bytes": 21047,
+    "sha256": "de584515ba425f43c607201dd3b5aef84f4ca11cec1f2cba016340fdad80b568",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520AS7331%2520Arduino%2520Library/2.2.0/SparkFunAS7331ArduinoLibrary-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20AS7331%20Arduino%20Library/2.2.0/SparkFunAS7331ArduinoLibrary-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20AS7343%20Arduino%20Library/1.0.0/SparkFunAS7343ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAS7343ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 21097,
+    "sha256": "eeca4db533e4070a9521c3126aa8a058860f1a5c189dda5910c0af4ce9839928",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520AS7343%2520Arduino%2520Library/1.0.0/SparkFunAS7343ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20AS7343%20Arduino%20Library/1.0.0/SparkFunAS7343ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ATECCX08a%20Arduino%20Library/1.3.1/SparkFunATECCX08aArduinoLibrary-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunATECCX08aArduinoLibrary-1.3.1.tar.gz",
+    "size_bytes": 25591,
+    "sha256": "97b25f7b63d1187989ef36d56b9b9276434f79986fd531563f4524da011945ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ATECCX08a%2520Arduino%2520Library/1.3.1/SparkFunATECCX08aArduinoLibrary-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ATECCX08a%20Arduino%20Library/1.3.1/SparkFunATECCX08aArduinoLibrary-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ATSHA204%20Library/1.0.0/SparkFunATSHA204Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunATSHA204Library-1.0.0.tar.gz",
+    "size_bytes": 14741,
+    "sha256": "06f83747f58f6104e2ffb0acaa13d01b1492bcc78b5a20382c3f2f8b2a9c972e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ATSHA204%2520Library/1.0.0/SparkFunATSHA204Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ATSHA204%20Library/1.0.0/SparkFunATSHA204Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20AVR%20ISP%20Programming%20Library/1.0.0/SparkFunAVRISPProgrammingLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAVRISPProgrammingLibrary-1.0.0.tar.gz",
+    "size_bytes": 17572,
+    "sha256": "977bb213258f85ea532967cec66d3fddddb03dccc49bb22f9779dddafcdb3dc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520AVR%2520ISP%2520Programming%2520Library/1.0.0/SparkFunAVRISPProgrammingLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20AVR%20ISP%20Programming%20Library/1.0.0/SparkFunAVRISPProgrammingLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Ambient%20Light%20Sensor%20Arduino%20Library/1.0.4/SparkFunAmbientLightSensorArduinoLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAmbientLightSensorArduinoLibrary-1.0.4.tar.gz",
+    "size_bytes": 9215,
+    "sha256": "4298675799484eec01b088159cd7007520c3d1a6af5b19c39c841d1ed1d41d52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Ambient%2520Light%2520Sensor%2520Arduino%2520Library/1.0.4/SparkFunAmbientLightSensorArduinoLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Ambient%20Light%20Sensor%20Arduino%20Library/1.0.4/SparkFunAmbientLightSensorArduinoLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Angular%20Displacement%20Sensor%20Arduino%20Library/1.3.3/SparkFunAngularDisplacementSensorArduinoLibrary-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAngularDisplacementSensorArduinoLibrary-1.3.3.tar.gz",
+    "size_bytes": 13718,
+    "sha256": "a15d21120d2c4e75bcaa6f0125b3048fb0f8efe0f0af3dc4fe8be67ec72398cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Angular%2520Displacement%2520Sensor%2520Arduino%2520Library/1.3.3/SparkFunAngularDisplacementSensorArduinoLibrary-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Angular%20Displacement%20Sensor%20Arduino%20Library/1.3.3/SparkFunAngularDisplacementSensorArduinoLibrary-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Apple%20Accessory%20Arduino%20Library/3.0.7.1/SparkFunAppleAccessoryArduinoLibrary-3.0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAppleAccessoryArduinoLibrary-3.0.7.1.tar.gz",
+    "size_bytes": 7003880,
+    "sha256": "806db90dad9888cb60a302f5d0abaa2aa05549ec305eaafb910cae6290aa7f3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Apple%2520Accessory%2520Arduino%2520Library/3.0.7.1/SparkFunAppleAccessoryArduinoLibrary-3.0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Apple%20Accessory%20Arduino%20Library/3.0.7.1/SparkFunAppleAccessoryArduinoLibrary-3.0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Apple%20Accessory%20Arduino%20Library/3.0.8/SparkFunAppleAccessoryArduinoLibrary-3.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAppleAccessoryArduinoLibrary-3.0.8.tar.gz",
+    "size_bytes": 7003873,
+    "sha256": "223228bbb7c5bc1f0fe11585aed7c4ce3ec70f6467a6dcf781a43d4691182d30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Apple%2520Accessory%2520Arduino%2520Library/3.0.8/SparkFunAppleAccessoryArduinoLibrary-3.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Apple%20Accessory%20Arduino%20Library/3.0.8/SparkFunAppleAccessoryArduinoLibrary-3.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Apple%20Accessory%20Arduino%20Library/3.0.9/SparkFunAppleAccessoryArduinoLibrary-3.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAppleAccessoryArduinoLibrary-3.0.9.tar.gz",
+    "size_bytes": 7008985,
+    "sha256": "e5cf31fa6403859420666ba30a132f68d4e9f9bac88e772285dae206c74e0969",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Apple%2520Accessory%2520Arduino%2520Library/3.0.9/SparkFunAppleAccessoryArduinoLibrary-3.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Apple%20Accessory%20Arduino%20Library/3.0.9/SparkFunAppleAccessoryArduinoLibrary-3.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Apple%20Accessory%20Arduino%20Library/3.1.0/SparkFunAppleAccessoryArduinoLibrary-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAppleAccessoryArduinoLibrary-3.1.0.tar.gz",
+    "size_bytes": 7011452,
+    "sha256": "a1db95b2a763b71bdb3097de42d46e254b60147c8dfe279171a3f2381b0ad08d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Apple%2520Accessory%2520Arduino%2520Library/3.1.0/SparkFunAppleAccessoryArduinoLibrary-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Apple%20Accessory%20Arduino%20Library/3.1.0/SparkFunAppleAccessoryArduinoLibrary-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Apple%20Accessory%20Arduino%20Library/3.1.1/SparkFunAppleAccessoryArduinoLibrary-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAppleAccessoryArduinoLibrary-3.1.1.tar.gz",
+    "size_bytes": 7012065,
+    "sha256": "9487a81342558bfc08f75670df209548b1837b45661eeb44349722eec14062b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Apple%2520Accessory%2520Arduino%2520Library/3.1.1/SparkFunAppleAccessoryArduinoLibrary-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Apple%20Accessory%20Arduino%20Library/3.1.1/SparkFunAppleAccessoryArduinoLibrary-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Apple%20Accessory%20Arduino%20Library/3.1.2/SparkFunAppleAccessoryArduinoLibrary-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAppleAccessoryArduinoLibrary-3.1.2.tar.gz",
+    "size_bytes": 7012863,
+    "sha256": "95a6c8c2423dfef145fabdd14651d0a34fa2c6093f914d2326af8a0ea2d28e2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Apple%2520Accessory%2520Arduino%2520Library/3.1.2/SparkFunAppleAccessoryArduinoLibrary-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Apple%20Accessory%20Arduino%20Library/3.1.2/SparkFunAppleAccessoryArduinoLibrary-3.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Authentication%20Coprocessor%20Arduino%20Library/1.0.0/SparkFunAuthenticationCoprocessorArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunAuthenticationCoprocessorArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 39363,
+    "sha256": "94903b7c3a11821dbc0579a4da775b8813b8809431c05a9545f6a9b9b054d0d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Authentication%2520Coprocessor%2520Arduino%2520Library/1.0.0/SparkFunAuthenticationCoprocessorArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Authentication%20Coprocessor%20Arduino%20Library/1.0.0/SparkFunAuthenticationCoprocessorArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20BH1749NUC%20Arduino%20Library/1.0.0/SparkFunBH1749NUCArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunBH1749NUCArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 15802,
+    "sha256": "af8236fe5d09a3bd23517776bd1f11c19c74a61c83ce262f42991e3ec9efdfcd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520BH1749NUC%2520Arduino%2520Library/1.0.0/SparkFunBH1749NUCArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20BH1749NUC%20Arduino%20Library/1.0.0/SparkFunBH1749NUCArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20BMA400%20Arduino%20Library/1.0.0/SparkFunBMA400ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunBMA400ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 48161,
+    "sha256": "d8a039e89a9dd26f36b248c66b6fea9d1c867fa9743ca3e542c0180f4633cee5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520BMA400%2520Arduino%2520Library/1.0.0/SparkFunBMA400ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20BMA400%20Arduino%20Library/1.0.0/SparkFunBMA400ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20BME280/2.0.4/SparkFunBME280-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunBME280-2.0.4.tar.gz",
+    "size_bytes": 19666,
+    "sha256": "5aa3571cf8a72a6e6b5e16b321778823148ef389379ed75649ad5a56ca103ab1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520BME280/2.0.4/SparkFunBME280-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20BME280/2.0.4/SparkFunBME280-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20BME280/2.0.9/SparkFunBME280-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunBME280-2.0.9.tar.gz",
+    "size_bytes": 21011,
+    "sha256": "5870090bfe242a125c78a7b9e779f665ce3d15bec45e225446f300575fb9b463",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520BME280/2.0.9/SparkFunBME280-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20BME280/2.0.9/SparkFunBME280-2.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20BMI270%20Arduino%20Library/1.0.3/SparkFunBMI270ArduinoLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunBMI270ArduinoLibrary-1.0.3.tar.gz",
+    "size_bytes": 184980,
+    "sha256": "29e8dcd63051a1e69550159d957a940dd92546ea87f0d0ba399366ee13d8a642",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520BMI270%2520Arduino%2520Library/1.0.3/SparkFunBMI270ArduinoLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20BMI270%20Arduino%20Library/1.0.3/SparkFunBMI270ArduinoLibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20BMP384%20Arduino%20Library/1.0.1/SparkFunBMP384ArduinoLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunBMP384ArduinoLibrary-1.0.1.tar.gz",
+    "size_bytes": 35388,
+    "sha256": "5a7416edaf5b435afb70759ec93622247c9d505affd54405a700babbe93bf216",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520BMP384%2520Arduino%2520Library/1.0.1/SparkFunBMP384ArduinoLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20BMP384%20Arduino%20Library/1.0.1/SparkFunBMP384ArduinoLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20BMP581%20Arduino%20Library/1.0.2/SparkFunBMP581ArduinoLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunBMP581ArduinoLibrary-1.0.2.tar.gz",
+    "size_bytes": 32480,
+    "sha256": "072f003989d9b500da5079574abb482cd190e12a00c32b60d135fa2328cdbbc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520BMP581%2520Arduino%2520Library/1.0.2/SparkFunBMP581ArduinoLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20BMP581%20Arduino%20Library/1.0.2/SparkFunBMP581ArduinoLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20BMV080%20Arduino%20Library/1.0.4/SparkFunBMV080ArduinoLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunBMV080ArduinoLibrary-1.0.4.tar.gz",
+    "size_bytes": 133734,
+    "sha256": "6c40c18907e564a97b2282d8069677ab31cb0af6c46431e56418406205105006",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520BMV080%2520Arduino%2520Library/1.0.4/SparkFunBMV080ArduinoLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20BMV080%20Arduino%20Library/1.0.4/SparkFunBMV080ArduinoLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20BNO080%20Cortex%20Based%20IMU/1.1.12/SparkFunBNO080CortexBasedIMU-1.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunBNO080CortexBasedIMU-1.1.12.tar.gz",
+    "size_bytes": 33524,
+    "sha256": "5756c780c22bc4f43810f3a198f7bd975f63e3aef46600a97daa03a7a91b3e51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520BNO080%2520Cortex%2520Based%2520IMU/1.1.12/SparkFunBNO080CortexBasedIMU-1.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20BNO080%20Cortex%20Based%20IMU/1.1.12/SparkFunBNO080CortexBasedIMU-1.1.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20BNO08x%20Cortex%20Based%20IMU/1.0.6/SparkFunBNO08xCortexBasedIMU-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunBNO08xCortexBasedIMU-1.0.6.tar.gz",
+    "size_bytes": 62983,
+    "sha256": "74cba84e7e60b3df4ff13f58be879c4b19ed51c9a96748a6106dec2a52420f70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520BNO08x%2520Cortex%2520Based%2520IMU/1.0.6/SparkFunBNO08xCortexBasedIMU-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20BNO08x%20Cortex%20Based%20IMU/1.0.6/SparkFunBNO08xCortexBasedIMU-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20BQ27441%20LiPo%20Fuel%20Gauge%20Arduino%20Library/1.1.0/SparkFunBQ27441LiPoFuelGaugeArduinoLibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunBQ27441LiPoFuelGaugeArduinoLibrary-1.1.0.tar.gz",
+    "size_bytes": 15105,
+    "sha256": "8b5e2cd9289a825fe13c197d29c56adb5b9ff520b72e6971a795af35a2d49348",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520BQ27441%2520LiPo%2520Fuel%2520Gauge%2520Arduino%2520Library/1.1.0/SparkFunBQ27441LiPoFuelGaugeArduinoLibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20BQ27441%20LiPo%20Fuel%20Gauge%20Arduino%20Library/1.1.0/SparkFunBQ27441LiPoFuelGaugeArduinoLibrary-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20BQ40Z50%20Battery%20Manager%20Arduino%20Library/1.0.0/SparkFunBQ40Z50BatteryManagerArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunBQ40Z50BatteryManagerArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 5767,
+    "sha256": "4bddcaf64117b5e499ff5e7cb096e470767dd7f31abb6e741b57222b4573d90a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520BQ40Z50%2520Battery%2520Manager%2520Arduino%2520Library/1.0.0/SparkFunBQ40Z50BatteryManagerArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20BQ40Z50%20Battery%20Manager%20Arduino%20Library/1.0.0/SparkFunBQ40Z50BatteryManagerArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Bar%20Graph%20Library/1.2.0/SparkFunBarGraphLibrary-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunBarGraphLibrary-1.2.0.tar.gz",
+    "size_bytes": 9308,
+    "sha256": "6a9eeabcd772d6bbeab8f722052f49f931930db04ee95674d3ac2bfa0c9ede79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Bar%2520Graph%2520Library/1.2.0/SparkFunBarGraphLibrary-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Bar%20Graph%20Library/1.2.0/SparkFunBarGraphLibrary-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Bio%20Sensor%20Hub%20Library/1.1/SparkFunBioSensorHubLibrary-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunBioSensorHubLibrary-1.1.tar.gz",
+    "size_bytes": 22091,
+    "sha256": "a2171159262bb8e1cd6ff2c526d2de70923ae492aa568668a6ee6ed41b5e3300",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Bio%2520Sensor%2520Hub%2520Library/1.1/SparkFunBioSensorHubLibrary-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Bio%20Sensor%20Hub%20Library/1.1/SparkFunBioSensorHubLibrary-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20CAP1203%20Arduino%20Library/1.0.5/SparkFunCAP1203ArduinoLibrary-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunCAP1203ArduinoLibrary-1.0.5.tar.gz",
+    "size_bytes": 11819,
+    "sha256": "d6a6993463bdc98b89e3e77b6afb487def06738178cee7ae70f80ac592f5fff3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520CAP1203%2520Arduino%2520Library/1.0.5/SparkFunCAP1203ArduinoLibrary-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20CAP1203%20Arduino%20Library/1.0.5/SparkFunCAP1203ArduinoLibrary-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20CCS811%20Arduino%20Library/2.0.3/SparkFunCCS811ArduinoLibrary-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunCCS811ArduinoLibrary-2.0.3.tar.gz",
+    "size_bytes": 14677,
+    "sha256": "4896629aad5625b82453be6fa6cf7ccd7aa0139d0d8d1865b72efacb2a1e00c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520CCS811%2520Arduino%2520Library/2.0.3/SparkFunCCS811ArduinoLibrary-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20CCS811%20Arduino%20Library/2.0.3/SparkFunCCS811ArduinoLibrary-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20CY8CMBR3xxx%20Arduino%20Library/1.0.0/SparkFunCY8CMBR3xxxArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunCY8CMBR3xxxArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 23722,
+    "sha256": "acc13d4101a3bc6ef64736f03152a942e2c60e9c4c4ebc2e5bcf30f93b23282c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520CY8CMBR3xxx%2520Arduino%2520Library/1.0.0/SparkFunCY8CMBR3xxxArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20CY8CMBR3xxx%20Arduino%20Library/1.0.0/SparkFunCY8CMBR3xxxArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Clock%205P49V60%20Arduino%20Library/1.0.2/SparkFunClock5P49V60ArduinoLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunClock5P49V60ArduinoLibrary-1.0.2.tar.gz",
+    "size_bytes": 17017,
+    "sha256": "b5b1fde64b9add317953c7088e69df895711a1307c7a497f65d7edaedef9f907",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Clock%25205P49V60%2520Arduino%2520Library/1.0.2/SparkFunClock5P49V60ArduinoLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Clock%205P49V60%20Arduino%20Library/1.0.2/SparkFunClock5P49V60ArduinoLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Color%20LCD%20Shield/1.0.1/SparkFunColorLCDShield-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunColorLCDShield-1.0.1.tar.gz",
+    "size_bytes": 15925,
+    "sha256": "80551ae6cfce59f36e7a1c34e7df203e9ea1f239bcaea9d0a563dd78a0ef2187",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Color%2520LCD%2520Shield/1.0.1/SparkFunColorLCDShield-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Color%20LCD%20Shield/1.0.1/SparkFunColorLCDShield-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Color%20Sensor%20OPT4048/1.2.1/SparkFunColorSensorOPT4048-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunColorSensorOPT4048-1.2.1.tar.gz",
+    "size_bytes": 15869,
+    "sha256": "a00066272a5f02a3bdccacf045e59ab1743cb64aa07bd88130509b7f2882e3ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Color%2520Sensor%2520OPT4048/1.2.1/SparkFunColorSensorOPT4048-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Color%20Sensor%20OPT4048/1.2.1/SparkFunColorSensorOPT4048-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20DE2120%202D%20Barcode%20Reader/1.2.1/SparkFunDE21202DBarcodeReader-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunDE21202DBarcodeReader-1.2.1.tar.gz",
+    "size_bytes": 9492,
+    "sha256": "5e24ea785ba18550315b2fb71350774deb6b09c9316a1f871b44f5f68e044d24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520DE2120%25202D%2520Barcode%2520Reader/1.2.1/SparkFunDE21202DBarcodeReader-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20DE2120%202D%20Barcode%20Reader/1.2.1/SparkFunDE21202DBarcodeReader-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20DMX%20Shield%20Library/2.0.1/SparkFunDMXShieldLibrary-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunDMXShieldLibrary-2.0.1.tar.gz",
+    "size_bytes": 8476,
+    "sha256": "f4293dc5aa31367cb9a23ae080ee87b130c7181e392297282804b05203ad75d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520DMX%2520Shield%2520Library/2.0.1/SparkFunDMXShieldLibrary-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20DMX%20Shield%20Library/2.0.1/SparkFunDMXShieldLibrary-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20DS1307%20Real-Time%20Clock%20%28RTC%29/1.0.1/SparkFunDS1307Real-TimeClockRTC-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunDS1307Real-TimeClockRTC-1.0.1.tar.gz",
+    "size_bytes": 8691,
+    "sha256": "fdde496ff1465877f75c3d0955f9272278100a7f381acc8970de4b51317d3c20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520DS1307%2520Real-Time%2520Clock%2520%2528RTC%2529/1.0.1/SparkFunDS1307Real-TimeClockRTC-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20DS1307%20Real-Time%20Clock%20%28RTC%29/1.0.1/SparkFunDS1307Real-TimeClockRTC-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Extensible%20Message%20Parser/1.0.6/SparkFunExtensibleMessageParser-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunExtensibleMessageParser-1.0.6.tar.gz",
+    "size_bytes": 42699,
+    "sha256": "8b54965a85f6a473908e14733d69e531e6061f8b14586343bc31b29443284561",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Extensible%2520Message%2520Parser/1.0.6/SparkFunExtensibleMessageParser-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Extensible%20Message%20Parser/1.0.6/SparkFunExtensibleMessageParser-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Extensible%20Message%20Parser/1.0.8/SparkFunExtensibleMessageParser-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunExtensibleMessageParser-1.0.8.tar.gz",
+    "size_bytes": 43014,
+    "sha256": "8a204c29bfa12515258c4504b22e3a7cf3c4f6fe4e09581927caeed24da1f4fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Extensible%2520Message%2520Parser/1.0.8/SparkFunExtensibleMessageParser-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Extensible%20Message%20Parser/1.0.8/SparkFunExtensibleMessageParser-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Extensible%20Message%20Parser/2.0.0/SparkFunExtensibleMessageParser-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunExtensibleMessageParser-2.0.0.tar.gz",
+    "size_bytes": 103643,
+    "sha256": "c06f6cb0b07148e1c0c091b1cd04982127d7369798f8f05eaedc740516dfbbfb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Extensible%2520Message%2520Parser/2.0.0/SparkFunExtensibleMessageParser-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Extensible%20Message%20Parser/2.0.0/SparkFunExtensibleMessageParser-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Extensible%20Message%20Parser/2.0.1/SparkFunExtensibleMessageParser-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunExtensibleMessageParser-2.0.1.tar.gz",
+    "size_bytes": 103685,
+    "sha256": "cc250bc91deb7355e7db39d60c984d2eb7118f16f75044c61ec741fdb25862ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Extensible%2520Message%2520Parser/2.0.1/SparkFunExtensibleMessageParser-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Extensible%20Message%20Parser/2.0.1/SparkFunExtensibleMessageParser-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Extensible%20Message%20Parser/2.0.2/SparkFunExtensibleMessageParser-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunExtensibleMessageParser-2.0.2.tar.gz",
+    "size_bytes": 108911,
+    "sha256": "54beb6dadd5b0fdbd4968b3c389ea60d11af7a0f8d07047dad850c4e12cd2dc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Extensible%2520Message%2520Parser/2.0.2/SparkFunExtensibleMessageParser-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Extensible%20Message%20Parser/2.0.2/SparkFunExtensibleMessageParser-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20External%20EEPROM%20Arduino%20Library/3.2.11/SparkFunExternalEEPROMArduinoLibrary-3.2.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunExternalEEPROMArduinoLibrary-3.2.11.tar.gz",
+    "size_bytes": 27055,
+    "sha256": "7b32d58803686c9e654a20916547eff5b2cc99ee0acde664dfae09392e39d4df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520External%2520EEPROM%2520Arduino%2520Library/3.2.11/SparkFunExternalEEPROMArduinoLibrary-3.2.11.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20External%20EEPROM%20Arduino%20Library/3.2.11/SparkFunExternalEEPROMArduinoLibrary-3.2.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20External%20EEPROM%20Arduino%20Library/3.2.12/SparkFunExternalEEPROMArduinoLibrary-3.2.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunExternalEEPROMArduinoLibrary-3.2.12.tar.gz",
+    "size_bytes": 27140,
+    "sha256": "b709f8eb6197ab8a072ebd9c657d3a02ef51d92b7e8e946cde06c694df0ce7e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520External%2520EEPROM%2520Arduino%2520Library/3.2.12/SparkFunExternalEEPROMArduinoLibrary-3.2.12.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20External%20EEPROM%20Arduino%20Library/3.2.12/SparkFunExternalEEPROMArduinoLibrary-3.2.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20External%20EEPROM%20Arduino%20Library/3.2.13/SparkFunExternalEEPROMArduinoLibrary-3.2.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunExternalEEPROMArduinoLibrary-3.2.13.tar.gz",
+    "size_bytes": 27136,
+    "sha256": "1ce86d78f6d5887f4d362a671db9fba4b2b5fafd267f3965a2ce4309c3fe6bb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520External%2520EEPROM%2520Arduino%2520Library/3.2.13/SparkFunExternalEEPROMArduinoLibrary-3.2.13.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20External%20EEPROM%20Arduino%20Library/3.2.13/SparkFunExternalEEPROMArduinoLibrary-3.2.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20FPC2534%20Arduino%20Library/1.0/SparkFunFPC2534ArduinoLibrary-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunFPC2534ArduinoLibrary-1.0.tar.gz",
+    "size_bytes": 38852,
+    "sha256": "19077785bf90a57697d930df1d142075abdce8f8a2796fbf4a024be731dcca67",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520FPC2534%2520Arduino%2520Library/1.0/SparkFunFPC2534ArduinoLibrary-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20FPC2534%20Arduino%20Library/1.0/SparkFunFPC2534ArduinoLibrary-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Flexible%20Grayscale%20OLED%20Breakout/1.0.4/SparkFunFlexibleGrayscaleOLEDBreakout-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunFlexibleGrayscaleOLEDBreakout-1.0.4.tar.gz",
+    "size_bytes": 52723,
+    "sha256": "261ed775c40a52f228674f2fa70d0db38d49fe45f199dde3fcbb221fde2dd963",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Flexible%2520Grayscale%2520OLED%2520Breakout/1.0.4/SparkFunFlexibleGrayscaleOLEDBreakout-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Flexible%20Grayscale%20OLED%20Breakout/1.0.4/SparkFunFlexibleGrayscaleOLEDBreakout-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Flying%20Jalapeno%202%20Arduino%20Library/1.0.4/SparkFunFlyingJalapeno2ArduinoLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunFlyingJalapeno2ArduinoLibrary-1.0.4.tar.gz",
+    "size_bytes": 20565,
+    "sha256": "61aa0cb32f814b7d07c531830fe1f7a0da4bad78340f8e324af6a87d22e4185b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Flying%2520Jalapeno%25202%2520Arduino%2520Library/1.0.4/SparkFunFlyingJalapeno2ArduinoLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Flying%20Jalapeno%202%20Arduino%20Library/1.0.4/SparkFunFlyingJalapeno2ArduinoLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Flying%20Jalapeno%20Arduino%20Library/1.0.1/SparkFunFlyingJalapenoArduinoLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunFlyingJalapenoArduinoLibrary-1.0.1.tar.gz",
+    "size_bytes": 7087,
+    "sha256": "73bc2413bb14e2d58f878145faef5c3a13b035f5fddfca93adf1631bec2b614b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Flying%2520Jalapeno%2520Arduino%2520Library/1.0.1/SparkFunFlyingJalapenoArduinoLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Flying%20Jalapeno%20Arduino%20Library/1.0.1/SparkFunFlyingJalapenoArduinoLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Garmin%20LIDAR-Lite%20v4%20Arduino%20Library/1.2.4/SparkFunGarminLIDAR-Litev4ArduinoLibrary-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunGarminLIDAR-Litev4ArduinoLibrary-1.2.4.tar.gz",
+    "size_bytes": 9497,
+    "sha256": "f542d1c154fc7ce56dab9916fadbbc3d5156b9eed5a18094c24891d824d351db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Garmin%2520LIDAR-Lite%2520v4%2520Arduino%2520Library/1.2.4/SparkFunGarminLIDAR-Litev4ArduinoLibrary-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Garmin%20LIDAR-Lite%20v4%20Arduino%20Library/1.2.4/SparkFunGarminLIDAR-Litev4ArduinoLibrary-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Graphic%20LCD%20Serial%20Backpack/1.0.1/SparkFunGraphicLCDSerialBackpack-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunGraphicLCDSerialBackpack-1.0.1.tar.gz",
+    "size_bytes": 7192,
+    "sha256": "597ecbada6faad3405af40942e73fdf750e5ea991d943025b1193b7658fea175",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Graphic%2520LCD%2520Serial%2520Backpack/1.0.1/SparkFunGraphicLCDSerialBackpack-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Graphic%20LCD%20Serial%20Backpack/1.0.1/SparkFunGraphicLCDSerialBackpack-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20GridEYE%20AMG88%20Library/1.0.2/SparkFunGridEYEAMG88Library-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunGridEYEAMG88Library-1.0.2.tar.gz",
+    "size_bytes": 11710,
+    "sha256": "8f7399e7b117f3328f12afece278383b5cacd1aa6f11a43546538dd23cc24c82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520GridEYE%2520AMG88%2520Library/1.0.2/SparkFunGridEYEAMG88Library-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20GridEYE%20AMG88%20Library/1.0.2/SparkFunGridEYEAMG88Library-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20HM1X%20Bluetooth%20Arduino%20Library/1.0.2/SparkFunHM1XBluetoothArduinoLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunHM1XBluetoothArduinoLibrary-1.0.2.tar.gz",
+    "size_bytes": 20342,
+    "sha256": "e404ccb0079b09a9c21b5f6037cf6e2e4c7b0a4fcf1fff2d26adc759b250bca4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520HM1X%2520Bluetooth%2520Arduino%2520Library/1.0.2/SparkFunHM1XBluetoothArduinoLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20HM1X%20Bluetooth%20Arduino%20Library/1.0.2/SparkFunHM1XBluetoothArduinoLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20HTU21D%20Humidity%20and%20Temperature%20Sensor%20Breakout/1.1.3/SparkFunHTU21DHumidityandTemperatureSensorBreakout-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunHTU21DHumidityandTemperatureSensorBreakout-1.1.3.tar.gz",
+    "size_bytes": 6707,
+    "sha256": "797d3c2631c7bf3c40c7ddfd5eb26ed00340f152d07b43a7488aed5fbae56382",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520HTU21D%2520Humidity%2520and%2520Temperature%2520Sensor%2520Breakout/1.1.3/SparkFunHTU21DHumidityandTemperatureSensorBreakout-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20HTU21D%20Humidity%20and%20Temperature%20Sensor%20Breakout/1.1.3/SparkFunHTU21DHumidityandTemperatureSensorBreakout-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Haptic%20Motor%20Driver/1.1.1/SparkFunHapticMotorDriver-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunHapticMotorDriver-1.1.1.tar.gz",
+    "size_bytes": 9138,
+    "sha256": "f992cb272a2b9dadf80ad3490fe5f7b008403da2a72103f189da6c79517dcabe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Haptic%2520Motor%2520Driver/1.1.1/SparkFunHapticMotorDriver-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Haptic%20Motor%20Driver/1.1.1/SparkFunHapticMotorDriver-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20High%20Precision%20Temperature%20Sensor%20TMP117%20Qwiic/1.2.5/SparkFunHighPrecisionTemperatureSensorTMP117Qwiic-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunHighPrecisionTemperatureSensorTMP117Qwiic-1.2.5.tar.gz",
+    "size_bytes": 16759,
+    "sha256": "cf8b2ae1d19954ba4c945d6d34527238dd542c3548b08ba7cd6d7303a0b157fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520High%2520Precision%2520Temperature%2520Sensor%2520TMP117%2520Qwiic/1.2.5/SparkFunHighPrecisionTemperatureSensorTMP117Qwiic-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20High%20Precision%20Temperature%20Sensor%20TMP117%20Qwiic/1.2.5/SparkFunHighPrecisionTemperatureSensorTMP117Qwiic-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Himax%20HM01B0%20Camera/0.0.3/SparkFunHimaxHM01B0Camera-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunHimaxHM01B0Camera-0.0.3.tar.gz",
+    "size_bytes": 21032,
+    "sha256": "1d8928da2e40a5db5fe57a1c6a191d6c45074716b42e8a42429c061950ba3198",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Himax%2520HM01B0%2520Camera/0.0.3/SparkFunHimaxHM01B0Camera-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Himax%20HM01B0%20Camera/0.0.3/SparkFunHimaxHM01B0Camera-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20HyperDisplay%204DLCD-320240/1.0.0/SparkFunHyperDisplay4DLCD-320240-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunHyperDisplay4DLCD-320240-1.0.0.tar.gz",
+    "size_bytes": 14788,
+    "sha256": "8135aaf1a48bd3ff597cdf3004ecd0010673cddc94e1daca1e35d9f3eb97883a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520HyperDisplay%25204DLCD-320240/1.0.0/SparkFunHyperDisplay4DLCD-320240-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20HyperDisplay%204DLCD-320240/1.0.0/SparkFunHyperDisplay4DLCD-320240-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20HyperDisplay%20ILI9163C/1.0.2/SparkFunHyperDisplayILI9163C-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunHyperDisplayILI9163C-1.0.2.tar.gz",
+    "size_bytes": 17176,
+    "sha256": "5afae692d8c6e5feec7fb23802a9f41903098bb011164d4ef4bf1663f28b2358",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520HyperDisplay%2520ILI9163C/1.0.2/SparkFunHyperDisplayILI9163C-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20HyperDisplay%20ILI9163C/1.0.2/SparkFunHyperDisplayILI9163C-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20HyperDisplay%20ILI9341/1.0.0/SparkFunHyperDisplayILI9341-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunHyperDisplayILI9341-1.0.0.tar.gz",
+    "size_bytes": 16853,
+    "sha256": "0dfa106c5b284feb999385bfdfb57b563985af40b7352d0ebecbe5ca6f6a0411",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520HyperDisplay%2520ILI9341/1.0.0/SparkFunHyperDisplayILI9341-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20HyperDisplay%20ILI9341/1.0.0/SparkFunHyperDisplayILI9341-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20HyperDisplay%20KWH018ST01/1.0.2/SparkFunHyperDisplayKWH018ST01-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunHyperDisplayKWH018ST01-1.0.2.tar.gz",
+    "size_bytes": 119003,
+    "sha256": "44cf6af3bfb0aeb48839fc9d74ac1387a5df3209be02d512dab76b49728a0632",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520HyperDisplay%2520KWH018ST01/1.0.2/SparkFunHyperDisplayKWH018ST01-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20HyperDisplay%20KWH018ST01/1.0.2/SparkFunHyperDisplayKWH018ST01-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20HyperDisplay%20SSD1309/1.1.1/SparkFunHyperDisplaySSD1309-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunHyperDisplaySSD1309-1.1.1.tar.gz",
+    "size_bytes": 12745,
+    "sha256": "0bf3dc50b69b6ccb2cf23b169685277c0838edf6a393a276a26972e74656b8fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520HyperDisplay%2520SSD1309/1.1.1/SparkFunHyperDisplaySSD1309-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20HyperDisplay%20SSD1309/1.1.1/SparkFunHyperDisplaySSD1309-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20HyperDisplay%20Transparent%20Graphical%20OLED/1.1.0/SparkFunHyperDisplayTransparentGraphicalOLED-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunHyperDisplayTransparentGraphicalOLED-1.1.0.tar.gz",
+    "size_bytes": 414031,
+    "sha256": "bae86ba69ba1e7ddfa5a490d5fe5b016b23b23c91a1c63db0f5d909ca08b3699",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520HyperDisplay%2520Transparent%2520Graphical%2520OLED/1.1.0/SparkFunHyperDisplayTransparentGraphicalOLED-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20HyperDisplay%20Transparent%20Graphical%20OLED/1.1.0/SparkFunHyperDisplayTransparentGraphicalOLED-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20HyperDisplay/2.0.1/SparkFunHyperDisplay-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunHyperDisplay-2.0.1.tar.gz",
+    "size_bytes": 30706,
+    "sha256": "86f551149163d0f46337b629b0f1f286252cdd0deeface20d20018a90ca51996",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520HyperDisplay/2.0.1/SparkFunHyperDisplay-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20HyperDisplay/2.0.1/SparkFunHyperDisplay-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20I2C%20Expander%20Arduino%20Library/1.0.2/SparkFunI2CExpanderArduinoLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunI2CExpanderArduinoLibrary-1.0.2.tar.gz",
+    "size_bytes": 9113,
+    "sha256": "723c184c9bbb73172887e12a514b107a1e5e3d76737d6a7ebeb86a07aba2bada",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520I2C%2520Expander%2520Arduino%2520Library/1.0.2/SparkFunI2CExpanderArduinoLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20I2C%20Expander%20Arduino%20Library/1.0.2/SparkFunI2CExpanderArduinoLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20I2C%20Expander%20Arduino%20Library/1.0.3/SparkFunI2CExpanderArduinoLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunI2CExpanderArduinoLibrary-1.0.3.tar.gz",
+    "size_bytes": 9450,
+    "sha256": "69e2d0babbbece2e0f84ba2357096bc08fb5610df0f5ac3e49f9236e9473399e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520I2C%2520Expander%2520Arduino%2520Library/1.0.3/SparkFunI2CExpanderArduinoLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20I2C%20Expander%20Arduino%20Library/1.0.3/SparkFunI2CExpanderArduinoLibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20I2C%20GPS%20Reading%20and%20Control/1.0.6/SparkFunI2CGPSReadingandControl-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunI2CGPSReadingandControl-1.0.6.tar.gz",
+    "size_bytes": 13288,
+    "sha256": "f17713eb7e85f51edab57815380125bdae3edd59ba1bd82d31218527f08aa127",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520I2C%2520GPS%2520Reading%2520and%2520Control/1.0.6/SparkFunI2CGPSReadingandControl-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20I2C%20GPS%20Reading%20and%20Control/1.0.6/SparkFunI2CGPSReadingandControl-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20I2C%20Mux%20Arduino%20Library/1.0.3/SparkFunI2CMuxArduinoLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunI2CMuxArduinoLibrary-1.0.3.tar.gz",
+    "size_bytes": 7205,
+    "sha256": "d177943bd9d0f8fdd5a213dc2d2de8a60acce50034a37deebfd93773b12d4ac2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520I2C%2520Mux%2520Arduino%2520Library/1.0.3/SparkFunI2CMuxArduinoLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20I2C%20Mux%20Arduino%20Library/1.0.3/SparkFunI2CMuxArduinoLibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20IM19%20IMU%20Arduino%20Library/1.0.2/SparkFunIM19IMUArduinoLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunIM19IMUArduinoLibrary-1.0.2.tar.gz",
+    "size_bytes": 12111,
+    "sha256": "fd3b57fea0c9d93bf22c672a2fb6ba77d2f957f2d350e4f4b364732a3dbc9dab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520IM19%2520IMU%2520Arduino%2520Library/1.0.2/SparkFunIM19IMUArduinoLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20IM19%20IMU%20Arduino%20Library/1.0.2/SparkFunIM19IMUArduinoLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20IM19%20IMU%20Arduino%20Library/1.1.1/SparkFunIM19IMUArduinoLibrary-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunIM19IMUArduinoLibrary-1.1.1.tar.gz",
+    "size_bytes": 15767,
+    "sha256": "0b447b3ca61059e93f0fabb43ab31d7390bba95376c9ce4d1f12f7f96b2a034c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520IM19%2520IMU%2520Arduino%2520Library/1.1.1/SparkFunIM19IMUArduinoLibrary-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20IM19%20IMU%20Arduino%20Library/1.1.1/SparkFunIM19IMUArduinoLibrary-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20INA2XX%20Arduino%20Library/1.0.0/SparkFunINA2XXArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunINA2XXArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 27397,
+    "sha256": "3b942b650149aa1cfda0bd4c576c050496746644f95ce1ccf382697f5cfc9c75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520INA2XX%2520Arduino%2520Library/1.0.0/SparkFunINA2XXArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20INA2XX%20Arduino%20Library/1.0.0/SparkFunINA2XXArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ISL29125%20Breakout/1.0.1/SparkFunISL29125Breakout-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunISL29125Breakout-1.0.1.tar.gz",
+    "size_bytes": 7963,
+    "sha256": "470b1d5f7a0aa6bb23d3a466e6efafb8245f8df455acaae6c2b56ee373c6a05a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ISL29125%2520Breakout/1.0.1/SparkFunISL29125Breakout-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ISL29125%20Breakout/1.0.1/SparkFunISL29125Breakout-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Indoor%20Air%20Quality%20Sensor%20-%20ENS160/1.1.0/SparkFunIndoorAirQualitySensor-ENS160-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunIndoorAirQualitySensor-ENS160-1.1.0.tar.gz",
+    "size_bytes": 16426,
+    "sha256": "19b42836555321984d31728818abfb9a56b99433b9c23dab594c4223fb2bafe5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Indoor%2520Air%2520Quality%2520Sensor%2520-%2520ENS160/1.1.0/SparkFunIndoorAirQualitySensor-ENS160-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Indoor%20Air%20Quality%20Sensor%20-%20ENS160/1.1.0/SparkFunIndoorAirQualitySensor-ENS160-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20L6470%20AutoDriver/1.3.3/SparkFunL6470AutoDriver-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunL6470AutoDriver-1.3.3.tar.gz",
+    "size_bytes": 34371,
+    "sha256": "37e6d503b4d85ad7c09417b332392e8b1e1fed67426319b3e93b67c1d8690ea2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520L6470%2520AutoDriver/1.3.3/SparkFunL6470AutoDriver-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20L6470%20AutoDriver/1.3.3/SparkFunL6470AutoDriver-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/1.0.10/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-1.0.10.tar.gz",
+    "size_bytes": 47957,
+    "sha256": "06898aa8f3d3ac7e027fd1ac7efc4bac3ab42efa2c1b13398a3e02a6a2c4f368",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LG290P%2520Quadband%2520RTK%2520GNSS%2520Arduino%2520Library/1.0.10/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/1.0.10/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/2.0.0/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-2.0.0.tar.gz",
+    "size_bytes": 47936,
+    "sha256": "0a400506555c1fe0abec823623d7a0ee5eef507d12d9fac04c433a04c491672c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LG290P%2520Quadband%2520RTK%2520GNSS%2520Arduino%2520Library/2.0.0/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/2.0.0/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/2.0.2/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-2.0.2.tar.gz",
+    "size_bytes": 49975,
+    "sha256": "2c0b3e0b095f66ff294e91789a4938c34ac2daecc0eca0d8c75fb46ddcca9a94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LG290P%2520Quadband%2520RTK%2520GNSS%2520Arduino%2520Library/2.0.2/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/2.0.2/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/2.0.3/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-2.0.3.tar.gz",
+    "size_bytes": 49994,
+    "sha256": "caa6252f6f68ad701bf1a00906e9d85ead42a875be1e44a8b47e631fc36bb706",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LG290P%2520Quadband%2520RTK%2520GNSS%2520Arduino%2520Library/2.0.3/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/2.0.3/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/3.0.0/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.0.tar.gz",
+    "size_bytes": 56960,
+    "sha256": "4d81bbdf1aa15aa2f0ba77a03911e0ca70012d56b17bd491aef0819aedbc0a9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LG290P%2520Quadband%2520RTK%2520GNSS%2520Arduino%2520Library/3.0.0/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/3.0.0/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/3.0.1/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.1.tar.gz",
+    "size_bytes": 56992,
+    "sha256": "2e57cab26ecfc6470e83c8f03cd0e886510784d59a66da9035a4ab59bb21aac9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LG290P%2520Quadband%2520RTK%2520GNSS%2520Arduino%2520Library/3.0.1/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/3.0.1/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/3.0.2/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.2.tar.gz",
+    "size_bytes": 88731,
+    "sha256": "b46eccad42cdc558ea0b24f65989cfd976ad75cde5b858bccce6b517b65c59fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LG290P%2520Quadband%2520RTK%2520GNSS%2520Arduino%2520Library/3.0.2/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/3.0.2/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/3.0.4/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.4.tar.gz",
+    "size_bytes": 88768,
+    "sha256": "d20ee4f5004e9c09e3efb701409809550855244db097e66b44c6e82628c55cdc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LG290P%2520Quadband%2520RTK%2520GNSS%2520Arduino%2520Library/3.0.4/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/3.0.4/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/3.1.0/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.1.0.tar.gz",
+    "size_bytes": 92159,
+    "sha256": "6347834d20d62d3827ce7acd4ba520c4bfc71474b70124975b4364e8c2f5f3ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LG290P%2520Quadband%2520RTK%2520GNSS%2520Arduino%2520Library/3.1.0/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/3.1.0/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/3.1.1/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.1.1.tar.gz",
+    "size_bytes": 93207,
+    "sha256": "a9db17536e1763e5d8f3e4ede82bde7657b5e4fe708f7f062d3f7f2a1948c4d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LG290P%2520Quadband%2520RTK%2520GNSS%2520Arduino%2520Library/3.1.1/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LG290P%20Quadband%20RTK%20GNSS%20Arduino%20Library/3.1.1/SparkFunLG290PQuadbandRTKGNSSArduinoLibrary-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LIS2DH12%20Arduino%20Library/1.0.3/SparkFunLIS2DH12ArduinoLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLIS2DH12ArduinoLibrary-1.0.3.tar.gz",
+    "size_bytes": 24642,
+    "sha256": "718deef82c68941c9c6bf60dced1eeb9d88aec560efff5eddc3810f61e4325fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LIS2DH12%2520Arduino%2520Library/1.0.3/SparkFunLIS2DH12ArduinoLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LIS2DH12%20Arduino%20Library/1.0.3/SparkFunLIS2DH12ArduinoLibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LIS3DH%20Arduino%20Library/1.0.3/SparkFunLIS3DHArduinoLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLIS3DHArduinoLibrary-1.0.3.tar.gz",
+    "size_bytes": 15886,
+    "sha256": "767fd1e46e67ccee2b42e0b8f4a5486b070f7d9548e48ae1378f6836c27c2da6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LIS3DH%2520Arduino%2520Library/1.0.3/SparkFunLIS3DHArduinoLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LIS3DH%20Arduino%20Library/1.0.3/SparkFunLIS3DHArduinoLibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LP55231%20Breakout/1.1.0/SparkFunLP55231Breakout-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLP55231Breakout-1.1.0.tar.gz",
+    "size_bytes": 17413,
+    "sha256": "c0b3aec0ec7409b26a344c6a24e7014c79a71204ea895c8585c77c9d37313c71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LP55231%2520Breakout/1.1.0/SparkFunLP55231Breakout-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LP55231%20Breakout/1.1.0/SparkFunLP55231Breakout-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LPS25HB%20Pressure%20Sensor%20Library/1.1.1/SparkFunLPS25HBPressureSensorLibrary-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLPS25HBPressureSensorLibrary-1.1.1.tar.gz",
+    "size_bytes": 12414,
+    "sha256": "a64bf0da9789de93cc41ba51c254514be02c6c6a7420d5ae225ba38457037529",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LPS25HB%2520Pressure%2520Sensor%2520Library/1.1.1/SparkFunLPS25HBPressureSensorLibrary-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LPS25HB%20Pressure%20Sensor%20Library/1.1.1/SparkFunLPS25HBPressureSensorLibrary-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LPS28DFW%20Arduino%20Library/1.0.0/SparkFunLPS28DFWArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLPS28DFWArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 22363,
+    "sha256": "42802523c68ac04fa21e1abfcec75011eed7286378f085247bf8aafe8a2812f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LPS28DFW%2520Arduino%2520Library/1.0.0/SparkFunLPS28DFWArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LPS28DFW%20Arduino%20Library/1.0.0/SparkFunLPS28DFWArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LSM303C%206%20DOF%20IMU%20Breakout/1.0.2/SparkFunLSM303C6DOFIMUBreakout-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLSM303C6DOFIMUBreakout-1.0.2.tar.gz",
+    "size_bytes": 11524,
+    "sha256": "5e8c355715cb64da60f5bc82954cbd862c0556184cef14a6b9a2a86d5bf1cd74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LSM303C%25206%2520DOF%2520IMU%2520Breakout/1.0.2/SparkFunLSM303C6DOFIMUBreakout-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LSM303C%206%20DOF%20IMU%20Breakout/1.0.2/SparkFunLSM303C6DOFIMUBreakout-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LSM6DS3%20Breakout/1.0.3/SparkFunLSM6DS3Breakout-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLSM6DS3Breakout-1.0.3.tar.gz",
+    "size_bytes": 24299,
+    "sha256": "0c2ac00f1b83e290c2071f41f8e4026ba9ae1ec61acebc72c58618c04b9eebed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LSM6DS3%2520Breakout/1.0.3/SparkFunLSM6DS3Breakout-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LSM6DS3%20Breakout/1.0.3/SparkFunLSM6DS3Breakout-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LSM9DS0%20Breakout/1.0.1/SparkFunLSM9DS0Breakout-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLSM9DS0Breakout-1.0.1.tar.gz",
+    "size_bytes": 29002,
+    "sha256": "3e655f2e8efbd4393f8eec17757fdd06cf0e2965242183426344cdf214b0bbe9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LSM9DS0%2520Breakout/1.0.1/SparkFunLSM9DS0Breakout-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LSM9DS0%20Breakout/1.0.1/SparkFunLSM9DS0Breakout-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LSM9DS1%20IMU/2.0.0/SparkFunLSM9DS1IMU-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLSM9DS1IMU-2.0.0.tar.gz",
+    "size_bytes": 26449,
+    "sha256": "fd054bcd2616c9ba109b9966e1f6037ce1dd6f92724e57a0f4563118a1c3ede3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LSM9DS1%2520IMU/2.0.0/SparkFunLSM9DS1IMU-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LSM9DS1%20IMU/2.0.0/SparkFunLSM9DS1IMU-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20LTE%20Shield%20Arduino%20Library/1.3.0/SparkFunLTEShieldArduinoLibrary-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLTEShieldArduinoLibrary-1.3.0.tar.gz",
+    "size_bytes": 27576,
+    "sha256": "e5b6f55e6b623a1f3d61ba522a200d16cbdb79993c080e011269d874d099f843",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520LTE%2520Shield%2520Arduino%2520Library/1.3.0/SparkFunLTEShieldArduinoLibrary-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20LTE%20Shield%20Arduino%20Library/1.3.0/SparkFunLTEShieldArduinoLibrary-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Line%20Follower%20Array/1.0.1/SparkFunLineFollowerArray-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunLineFollowerArray-1.0.1.tar.gz",
+    "size_bytes": 13461,
+    "sha256": "53b32709a43620a0c23e0901be82b711bc1d1fb373a2f98400ff5b117935b2c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Line%2520Follower%2520Array/1.0.1/SparkFunLineFollowerArray-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Line%20Follower%20Array/1.0.1/SparkFunLineFollowerArray-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MAG3110%20Magnetometer%20Breakout%20Arduino%20Library/1.0.3/SparkFunMAG3110MagnetometerBreakoutArduinoLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMAG3110MagnetometerBreakoutArduinoLibrary-1.0.3.tar.gz",
+    "size_bytes": 15991,
+    "sha256": "77d8f028ec19648127a00020a17b4f495ae6ac91779557884aa423f441a19dc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MAG3110%2520Magnetometer%2520Breakout%2520Arduino%2520Library/1.0.3/SparkFunMAG3110MagnetometerBreakoutArduinoLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MAG3110%20Magnetometer%20Breakout%20Arduino%20Library/1.0.3/SparkFunMAG3110MagnetometerBreakoutArduinoLibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MAX1704x%20Fuel%20Gauge%20Arduino%20Library/1.0.4/SparkFunMAX1704xFuelGaugeArduinoLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMAX1704xFuelGaugeArduinoLibrary-1.0.4.tar.gz",
+    "size_bytes": 14326,
+    "sha256": "3797f31c892c7f2ae77a067824cefbf4349b12c510f79f97cb91d12c8d8f85fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MAX1704x%2520Fuel%2520Gauge%2520Arduino%2520Library/1.0.4/SparkFunMAX1704xFuelGaugeArduinoLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MAX1704x%20Fuel%20Gauge%20Arduino%20Library/1.0.4/SparkFunMAX1704xFuelGaugeArduinoLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MAX3010x%20Pulse%20and%20Proximity%20Sensor%20Library/1.1.2/SparkFunMAX3010xPulseandProximitySensorLibrary-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMAX3010xPulseandProximitySensorLibrary-1.1.2.tar.gz",
+    "size_bytes": 24400,
+    "sha256": "edb0313ee3b9b53e7b894cb4172b4d276e7dfb8562aeaa4a9e817776d3be7b27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MAX3010x%2520Pulse%2520and%2520Proximity%2520Sensor%2520Library/1.1.2/SparkFunMAX3010xPulseandProximitySensorLibrary-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MAX3010x%20Pulse%20and%20Proximity%20Sensor%20Library/1.1.2/SparkFunMAX3010xPulseandProximitySensorLibrary-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MAX31855K%20Thermocouple%20Digitizer/1.0.0/SparkFunMAX31855KThermocoupleDigitizer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMAX31855KThermocoupleDigitizer-1.0.0.tar.gz",
+    "size_bytes": 7256,
+    "sha256": "b0d33622196160b2c66622fa6155bbfa5165c41cf554a4f8ef0ace929efbe873",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MAX31855K%2520Thermocouple%2520Digitizer/1.0.0/SparkFunMAX31855KThermocoupleDigitizer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MAX31855K%20Thermocouple%20Digitizer/1.0.0/SparkFunMAX31855KThermocoupleDigitizer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MCP4725%20Arduino%20Library/1.0.0/SparkFunMCP4725ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMCP4725ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 11346,
+    "sha256": "c2108976b920f50912c7fc011897b5a1fb4dd82a2cc8426529702575c4cd1178",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MCP4725%2520Arduino%2520Library/1.0.0/SparkFunMCP4725ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MCP4725%20Arduino%20Library/1.0.0/SparkFunMCP4725ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MCP9600%20Thermocouple%20Library/1.0.6/SparkFunMCP9600ThermocoupleLibrary-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMCP9600ThermocoupleLibrary-1.0.6.tar.gz",
+    "size_bytes": 14681,
+    "sha256": "5bd7a1e39ecfa773eccd7327b8d240dd85e730adc3cc11c978079a17be972fd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MCP9600%2520Thermocouple%2520Library/1.0.6/SparkFunMCP9600ThermocoupleLibrary-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MCP9600%20Thermocouple%20Library/1.0.6/SparkFunMCP9600ThermocoupleLibrary-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MG2639%20CellShield/1.0.0/SparkFunMG2639CellShield-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMG2639CellShield-1.0.0.tar.gz",
+    "size_bytes": 30695,
+    "sha256": "29130144efcc6c6f1f0d7631dfee7126b680b09629f423b6cb78f4739e9cc6aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MG2639%2520CellShield/1.0.0/SparkFunMG2639CellShield-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MG2639%20CellShield/1.0.0/SparkFunMG2639CellShield-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MLX90632%20Noncontact%20Infrared%20Temperature%20Sensor/1.0.1/SparkFunMLX90632NoncontactInfraredTemperatureSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMLX90632NoncontactInfraredTemperatureSensor-1.0.1.tar.gz",
+    "size_bytes": 12151,
+    "sha256": "16e687873864c4d4a708498eca024c20189bccac42f0d485b89e70ca0f5e97ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MLX90632%2520Noncontact%2520Infrared%2520Temperature%2520Sensor/1.0.1/SparkFunMLX90632NoncontactInfraredTemperatureSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MLX90632%20Noncontact%20Infrared%20Temperature%20Sensor/1.0.1/SparkFunMLX90632NoncontactInfraredTemperatureSensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MMC5983MA%20Magnetometer%20Arduino%20Library/1.1.4/SparkFunMMC5983MAMagnetometerArduinoLibrary-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMMC5983MAMagnetometerArduinoLibrary-1.1.4.tar.gz",
+    "size_bytes": 17300,
+    "sha256": "1811c493ab3c788a0fe998615e341549c9dd4b73bdb7614187c47c120fd67a93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MMC5983MA%2520Magnetometer%2520Arduino%2520Library/1.1.4/SparkFunMMC5983MAMagnetometerArduinoLibrary-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MMC5983MA%20Magnetometer%20Arduino%20Library/1.1.4/SparkFunMMC5983MAMagnetometerArduinoLibrary-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MMC5983MA%20Magnetometer%20Arduino%20Library/1.1.5/SparkFunMMC5983MAMagnetometerArduinoLibrary-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMMC5983MAMagnetometerArduinoLibrary-1.1.5.tar.gz",
+    "size_bytes": 17329,
+    "sha256": "54a80ccbe18bed2c5fc7e440fff738e9ef2a7b72e053cc1621eff5ff4cbab673",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MMC5983MA%2520Magnetometer%2520Arduino%2520Library/1.1.5/SparkFunMMC5983MAMagnetometerArduinoLibrary-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MMC5983MA%20Magnetometer%20Arduino%20Library/1.1.5/SparkFunMMC5983MAMagnetometerArduinoLibrary-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MPL3115A2%20Altitude%20and%20Pressure%20Sensor%20Breakout/1.2.4/SparkFunMPL3115A2AltitudeandPressureSensorBreakout-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMPL3115A2AltitudeandPressureSensorBreakout-1.2.4.tar.gz",
+    "size_bytes": 21467,
+    "sha256": "a23196852e81977e42fc686fe8c5ec2974e7df6287ad8fac4d359c879ce5f994",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MPL3115A2%2520Altitude%2520and%2520Pressure%2520Sensor%2520Breakout/1.2.4/SparkFunMPL3115A2AltitudeandPressureSensorBreakout-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MPL3115A2%20Altitude%20and%20Pressure%20Sensor%20Breakout/1.2.4/SparkFunMPL3115A2AltitudeandPressureSensorBreakout-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MPU-9250%209%20DOF%20IMU%20Breakout/1.0.2/SparkFunMPU-92509DOFIMUBreakout-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMPU-92509DOFIMUBreakout-1.0.2.tar.gz",
+    "size_bytes": 27173,
+    "sha256": "477ec58b57535a9f1a7fead5890f38a5dceeee700610da2e80dff9331b2748e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MPU-9250%25209%2520DOF%2520IMU%2520Breakout/1.0.2/SparkFunMPU-92509DOFIMUBreakout-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MPU-9250%209%20DOF%20IMU%20Breakout/1.0.2/SparkFunMPU-92509DOFIMUBreakout-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MPU-9250%20Digital%20Motion%20Processing%20%28DMP%29%20Arduino%20Library/1.0.0/SparkFunMPU-9250DigitalMotionProcessingDMPArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMPU-9250DigitalMotionProcessingDMPArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 56716,
+    "sha256": "e2c82b11422fee407b150abc1fce9dffc62ee5c8faaf7d3cd529139c3cc55f88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MPU-9250%2520Digital%2520Motion%2520Processing%2520%2528DMP%2529%2520Arduino%2520Library/1.0.0/SparkFunMPU-9250DigitalMotionProcessingDMPArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MPU-9250%20Digital%20Motion%20Processing%20%28DMP%29%20Arduino%20Library/1.0.0/SparkFunMPU-9250DigitalMotionProcessingDMPArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MS5637%20Barometric%20Pressure%20Library/1.0.2/SparkFunMS5637BarometricPressureLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMS5637BarometricPressureLibrary-1.0.2.tar.gz",
+    "size_bytes": 11294,
+    "sha256": "4010d5a63bfcf945617f19c37f332117f9115958811691b670f6a2752c1dd7ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MS5637%2520Barometric%2520Pressure%2520Library/1.0.2/SparkFunMS5637BarometricPressureLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MS5637%20Barometric%20Pressure%20Library/1.0.2/SparkFunMS5637BarometricPressureLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MS5803-14BA%20Pressure%20Sensor/1.1.4/SparkFunMS5803-14BAPressureSensor-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMS5803-14BAPressureSensor-1.1.4.tar.gz",
+    "size_bytes": 9050,
+    "sha256": "61ba4e4c49ce468e54ecda691c7a55bcb66d6e44f040f79d37d5aaac68bb8b1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MS5803-14BA%2520Pressure%2520Sensor/1.1.4/SparkFunMS5803-14BAPressureSensor-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MS5803-14BA%20Pressure%20Sensor/1.1.4/SparkFunMS5803-14BAPressureSensor-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MY1690%20MP3%20Decoder%20Library/1.0.1/SparkFunMY1690MP3DecoderLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMY1690MP3DecoderLibrary-1.0.1.tar.gz",
+    "size_bytes": 15648,
+    "sha256": "0646c9350dc35000f357c3d8e27ed99652ffafeee1c366d7feed12014c4625a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MY1690%2520MP3%2520Decoder%2520Library/1.0.1/SparkFunMY1690MP3DecoderLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MY1690%20MP3%20Decoder%20Library/1.0.1/SparkFunMY1690MP3DecoderLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MetaWatch/1.1.0/SparkFunMetaWatch-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMetaWatch-1.1.0.tar.gz",
+    "size_bytes": 12796,
+    "sha256": "d3573e1e2d47826f69e94e5e1adbcd43cff5178333192fffdbb0968f0d956c91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MetaWatch/1.1.0/SparkFunMetaWatch-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MetaWatch/1.1.0/SparkFunMetaWatch-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Micro%20OLED%20Breakout/1.3.3/SparkFunMicroOLEDBreakout-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMicroOLEDBreakout-1.3.3.tar.gz",
+    "size_bytes": 44711,
+    "sha256": "b801dbfe7aa95b5f4100fc0e7745a0349424201bac69e9aeac556b9a254c2e55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Micro%2520OLED%2520Breakout/1.3.3/SparkFunMicroOLEDBreakout-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Micro%20OLED%20Breakout/1.3.3/SparkFunMicroOLEDBreakout-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MicroMod%20Button/1.0.0/SparkFunMicroModButton-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMicroModButton-1.0.0.tar.gz",
+    "size_bytes": 5162,
+    "sha256": "def2246a190911c3bbccb7b8645d42e131208cad6de70d250d7fbb24053020b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MicroMod%2520Button/1.0.0/SparkFunMicroModButton-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MicroMod%20Button/1.0.0/SparkFunMicroModButton-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MicroPressure%20Library/1.0.1/SparkFunMicroPressureLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMicroPressureLibrary-1.0.1.tar.gz",
+    "size_bytes": 4778,
+    "sha256": "47412feb12d7ba858326f9033cab38b3398bf5d43cbf7bc554352fc2e041366a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MicroPressure%2520Library/1.0.1/SparkFunMicroPressureLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MicroPressure%20Library/1.0.1/SparkFunMicroPressureLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MiniGen/1.1.0/SparkFunMiniGen-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMiniGen-1.1.0.tar.gz",
+    "size_bytes": 7794,
+    "sha256": "79c1fc56b1d72d4aecefb3783639ec0b2ce6580260b88f3f4522a408b002c986",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MiniGen/1.1.0/SparkFunMiniGen-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MiniGen/1.1.0/SparkFunMiniGen-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20MiniMoto/1.1.0/SparkFunMiniMoto-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunMiniMoto-1.1.0.tar.gz",
+    "size_bytes": 5839,
+    "sha256": "ed647741174935b02c1a46c8a99b314e7d2742e897a345da7f990a2df9aa78a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520MiniMoto/1.1.0/SparkFunMiniMoto-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20MiniMoto/1.1.0/SparkFunMiniMoto-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20OWire%20Arduino%20Library/1.0.1/SparkFunOWireArduinoLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunOWireArduinoLibrary-1.0.1.tar.gz",
+    "size_bytes": 5461,
+    "sha256": "f72138aabf63a1cc48b5e1ccc42f9c3fb58f405b08c3f257f006c7dea1cce127",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520OWire%2520Arduino%2520Library/1.0.1/SparkFunOWireArduinoLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20OWire%20Arduino%20Library/1.0.1/SparkFunOWireArduinoLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20PCA9536%20Arduino%20Library/1.2.2/SparkFunPCA9536ArduinoLibrary-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunPCA9536ArduinoLibrary-1.2.2.tar.gz",
+    "size_bytes": 6432,
+    "sha256": "a33b0db6867a8c4f5165ef1c87aa79ab5576497638f65c2ffd894c857f3dda7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520PCA9536%2520Arduino%2520Library/1.2.2/SparkFunPCA9536ArduinoLibrary-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20PCA9536%20Arduino%20Library/1.2.2/SparkFunPCA9536ArduinoLibrary-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20PCA9846%20Mux%20Arduino%20Library/1.0.0/SparkFunPCA9846MuxArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunPCA9846MuxArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 9511,
+    "sha256": "8f42b38ca6e71d350a7474f46f7cb41489b62d18d579c4a24d7827ef2eead1b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520PCA9846%2520Mux%2520Arduino%2520Library/1.0.0/SparkFunPCA9846MuxArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20PCA9846%20Mux%20Arduino%20Library/1.0.0/SparkFunPCA9846MuxArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20PHT%20MS8607%20Arduino%20Library/1.0.5/SparkFunPHTMS8607ArduinoLibrary-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunPHTMS8607ArduinoLibrary-1.0.5.tar.gz",
+    "size_bytes": 19433,
+    "sha256": "efc9554d1bd0e06501e85be55238e3fbbec5a5af69b55634c2fd74a6fc1ecafd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520PHT%2520MS8607%2520Arduino%2520Library/1.0.5/SparkFunPHTMS8607ArduinoLibrary-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20PHT%20MS8607%20Arduino%20Library/1.0.5/SparkFunPHTMS8607ArduinoLibrary-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Particle%20Sensor%20Panasonic%20SN-GCJA5/1.0.1/SparkFunParticleSensorPanasonicSN-GCJA5-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunParticleSensorPanasonicSN-GCJA5-1.0.1.tar.gz",
+    "size_bytes": 6086,
+    "sha256": "8b913901931ac54dcdcf6c423f0db9feb79ce4304ecfc4bd5f0e16143dd82bd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Particle%2520Sensor%2520Panasonic%2520SN-GCJA5/1.0.1/SparkFunParticleSensorPanasonicSN-GCJA5-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Particle%20Sensor%20Panasonic%20SN-GCJA5/1.0.1/SparkFunParticleSensorPanasonicSN-GCJA5-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20PicoDVI/1.3.0/SparkFunPicoDVI-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunPicoDVI-1.3.0.tar.gz",
+    "size_bytes": 610504,
+    "sha256": "c01c6cf5e3ae40ccbeb9aac1cc3ee622f8a26c992e727da4f66d0ccb367da99e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520PicoDVI/1.3.0/SparkFunPicoDVI-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20PicoDVI/1.3.0/SparkFunPicoDVI-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ProDriver%20TC78G670FTG%20Arduino%20Library/1.0.2/SparkFunProDriverTC78G670FTGArduinoLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunProDriverTC78G670FTGArduinoLibrary-1.0.2.tar.gz",
+    "size_bytes": 14418,
+    "sha256": "cb71409f1aa82c58c3b76ca11df21078c96a56624c8de53ba69798ed4d1cc5b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ProDriver%2520TC78G670FTG%2520Arduino%2520Library/1.0.2/SparkFunProDriverTC78G670FTGArduinoLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ProDriver%20TC78G670FTG%20Arduino%20Library/1.0.2/SparkFunProDriverTC78G670FTGArduinoLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Quadstepper%20Motor%20Driver/1.0.1/SparkFunQuadstepperMotorDriver-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQuadstepperMotorDriver-1.0.1.tar.gz",
+    "size_bytes": 5537,
+    "sha256": "4567355ee3fa382f6258873a36eb92375652e4c59e1b2d547a8c8710a8b80f51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Quadstepper%2520Motor%2520Driver/1.0.1/SparkFunQuadstepperMotorDriver-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Quadstepper%20Motor%20Driver/1.0.1/SparkFunQuadstepperMotorDriver-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%206Dof%20-%20LSM6DSO/1.0.4/SparkFunQwiic6Dof-LSM6DSO-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiic6Dof-LSM6DSO-1.0.4.tar.gz",
+    "size_bytes": 23192,
+    "sha256": "673dafa471f851d1360155d3439b786ef35ef05983fe3c40a3399148ebb03dff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%25206Dof%2520-%2520LSM6DSO/1.0.4/SparkFunQwiic6Dof-LSM6DSO-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%206Dof%20-%20LSM6DSO/1.0.4/SparkFunQwiic6Dof-LSM6DSO-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20AS7341L%2010-Channel%20Spectral%20Sensor/1.0.0/SparkFunQwiicAS7341L10-ChannelSpectralSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicAS7341L10-ChannelSpectralSensor-1.0.0.tar.gz",
+    "size_bytes": 15346,
+    "sha256": "5c7b475c7debdcfb6c65891e676b2eb393632d4bc0bc3e895bd6440d1048ee6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520AS7341L%252010-Channel%2520Spectral%2520Sensor/1.0.0/SparkFunQwiicAS7341L10-ChannelSpectralSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20AS7341L%2010-Channel%20Spectral%20Sensor/1.0.0/SparkFunQwiicAS7341L10-ChannelSpectralSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Alphanumeric%20Display%20Arduino%20Library/2.1.4/SparkFunQwiicAlphanumericDisplayArduinoLibrary-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicAlphanumericDisplayArduinoLibrary-2.1.4.tar.gz",
+    "size_bytes": 13191,
+    "sha256": "913f7d64b275b64e6ccf3bc1fefd8312f0c3116df21d425f22f54cdc8b1e55ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Alphanumeric%2520Display%2520Arduino%2520Library/2.1.4/SparkFunQwiicAlphanumericDisplayArduinoLibrary-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Alphanumeric%20Display%20Arduino%20Library/2.1.4/SparkFunQwiicAlphanumericDisplayArduinoLibrary-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Button%20and%20Qwiic%20Switch%20Library/2.0.6/SparkFunQwiicButtonandQwiicSwitchLibrary-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicButtonandQwiicSwitchLibrary-2.0.6.tar.gz",
+    "size_bytes": 12579,
+    "sha256": "a8a003d47702a712216ba11e864ab9153263f65bf6f38b50814c7806692e34b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Button%2520and%2520Qwiic%2520Switch%2520Library/2.0.6/SparkFunQwiicButtonandQwiicSwitchLibrary-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Button%20and%20Qwiic%20Switch%20Library/2.0.6/SparkFunQwiicButtonandQwiicSwitchLibrary-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Buzzer%20Library/1.1.0/SparkFunQwiicBuzzerLibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicBuzzerLibrary-1.1.0.tar.gz",
+    "size_bytes": 16023,
+    "sha256": "196ea2afac7af2f4cfb0a6ff7f18f09bb3a2ef759777b525291ab065ca0f949c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Buzzer%2520Library/1.1.0/SparkFunQwiicBuzzerLibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Buzzer%20Library/1.1.0/SparkFunQwiicBuzzerLibrary-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Digital%20Capacitor%20Arduino%20Library/1.0.0/SparkFunQwiicDigitalCapacitorArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicDigitalCapacitorArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 5541,
+    "sha256": "f139306a2e23f7e9ef0d5bd89cfe49cecb41e94b45722870b8f45f2b1b4d85d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Digital%2520Capacitor%2520Arduino%2520Library/1.0.0/SparkFunQwiicDigitalCapacitorArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Digital%20Capacitor%20Arduino%20Library/1.0.0/SparkFunQwiicDigitalCapacitorArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Fan%20Arduino%20Library/1.2.1/SparkFunQwiicFanArduinoLibrary-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicFanArduinoLibrary-1.2.1.tar.gz",
+    "size_bytes": 9906,
+    "sha256": "63081553effc02f5c44f8a5b7803d7a9bb2b4845ec0c2e087e83b1214c7f60b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Fan%2520Arduino%2520Library/1.2.1/SparkFunQwiicFanArduinoLibrary-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Fan%20Arduino%20Library/1.2.1/SparkFunQwiicFanArduinoLibrary-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20GPIO%20TCA9534%20Arduino%20Library/1.0.0/SparkFunQwiicGPIOTCA9534ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicGPIOTCA9534ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 6471,
+    "sha256": "7a3b3327d491bdb8de8ddbd9a9b7b3f0f4138a243a8fe48f538966bf2665f01d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520GPIO%2520TCA9534%2520Arduino%2520Library/1.0.0/SparkFunQwiicGPIOTCA9534ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20GPIO%20TCA9534%20Arduino%20Library/1.0.0/SparkFunQwiicGPIOTCA9534ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Haptic%20Driver%20DA7280%20Library/1.1.4/SparkFunQwiicHapticDriverDA7280Library-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicHapticDriverDA7280Library-1.1.4.tar.gz",
+    "size_bytes": 11141,
+    "sha256": "5fafe142d9ce3c254fa06cdd033ec914f3eec87f526246b3ee995e310763c810",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Haptic%2520Driver%2520DA7280%2520Library/1.1.4/SparkFunQwiicHapticDriverDA7280Library-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Haptic%20Driver%20DA7280%20Library/1.1.4/SparkFunQwiicHapticDriverDA7280Library-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Humidity%20AHT20/1.0.3/SparkFunQwiicHumidityAHT20-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicHumidityAHT20-1.0.3.tar.gz",
+    "size_bytes": 4585,
+    "sha256": "fb204b37c490b745136e9688a103a563acffc1e6ca7add938f22b441214853c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Humidity%2520AHT20/1.0.3/SparkFunQwiicHumidityAHT20-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Humidity%20AHT20/1.0.3/SparkFunQwiicHumidityAHT20-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20IR%20Thermometer%20MLX90614%20Arduino%20Library/1.1.5/SparkFunQwiicIRThermometerMLX90614ArduinoLibrary-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicIRThermometerMLX90614ArduinoLibrary-1.1.5.tar.gz",
+    "size_bytes": 9970,
+    "sha256": "604cfc86898b1f4c226eb1fbd8396a6904c44f54fcd1a82d121f1cb1e4be2b43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520IR%2520Thermometer%2520MLX90614%2520Arduino%2520Library/1.1.5/SparkFunQwiicIRThermometerMLX90614ArduinoLibrary-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20IR%20Thermometer%20MLX90614%20Arduino%20Library/1.1.5/SparkFunQwiicIRThermometerMLX90614ArduinoLibrary-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Joystick%20Arduino%20Library/1.1.1/SparkFunQwiicJoystickArduinoLibrary-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicJoystickArduinoLibrary-1.1.1.tar.gz",
+    "size_bytes": 7577,
+    "sha256": "14a1453b2928a1788b38726f0f51f2b6a2cc44659a2b7b01f53ceba10c8fd313",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Joystick%2520Arduino%2520Library/1.1.1/SparkFunQwiicJoystickArduinoLibrary-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Joystick%20Arduino%20Library/1.1.1/SparkFunQwiicJoystickArduinoLibrary-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Keypad%20Arduino%20Library/1.2.0/SparkFunQwiicKeypadArduinoLibrary-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicKeypadArduinoLibrary-1.2.0.tar.gz",
+    "size_bytes": 9707,
+    "sha256": "3eeaa467dbc3bec7a1701a1b169f398fafa58158e43111c57bfb20a40388d2d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Keypad%2520Arduino%2520Library/1.2.0/SparkFunQwiicKeypadArduinoLibrary-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Keypad%20Arduino%20Library/1.2.0/SparkFunQwiicKeypadArduinoLibrary-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20LED%20Stick%20Library/1.0.5/SparkFunQwiicLEDStickLibrary-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicLEDStickLibrary-1.0.5.tar.gz",
+    "size_bytes": 10482,
+    "sha256": "d91b451afe40ba47610ba30c7a444266fde08654caea6fa246ae3a3804de8529",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520LED%2520Stick%2520Library/1.0.5/SparkFunQwiicLEDStickLibrary-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20LED%20Stick%20Library/1.0.5/SparkFunQwiicLEDStickLibrary-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20MP3%20Trigger%20Arduino%20Library/1.0.4/SparkFunQwiicMP3TriggerArduinoLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicMP3TriggerArduinoLibrary-1.0.4.tar.gz",
+    "size_bytes": 11672,
+    "sha256": "2e294ae2ca87d2d1788ec2873f0f0a00a5aaf0c5f0e5ed1b9c615967d85cd693",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520MP3%2520Trigger%2520Arduino%2520Library/1.0.4/SparkFunQwiicMP3TriggerArduinoLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20MP3%20Trigger%20Arduino%20Library/1.0.4/SparkFunQwiicMP3TriggerArduinoLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20OLED%20Arduino%20Library/1.0/SparkFunQwiicOLEDArduinoLibrary-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicOLEDArduinoLibrary-1.0.tar.gz",
+    "size_bytes": 55924,
+    "sha256": "1df81b9339c79e08ab26c822f01efed603e160e30837516e28146e1c30012552",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520OLED%2520Arduino%2520Library/1.0/SparkFunQwiicOLEDArduinoLibrary-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20OLED%20Arduino%20Library/1.0/SparkFunQwiicOLEDArduinoLibrary-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20OTOS%20Arduino%20Library/1.1.0/SparkFunQwiicOTOSArduinoLibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicOTOSArduinoLibrary-1.1.0.tar.gz",
+    "size_bytes": 16440,
+    "sha256": "b71242d6e30b7ae104d4a42cc8fa57954268bec3b64bf5f4412939568672c690",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520OTOS%2520Arduino%2520Library/1.1.0/SparkFunQwiicOTOSArduinoLibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20OTOS%20Arduino%20Library/1.1.0/SparkFunQwiicOTOSArduinoLibrary-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20OpenLog/3.0.2/SparkFunQwiicOpenLog-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicOpenLog-3.0.2.tar.gz",
+    "size_bytes": 13594,
+    "sha256": "80892b44b126822418772557686d014721afb2cd0b2a040a2ffe9b395fa24128",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520OpenLog/3.0.2/SparkFunQwiicOpenLog-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20OpenLog/3.0.2/SparkFunQwiicOpenLog-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20PIR%20Library/1.0.0/SparkFunQwiicPIRLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicPIRLibrary-1.0.0.tar.gz",
+    "size_bytes": 10203,
+    "sha256": "853ad7d2089cd84791b30ce6058d34fb865b39cdd25e5cf54f3b1aa4840b2f8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520PIR%2520Library/1.0.0/SparkFunQwiicPIRLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20PIR%20Library/1.0.0/SparkFunQwiicPIRLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Power%20Switch%20Arduino%20Library/1.0.2/SparkFunQwiicPowerSwitchArduinoLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicPowerSwitchArduinoLibrary-1.0.2.tar.gz",
+    "size_bytes": 5691,
+    "sha256": "347ceb3d6d47bfeeecf452e3f754459d841ba18d5725bdc6716e8efdd6d01c9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Power%2520Switch%2520Arduino%2520Library/1.0.2/SparkFunQwiicPowerSwitchArduinoLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Power%20Switch%20Arduino%20Library/1.0.2/SparkFunQwiicPowerSwitchArduinoLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20RFID%20Arduino%20Library/1.1.6/SparkFunQwiicRFIDArduinoLibrary-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicRFIDArduinoLibrary-1.1.6.tar.gz",
+    "size_bytes": 7636,
+    "sha256": "8af51002aef7545acd44db79f16ba4ad098bcac2e14aedd0b73a3a98af472c00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520RFID%2520Arduino%2520Library/1.1.6/SparkFunQwiicRFIDArduinoLibrary-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20RFID%20Arduino%20Library/1.1.6/SparkFunQwiicRFIDArduinoLibrary-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20RTC%20RV1805%20Arduino%20Library/1.1.0/SparkFunQwiicRTCRV1805ArduinoLibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicRTCRV1805ArduinoLibrary-1.1.0.tar.gz",
+    "size_bytes": 14436,
+    "sha256": "d86fa9fb944a2573bd2ceee2279c35062f89fb8f6c1ce8abd7884488b7aa40f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520RTC%2520RV1805%2520Arduino%2520Library/1.1.0/SparkFunQwiicRTCRV1805ArduinoLibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20RTC%20RV1805%20Arduino%20Library/1.1.0/SparkFunQwiicRTCRV1805ArduinoLibrary-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20RTC%20RV8803%20Arduino%20Library/1.2.10/SparkFunQwiicRTCRV8803ArduinoLibrary-1.2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicRTCRV8803ArduinoLibrary-1.2.10.tar.gz",
+    "size_bytes": 23129,
+    "sha256": "e66525e17775268ba460604109a68466177398af1023b84556466055cf3b0aef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520RTC%2520RV8803%2520Arduino%2520Library/1.2.10/SparkFunQwiicRTCRV8803ArduinoLibrary-1.2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20RTC%20RV8803%20Arduino%20Library/1.2.10/SparkFunQwiicRTCRV8803ArduinoLibrary-1.2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Relay%20Arduino%20Library/1.3.1/SparkFunQwiicRelayArduinoLibrary-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicRelayArduinoLibrary-1.3.1.tar.gz",
+    "size_bytes": 10103,
+    "sha256": "50bd184c27cb5013679b6f454ce121851a6f4bf3ae734b7eacb125057773fa49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Relay%2520Arduino%2520Library/1.3.1/SparkFunQwiicRelayArduinoLibrary-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Relay%20Arduino%20Library/1.3.1/SparkFunQwiicRelayArduinoLibrary-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Scale%20NAU7802%20Arduino%20Library/1.0.6/SparkFunQwiicScaleNAU7802ArduinoLibrary-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicScaleNAU7802ArduinoLibrary-1.0.6.tar.gz",
+    "size_bytes": 14632,
+    "sha256": "fdf73eb107e99175b894184a2fd19e6cd5528da30ff033eb77a5f0fa46308112",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Scale%2520NAU7802%2520Arduino%2520Library/1.0.6/SparkFunQwiicScaleNAU7802ArduinoLibrary-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Scale%20NAU7802%20Arduino%20Library/1.0.6/SparkFunQwiicScaleNAU7802ArduinoLibrary-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Step%20Arduino%20Library/2.0.1/SparkFunQwiicStepArduinoLibrary-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicStepArduinoLibrary-2.0.1.tar.gz",
+    "size_bytes": 12988,
+    "sha256": "6fad0bb918e9439a47bfc3d3bf9a432f8e65da3ce34026eebaf2ee0e00216a09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Step%2520Arduino%2520Library/2.0.1/SparkFunQwiicStepArduinoLibrary-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Step%20Arduino%20Library/2.0.1/SparkFunQwiicStepArduinoLibrary-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20TMF-8801%20Time-of-flight%20Library/1.0.0/SparkFunQwiicTMF-8801Time-of-flightLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicTMF-8801Time-of-flightLibrary-1.0.0.tar.gz",
+    "size_bytes": 12076,
+    "sha256": "10b3ed086c9a402c46481e1cce903f4d5694d2828b597821529fe27b896f86e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520TMF-8801%2520Time-of-flight%2520Library/1.0.0/SparkFunQwiicTMF-8801Time-of-flightLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20TMF-8801%20Time-of-flight%20Library/1.0.0/SparkFunQwiicTMF-8801Time-of-flightLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20TMF882X%20Library/1.0.2/SparkFunQwiicTMF882XLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicTMF882XLibrary-1.0.2.tar.gz",
+    "size_bytes": 87246,
+    "sha256": "beab9bbddcacdd219f415cacf39939b41fa67237252741a52103196555909f04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520TMF882X%2520Library/1.0.2/SparkFunQwiicTMF882XLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20TMF882X%20Library/1.0.2/SparkFunQwiicTMF882XLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Twist%20Arduino%20Library/1.0.4/SparkFunQwiicTwistArduinoLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicTwistArduinoLibrary-1.0.4.tar.gz",
+    "size_bytes": 10652,
+    "sha256": "66730b5a413a0bedddd7e245865ee034b89431f7c2160899bb98f57f421638a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Twist%2520Arduino%2520Library/1.0.4/SparkFunQwiicTwistArduinoLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Twist%20Arduino%20Library/1.0.4/SparkFunQwiicTwistArduinoLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Ultrasonic%20Arduino%20Library/1.2.0/SparkFunQwiicUltrasonicArduinoLibrary-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicUltrasonicArduinoLibrary-1.2.0.tar.gz",
+    "size_bytes": 9621,
+    "sha256": "681dd85c64e6599d953e0b6f289eae8df82bdf2ecd0e5ed8b9230eedc7a49a84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Ultrasonic%2520Arduino%2520Library/1.2.0/SparkFunQwiicUltrasonicArduinoLibrary-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Ultrasonic%20Arduino%20Library/1.2.0/SparkFunQwiicUltrasonicArduinoLibrary-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Qwiic%20Universal%20Auto-Detect/1.0.1/SparkFunQwiicUniversalAuto-Detect-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicUniversalAuto-Detect-1.0.1.tar.gz",
+    "size_bytes": 371458,
+    "sha256": "dbaa8374df9ec2e94ae0b7544edae3892e583255dd6a7bae699ac5e1c33234de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Qwiic%2520Universal%2520Auto-Detect/1.0.1/SparkFunQwiicUniversalAuto-Detect-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Qwiic%20Universal%20Auto-Detect/1.0.1/SparkFunQwiicUniversalAuto-Detect-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20QwiicNES%20Arduino%20Library/1.0.0/SparkFunQwiicNESArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicNESArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 6210,
+    "sha256": "bfbc7787ee64e9ad360cf3f645afc5d1b7a03264ef236ba08ce6ff30ca4e6b85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520QwiicNES%2520Arduino%2520Library/1.0.0/SparkFunQwiicNESArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20QwiicNES%20Arduino%20Library/1.0.0/SparkFunQwiicNESArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20QwiicRF/1.0/SparkFunQwiicRF-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunQwiicRF-1.0.tar.gz",
+    "size_bytes": 7144,
+    "sha256": "fe84f11e7190785c76acbd32e2b367fff805c468e1f105fe8723b0b9377bc278",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520QwiicRF/1.0/SparkFunQwiicRF-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20QwiicRF/1.0/SparkFunQwiicRF-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20RFD77402%20Distance%20Sensor%20-%20VCSEL%20Time%20of%20Flight/1.0.0/SparkFunRFD77402DistanceSensor-VCSELTimeofFlight-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunRFD77402DistanceSensor-VCSELTimeofFlight-1.0.0.tar.gz",
+    "size_bytes": 10012,
+    "sha256": "6a83bbe5b0f0617ed9d177b369a27c10f49c4040745adbe677cf3f9a8a2086a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520RFD77402%2520Distance%2520Sensor%2520-%2520VCSEL%2520Time%2520of%2520Flight/1.0.0/SparkFunRFD77402DistanceSensor-VCSELTimeofFlight-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20RFD77402%20Distance%20Sensor%20-%20VCSEL%20Time%20of%20Flight/1.0.0/SparkFunRFD77402DistanceSensor-VCSELTimeofFlight-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20RGB%20OLED%2064x64%20Library/1.0.0/SparkFunRGBOLED64x64Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunRGBOLED64x64Library-1.0.0.tar.gz",
+    "size_bytes": 65570,
+    "sha256": "807ff5e46ad535f401c3c63d67c1710afec405a916df13b462ed07d1894e61a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520RGB%2520OLED%252064x64%2520Library/1.0.0/SparkFunRGBOLED64x64Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20RGB%20OLED%2064x64%20Library/1.0.0/SparkFunRGBOLED64x64Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20RHT03%20Arduino%20Library/1.0.0/SparkFunRHT03ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunRHT03ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 6484,
+    "sha256": "7bc37dcdba8cb7fafa9c1acd36c64cf3a849c290ba2e568c235586492c827864",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520RHT03%2520Arduino%2520Library/1.0.0/SparkFunRHT03ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20RHT03%20Arduino%20Library/1.0.0/SparkFunRHT03ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20RedBot%20Library/2.1.1/SparkFunRedBotLibrary-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunRedBotLibrary-2.1.1.tar.gz",
+    "size_bytes": 34161,
+    "sha256": "3a2381012f163f3050fa42c26954d17628b298218738c1d01d66dfc1659c2c85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520RedBot%2520Library/2.1.1/SparkFunRedBotLibrary-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20RedBot%20Library/2.1.1/SparkFunRedBotLibrary-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20SCD30%20Arduino%20Library/1.0.20/SparkFunSCD30ArduinoLibrary-1.0.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSCD30ArduinoLibrary-1.0.20.tar.gz",
+    "size_bytes": 11319,
+    "sha256": "b01df910fb7c87478078464a47217b522fe676a529b54799719ad78fecf7c627",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520SCD30%2520Arduino%2520Library/1.0.20/SparkFunSCD30ArduinoLibrary-1.0.20.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20SCD30%20Arduino%20Library/1.0.20/SparkFunSCD30ArduinoLibrary-1.0.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20SCD4x%20Arduino%20Library/1.1.2/SparkFunSCD4xArduinoLibrary-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSCD4xArduinoLibrary-1.1.2.tar.gz",
+    "size_bytes": 17158,
+    "sha256": "bf6f3d101396e6247ae14a0983c69bd66762b9a4b033bf9cc0f3b830e20a4fd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520SCD4x%2520Arduino%2520Library/1.1.2/SparkFunSCD4xArduinoLibrary-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20SCD4x%20Arduino%20Library/1.1.2/SparkFunSCD4xArduinoLibrary-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20SDP3x%20Arduino%20Library/1.0.4/SparkFunSDP3xArduinoLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSDP3xArduinoLibrary-1.0.4.tar.gz",
+    "size_bytes": 9834,
+    "sha256": "b664c230d95d4863072b63e08b47a8eb347d3072238a284a5c0c63bd6626b182",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520SDP3x%2520Arduino%2520Library/1.0.4/SparkFunSDP3xArduinoLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20SDP3x%20Arduino%20Library/1.0.4/SparkFunSDP3xArduinoLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20SFA40%20Arduino%20Library/1.0.0/SparkFunSFA40ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSFA40ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 15649,
+    "sha256": "eb05897c9fcdaaa219cae05843bfb0a36e8ffe006cbb434f859fdccf4e63e563",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520SFA40%2520Arduino%2520Library/1.0.0/SparkFunSFA40ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20SFA40%20Arduino%20Library/1.0.0/SparkFunSFA40ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20SGP30%20Arduino%20Library/1.0.5/SparkFunSGP30ArduinoLibrary-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSGP30ArduinoLibrary-1.0.5.tar.gz",
+    "size_bytes": 11741,
+    "sha256": "ceee7ff83aca325d2c2fafa958a1a8bd81ebbada5f2a1ee89eea0d6fa9a8015e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520SGP30%2520Arduino%2520Library/1.0.5/SparkFunSGP30ArduinoLibrary-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20SGP30%20Arduino%20Library/1.0.5/SparkFunSGP30ArduinoLibrary-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20SGP4%20Arduino%20Library/1.0.4/SparkFunSGP4ArduinoLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSGP4ArduinoLibrary-1.0.4.tar.gz",
+    "size_bytes": 40989,
+    "sha256": "10bb3c6807bdf36c7afb1293ba4de1a4adf2df54394ada595d9e7655b6923235",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520SGP4%2520Arduino%2520Library/1.0.4/SparkFunSGP4ArduinoLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20SGP4%20Arduino%20Library/1.0.4/SparkFunSGP4ArduinoLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20SGP40%20Arduino%20Library/1.0.4/SparkFunSGP40ArduinoLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSGP40ArduinoLibrary-1.0.4.tar.gz",
+    "size_bytes": 16801,
+    "sha256": "54b8633b4803ec229720d932216cebcf2b0aa1ef83a56082c580d6a67cc14df2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520SGP40%2520Arduino%2520Library/1.0.4/SparkFunSGP40ArduinoLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20SGP40%20Arduino%20Library/1.0.4/SparkFunSGP40ArduinoLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20SHTC3%20Humidity%20and%20Temperature%20Sensor%20Library/1.1.4/SparkFunSHTC3HumidityandTemperatureSensorLibrary-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSHTC3HumidityandTemperatureSensorLibrary-1.1.4.tar.gz",
+    "size_bytes": 9554,
+    "sha256": "98984348e746d7481ceaa200612009c66c1425a4590896931930cc3cc60843dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520SHTC3%2520Humidity%2520and%2520Temperature%2520Sensor%2520Library/1.1.4/SparkFunSHTC3HumidityandTemperatureSensorLibrary-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20SHTC3%20Humidity%20and%20Temperature%20Sensor%20Library/1.1.4/SparkFunSHTC3HumidityandTemperatureSensorLibrary-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20SPI%20SerialFlash%20Arduino%20Library/1.0.3/SparkFunSPISerialFlashArduinoLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSPISerialFlashArduinoLibrary-1.0.3.tar.gz",
+    "size_bytes": 9923,
+    "sha256": "aa523fb91b9866b8b22378202e43df8aac8fa2bb7e1e3cf36aef9050785e1e5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520SPI%2520SerialFlash%2520Arduino%2520Library/1.0.3/SparkFunSPISerialFlashArduinoLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20SPI%20SerialFlash%20Arduino%20Library/1.0.3/SparkFunSPISerialFlashArduinoLibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20SSD168x%20I2C%20Interface%20Library/1.0.0/SparkFunSSD168xI2CInterfaceLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSSD168xI2CInterfaceLibrary-1.0.0.tar.gz",
+    "size_bytes": 83146,
+    "sha256": "91f9d7c875918aba22e8eaaa38fa048562453306d4b3f8cf33f1d1079f7c1555",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520SSD168x%2520I2C%2520Interface%2520Library/1.0.0/SparkFunSSD168xI2CInterfaceLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20SSD168x%20I2C%20Interface%20Library/1.0.0/SparkFunSSD168xI2CInterfaceLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20SSD168x%20I2C%20Interface%20Library/1.0.1/SparkFunSSD168xI2CInterfaceLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSSD168xI2CInterfaceLibrary-1.0.1.tar.gz",
+    "size_bytes": 84496,
+    "sha256": "f48b96a6faa305721c929ab96610c68bfe67d7775b7c2043305fa7f197c42855",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520SSD168x%2520I2C%2520Interface%2520Library/1.0.1/SparkFunSSD168xI2CInterfaceLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20SSD168x%20I2C%20Interface%20Library/1.0.1/SparkFunSSD168xI2CInterfaceLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ST25DV64KC%20Arduino%20Library/1.0.0/SparkFunST25DV64KCArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunST25DV64KCArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 47679,
+    "sha256": "f6b9fb8fa1c1747e1d10c077dded7e1dfbdbfcdb11e0b6a89da0f03816942e15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ST25DV64KC%2520Arduino%2520Library/1.0.0/SparkFunST25DV64KCArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ST25DV64KC%20Arduino%20Library/1.0.0/SparkFunST25DV64KCArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20STC3x%20Arduino%20Library/1.0.0/SparkFunSTC3xArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSTC3xArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 11977,
+    "sha256": "19c1c1f2d676889e2aef24e617c02fcf1a9f5efa7b517247d3edcf1525787de6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520STC3x%2520Arduino%2520Library/1.0.0/SparkFunSTC3xArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20STC3x%20Arduino%20Library/1.0.0/SparkFunSTC3xArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20STCC4%20Arduino%20Library/1.0.0/SparkFunSTCC4ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSTCC4ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 21669,
+    "sha256": "285e109447977ce0a9c2fefed7fbe4617bff682286cd1bb04a0ee85155c7bb7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520STCC4%2520Arduino%2520Library/1.0.0/SparkFunSTCC4ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20STCC4%20Arduino%20Library/1.0.0/SparkFunSTCC4ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20STHS34PF80%20Arduino%20Library/1.0.5/SparkFunSTHS34PF80ArduinoLibrary-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSTHS34PF80ArduinoLibrary-1.0.5.tar.gz",
+    "size_bytes": 28259,
+    "sha256": "f4eef94fe3584508312288911df8a0be70f7230f8e217583ed627ca320ccf179",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520STHS34PF80%2520Arduino%2520Library/1.0.5/SparkFunSTHS34PF80ArduinoLibrary-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20STHS34PF80%20Arduino%20Library/1.0.5/SparkFunSTHS34PF80ArduinoLibrary-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20STP3593LF%20OCXO%20Arduino%20Library/1.0.2/SparkFunSTP3593LFOCXOArduinoLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSTP3593LFOCXOArduinoLibrary-1.0.2.tar.gz",
+    "size_bytes": 8448,
+    "sha256": "7ea486161d743fb8014f9db522acf91c41477d7249f4e82192eb1f759f9f66bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520STP3593LF%2520OCXO%2520Arduino%2520Library/1.0.2/SparkFunSTP3593LFOCXOArduinoLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20STP3593LF%20OCXO%20Arduino%20Library/1.0.2/SparkFunSTP3593LFOCXOArduinoLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20STUSB4500/1.1.5/SparkFunSTUSB4500-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSTUSB4500-1.1.5.tar.gz",
+    "size_bytes": 13502,
+    "sha256": "fa096aba54e2609c51699f6b22f5a7cdaa36a813b2365798577442d752402c78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520STUSB4500/1.1.5/SparkFunSTUSB4500-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20STUSB4500/1.1.5/SparkFunSTUSB4500-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20SerLCD%20Arduino%20Library/1.0.9/SparkFunSerLCDArduinoLibrary-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSerLCDArduinoLibrary-1.0.9.tar.gz",
+    "size_bytes": 16996,
+    "sha256": "126e0f6335cf85c7da492f5d4c338ec45a82bca1fa8b3f7c4effa26900a34356",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520SerLCD%2520Arduino%2520Library/1.0.9/SparkFunSerLCDArduinoLibrary-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20SerLCD%20Arduino%20Library/1.0.9/SparkFunSerLCDArduinoLibrary-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Serial%20Fingerprint%20Scanners%20AS-108M%20and%20AD-013/1.0.1/SparkFunSerialFingerprintScannersAS-108MandAD-013-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSerialFingerprintScannersAS-108MandAD-013-1.0.1.tar.gz",
+    "size_bytes": 20826,
+    "sha256": "7f3ac02ed20c8054d7c94539edfd5789cf2cbbbac801d659e8888663c2c2b496",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Serial%2520Fingerprint%2520Scanners%2520AS-108M%2520and%2520AD-013/1.0.1/SparkFunSerialFingerprintScannersAS-108MandAD-013-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Serial%20Fingerprint%20Scanners%20AS-108M%20and%20AD-013/1.0.1/SparkFunSerialFingerprintScannersAS-108MandAD-013-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Si4703/1.3.0/SparkFunSi4703-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSi4703-1.3.0.tar.gz",
+    "size_bytes": 8075,
+    "sha256": "f8174a3d9ea4ae75b44676c7f74b08fdf9a925b6cf85f361e1927f9b930e806a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Si4703/1.3.0/SparkFunSi4703-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Si4703/1.3.0/SparkFunSi4703-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Si7021%20Humidity%20and%20Temperature%20Sensor/2.0.0/SparkFunSi7021HumidityandTemperatureSensor-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSi7021HumidityandTemperatureSensor-2.0.0.tar.gz",
+    "size_bytes": 8343,
+    "sha256": "80e4df72abb77a781484efd9847fbad7c8edbbb5ae822ff77e9eb582eb114d6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Si7021%2520Humidity%2520and%2520Temperature%2520Sensor/2.0.0/SparkFunSi7021HumidityandTemperatureSensor-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Si7021%20Humidity%20and%20Temperature%20Sensor/2.0.0/SparkFunSi7021HumidityandTemperatureSensor-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20SiT5358%20DCTCXO%20Arduino%20Library/1.0.1/SparkFunSiT5358DCTCXOArduinoLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSiT5358DCTCXOArduinoLibrary-1.0.1.tar.gz",
+    "size_bytes": 11563,
+    "sha256": "cb1a7df0a78b9d01d0b55b1056491865a87eeadb7688a6acd825f604b4ad14d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520SiT5358%2520DCTCXO%2520Arduino%2520Library/1.0.1/SparkFunSiT5358DCTCXOArduinoLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20SiT5358%20DCTCXO%20Arduino%20Library/1.0.1/SparkFunSiT5358DCTCXOArduinoLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20SiT5811%20OCXO%20Arduino%20Library/1.0.1/SparkFunSiT5811OCXOArduinoLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSiT5811OCXOArduinoLibrary-1.0.1.tar.gz",
+    "size_bytes": 11358,
+    "sha256": "60e279b3ce45ddaebbcf88c59f1317c360033a756e63ef50f1c459578b8b813c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520SiT5811%2520OCXO%2520Arduino%2520Library/1.0.1/SparkFunSiT5811OCXOArduinoLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20SiT5811%20OCXO%20Arduino%20Library/1.0.1/SparkFunSiT5811OCXOArduinoLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Simultaneous%20RFID%20Tag%20Reader%20Library/1.2.0/SparkFunSimultaneousRFIDTagReaderLibrary-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSimultaneousRFIDTagReaderLibrary-1.2.0.tar.gz",
+    "size_bytes": 21950,
+    "sha256": "66e547402028e062cec6271cc5e595a8ce6de4ef6fa966a4d825c2f7e8d03004",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Simultaneous%2520RFID%2520Tag%2520Reader%2520Library/1.2.0/SparkFunSimultaneousRFIDTagReaderLibrary-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Simultaneous%20RFID%20Tag%20Reader%20Library/1.2.0/SparkFunSimultaneousRFIDTagReaderLibrary-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Soil%20Moisture%20Sensor/1.0.2/SparkFunSoilMoistureSensor-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSoilMoistureSensor-1.0.2.tar.gz",
+    "size_bytes": 11917,
+    "sha256": "40a0df0eac829d787c292293eedeed003d856d8ac49dce91a365e0c00b9137ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Soil%2520Moisture%2520Sensor/1.0.2/SparkFunSoilMoistureSensor-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Soil%20Moisture%20Sensor/1.0.2/SparkFunSoilMoistureSensor-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Spectral%20Triad%20AS7265X/1.0.5/SparkFunSpectralTriadAS7265X-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSpectralTriadAS7265X-1.0.5.tar.gz",
+    "size_bytes": 13190,
+    "sha256": "d688a698e96dfd77902ceee5eb3e8680325f99e1a35760a097318b42fde23b36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Spectral%2520Triad%2520AS7265X/1.0.5/SparkFunSpectralTriadAS7265X-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Spectral%20Triad%20AS7265X/1.0.5/SparkFunSpectralTriadAS7265X-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Swarm%20Satellite%20Arduino%20Library/1.1.10/SparkFunSwarmSatelliteArduinoLibrary-1.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunSwarmSatelliteArduinoLibrary-1.1.10.tar.gz",
+    "size_bytes": 99258,
+    "sha256": "c1b8e21773f9be99f18b986dac4147cc57994657d30fd761b023e365046d0411",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Swarm%2520Satellite%2520Arduino%2520Library/1.1.10/SparkFunSwarmSatelliteArduinoLibrary-1.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Swarm%20Satellite%20Arduino%20Library/1.1.10/SparkFunSwarmSatelliteArduinoLibrary-1.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20TB6612FNG%20Motor%20Driver%20Library/1.0.0/SparkFunTB6612FNGMotorDriverLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunTB6612FNGMotorDriverLibrary-1.0.0.tar.gz",
+    "size_bytes": 6723,
+    "sha256": "105a790e70283e7fa737802a39f462a3aaac30b07092beb00201a3165ed6c086",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520TB6612FNG%2520Motor%2520Driver%2520Library/1.0.0/SparkFunTB6612FNGMotorDriverLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20TB6612FNG%20Motor%20Driver%20Library/1.0.0/SparkFunTB6612FNGMotorDriverLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20TLC5940/1.1.1/SparkFunTLC5940-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunTLC5940-1.1.1.tar.gz",
+    "size_bytes": 37113,
+    "sha256": "ce5e1d39be39a0b7331eac5f849470273aaee0d59c8f5b18d88cf25edb207b25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520TLC5940/1.1.1/SparkFunTLC5940-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20TLC5940/1.1.1/SparkFunTLC5940-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20TMAG5273%20Arduino%20Library/1.0.0/SparkFunTMAG5273ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunTMAG5273ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 27154,
+    "sha256": "d67dfc8c5d6ef5459692e7e29d84866c23dd635955f5f9b9b11c045f4f9a69af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520TMAG5273%2520Arduino%2520Library/1.0.0/SparkFunTMAG5273ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20TMAG5273%20Arduino%20Library/1.0.0/SparkFunTMAG5273ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20TMP102%20Breakout/1.1.2/SparkFunTMP102Breakout-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunTMP102Breakout-1.1.2.tar.gz",
+    "size_bytes": 6918,
+    "sha256": "1249d71f971dd7e43d1b04facbb5a80b3b4c579bae6df76347e6ab7e37fbb6b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520TMP102%2520Breakout/1.1.2/SparkFunTMP102Breakout-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20TMP102%20Breakout/1.1.2/SparkFunTMP102Breakout-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20TPA2016D2%20Arduino%20Library/1.0.0/SparkFunTPA2016D2ArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunTPA2016D2ArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 10056,
+    "sha256": "16252c4dd3bdc1eb7480f467d6dbf86844f11c760307510c94d781e160233fd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520TPA2016D2%2520Arduino%2520Library/1.0.0/SparkFunTPA2016D2ArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20TPA2016D2%20Arduino%20Library/1.0.0/SparkFunTPA2016D2ArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20TSL2561/1.1.0/SparkFunTSL2561-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunTSL2561-1.1.0.tar.gz",
+    "size_bytes": 7203,
+    "sha256": "9407e9fc923506e53ed643a9db32331139acf412a9597f382e77f47e780a4a35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520TSL2561/1.1.0/SparkFunTSL2561-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20TSL2561/1.1.0/SparkFunTSL2561-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Temperature%20Sensor%20-%20STTS22H/1.0.1/SparkFunTemperatureSensor-STTS22H-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunTemperatureSensor-STTS22H-1.0.1.tar.gz",
+    "size_bytes": 13640,
+    "sha256": "55064253b152b6d49bdd8c72137c6c696ac32e1c803691d22a8e44b01aa71a35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Temperature%2520Sensor%2520-%2520STTS22H/1.0.1/SparkFunTemperatureSensor-STTS22H-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Temperature%20Sensor%20-%20STTS22H/1.0.1/SparkFunTemperatureSensor-STTS22H-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Toolkit/0.9.2/SparkFunToolkit-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunToolkit-0.9.2.tar.gz",
+    "size_bytes": 11203,
+    "sha256": "4483df8e0cf0f5cf8f74b40c0c43b323c94b512909a1c39071f1a4c0ed2610cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Toolkit/0.9.2/SparkFunToolkit-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Toolkit/0.9.2/SparkFunToolkit-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Toolkit/1.2.0/SparkFunToolkit-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunToolkit-1.2.0.tar.gz",
+    "size_bytes": 16441,
+    "sha256": "063a6c0373c9709fd58c5181c1a344520eac4bf1744ba0d9487deaa5516a94e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Toolkit/1.2.0/SparkFunToolkit-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Toolkit/1.2.0/SparkFunToolkit-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Toolkit/1.2.1/SparkFunToolkit-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunToolkit-1.2.1.tar.gz",
+    "size_bytes": 16721,
+    "sha256": "e3b6fdd47fef3f8f940373b1f9e27324ec1ef20fff24dea200213d3d3aab1698",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Toolkit/1.2.1/SparkFunToolkit-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Toolkit/1.2.1/SparkFunToolkit-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20TouchInput%20Arduino%20Library/1.0.0/SparkFunTouchInputArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunTouchInputArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 21608,
+    "sha256": "f1bc171cb522124fc692c6d4c7043e9d8f56aacf21e2e041a5d3912a14bdffd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520TouchInput%2520Arduino%2520Library/1.0.0/SparkFunTouchInputArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20TouchInput%20Arduino%20Library/1.0.0/SparkFunTouchInputArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20TouchInput%20Driver%20FT5xx6/1.0.0/SparkFunTouchInputDriverFT5xx6-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunTouchInputDriverFT5xx6-1.0.0.tar.gz",
+    "size_bytes": 12720,
+    "sha256": "fb855cb09bdf90322c6eb92018543cc4cce3657ee7c49a970efe9b146f7dfa9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520TouchInput%2520Driver%2520FT5xx6/1.0.0/SparkFunTouchInputDriverFT5xx6-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20TouchInput%20Driver%20FT5xx6/1.0.0/SparkFunTouchInputDriverFT5xx6-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Tsunami%20Super%20WAV%20Trigger%20Qwiic/1.0.0/SparkFunTsunamiSuperWAVTriggerQwiic-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunTsunamiSuperWAVTriggerQwiic-1.0.0.tar.gz",
+    "size_bytes": 14079,
+    "sha256": "920f7dbc798d962978093c1c132acf0e2844f560bbab62ac2181a50d547c50d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Tsunami%2520Super%2520WAV%2520Trigger%2520Qwiic/1.0.0/SparkFunTsunamiSuperWAVTriggerQwiic-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Tsunami%20Super%20WAV%20Trigger%20Qwiic/1.0.0/SparkFunTsunamiSuperWAVTriggerQwiic-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20UM980%20Triband%20RTK%20GNSS%20Arduino%20Library/1.0.10/SparkFunUM980TribandRTKGNSSArduinoLibrary-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunUM980TribandRTKGNSSArduinoLibrary-1.0.10.tar.gz",
+    "size_bytes": 39236,
+    "sha256": "93fff7e29b6244eba08368b622c8ab77571f7f3208f65936ad0c0dfe5f256d6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520UM980%2520Triband%2520RTK%2520GNSS%2520Arduino%2520Library/1.0.10/SparkFunUM980TribandRTKGNSSArduinoLibrary-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20UM980%20Triband%20RTK%20GNSS%20Arduino%20Library/1.0.10/SparkFunUM980TribandRTKGNSSArduinoLibrary-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20UM980%20Triband%20RTK%20GNSS%20Arduino%20Library/1.0.8/SparkFunUM980TribandRTKGNSSArduinoLibrary-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunUM980TribandRTKGNSSArduinoLibrary-1.0.8.tar.gz",
+    "size_bytes": 39128,
+    "sha256": "635145d12386938e65a2480d2b423f18153083c0124d148d7965b434ed5f4ed1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520UM980%2520Triband%2520RTK%2520GNSS%2520Arduino%2520Library/1.0.8/SparkFunUM980TribandRTKGNSSArduinoLibrary-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20UM980%20Triband%20RTK%20GNSS%20Arduino%20Library/1.0.8/SparkFunUM980TribandRTKGNSSArduinoLibrary-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20UM980%20Triband%20RTK%20GNSS%20Arduino%20Library/1.0.9/SparkFunUM980TribandRTKGNSSArduinoLibrary-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunUM980TribandRTKGNSSArduinoLibrary-1.0.9.tar.gz",
+    "size_bytes": 39132,
+    "sha256": "6ad7a078a9a02d316bf9a69d9b675fc4e931b9993e2d073ea7b5fc3810deb50f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520UM980%2520Triband%2520RTK%2520GNSS%2520Arduino%2520Library/1.0.9/SparkFunUM980TribandRTKGNSSArduinoLibrary-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20UM980%20Triband%20RTK%20GNSS%20Arduino%20Library/1.0.9/SparkFunUM980TribandRTKGNSSArduinoLibrary-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20UM980%20Triband%20RTK%20GNSS%20Arduino%20Library/2.0.0/SparkFunUM980TribandRTKGNSSArduinoLibrary-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunUM980TribandRTKGNSSArduinoLibrary-2.0.0.tar.gz",
+    "size_bytes": 45398,
+    "sha256": "45d375dc0230951202a8f8bededa5c2c1b70f8abdcde2202cfce44e4ba2f614b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520UM980%2520Triband%2520RTK%2520GNSS%2520Arduino%2520Library/2.0.0/SparkFunUM980TribandRTKGNSSArduinoLibrary-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20UM980%20Triband%20RTK%20GNSS%20Arduino%20Library/2.0.0/SparkFunUM980TribandRTKGNSSArduinoLibrary-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20UM980%20Triband%20RTK%20GNSS%20Arduino%20Library/2.0.1/SparkFunUM980TribandRTKGNSSArduinoLibrary-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunUM980TribandRTKGNSSArduinoLibrary-2.0.1.tar.gz",
+    "size_bytes": 45772,
+    "sha256": "fa5af0abda23982bcb3028b58a922951a5d569921aa489e6cfe68dac002f3aab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520UM980%2520Triband%2520RTK%2520GNSS%2520Arduino%2520Library/2.0.1/SparkFunUM980TribandRTKGNSSArduinoLibrary-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20UM980%20Triband%20RTK%20GNSS%20Arduino%20Library/2.0.1/SparkFunUM980TribandRTKGNSSArduinoLibrary-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20UM980%20Triband%20RTK%20GNSS%20Arduino%20Library/2.0.2/SparkFunUM980TribandRTKGNSSArduinoLibrary-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunUM980TribandRTKGNSSArduinoLibrary-2.0.2.tar.gz",
+    "size_bytes": 47898,
+    "sha256": "4011b39f9873805501eb4bda8cd0d25f7a7f5474f07e382900f7fe54832a65e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520UM980%2520Triband%2520RTK%2520GNSS%2520Arduino%2520Library/2.0.2/SparkFunUM980TribandRTKGNSSArduinoLibrary-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20UM980%20Triband%20RTK%20GNSS%20Arduino%20Library/2.0.2/SparkFunUM980TribandRTKGNSSArduinoLibrary-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20USB%20Hub%20Qwiic%20USB251x/1.0.0/SparkFunUSBHubQwiicUSB251x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunUSBHubQwiicUSB251x-1.0.0.tar.gz",
+    "size_bytes": 7427,
+    "sha256": "7f83d6cd77a171756e6ca108b90b30dfe942376ba04f21faad7b741a1536afee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520USB%2520Hub%2520Qwiic%2520USB251x/1.0.0/SparkFunUSBHubQwiicUSB251x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20USB%20Hub%20Qwiic%20USB251x/1.0.0/SparkFunUSBHubQwiicUSB251x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20VCNL4040%20Proximity%20Sensor%20Library/1.0.4/SparkFunVCNL4040ProximitySensorLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunVCNL4040ProximitySensorLibrary-1.0.4.tar.gz",
+    "size_bytes": 10198,
+    "sha256": "0b9331e4417fe823489f94671e29a30497d40f6c34fcc987c988311a7a5179a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520VCNL4040%2520Proximity%2520Sensor%2520Library/1.0.4/SparkFunVCNL4040ProximitySensorLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20VCNL4040%20Proximity%20Sensor%20Library/1.0.4/SparkFunVCNL4040ProximitySensorLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20VEML6075%20Arduino%20Library/1.1.5/SparkFunVEML6075ArduinoLibrary-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunVEML6075ArduinoLibrary-1.1.5.tar.gz",
+    "size_bytes": 10547,
+    "sha256": "b74c495e3e1838dd1a96e8251cc15996e70e54c1b343ec0a2dff0d504d77b771",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520VEML6075%2520Arduino%2520Library/1.1.5/SparkFunVEML6075ArduinoLibrary-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20VEML6075%20Arduino%20Library/1.1.5/SparkFunVEML6075ArduinoLibrary-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20VEML7700%20Arduino%20Library/2.0.1/SparkFunVEML7700ArduinoLibrary-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunVEML7700ArduinoLibrary-2.0.1.tar.gz",
+    "size_bytes": 15453,
+    "sha256": "28ec1e4f39b733c72598384bf017599c597e218d4c750d77a6465f3b3aec23ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520VEML7700%2520Arduino%2520Library/2.0.1/SparkFunVEML7700ArduinoLibrary-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20VEML7700%20Arduino%20Library/2.0.1/SparkFunVEML7700ArduinoLibrary-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20VKey%20Arduino%20Library/1.0.3/SparkFunVKeyArduinoLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunVKeyArduinoLibrary-1.0.3.tar.gz",
+    "size_bytes": 5992,
+    "sha256": "4175648f5757bf18484f3d351c4a5ff26aad2054656e73dcfaea9bc3a1dc2002",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520VKey%2520Arduino%2520Library/1.0.3/SparkFunVKeyArduinoLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20VKey%20Arduino%20Library/1.0.3/SparkFunVKeyArduinoLibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20VL53L1X%204m%20Laser%20Distance%20Sensor/1.2.12/SparkFunVL53L1X4mLaserDistanceSensor-1.2.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunVL53L1X4mLaserDistanceSensor-1.2.12.tar.gz",
+    "size_bytes": 30653,
+    "sha256": "c8e55093ece45cf3e10a59ed78ef68973d34004af39e32587f837672e26dc52e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520VL53L1X%25204m%2520Laser%2520Distance%2520Sensor/1.2.12/SparkFunVL53L1X4mLaserDistanceSensor-1.2.12.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20VL53L1X%204m%20Laser%20Distance%20Sensor/1.2.12/SparkFunVL53L1X4mLaserDistanceSensor-1.2.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20VL53L5CX%20Arduino%20Library/1.0.3/SparkFunVL53L5CXArduinoLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunVL53L5CXArduinoLibrary-1.0.3.tar.gz",
+    "size_bytes": 137492,
+    "sha256": "65b52aece785ac4c44ddeec54b64448775ebe03e570dc7500e54d8d002703363",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520VL53L5CX%2520Arduino%2520Library/1.0.3/SparkFunVL53L5CXArduinoLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20VL53L5CX%20Arduino%20Library/1.0.3/SparkFunVL53L5CXArduinoLibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20VL6180%20Sensor/1.1.3/SparkFunVL6180Sensor-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunVL6180Sensor-1.1.3.tar.gz",
+    "size_bytes": 8541,
+    "sha256": "a049aca058e72bd25832e6455f17d419ddea5c93395cec2e0bff8e1758eea32c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520VL6180%2520Sensor/1.1.3/SparkFunVL6180Sensor-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20VL6180%20Sensor/1.1.3/SparkFunVL6180Sensor-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20WM8960%20Arduino%20Library/1.0.6/SparkFunWM8960ArduinoLibrary-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunWM8960ArduinoLibrary-1.0.6.tar.gz",
+    "size_bytes": 34574,
+    "sha256": "40057e34596d3e35375f411759edc51bfb44048db9ef9c755646494f9df4de29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520WM8960%2520Arduino%2520Library/1.0.6/SparkFunWM8960ArduinoLibrary-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20WM8960%20Arduino%20Library/1.0.6/SparkFunWM8960ArduinoLibrary-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20WT2003S%20MP3%20Decoder%20Library/1.0.3/SparkFunWT2003SMP3DecoderLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunWT2003SMP3DecoderLibrary-1.0.3.tar.gz",
+    "size_bytes": 17660,
+    "sha256": "91de32bbf0f14397cd4128f077972eb38779508058970706ffb9f67a8fb0a812",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520WT2003S%2520MP3%2520Decoder%2520Library/1.0.3/SparkFunWT2003SMP3DecoderLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20WT2003S%20MP3%20Decoder%20Library/1.0.3/SparkFunWT2003SMP3DecoderLibrary-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20Weather%20Meter%20Kit%20Arduino%20Library/1.1.2/SparkFunWeatherMeterKitArduinoLibrary-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunWeatherMeterKitArduinoLibrary-1.1.2.tar.gz",
+    "size_bytes": 13078,
+    "sha256": "3664454b979264c98ca2b74556db582c66f3aa966d2d4262ae55a9505902ecdc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520Weather%2520Meter%2520Kit%2520Arduino%2520Library/1.1.2/SparkFunWeatherMeterKitArduinoLibrary-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20Weather%20Meter%20Kit%20Arduino%20Library/1.1.2/SparkFunWeatherMeterKitArduinoLibrary-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20WiseChip%20HUD/1.0.2/SparkFunWiseChipHUD-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunWiseChipHUD-1.0.2.tar.gz",
+    "size_bytes": 15377,
+    "sha256": "6a28336f6781fa592e5edf78cd223c96c15522f6bd0ab465c439773ac96a0a32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520WiseChip%2520HUD/1.0.2/SparkFunWiseChipHUD-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20WiseChip%20HUD/1.0.2/SparkFunWiseChipHUD-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20XM125%20Arduino%20Library/2.0.0/SparkFunXM125ArduinoLibrary-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunXM125ArduinoLibrary-2.0.0.tar.gz",
+    "size_bytes": 30646,
+    "sha256": "642ebe8956e3d97487fe9cc66823b7da680f8d9474ac6621fd348adea23fb7f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520XM125%2520Arduino%2520Library/2.0.0/SparkFunXM125ArduinoLibrary-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20XM125%20Arduino%20Library/2.0.0/SparkFunXM125ArduinoLibrary-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ZX%20Distance%20and%20Gesture%20Sensor/1.0.1/SparkFunZXDistanceandGestureSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunZXDistanceandGestureSensor-1.0.1.tar.gz",
+    "size_bytes": 10187,
+    "sha256": "3ab0b944b658373a56fd6f2ab1ccd379ca24aaa3aa29640a0c6c9c6e64ac33e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ZX%2520Distance%2520and%2520Gesture%2520Sensor/1.0.1/SparkFunZXDistanceandGestureSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ZX%20Distance%20and%20Gesture%20Sensor/1.0.1/SparkFunZXDistanceandGestureSensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20ePaper%20Arduino%20Library/2.1.3/SparkFunePaperArduinoLibrary-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunePaperArduinoLibrary-2.1.3.tar.gz",
+    "size_bytes": 1076730,
+    "sha256": "1e56c76ede9d06c030a510a0f215fcee645e788fb0b7f29c66bc9b5de801f6b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520ePaper%2520Arduino%2520Library/2.1.3/SparkFunePaperArduinoLibrary-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20ePaper%20Arduino%20Library/2.1.3/SparkFunePaperArduinoLibrary-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20smol%20Power%20Board%20Arduino%20Library/1.0.0/SparkFunsmolPowerBoardArduinoLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunsmolPowerBoardArduinoLibrary-1.0.0.tar.gz",
+    "size_bytes": 41077,
+    "sha256": "dc09fb9c089ec50b7aecc1fab8b3cd54ba963396c3fd1d8c54f98dfda7a66638",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520smol%2520Power%2520Board%2520Arduino%2520Library/1.0.0/SparkFunsmolPowerBoardArduinoLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20smol%20Power%20Board%20Arduino%20Library/1.0.0/SparkFunsmolPowerBoardArduinoLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20u-blox%20Arduino%20Library/1.8.11/SparkFunu-bloxArduinoLibrary-1.8.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunu-bloxArduinoLibrary-1.8.11.tar.gz",
+    "size_bytes": 239054,
+    "sha256": "b7b3126ee9bca81a1e319701b6be7cccbad62f3b5af54634be4488da494af6ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520u-blox%2520Arduino%2520Library/1.8.11/SparkFunu-bloxArduinoLibrary-1.8.11.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20u-blox%20Arduino%20Library/1.8.11/SparkFunu-bloxArduinoLibrary-1.8.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20u-blox%20Cellular%20Arduino%20Library/1.0.1/SparkFunu-bloxCellularArduinoLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunu-bloxCellularArduinoLibrary-1.0.1.tar.gz",
+    "size_bytes": 66421,
+    "sha256": "13b4be93588e28af73530a6c0195c3af919ad813416b06b66ae95c40d5b15cb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520u-blox%2520Cellular%2520Arduino%2520Library/1.0.1/SparkFunu-bloxCellularArduinoLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20u-blox%20Cellular%20Arduino%20Library/1.0.1/SparkFunu-bloxCellularArduinoLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20u-blox%20GNSS%20Arduino%20Library/2.2.28/SparkFunu-bloxGNSSArduinoLibrary-2.2.28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunu-bloxGNSSArduinoLibrary-2.2.28.tar.gz",
+    "size_bytes": 301164,
+    "sha256": "cd4e7ae417992e4ac604bda02c087c82cf1d78efc9807103e6929693ec81485f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520u-blox%2520GNSS%2520Arduino%2520Library/2.2.28/SparkFunu-bloxGNSSArduinoLibrary-2.2.28.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20u-blox%20GNSS%20Arduino%20Library/2.2.28/SparkFunu-bloxGNSSArduinoLibrary-2.2.28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20u-blox%20GNSS%20Arduino%20Library/2.2.29/SparkFunu-bloxGNSSArduinoLibrary-2.2.29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunu-bloxGNSSArduinoLibrary-2.2.29.tar.gz",
+    "size_bytes": 301224,
+    "sha256": "96c7997c860258a742596ddf3817dd54385e62bdf28e0f4149e2ebec282fb019",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520u-blox%2520GNSS%2520Arduino%2520Library/2.2.29/SparkFunu-bloxGNSSArduinoLibrary-2.2.29.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20u-blox%20GNSS%20Arduino%20Library/2.2.29/SparkFunu-bloxGNSSArduinoLibrary-2.2.29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20u-blox%20GNSS%20v3/3.1.12/SparkFunu-bloxGNSSv3-3.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunu-bloxGNSSv3-3.1.12.tar.gz",
+    "size_bytes": 348645,
+    "sha256": "11bed8aec06b4a88bcfb61b8ff4738d0c9880e14f6ec5d4c2005fd0a3ab587c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520u-blox%2520GNSS%2520v3/3.1.12/SparkFunu-bloxGNSSv3-3.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20u-blox%20GNSS%20v3/3.1.12/SparkFunu-bloxGNSSv3-3.1.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20u-blox%20GNSS%20v3/3.1.13/SparkFunu-bloxGNSSv3-3.1.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunu-bloxGNSSv3-3.1.13.tar.gz",
+    "size_bytes": 348662,
+    "sha256": "5f052b090f2d4244253a90da62246ad63c5b2b309058e93f76c5b7dd05d0e749",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520u-blox%2520GNSS%2520v3/3.1.13/SparkFunu-bloxGNSSv3-3.1.13.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20u-blox%20GNSS%20v3/3.1.13/SparkFunu-bloxGNSSv3-3.1.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20u-blox%20GNSS%20v3/3.1.14/SparkFunu-bloxGNSSv3-3.1.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunu-bloxGNSSv3-3.1.14.tar.gz",
+    "size_bytes": 351098,
+    "sha256": "136880ae3d30576dabc8637e37a6b93cb56b37eff8425c6b7c3d8e128e641603",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520u-blox%2520GNSS%2520v3/3.1.14/SparkFunu-bloxGNSSv3-3.1.14.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20u-blox%20GNSS%20v3/3.1.14/SparkFunu-bloxGNSSv3-3.1.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20u-blox%20GNSS%20v3/3.1.15/SparkFunu-bloxGNSSv3-3.1.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunu-bloxGNSSv3-3.1.15.tar.gz",
+    "size_bytes": 353705,
+    "sha256": "3c8f3db9f7006dad13bf2474f42754f0c214df4656485c56cb1de896939518fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520u-blox%2520GNSS%2520v3/3.1.15/SparkFunu-bloxGNSSv3-3.1.15.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20u-blox%20GNSS%20v3/3.1.15/SparkFunu-bloxGNSSv3-3.1.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20u-blox%20GNSS%20v4/4.0.0/SparkFunu-bloxGNSSv4-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunu-bloxGNSSv4-4.0.0.tar.gz",
+    "size_bytes": 388853,
+    "sha256": "b53bb7c8699cc49e1849d284f4323f991e038b7791fa181a4b5d3b3fdcee12b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520u-blox%2520GNSS%2520v4/4.0.0/SparkFunu-bloxGNSSv4-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20u-blox%20GNSS%20v4/4.0.0/SparkFunu-bloxGNSSv4-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20u-blox%20GNSS%20v4/4.1.1/SparkFunu-bloxGNSSv4-4.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunu-bloxGNSSv4-4.1.1.tar.gz",
+    "size_bytes": 458847,
+    "sha256": "b2b59fde5ffb4ef11b5e2ee05ec6d055b5852586af48789bd74d74dfaebd4ecc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520u-blox%2520GNSS%2520v4/4.1.1/SparkFunu-bloxGNSSv4-4.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20u-blox%20GNSS%20v4/4.1.1/SparkFunu-bloxGNSSv4-4.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20u-blox%20PointPerfect%20Library/1.11.4/SparkFunu-bloxPointPerfectLibrary-1.11.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunu-bloxPointPerfectLibrary-1.11.4.tar.gz",
+    "size_bytes": 700028,
+    "sha256": "dd596d8c2f0eb1445f7ad22bbcdca7bff4ae5fb2dde0821e4478d4eec0311d2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520u-blox%2520PointPerfect%2520Library/1.11.4/SparkFunu-bloxPointPerfectLibrary-1.11.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20u-blox%20PointPerfect%20Library/1.11.4/SparkFunu-bloxPointPerfectLibrary-1.11.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun%20u-blox%20SARA-R5%20Arduino%20Library/1.1.13/SparkFunu-bloxSARA-R5ArduinoLibrary-1.1.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFunu-bloxSARA-R5ArduinoLibrary-1.1.13.tar.gz",
+    "size_bytes": 94406,
+    "sha256": "949209c846495c1cc03dc36ef1eba330bcef9b2f2278ae322133beb528c3377a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun%2520u-blox%2520SARA-R5%2520Arduino%2520Library/1.1.13/SparkFunu-bloxSARA-R5ArduinoLibrary-1.1.13.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun%20u-blox%20SARA-R5%20Arduino%20Library/1.1.13/SparkFunu-bloxSARA-R5ArduinoLibrary-1.1.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun-CC3000/0.0.0-alpha+sha.e69f5f526b/SparkFun-CC3000-0.0.0-alphasha.e69f5f526b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFun-CC3000-0.0.0-alphasha.e69f5f526b.tar.gz",
+    "size_bytes": 97552,
+    "sha256": "db222f17d0001e154f09cdfeb79dc7f8b1a09540aea6becd2d84819e13813ffd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun-CC3000/0.0.0-alpha%2Bsha.e69f5f526b/SparkFun-CC3000-0.0.0-alphasha.e69f5f526b.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun-CC3000/0.0.0-alpha%2Bsha.e69f5f526b/SparkFun-CC3000-0.0.0-alphasha.e69f5f526b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun_FS3000_Arduino_Library/1.0.5/SparkFun_FS3000_Arduino_Library-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFun_FS3000_Arduino_Library-1.0.5.tar.gz",
+    "size_bytes": 8441,
+    "sha256": "668ef4f8a88ecdcc75d4325b151cffdbfe24ef5e42684a68243f4ba77f4386f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun_FS3000_Arduino_Library/1.0.5/SparkFun_FS3000_Arduino_Library-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun_FS3000_Arduino_Library/1.0.5/SparkFun_FS3000_Arduino_Library-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun_MMA8452Q/1.4.0/SparkFun_MMA8452Q-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFun_MMA8452Q-1.4.0.tar.gz",
+    "size_bytes": 11771,
+    "sha256": "5847cdb7cb0a6509f3bdf5489e1aab4a36bfd3b686820c04e0b9f01e775fa0b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun_MMA8452Q/1.4.0/SparkFun_MMA8452Q-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun_MMA8452Q/1.4.0/SparkFun_MMA8452Q-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/SparkFun_MicroView/1.0.1/SparkFun_MicroView-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkFun_MicroView-1.0.1.tar.gz",
+    "size_bytes": 48377,
+    "sha256": "e78966c9be49f78af581d3bae776fc7b7254c54221581ed49e196cef7392be97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/SparkFun_MicroView/1.0.1/SparkFun_MicroView-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/SparkFun_MicroView/1.0.1/SparkFun_MicroView-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/Sparkfun%20BMP180/1.1.2/SparkfunBMP180-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkfunBMP180-1.1.2.tar.gz",
+    "size_bytes": 10157,
+    "sha256": "219515faec52c3f2bd9b82cf76e3391036ad04e05d9dc4c9b8a5188ac1b92532",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/Sparkfun%2520BMP180/1.1.2/SparkfunBMP180-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/Sparkfun%20BMP180/1.1.2/SparkfunBMP180-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/Sparkfun%20T5403%20Barometric%20Sensor%20Library/1.0.1/SparkfunT5403BarometricSensorLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkfunT5403BarometricSensorLibrary-1.0.1.tar.gz",
+    "size_bytes": 5531,
+    "sha256": "cf3bd721fcd067043fc2425e89ac7b0cbfb030ec80ea3ea06fa965886a37a244",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/Sparkfun%2520T5403%2520Barometric%2520Sensor%2520Library/1.0.1/SparkfunT5403BarometricSensorLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/Sparkfun%20T5403%20Barometric%20Sensor%20Library/1.0.1/SparkfunT5403BarometricSensorLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sparkfun/library/TeensyView/1.1.0/TeensyView-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeensyView-1.1.0.tar.gz",
+    "size_bytes": 26166,
+    "sha256": "e281d820c6838b145c5c1ce52790be76be12f17fd5c48f741689afe8d9c741f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sparkfun/library/TeensyView/1.1.0/TeensyView-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sparkfun/library/TeensyView/1.1.0/TeensyView-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

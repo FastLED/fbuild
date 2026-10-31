@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pentium",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pentium/library/Transfer_STL/0.0.0+sha.cb8fb0cba02b/Transfer_STL-0.0.0+sha.cb8fb0cba02b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Transfer_STL-0.0.0+sha.cb8fb0cba02b.tar.gz",
+    "size_bytes": 1520,
+    "sha256": "b81fd77918bddd8cdcb5a3807218dbde5f9f3ec024b544b2dc2c13a308d134c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pentium/library/Transfer_STL/0.0.0%2Bsha.cb8fb0cba02b/Transfer_STL-0.0.0%2Bsha.cb8fb0cba02b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pentium/library/Transfer_STL/0.0.0%2Bsha.cb8fb0cba02b/Transfer_STL-0.0.0%2Bsha.cb8fb0cba02b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pentium/library/Transfer_function/0.0.0+sha.55faa754fc49/Transfer_function-0.0.0+sha.55faa754fc49.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Transfer_function-0.0.0+sha.55faa754fc49.tar.gz",
+    "size_bytes": 1493,
+    "sha256": "8ab2f32316793e5f6c4f8f25d73b4880f34722fad70afe09d6af01e3f831dc4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pentium/library/Transfer_function/0.0.0%2Bsha.55faa754fc49/Transfer_function-0.0.0%2Bsha.55faa754fc49.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pentium/library/Transfer_function/0.0.0%2Bsha.55faa754fc49/Transfer_function-0.0.0%2Bsha.55faa754fc49.tar.gz"
+    ]
+   }
+  }
+ ]
+}

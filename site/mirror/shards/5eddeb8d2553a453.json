@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/baracodadailyhealthtech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "baracodadailyhealthtech/library/LwGPS/2.3.3/LwGPS-2.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LwGPS-2.3.3.tar.gz",
+    "size_bytes": 24177,
+    "sha256": "de15b603ee56cf01dd16e8928c01b911280c9dba2e5a1d36ed703100c662dedd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baracodadailyhealthtech/library/LwGPS/2.3.3/LwGPS-2.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/baracodadailyhealthtech/library/LwGPS/2.3.3/LwGPS-2.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baracodadailyhealthtech/library/cJSON/1.7.18/cJSON-1.7.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cJSON-1.7.18.tar.gz",
+    "size_bytes": 63937,
+    "sha256": "4ccf8921a5cb24da860e8e651a8c7f370bacb0e0554a42403927f35e6d373787",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baracodadailyhealthtech/library/cJSON/1.7.18/cJSON-1.7.18.tar.gz",
+     "https://dl.registry.platformio.org/download/baracodadailyhealthtech/library/cJSON/1.7.18/cJSON-1.7.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baracodadailyhealthtech/library/catch2/4-3.7.1/catch2-4-3.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "catch2-4-3.7.1.tar.gz",
+    "size_bytes": 310745,
+    "sha256": "cd8a55b3945109e923baa84528530ff1475007c88a1061fa8eb1bb524337fe69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baracodadailyhealthtech/library/catch2/4-3.7.1/catch2-4-3.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/baracodadailyhealthtech/library/catch2/4-3.7.1/catch2-4-3.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baracodadailyhealthtech/library/cryptoauthlib/3.7.6-p1/cryptoauthlib-3.7.6-p1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cryptoauthlib-3.7.6-p1.tar.gz",
+    "size_bytes": 653914,
+    "sha256": "8146b6d791b9305fc7c5141afc49d74f29b19ebfeb41c99caf2ff8c466040602",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baracodadailyhealthtech/library/cryptoauthlib/3.7.6-p1/cryptoauthlib-3.7.6-p1.tar.gz",
+     "https://dl.registry.platformio.org/download/baracodadailyhealthtech/library/cryptoauthlib/3.7.6-p1/cryptoauthlib-3.7.6-p1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baracodadailyhealthtech/library/cryptoauthlib/3.7.6-p2/cryptoauthlib-3.7.6-p2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cryptoauthlib-3.7.6-p2.tar.gz",
+    "size_bytes": 676589,
+    "sha256": "731ace0cf5b65edc69bb724f9eaf09bcc02dc697cc6d1d4106ab94e3b12c3321",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baracodadailyhealthtech/library/cryptoauthlib/3.7.6-p2/cryptoauthlib-3.7.6-p2.tar.gz",
+     "https://dl.registry.platformio.org/download/baracodadailyhealthtech/library/cryptoauthlib/3.7.6-p2/cryptoauthlib-3.7.6-p2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baracodadailyhealthtech/library/cryptoauthlib/3.7.6/cryptoauthlib-3.7.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cryptoauthlib-3.7.6.tar.gz",
+    "size_bytes": 653881,
+    "sha256": "e44d56d796f93448a292e949111182725263f62e30a1a1d6b4e74a9ec46a1a31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baracodadailyhealthtech/library/cryptoauthlib/3.7.6/cryptoauthlib-3.7.6.tar.gz",
+     "https://dl.registry.platformio.org/download/baracodadailyhealthtech/library/cryptoauthlib/3.7.6/cryptoauthlib-3.7.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baracodadailyhealthtech/library/cwalk/1.2.9/cwalk-1.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cwalk-1.2.9.tar.gz",
+    "size_bytes": 22966,
+    "sha256": "0dfe00b3d5a0267f172265080307df74a0a251da6b9a686f5dfe0001f74e699f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baracodadailyhealthtech/library/cwalk/1.2.9/cwalk-1.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/baracodadailyhealthtech/library/cwalk/1.2.9/cwalk-1.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baracodadailyhealthtech/library/mbedtls/3.6.1-1/mbedtls-3.6.1-1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbedtls-3.6.1-1.tar.gz",
+    "size_bytes": 1883416,
+    "sha256": "0283b3d210be2b292f9a61ab6c6c75551be2a50496bd3b061e773deee0cd99a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baracodadailyhealthtech/library/mbedtls/3.6.1-1/mbedtls-3.6.1-1.tar.gz",
+     "https://dl.registry.platformio.org/download/baracodadailyhealthtech/library/mbedtls/3.6.1-1/mbedtls-3.6.1-1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baracodadailyhealthtech/library/tiny-regex-c/0.0.1/tiny-regex-c-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tiny-regex-c-0.0.1.tar.gz",
+    "size_bytes": 46963,
+    "sha256": "ba27d83aecbb414ad81ffee5223cb1d5cf909350a1fb9f60b0e13263eb1585b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baracodadailyhealthtech/library/tiny-regex-c/0.0.1/tiny-regex-c-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/baracodadailyhealthtech/library/tiny-regex-c/0.0.1/tiny-regex-c-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baracodadailyhealthtech/library/tinyusb/0.17.0/tinyusb-0.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyusb-0.17.0.tar.gz",
+    "size_bytes": 2869680,
+    "sha256": "cd89557499c3ebb4b583fa644e87deadbe30f8d177763e353183435174e02227",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baracodadailyhealthtech/library/tinyusb/0.17.0/tinyusb-0.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/baracodadailyhealthtech/library/tinyusb/0.17.0/tinyusb-0.17.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baracodadailyhealthtech/library/tre/0.9.7/tre-0.9.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tre-0.9.7.tar.gz",
+    "size_bytes": 115243,
+    "sha256": "a535a0344f99e6a862873829e7dc53c108e011a2f2cdb377c3da9fe4814f452f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baracodadailyhealthtech/library/tre/0.9.7/tre-0.9.7.tar.gz",
+     "https://dl.registry.platformio.org/download/baracodadailyhealthtech/library/tre/0.9.7/tre-0.9.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

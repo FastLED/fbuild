@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sigmashig",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sigmashig/library/Async1Wire/0.3.1/Async1Wire-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Async1Wire-0.3.1.tar.gz",
+    "size_bytes": 7862,
+    "sha256": "0db4bf4266b6d2a8381ef5b775b0ac1111f588ddfb381f2ad91d88941d6e8890",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sigmashig/library/Async1Wire/0.3.1/Async1Wire-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sigmashig/library/Async1Wire/0.3.1/Async1Wire-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sigmashig/library/SigmaClock/0.3.0/SigmaClock-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SigmaClock-0.3.0.tar.gz",
+    "size_bytes": 10714,
+    "sha256": "7e666627f287ac6669c1c66e61f72713b56fb694ba12a8ed8e324ccb6ed8f7d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sigmashig/library/SigmaClock/0.3.0/SigmaClock-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sigmashig/library/SigmaClock/0.3.0/SigmaClock-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sigmashig/library/SigmaIO/0.1.4/SigmaIO-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SigmaIO-0.1.4.tar.gz",
+    "size_bytes": 10875,
+    "sha256": "a3797ec414abbb4978fefff8fe932c47543d6b011472201dd3fedb6709f93179",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sigmashig/library/SigmaIO/0.1.4/SigmaIO-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sigmashig/library/SigmaIO/0.1.4/SigmaIO-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sigmashig/library/SigmaLogger/0.1.0/SigmaLogger-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SigmaLogger-0.1.0.tar.gz",
+    "size_bytes": 4450,
+    "sha256": "0a75173e83161b8db661fa9b8358f95e1dfb971b76112f010e9db538834ee88c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sigmashig/library/SigmaLogger/0.1.0/SigmaLogger-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sigmashig/library/SigmaLogger/0.1.0/SigmaLogger-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sigmashig/library/SigmaMQTT/0.1.5/SigmaMQTT-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SigmaMQTT-0.1.5.tar.gz",
+    "size_bytes": 7169,
+    "sha256": "d96b9134d449a9c349f0186458fad5cbb896690c790c9c8d84cbe3aeca7ae4be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sigmashig/library/SigmaMQTT/0.1.5/SigmaMQTT-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sigmashig/library/SigmaMQTT/0.1.5/SigmaMQTT-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sigmashig/library/SigmaUtils/0.1.2/SigmaUtils-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SigmaUtils-0.1.2.tar.gz",
+    "size_bytes": 5661,
+    "sha256": "37622999a33d53ccc7b31e1b54909a6552e77caa60054b4880c5f877e0ae3adb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sigmashig/library/SigmaUtils/0.1.2/SigmaUtils-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sigmashig/library/SigmaUtils/0.1.2/SigmaUtils-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

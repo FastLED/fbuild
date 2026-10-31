@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/khaledhamidi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "khaledhamidi/library/Qlink/0.1.0/Qlink-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Qlink-0.1.0.tar.gz",
+    "size_bytes": 10245,
+    "sha256": "fd14ee0c2fb2f2f2d9fc4553e2bc61007b3402f117b0baea463d3928cd380d47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/khaledhamidi/library/Qlink/0.1.0/Qlink-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/khaledhamidi/library/Qlink/0.1.0/Qlink-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

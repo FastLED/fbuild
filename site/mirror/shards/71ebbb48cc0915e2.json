@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chaosnuggets",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chaosnuggets/library/Diabolo%20Light/1.1.1/DiaboloLight-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DiaboloLight-1.1.1.tar.gz",
+    "size_bytes": 6725,
+    "sha256": "1459b6be95d77c33887d056476a33a2fab810530d9072f9fab64917162dec185",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chaosnuggets/library/Diabolo%2520Light/1.1.1/DiaboloLight-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chaosnuggets/library/Diabolo%20Light/1.1.1/DiaboloLight-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

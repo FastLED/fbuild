@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jrj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jrj/library/buffered-serial0/0.0.0+sha.8daa0697fa7f/buffered-serial0-0.0.0+sha.8daa0697fa7f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "buffered-serial0-0.0.0+sha.8daa0697fa7f.tar.gz",
+    "size_bytes": 2285,
+    "sha256": "92d5689939b717261f3385e921e422bb6fb914bbd8b0b2ba7a1288aeb4347dc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jrj/library/buffered-serial0/0.0.0%2Bsha.8daa0697fa7f/buffered-serial0-0.0.0%2Bsha.8daa0697fa7f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jrj/library/buffered-serial0/0.0.0%2Bsha.8daa0697fa7f/buffered-serial0-0.0.0%2Bsha.8daa0697fa7f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

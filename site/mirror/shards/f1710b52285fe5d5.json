@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marian-craciunescu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marian-craciunescu/library/ESP32Ping/1.7/ESP32Ping-1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Ping-1.7.tar.gz",
+    "size_bytes": 15772,
+    "sha256": "fccf1120fdeb2d29c9dc5734083ed031f53b06b2495df4ecd35b311ad72446a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marian-craciunescu/library/ESP32Ping/1.7/ESP32Ping-1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/marian-craciunescu/library/ESP32Ping/1.7/ESP32Ping-1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

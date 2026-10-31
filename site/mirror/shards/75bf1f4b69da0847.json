@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-analogdevices",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-analogdevices/library/AD5270/0.0.0+sha.9f9dd8c48e8a/AD5270-0.0.0+sha.9f9dd8c48e8a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD5270-0.0.0+sha.9f9dd8c48e8a.tar.gz",
+    "size_bytes": 4551,
+    "sha256": "8df9664727164929d7d34aab6bf696a125dd7a506111b5c45d4b5f6b9d7a423c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-analogdevices/library/AD5270/0.0.0%2Bsha.9f9dd8c48e8a/AD5270-0.0.0%2Bsha.9f9dd8c48e8a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-analogdevices/library/AD5270/0.0.0%2Bsha.9f9dd8c48e8a/AD5270-0.0.0%2Bsha.9f9dd8c48e8a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-analogdevices/library/AD7124/0.0.0+sha.5fa802deb471/AD7124-0.0.0+sha.5fa802deb471.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD7124-0.0.0+sha.5fa802deb471.tar.gz",
+    "size_bytes": 8308,
+    "sha256": "00752ea1dda48f3aa67c04a41127e03c6cff5e8ec845ed6e4c3fa5d0e2aeadbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-analogdevices/library/AD7124/0.0.0%2Bsha.5fa802deb471/AD7124-0.0.0%2Bsha.5fa802deb471.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-analogdevices/library/AD7124/0.0.0%2Bsha.5fa802deb471/AD7124-0.0.0%2Bsha.5fa802deb471.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-analogdevices/library/AD7790/0.0.0+sha.c7cfa6877e1d/AD7790-0.0.0+sha.c7cfa6877e1d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD7790-0.0.0+sha.c7cfa6877e1d.tar.gz",
+    "size_bytes": 5376,
+    "sha256": "ec47379d592e228af61e6abf530e146a10b879ebce8019afbb5ce94c7e943320",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-analogdevices/library/AD7790/0.0.0%2Bsha.c7cfa6877e1d/AD7790-0.0.0%2Bsha.c7cfa6877e1d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-analogdevices/library/AD7790/0.0.0%2Bsha.c7cfa6877e1d/AD7790-0.0.0%2Bsha.c7cfa6877e1d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-analogdevices/library/AD7791/0.0.0+sha.075fe3d08488/AD7791-0.0.0+sha.075fe3d08488.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD7791-0.0.0+sha.075fe3d08488.tar.gz",
+    "size_bytes": 5360,
+    "sha256": "638cf1350f73d7970bf9e0659b32b3718c706c50d4f830931beb28f50c861180",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-analogdevices/library/AD7791/0.0.0%2Bsha.075fe3d08488/AD7791-0.0.0%2Bsha.075fe3d08488.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-analogdevices/library/AD7791/0.0.0%2Bsha.075fe3d08488/AD7791-0.0.0%2Bsha.075fe3d08488.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-analogdevices/library/ADT7310/0.0.0+sha.63996d24973b/ADT7310-0.0.0+sha.63996d24973b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADT7310-0.0.0+sha.63996d24973b.tar.gz",
+    "size_bytes": 1725,
+    "sha256": "796c58a54e4ef74d24952022c09dfcbcc417a1649b7d9b0ce5748355073eb255",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-analogdevices/library/ADT7310/0.0.0%2Bsha.63996d24973b/ADT7310-0.0.0%2Bsha.63996d24973b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-analogdevices/library/ADT7310/0.0.0%2Bsha.63996d24973b/ADT7310-0.0.0%2Bsha.63996d24973b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-analogdevices/library/ADXL362/0.0.0+sha.ae171c032dc0/ADXL362-0.0.0+sha.ae171c032dc0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL362-0.0.0+sha.ae171c032dc0.tar.gz",
+    "size_bytes": 6231,
+    "sha256": "d2c32259d585bcf291388dd52c582ae5e38716e18f13f737039e0bdb49f92a6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-analogdevices/library/ADXL362/0.0.0%2Bsha.ae171c032dc0/ADXL362-0.0.0%2Bsha.ae171c032dc0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-analogdevices/library/ADXL362/0.0.0%2Bsha.ae171c032dc0/ADXL362-0.0.0%2Bsha.ae171c032dc0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-analogdevices/library/CN0216/0.0.0+sha.ea269fe29bab/CN0216-0.0.0+sha.ea269fe29bab.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CN0216-0.0.0+sha.ea269fe29bab.tar.gz",
+    "size_bytes": 3570,
+    "sha256": "90ea07a89ba9dfe034e179eed07c082f948ad7b36e1aa37fdda7700c50829017",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-analogdevices/library/CN0216/0.0.0%2Bsha.ea269fe29bab/CN0216-0.0.0%2Bsha.ea269fe29bab.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-analogdevices/library/CN0216/0.0.0%2Bsha.ea269fe29bab/CN0216-0.0.0%2Bsha.ea269fe29bab.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-analogdevices/library/CN0357/0.0.0+sha.19e1bf69dc75/CN0357-0.0.0+sha.19e1bf69dc75.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CN0357-0.0.0+sha.19e1bf69dc75.tar.gz",
+    "size_bytes": 3858,
+    "sha256": "d5f6bcbd263c06788da906bfd7752049fc2eb15ffe40f8b484b7f7123dbc95fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-analogdevices/library/CN0357/0.0.0%2Bsha.19e1bf69dc75/CN0357-0.0.0%2Bsha.19e1bf69dc75.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-analogdevices/library/CN0357/0.0.0%2Bsha.19e1bf69dc75/CN0357-0.0.0%2Bsha.19e1bf69dc75.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-analogdevices/library/CN0391/0.0.0+sha.f40851ca9316/CN0391-0.0.0+sha.f40851ca9316.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CN0391-0.0.0+sha.f40851ca9316.tar.gz",
+    "size_bytes": 3443,
+    "sha256": "665ebae679a71ad24dfed6a3648e4bb6ef3c03ffce2d5a22371dd4c5ea6a5173",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-analogdevices/library/CN0391/0.0.0%2Bsha.f40851ca9316/CN0391-0.0.0%2Bsha.f40851ca9316.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-analogdevices/library/CN0391/0.0.0%2Bsha.f40851ca9316/CN0391-0.0.0%2Bsha.f40851ca9316.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-analogdevices/library/CN0398/0.0.0+sha.7072863079d5/CN0398-0.0.0+sha.7072863079d5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CN0398-0.0.0+sha.7072863079d5.tar.gz",
+    "size_bytes": 6006,
+    "sha256": "255d207239974845627f0a912419c5ee83358a9aa2566147953d07818af2272b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-analogdevices/library/CN0398/0.0.0%2Bsha.7072863079d5/CN0398-0.0.0%2Bsha.7072863079d5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-analogdevices/library/CN0398/0.0.0%2Bsha.7072863079d5/CN0398-0.0.0%2Bsha.7072863079d5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-analogdevices/library/EVAL_ADXL362_ARDZ/0.0.0+sha.e56adca82fee/EVAL_ADXL362_ARDZ-0.0.0+sha.e56adca82fee.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EVAL_ADXL362_ARDZ-0.0.0+sha.e56adca82fee.tar.gz",
+    "size_bytes": 6881,
+    "sha256": "67959e68b07563b9a3e908b005f2f93406b415ef71d4234c711647056b3300ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-analogdevices/library/EVAL_ADXL362_ARDZ/0.0.0%2Bsha.e56adca82fee/EVAL_ADXL362_ARDZ-0.0.0%2Bsha.e56adca82fee.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-analogdevices/library/EVAL_ADXL362_ARDZ/0.0.0%2Bsha.e56adca82fee/EVAL_ADXL362_ARDZ-0.0.0%2Bsha.e56adca82fee.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-analogdevices/library/Thermocouple/0.0.0+sha.5421fc992678/Thermocouple-0.0.0+sha.5421fc992678.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Thermocouple-0.0.0+sha.5421fc992678.tar.gz",
+    "size_bytes": 91874,
+    "sha256": "350824a838e5855120fb3de29e09184a89510ec171608debb944f1a963f11b11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-analogdevices/library/Thermocouple/0.0.0%2Bsha.5421fc992678/Thermocouple-0.0.0%2Bsha.5421fc992678.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-analogdevices/library/Thermocouple/0.0.0%2Bsha.5421fc992678/Thermocouple-0.0.0%2Bsha.5421fc992678.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-analogdevices/library/mbed-drivers/0.0.0+sha.c3ec596a29c2/mbed-drivers-0.0.0+sha.c3ec596a29c2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-drivers-0.0.0+sha.c3ec596a29c2.tar.gz",
+    "size_bytes": 168676,
+    "sha256": "207e1c6e78e08e33b01a0ca91040091c18362b7cab1103be33462fe217e78a60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-analogdevices/library/mbed-drivers/0.0.0%2Bsha.c3ec596a29c2/mbed-drivers-0.0.0%2Bsha.c3ec596a29c2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-analogdevices/library/mbed-drivers/0.0.0%2Bsha.c3ec596a29c2/mbed-drivers-0.0.0%2Bsha.c3ec596a29c2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-analogdevices/library/platform_drivers/0.0.0+sha.46aad38346a6/platform_drivers-0.0.0+sha.46aad38346a6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "platform_drivers-0.0.0+sha.46aad38346a6.tar.gz",
+    "size_bytes": 17398,
+    "sha256": "1dddf545368369d02f2cd09d34d3c332aae61022cd4b35bbae47c6a05232ecd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-analogdevices/library/platform_drivers/0.0.0%2Bsha.46aad38346a6/platform_drivers-0.0.0%2Bsha.46aad38346a6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-analogdevices/library/platform_drivers/0.0.0%2Bsha.46aad38346a6/platform_drivers-0.0.0%2Bsha.46aad38346a6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

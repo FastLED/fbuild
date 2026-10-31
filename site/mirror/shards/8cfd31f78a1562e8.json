@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/almavios",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "almavios/library/AlmaviosLitMqtt/0.3.0/AlmaviosLitMqtt-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlmaviosLitMqtt-0.3.0.tar.gz",
+    "size_bytes": 31181,
+    "sha256": "8a1b3cc88f4b1dc3a01f707a0480752b06f9d4b6e3ed00770cedde27b03a48b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/almavios/library/AlmaviosLitMqtt/0.3.0/AlmaviosLitMqtt-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/almavios/library/AlmaviosLitMqtt/0.3.0/AlmaviosLitMqtt-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

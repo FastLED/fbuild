@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/silent",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "silent/library/Function%20objects/1.0/Functionobjects-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Functionobjects-1.0.tar.gz",
+    "size_bytes": 14041,
+    "sha256": "3b24a06a58477e7a3ac2c9d648fcf3f22501dae9c9062e08b9438a00b3d005ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/silent/library/Function%2520objects/1.0/Functionobjects-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/silent/library/Function%20objects/1.0/Functionobjects-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "silent/library/MG811/1.0/MG811-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MG811-1.0.tar.gz",
+    "size_bytes": 5010,
+    "sha256": "e0641ca18f7e1261726bf05f35fff61bd80bbf037f43f85c4234931e4afcec20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/silent/library/MG811/1.0/MG811-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/silent/library/MG811/1.0/MG811-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "silent/library/Simple%20Switch/2.0.1/SimpleSwitch-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleSwitch-2.0.1.tar.gz",
+    "size_bytes": 1809,
+    "sha256": "be3651494af34d0bd7f35c0ed70608dfcf030f435a434732d33b2e1d7c156bff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/silent/library/Simple%2520Switch/2.0.1/SimpleSwitch-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/silent/library/Simple%20Switch/2.0.1/SimpleSwitch-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "silent/library/Smart%20Impulsator/2.0.0/SmartImpulsator-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartImpulsator-2.0.0.tar.gz",
+    "size_bytes": 6598,
+    "sha256": "b347451151893174330c4e86e78d2b08d2d16e0c4ffa2ece535422490fd5615f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/silent/library/Smart%2520Impulsator/2.0.0/SmartImpulsator-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/silent/library/Smart%20Impulsator/2.0.0/SmartImpulsator-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "silent/library/Spline%20interpolation/1.4/Splineinterpolation-1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Splineinterpolation-1.4.tar.gz",
+    "size_bytes": 5021,
+    "sha256": "19381f5b10251e6b638309aa8d4bc2433fe9c85934698942b28488685a8354bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/silent/library/Spline%2520interpolation/1.4/Splineinterpolation-1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/silent/library/Spline%20interpolation/1.4/Splineinterpolation-1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "silent/library/String%20Padding/1.5.2/StringPadding-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StringPadding-1.5.2.tar.gz",
+    "size_bytes": 2183,
+    "sha256": "6947eaf05bcd4f05efebd2b80cc5a4a66f2b2dca67747e6a7a44eaf76c330eb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/silent/library/String%2520Padding/1.5.2/StringPadding-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/silent/library/String%20Padding/1.5.2/StringPadding-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "silent/library/click_Mikolaja/0.0.2/click_Mikolaja-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "click_Mikolaja-0.0.2.tar.gz",
+    "size_bytes": 2125,
+    "sha256": "c061ecff5457c88b502a032654db8139a121ead70768831348ef6deed3d3b9a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/silent/library/click_Mikolaja/0.0.2/click_Mikolaja-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/silent/library/click_Mikolaja/0.0.2/click_Mikolaja-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "silent/library/function_objects/1.0.0/function_objects-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "function_objects-1.0.0.tar.gz",
+    "size_bytes": 15024,
+    "sha256": "986d32eff0f3d0abf89f2d44e314e9bf19f9f4e8d6aa2bcb8cd69dc07f732947",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/silent/library/function_objects/1.0.0/function_objects-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/silent/library/function_objects/1.0.0/function_objects-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "silent/library/mik_blink/0.1.1/mik_blink-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mik_blink-0.1.1.tar.gz",
+    "size_bytes": 2446,
+    "sha256": "702df7316d5efa2fd0184d73e90127b1fbe870d6042f5b777da2362023186351",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/silent/library/mik_blink/0.1.1/mik_blink-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/silent/library/mik_blink/0.1.1/mik_blink-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "silent/library/mik_click/1.2.1/mik_click-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mik_click-1.2.1.tar.gz",
+    "size_bytes": 2769,
+    "sha256": "311f4b58e42c4ba1be10365d8ba8774425ae2d120643a64a807644d1be5650e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/silent/library/mik_click/1.2.1/mik_click-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/silent/library/mik_click/1.2.1/mik_click-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "silent/library/simple_raw_menu/0.1.4/simple_raw_menu-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "simple_raw_menu-0.1.4.tar.gz",
+    "size_bytes": 2727,
+    "sha256": "99c9f75c72799539f5faebe33cb02691448788ff4f056c310ebce55e81a168d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/silent/library/simple_raw_menu/0.1.4/simple_raw_menu-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/silent/library/simple_raw_menu/0.1.4/simple_raw_menu-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "silent/library/timer/0.1.2/timer-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "timer-0.1.2.tar.gz",
+    "size_bytes": 4395,
+    "sha256": "30b2aea5b8ee7c3e257917f74131913e9834c537d392cdbcecc664f16806bbc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/silent/library/timer/0.1.2/timer-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/silent/library/timer/0.1.2/timer-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "silent/library/universal%20button%20operator%20by%20mik/0.2.0/universalbuttonoperatorbymik-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "universalbuttonoperatorbymik-0.2.0.tar.gz",
+    "size_bytes": 3456,
+    "sha256": "24805e202d03f3d0c389b928d5dc83b7446ef941e094cafa598c501e507c256d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/silent/library/universal%2520button%2520operator%2520by%2520mik/0.2.0/universalbuttonoperatorbymik-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/silent/library/universal%20button%20operator%20by%20mik/0.2.0/universalbuttonoperatorbymik-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gignops",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gignops/library/sc6502/1.0.1/sc6502-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sc6502-1.0.1.tar.gz",
+    "size_bytes": 68055,
+    "sha256": "f7341f46fbfa987dd6577324be6f5e2889dbcae5e7ceb5937fbe993ddd99b507",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gignops/library/sc6502/1.0.1/sc6502-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gignops/library/sc6502/1.0.1/sc6502-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

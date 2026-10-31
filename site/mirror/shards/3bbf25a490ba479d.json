@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/supratikd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "supratikd/library/7Semi%20AS7343/1.0.1/7SemiAS7343-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiAS7343-1.0.1.tar.gz",
+    "size_bytes": 19970,
+    "sha256": "67127dd34fa35e2ab0cbf77db2832ea2bd1e2edf387ae7a5cfa0134bec9b0eb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/supratikd/library/7Semi%2520AS7343/1.0.1/7SemiAS7343-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/supratikd/library/7Semi%20AS7343/1.0.1/7SemiAS7343-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "supratikd/library/HW290/1.0.0/HW290-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HW290-1.0.0.tar.gz",
+    "size_bytes": 8618,
+    "sha256": "0826e0597bf4f76e824150ef1477035913f38d5c874f6a1bb4d87dac185fd59d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/supratikd/library/HW290/1.0.0/HW290-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/supratikd/library/HW290/1.0.0/HW290-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "supratikd/library/HW290/1.0.1/HW290-MPU6050-10DOF-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HW290-MPU6050-10DOF-1.0.1.tar.gz",
+    "size_bytes": 9492,
+    "sha256": "eb1cf64d56053db99c24bf299088b4554294a1e2c76a859d1b8f787b5b60a4c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/supratikd/library/HW290/1.0.1/HW290-MPU6050-10DOF-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/supratikd/library/HW290/1.0.1/HW290-MPU6050-10DOF-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "supratikd/library/HW290/1.0.2/HW290-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HW290-1.0.2.tar.gz",
+    "size_bytes": 11225,
+    "sha256": "0a453799faa3e4deaad57bdf11f1f3cc87cf71228a3a497ade87533426754999",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/supratikd/library/HW290/1.0.2/HW290-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/supratikd/library/HW290/1.0.2/HW290-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "supratikd/library/HW290/1.0.3/HW290-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HW290-1.0.3.tar.gz",
+    "size_bytes": 12205,
+    "sha256": "142b2b142b6fa82ce5ce1bc950bdf843fd56532feca939f0301ac1ca6774d642",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/supratikd/library/HW290/1.0.3/HW290-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/supratikd/library/HW290/1.0.3/HW290-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/planetk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "planetk/library/ArduinoFritzApi/0.1.1/ArduinoFritzApi-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoFritzApi-0.1.1.tar.gz",
+    "size_bytes": 3589,
+    "sha256": "b44f2457da91a1cc17be9251cefd7342faf92c4001cbfcafdb11e1965c96f053",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/planetk/library/ArduinoFritzApi/0.1.1/ArduinoFritzApi-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/planetk/library/ArduinoFritzApi/0.1.1/ArduinoFritzApi-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

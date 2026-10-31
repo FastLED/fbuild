@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-remitte",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-remitte/library/Akene/0.0.0+sha.ce17068deacf/Akene-0.0.0+sha.ce17068deacf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Akene-0.0.0+sha.ce17068deacf.tar.gz",
+    "size_bytes": 3028,
+    "sha256": "ee4bbf6fc1b95728bc3d18dbdcdb2834b27f4c8cc6fd46402c808fab73f912dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-remitte/library/Akene/0.0.0%2Bsha.ce17068deacf/Akene-0.0.0%2Bsha.ce17068deacf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-remitte/library/Akene/0.0.0%2Bsha.ce17068deacf/Akene-0.0.0%2Bsha.ce17068deacf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

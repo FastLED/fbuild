@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cristianszwarc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cristianszwarc/library/SerialCommander/0.0.0-alpha+sha.dd6cd96dbf/SerialCommander-0.0.0-alphasha.dd6cd96dbf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialCommander-0.0.0-alphasha.dd6cd96dbf.tar.gz",
+    "size_bytes": 4296,
+    "sha256": "703a99319e3b7932af45cb4c1745405b2b12cb54de419558ce0907328de0891f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cristianszwarc/library/SerialCommander/0.0.0-alpha%2Bsha.dd6cd96dbf/SerialCommander-0.0.0-alphasha.dd6cd96dbf.tar.gz",
+     "https://dl.registry.platformio.org/download/cristianszwarc/library/SerialCommander/0.0.0-alpha%2Bsha.dd6cd96dbf/SerialCommander-0.0.0-alphasha.dd6cd96dbf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

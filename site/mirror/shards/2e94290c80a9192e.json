@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/miguel5612",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "miguel5612/library/MQUnifiedsensor/3.0.5/MQUnifiedsensor-3.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQUnifiedsensor-3.0.5.tar.gz",
+    "size_bytes": 28096,
+    "sha256": "cb64113d73bd73307d64cc01e971a0f7a84f2d15eac73ea090aeec81f1409bb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miguel5612/library/MQUnifiedsensor/3.0.5/MQUnifiedsensor-3.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/miguel5612/library/MQUnifiedsensor/3.0.5/MQUnifiedsensor-3.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "miguel5612/library/ThermistorLibrary/1.0.6/ThermistorLibrary-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThermistorLibrary-1.0.6.tar.gz",
+    "size_bytes": 30925,
+    "sha256": "6aa4ffe37923c80eb1549ffa33fb355b04ebb15aec2f83277a1e7a8fef5bc2b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/miguel5612/library/ThermistorLibrary/1.0.6/ThermistorLibrary-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/miguel5612/library/ThermistorLibrary/1.0.6/ThermistorLibrary-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

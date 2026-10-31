@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jwaters9",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jwaters9/library/ShiftBrite/0.0.0+sha.466ea48e852a/ShiftBrite-0.0.0+sha.466ea48e852a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShiftBrite-0.0.0+sha.466ea48e852a.tar.gz",
+    "size_bytes": 1644,
+    "sha256": "2d9f09a2114a79278be00e11e4a37089552ad4d071bc1e1fccbd6776b0d988b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jwaters9/library/ShiftBrite/0.0.0%2Bsha.466ea48e852a/ShiftBrite-0.0.0%2Bsha.466ea48e852a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jwaters9/library/ShiftBrite/0.0.0%2Bsha.466ea48e852a/ShiftBrite-0.0.0%2Bsha.466ea48e852a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

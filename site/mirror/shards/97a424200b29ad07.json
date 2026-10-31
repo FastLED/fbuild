@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fxduke",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fxduke/library/Tools/1.0.0/Tools-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tools-1.0.0.tar.gz",
+    "size_bytes": 14821,
+    "sha256": "29409e7e8619289a05a789b6e7e15639690b7f81f1ffbd4aa93a7c6f30f9b393",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fxduke/library/Tools/1.0.0/Tools-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fxduke/library/Tools/1.0.0/Tools-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

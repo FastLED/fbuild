@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hestia1abs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hestia1abs/library/HXTP/1.0.0/HXTP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HXTP-1.0.0.tar.gz",
+    "size_bytes": 40093,
+    "sha256": "11f94b27c97de8b5fe66db73269e55adcd9d42422413e47897d63682b69796aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hestia1abs/library/HXTP/1.0.0/HXTP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hestia1abs/library/HXTP/1.0.0/HXTP-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hestia1abs/library/HXTP/1.0.2/HXTP-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HXTP-1.0.2.tar.gz",
+    "size_bytes": 49074,
+    "sha256": "e5a084c6d7770f60c6287545085067204b20e3a18b4144dcc78be0e159d7f9b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hestia1abs/library/HXTP/1.0.2/HXTP-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hestia1abs/library/HXTP/1.0.2/HXTP-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

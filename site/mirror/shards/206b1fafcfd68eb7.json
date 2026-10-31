@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nbremond",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nbremond/library/Watchdog/0.0.0+sha.40f189c7795b/Watchdog-0.0.0+sha.40f189c7795b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Watchdog-0.0.0+sha.40f189c7795b.tar.gz",
+    "size_bytes": 3097,
+    "sha256": "95dd88fe6a456fc24d9b0135f9a8b1f9e96999cf6bd3d82450f331b53a711feb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nbremond/library/Watchdog/0.0.0%2Bsha.40f189c7795b/Watchdog-0.0.0%2Bsha.40f189c7795b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nbremond/library/Watchdog/0.0.0%2Bsha.40f189c7795b/Watchdog-0.0.0%2Bsha.40f189c7795b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fltsimtech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fltsimtech/library/ISRdelay/1.0.0/ISRdelay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ISRdelay-1.0.0.tar.gz",
+    "size_bytes": 1724,
+    "sha256": "6b71ed0065bc576022a20e30ba85d2f97ced750c2a48ed53e26ee1d82e2cb712",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fltsimtech/library/ISRdelay/1.0.0/ISRdelay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fltsimtech/library/ISRdelay/1.0.0/ISRdelay-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

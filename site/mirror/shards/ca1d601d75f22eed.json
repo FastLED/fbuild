@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/timherreijgers",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "timherreijgers/library/DomoticsBase/0.1.8/DomoticsBase-0.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DomoticsBase-0.1.8.tar.gz",
+    "size_bytes": 45544,
+    "sha256": "bc6570daab908ff9be23470a5c543032df17852d9023e42f38d3dea2a062c26f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/timherreijgers/library/DomoticsBase/0.1.8/DomoticsBase-0.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/timherreijgers/library/DomoticsBase/0.1.8/DomoticsBase-0.1.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

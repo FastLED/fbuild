@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ryzobee",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ryzobee/library/Ryzobee/0.0.1/Ryzobee-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ryzobee-0.0.1.tar.gz",
+    "size_bytes": 542488,
+    "sha256": "7a2ee21ac778d3aed1868caf0ff099bf30ad439aa1ee7a9e478db80cfd2f570d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ryzobee/library/Ryzobee/0.0.1/Ryzobee-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ryzobee/library/Ryzobee/0.0.1/Ryzobee-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ryzobee/library/Ryzobee/1.0.0/Ryzobee-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ryzobee-1.0.0.tar.gz",
+    "size_bytes": 18854,
+    "sha256": "08fea84a4f16642fdd14052b9acbe03429e2821c9cd5973cca7f669344c2e7ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ryzobee/library/Ryzobee/1.0.0/Ryzobee-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ryzobee/library/Ryzobee/1.0.0/Ryzobee-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ryzobee/library/Ryzobee/1.0.5/Ryzobee-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ryzobee-1.0.5.tar.gz",
+    "size_bytes": 551030,
+    "sha256": "9399ef293b66f1dc8c7109fd6be7c28d0097e8e40463d3432ab337893dce9b84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ryzobee/library/Ryzobee/1.0.5/Ryzobee-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ryzobee/library/Ryzobee/1.0.5/Ryzobee-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

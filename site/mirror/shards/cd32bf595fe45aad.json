@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/suratin27",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "suratin27/library/DINO%20PLC/1.0.6/DINOPLC-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DINOPLC-1.0.6.tar.gz",
+    "size_bytes": 3048696,
+    "sha256": "5f0a329d80448bd06010e28f070a3d80f1beffa0bb5a7c336091844713071daf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suratin27/library/DINO%2520PLC/1.0.6/DINOPLC-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/suratin27/library/DINO%20PLC/1.0.6/DINOPLC-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suratin27/library/DINO_PLC_V1/1.0.0/DINO_PLC_V1-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DINO_PLC_V1-1.0.0.tar.gz",
+    "size_bytes": 1303614,
+    "sha256": "08e1c9c3437be031c72f67abfb36b97ba6526d4c3000aaf5ec9fbac4662f0e8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suratin27/library/DINO_PLC_V1/1.0.0/DINO_PLC_V1-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/suratin27/library/DINO_PLC_V1/1.0.0/DINO_PLC_V1-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suratin27/library/ESP32%20Control%20lite/1.0.0/ESP32Controllite-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Controllite-1.0.0.tar.gz",
+    "size_bytes": 161124,
+    "sha256": "3c00db60d2004e20bf15bb2875d8caa1b25f626f42b2237172ff4cd2bf3e544a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suratin27/library/ESP32%2520Control%2520lite/1.0.0/ESP32Controllite-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/suratin27/library/ESP32%20Control%20lite/1.0.0/ESP32Controllite-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suratin27/library/ESP32%20Control/1.2.8.1/ESP32Control-1.2.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Control-1.2.8.1.tar.gz",
+    "size_bytes": 262333,
+    "sha256": "9f867ba83ad4d58432575009e22edefb21af6dc0bf123a02f687a797b02e7101",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suratin27/library/ESP32%2520Control/1.2.8.1/ESP32Control-1.2.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/suratin27/library/ESP32%20Control/1.2.8.1/ESP32Control-1.2.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suratin27/library/ESP32%20FX1N%20PLC/1.0.3/ESP32FX1NPLC-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32FX1NPLC-1.0.3.tar.gz",
+    "size_bytes": 586799,
+    "sha256": "2c855accb4bb8952df659e6733e8efa2498929523450c18863fc414c9fd1f898",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suratin27/library/ESP32%2520FX1N%2520PLC/1.0.3/ESP32FX1NPLC-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/suratin27/library/ESP32%20FX1N%20PLC/1.0.3/ESP32FX1NPLC-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suratin27/library/MiniPLC_FX2N/1.0.1/MiniPLC_FX2N-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniPLC_FX2N-1.0.1.tar.gz",
+    "size_bytes": 470894,
+    "sha256": "cc00d7be2a8320f2663cdff93bf4806a9e9d6770d8c7877c783cc1d4421f70b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suratin27/library/MiniPLC_FX2N/1.0.1/MiniPLC_FX2N-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/suratin27/library/MiniPLC_FX2N/1.0.1/MiniPLC_FX2N-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suratin27/library/PLCCore2/1.0.10/PLCCore2-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PLCCore2-1.0.10.tar.gz",
+    "size_bytes": 1128278,
+    "sha256": "eed70b50d1ee398b104b046d7883694bb7ef21584d9211192e7573a7c888f58d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suratin27/library/PLCCore2/1.0.10/PLCCore2-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/suratin27/library/PLCCore2/1.0.10/PLCCore2-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suratin27/library/PicoPLC/1.0.0/PicoPLC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoPLC-1.0.0.tar.gz",
+    "size_bytes": 355502,
+    "sha256": "90eef1a4d877be3aaf0c29236e1dc93326229ca54ee73e37a0c1ef44633b14d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suratin27/library/PicoPLC/1.0.0/PicoPLC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/suratin27/library/PicoPLC/1.0.0/PicoPLC-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

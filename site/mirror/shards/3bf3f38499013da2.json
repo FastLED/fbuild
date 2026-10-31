@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bcisoft",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bcisoft/library/OvhAPI/1.0.4/OvhAPI-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OvhAPI-1.0.4.tar.gz",
+    "size_bytes": 6804,
+    "sha256": "75587ed5f3678f6afeb6e91bdf1b33620a90c3e1865c2482e4d047c00aa2207c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bcisoft/library/OvhAPI/1.0.4/OvhAPI-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bcisoft/library/OvhAPI/1.0.4/OvhAPI-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

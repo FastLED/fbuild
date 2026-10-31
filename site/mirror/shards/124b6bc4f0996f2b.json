@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/x-stuff",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "x-stuff/library/SimpleProfiler/1.0.2/SimpleProfiler-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleProfiler-1.0.2.tar.gz",
+    "size_bytes": 5818,
+    "sha256": "141907dda64ac13a6975b07e3af51facebd6d0cb44662df807f7609b99269dd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x-stuff/library/SimpleProfiler/1.0.2/SimpleProfiler-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/x-stuff/library/SimpleProfiler/1.0.2/SimpleProfiler-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x-stuff/library/SimpleProfiler/1.1.0/SimpleProfiler-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleProfiler-1.1.0.tar.gz",
+    "size_bytes": 5905,
+    "sha256": "528c0a1c8cae5361f4bab984f8e7ad5e6979846a4f48f0eddaa6d561ec2160fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x-stuff/library/SimpleProfiler/1.1.0/SimpleProfiler-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/x-stuff/library/SimpleProfiler/1.1.0/SimpleProfiler-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

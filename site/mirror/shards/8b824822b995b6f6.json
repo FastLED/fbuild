@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/x99",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "x99/library/BootInfo/2.1.0/BootInfo-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BootInfo-2.1.0.tar.gz",
+    "size_bytes": 7374,
+    "sha256": "5f214229952e52c59a9d916b85efc4c022597354cec461ee6a22bf17815d0a28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x99/library/BootInfo/2.1.0/BootInfo-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/x99/library/BootInfo/2.1.0/BootInfo-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "x99/library/NMEAParser/2.0.0/NMEAParser-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NMEAParser-2.0.0.tar.gz",
+    "size_bytes": 23666,
+    "sha256": "1d5de525eb3f371fb14780c4188ced2f88b897ab900ba3e4df2889b7f631fab8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x99/library/NMEAParser/2.0.0/NMEAParser-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/x99/library/NMEAParser/2.0.0/NMEAParser-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

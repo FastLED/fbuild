@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sheesourav0",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sheesourav0/library/ZoneStarIoT/1.0.0/ZoneStarIoT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZoneStarIoT-1.0.0.tar.gz",
+    "size_bytes": 17645,
+    "sha256": "db3d770774a648bd0351bf091b54e90d7aac0d76e13f7d2a38839edac9749a3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sheesourav0/library/ZoneStarIoT/1.0.0/ZoneStarIoT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sheesourav0/library/ZoneStarIoT/1.0.0/ZoneStarIoT-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

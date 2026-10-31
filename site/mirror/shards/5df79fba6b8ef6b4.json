@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eggtronic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eggtronic/tool/tool-ponyprog/3.1.4-rc1/tool-ponyprog-linux_x86_64-3.1.4-rc1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-ponyprog-linux_x86_64-3.1.4-rc1.tar.gz",
+    "size_bytes": 35134914,
+    "sha256": "ba0ebd2f8c2836175c0272f4e8b76b3176e7adb62b1cf54bcc1369c8563d0fbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eggtronic/tool/tool-ponyprog/3.1.4-rc1/tool-ponyprog-linux_x86_64-3.1.4-rc1.tar.gz",
+     "https://dl.registry.platformio.org/download/eggtronic/tool/tool-ponyprog/3.1.4-rc1/tool-ponyprog-linux_x86_64-3.1.4-rc1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eggtronic/tool/tool-ponyprog/3.1.4-rc1/tool-ponyprog-windows_amd64-3.1.4-rc1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-ponyprog-windows_amd64-3.1.4-rc1.tar.gz",
+    "size_bytes": 22902409,
+    "sha256": "a5ff345599048144b8b94666e1d2339c3de35fa1e807f213fded83f6741e4280",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eggtronic/tool/tool-ponyprog/3.1.4-rc1/tool-ponyprog-windows_amd64-3.1.4-rc1.tar.gz",
+     "https://dl.registry.platformio.org/download/eggtronic/tool/tool-ponyprog/3.1.4-rc1/tool-ponyprog-windows_amd64-3.1.4-rc1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mechaleague",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mechaleague/library/MechaLib/0.1.0/MechaLib-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MechaLib-0.1.0.tar.gz",
+    "size_bytes": 5072,
+    "sha256": "999aec2bc131e3d97435570f9bda3738fcdcd85875ae81478ad5e0aea0274079",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mechaleague/library/MechaLib/0.1.0/MechaLib-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mechaleague/library/MechaLib/0.1.0/MechaLib-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mechaleague/library/MechaLib/0.1.5/MechaLib-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MechaLib-0.1.5.tar.gz",
+    "size_bytes": 10571,
+    "sha256": "b2f9d6222e76278b1f8d8d7db8f9588d94728cd68b8bc5811b8e2b2570df0b42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mechaleague/library/MechaLib/0.1.5/MechaLib-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mechaleague/library/MechaLib/0.1.5/MechaLib-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mechaleague/library/MechaLib/0.2.5/MechaLib-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MechaLib-0.2.5.tar.gz",
+    "size_bytes": 94243,
+    "sha256": "132ecd40e3b537c68ccedf839987474a94c255c1df275942a8ef43c82ffa8656",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mechaleague/library/MechaLib/0.2.5/MechaLib-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mechaleague/library/MechaLib/0.2.5/MechaLib-0.2.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

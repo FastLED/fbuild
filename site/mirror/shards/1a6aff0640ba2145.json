@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/merger-zero",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "merger-zero/library/ESP32-SC-Inference/1.0.1/ESP32-SC-Inference-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-SC-Inference-1.0.1.tar.gz",
+    "size_bytes": 129767,
+    "sha256": "0a85cddff57629aae2e2ab5d46cf83e9eb57da8fc23356d76e47ac9b4ff785fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/merger-zero/library/ESP32-SC-Inference/1.0.1/ESP32-SC-Inference-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/merger-zero/library/ESP32-SC-Inference/1.0.1/ESP32-SC-Inference-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "merger-zero/library/ESP32-SC-Inference/1.0.2/ESP32-SC-Inference-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-SC-Inference-1.0.2.tar.gz",
+    "size_bytes": 129653,
+    "sha256": "013f54a610834f23c773c2893bbaeca310b509ab53a6550279e3fc7218c107ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/merger-zero/library/ESP32-SC-Inference/1.0.2/ESP32-SC-Inference-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/merger-zero/library/ESP32-SC-Inference/1.0.2/ESP32-SC-Inference-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

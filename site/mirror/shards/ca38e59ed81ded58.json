@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/intentfulmotion",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "intentfulmotion/library/LIS2MDL/0.1.1/LIS2MDL-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIS2MDL-0.1.1.tar.gz",
+    "size_bytes": 6736,
+    "sha256": "30f62cad0b87ba9c4dff010b241beb29ecff6073e305ce63c05dbdc950f02d2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/intentfulmotion/library/LIS2MDL/0.1.1/LIS2MDL-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/intentfulmotion/library/LIS2MDL/0.1.1/LIS2MDL-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

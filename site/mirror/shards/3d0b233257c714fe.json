@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dingusdk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dingusdk/library/ArduinoIHC/1.0.10/ArduinoIHC-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoIHC-1.0.10.tar.gz",
+    "size_bytes": 18976,
+    "sha256": "47fe853fcc2188e8f6eb766dbe87eea225ea01805869e0fb1e3134c8b9305bf5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dingusdk/library/ArduinoIHC/1.0.10/ArduinoIHC-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/dingusdk/library/ArduinoIHC/1.0.10/ArduinoIHC-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dingusdk/library/IHCSoapClient/1.0.2/IHCSoapClient-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IHCSoapClient-1.0.2.tar.gz",
+    "size_bytes": 19609,
+    "sha256": "6712691f6a3f7d1c4e34f32403189897a4e3418b197e9d41c7420e01ae8d7b7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dingusdk/library/IHCSoapClient/1.0.2/IHCSoapClient-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dingusdk/library/IHCSoapClient/1.0.2/IHCSoapClient-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

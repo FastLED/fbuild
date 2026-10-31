@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/terry-gould",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "terry-gould/library/ACANFD_SAME/1.0.0/ACANFD_SAME-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACANFD_SAME-1.0.0.tar.gz",
+    "size_bytes": 36726,
+    "sha256": "9e2fbefc0fa456302632b2fee6501325f79121ed0618249eb2d18c10efc4c2f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/terry-gould/library/ACANFD_SAME/1.0.0/ACANFD_SAME-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/terry-gould/library/ACANFD_SAME/1.0.0/ACANFD_SAME-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "terry-gould/library/ACANFD_SAME/1.0.1/ACANFD_SAME-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACANFD_SAME-1.0.1.tar.gz",
+    "size_bytes": 36752,
+    "sha256": "fba81368001d037540be48882f2010f5101d60828dcbeb6764f5223114e6a0ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/terry-gould/library/ACANFD_SAME/1.0.1/ACANFD_SAME-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/terry-gould/library/ACANFD_SAME/1.0.1/ACANFD_SAME-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "terry-gould/library/ACANFD_SAME/1.1.0/ACANFD_SAME-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACANFD_SAME-1.1.0.tar.gz",
+    "size_bytes": 37522,
+    "sha256": "2f602c7aee8b90c194abb3580c9c0c35cee1540b235f665b3637f58d75cc69b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/terry-gould/library/ACANFD_SAME/1.1.0/ACANFD_SAME-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/terry-gould/library/ACANFD_SAME/1.1.0/ACANFD_SAME-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "terry-gould/library/CANMessageSignal/1.0.0/CANMessageSignal-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANMessageSignal-1.0.0.tar.gz",
+    "size_bytes": 36248,
+    "sha256": "24b522ab148771568550f705470f532aa5750de46eec2f1b8aea1503298a3a38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/terry-gould/library/CANMessageSignal/1.0.0/CANMessageSignal-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/terry-gould/library/CANMessageSignal/1.0.0/CANMessageSignal-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "terry-gould/library/CANMessageSignal/1.0.1/CANMessageSignal-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANMessageSignal-1.0.1.tar.gz",
+    "size_bytes": 36438,
+    "sha256": "b1570c999e0533abf0d83a2ef4e7b0298dbe9c77b23606ed7373b88f758a10e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/terry-gould/library/CANMessageSignal/1.0.1/CANMessageSignal-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/terry-gould/library/CANMessageSignal/1.0.1/CANMessageSignal-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "terry-gould/library/CANSignalStudioInterface/0.1.0/CANSignalStudioInterface-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANSignalStudioInterface-0.1.0.tar.gz",
+    "size_bytes": 61164,
+    "sha256": "f422351d289d773aaa67b292d4b36dd5a58c61b8a1b32fff009bb76f69a92b28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/terry-gould/library/CANSignalStudioInterface/0.1.0/CANSignalStudioInterface-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/terry-gould/library/CANSignalStudioInterface/0.1.0/CANSignalStudioInterface-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "terry-gould/library/CANSignalStudioInterface/0.1.1/CANSignalStudioInterface-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANSignalStudioInterface-0.1.1.tar.gz",
+    "size_bytes": 57970,
+    "sha256": "4f702fe2037927486893db6b8fbfbce042e0045192b875030e83f6b119b810d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/terry-gould/library/CANSignalStudioInterface/0.1.1/CANSignalStudioInterface-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/terry-gould/library/CANSignalStudioInterface/0.1.1/CANSignalStudioInterface-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dan-cuspi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dan-cuspi/library/MSCFileSystem/0.0.0+sha.8071d6c9aeb0/MSCFileSystem-0.0.0+sha.8071d6c9aeb0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MSCFileSystem-0.0.0+sha.8071d6c9aeb0.tar.gz",
+    "size_bytes": 12334,
+    "sha256": "d40e671ba871609716dd60a51f4ab5e5d8119c4b03442ceef3a38382d32eb75e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dan-cuspi/library/MSCFileSystem/0.0.0%2Bsha.8071d6c9aeb0/MSCFileSystem-0.0.0%2Bsha.8071d6c9aeb0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dan-cuspi/library/MSCFileSystem/0.0.0%2Bsha.8071d6c9aeb0/MSCFileSystem-0.0.0%2Bsha.8071d6c9aeb0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

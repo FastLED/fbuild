@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/svizel-pritula",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "svizel-pritula/library/TemperatureSensor/1.0.2/TemperatureSensor-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TemperatureSensor-1.0.2.tar.gz",
+    "size_bytes": 1871,
+    "sha256": "a69b75313ed51443ee72c266335c49cfc78292d2925c83cfa712f6d0a2cc63b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/svizel-pritula/library/TemperatureSensor/1.0.2/TemperatureSensor-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/svizel-pritula/library/TemperatureSensor/1.0.2/TemperatureSensor-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

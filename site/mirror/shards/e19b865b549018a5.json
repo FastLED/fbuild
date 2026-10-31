@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/josefkuchar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "josefkuchar/library/DigiKeyboardMultilang/1.1.1/DigiKeyboardMultilang-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigiKeyboardMultilang-1.1.1.tar.gz",
+    "size_bytes": 18955,
+    "sha256": "e219976c512240836e33b7d6ad95069bdd166c9a3827417d2780070a77dc06e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josefkuchar/library/DigiKeyboardMultilang/1.1.1/DigiKeyboardMultilang-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/josefkuchar/library/DigiKeyboardMultilang/1.1.1/DigiKeyboardMultilang-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/josaezlopez",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "josaezlopez/library/AsyncMQTT/1.1.0/AsyncMQTT-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncMQTT-1.1.0.tar.gz",
+    "size_bytes": 4064,
+    "sha256": "b05194f07db2f8673afcd437d5c1fb4172e5f24f955d92132011de1e29c9e115",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josaezlopez/library/AsyncMQTT/1.1.0/AsyncMQTT-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/josaezlopez/library/AsyncMQTT/1.1.0/AsyncMQTT-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josaezlopez/library/NTPClientExt/1.5.0/NTPClientExt-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTPClientExt-1.5.0.tar.gz",
+    "size_bytes": 5286,
+    "sha256": "e4e55829baf9c346c3a27f4773a603e000ab6730fdc0710a0c7e78d3e9aebaf4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josaezlopez/library/NTPClientExt/1.5.0/NTPClientExt-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/josaezlopez/library/NTPClientExt/1.5.0/NTPClientExt-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "josaezlopez/library/threadesp32/1.5.0/threadesp32-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "threadesp32-1.5.0.tar.gz",
+    "size_bytes": 4425,
+    "sha256": "a81d7d1f62ce2d10dfcf9a226e09299bd111e8a16309286b0a14fcef8ed6f0a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/josaezlopez/library/threadesp32/1.5.0/threadesp32-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/josaezlopez/library/threadesp32/1.5.0/threadesp32-1.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

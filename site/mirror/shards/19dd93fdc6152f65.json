@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vijaynvr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vijaynvr/library/VLX6180X_API/0.0.0+sha.bc9f26b5dadf/VLX6180X_API-0.0.0+sha.bc9f26b5dadf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VLX6180X_API-0.0.0+sha.bc9f26b5dadf.tar.gz",
+    "size_bytes": 32526,
+    "sha256": "28814131c4f984388c11792a0dde2490277789b6fe43f1bbae1f082c85ab06e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vijaynvr/library/VLX6180X_API/0.0.0%2Bsha.bc9f26b5dadf/VLX6180X_API-0.0.0%2Bsha.bc9f26b5dadf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vijaynvr/library/VLX6180X_API/0.0.0%2Bsha.bc9f26b5dadf/VLX6180X_API-0.0.0%2Bsha.bc9f26b5dadf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/firechip",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "firechip/library/USB%20Host%20MSC%20driver/1.1.2/USBHostMSCdriver-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBHostMSCdriver-1.1.2.tar.gz",
+    "size_bytes": 3142,
+    "sha256": "81a11c368eeb7d503237a344b9afeb3f5c179183f8d285a4d5ad96471801b5e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/firechip/library/USB%2520Host%2520MSC%2520driver/1.1.2/USBHostMSCdriver-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/firechip/library/USB%20Host%20MSC%20driver/1.1.2/USBHostMSCdriver-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "firechip/library/usb-host-msc/1.1.4/usb-host-msc-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "usb-host-msc-1.1.4.tar.gz",
+    "size_bytes": 28791,
+    "sha256": "d24a8e7be171305025a0ec76a8f625f173903104031f30501aa29a00862ce170",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/firechip/library/usb-host-msc/1.1.4/usb-host-msc-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/firechip/library/usb-host-msc/1.1.4/usb-host-msc-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

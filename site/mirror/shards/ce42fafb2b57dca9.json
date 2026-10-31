@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sierra-market",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sierra-market/library/SierraStrainGauge/1.0.0/SierraStrainGauge-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SierraStrainGauge-1.0.0.tar.gz",
+    "size_bytes": 948,
+    "sha256": "48c2a4c0b72bb886668762a72258875d1cbb0025c10cc653255790d270d571f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sierra-market/library/SierraStrainGauge/1.0.0/SierraStrainGauge-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sierra-market/library/SierraStrainGauge/1.0.0/SierraStrainGauge-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

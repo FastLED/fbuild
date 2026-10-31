@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/panjkrc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "panjkrc/library/tcs3200/1.3.1/tcs3200-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tcs3200-1.3.1.tar.gz",
+    "size_bytes": 3426,
+    "sha256": "cf197b1cbd6b27a8939ee122d4bf12121721cde963b29b8499b996247bc9e354",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/panjkrc/library/tcs3200/1.3.1/tcs3200-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/panjkrc/library/tcs3200/1.3.1/tcs3200-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

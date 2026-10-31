@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/emakefun-arduino-library",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "emakefun-arduino-library/library/AQ01/1.0.2/AQ01-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AQ01-1.0.2.tar.gz",
+    "size_bytes": 2184,
+    "sha256": "e91c569d2795eb4dadc4b9fea4d4f800ea291dbf9150d68df843ff7565bd6d00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emakefun-arduino-library/library/AQ01/1.0.2/AQ01-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/emakefun-arduino-library/library/AQ01/1.0.2/AQ01-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emakefun-arduino-library/library/CQ01/1.0.0/CQ01-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CQ01-1.0.0.tar.gz",
+    "size_bytes": 2597,
+    "sha256": "f3363af9fb014988adbe94fcd92b491cf7f75771664c556d90ad86dd2f4b0d44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emakefun-arduino-library/library/CQ01/1.0.0/CQ01-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/emakefun-arduino-library/library/CQ01/1.0.0/CQ01-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "emakefun-arduino-library/library/CQ01/1.0.1/CQ01-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CQ01-1.0.1.tar.gz",
+    "size_bytes": 2598,
+    "sha256": "6e43255dc091c78b45c32c93714e1bd778a3b5f36c03c8926d3b5ddbe721c67d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/emakefun-arduino-library/library/CQ01/1.0.1/CQ01-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/emakefun-arduino-library/library/CQ01/1.0.1/CQ01-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

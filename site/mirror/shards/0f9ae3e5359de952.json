@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-penn-electric-racing",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-penn-electric-racing/library/Venus838-GPS-Library/0.0.0+sha.868c31bace68/Venus838-GPS-Library-0.0.0+sha.868c31bace68.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Venus838-GPS-Library-0.0.0+sha.868c31bace68.tar.gz",
+    "size_bytes": 2267,
+    "sha256": "116ba4d5e281cf5cfc9d96840a39f4632efc7bb1388c41175357bf7b3305fb24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-penn-electric-racing/library/Venus838-GPS-Library/0.0.0%2Bsha.868c31bace68/Venus838-GPS-Library-0.0.0%2Bsha.868c31bace68.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-penn-electric-racing/library/Venus838-GPS-Library/0.0.0%2Bsha.868c31bace68/Venus838-GPS-Library-0.0.0%2Bsha.868c31bace68.tar.gz"
+    ]
+   }
+  }
+ ]
+}

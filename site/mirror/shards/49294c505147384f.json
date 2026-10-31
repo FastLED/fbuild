@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eastermaster",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eastermaster/library/DigitLed72xx/0.0.7/DigitLed72xx-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitLed72xx-0.0.7.tar.gz",
+    "size_bytes": 7686,
+    "sha256": "11b3a984e913223bc4a9ab28915e037732e5b4138e78e6ccf5f670b0a596a2f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eastermaster/library/DigitLed72xx/0.0.7/DigitLed72xx-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/eastermaster/library/DigitLed72xx/0.0.7/DigitLed72xx-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "eastermaster/library/Pictiva_OS288048/0.0.2/Pictiva_OS288048-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pictiva_OS288048-0.0.2.tar.gz",
+    "size_bytes": 13464,
+    "sha256": "e382dc0ab2d46b8d739f9ccc351b68452b46c352e17456b2ce6233e0fe1bb61a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eastermaster/library/Pictiva_OS288048/0.0.2/Pictiva_OS288048-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/eastermaster/library/Pictiva_OS288048/0.0.2/Pictiva_OS288048-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

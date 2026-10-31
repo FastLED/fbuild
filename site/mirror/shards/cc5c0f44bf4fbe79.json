@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chrissb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chrissb/library/ADS1X15/1.0.0/ADS1X15-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1X15-1.0.0.tar.gz",
+    "size_bytes": 19346,
+    "sha256": "c611a717514898139adf358bbb788f3a52524eed7011ad1fc06416d20f678344",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrissb/library/ADS1X15/1.0.0/ADS1X15-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrissb/library/ADS1X15/1.0.0/ADS1X15-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrissb/library/ADS1X15/1.1.0/ADS1X15-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1X15-1.1.0.tar.gz",
+    "size_bytes": 26594,
+    "sha256": "0920725ffa223a91ad0923abb64dbb486961bdaaf9487a43cb021f24585e259e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrissb/library/ADS1X15/1.1.0/ADS1X15-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrissb/library/ADS1X15/1.1.0/ADS1X15-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrissb/library/ADS1X15/1.1.1/ADS1X15-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1X15-1.1.1.tar.gz",
+    "size_bytes": 27032,
+    "sha256": "3d24cd73eea8bde411c3acf67e97b628fed987410f863353e2171bcb53bd898e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrissb/library/ADS1X15/1.1.1/ADS1X15-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrissb/library/ADS1X15/1.1.1/ADS1X15-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrissb/library/PCAL9535A%20Library/1.2.4/PCAL9535ALibrary-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCAL9535ALibrary-1.2.4.tar.gz",
+    "size_bytes": 23408,
+    "sha256": "7743ef248cc29dfebc91eb183728e42ad3fbf03c46c3d12bd406fd740b0d8520",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrissb/library/PCAL9535A%2520Library/1.2.4/PCAL9535ALibrary-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/chrissb/library/PCAL9535A%20Library/1.2.4/PCAL9535ALibrary-1.2.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

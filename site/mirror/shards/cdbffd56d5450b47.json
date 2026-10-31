@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xiaozi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xiaozi/library/Blinker/0.3.10/Blinker-0.3.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blinker-0.3.10.tar.gz",
+    "size_bytes": 503782,
+    "sha256": "24853574adc1a259719ca9ac3bfc19aa528440b7ac5b9836533b42cef566a855",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xiaozi/library/Blinker/0.3.10/Blinker-0.3.10.tar.gz",
+     "https://dl.registry.platformio.org/download/xiaozi/library/Blinker/0.3.10/Blinker-0.3.10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

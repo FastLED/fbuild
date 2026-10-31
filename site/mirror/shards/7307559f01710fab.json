@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/m5ez",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "m5ez/library/M5ez/2.3.0/M5ez-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5ez-2.3.0.tar.gz",
+    "size_bytes": 146392,
+    "sha256": "883f50de84e34ecc61ad2a262fecf860e4b9fb7e89f3bdba804c8c3b84cfb60c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5ez/library/M5ez/2.3.0/M5ez-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5ez/library/M5ez/2.3.0/M5ez-2.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

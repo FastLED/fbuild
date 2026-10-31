@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ssilver2007",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ssilver2007/library/LCD_1602_RUS/1.0.5/LCD_1602_RUS-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_1602_RUS-1.0.5.tar.gz",
+    "size_bytes": 13315,
+    "sha256": "eea883d1104af858afa4ba1130f5675dc1a388595e9956217ab3fddeddb2641e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilver2007/library/LCD_1602_RUS/1.0.5/LCD_1602_RUS-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilver2007/library/LCD_1602_RUS/1.0.5/LCD_1602_RUS-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ssilver2007/library/LiquidCrystal_1602_RUS/1.0.5/LiquidCrystal_1602_RUS-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidCrystal_1602_RUS-1.0.5.tar.gz",
+    "size_bytes": 13384,
+    "sha256": "f990078a10ba0193230c103017ae21f2dfcbf85d2b8a728246ccef1295bf0538",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ssilver2007/library/LiquidCrystal_1602_RUS/1.0.5/LiquidCrystal_1602_RUS-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ssilver2007/library/LiquidCrystal_1602_RUS/1.0.5/LiquidCrystal_1602_RUS-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

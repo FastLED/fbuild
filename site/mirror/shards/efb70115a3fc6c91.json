@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/felixerdy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "felixerdy/library/QRCodeGenerator/0.0.1/QRCodeGenerator-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QRCodeGenerator-0.0.1.tar.gz",
+    "size_bytes": 17629,
+    "sha256": "2353b7c62f312ac426c97694d49ea43865db706c166735d0af6543b33b9de6de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felixerdy/library/QRCodeGenerator/0.0.1/QRCodeGenerator-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/felixerdy/library/QRCodeGenerator/0.0.1/QRCodeGenerator-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

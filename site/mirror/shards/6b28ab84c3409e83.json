@@ -1,0 +1,360 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/janelia-arduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "janelia-arduino/library/AD57X4R/5.0.1/AD57X4R-5.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD57X4R-5.0.1.tar.gz",
+    "size_bytes": 7838,
+    "sha256": "f8709f5fece9f4bbeb0f36c4a99960698d66c90820701d165560b453b91ac0c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/AD57X4R/5.0.1/AD57X4R-5.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/AD57X4R/5.0.1/AD57X4R-5.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/AT42QT/0.7.0/AT42QT-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT42QT-0.7.0.tar.gz",
+    "size_bytes": 11354,
+    "sha256": "4e4d9a87ba3fc15ea2113eaefd53507e1eba28e6ca507c7f1e80420e6c1eccbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/AT42QT/0.7.0/AT42QT-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/AT42QT/0.7.0/AT42QT-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/AT42QT/0.7.1/AT42QT-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT42QT-0.7.1.tar.gz",
+    "size_bytes": 11724,
+    "sha256": "89db96076ee00a7894ac3b46a50e886d6747c120fbe741eec4a6e8ce374b8767",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/AT42QT/0.7.1/AT42QT-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/AT42QT/0.7.1/AT42QT-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/AT42QT/0.7.2/AT42QT-0.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT42QT-0.7.2.tar.gz",
+    "size_bytes": 51441,
+    "sha256": "2e71f2e1752d05e6c857e126f17852412838c2e384004e709c90626680539fab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/AT42QT/0.7.2/AT42QT-0.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/AT42QT/0.7.2/AT42QT-0.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/Array/1.2.1/Array-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Array-1.2.1.tar.gz",
+    "size_bytes": 4686,
+    "sha256": "ffb5726a09672cf729b64adbf971292f2beaa649ec56b236b239701a4e078a6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/Array/1.2.1/Array-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/Array/1.2.1/Array-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/Array/1.4.0/Array-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Array-1.4.0.tar.gz",
+    "size_bytes": 42531,
+    "sha256": "acc72591b0f79f642c0d95e3fa15832f5b4c03dc99deefb7de666a52e9391680",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/Array/1.4.0/Array-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/Array/1.4.0/Array-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/Functor/1.0.1/Functor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Functor-1.0.1.tar.gz",
+    "size_bytes": 9549,
+    "sha256": "09874d1f8d6f07dbbaa77281dceef98467e2491da1cdc06b51fd2f923bfa5d87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/Functor/1.0.1/Functor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/Functor/1.0.1/Functor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/JsmnStream/1.0.1/JsmnStream-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JsmnStream-1.0.1.tar.gz",
+    "size_bytes": 8492,
+    "sha256": "10792f8af418450aad8e57bacac3a2847d66190def78fb69e14c4f8705103524",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/JsmnStream/1.0.1/JsmnStream-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/JsmnStream/1.0.1/JsmnStream-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/MPR121/1.3.0/MPR121-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPR121-1.3.0.tar.gz",
+    "size_bytes": 8756,
+    "sha256": "719c0982b024ca37fc550d36701ead12d14c018c3441eaf890c32ac93235ff4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/MPR121/1.3.0/MPR121-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/MPR121/1.3.0/MPR121-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/PCA9685/3.0.3/PCA9685-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9685-3.0.3.tar.gz",
+    "size_bytes": 10003,
+    "sha256": "e1629baddbc15a71b384c201d64c36189da5fe5741762d232a7ed08eb09016be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/PCA9685/3.0.3/PCA9685-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/PCA9685/3.0.3/PCA9685-3.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/PrintCppVersion/1.0.0/PrintCppVersion-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PrintCppVersion-1.0.0.tar.gz",
+    "size_bytes": 1779,
+    "sha256": "e5f1b7acda08d101d9de00eca13a59ccbf45817aa0951dccd0a7601ab52a7da1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/PrintCppVersion/1.0.0/PrintCppVersion-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/PrintCppVersion/1.0.0/PrintCppVersion-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/TLE72X/1.0.1/TLE72X-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLE72X-1.0.1.tar.gz",
+    "size_bytes": 4546,
+    "sha256": "9cf6ef0a8daf97de52f87ad9d778841540690f00a1948177d6c03b93add0e034",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/TLE72X/1.0.1/TLE72X-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/TLE72X/1.0.1/TLE72X-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/TMC2130/1.0.6/TMC2130-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC2130-1.0.6.tar.gz",
+    "size_bytes": 6520,
+    "sha256": "bd817d327d92ec83637fa4b7273f13f9e79b77cee5c7254c057d978a57403706",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/TMC2130/1.0.6/TMC2130-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/TMC2130/1.0.6/TMC2130-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/TMC2209/10.1.1/TMC2209-10.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC2209-10.1.1.tar.gz",
+    "size_bytes": 34611,
+    "sha256": "a1c24f43506a839a3b654c10a9cabed771bdfa03c0dc11936f5999b942bc05e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/TMC2209/10.1.1/TMC2209-10.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/TMC2209/10.1.1/TMC2209-10.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/TMC2209/9.4.2/TMC2209-9.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC2209-9.4.2.tar.gz",
+    "size_bytes": 31488,
+    "sha256": "6fdf2f3f7ad82d466294592234b1176c084313e17c0cdf9fe0cb19cdc8fa3431",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/TMC2209/9.4.2/TMC2209-9.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/TMC2209/9.4.2/TMC2209-9.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/TMC429/2.3.2/TMC429-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC429-2.3.2.tar.gz",
+    "size_bytes": 12211,
+    "sha256": "d026e177b0ab6f457f1621f3bde37d1fccdcf93bea00af94f79df521d0e10721",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/TMC429/2.3.2/TMC429-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/TMC429/2.3.2/TMC429-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/TMC429/2.4.0/TMC429-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC429-2.4.0.tar.gz",
+    "size_bytes": 12217,
+    "sha256": "9a7b8f20a5e9616564927600e7e369cf6dfdbc5c45d311cfd693a1cbe3bdfe1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/TMC429/2.4.0/TMC429-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/TMC429/2.4.0/TMC429-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/TMC51X0/2.4.1/TMC51X0-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC51X0-2.4.1.tar.gz",
+    "size_bytes": 30309,
+    "sha256": "ebf2f4392f17f99acb266f3d0d66a997b7127fe1ca4c53d36f4ec850901fb227",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/TMC51X0/2.4.1/TMC51X0-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/TMC51X0/2.4.1/TMC51X0-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/TMC51X0/3.0.0/TMC51X0-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC51X0-3.0.0.tar.gz",
+    "size_bytes": 33025,
+    "sha256": "e35d20cb686a8dc68b6bf70ee7b995593604a8977efb5906ac97cfd279556ade",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/TMC51X0/3.0.0/TMC51X0-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/TMC51X0/3.0.0/TMC51X0-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/TMC51X0/4.0.0/TMC51X0-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC51X0-4.0.0.tar.gz",
+    "size_bytes": 94981,
+    "sha256": "85bd1f1cd1305a53b1560c3e692260fbc72ae1983c242bff970d683c459b7a4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/TMC51X0/4.0.0/TMC51X0-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/TMC51X0/4.0.0/TMC51X0-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/TMC51X0/4.0.1/TMC51X0-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC51X0-4.0.1.tar.gz",
+    "size_bytes": 95242,
+    "sha256": "6f0138a1e81bd9cc38014f6abcbd7bbf99ab31718eacfa9ec82589a0fd9a65f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/TMC51X0/4.0.1/TMC51X0-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/TMC51X0/4.0.1/TMC51X0-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/TMC51X0/4.0.3/TMC51X0-4.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC51X0-4.0.3.tar.gz",
+    "size_bytes": 95211,
+    "sha256": "be411b82c73428bf9d0075b64cfbbf7b085b3dd95ecd1b1845815e46623d1773",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/TMC51X0/4.0.3/TMC51X0-4.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/TMC51X0/4.0.3/TMC51X0-4.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/TMC51X0/4.1.0/TMC51X0-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC51X0-4.1.0.tar.gz",
+    "size_bytes": 105434,
+    "sha256": "fe2bfbb4ac113034c99f77241d6e4bd1cae45888d329d52be829bc48eccfeb45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/TMC51X0/4.1.0/TMC51X0-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/TMC51X0/4.1.0/TMC51X0-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/TMC51X0/4.2.0/TMC51X0-4.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC51X0-4.2.0.tar.gz",
+    "size_bytes": 108365,
+    "sha256": "c131726d9502cd024dec05925f24215f0d0c76b23120661aa1caf4ee4c38d558",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/TMC51X0/4.2.0/TMC51X0-4.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/TMC51X0/4.2.0/TMC51X0-4.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/Vector/1.2.2/Vector-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Vector-1.2.2.tar.gz",
+    "size_bytes": 7099,
+    "sha256": "f511df87ff93b9e01a518401c35880dbec0464729c4e15287267d62c9010266c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/Vector/1.2.2/Vector-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/Vector/1.2.2/Vector-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/Vector/1.4.0/Vector-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Vector-1.4.0.tar.gz",
+    "size_bytes": 44828,
+    "sha256": "798268b3104f79f9b448e9722aadd13e833d98cb47c60c075a530b825268a646",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/Vector/1.4.0/Vector-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/Vector/1.4.0/Vector-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "janelia-arduino/library/Watchdog/3.0.2/Watchdog-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Watchdog-3.0.2.tar.gz",
+    "size_bytes": 8274,
+    "sha256": "2c42e8987a4df8a4b3d1536add4b91cd3b8ba686dffd9ac16e7147b228bf9ec4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janelia-arduino/library/Watchdog/3.0.2/Watchdog-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/janelia-arduino/library/Watchdog/3.0.2/Watchdog-3.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

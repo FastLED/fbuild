@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lievenhollevoet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lievenhollevoet/library/Si7005/0.0.0+sha.6fbf67893ca2/Si7005-0.0.0+sha.6fbf67893ca2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Si7005-0.0.0+sha.6fbf67893ca2.tar.gz",
+    "size_bytes": 3147,
+    "sha256": "9ee9d03bdb330d9dddc58f3359c952de92fbe2e0fcadd4c192c7d5e999ab0537",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lievenhollevoet/library/Si7005/0.0.0%2Bsha.6fbf67893ca2/Si7005-0.0.0%2Bsha.6fbf67893ca2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lievenhollevoet/library/Si7005/0.0.0%2Bsha.6fbf67893ca2/Si7005-0.0.0%2Bsha.6fbf67893ca2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

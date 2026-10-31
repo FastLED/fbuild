@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-deepanaishtaweera174",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-deepanaishtaweera174/library/MPU6050-DMP/0.0.0+sha.70f4de44591d/MPU6050-DMP-0.0.0+sha.70f4de44591d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050-DMP-0.0.0+sha.70f4de44591d.tar.gz",
+    "size_bytes": 43506,
+    "sha256": "2685c78385a701155bc2a7474086246db94d9b29d58af99ad4d2afec44467b17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-deepanaishtaweera174/library/MPU6050-DMP/0.0.0%2Bsha.70f4de44591d/MPU6050-DMP-0.0.0%2Bsha.70f4de44591d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-deepanaishtaweera174/library/MPU6050-DMP/0.0.0%2Bsha.70f4de44591d/MPU6050-DMP-0.0.0%2Bsha.70f4de44591d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-deepanaishtaweera174/library/vl53l0x/0.0.0+sha.1c8c01640f54/vl53l0x-0.0.0+sha.1c8c01640f54.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vl53l0x-0.0.0+sha.1c8c01640f54.tar.gz",
+    "size_bytes": 13576,
+    "sha256": "c3518ea22fa46967243b8583102fb90def2f4f7d0598d188cf75bf7c3fe01c6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-deepanaishtaweera174/library/vl53l0x/0.0.0%2Bsha.1c8c01640f54/vl53l0x-0.0.0%2Bsha.1c8c01640f54.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-deepanaishtaweera174/library/vl53l0x/0.0.0%2Bsha.1c8c01640f54/vl53l0x-0.0.0%2Bsha.1c8c01640f54.tar.gz"
+    ]
+   }
+  }
+ ]
+}

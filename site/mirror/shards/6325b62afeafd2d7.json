@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cuprum",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cuprum/library/EEPROM_24C04/1.0.0/EEPROM_24C04-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM_24C04-1.0.0.tar.gz",
+    "size_bytes": 6531,
+    "sha256": "63ee70771747e3dacf39b47b1919a4a3b8141b016a02ab7d5c6cd341e5e2afbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cuprum/library/EEPROM_24C04/1.0.0/EEPROM_24C04-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cuprum/library/EEPROM_24C04/1.0.0/EEPROM_24C04-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/euphi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "euphi/library/ESP_HomieBME280Node/0.2.0/ESP_HomieBME280Node-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_HomieBME280Node-0.2.0.tar.gz",
+    "size_bytes": 5917,
+    "sha256": "579fe85cfc97d29553397ed578e08560a45f413cec49a83b9be7962baf581a73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/euphi/library/ESP_HomieBME280Node/0.2.0/ESP_HomieBME280Node-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/euphi/library/ESP_HomieBME280Node/0.2.0/ESP_HomieBME280Node-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "euphi/library/ESP_Homie_WS2812FX/0.9.9/ESP_Homie_WS2812FX-0.9.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_Homie_WS2812FX-0.9.9.tar.gz",
+    "size_bytes": 7035,
+    "sha256": "fcde0f77109424250d5cd47acd57a264fa62d1a2d83ce324f515926fdc7b3734",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/euphi/library/ESP_Homie_WS2812FX/0.9.9/ESP_Homie_WS2812FX-0.9.9.tar.gz",
+     "https://dl.registry.platformio.org/download/euphi/library/ESP_Homie_WS2812FX/0.9.9/ESP_Homie_WS2812FX-0.9.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "euphi/library/HomieLoggerNode/3.0.0/HomieLoggerNode-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomieLoggerNode-3.0.0.tar.gz",
+    "size_bytes": 7876,
+    "sha256": "0913ed6df5208ab47885c46bca76ed3f96d1c7f83a32ff6001f09a5dfaf4099d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/euphi/library/HomieLoggerNode/3.0.0/HomieLoggerNode-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/euphi/library/HomieLoggerNode/3.0.0/HomieLoggerNode-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "euphi/library/HomieNodeCollection/3.0.0/HomieNodeCollection-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomieNodeCollection-3.0.0.tar.gz",
+    "size_bytes": 27422,
+    "sha256": "31b4a469512b71b603d6083894d9b03aa78600467ca5bbedb7b040b7471a2fc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/euphi/library/HomieNodeCollection/3.0.0/HomieNodeCollection-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/euphi/library/HomieNodeCollection/3.0.0/HomieNodeCollection-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

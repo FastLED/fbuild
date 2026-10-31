@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/firebaseextended",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "firebaseextended/library/FirebaseArduino/0.1/FirebaseArduino-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FirebaseArduino-0.1.tar.gz",
+    "size_bytes": 121866,
+    "sha256": "8dde56b30f095b44f60b142e385a6ff83c41caf671b6fa9784475ae9cdd346a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/firebaseextended/library/FirebaseArduino/0.1/FirebaseArduino-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/firebaseextended/library/FirebaseArduino/0.1/FirebaseArduino-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

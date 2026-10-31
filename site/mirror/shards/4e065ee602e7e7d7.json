@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-multi-hackers",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-multi-hackers/library/AxedaWrapper/0.0.0+sha.aa0594410aa9/AxedaWrapper-0.0.0+sha.aa0594410aa9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AxedaWrapper-0.0.0+sha.aa0594410aa9.tar.gz",
+    "size_bytes": 15918,
+    "sha256": "1115da50c902a0c76d4817baeaa50ba74b780e18d0e2b214433453f58fe4febe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-multi-hackers/library/AxedaWrapper/0.0.0%2Bsha.aa0594410aa9/AxedaWrapper-0.0.0%2Bsha.aa0594410aa9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-multi-hackers/library/AxedaWrapper/0.0.0%2Bsha.aa0594410aa9/AxedaWrapper-0.0.0%2Bsha.aa0594410aa9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-multi-hackers/library/SocketModem/0.0.0+sha.9a2c7ed27744/SocketModem-0.0.0+sha.9a2c7ed27744.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SocketModem-0.0.0+sha.9a2c7ed27744.tar.gz",
+    "size_bytes": 37657,
+    "sha256": "c9de4b1edbfa660c8fe94c35156b91b8e75990c273bb9d5b1906907f9f7f01df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-multi-hackers/library/SocketModem/0.0.0%2Bsha.9a2c7ed27744/SocketModem-0.0.0%2Bsha.9a2c7ed27744.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-multi-hackers/library/SocketModem/0.0.0%2Bsha.9a2c7ed27744/SocketModem-0.0.0%2Bsha.9a2c7ed27744.tar.gz"
+    ]
+   }
+  }
+ ]
+}

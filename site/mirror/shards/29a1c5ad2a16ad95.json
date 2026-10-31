@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jlpdiez",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jlpdiez/library/MCP7940NRTC/0.0.0-alpha+sha.17b40f4e54/MCP7940NRTC-0.0.0-alphasha.17b40f4e54.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP7940NRTC-0.0.0-alphasha.17b40f4e54.tar.gz",
+    "size_bytes": 5748,
+    "sha256": "5d014573f886861cfa5f5a96245a87dd3995150e65ebb8e933ce7c2237007528",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jlpdiez/library/MCP7940NRTC/0.0.0-alpha%2Bsha.17b40f4e54/MCP7940NRTC-0.0.0-alphasha.17b40f4e54.tar.gz",
+     "https://dl.registry.platformio.org/download/jlpdiez/library/MCP7940NRTC/0.0.0-alpha%2Bsha.17b40f4e54/MCP7940NRTC-0.0.0-alphasha.17b40f4e54.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/usmnzain",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "usmnzain/platform/azadi/0.0.3/azadi-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "azadi-0.0.3.tar.gz",
+    "size_bytes": 5747,
+    "sha256": "0624816fa1242274fd6ccddcc4f35a6c2fbd8c45b8a78cdeed22fe8ba0fec67e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/usmnzain/platform/azadi/0.0.3/azadi-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/usmnzain/platform/azadi/0.0.3/azadi-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "usmnzain/tool/framework-azadi-sdk/0.3/framework-azadi-sdk-0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-azadi-sdk-0.3.tar.gz",
+    "size_bytes": 233603,
+    "sha256": "516d44a229fa0f6539eb7df8a11db0ec8f853ffd209bd02f1276a8331832af95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/usmnzain/tool/framework-azadi-sdk/0.3/framework-azadi-sdk-0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/usmnzain/tool/framework-azadi-sdk/0.3/framework-azadi-sdk-0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

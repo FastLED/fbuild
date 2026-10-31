@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-harryeakins",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-harryeakins/library/HBridgeMotor/0.0.0+sha.a3bcb7eab9d9/HBridgeMotor-0.0.0+sha.a3bcb7eab9d9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HBridgeMotor-0.0.0+sha.a3bcb7eab9d9.tar.gz",
+    "size_bytes": 944,
+    "sha256": "8dc996949bbdeb6d969e4dbe4fa49581d2216914d38a88028be404d0889691b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-harryeakins/library/HBridgeMotor/0.0.0%2Bsha.a3bcb7eab9d9/HBridgeMotor-0.0.0%2Bsha.a3bcb7eab9d9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-harryeakins/library/HBridgeMotor/0.0.0%2Bsha.a3bcb7eab9d9/HBridgeMotor-0.0.0%2Bsha.a3bcb7eab9d9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-harryeakins/library/RF12B/0.0.0+sha.cd34784da6da/RF12B-0.0.0+sha.cd34784da6da.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF12B-0.0.0+sha.cd34784da6da.tar.gz",
+    "size_bytes": 8966,
+    "sha256": "b2314cea7548232f1ceba476d3e638c02a655ca531ba5857a1ca82ca551d970d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-harryeakins/library/RF12B/0.0.0%2Bsha.cd34784da6da/RF12B-0.0.0%2Bsha.cd34784da6da.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-harryeakins/library/RF12B/0.0.0%2Bsha.cd34784da6da/RF12B-0.0.0%2Bsha.cd34784da6da.tar.gz"
+    ]
+   }
+  }
+ ]
+}

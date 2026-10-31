@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/darkdust",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "darkdust/library/MHGroveBLE/1.0.0/MHGroveBLE-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MHGroveBLE-1.0.0.tar.gz",
+    "size_bytes": 8431,
+    "sha256": "f49e4b949193e715cd5fca0d1773305ba29fbd70fd95bf3c593dbe959b4e8aa1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/darkdust/library/MHGroveBLE/1.0.0/MHGroveBLE-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/darkdust/library/MHGroveBLE/1.0.0/MHGroveBLE-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

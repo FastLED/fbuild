@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andrenepomuceno",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andrenepomuceno/library/CriticalTaskScheduler/1.0.0/CriticalTaskScheduler-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CriticalTaskScheduler-1.0.0.tar.gz",
+    "size_bytes": 12913,
+    "sha256": "81eed42f8f174ea0c34832653f926481309392f4622f2cdd9628a5eaf640c959",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrenepomuceno/library/CriticalTaskScheduler/1.0.0/CriticalTaskScheduler-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andrenepomuceno/library/CriticalTaskScheduler/1.0.0/CriticalTaskScheduler-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andrenepomuceno/library/CriticalTaskScheduler/1.0.1/CriticalTaskScheduler-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CriticalTaskScheduler-1.0.1.tar.gz",
+    "size_bytes": 14476,
+    "sha256": "ae29a3fe7bcd3ba5bb93e461b4ab3a810ae736133f7423061315ad4a62f76e40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrenepomuceno/library/CriticalTaskScheduler/1.0.1/CriticalTaskScheduler-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/andrenepomuceno/library/CriticalTaskScheduler/1.0.1/CriticalTaskScheduler-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andrenepomuceno/library/CriticalTaskScheduler/1.0.2/CriticalTaskScheduler-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CriticalTaskScheduler-1.0.2.tar.gz",
+    "size_bytes": 15059,
+    "sha256": "7a0689c850f63f92cb5bd14d451f06a668207e9f0ff44c70df52849206dcd540",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrenepomuceno/library/CriticalTaskScheduler/1.0.2/CriticalTaskScheduler-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/andrenepomuceno/library/CriticalTaskScheduler/1.0.2/CriticalTaskScheduler-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andrenepomuceno/library/CriticalTaskScheduler/1.0.3/CriticalTaskScheduler-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CriticalTaskScheduler-1.0.3.tar.gz",
+    "size_bytes": 16409,
+    "sha256": "489e868bcba644544fa0bc0799403969b83e84cd359acbe47fa85d65f8f5e4d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrenepomuceno/library/CriticalTaskScheduler/1.0.3/CriticalTaskScheduler-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/andrenepomuceno/library/CriticalTaskScheduler/1.0.3/CriticalTaskScheduler-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andrenepomuceno/library/CriticalTaskScheduler/1.0.5/CriticalTaskScheduler-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CriticalTaskScheduler-1.0.5.tar.gz",
+    "size_bytes": 17158,
+    "sha256": "482dd6e4e96ebce42b66b324d909b16a3e154b2379a3087f38bd2880e94ff16b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrenepomuceno/library/CriticalTaskScheduler/1.0.5/CriticalTaskScheduler-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/andrenepomuceno/library/CriticalTaskScheduler/1.0.5/CriticalTaskScheduler-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andrenepomuceno/library/CriticalTaskScheduler/1.0.6/CriticalTaskScheduler-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CriticalTaskScheduler-1.0.6.tar.gz",
+    "size_bytes": 17395,
+    "sha256": "c2471f403b771a94f569001bae498903dff33a1c66970df586fe5fc92e74f2e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrenepomuceno/library/CriticalTaskScheduler/1.0.6/CriticalTaskScheduler-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/andrenepomuceno/library/CriticalTaskScheduler/1.0.6/CriticalTaskScheduler-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andrenepomuceno/library/CriticalTaskScheduler/1.0.7/CriticalTaskScheduler-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CriticalTaskScheduler-1.0.7.tar.gz",
+    "size_bytes": 19462,
+    "sha256": "2fd81acf765b4f0987f8771454b8f5f66c8d547d1eb481733b31a220ede59876",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andrenepomuceno/library/CriticalTaskScheduler/1.0.7/CriticalTaskScheduler-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/andrenepomuceno/library/CriticalTaskScheduler/1.0.7/CriticalTaskScheduler-1.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

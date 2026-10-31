@@ -1,16 +1,26 @@
-"""Generate fbuild's server-side download mirror manifest (FastLED/fbuild#1810).
+"""Generate fbuild's server-side download mirror manifest (FastLED/fbuild#1810, #1815).
 
-Scans the crates for the static PlatformIO-registry and GitHub download URLs
-fbuild fetches, checks which ones fbuild's mirror bucket holds, and writes a
-zackees/manifest.json v1 ``Release`` listing, for each mirrored artifact,
-``urls: [bucket, vendor]`` plus its size and SHA-256 (hashed from the bucket
-copy). Clients try the URLs in that order and reject mirror bytes whose hash
-does not match.
+Lists every object in fbuild's mirror bucket, SHA-256-hashes the ones not yet
+recorded (bytes are read from the bucket, never from PlatformIO), and writes
+zackees/manifest.json v1 documents under ``site/mirror/``:
 
-    uv run --no-project python ci/gen_mirror_manifest.py
-    uv run --no-project python ci/gen_mirror_manifest.py --check   # CI drift gate
+- ``manifest.json``: an ``Index`` whose ``tools`` map each bucket owner (the
+  first key segment, a registry owner) to a shard
+  descriptor ``{url, sha256, size_bytes}``;
+- ``shards/<id>.json``: one ``Release`` per owner whose components list, for
+  each object, ``urls: [bucket, vendor]`` plus ``size_bytes`` and ``sha256``.
 
-The bucket key for a vendor URL must match ``mirror_path`` in
+Re-runs are incremental: an object already in a shard with the same size is
+not downloaded again.
+
+    uv run --no-project --with boto3 python ci/gen_mirror_manifest.py
+    uv run --no-project --with boto3 python ci/gen_mirror_manifest.py --check
+
+Listing the bucket needs read credentials: ``--credentials`` (a JSON file
+with ``access_key``/``secret_key``) or ``AWS_ACCESS_KEY_ID`` /
+``AWS_SECRET_ACCESS_KEY``. Secrets are never printed.
+
+Bucket keys must match ``mirror_path`` in
 ``crates/fbuild-packages-fetch/src/downloader_mirrors.rs``.
 """
 
@@ -19,137 +29,240 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import re
-import subprocess
+import os
 import sys
-import urllib.error
+import threading
 import urllib.request
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "site" / "mirror" / "manifest.json"
-BUCKET = "https://fbuild.sfo3.digitaloceanspaces.com/"
+OUT_DIR = ROOT / "site" / "mirror"
+BUCKET_NAME = "fbuild"
+REGION = "sfo3"
+BUCKET = f"https://{BUCKET_NAME}.{REGION}.digitaloceanspaces.com/"
 SCHEMA = "https://zackees.github.io/manifest.json/v1/manifest.schema.json"
 REGISTRY_PREFIX = "https://dl.registry.platformio.org/download/"
-GITHUB_PREFIX = "https://github.com/"
-URL_RE = re.compile(
-    r"https://(?:dl\.registry\.platformio\.org/download/|github\.com/[^\s\"'`<>()]+/(?:archive|releases/download)/)"
-    r"[^\s\"'`<>(){}\\]+"
-)
-ARCHIVE_SUFFIXES = (".tar.gz", ".tgz", ".zip", ".tar.xz", ".tar.bz2", ".tar.zst", ".tar")
-USER_AGENT = "fbuild-mirror-manifest/1"
+TOOL = "fbuild-download-mirror"
+USER_AGENT = "fbuild-mirror-manifest/2"
 
 
-def mirror_key(url: str) -> str | None:
-    """Bucket key for ``url``; mirrors ``mirror_path`` in downloader_mirrors.rs."""
-    if url.startswith(REGISTRY_PREFIX):
-        return url[len(REGISTRY_PREFIX) :]
-    if url.startswith(GITHUB_PREFIX):
-        return "github.com/" + url[len(GITHUB_PREFIX) :]
-    return None
+def vendor_url(key: str) -> str:
+    """Original registry URL for a bucket key; inverse of ``mirror_path``.
+
+    Keys hold the registry path decoded (``dmytro korniienko/...``), so it is
+    re-escaped the way the registry's own download URLs are; an existing
+    ``%XX`` is kept as is."""
+    return REGISTRY_PREFIX + quote(key, safe="/%")
 
 
-def is_test_path(path: str) -> bool:
-    parts = path.split("/")
-    return "tests" in parts or "test" in Path(path).stem or "fixtures" in parts
+def bucket_url(key: str) -> str:
+    # Keys copied from registry paths can hold a literal ``%20``; the URL
+    # must escape it so Spaces finds the key as stored.
+    return BUCKET + quote(key, safe="/")
 
 
-def scan_urls() -> list[str]:
-    """Static download URLs in tracked, non-test crate sources and data."""
-    files = subprocess.run(
-        ["git", "ls-files", "crates/**/*.rs", "crates/**/*.json"],
-        cwd=ROOT,
-        check=True,
-        capture_output=True,
-        text=True,
-    ).stdout.split()
-    urls: set[str] = set()
-    for rel in files:
-        if is_test_path(rel):
-            continue
-        text = (ROOT / rel).read_text(encoding="utf-8", errors="replace")
-        for url in URL_RE.findall(text):
-            url = url.rstrip(".,;:")
-            if url.endswith(ARCHIVE_SUFFIXES) and "{" not in url:
-                urls.add(url)
-    return sorted(urls)
+def is_registry_key(key: str) -> bool:
+    """``<owner>/<type>/<name>/<version>/<file>``: the registry layout the
+    bucket mirrors. Anything else (bucket bookkeeping such as ``_state/``)
+    is not a download and is left out."""
+    parts = key.split("/")
+    return len(parts) == 5 and all(parts) and not parts[0].startswith("_")
 
 
-def _request(url: str, method: str) -> urllib.request.Request:
-    return urllib.request.Request(url, method=method, headers={"User-Agent": USER_AGENT})
+def owner_of(key: str) -> str:
+    """Index key for ``key``: its first segment, escaped like the URL fbuild
+    downloads, so the client can take it straight from that URL."""
+    return quote(key.split("/", 1)[0], safe="%")
 
 
-def describe(vendor: str, hash_bytes: bool) -> dict | None:
-    """A manifest component for ``vendor`` if the bucket holds it, else None."""
-    key = mirror_key(vendor)
-    if key is None:
-        return None
-    bucket_url = BUCKET + key
-    try:
-        with urllib.request.urlopen(_request(bucket_url, "HEAD"), timeout=30) as resp:
-            size = int(resp.headers.get("Content-Length", "0"))
-    except urllib.error.HTTPError as exc:
-        if exc.code in (403, 404):
-            return None
-        raise
-    asset: dict = {
-        "filename": vendor.rsplit("/", 1)[-1],
-        "size_bytes": size,
-        "urls": [bucket_url, vendor],
-    }
-    if hash_bytes:
-        digest = hashlib.sha256()
-        seen = 0
-        with urllib.request.urlopen(_request(bucket_url, "GET"), timeout=300) as resp:
-            while chunk := resp.read(1 << 20):
-                digest.update(chunk)
-                seen += len(chunk)
-        if seen != size:
-            raise RuntimeError(f"{bucket_url}: read {seen} bytes, HEAD said {size}")
-        asset["sha256"] = digest.hexdigest()
-    return {"id": key, "required": False, "asset": asset}
+def shard_id(owner: str) -> str:
+    return hashlib.sha256(owner.encode()).hexdigest()[:16]
 
 
-def build(hash_bytes: bool, version: str) -> dict:
-    vendors = scan_urls()
-    with ThreadPoolExecutor(max_workers=8) as pool:
-        found = list(pool.map(lambda v: describe(v, hash_bytes), vendors))
-    components = sorted((c for c in found if c), key=lambda c: c["id"])
-    print(f"{len(components)} of {len(vendors)} scanned URLs are mirrored", file=sys.stderr)
-    return {
-        "$schema": SCHEMA,
-        "kind": "Release",
-        "schema_version": 1,
-        "tool": "fbuild-download-mirror",
-        "version": version,
-        "components": components,
-    }
+def list_bucket(credentials: Path | None) -> dict[str, int]:
+    import boto3  # only the listing step needs it
+
+    if credentials:
+        creds = json.loads(credentials.read_text())
+        key_id, secret = creds["access_key"], creds["secret_key"]
+    else:
+        key_id, secret = os.environ["AWS_ACCESS_KEY_ID"], os.environ["AWS_SECRET_ACCESS_KEY"]
+    s3 = boto3.client(
+        "s3",
+        region_name=REGION,
+        endpoint_url=f"https://{REGION}.digitaloceanspaces.com",
+        aws_access_key_id=key_id,
+        aws_secret_access_key=secret,
+    )
+    objects: dict[str, int] = {}
+    for page in s3.get_paginator("list_objects_v2").paginate(Bucket=BUCKET_NAME):
+        for obj in page.get("Contents", []):
+            if is_registry_key(obj["Key"]):
+                objects[obj["Key"]] = obj["Size"]
+    return objects
+
+
+def load_existing(out_dir: Path) -> dict[str, tuple[int, str]]:
+    """``key -> (size, sha256)`` from the shards already on disk."""
+    known: dict[str, tuple[int, str]] = {}
+    for shard in (out_dir / "shards").glob("*.json"):
+        for component in json.loads(shard.read_text()).get("components", []):
+            asset = component["asset"]
+            known[component["id"]] = (asset["size_bytes"], asset["sha256"])
+    return known
+
+
+def hash_object(key: str, size: int) -> str:
+    request = urllib.request.Request(bucket_url(key), headers={"User-Agent": USER_AGENT})
+    digest = hashlib.sha256()
+    seen = 0
+    with urllib.request.urlopen(request, timeout=600) as resp:
+        while chunk := resp.read(1 << 20):
+            digest.update(chunk)
+            seen += len(chunk)
+    if seen != size:
+        raise RuntimeError(f"{key}: read {seen} bytes, listing said {size}")
+    return digest.hexdigest()
+
+
+def load_checkpoint(path: Path | None) -> dict[str, tuple[int, str]]:
+    """Hashes recorded by an interrupted run (``size\tsha256\tkey`` lines)."""
+    if not path or not path.exists():
+        return {}
+    done = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        size, sha, key = line.split("\t", 2)
+        done[key] = (int(size), sha)
+    return done
+
+
+def hash_missing(
+    objects: dict[str, int],
+    known: dict[str, tuple[int, str]],
+    workers: int,
+    checkpoint: Path | None,
+) -> dict[str, tuple[int, str]]:
+    known = {**known, **load_checkpoint(checkpoint)}
+    log = checkpoint.open("a", encoding="utf-8") if checkpoint else None
+    todo = {k: s for k, s in objects.items() if known.get(k, (None,))[0] != s}
+    total = sum(todo.values())
+    print(f"{len(todo)} of {len(objects)} objects need hashing ({total / 1e9:.1f} GB)", file=sys.stderr)
+    result = {k: v for k, v in known.items() if k in objects and k not in todo}
+    done_bytes = 0
+    lock = threading.Lock()
+    failures: list[str] = []
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {pool.submit(hash_object, k, s): (k, s) for k, s in todo.items()}
+        for n, future in enumerate(as_completed(futures), 1):
+            key, size = futures[future]
+            try:
+                result[key] = (size, future.result())
+                if log:
+                    log.write(f"{size}\t{result[key][1]}\t{key}\n")
+                    log.flush()
+            except Exception as exc:  # report and keep going
+                failures.append(f"{key}: {exc}")
+            with lock:
+                done_bytes += size
+            if n % 500 == 0 or n == len(futures):
+                print(f"  {n}/{len(futures)} ({done_bytes / 1e9:.1f}/{total / 1e9:.1f} GB)", file=sys.stderr)
+    if failures:
+        print(f"{len(failures)} objects failed to hash:", file=sys.stderr)
+        for line in failures[:50]:
+            print("  " + line, file=sys.stderr)
+    return result
 
 
 def render(doc: dict) -> str:
-    return json.dumps(doc, indent=2, sort_keys=False) + "\n"
+    return json.dumps(doc, indent=1, ensure_ascii=False) + "\n"
+
+
+def build_documents(hashed: dict[str, tuple[int, str]], version: str) -> dict[str, str]:
+    """Relative path -> rendered document."""
+    by_owner: dict[str, list[str]] = {}
+    for key in hashed:
+        by_owner.setdefault(owner_of(key), []).append(key)
+    docs: dict[str, str] = {}
+    tools: dict[str, dict] = {}
+    for owner in sorted(by_owner):
+        components = [
+            {
+                "id": key,
+                "required": False,
+                "asset": {
+                    "filename": key.rsplit("/", 1)[-1],
+                    "size_bytes": hashed[key][0],
+                    "sha256": hashed[key][1],
+                    "urls": [bucket_url(key), vendor_url(key)],
+                },
+            }
+            for key in sorted(by_owner[owner])
+        ]
+        shard = render(
+            {
+                "$schema": SCHEMA,
+                "kind": "Release",
+                "schema_version": 1,
+                "tool": f"{TOOL}/{owner}",
+                "version": version,
+                "components": components,
+            }
+        )
+        rel = f"shards/{shard_id(owner)}.json"
+        docs[rel] = shard
+        data = shard.encode()
+        tools[owner] = {
+            "descriptor": {
+                "url": rel,
+                "sha256": hashlib.sha256(data).hexdigest(),
+                "size_bytes": len(data),
+            },
+            "kind_hint": "data",
+        }
+    docs["manifest.json"] = render(
+        {"$schema": SCHEMA, "kind": "Index", "schema_version": 1, "tools": tools}
+    )
+    return docs
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--out", type=Path, default=OUT)
-    parser.add_argument("--version", help="manifest version (default: keep the existing one)")
-    parser.add_argument("--no-sha256", action="store_true", help="skip hashing bucket objects")
-    parser.add_argument("--check", action="store_true", help="fail if --out is out of date")
+    parser.add_argument("--out-dir", type=Path, default=OUT_DIR)
+    parser.add_argument("--credentials", type=Path, help="JSON file with access_key/secret_key")
+    parser.add_argument("--version", help="shard version (default: keep the existing one)")
+    parser.add_argument("--workers", type=int, default=32)
+    parser.add_argument("--checkpoint", type=Path, help="append hashes here as they finish; reused on rerun")
+    parser.add_argument("--check", action="store_true", help="fail if the documents are out of date")
     args = parser.parse_args()
 
-    existing = json.loads(args.out.read_text()) if args.out.exists() else {}
-    version = args.version or existing.get("version") or "1"
-    rendered = render(build(not args.no_sha256, version))
+    objects = list_bucket(args.credentials)
+    known = load_existing(args.out_dir)
     if args.check:
-        if args.out.exists() and args.out.read_text() == rendered:
-            return 0
-        print(f"{args.out} is out of date; rerun ci/gen_mirror_manifest.py", file=sys.stderr)
+        stale = sorted(k for k, s in objects.items() if known.get(k, (None,))[0] != s)
+        gone = sorted(set(known) - set(objects))
+        if stale or gone:
+            print(f"{len(stale)} unhashed/changed and {len(gone)} removed objects; rerun", file=sys.stderr)
+            return 1
+        return 0
+
+    hashed = hash_missing(objects, known, args.workers, args.checkpoint)
+    missing = set(objects) - set(hashed)
+    version = args.version or "1"
+    docs = build_documents(hashed, version)
+    shards_dir = args.out_dir / "shards"
+    shards_dir.mkdir(parents=True, exist_ok=True)
+    keep = {args.out_dir / rel for rel in docs}
+    for old in shards_dir.glob("*.json"):
+        if old not in keep:
+            old.unlink()
+    for rel, text in docs.items():
+        (args.out_dir / rel).write_text(text, encoding="utf-8")
+    print(f"wrote {len(docs) - 1} shards covering {len(hashed)} objects", file=sys.stderr)
+    if missing:
+        print(f"{len(missing)} objects left unhashed; rerun to retry", file=sys.stderr)
         return 1
-    args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(rendered)
-    print(f"wrote {args.out}", file=sys.stderr)
     return 0
 
 

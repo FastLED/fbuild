@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mjackdk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mjackdk/library/AmbientCO2/0.3.0/AmbientCO2-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AmbientCO2-0.3.0.tar.gz",
+    "size_bytes": 5512,
+    "sha256": "fc57b62454441d9893128bbcfea65ac6a9a131ea7369e0f298407eccb8c35295",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mjackdk/library/AmbientCO2/0.3.0/AmbientCO2-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mjackdk/library/AmbientCO2/0.3.0/AmbientCO2-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

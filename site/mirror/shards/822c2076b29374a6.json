@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-komaida424",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-komaida424/library/PulseWidthCounter/0.0.0+sha.d37d6388c179/PulseWidthCounter-0.0.0+sha.d37d6388c179.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseWidthCounter-0.0.0+sha.d37d6388c179.tar.gz",
+    "size_bytes": 1087,
+    "sha256": "9b573d2d84a695cb694f5fdf801f6432c4b51ba86deeeca0cf56673245b90728",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-komaida424/library/PulseWidthCounter/0.0.0%2Bsha.d37d6388c179/PulseWidthCounter-0.0.0%2Bsha.d37d6388c179.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-komaida424/library/PulseWidthCounter/0.0.0%2Bsha.d37d6388c179/PulseWidthCounter-0.0.0%2Bsha.d37d6388c179.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-komaida424/library/SerialLcd/0.0.0+sha.f30bad3f815d/SerialLcd-0.0.0+sha.f30bad3f815d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialLcd-0.0.0+sha.f30bad3f815d.tar.gz",
+    "size_bytes": 1012,
+    "sha256": "b3ace6ab923598df8a6c0f31e8783207f60de3880f85f4a0057ae27349519ab8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-komaida424/library/SerialLcd/0.0.0%2Bsha.f30bad3f815d/SerialLcd-0.0.0%2Bsha.f30bad3f815d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-komaida424/library/SerialLcd/0.0.0%2Bsha.f30bad3f815d/SerialLcd-0.0.0%2Bsha.f30bad3f815d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-komaida424/library/SoftPWM/0.0.0+sha.7918ce37626c/SoftPWM-0.0.0+sha.7918ce37626c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftPWM-0.0.0+sha.7918ce37626c.tar.gz",
+    "size_bytes": 1621,
+    "sha256": "637c738c0f769fe8d0a6f0bd9b341e364dfb059e094c34a1070c8ad0b4bd510f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-komaida424/library/SoftPWM/0.0.0%2Bsha.7918ce37626c/SoftPWM-0.0.0%2Bsha.7918ce37626c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-komaida424/library/SoftPWM/0.0.0%2Bsha.7918ce37626c/SoftPWM-0.0.0%2Bsha.7918ce37626c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nainaiurk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nainaiurk/library/ESP32MultiWiFiProvision/1.3.1/ESP32MultiWiFiProvision-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32MultiWiFiProvision-1.3.1.tar.gz",
+    "size_bytes": 16422,
+    "sha256": "308a6bf9e038cc852ae9651ecfb60d7bfff7f0b1bfaf6ea4311d6a0d193eb4d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nainaiurk/library/ESP32MultiWiFiProvision/1.3.1/ESP32MultiWiFiProvision-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nainaiurk/library/ESP32MultiWiFiProvision/1.3.1/ESP32MultiWiFiProvision-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nainaiurk/library/ESP32MultiWiFiProvision/1.3.2/ESP32MultiWiFiProvision-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32MultiWiFiProvision-1.3.2.tar.gz",
+    "size_bytes": 17645,
+    "sha256": "068e3ffac6d143f3ba745165821a8f6a0a210c8d5b3d495b17ea8f7753a4e14a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nainaiurk/library/ESP32MultiWiFiProvision/1.3.2/ESP32MultiWiFiProvision-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nainaiurk/library/ESP32MultiWiFiProvision/1.3.2/ESP32MultiWiFiProvision-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nainaiurk/library/ESP32MultiWiFiProvision/1.3.3/ESP32MultiWiFiProvision-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32MultiWiFiProvision-1.3.3.tar.gz",
+    "size_bytes": 17803,
+    "sha256": "bbe8ea154e429449f03682d6c57154ad562e0ab036d0eedda29d821bbc93bf8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nainaiurk/library/ESP32MultiWiFiProvision/1.3.3/ESP32MultiWiFiProvision-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nainaiurk/library/ESP32MultiWiFiProvision/1.3.3/ESP32MultiWiFiProvision-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nainaiurk/library/ESP32MultiWiFiProvision/1.3.4/ESP32MultiWiFiProvision-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32MultiWiFiProvision-1.3.4.tar.gz",
+    "size_bytes": 17907,
+    "sha256": "0dd4856861f9cb2d1dbcd93447e402868dd6731cc495b853d14fae1b97b59872",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nainaiurk/library/ESP32MultiWiFiProvision/1.3.4/ESP32MultiWiFiProvision-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nainaiurk/library/ESP32MultiWiFiProvision/1.3.4/ESP32MultiWiFiProvision-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nainaiurk/library/ESP32MultiWiFiProvision/1.3.5/ESP32MultiWiFiProvision-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32MultiWiFiProvision-1.3.5.tar.gz",
+    "size_bytes": 17950,
+    "sha256": "7fbf8d0acd2754a2559e5ddc890ae24ed1c5eea642cf79f59dcb7f9558f61bd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nainaiurk/library/ESP32MultiWiFiProvision/1.3.5/ESP32MultiWiFiProvision-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nainaiurk/library/ESP32MultiWiFiProvision/1.3.5/ESP32MultiWiFiProvision-1.3.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

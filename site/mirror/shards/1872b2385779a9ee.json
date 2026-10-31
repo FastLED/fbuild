@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xiongyu0523",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xiongyu0523/library/Azure%20RTOS%20ThreadX/1.0.3/AzureRTOSThreadX-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureRTOSThreadX-1.0.3.tar.gz",
+    "size_bytes": 259392,
+    "sha256": "f29d05f8a56eabc77cae845b8d7fd4b65adf1a9ef1c19809b11d7db7cdf400d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xiongyu0523/library/Azure%2520RTOS%2520ThreadX/1.0.3/AzureRTOSThreadX-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/xiongyu0523/library/Azure%20RTOS%20ThreadX/1.0.3/AzureRTOSThreadX-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

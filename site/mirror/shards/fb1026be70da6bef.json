@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ubal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ubal/library/MD25/0.0.0+sha.a06e2ad45792/MD25-0.0.0+sha.a06e2ad45792.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD25-0.0.0+sha.a06e2ad45792.tar.gz",
+    "size_bytes": 4415,
+    "sha256": "bfbf31fdae0c6c2d238baddf005397224f6c7f6f8342c2d5bc0afe8f50dbd7ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ubal/library/MD25/0.0.0%2Bsha.a06e2ad45792/MD25-0.0.0%2Bsha.a06e2ad45792.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ubal/library/MD25/0.0.0%2Bsha.a06e2ad45792/MD25-0.0.0%2Bsha.a06e2ad45792.tar.gz"
+    ]
+   }
+  }
+ ]
+}

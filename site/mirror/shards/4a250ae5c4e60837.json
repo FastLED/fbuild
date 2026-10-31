@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fran6nd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fran6nd/library/Updatable/1.0.0/Updatable-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Updatable-1.0.0.tar.gz",
+    "size_bytes": 8824,
+    "sha256": "fd4ab4f2b6ea3f4791a01ee348ce605be12ed99f62cdac246c969ec324575c04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fran6nd/library/Updatable/1.0.0/Updatable-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fran6nd/library/Updatable/1.0.0/Updatable-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fran6nd/library/Updatable/2.0.0/Updatable-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Updatable-2.0.0.tar.gz",
+    "size_bytes": 12775,
+    "sha256": "dba894a999ed1ab6e6fd8bdec04f7ac174f9d36fe0f4867198a0202a22144ffc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fran6nd/library/Updatable/2.0.0/Updatable-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fran6nd/library/Updatable/2.0.0/Updatable-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

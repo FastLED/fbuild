@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/duinowitchery",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "duinowitchery/library/hd44780/1.3.2/hd44780-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hd44780-1.3.2.tar.gz",
+    "size_bytes": 272981,
+    "sha256": "699bed300f207b11dd26983760beb3bc2997e1a2e9622015efb2849a0a977792",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duinowitchery/library/hd44780/1.3.2/hd44780-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/duinowitchery/library/hd44780/1.3.2/hd44780-1.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

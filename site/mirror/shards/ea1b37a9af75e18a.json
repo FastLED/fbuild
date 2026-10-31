@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-shettypavank",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-shettypavank/library/MAX30102/0.0.0+sha.162320d6f658/MAX30102-0.0.0+sha.162320d6f658.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30102-0.0.0+sha.162320d6f658.tar.gz",
+    "size_bytes": 3181,
+    "sha256": "582f025bfa322cb988adc16d04fd3d1b7033a0449901e596fee62ffcfd19ef33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-shettypavank/library/MAX30102/0.0.0%2Bsha.162320d6f658/MAX30102-0.0.0%2Bsha.162320d6f658.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-shettypavank/library/MAX30102/0.0.0%2Bsha.162320d6f658/MAX30102-0.0.0%2Bsha.162320d6f658.tar.gz"
+    ]
+   }
+  }
+ ]
+}

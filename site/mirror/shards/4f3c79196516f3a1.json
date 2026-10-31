@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sitti",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sitti/library/Glowing/0.0.0+sha.eef7593bdcc5/Glowing-0.0.0+sha.eef7593bdcc5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Glowing-0.0.0+sha.eef7593bdcc5.tar.gz",
+    "size_bytes": 2455,
+    "sha256": "31812b801e292115a1b48ee821a94c3d3d5943a68192ef12e8e44159818355e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sitti/library/Glowing/0.0.0%2Bsha.eef7593bdcc5/Glowing-0.0.0%2Bsha.eef7593bdcc5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sitti/library/Glowing/0.0.0%2Bsha.eef7593bdcc5/Glowing-0.0.0%2Bsha.eef7593bdcc5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vicenteraphael",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vicenteraphael/library/SmartTrafficLight/1.0.1/SmartTrafficLight-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartTrafficLight-1.0.1.tar.gz",
+    "size_bytes": 7508,
+    "sha256": "c7c8f7dc363dfff6b5daac7100d3aa5caabd1862aff4a2dfdd0944884a09de7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vicenteraphael/library/SmartTrafficLight/1.0.1/SmartTrafficLight-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vicenteraphael/library/SmartTrafficLight/1.0.1/SmartTrafficLight-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vicenteraphael/library/SmartTrafficLight/2.0.0/SmartTrafficLight-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartTrafficLight-2.0.0.tar.gz",
+    "size_bytes": 10820,
+    "sha256": "fdab94ff3b29410feb46f92c6aa6021ffb79c9e1c68b694fc0916f6283e7da93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vicenteraphael/library/SmartTrafficLight/2.0.0/SmartTrafficLight-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vicenteraphael/library/SmartTrafficLight/2.0.0/SmartTrafficLight-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vicenteraphael/library/SmartTrafficLight/2.0.1/SmartTrafficLight-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartTrafficLight-2.0.1.tar.gz",
+    "size_bytes": 11188,
+    "sha256": "e03731e667645c7206ce4c0448c1cf07e4a16bafd66d73262b13f167003986ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vicenteraphael/library/SmartTrafficLight/2.0.1/SmartTrafficLight-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vicenteraphael/library/SmartTrafficLight/2.0.1/SmartTrafficLight-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vicenteraphael/library/SmartTrafficLight/2.0.2/SmartTrafficLight-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartTrafficLight-2.0.2.tar.gz",
+    "size_bytes": 11186,
+    "sha256": "998bbfdbbee9812fd432a7ad7d450fd7739531dea77f9b5f903c814954628a96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vicenteraphael/library/SmartTrafficLight/2.0.2/SmartTrafficLight-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vicenteraphael/library/SmartTrafficLight/2.0.2/SmartTrafficLight-2.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

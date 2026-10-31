@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sadr0b0t",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sadr0b0t/library/arduino-timer-api/0.1.0/arduino-timer-api-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-timer-api-0.1.0.tar.gz",
+    "size_bytes": 21528,
+    "sha256": "92a69237498de6d4ded44f58aaf3a4175618db1fffc395d96ec4044d47d7a8f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sadr0b0t/library/arduino-timer-api/0.1.0/arduino-timer-api-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sadr0b0t/library/arduino-timer-api/0.1.0/arduino-timer-api-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/todbot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "todbot/library/TS20/0.5.0/TS20-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TS20-0.5.0.tar.gz",
+    "size_bytes": 9632,
+    "sha256": "e74f740f73c4262c6d6d9e55d5c49c9fa3f19cd43555e436ac6b743013a5b3d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/todbot/library/TS20/0.5.0/TS20-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/todbot/library/TS20/0.5.0/TS20-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "todbot/library/TS20/0.6.0/TS20-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TS20-0.6.0.tar.gz",
+    "size_bytes": 11183,
+    "sha256": "c1945e63d16e42361ff3059be8b9eac0a8943d07df5b37dbca0951e23dabe35b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/todbot/library/TS20/0.6.0/TS20-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/todbot/library/TS20/0.6.0/TS20-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "todbot/library/TouchyTouch/1.2.1/TouchyTouch-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchyTouch-1.2.1.tar.gz",
+    "size_bytes": 4216,
+    "sha256": "e60bcd2cbdb7a6cb8ba9916cdd063ef0ace951492773aad4ac627e212ad526a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/todbot/library/TouchyTouch/1.2.1/TouchyTouch-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/todbot/library/TouchyTouch/1.2.1/TouchyTouch-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

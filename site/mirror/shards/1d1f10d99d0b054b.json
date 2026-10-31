@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/peteole",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "peteole/library/GenericDMP/1.0/GenericDMP-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GenericDMP-1.0.tar.gz",
+    "size_bytes": 4478,
+    "sha256": "9adde3ff01c42a16b84753208e4aa4e3c74c453d99a09eebcb7e6b27d979c79a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peteole/library/GenericDMP/1.0/GenericDMP-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/peteole/library/GenericDMP/1.0/GenericDMP-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peteole/library/SPMSatRx/1.1/SPMSatRx-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPMSatRx-1.1.tar.gz",
+    "size_bytes": 2496,
+    "sha256": "0778d99a859185168c33b32b4e532d796db633e31371620c6faa370b1e99e629",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peteole/library/SPMSatRx/1.1/SPMSatRx-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/peteole/library/SPMSatRx/1.1/SPMSatRx-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peteole/library/TelemetryProtocol/1.0/TelemetryProtocol-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TelemetryProtocol-1.0.tar.gz",
+    "size_bytes": 1861,
+    "sha256": "52cb6b42f3206eb653ba1cb89cd62d3db35b2469c1c09e7c3c8001523d44379d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peteole/library/TelemetryProtocol/1.0/TelemetryProtocol-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/peteole/library/TelemetryProtocol/1.0/TelemetryProtocol-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

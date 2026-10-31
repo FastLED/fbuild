@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/particle-iot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "particle-iot/library/InternetButton/0.1.15/InternetButton-0.1.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InternetButton-0.1.15.tar.gz",
+    "size_bytes": 15214,
+    "sha256": "b30ecbdf98f0a301ca2e07f93dfa65ca0b3c59cd75f7c647635730d1442cbfcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/particle-iot/library/InternetButton/0.1.15/InternetButton-0.1.15.tar.gz",
+     "https://dl.registry.platformio.org/download/particle-iot/library/InternetButton/0.1.15/InternetButton-0.1.15.tar.gz"
+    ]
+   }
+  }
+ ]
+}

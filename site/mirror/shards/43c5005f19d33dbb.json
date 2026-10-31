@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/foothillscommunityworkshop",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "foothillscommunityworkshop/library/FCWRobot_Model2/1.0.1/FCWRobot_Model2-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FCWRobot_Model2-1.0.1.tar.gz",
+    "size_bytes": 26603,
+    "sha256": "de47aabf7eb8d021b37ca241392fbc5606ea52bbfdd9da04ebc3a545b8c092b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foothillscommunityworkshop/library/FCWRobot_Model2/1.0.1/FCWRobot_Model2-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/foothillscommunityworkshop/library/FCWRobot_Model2/1.0.1/FCWRobot_Model2-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

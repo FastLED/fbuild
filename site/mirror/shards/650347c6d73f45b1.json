@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/industruino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "industruino/library/EthernetIndustruino/1.0.0/EthernetIndustruino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EthernetIndustruino-1.0.0.tar.gz",
+    "size_bytes": 29741,
+    "sha256": "3b2f36e5b2ce89c37d7ef1606885334d36669e8ed52051d03bd8925738aa9c71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/industruino/library/EthernetIndustruino/1.0.0/EthernetIndustruino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/industruino/library/EthernetIndustruino/1.0.0/EthernetIndustruino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "industruino/library/Fram/1.0.0/Fram-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Fram-1.0.0.tar.gz",
+    "size_bytes": 3814,
+    "sha256": "6a791cda66f0c9235bbc342596663d69619fe401b4083354552dca729673a728",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/industruino/library/Fram/1.0.0/Fram-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/industruino/library/Fram/1.0.0/Fram-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "industruino/library/Indio/1.2.0/Indio-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Indio-1.2.0.tar.gz",
+    "size_bytes": 15555,
+    "sha256": "65690c032ab0df8d0ac5a596526bb1e451802010d386f5e066f5e8d652d801c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/industruino/library/Indio/1.2.0/Indio-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/industruino/library/Indio/1.2.0/Indio-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "industruino/library/UC1701/1.1.0/UC1701-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UC1701-1.1.0.tar.gz",
+    "size_bytes": 27807,
+    "sha256": "3d4043a49e4ffbcccbd8dd1222689eb66e430d5ecae37271e9197a6b8ef396f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/industruino/library/UC1701/1.1.0/UC1701-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/industruino/library/UC1701/1.1.0/UC1701-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shyd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shyd/library/SerialCommand%20Advanced/1.0.0/SerialCommandAdvanced-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialCommandAdvanced-1.0.0.tar.gz",
+    "size_bytes": 16476,
+    "sha256": "3321164c62b96e4c3c8c8a71b2bf8e1bec5861ef159d5c9ca2648529eb091af5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shyd/library/SerialCommand%2520Advanced/1.0.0/SerialCommandAdvanced-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shyd/library/SerialCommand%20Advanced/1.0.0/SerialCommandAdvanced-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

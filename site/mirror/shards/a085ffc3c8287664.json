@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/septentrio-gnss",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "septentrio-gnss/library/Eridano-Septentrio/1.0.0/Eridano-Septentrio-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Eridano-Septentrio-1.0.0.tar.gz",
+    "size_bytes": 33462,
+    "sha256": "ae06852592c3a5fb0ba534cb9a134509e5e020ea60a767bb108719ec9ba654c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/septentrio-gnss/library/Eridano-Septentrio/1.0.0/Eridano-Septentrio-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/septentrio-gnss/library/Eridano-Septentrio/1.0.0/Eridano-Septentrio-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

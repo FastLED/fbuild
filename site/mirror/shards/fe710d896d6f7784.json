@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cheezcheez",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cheezcheez/library/CheezPPG/1.1.3/CheezPPG-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CheezPPG-1.1.3.tar.gz",
+    "size_bytes": 8904,
+    "sha256": "7e6d1796dbb92ca51d4a503eabde83178e2731c8b58f4ad3275db8d2e3712d7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cheezcheez/library/CheezPPG/1.1.3/CheezPPG-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cheezcheez/library/CheezPPG/1.1.3/CheezPPG-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cheezcheez/library/CheezPPG/1.1.4/CheezPPG-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CheezPPG-1.1.4.tar.gz",
+    "size_bytes": 9132,
+    "sha256": "a4f264e9cb634e703e47d51d0f2d7b35b88574eb52c7a55d595c964fcb82e053",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cheezcheez/library/CheezPPG/1.1.4/CheezPPG-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/cheezcheez/library/CheezPPG/1.1.4/CheezPPG-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cheezcheez/library/CheezsEMG/1.0.2/CheezsEMG-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CheezsEMG-1.0.2.tar.gz",
+    "size_bytes": 9907,
+    "sha256": "88d627df7effc59fe67325bd7d29540ac2aac7c86f2be85e3a416ebe8bda24ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cheezcheez/library/CheezsEMG/1.0.2/CheezsEMG-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cheezcheez/library/CheezsEMG/1.0.2/CheezsEMG-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

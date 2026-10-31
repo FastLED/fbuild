@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/panstamp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "panstamp/library/MMA8652/1.0.1/MMA8652-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8652-1.0.1.tar.gz",
+    "size_bytes": 10995,
+    "sha256": "0d01b9f894db3a495b806ea1b3764543f0c4dee93475224ad4a4a3aa118fd863",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/panstamp/library/MMA8652/1.0.1/MMA8652-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/panstamp/library/MMA8652/1.0.1/MMA8652-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "panstamp/library/SRAM/1.0.1/SRAM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SRAM-1.0.1.tar.gz",
+    "size_bytes": 4832,
+    "sha256": "85984533638a4083e16f48ba96d8eda6bc6747704264fad366893055a5c45b13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/panstamp/library/SRAM/1.0.1/SRAM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/panstamp/library/SRAM/1.0.1/SRAM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "panstamp/library/SWAP/1.0.9/SWAP-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SWAP-1.0.9.tar.gz",
+    "size_bytes": 45319,
+    "sha256": "f5d57936b71d9a0e6c2206b5e8cb9145afc49265accb5385ceff09d154e1e3f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/panstamp/library/SWAP/1.0.9/SWAP-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/panstamp/library/SWAP/1.0.9/SWAP-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "panstamp/library/thermistor/1.0.2/thermistor-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "thermistor-1.0.2.tar.gz",
+    "size_bytes": 5478,
+    "sha256": "3bcd58390abfa178c45c0c07de76285c1ef53e855d1cc0fda54528e222ddc582",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/panstamp/library/thermistor/1.0.2/thermistor-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/panstamp/library/thermistor/1.0.2/thermistor-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

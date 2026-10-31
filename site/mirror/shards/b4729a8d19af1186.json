@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ciuri",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ciuri/library/TEF6686Library/1.0.4/TEF6686Library-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TEF6686Library-1.0.4.tar.gz",
+    "size_bytes": 10241,
+    "sha256": "fe018460aa41b17c3ce355f3cb01e49d0c748cdbc7f9e2429366a312e00a7878",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ciuri/library/TEF6686Library/1.0.4/TEF6686Library-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ciuri/library/TEF6686Library/1.0.4/TEF6686Library-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

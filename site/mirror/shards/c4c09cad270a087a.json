@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jbliesener",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jbliesener/library/FlightSimOutputs/0.2.6/FlightSimOutputs-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlightSimOutputs-0.2.6.tar.gz",
+    "size_bytes": 9409,
+    "sha256": "4a4b9e3d5130a0ab11ebad89c847d81b3560e63dae5614b784751dcb8071c78d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jbliesener/library/FlightSimOutputs/0.2.6/FlightSimOutputs-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/jbliesener/library/FlightSimOutputs/0.2.6/FlightSimOutputs-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jbliesener/library/FlightSimSwitches/1.1.15/FlightSimSwitches-1.1.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlightSimSwitches-1.1.15.tar.gz",
+    "size_bytes": 16731,
+    "sha256": "fb9037a97ef7f4c17db758ed6199079cf426b1f6e36f4761e5e37930f8eaa362",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jbliesener/library/FlightSimSwitches/1.1.15/FlightSimSwitches-1.1.15.tar.gz",
+     "https://dl.registry.platformio.org/download/jbliesener/library/FlightSimSwitches/1.1.15/FlightSimSwitches-1.1.15.tar.gz"
+    ]
+   }
+  }
+ ]
+}

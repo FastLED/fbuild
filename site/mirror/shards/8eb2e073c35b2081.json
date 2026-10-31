@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/minds-i",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "minds-i/library/MINDS-i-Common/1.0.1/MINDS-i-Common-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MINDS-i-Common-1.0.1.tar.gz",
+    "size_bytes": 9069,
+    "sha256": "12f9fe9a4d3ed18a05b22ae14ca33eeb72f36e47019666541bd0356521b6d49c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/minds-i/library/MINDS-i-Common/1.0.1/MINDS-i-Common-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/minds-i/library/MINDS-i-Common/1.0.1/MINDS-i-Common-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "minds-i/library/MINDS-i-Drone/1.4.0/MINDS-i-Drone-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MINDS-i-Drone-1.4.0.tar.gz",
+    "size_bytes": 119702,
+    "sha256": "f9d635902544c6cd79b3d8214452fc036c1a43453076e9067a419f69b2dee763",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/minds-i/library/MINDS-i-Drone/1.4.0/MINDS-i-Drone-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/minds-i/library/MINDS-i-Drone/1.4.0/MINDS-i-Drone-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "minds-i/library/MINDS-i-Farming/1.0.2/MINDS-i-Farming-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MINDS-i-Farming-1.0.2.tar.gz",
+    "size_bytes": 16436,
+    "sha256": "456d484053c07e098946e078b4f98d08494e151f10d863d23ca944b49b394451",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/minds-i/library/MINDS-i-Farming/1.0.2/MINDS-i-Farming-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/minds-i/library/MINDS-i-Farming/1.0.2/MINDS-i-Farming-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "minds-i/library/MINDS-i-Foundations/4.0.3/MINDS-i-Foundations-4.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MINDS-i-Foundations-4.0.3.tar.gz",
+    "size_bytes": 17400,
+    "sha256": "3a9967d9079ea08b4ca5346d4277a39d9f5ac427d3c0376e32ba83a1878c671d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/minds-i/library/MINDS-i-Foundations/4.0.3/MINDS-i-Foundations-4.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/minds-i/library/MINDS-i-Foundations/4.0.3/MINDS-i-Foundations-4.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

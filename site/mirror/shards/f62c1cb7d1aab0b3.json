@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/meebplayzs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "meebplayzs/library/GoogleCalendarClient/1.0/GoogleCalendarClient-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GoogleCalendarClient-1.0.tar.gz",
+    "size_bytes": 2215,
+    "sha256": "973c68c8e209a032915942eea0f48ebb4c872c01b6da94bd43810da13880d3df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/meebplayzs/library/GoogleCalendarClient/1.0/GoogleCalendarClient-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/meebplayzs/library/GoogleCalendarClient/1.0/GoogleCalendarClient-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

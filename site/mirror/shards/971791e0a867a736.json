@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-1529561000",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-1529561000/library/ADC/0.0.0+sha.c5f50c994173/ADC-0.0.0+sha.c5f50c994173.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADC-0.0.0+sha.c5f50c994173.tar.gz",
+    "size_bytes": 2230,
+    "sha256": "f52bbc5e0c1a03848abe9ff2bcf5ddfcfef10397d074c7836e4020988b912ebb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-1529561000/library/ADC/0.0.0%2Bsha.c5f50c994173/ADC-0.0.0%2Bsha.c5f50c994173.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-1529561000/library/ADC/0.0.0%2Bsha.c5f50c994173/ADC-0.0.0%2Bsha.c5f50c994173.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-1529561000/library/SD/0.0.0+sha.db4599aff06a/SD-0.0.0+sha.db4599aff06a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SD-0.0.0+sha.db4599aff06a.tar.gz",
+    "size_bytes": 1542,
+    "sha256": "f0a8584684bb84f147fc8b76296bccebc9f4034017711b2597f1651daa8b3f60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-1529561000/library/SD/0.0.0%2Bsha.db4599aff06a/SD-0.0.0%2Bsha.db4599aff06a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-1529561000/library/SD/0.0.0%2Bsha.db4599aff06a/SD-0.0.0%2Bsha.db4599aff06a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

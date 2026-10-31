@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/telemetryharbor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "telemetryharbor/library/TelemetryHarborSDK/0.1.4/TelemetryHarborSDK-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TelemetryHarborSDK-0.1.4.tar.gz",
+    "size_bytes": 8411,
+    "sha256": "490836374f56a0be06da833b243c623ac1bf4953623e3023dd0c9ba06af331de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/telemetryharbor/library/TelemetryHarborSDK/0.1.4/TelemetryHarborSDK-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/telemetryharbor/library/TelemetryHarborSDK/0.1.4/TelemetryHarborSDK-0.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

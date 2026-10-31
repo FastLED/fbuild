@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tiotlab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tiotlab/library/AsyncTCP/1.1.1/AsyncTCP-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-1.1.1.tar.gz",
+    "size_bytes": 17163,
+    "sha256": "f14c73b9215552b6919f5b8b64484fa70b693b5e044b804fe59bce881689f456",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tiotlab/library/AsyncTCP/1.1.1/AsyncTCP-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tiotlab/library/AsyncTCP/1.1.1/AsyncTCP-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tiotlab/library/SetUpWiFi/1.0.9/SetUpWiFi-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SetUpWiFi-1.0.9.tar.gz",
+    "size_bytes": 6908,
+    "sha256": "20f8411441c97122cb8a0cba349a9f6411de857c15b937ed754f4a734663ecf8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tiotlab/library/SetUpWiFi/1.0.9/SetUpWiFi-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tiotlab/library/SetUpWiFi/1.0.9/SetUpWiFi-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tiotlab/library/TioTLAB_WiFiManager/1.0.0/TioTLAB_WiFiManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TioTLAB_WiFiManager-1.0.0.tar.gz",
+    "size_bytes": 7576,
+    "sha256": "07bfc52b1d360613f9a1803e13d36a9e9fd762bb4eea08843896ba2b85fa9516",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tiotlab/library/TioTLAB_WiFiManager/1.0.0/TioTLAB_WiFiManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tiotlab/library/TioTLAB_WiFiManager/1.0.0/TioTLAB_WiFiManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tiotlab/library/TioTLAB_WiFiManager/1.0.1/TioTLAB_WiFiManager-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TioTLAB_WiFiManager-1.0.1.tar.gz",
+    "size_bytes": 7973,
+    "sha256": "e103beb032f7a409ff17ce598b1459b61d87f6cd8be21ce3a84fe15afe188f6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tiotlab/library/TioTLAB_WiFiManager/1.0.1/TioTLAB_WiFiManager-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tiotlab/library/TioTLAB_WiFiManager/1.0.1/TioTLAB_WiFiManager-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tiotlab/library/TioTLAB_WiFiManager/1.0.2/TioTLAB_WiFiManager-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TioTLAB_WiFiManager-1.0.2.tar.gz",
+    "size_bytes": 7980,
+    "sha256": "1b9b61448acfbe7a009c3c7f20d58c108bab9f1df1738735611ca4ef25f6db78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tiotlab/library/TioTLAB_WiFiManager/1.0.2/TioTLAB_WiFiManager-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tiotlab/library/TioTLAB_WiFiManager/1.0.2/TioTLAB_WiFiManager-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

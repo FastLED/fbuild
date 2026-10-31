@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-trm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-trm/library/FXOS8700CQ/0.0.0+sha.e2fe752b881e/FXOS8700CQ-0.0.0+sha.e2fe752b881e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXOS8700CQ-0.0.0+sha.e2fe752b881e.tar.gz",
+    "size_bytes": 4035,
+    "sha256": "7001619866235de043d3a9420d9df42d4a4a4768b750f09b6282b69246b6a831",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-trm/library/FXOS8700CQ/0.0.0%2Bsha.e2fe752b881e/FXOS8700CQ-0.0.0%2Bsha.e2fe752b881e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-trm/library/FXOS8700CQ/0.0.0%2Bsha.e2fe752b881e/FXOS8700CQ-0.0.0%2Bsha.e2fe752b881e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

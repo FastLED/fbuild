@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-zatakon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-zatakon/library/Odometry/0.0.0+sha.1765665581cc/Odometry-0.0.0+sha.1765665581cc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Odometry-0.0.0+sha.1765665581cc.tar.gz",
+    "size_bytes": 1430,
+    "sha256": "38a2d7b12ccd1cb7f2b339fc6d7383b3523e9196c9ef52bdfb098cea5ce5498f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-zatakon/library/Odometry/0.0.0%2Bsha.1765665581cc/Odometry-0.0.0%2Bsha.1765665581cc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-zatakon/library/Odometry/0.0.0%2Bsha.1765665581cc/Odometry-0.0.0%2Bsha.1765665581cc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

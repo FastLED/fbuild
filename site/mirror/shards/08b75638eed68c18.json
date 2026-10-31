@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dok-net",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dok-net/library/CoopTask/3.10.0/CoopTask-3.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoopTask-3.10.0.tar.gz",
+    "size_bytes": 43471,
+    "sha256": "d1a40d3683753d614240a725650bd72f3abfa8ffb693452d7d3219af5c8f7f95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dok-net/library/CoopTask/3.10.0/CoopTask-3.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dok-net/library/CoopTask/3.10.0/CoopTask-3.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dok-net/library/ad5243/0.4.0/ad5243-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ad5243-0.4.0.tar.gz",
+    "size_bytes": 2942,
+    "sha256": "ccf97c36741d34b5f7aed6ec1e406f4d7a334fa35cb4af4b803693b7b83db84d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dok-net/library/ad5243/0.4.0/ad5243-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dok-net/library/ad5243/0.4.0/ad5243-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dok-net/library/esp_sds011/2.2.0/esp_sds011-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_sds011-2.2.0.tar.gz",
+    "size_bytes": 6600,
+    "sha256": "26896ee1d86621e653b72956f8b186cd9dfe70e0cafecd1b8956e7f54a8d8b18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dok-net/library/esp_sds011/2.2.0/esp_sds011-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dok-net/library/esp_sds011/2.2.0/esp_sds011-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dok-net/library/ghostl/1.0.1/ghostl-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ghostl-1.0.1.tar.gz",
+    "size_bytes": 37460,
+    "sha256": "b46bf874f08cadcd5a03b01a4c72e4d179eee51b4f51e5f6c3ae742ddb39709d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dok-net/library/ghostl/1.0.1/ghostl-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dok-net/library/ghostl/1.0.1/ghostl-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dok-net/library/tca9544a/0.1.0/tca9544a-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tca9544a-0.1.0.tar.gz",
+    "size_bytes": 2254,
+    "sha256": "81eab75527fd4183baab1d59cd62c4361e76974cca24bdae00fac1e4629bbfc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dok-net/library/tca9544a/0.1.0/tca9544a-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dok-net/library/tca9544a/0.1.0/tca9544a-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

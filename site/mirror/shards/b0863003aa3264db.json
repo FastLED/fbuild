@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-khuang",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-khuang/library/nRF24L01/0.0.0+sha.b3ea38f27b69/nRF24L01-0.0.0+sha.b3ea38f27b69.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF24L01-0.0.0+sha.b3ea38f27b69.tar.gz",
+    "size_bytes": 7707,
+    "sha256": "526c5dcabe0ef30819565b656a50939904825a673cb726cff4f520d13a124896",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-khuang/library/nRF24L01/0.0.0%2Bsha.b3ea38f27b69/nRF24L01-0.0.0%2Bsha.b3ea38f27b69.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-khuang/library/nRF24L01/0.0.0%2Bsha.b3ea38f27b69/nRF24L01-0.0.0%2Bsha.b3ea38f27b69.tar.gz"
+    ]
+   }
+  }
+ ]
+}

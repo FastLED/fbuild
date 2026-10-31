@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/foxel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "foxel/library/noolite_tx/0.2.0/noolite_tx-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "noolite_tx-0.2.0.tar.gz",
+    "size_bytes": 4009,
+    "sha256": "ab4cd3765588c1a11103627cada99725dc5cdf8665b98f054977f917a07c548d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/foxel/library/noolite_tx/0.2.0/noolite_tx-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/foxel/library/noolite_tx/0.2.0/noolite_tx-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

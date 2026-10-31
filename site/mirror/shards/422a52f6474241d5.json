@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-iot-private",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-iot-private/library/us_ticker_rtc/0.0.0+sha.321130411be8/us_ticker_rtc-0.0.0+sha.321130411be8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "us_ticker_rtc-0.0.0+sha.321130411be8.tar.gz",
+    "size_bytes": 1541,
+    "sha256": "5e7172165fc7acc4389eb6fa73a8ad8f1682dfa9591501b4feea57b5e921d84b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-iot-private/library/us_ticker_rtc/0.0.0%2Bsha.321130411be8/us_ticker_rtc-0.0.0%2Bsha.321130411be8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-iot-private/library/us_ticker_rtc/0.0.0%2Bsha.321130411be8/us_ticker_rtc-0.0.0%2Bsha.321130411be8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

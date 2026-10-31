@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/metehoca",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "metehoca/library/Mete%20Hoca%20Qwilino/1.0.0/MeteHocaQwilino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeteHocaQwilino-1.0.0.tar.gz",
+    "size_bytes": 32459,
+    "sha256": "e32347808b5be979f1b6052cab234bcce0ab918dd168f87b0657de4e5a70ff8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/metehoca/library/Mete%2520Hoca%2520Qwilino/1.0.0/MeteHocaQwilino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/metehoca/library/Mete%20Hoca%20Qwilino/1.0.0/MeteHocaQwilino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "metehoca/library/Mete%20Hoca%20Qwilino/1.0.1/MeteHocaQwilino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeteHocaQwilino-1.0.1.tar.gz",
+    "size_bytes": 32534,
+    "sha256": "3af48bc8a7aafff454bc44778a269bb45e9f8f3f5a664275a9fedecb165dd2bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/metehoca/library/Mete%2520Hoca%2520Qwilino/1.0.1/MeteHocaQwilino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/metehoca/library/Mete%20Hoca%20Qwilino/1.0.1/MeteHocaQwilino-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

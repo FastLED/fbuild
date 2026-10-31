@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/prohazko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "prohazko/library/DmTftLibrary/1.4.1/DmTftLibrary-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DmTftLibrary-1.4.1.tar.gz",
+    "size_bytes": 456506,
+    "sha256": "39523d4c33d25b13a9569daeee1ebf8ffd2da27e52cd4e3608ce20717f895f3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prohazko/library/DmTftLibrary/1.4.1/DmTftLibrary-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/prohazko/library/DmTftLibrary/1.4.1/DmTftLibrary-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prohazko/library/DmTouchLibrary/1.4.1/DmTouchLibrary-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DmTouchLibrary-1.4.1.tar.gz",
+    "size_bytes": 2367,
+    "sha256": "871df4de51b6c0e883bd4683bd9e37836320c34a204a9a4b3d2a05d3523c94bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prohazko/library/DmTouchLibrary/1.4.1/DmTouchLibrary-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/prohazko/library/DmTouchLibrary/1.4.1/DmTouchLibrary-1.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

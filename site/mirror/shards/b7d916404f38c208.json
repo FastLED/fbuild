@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hepta",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hepta/library/Hepta9axis/0.0.0+sha.098423fb0371/Hepta9axis-0.0.0+sha.098423fb0371.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hepta9axis-0.0.0+sha.098423fb0371.tar.gz",
+    "size_bytes": 2332,
+    "sha256": "39a4b07073e6392a0a0082a942e0d632e3f046f56e77966adf09a71dd6aa6019",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hepta/library/Hepta9axis/0.0.0%2Bsha.098423fb0371/Hepta9axis-0.0.0%2Bsha.098423fb0371.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hepta/library/Hepta9axis/0.0.0%2Bsha.098423fb0371/Hepta9axis-0.0.0%2Bsha.098423fb0371.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hepta/library/HeptaBattery/0.0.0+sha.65c3076b5c24/HeptaBattery-0.0.0+sha.65c3076b5c24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeptaBattery-0.0.0+sha.65c3076b5c24.tar.gz",
+    "size_bytes": 1825,
+    "sha256": "b32b2ce66c4230884551bcfbff9dac9c04c0a96a835b69e2ed3bb72f3d799f74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hepta/library/HeptaBattery/0.0.0%2Bsha.65c3076b5c24/HeptaBattery-0.0.0%2Bsha.65c3076b5c24.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hepta/library/HeptaBattery/0.0.0%2Bsha.65c3076b5c24/HeptaBattery-0.0.0%2Bsha.65c3076b5c24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hepta/library/HeptaTemp/0.0.0+sha.9a367d5cf53d/HeptaTemp-0.0.0+sha.9a367d5cf53d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeptaTemp-0.0.0+sha.9a367d5cf53d.tar.gz",
+    "size_bytes": 1557,
+    "sha256": "735a326d52705268562858d4724b3e4f6e5d6794a9f3c52025f79c4895cb5fc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hepta/library/HeptaTemp/0.0.0%2Bsha.9a367d5cf53d/HeptaTemp-0.0.0%2Bsha.9a367d5cf53d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hepta/library/HeptaTemp/0.0.0%2Bsha.9a367d5cf53d/HeptaTemp-0.0.0%2Bsha.9a367d5cf53d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hepta/library/HeptaXbee/0.0.0+sha.40e317924467/HeptaXbee-0.0.0+sha.40e317924467.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HeptaXbee-0.0.0+sha.40e317924467.tar.gz",
+    "size_bytes": 2228,
+    "sha256": "8c80f8b8103c338729e26c4b36d47594d36b86e4b721c88b1d7232d5f648e49d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hepta/library/HeptaXbee/0.0.0%2Bsha.40e317924467/HeptaXbee-0.0.0%2Bsha.40e317924467.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hepta/library/HeptaXbee/0.0.0%2Bsha.40e317924467/HeptaXbee-0.0.0%2Bsha.40e317924467.tar.gz"
+    ]
+   }
+  }
+ ]
+}

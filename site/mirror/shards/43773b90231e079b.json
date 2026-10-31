@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/whatnick",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "whatnick/library/ATM90E26%20Arduino/0.1/ATM90E26Arduino-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATM90E26Arduino-0.1.tar.gz",
+    "size_bytes": 8933,
+    "sha256": "095a9e1aa3581b8be747b741a331ad16cb203b5e0adb2868f04057af2ae9b4dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/whatnick/library/ATM90E26%2520Arduino/0.1/ATM90E26Arduino-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/whatnick/library/ATM90E26%20Arduino/0.1/ATM90E26Arduino-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "whatnick/library/CS5464%20Arduino/0.1/CS5464Arduino-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CS5464Arduino-0.1.tar.gz",
+    "size_bytes": 3509,
+    "sha256": "5b057e88ed9bed808d7efae54aad0e6f26406a002350452a3f22b6b4e8c0eb75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/whatnick/library/CS5464%2520Arduino/0.1/CS5464Arduino-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/whatnick/library/CS5464%20Arduino/0.1/CS5464Arduino-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

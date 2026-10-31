@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shuntomino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shuntomino/library/ESP_MOVIE/1.0.0/ESP_MOVIE-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_MOVIE-1.0.0.tar.gz",
+    "size_bytes": 13526992,
+    "sha256": "d5cbd25016c0c5975c6b86be5c4fe7bc473674e7a072652e60024efc34d82974",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shuntomino/library/ESP_MOVIE/1.0.0/ESP_MOVIE-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shuntomino/library/ESP_MOVIE/1.0.0/ESP_MOVIE-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shuntomino/library/ESP_MOVIE/1.0.1/ESP_MOVIE-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_MOVIE-1.0.1.tar.gz",
+    "size_bytes": 13527576,
+    "sha256": "a335b7457b4248395b8f68b2113afa5117e5f31f47dce8f6b428661f765b9848",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shuntomino/library/ESP_MOVIE/1.0.1/ESP_MOVIE-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/shuntomino/library/ESP_MOVIE/1.0.1/ESP_MOVIE-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shuntomino/library/ESP_MOVIE/1.1.0/ESP_MOVIE-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_MOVIE-1.1.0.tar.gz",
+    "size_bytes": 13527946,
+    "sha256": "6e5eb77a53b6eae4b1d052cf3df13c0cac01291127ca9d556d3e100863733377",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shuntomino/library/ESP_MOVIE/1.1.0/ESP_MOVIE-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shuntomino/library/ESP_MOVIE/1.1.0/ESP_MOVIE-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}
