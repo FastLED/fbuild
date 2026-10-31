@@ -14,7 +14,9 @@
 //! steer some downloads.
 
 use std::collections::HashMap;
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use fbuild_core::path::NormalizedPath;
 use std::sync::Arc;
 use std::time::Duration;
 
@@ -207,10 +209,10 @@ pub(super) fn manifest_urls() -> Vec<String> {
 
 /// Cache file for a given source list, so an overridden source never
 /// shares (or poisons) the default source's cache.
-pub(super) fn cache_path(cache_root: &Path, sources: &[String]) -> PathBuf {
+pub(super) fn cache_path(cache_root: &Path, sources: &[String]) -> NormalizedPath {
     let digest = Sha256::digest(sources.join("\n").as_bytes());
     let key: String = digest[..8].iter().map(|b| format!("{b:02x}")).collect();
-    cache_root
+    NormalizedPath::new(cache_root)
         .join("mirror-manifest")
         .join(format!("manifest-{key}.json"))
 }
@@ -231,7 +233,7 @@ pub(super) async fn current() -> Option<Arc<MirrorManifest>> {
             }
             let cache = cache_path(&fbuild_paths::get_cache_root(), &sources);
             let client = super::http::client_with_timeout(FETCH_TIMEOUT);
-            load_with(&client, &sources, Some(&cache), CACHE_TTL)
+            load_with(&client, &sources, Some(cache.as_path()), CACHE_TTL)
                 .await
                 .map(Arc::new)
         })

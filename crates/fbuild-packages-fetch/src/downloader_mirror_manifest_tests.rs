@@ -394,7 +394,8 @@ fn cache_files_are_keyed_by_source_list() {
     let b = cache_path(root, &["https://b/m.json".to_string()]);
     assert_ne!(a, b);
     assert_eq!(a, cache_path(root, &["https://a/m.json".to_string()]));
-    assert!(a.starts_with(root.join("mirror-manifest")));
+    let dir = fbuild_core::path::NormalizedPath::new(root).join("mirror-manifest");
+    assert!(a.relative_to(&dir).is_some(), "{a:?} not under {dir:?}");
 }
 
 // ------------------------------------------------------------ downloading
