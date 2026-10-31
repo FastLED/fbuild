@@ -29,14 +29,10 @@ pub(super) fn configured_mirrors() -> Vec<String> {
 }
 
 /// True when `FBUILD_DOWNLOAD_MIRROR_FIRST` is truthy: the mirrors are then
-/// tried before the primary URL. Empty, `0` and any case-fold of `false` are
-/// falsy, matching the convention the rest of fbuild's flags use.
+/// tried before the primary URL. Parsed by [`fbuild_core::env_flag`], the one
+/// canonical truth table for every fbuild flag (FastLED/fbuild#1798).
 pub(super) fn mirror_first_requested() -> bool {
-    let Ok(value) = std::env::var(MIRROR_FIRST_ENV) else {
-        return false;
-    };
-    let value = value.trim();
-    !(value.is_empty() || value == "0" || value.eq_ignore_ascii_case("false"))
+    fbuild_core::env_flag::is_set(MIRROR_FIRST_ENV)
 }
 
 /// Attempt order over [`candidate_urls`]'s output. The primary (index 0)

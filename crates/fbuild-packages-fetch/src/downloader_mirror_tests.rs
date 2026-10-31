@@ -300,10 +300,15 @@ async fn mirror_first_env_follows_the_truthy_convention() {
         ("TRUE", true),
         ("yes", true),
         (" 1 ", true),
+        ("on", true),
+        (" ON ", true),
         ("0", false),
         ("", false),
         ("false", false),
         ("FALSE", false),
+        ("no", false),
+        ("off", false),
+        ("2", false),
     ] {
         let _env = MirrorFirstEnv::set(value);
         assert_eq!(
