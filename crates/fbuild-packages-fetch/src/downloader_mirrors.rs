@@ -6,9 +6,12 @@
 use std::path::Path;
 
 use fbuild_core::{FbuildError, Result};
+use sha2::Digest;
 
+use super::manifest::{self, MirrorEntry, MirrorManifest, is_loopback_url};
 use super::{
     DownloadProgress, RetryTiming, download_file_with_progress_named, get_with_retry_timed,
+    hex_encode,
 };
 
 /// Env var that moves the configured mirrors ahead of the primary URL.
@@ -33,28 +36,104 @@ fn parse_mirrors(value: &str) -> Vec<String> {
         .collect()
 }
 
-/// Candidate URLs for `url` and whether the mirrors lead.
+/// Where one download may come from and in which order.
+#[derive(Debug, PartialEq, Eq)]
+pub(super) struct Candidates {
+    /// The primary URL at index 0, then every mirror.
+    pub urls: Vec<String>,
+    /// Indices into `urls` in the order to try them; always includes 0.
+    pub order: Vec<usize>,
+    /// SHA-256 that bytes served by a mirror must match, when known.
+    pub mirror_sha256: Option<String>,
+}
+
+impl Candidates {
+    /// `urls` tried primary-first, or mirrors-first with the primary last.
+    pub fn new(urls: Vec<String>, mirror_first: bool) -> Self {
+        let order = attempt_order(urls.len(), mirror_first);
+        Self {
+            urls,
+            order,
+            mirror_sha256: None,
+        }
+    }
+}
+
+/// [`resolve_with`] using the server-side manifest (FastLED/fbuild#1810),
+/// which is consulted only when no operator mirrors are configured and the
+/// download is not to the loopback host.
+pub(super) async fn resolve_candidates(url: &str) -> Candidates {
+    let manifest = if std::env::var(MIRRORS_ENV).is_err() && !is_loopback_url(url) {
+        manifest::current().await
+    } else {
+        None
+    };
+    resolve_with(url, manifest.as_deref())
+}
+
+/// Candidates for `url`, highest precedence first:
 ///
-/// `FBUILD_DOWNLOAD_MIRRORS` set (even empty, which opts out) means exactly
-/// those mirrors, ordered by `FBUILD_DOWNLOAD_MIRROR_FIRST`. Unset means the
-/// built-in [`DEFAULT_MIRROR`], tried first unless
-/// `FBUILD_DOWNLOAD_MIRROR_FIRST` says otherwise, and only for hosts the
-/// bucket mirrors; anything else goes straight to its own URL.
-pub(super) fn resolve_candidates(url: &str) -> (Vec<String>, bool) {
+/// 1. `FBUILD_DOWNLOAD_MIRRORS` set (even empty, which opts out): exactly
+///    those mirrors, ordered by `FBUILD_DOWNLOAD_MIRROR_FIRST`.
+/// 2. An entry in the server-side manifest listing `url`: its URLs in the
+///    published order (or `FBUILD_DOWNLOAD_MIRROR_FIRST`'s, when set), its
+///    SHA-256 guarding mirror bytes. A yanked entry means the primary only.
+/// 3. The built-in [`DEFAULT_MIRROR`] for hosts the bucket mirrors, tried
+///    first unless `FBUILD_DOWNLOAD_MIRROR_FIRST` says otherwise.
+/// 4. The primary URL alone.
+pub(super) fn resolve_with(url: &str, manifest: Option<&MirrorManifest>) -> Candidates {
     if let Ok(value) = std::env::var(MIRRORS_ENV) {
-        return (
+        return Candidates::new(
             candidate_urls(url, &parse_mirrors(&value)),
             mirror_first_requested(),
         );
     }
+    if let Some(entry) = manifest.and_then(|m| m.lookup(url)) {
+        return from_manifest(url, entry);
+    }
     if mirror_path(url).is_none() {
-        return (vec![url.to_string()], false);
+        return Candidates::new(vec![url.to_string()], false);
     }
     let mirror_first = std::env::var(MIRROR_FIRST_ENV).map_or(true, |_| mirror_first_requested());
-    (
+    Candidates::new(
         candidate_urls(url, &[DEFAULT_MIRROR.to_string()]),
         mirror_first,
     )
+}
+
+fn from_manifest(url: &str, entry: &MirrorEntry) -> Candidates {
+    if entry.yanked {
+        return Candidates::new(vec![url.to_string()], false);
+    }
+    let mut urls = vec![url.to_string()];
+    urls.extend(entry.urls.iter().filter(|u| *u != url).cloned());
+    let order = if std::env::var(MIRROR_FIRST_ENV).is_ok() {
+        attempt_order(urls.len(), mirror_first_requested())
+    } else {
+        // `entry` was found by `url`, so every listed URL is in `urls`.
+        entry
+            .urls
+            .iter()
+            .filter_map(|u| urls.iter().position(|c| c == u))
+            .collect()
+    };
+    Candidates {
+        urls,
+        order,
+        mirror_sha256: entry.sha256.clone(),
+    }
+}
+
+/// `Err` naming both digests when `bytes` do not hash to `expected`.
+fn check_mirror_digest(bytes: &[u8], expected: &str) -> std::result::Result<(), String> {
+    let actual = hex_encode(&sha2::Sha256::digest(bytes));
+    if actual == expected {
+        Ok(())
+    } else {
+        Err(format!(
+            "mirror bytes have sha256 {actual}, manifest expects {expected}"
+        ))
+    }
 }
 
 /// True when `FBUILD_DOWNLOAD_MIRROR_FIRST` is truthy: the mirrors are then
@@ -137,22 +216,62 @@ fn all_candidates_failed(primary: FbuildError, tried: &[String]) -> FbuildError 
     ))
 }
 
+/// True when bytes served by mirror `url` may be used: they match the
+/// manifest's SHA-256, or none is known.
+fn accept_mirror_bytes(candidates: &Candidates, url: &str, bytes: &[u8]) -> bool {
+    if let Some(expected) = &candidates.mirror_sha256 {
+        if let Err(error) = check_mirror_digest(bytes, expected) {
+            tracing::warn!("rejecting {url}: {error}");
+            return false;
+        }
+    }
+    tracing::warn!("served from mirror {url}");
+    true
+}
+
+/// [`accept_mirror_bytes`] for a file downloaded into `dest_dir`. A rejected
+/// file is deleted with its part file, so neither seeds the next
+/// candidate's resume.
+async fn accept_mirror_file(
+    candidates: &Candidates,
+    url: &str,
+    dest_dir: &Path,
+    filename: &str,
+) -> bool {
+    if candidates.mirror_sha256.is_none() {
+        return accept_mirror_bytes(candidates, url, &[]);
+    }
+    let path = dest_dir.join(filename);
+    let accepted = match tokio::fs::read(&path).await {
+        Ok(bytes) => accept_mirror_bytes(candidates, url, &bytes),
+        Err(error) => {
+            tracing::warn!("rejecting {url}: cannot read {}: {error}", path.display());
+            false
+        }
+    };
+    if !accepted {
+        let _ = tokio::fs::remove_file(&path).await;
+        let _ = tokio::fs::remove_file(dest_dir.join(format!("{filename}.part"))).await;
+    }
+    accepted
+}
+
 /// Try each candidate URL in turn with the full retry policy; the first
 /// success wins. A vendor outage that outlasts the primary's budget falls
 /// through to the mirrors (FastLED/fbuild#1463).
 pub(super) async fn get_from_candidates(
     client: &reqwest::Client,
-    urls: &[String],
-    mirror_first: bool,
+    candidates: &Candidates,
     timing: RetryTiming,
 ) -> Result<Vec<u8>> {
+    let urls = &candidates.urls;
     let mut primary_error = None;
-    for index in attempt_order(urls.len(), mirror_first) {
+    for &index in &candidates.order {
         let url = &urls[index];
         match get_with_retry_timed(client, url, timing).await {
             Ok(bytes) => {
-                if index != 0 {
-                    tracing::warn!("served from mirror {url}");
+                if index != 0 && !accept_mirror_bytes(candidates, url, &bytes) {
+                    continue;
                 }
                 return Ok(bytes);
             }
@@ -173,16 +292,16 @@ pub(super) async fn get_from_candidates(
 /// Streaming counterpart of [`get_from_candidates`].
 pub(super) async fn download_from_candidates(
     client: &reqwest::Client,
-    urls: &[String],
+    candidates: &Candidates,
     dest_dir: &Path,
     on_progress: &mut (dyn FnMut(&DownloadProgress) + Send),
-    mirror_first: bool,
     timing: RetryTiming,
 ) -> Result<()> {
+    let urls = &candidates.urls;
     // Every candidate lands under the primary URL's file name.
     let filename = urls[0].rsplit('/').next().unwrap_or("download").to_string();
     let mut primary_error = None;
-    for index in attempt_order(urls.len(), mirror_first) {
+    for &index in &candidates.order {
         let url = &urls[index];
         match download_file_with_progress_named(
             client,
@@ -195,8 +314,8 @@ pub(super) async fn download_from_candidates(
         .await
         {
             Ok(()) => {
-                if index != 0 {
-                    tracing::warn!("served from mirror {url}");
+                if index != 0 && !accept_mirror_file(candidates, url, dest_dir, &filename).await {
+                    continue;
                 }
                 return Ok(());
             }
