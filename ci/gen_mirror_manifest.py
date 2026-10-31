@@ -82,7 +82,7 @@ def shard_id(owner: str) -> str:
 
 
 def list_bucket(credentials: Path | None) -> dict[str, int]:
-    import boto3  # noqa: PLC0415 - only the listing step needs it
+    import boto3  # only the listing step needs it
 
     if credentials:
         creds = json.loads(credentials.read_text())
@@ -162,7 +162,7 @@ def hash_missing(
                 if log:
                     log.write(f"{size}\t{result[key][1]}\t{key}\n")
                     log.flush()
-            except Exception as exc:  # noqa: BLE001 - report and keep going
+            except Exception as exc:  # report and keep going
                 failures.append(f"{key}: {exc}")
             with lock:
                 done_bytes += size
