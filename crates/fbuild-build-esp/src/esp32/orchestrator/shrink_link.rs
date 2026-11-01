@@ -41,6 +41,7 @@ pub(crate) async fn resolve_shrink(
     compiler: &Path,
     caller_path: Option<&str>,
     toolchain_name: &str,
+    is_xtensa: bool,
     overlay_link_flags: &mut Vec<String>,
     build_log: &mut BuildLog,
 ) -> ShrinkRecord {
@@ -49,11 +50,36 @@ pub(crate) async fn resolve_shrink(
         // JSON then documents that shrink was considered and not applied.
         return printf_thin::record_for(mode, false);
     }
+    if !is_xtensa {
+        // Measured, not assumed: on ESP32-C6 (riscv32-esp-elf 14.2.0,
+        // ESP-IDF 5.5.5, arduino 3.3.12) linking newlib-nano pulled
+        // `_dtoa_r` + `_printf_float` back into the image and grew
+        // `firmware.bin` by 9,520 B, while the same source shrank by
+        // 23,149 B on esp32 and 23,028 B on esp32s3 (FastLED/fbuild#1459).
+        // Never apply a size reducer that grows the image; say so instead.
+        let warning = format!(
+            "WARNING: shrink: --shrink=printf is Xtensa-only; {toolchain_name} is \
+             RISC-V, where newlib-nano grows the image - building unshrunk \
+             (FastLED/fbuild#1459)"
+        );
+        build_log.push(warning.clone());
+        tracing::warn!("{warning}");
+        return printf_thin::record_for(mode, false);
+    }
     let available = printf_thin::probe_nano_specs(compiler, caller_path)
         .await
         .unwrap_or(false);
     if available {
         overlay_link_flags.extend(printf_thin::link_flags());
+        // The one place that may claim the reducer is linked: this module
+        // knows the architecture *and* the probe result. The CLI cannot (it
+        // would have to resolve board -> mcu -> arch), so it no longer
+        // previews the applied reducer -- see `fbuild-cli/cli/shrink_notice.rs`.
+        build_log.push(format!(
+            "shrink: --shrink=printf links newlib-nano ({}) instead of newlib's full \
+             _vfprintf_r/_svfprintf_r; float formatting kept via _printf_float",
+            printf_thin::SPECS_FLAG
+        ));
         return printf_thin::record_for(mode, true);
     }
     // Visible, not just filtered `tracing::warn!`: the request is being

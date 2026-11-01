@@ -905,19 +905,15 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &ctx.board,
         ));
 
-        // `--shrink=printf` (FastLED/fbuild#1459): switch the image onto the
-        // newlib-nano copy of libc that ships inside the same toolchain, so
-        // the full `_vfprintf_r`/`_svfprintf_r`/`_dtoa_r` cluster is replaced
-        // by newlib's own thin formatter. Opt-in only; `Auto` resolves to
-        // `Off`, so a default build never takes this path. The spec file is
-        // probed first: a toolchain without a nano variant builds unshrunk
-        // rather than failing the link on a missing spec file.
+        // `--shrink=printf` (FastLED/fbuild#1459): opt-in, probed, and
+        // arch-gated -- see `shrink_link::resolve_shrink`.
         let mut overlay_link_flags = ctx.overlay_link_flags.clone();
         let shrink_record = super::shrink_link::resolve_shrink(
             params.shrink,
             &toolchain.get_gcc_path(),
             params.caller_path.as_deref(),
             &toolchain_info.name,
+            mcu_config.is_xtensa(),
             &mut overlay_link_flags,
             &mut build_log,
         )
