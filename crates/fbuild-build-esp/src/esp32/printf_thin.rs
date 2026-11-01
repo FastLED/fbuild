@@ -19,9 +19,13 @@
 //! conversion specifier literally. We always link it so a build that
 //! shrinks still formats the same values.
 //!
-//! Divergences that remain (documented in the issue): nano has no wide-char
-//! or long-double support and rounds in double precision, like the vendor
-//! intends. `--shrink=auto` never selects this mode.
+//! Divergences that remain (documented in `shrink/README.md`): nano has no
+//! wide-char or long-double support and rounds in double precision, like the
+//! vendor intends. `--shrink=auto` never selects this mode.
+//!
+//! Availability is not the same as a win: RISC-V ESP32 targets ship a much
+//! smaller full formatter, and linking nano there *grows* the image (measured
+//! +9.5 KB on ESP32-C6). The caller gates on `McuConfig::is_xtensa()`.
 
 use std::path::Path;
 
@@ -46,7 +50,9 @@ pub const PROBE_ARG: &str = "-print-file-name=nano.specs";
 
 /// Whether the reducer applies to this resolved mode + platform.
 ///
-/// Only `--shrink=printf` opts in, and only on ESP32 (Xtensa/RISC-V newlib).
+/// Only `--shrink=printf` opts in, and only on ESP32. The architecture gate
+/// (`is_xtensa`) lives at the call site because it is a *measurement*, not a
+/// platform property: see `shrink/README.md`.
 #[must_use]
 pub fn applies(mode: ShrinkMode, platform: Platform) -> bool {
     mode == ShrinkMode::Printf && platform == Platform::Espressif32

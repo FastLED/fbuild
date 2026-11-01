@@ -414,7 +414,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--pypi-json", type=Path, required=True, help="saved /pypi/<name>/json")
     parser.add_argument("--version", default="", help="version being completed")
     parser.add_argument("--expected-wheels", type=int, default=0)
-    parser.add_argument("--wheel", type=Path, action="append", default=[], help="built wheel")
+    parser.add_argument(
+        "--wheel", type=Path, action="extend", nargs="+", default=[], help="built wheel(s)"
+    )
     parser.add_argument("--limit-bytes", type=int, default=PYPI_PROJECT_SIZE_LIMIT_BYTES)
     args = parser.parse_args(argv)
 
