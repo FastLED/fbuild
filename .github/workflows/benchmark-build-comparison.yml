@@ -30,6 +30,9 @@ env:
   ARDUINO_CLI_VERSION: '1.5.0'
   ARDUINO_AVR_CORE_VERSION: '1.8.8'
   ARDUINO_ESP32_CORE_VERSION: '3.3.7'
+  # Resolve against the registry index committed at this sha, not the copy
+  # this very workflow is about to publish (FastLED/fbuild#1829).
+  FBUILD_MIRROR_MANIFEST_URL: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/site/mirror/manifest.json
 
 jobs:
   benchmark:

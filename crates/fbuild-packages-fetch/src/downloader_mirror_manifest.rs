@@ -224,6 +224,12 @@ impl MirrorManifest {
         &self.entries
     }
 
+    /// Whether this Index carries the `@names-` shards of the registry
+    /// index format (#1829).
+    pub(crate) fn lists_names(&self) -> bool {
+        self.shards.keys().any(|key| key.starts_with("@names-"))
+    }
+
     /// `owner`'s shard (an Index key, see [`owner_key`]), telling an owner
     /// the Index does not list apart from a shard that could not be loaded.
     pub(crate) async fn owner_shard(&self, owner: &str) -> ShardLookup {
@@ -523,7 +529,9 @@ pub(super) fn cache_path(cache_root: &Path, sources: &[String]) -> NormalizedPat
     let key: String = digest[..8].iter().map(|b| format!("{b:02x}")).collect();
     NormalizedPath::new(cache_root)
         .join("mirror-manifest")
-        .join(format!("manifest-{key}.json"))
+        // `v2`: the registry index format (#1829); an older cached document
+        // has no `@names-` shards, so it must not be reused.
+        .join(format!("manifest-v2-{key}.json"))
 }
 
 /// The process-wide manifest, loaded on first use.
