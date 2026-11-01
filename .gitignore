@@ -34,6 +34,9 @@ libiconv-2.dll
 .pio/
 benchmark-output/
 benchmark-stats/
+# Mirror-manifest incremental hash/ETag record (FastLED/fbuild#1825): local
+# machine state for `ci/gen_mirror_manifest.py`, never published.
+site/.mirror-hashes.tsv
 tests/platform/*/build_info*.json
 
 # Local cargo cache
