@@ -201,6 +201,37 @@ impl RegistryClient {
         cache_root: &Path,
         fetch: bool,
     ) -> Result<Option<ResolvedPayload>, RegistryError> {
+        // Boxed `dyn Future`: compiled once instead of inlined per caller.
+        self.resolve_cached_boxed(spec, kind, system, cache_root, fetch)
+            .await
+    }
+
+    #[inline(never)]
+    fn resolve_cached_boxed<'a>(
+        &'a self,
+        spec: &'a RegistrySpec,
+        kind: PackageKind,
+        system: &'a str,
+        cache_root: &'a Path,
+        fetch: bool,
+    ) -> std::pin::Pin<
+        Box<
+            dyn std::future::Future<Output = Result<Option<ResolvedPayload>, RegistryError>>
+                + Send
+                + 'a,
+        >,
+    > {
+        Box::pin(self.resolve_cached_impl(spec, kind, system, cache_root, fetch))
+    }
+
+    async fn resolve_cached_impl(
+        &self,
+        spec: &RegistrySpec,
+        kind: PackageKind,
+        system: &str,
+        cache_root: &Path,
+        fetch: bool,
+    ) -> Result<Option<ResolvedPayload>, RegistryError> {
         let request = serde_json::to_vec(&(self.index.describe(), spec, kind, system))?;
         let key = format!("{:x}", Sha256::digest(request));
         let directory = cache_root.join("platformio-registry-resolutions");
