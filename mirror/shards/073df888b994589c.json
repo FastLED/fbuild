@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mkostersitz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mkostersitz/library/ESP32CAN/0.0.1/ESP32CAN-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32CAN-0.0.1.tar.gz",
+    "size_bytes": 10123,
+    "sha256": "b5f1838f4e0db5b6bfdaecbf4f47d0d4ef9c53f4a59efd53d3b801bd26a05468",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mkostersitz/library/ESP32CAN/0.0.1/ESP32CAN-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mkostersitz/library/ESP32CAN/0.0.1/ESP32CAN-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

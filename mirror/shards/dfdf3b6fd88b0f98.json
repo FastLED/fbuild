@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/guicaiala",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "guicaiala/library/AMRFID/1.0.0/AMRFID-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMRFID-1.0.0.tar.gz",
+    "size_bytes": 8308,
+    "sha256": "4022efce332c0191f1322b5ca43bcb88f625a9ddf104d8b6d874173bb2c81347",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/guicaiala/library/AMRFID/1.0.0/AMRFID-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/guicaiala/library/AMRFID/1.0.0/AMRFID-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

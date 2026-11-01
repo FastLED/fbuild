@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marineappliedresearch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marineappliedresearch/library/Naviguider_Compass_I2C/1.0.1/Naviguider_Compass_I2C-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Naviguider_Compass_I2C-1.0.1.tar.gz",
+    "size_bytes": 31499,
+    "sha256": "f7bd7165dd0dc369086334b16eed5f8d4e2b49440871d9084cc18f1f4cdf44a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marineappliedresearch/library/Naviguider_Compass_I2C/1.0.1/Naviguider_Compass_I2C-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/marineappliedresearch/library/Naviguider_Compass_I2C/1.0.1/Naviguider_Compass_I2C-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

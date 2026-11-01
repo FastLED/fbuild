@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/twilio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "twilio/library/Breakout%20Arduino%20Library/0.1.0/BreakoutArduinoLibrary-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BreakoutArduinoLibrary-0.1.0.tar.gz",
+    "size_bytes": 281427,
+    "sha256": "98c1559ef7262de5747ce0f27cd1af944d98280d4220baa5c6ce1c3b7dc9f82a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/twilio/library/Breakout%2520Arduino%2520Library/0.1.0/BreakoutArduinoLibrary-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/twilio/library/Breakout%20Arduino%20Library/0.1.0/BreakoutArduinoLibrary-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

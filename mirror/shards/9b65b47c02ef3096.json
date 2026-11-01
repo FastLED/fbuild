@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/8u9",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "8u9/library/ModBusTermostat/0.1.1/ModBusTermostat-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModBusTermostat-0.1.1.tar.gz",
+    "size_bytes": 5339,
+    "sha256": "61b81f030e2edb432d8ed890da2caf01752a463286d52b2ce5b37c01f25d9de9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/8u9/library/ModBusTermostat/0.1.1/ModBusTermostat-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/8u9/library/ModBusTermostat/0.1.1/ModBusTermostat-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "8u9/library/OpenThermLibrary%20barbieri.pro/1.1.8/OpenThermLibrarybarbieri.pro-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenThermLibrarybarbieri.pro-1.1.8.tar.gz",
+    "size_bytes": 11922,
+    "sha256": "acc24bf8590e1bbccc54fac93e9486f7ab26684b6e18153f98dfe1a9380810b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/8u9/library/OpenThermLibrary%2520barbieri.pro/1.1.8/OpenThermLibrarybarbieri.pro-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/8u9/library/OpenThermLibrary%20barbieri.pro/1.1.8/OpenThermLibrarybarbieri.pro-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "8u9/library/WebSocketSerial/0.0.2/WebSocketSerial-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebSocketSerial-0.0.2.tar.gz",
+    "size_bytes": 2392,
+    "sha256": "ec6e86365f7fffa1c2f12ee2c29d52d54299fe969251e57b2476941740678bb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/8u9/library/WebSocketSerial/0.0.2/WebSocketSerial-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/8u9/library/WebSocketSerial/0.0.2/WebSocketSerial-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "8u9/library/barbieri-framework/1.0.9/barbieri-framework-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "barbieri-framework-1.0.9.tar.gz",
+    "size_bytes": 44335,
+    "sha256": "c16230fa0560309352ab81436361e9e159b9bd04db8caf5afb694bf533276a79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/8u9/library/barbieri-framework/1.0.9/barbieri-framework-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/8u9/library/barbieri-framework/1.0.9/barbieri-framework-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

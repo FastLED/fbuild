@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maximecheramy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maximecheramy/library/ButtonManager/1.0.2/ButtonManager-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonManager-1.0.2.tar.gz",
+    "size_bytes": 2435,
+    "sha256": "fa5c1bb84ab1ebeb83f1bdd92f8b914c9a86d1d70c0c72b74f4ac8aff7b08b90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maximecheramy/library/ButtonManager/1.0.2/ButtonManager-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/maximecheramy/library/ButtonManager/1.0.2/ButtonManager-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

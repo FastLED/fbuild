@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-graeme88",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-graeme88/library/SHT21_ncleee/0.0.0+sha.03bbabb7b0b0/SHT21_ncleee-0.0.0+sha.03bbabb7b0b0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHT21_ncleee-0.0.0+sha.03bbabb7b0b0.tar.gz",
+    "size_bytes": 3752,
+    "sha256": "09e3d698e1d3c8aa6c17a60c7581e5f08e093e06891cf7851cca9bd11e1e6501",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-graeme88/library/SHT21_ncleee/0.0.0%2Bsha.03bbabb7b0b0/SHT21_ncleee-0.0.0%2Bsha.03bbabb7b0b0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-graeme88/library/SHT21_ncleee/0.0.0%2Bsha.03bbabb7b0b0/SHT21_ncleee-0.0.0%2Bsha.03bbabb7b0b0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

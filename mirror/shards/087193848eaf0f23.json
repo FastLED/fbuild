@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/himc29",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "himc29/library/AsyncBitMatrix/1.0.0/AsyncBitMatrix-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncBitMatrix-1.0.0.tar.gz",
+    "size_bytes": 2777,
+    "sha256": "bbad7610140da38159dc34d0fe5f0d5b3f72ee1cc9c37865abc4252f2e66be7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/himc29/library/AsyncBitMatrix/1.0.0/AsyncBitMatrix-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/himc29/library/AsyncBitMatrix/1.0.0/AsyncBitMatrix-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

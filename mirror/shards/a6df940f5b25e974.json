@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/exosite-garage",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "exosite-garage/library/Exosite/2.6.2/Exosite-2.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Exosite-2.6.2.tar.gz",
+    "size_bytes": 30080,
+    "sha256": "393d7a85eb7cb60c288ea3e74e8691f5039af6d2a502b7cdcc9b5022aa5de5cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exosite-garage/library/Exosite/2.6.2/Exosite-2.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/exosite-garage/library/Exosite/2.6.2/Exosite-2.6.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

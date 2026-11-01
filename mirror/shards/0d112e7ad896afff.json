@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mrfaptastic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/2.0.7/ESP32HUB75LEDMATRIXPANELDMADisplay-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32HUB75LEDMATRIXPANELDMADisplay-2.0.7.tar.gz",
+    "size_bytes": 271704,
+    "sha256": "9697a06c7ec4ab9589f34b92255391c4835ca16acd9cdf9d1c75b6fd712fb7c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrfaptastic/library/ESP32%2520HUB75%2520LED%2520MATRIX%2520PANEL%2520DMA%2520Display/2.0.7/ESP32HUB75LEDMATRIXPANELDMADisplay-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/2.0.7/ESP32HUB75LEDMATRIXPANELDMADisplay-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/3.0.0/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.0.tar.gz",
+    "size_bytes": 269781,
+    "sha256": "543e521ed214b7f37c58149109e23084d371082c18167503e5b76005a6211e6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrfaptastic/library/ESP32%2520HUB75%2520LED%2520MATRIX%2520PANEL%2520DMA%2520Display/3.0.0/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/3.0.0/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/3.0.11/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.11.tar.gz",
+    "size_bytes": 159036,
+    "sha256": "93f08fcd72ee678866746e643b24ea9c8a193b3b4d28862df772a0781fc75b3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrfaptastic/library/ESP32%2520HUB75%2520LED%2520MATRIX%2520PANEL%2520DMA%2520Display/3.0.11/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/3.0.11/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/3.0.12/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.12.tar.gz",
+    "size_bytes": 127349,
+    "sha256": "0e761ad1ad76ca149ed1130ecadaec242f967c1185ca1863dbb497419a5b2de6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrfaptastic/library/ESP32%2520HUB75%2520LED%2520MATRIX%2520PANEL%2520DMA%2520Display/3.0.12/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/3.0.12/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/3.0.13/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.13.tar.gz",
+    "size_bytes": 135813,
+    "sha256": "b698e592d4cc7c0d446e99943ea357e7dc581719131a60e91423eeafff177d37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrfaptastic/library/ESP32%2520HUB75%2520LED%2520MATRIX%2520PANEL%2520DMA%2520Display/3.0.13/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/3.0.13/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/3.0.14/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.14.tar.gz",
+    "size_bytes": 141032,
+    "sha256": "10c2322704a44a1c65fae0c817bff2d6f865e2b89712c1537b4893c5bfe8a6f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrfaptastic/library/ESP32%2520HUB75%2520LED%2520MATRIX%2520PANEL%2520DMA%2520Display/3.0.14/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/3.0.14/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/3.0.15/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.15.tar.gz",
+    "size_bytes": 141559,
+    "sha256": "3ea9933040c7c0532c0a21bcd57f8a4cf9daa0427374e8ccd0c576b1c246c285",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrfaptastic/library/ESP32%2520HUB75%2520LED%2520MATRIX%2520PANEL%2520DMA%2520Display/3.0.15/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/3.0.15/ESP32HUB75LEDMATRIXPANELDMADisplay-3.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/3.1.0/ESP32HUB75LEDMATRIXPANELDMADisplay-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32HUB75LEDMATRIXPANELDMADisplay-3.1.0.tar.gz",
+    "size_bytes": 151716,
+    "sha256": "0af02491f05958b39c5809fb92c7f40de59d5503e2d19de98f52621e716008c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrfaptastic/library/ESP32%2520HUB75%2520LED%2520MATRIX%2520PANEL%2520DMA%2520Display/3.1.0/ESP32HUB75LEDMATRIXPANELDMADisplay-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mrfaptastic/library/ESP32%20HUB75%20LED%20MATRIX%20PANEL%20DMA%20Display/3.1.0/ESP32HUB75LEDMATRIXPANELDMADisplay-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrfaptastic/library/Json%20Streaming%20Parser%202/2.1.1/JsonStreamingParser2-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JsonStreamingParser2-2.1.1.tar.gz",
+    "size_bytes": 20222,
+    "sha256": "23782b6c6125601cb9f209b043c8a8d84c3501b4465b822066ff7b496001b31c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrfaptastic/library/Json%2520Streaming%2520Parser%25202/2.1.1/JsonStreamingParser2-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mrfaptastic/library/Json%20Streaming%20Parser%202/2.1.1/JsonStreamingParser2-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrfaptastic/library/WiFiConnect%20Lite/1.0.0/WiFiConnectLite-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiConnectLite-1.0.0.tar.gz",
+    "size_bytes": 34185,
+    "sha256": "e19c4387ad8d935bad96532093a86281efa53bc9b6dfb81d337e71a2b9c097ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrfaptastic/library/WiFiConnect%2520Lite/1.0.0/WiFiConnectLite-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mrfaptastic/library/WiFiConnect%20Lite/1.0.0/WiFiConnectLite-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

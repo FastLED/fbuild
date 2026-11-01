@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vijayges",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vijayges/library/ESP32WiFiProvisioner/1.0.1/ESP32WiFiProvisioner-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32WiFiProvisioner-1.0.1.tar.gz",
+    "size_bytes": 3339,
+    "sha256": "d2ddae64103a3530344138a0f1ec99ccf067669ea4bb4e0ee0e24f1c9535d2fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vijayges/library/ESP32WiFiProvisioner/1.0.1/ESP32WiFiProvisioner-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vijayges/library/ESP32WiFiProvisioner/1.0.1/ESP32WiFiProvisioner-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vijayges/library/ESP32WiFiProvisioner/1.0.3/ESP32WiFiProvisioner-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32WiFiProvisioner-1.0.3.tar.gz",
+    "size_bytes": 4063,
+    "sha256": "d5b9538a6ad4abc7caa356d8105eb2e8bbf8a32aafc7697e7adbe359e435a374",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vijayges/library/ESP32WiFiProvisioner/1.0.3/ESP32WiFiProvisioner-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vijayges/library/ESP32WiFiProvisioner/1.0.3/ESP32WiFiProvisioner-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vijayges/library/ESP32WiFiProvisioner/1.0.4/ESP32WiFiProvisioner-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32WiFiProvisioner-1.0.4.tar.gz",
+    "size_bytes": 4102,
+    "sha256": "d296eabb016e1f7bda236f8bb1b8a037d695e7bd8eda9e02cdcbae80a86652ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vijayges/library/ESP32WiFiProvisioner/1.0.4/ESP32WiFiProvisioner-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vijayges/library/ESP32WiFiProvisioner/1.0.4/ESP32WiFiProvisioner-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

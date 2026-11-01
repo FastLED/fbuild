@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shrawankhambekar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shrawankhambekar/library/ESP32_CPWIFI/1.2.0/ESP32_CPWIFI-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_CPWIFI-1.2.0.tar.gz",
+    "size_bytes": 12884,
+    "sha256": "c96cbf5248706966defac37d77f9e9a74b556edb66e7119243d9f8e63f13de7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shrawankhambekar/library/ESP32_CPWIFI/1.2.0/ESP32_CPWIFI-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shrawankhambekar/library/ESP32_CPWIFI/1.2.0/ESP32_CPWIFI-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

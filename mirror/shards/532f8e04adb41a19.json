@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/unger1984",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "unger1984/library/NecDecoderHAL/2.1/NecDecoderHAL-2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NecDecoderHAL-2.1.tar.gz",
+    "size_bytes": 5538,
+    "sha256": "c4845478d72121c1cd1bf65b2f2f5612d12d33d5eb857dccec4fcd7cd9476598",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unger1984/library/NecDecoderHAL/2.1/NecDecoderHAL-2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unger1984/library/NecDecoderHAL/2.1/NecDecoderHAL-2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

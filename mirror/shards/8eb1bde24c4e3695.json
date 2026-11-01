@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yvesyuri",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yvesyuri/library/SevyCore/0.1.0-alpha/SevyCore-0.1.0-alpha.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevyCore-0.1.0-alpha.tar.gz",
+    "size_bytes": 6860,
+    "sha256": "79c7c365ee12a0c4ec200c5c25e0c9a6c0a30112edbc5e028278044818177bf7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yvesyuri/library/SevyCore/0.1.0-alpha/SevyCore-0.1.0-alpha.tar.gz",
+     "https://dl.registry.platformio.org/download/yvesyuri/library/SevyCore/0.1.0-alpha/SevyCore-0.1.0-alpha.tar.gz"
+    ]
+   }
+  }
+ ]
+}

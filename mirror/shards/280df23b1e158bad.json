@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/serhiile",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "serhiile/library/DFMiniMp3E/1.2.3/DFMiniMp3E-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFMiniMp3E-1.2.3.tar.gz",
+    "size_bytes": 18787,
+    "sha256": "dcaaaa1b4eb3f4f78e54f501cf7ff2d28a7add88f352f2d029c62e458662f4af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/serhiile/library/DFMiniMp3E/1.2.3/DFMiniMp3E-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/serhiile/library/DFMiniMp3E/1.2.3/DFMiniMp3E-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "serhiile/library/asyncHTTP/1.0.0/asyncHTTP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "asyncHTTP-1.0.0.tar.gz",
+    "size_bytes": 33784,
+    "sha256": "e52bf09f8bdfd7348d9474b9de62a4a080a7a2b1a3d5c60b57d237522d41bde7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/serhiile/library/asyncHTTP/1.0.0/asyncHTTP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/serhiile/library/asyncHTTP/1.0.0/asyncHTTP-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "serhiile/library/asyncTelegramAPI/1.0.0/asyncTelegramAPI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "asyncTelegramAPI-1.0.0.tar.gz",
+    "size_bytes": 35705,
+    "sha256": "c656ccf5a9f70769c224128cc3d30a7a6f3ba8e60b690c1e021a8bfb315338bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/serhiile/library/asyncTelegramAPI/1.0.0/asyncTelegramAPI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/serhiile/library/asyncTelegramAPI/1.0.0/asyncTelegramAPI-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "serhiile/library/microTelegramAPI/1.0.0/microTelegramAPI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microTelegramAPI-1.0.0.tar.gz",
+    "size_bytes": 15908,
+    "sha256": "c5915ec5d3ddebc1fb97c48ace1c808390d57f11ed08f0d86ae28949b1a6ae1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/serhiile/library/microTelegramAPI/1.0.0/microTelegramAPI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/serhiile/library/microTelegramAPI/1.0.0/microTelegramAPI-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "serhiile/library/microTelegramAPI/1.1.1/microTelegramAPI-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microTelegramAPI-1.1.1.tar.gz",
+    "size_bytes": 18706,
+    "sha256": "02b27c50a53bd4ac8ce31059bbb7db3a398847e142ac2a5a956c1a00fc7e2315",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/serhiile/library/microTelegramAPI/1.1.1/microTelegramAPI-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/serhiile/library/microTelegramAPI/1.1.1/microTelegramAPI-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "serhiile/library/microTelegramAPI/1.2.0/microTelegramAPI-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microTelegramAPI-1.2.0.tar.gz",
+    "size_bytes": 32440,
+    "sha256": "53b731ec5dcaf18584f5da7619c08f964db12722d48f926602b7a6b41a624f35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/serhiile/library/microTelegramAPI/1.2.0/microTelegramAPI-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/serhiile/library/microTelegramAPI/1.2.0/microTelegramAPI-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

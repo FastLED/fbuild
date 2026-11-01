@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/msteltman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "msteltman/library/ESP32Sampler/1.1.0/ESP32Sampler-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Sampler-1.1.0.tar.gz",
+    "size_bytes": 8794,
+    "sha256": "f7948a0c1d30191938c6b658d5b9ce7caa0ecdb5d439c848a616526cf2621803",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/msteltman/library/ESP32Sampler/1.1.0/ESP32Sampler-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/msteltman/library/ESP32Sampler/1.1.0/ESP32Sampler-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "msteltman/library/ESP32_FFT/0.0.0+20230204001517/ESP32_FFT-0.0.0+20230204001517.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_FFT-0.0.0+20230204001517.tar.gz",
+    "size_bytes": 10473,
+    "sha256": "516a6c6a420c327ba93a60951c78a52f219c49bc0386449940796e8db8ac6108",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/msteltman/library/ESP32_FFT/0.0.0%2B20230204001517/ESP32_FFT-0.0.0%2B20230204001517.tar.gz",
+     "https://dl.registry.platformio.org/download/msteltman/library/ESP32_FFT/0.0.0%2B20230204001517/ESP32_FFT-0.0.0%2B20230204001517.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "msteltman/library/SoundAnalyzer/1.0.0/SoundAnalyzer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoundAnalyzer-1.0.0.tar.gz",
+    "size_bytes": 28237,
+    "sha256": "91496bd3c5d9c0f6453a5f5f48c70df551c3f5689c258be7f4ed84f883dea2e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/msteltman/library/SoundAnalyzer/1.0.0/SoundAnalyzer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/msteltman/library/SoundAnalyzer/1.0.0/SoundAnalyzer-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

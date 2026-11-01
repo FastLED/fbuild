@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dave93cab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dave93cab/library/MCP23S17/0.0.0+sha.69ce30406dc8/MCP23S17-0.0.0+sha.69ce30406dc8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23S17-0.0.0+sha.69ce30406dc8.tar.gz",
+    "size_bytes": 4288,
+    "sha256": "c0c4d0b62129c148e1b5ef55c175308cf09c21a9bddd9dddc11dbff8bc043a5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dave93cab/library/MCP23S17/0.0.0%2Bsha.69ce30406dc8/MCP23S17-0.0.0%2Bsha.69ce30406dc8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dave93cab/library/MCP23S17/0.0.0%2Bsha.69ce30406dc8/MCP23S17-0.0.0%2Bsha.69ce30406dc8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

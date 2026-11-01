@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-januserasmus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-januserasmus/library/Console/0.0.0+sha.4624aed3b143/Console-0.0.0+sha.4624aed3b143.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Console-0.0.0+sha.4624aed3b143.tar.gz",
+    "size_bytes": 2809,
+    "sha256": "4a45bc37242869d8ffbe2304a2888227ea19e7037c9d1dca68dd44213bbd15f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-januserasmus/library/Console/0.0.0%2Bsha.4624aed3b143/Console-0.0.0%2Bsha.4624aed3b143.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-januserasmus/library/Console/0.0.0%2Bsha.4624aed3b143/Console-0.0.0%2Bsha.4624aed3b143.tar.gz"
+    ]
+   }
+  }
+ ]
+}

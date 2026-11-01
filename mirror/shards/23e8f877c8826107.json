@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/konikoni428",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "konikoni428/library/BM64%20Library/1.1.2/BM64Library-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BM64Library-1.1.2.tar.gz",
+    "size_bytes": 7473,
+    "sha256": "8dd0bc59a6df484007544d207eccc72704213cfeaaea1614ca4c3c76e6b673c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/konikoni428/library/BM64%2520Library/1.1.2/BM64Library-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/konikoni428/library/BM64%20Library/1.1.2/BM64Library-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

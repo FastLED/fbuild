@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thirstyice",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thirstyice/library/JVC-Stereo/1.0.0/JVC-Stereo-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JVC-Stereo-1.0.0.tar.gz",
+    "size_bytes": 1705,
+    "sha256": "26385a20531ef20e3256af444d3790285c64385c393931cc256c23c104a01f64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thirstyice/library/JVC-Stereo/1.0.0/JVC-Stereo-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thirstyice/library/JVC-Stereo/1.0.0/JVC-Stereo-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thirstyice/library/Olimex16x2/0.1.5/Olimex16x2-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Olimex16x2-0.1.5.tar.gz",
+    "size_bytes": 14828,
+    "sha256": "c8f34b0587056b6c59c62bf2d39c48e9ca2af7acba627c6af8c568b4015bd76e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thirstyice/library/Olimex16x2/0.1.5/Olimex16x2-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/thirstyice/library/Olimex16x2/0.1.5/Olimex16x2-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thirstyice/library/RedEye/0.1.2/RedEye-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RedEye-0.1.2.tar.gz",
+    "size_bytes": 18140,
+    "sha256": "fc4179cc4d144cecffe943e6ea5d56a97520246011e613b67256f2f1ce1f8533",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thirstyice/library/RedEye/0.1.2/RedEye-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thirstyice/library/RedEye/0.1.2/RedEye-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thirstyice/library/SimpleDecorator/0.1.0/SimpleDecorator-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleDecorator-0.1.0.tar.gz",
+    "size_bytes": 1789,
+    "sha256": "16ab3b6604f8b5694b0e90b29b293ca8f84dc40c59ad82902fbc845724797392",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thirstyice/library/SimpleDecorator/0.1.0/SimpleDecorator-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thirstyice/library/SimpleDecorator/0.1.0/SimpleDecorator-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thirstyice/library/TinyDMXSerial/1.5.3-tiny/TinyDMXSerial-1.5.3-tiny.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyDMXSerial-1.5.3-tiny.tar.gz",
+    "size_bytes": 16338,
+    "sha256": "22e51e42eb27d2c877de3ad3488fd62fc971b0ccaa12e3d1a70d7ddb72b7e308",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thirstyice/library/TinyDMXSerial/1.5.3-tiny/TinyDMXSerial-1.5.3-tiny.tar.gz",
+     "https://dl.registry.platformio.org/download/thirstyice/library/TinyDMXSerial/1.5.3-tiny/TinyDMXSerial-1.5.3-tiny.tar.gz"
+    ]
+   }
+  }
+ ]
+}

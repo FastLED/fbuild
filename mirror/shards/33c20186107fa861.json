@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xcoder123",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xcoder123/library/FlexiPlot%20Arduino%20Library/1.2.2/FlexiPlotArduinoLibrary-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlexiPlotArduinoLibrary-1.2.2.tar.gz",
+    "size_bytes": 12313,
+    "sha256": "21becfffaecaba8787a806f30247b71d72417e601b3026d5ea3154acb901c49c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xcoder123/library/FlexiPlot%2520Arduino%2520Library/1.2.2/FlexiPlotArduinoLibrary-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xcoder123/library/FlexiPlot%20Arduino%20Library/1.2.2/FlexiPlotArduinoLibrary-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

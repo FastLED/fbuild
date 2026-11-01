@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/daniel-amadeus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "daniel-amadeus/library/WeatherStation32/1.6.7/WeatherStation32-1.6.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WeatherStation32-1.6.7.tar.gz",
+    "size_bytes": 374073,
+    "sha256": "6a7f1314f6e7bd3d30e629732a3177df69a24c268b04d918df36749274850646",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daniel-amadeus/library/WeatherStation32/1.6.7/WeatherStation32-1.6.7.tar.gz",
+     "https://dl.registry.platformio.org/download/daniel-amadeus/library/WeatherStation32/1.6.7/WeatherStation32-1.6.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lendres",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lendres/library/BatteryMeter/1.0.0/BatteryMeter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BatteryMeter-1.0.0.tar.gz",
+    "size_bytes": 9910,
+    "sha256": "54251d47a06e16bd9148045e321fa0731b22b531c3831f318e97a1470d8ef559",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lendres/library/BatteryMeter/1.0.0/BatteryMeter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lendres/library/BatteryMeter/1.0.0/BatteryMeter-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lendres/library/BlinkSuite/1.0.0/BlinkSuite-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlinkSuite-1.0.0.tar.gz",
+    "size_bytes": 6163,
+    "sha256": "a008d7d7b7d07c561a3a3f6afd8bfb7bbd8f87ab56b60135e3fe421ed31949bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lendres/library/BlinkSuite/1.0.0/BlinkSuite-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lendres/library/BlinkSuite/1.0.0/BlinkSuite-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lendres/library/ButtonSuite/2.1.1/ButtonSuite-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonSuite-2.1.1.tar.gz",
+    "size_bytes": 14850,
+    "sha256": "791ce00d1b1668261842ebc63fd1f7c358aa5360f83d8044a4edc36f16d69c76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lendres/library/ButtonSuite/2.1.1/ButtonSuite-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lendres/library/ButtonSuite/2.1.1/ButtonSuite-2.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

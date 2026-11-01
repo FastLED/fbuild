@@ -1,0 +1,224 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vshymanskyy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vshymanskyy/library/BlynkESP8266/0.0.0-alpha+sha.06e621a432/BlynkESP8266-0.0.0-alphasha.06e621a432.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlynkESP8266-0.0.0-alphasha.06e621a432.tar.gz",
+    "size_bytes": 10567,
+    "sha256": "73dc0f967e1d8762fc87264634187ee0babe1a1034fe7a47b0a6567761521c6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/library/BlynkESP8266/0.0.0-alpha%2Bsha.06e621a432/BlynkESP8266-0.0.0-alphasha.06e621a432.tar.gz",
+     "https://dl.registry.platformio.org/download/vshymanskyy/library/BlynkESP8266/0.0.0-alpha%2Bsha.06e621a432/BlynkESP8266-0.0.0-alphasha.06e621a432.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vshymanskyy/library/Preferences/2.1.0/Preferences-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Preferences-2.1.0.tar.gz",
+    "size_bytes": 8740,
+    "sha256": "a5e40f5cbc858eed3f6c949fdca5698d12c8402c5c6fc8a0e5dd6e772cf7a5a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/library/Preferences/2.1.0/Preferences-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vshymanskyy/library/Preferences/2.1.0/Preferences-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vshymanskyy/library/Preferences/2.2.2/Preferences-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Preferences-2.2.2.tar.gz",
+    "size_bytes": 10320,
+    "sha256": "f81b71aa01545d9d6e12ffc4fdacacd6dda6a8b69605ef88988274fc5abe3cec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/library/Preferences/2.2.2/Preferences-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vshymanskyy/library/Preferences/2.2.2/Preferences-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vshymanskyy/library/Preferences/2.4.0/Preferences-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Preferences-2.4.0.tar.gz",
+    "size_bytes": 15077,
+    "sha256": "8408c8ca0013c6451cffd4c22ff731aa846bd8d9226d786bae769d1553b07a6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/library/Preferences/2.4.0/Preferences-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vshymanskyy/library/Preferences/2.4.0/Preferences-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vshymanskyy/library/StreamDebugger/1.0.1/StreamDebugger-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamDebugger-1.0.1.tar.gz",
+    "size_bytes": 2126,
+    "sha256": "76fc0c9926484f64cc8848d2e32be53a6d78626d57d324849434934b821ae1aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/library/StreamDebugger/1.0.1/StreamDebugger-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vshymanskyy/library/StreamDebugger/1.0.1/StreamDebugger-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vshymanskyy/library/TinyGSM/0.10.9/TinyGSM-0.10.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyGSM-0.10.9.tar.gz",
+    "size_bytes": 93700,
+    "sha256": "19859ba57f46c926a9fe0b12a6c46db885f0b96431f2a33e667e08d8bf309ea8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/library/TinyGSM/0.10.9/TinyGSM-0.10.9.tar.gz",
+     "https://dl.registry.platformio.org/download/vshymanskyy/library/TinyGSM/0.10.9/TinyGSM-0.10.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vshymanskyy/library/TinyGSM/0.11.5/TinyGSM-0.11.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyGSM-0.11.5.tar.gz",
+    "size_bytes": 104674,
+    "sha256": "414252870835818ac1fa1cc621e89cd5978093321236083319bbc13b14a22246",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/library/TinyGSM/0.11.5/TinyGSM-0.11.5.tar.gz",
+     "https://dl.registry.platformio.org/download/vshymanskyy/library/TinyGSM/0.11.5/TinyGSM-0.11.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vshymanskyy/library/TinyGSM/0.11.7/TinyGSM-0.11.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyGSM-0.11.7.tar.gz",
+    "size_bytes": 105231,
+    "sha256": "194be9b5da502f63142df6529949c17072ad2f4fff9e28f2b8e4776ced5ce762",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/library/TinyGSM/0.11.7/TinyGSM-0.11.7.tar.gz",
+     "https://dl.registry.platformio.org/download/vshymanskyy/library/TinyGSM/0.11.7/TinyGSM-0.11.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vshymanskyy/library/TinyGSM/0.12.0/TinyGSM-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyGSM-0.12.0.tar.gz",
+    "size_bytes": 116885,
+    "sha256": "d0b323c899d3bd5ed8992fce2b225b1613ffcec4206e753cb62ee66b57a80773",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/library/TinyGSM/0.12.0/TinyGSM-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vshymanskyy/library/TinyGSM/0.12.0/TinyGSM-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vshymanskyy/tool/tool-trice/0.62.3/tool-trice-darwin_arm64-0.62.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-trice-darwin_arm64-0.62.3.tar.gz",
+    "size_bytes": 2224301,
+    "sha256": "8da510e66f3cd22c49b75284598eb384288a8cd697686f5c323192a359014a17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-darwin_arm64-0.62.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-darwin_arm64-0.62.3.tar.gz"
+    ],
+    "provides": [
+     "darwin_arm64"
+    ]
+   }
+  },
+  {
+   "id": "vshymanskyy/tool/tool-trice/0.62.3/tool-trice-darwin_x86_64-0.62.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-trice-darwin_x86_64-0.62.3.tar.gz",
+    "size_bytes": 2316955,
+    "sha256": "fa3b0df25335799cd2715ac47c0f1adf47b8f278b9e85acc9c65f4443cc1bed3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-darwin_x86_64-0.62.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-darwin_x86_64-0.62.3.tar.gz"
+    ],
+    "provides": [
+     "darwin_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "vshymanskyy/tool/tool-trice/0.62.3/tool-trice-linux_aarch64-0.62.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-trice-linux_aarch64-0.62.3.tar.gz",
+    "size_bytes": 2021138,
+    "sha256": "9931b26e35a9e3536692f58501cefc92f638d2df789d481f714d6a7b4f298bfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-linux_aarch64-0.62.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-linux_aarch64-0.62.3.tar.gz"
+    ],
+    "provides": [
+     "linux_aarch64"
+    ]
+   }
+  },
+  {
+   "id": "vshymanskyy/tool/tool-trice/0.62.3/tool-trice-linux_armv7l-0.62.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-trice-linux_armv7l-0.62.3.tar.gz",
+    "size_bytes": 2019974,
+    "sha256": "07b8292ecdc9853b8289f9b9b61e51ba2d48b0830056d93115cec177e9c8d61d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-linux_armv7l-0.62.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-linux_armv7l-0.62.3.tar.gz"
+    ],
+    "provides": [
+     "linux_armv7l",
+     "linux_armv8l"
+    ]
+   }
+  },
+  {
+   "id": "vshymanskyy/tool/tool-trice/0.62.3/tool-trice-linux_x86_64-0.62.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-trice-linux_x86_64-0.62.3.tar.gz",
+    "size_bytes": 2210493,
+    "sha256": "435df48e61626229747d87cebf49ba1e4c6e0273090f567e537c31d0c8c9b9a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-linux_x86_64-0.62.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-linux_x86_64-0.62.3.tar.gz"
+    ],
+    "provides": [
+     "linux_x86_64"
+    ]
+   }
+  },
+  {
+   "id": "vshymanskyy/tool/tool-trice/0.62.3/tool-trice-windows_amd64-0.62.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tool-trice-windows_amd64-0.62.3.tar.gz",
+    "size_bytes": 2305552,
+    "sha256": "5f3af6407553d8027f6417b30facefa28320dbf1d1220c26dd82901056722d74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-windows_amd64-0.62.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vshymanskyy/tool/tool-trice/0.62.3/tool-trice-windows_amd64-0.62.3.tar.gz"
+    ],
+    "provides": [
+     "windows_amd64",
+     "windows_arm64"
+    ]
+   }
+  }
+ ]
+}

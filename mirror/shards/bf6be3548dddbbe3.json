@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-vishal1695",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-vishal1695/library/FastLED_min/1.0.0/FastLED_min-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLED_min-1.0.0.tar.gz",
+    "size_bytes": 5620,
+    "sha256": "de89b9ae17834658ee7224c0f2d8015eb14790880120db41210caff5da8f3702",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-vishal1695/library/FastLED_min/1.0.0/FastLED_min-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-vishal1695/library/FastLED_min/1.0.0/FastLED_min-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-vishal1695/library/mvswifi_esp32/1.0.0/mvswifi_esp32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mvswifi_esp32-1.0.0.tar.gz",
+    "size_bytes": 8306,
+    "sha256": "3e2f0cd4b2ee043d2a686b3a0534e0ac602338a5d1b22b6d985be4e3e1d8054c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-vishal1695/library/mvswifi_esp32/1.0.0/mvswifi_esp32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-vishal1695/library/mvswifi_esp32/1.0.0/mvswifi_esp32-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-vishal1695/library/mvswifi_esp8266/1.0.1/mvswifi_esp8266-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mvswifi_esp8266-1.0.1.tar.gz",
+    "size_bytes": 8479,
+    "sha256": "259646a00b81de2066d1fe317f5dc2fdf758fc552b8c4a06dd88432ff80fd437",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-vishal1695/library/mvswifi_esp8266/1.0.1/mvswifi_esp8266-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-vishal1695/library/mvswifi_esp8266/1.0.1/mvswifi_esp8266-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

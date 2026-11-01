@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cognitician",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cognitician/library/SmarTC_VEML6070/1.0.0/SmarTC_VEML6070-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmarTC_VEML6070-1.0.0.tar.gz",
+    "size_bytes": 3772,
+    "sha256": "242b872c8dcd8016f67ff408d0894b2058a34daaf33e0ddb0964b981427b581a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cognitician/library/SmarTC_VEML6070/1.0.0/SmarTC_VEML6070-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cognitician/library/SmarTC_VEML6070/1.0.0/SmarTC_VEML6070-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

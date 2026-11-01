@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cdonate",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cdonate/library/ITG3200/0.0.0+sha.044664f2cc01/ITG3200-0.0.0+sha.044664f2cc01.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ITG3200-0.0.0+sha.044664f2cc01.tar.gz",
+    "size_bytes": 2219,
+    "sha256": "25251e0233633732c235b2a9932cb70fc1a00c167a8eda4c318c0372fb8ec55a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cdonate/library/ITG3200/0.0.0%2Bsha.044664f2cc01/ITG3200-0.0.0%2Bsha.044664f2cc01.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cdonate/library/ITG3200/0.0.0%2Bsha.044664f2cc01/ITG3200-0.0.0%2Bsha.044664f2cc01.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-cdonate/library/kalman/0.0.0+sha.8a460b0d6f09/kalman-0.0.0+sha.8a460b0d6f09.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kalman-0.0.0+sha.8a460b0d6f09.tar.gz",
+    "size_bytes": 2566,
+    "sha256": "846e1a518d893d971a9a3a25e39a1f6b275a3ac74938c0422649ab5d3b04ec1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cdonate/library/kalman/0.0.0%2Bsha.8a460b0d6f09/kalman-0.0.0%2Bsha.8a460b0d6f09.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cdonate/library/kalman/0.0.0%2Bsha.8a460b0d6f09/kalman-0.0.0%2Bsha.8a460b0d6f09.tar.gz"
+    ]
+   }
+  }
+ ]
+}

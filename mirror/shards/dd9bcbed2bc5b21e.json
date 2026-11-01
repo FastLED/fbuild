@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-manitou",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-manitou/library/FastCRC/0.0.0+sha.1ce0f4ee7357/FastCRC-0.0.0+sha.1ce0f4ee7357.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastCRC-0.0.0+sha.1ce0f4ee7357.tar.gz",
+    "size_bytes": 34221,
+    "sha256": "8f3cf8231713c92841180b1f0c827d49cb64836bce62cde7208100719944a7d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-manitou/library/FastCRC/0.0.0%2Bsha.1ce0f4ee7357/FastCRC-0.0.0%2Bsha.1ce0f4ee7357.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-manitou/library/FastCRC/0.0.0%2Bsha.1ce0f4ee7357/FastCRC-0.0.0%2Bsha.1ce0f4ee7357.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-manitou/library/PulsePosition/0.0.0+sha.cb791d277230/PulsePosition-0.0.0+sha.cb791d277230.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulsePosition-0.0.0+sha.cb791d277230.tar.gz",
+    "size_bytes": 5418,
+    "sha256": "d52c1d1e0d937fad4bbc3c0628615a15959c843e983a348ac59288d581cffcfe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-manitou/library/PulsePosition/0.0.0%2Bsha.cb791d277230/PulsePosition-0.0.0%2Bsha.cb791d277230.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-manitou/library/PulsePosition/0.0.0%2Bsha.cb791d277230/PulsePosition-0.0.0%2Bsha.cb791d277230.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-manitou/library/SerialFlash/0.0.0+sha.e5c9fd5789d7/SerialFlash-0.0.0+sha.e5c9fd5789d7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialFlash-0.0.0+sha.e5c9fd5789d7.tar.gz",
+    "size_bytes": 8810,
+    "sha256": "1261a257fc17f26b0099b6a57ebea3830310729e30a8918dc1901ce2ff747f7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-manitou/library/SerialFlash/0.0.0%2Bsha.e5c9fd5789d7/SerialFlash-0.0.0%2Bsha.e5c9fd5789d7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-manitou/library/SerialFlash/0.0.0%2Bsha.e5c9fd5789d7/SerialFlash-0.0.0%2Bsha.e5c9fd5789d7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,464 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leva",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leva/library/LionArray/1.0.0/LionArray-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionArray-1.0.0.tar.gz",
+    "size_bytes": 7792,
+    "sha256": "c542c28508be12c0c0d0204fb73af3cf56a1decca6b0ddb92228c1e0dd00d869",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionArray/1.0.0/LionArray-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionArray/1.0.0/LionArray-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionArray/1.0.1/LionArray-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionArray-1.0.1.tar.gz",
+    "size_bytes": 8091,
+    "sha256": "f5ca3d2553973ddf25789c00464d7dd21a246ae8bf4a84f6265051cacacd99f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionArray/1.0.1/LionArray-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionArray/1.0.1/LionArray-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionArray/1.0.2/LionArray-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionArray-1.0.2.tar.gz",
+    "size_bytes": 8293,
+    "sha256": "719d02c8e8220ddb5ed44a255205e96c4fd9b00f0ac00e72a136d56f5c0a14a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionArray/1.0.2/LionArray-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionArray/1.0.2/LionArray-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionDallas/1.0.0/LionDallas-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionDallas-1.0.0.tar.gz",
+    "size_bytes": 12041,
+    "sha256": "5cb24921fcfce630ef6e71102cc31d58cdc9425046078b3bc93eb3a439b3263c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionDallas/1.0.0/LionDallas-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionDallas/1.0.0/LionDallas-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionDallas/1.1.0/LionDallas-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionDallas-1.1.0.tar.gz",
+    "size_bytes": 14015,
+    "sha256": "abd6ce55c9af45d3c6884758c0ee2943e0cf8e64bebd8aa41d7200722c0b7f6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionDallas/1.1.0/LionDallas-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionDallas/1.1.0/LionDallas-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionFastLcd/1.0.0/LionFastLcd-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionFastLcd-1.0.0.tar.gz",
+    "size_bytes": 9699,
+    "sha256": "f045e8863a93b08ea4b1e4a1d12b1484ba9a425c213c4879303e3ff3fa7b4fc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionFastLcd/1.0.0/LionFastLcd-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionFastLcd/1.0.0/LionFastLcd-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionLogger/1.0.0/LionLogger-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionLogger-1.0.0.tar.gz",
+    "size_bytes": 11649,
+    "sha256": "21a7e061a8f7ad8e1b7ed3f8d7f7ad6255f00222768609e250450db1f32613b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionLogger/1.0.0/LionLogger-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionLogger/1.0.0/LionLogger-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionLogger/1.0.1/LionLogger-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionLogger-1.0.1.tar.gz",
+    "size_bytes": 11804,
+    "sha256": "db223f5753f9cec5b24bd020e2918ee4bcb7e235c3118cd3c8ee8946744e4d46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionLogger/1.0.1/LionLogger-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionLogger/1.0.1/LionLogger-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionLogger/1.1.0/LionLogger-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionLogger-1.1.0.tar.gz",
+    "size_bytes": 13846,
+    "sha256": "6259b9357cfda323cff52af0c0b6d696e06bf6aaf535996bff1567e6585746aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionLogger/1.1.0/LionLogger-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionLogger/1.1.0/LionLogger-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionRtosTask/1.0.0/LionRtosTask-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionRtosTask-1.0.0.tar.gz",
+    "size_bytes": 7752,
+    "sha256": "719f6b11a510088edf0d08b47371b7b23bed447f35085c2aa4c5f44454cd95d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionRtosTask/1.0.0/LionRtosTask-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionRtosTask/1.0.0/LionRtosTask-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionStreams/1.0.0/LionStreams-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionStreams-1.0.0.tar.gz",
+    "size_bytes": 6728,
+    "sha256": "33f3ae89d9e270280a05ba02a394a19d36095888e5c8243a1153a330572a7c83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionStreams/1.0.0/LionStreams-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionStreams/1.0.0/LionStreams-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionStreams/1.1.0/LionStreams-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionStreams-1.1.0.tar.gz",
+    "size_bytes": 11128,
+    "sha256": "85f4ea6e7d72e00cdc6aa7e14259c6285e61d8e8890d0c513ad1e52043676e30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionStreams/1.1.0/LionStreams-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionStreams/1.1.0/LionStreams-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionStreams/1.2.0/LionStreams-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionStreams-1.2.0.tar.gz",
+    "size_bytes": 12897,
+    "sha256": "924a59775738d08b38686a9743e053dffe9979a647944dea2bd9396599ad7a7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionStreams/1.2.0/LionStreams-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionStreams/1.2.0/LionStreams-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionStreams/1.3.0/LionStreams-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionStreams-1.3.0.tar.gz",
+    "size_bytes": 14294,
+    "sha256": "13c81da11286409ae78b9c933a5a6a92b545ca149d2b3f2aa6fa9679e6f71ce3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionStreams/1.3.0/LionStreams-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionStreams/1.3.0/LionStreams-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionTask/1.0.0/LionTask-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionTask-1.0.0.tar.gz",
+    "size_bytes": 9775,
+    "sha256": "35a7169aa95799e1de06cd7a64e379f8838f469943da5dc1d6999014e1b1138b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionTask/1.0.0/LionTask-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionTask/1.0.0/LionTask-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionTask/1.1.0/LionTask-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionTask-1.1.0.tar.gz",
+    "size_bytes": 10837,
+    "sha256": "53bbf45d352d5823ff9e47de9380a268dad1ef445b324c45fb9762445a452000",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionTask/1.1.0/LionTask-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionTask/1.1.0/LionTask-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.0.0/LionWifi-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.0.0.tar.gz",
+    "size_bytes": 30321,
+    "sha256": "2356eaffcfd9f63804c154361919d4619560ee5f695ef7b55147918b1d85f41f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.0.0/LionWifi-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.0.0/LionWifi-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.1.0/LionWifi-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.1.0.tar.gz",
+    "size_bytes": 33729,
+    "sha256": "bbee9de8fad2bf24a3bf96922ca46ea55aa723b41cdfc408455d5f4f5a32e379",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.1.0/LionWifi-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.1.0/LionWifi-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.1.1/LionWifi-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.1.1.tar.gz",
+    "size_bytes": 35272,
+    "sha256": "bf7cac59f9cd94d16ba000a3a4c76d027e9bae3867eeb89b3c398ab8094e9015",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.1.1/LionWifi-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.1.1/LionWifi-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.2.0/LionWifi-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.2.0.tar.gz",
+    "size_bytes": 42729,
+    "sha256": "524c2e47582cfee6b29677606f29ea1d223607520e0e1439439f7fdba8536d69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.2.0/LionWifi-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.2.0/LionWifi-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.2.1/LionWifi-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.2.1.tar.gz",
+    "size_bytes": 45253,
+    "sha256": "587107a56f19ccf6e1f7fec70a5a8351fc1618ae711777a5ae54616ce879483b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.2.1/LionWifi-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.2.1/LionWifi-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.2.2/LionWifi-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.2.2.tar.gz",
+    "size_bytes": 45991,
+    "sha256": "f08ee77656ec4c653f31bfe838bebc03d8f6d52ced86e5e5e02ed7fdf8972eba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.2.2/LionWifi-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.2.2/LionWifi-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.3.0/LionWifi-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.3.0.tar.gz",
+    "size_bytes": 47107,
+    "sha256": "f4a36ab46b662a96b1c34c688ad9f064fcb3d803847e4cef5ee57ebda3b4b58f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.3.0/LionWifi-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.3.0/LionWifi-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.3.1/LionWifi-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.3.1.tar.gz",
+    "size_bytes": 49101,
+    "sha256": "6305187d170fc11d218b169575048bfbe89dea19dcc5aa87a1c5d278b6c60233",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.3.1/LionWifi-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.3.1/LionWifi-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.3.2/LionWifi-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.3.2.tar.gz",
+    "size_bytes": 50336,
+    "sha256": "f1c672eefd057eb8bd5c4e6d5cfa8639d678adc61b75181a869ff74f56378f3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.3.2/LionWifi-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.3.2/LionWifi-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.3.3/LionWifi-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.3.3.tar.gz",
+    "size_bytes": 50985,
+    "sha256": "c3945ec4615dd4203dfd0f1adff1ae16178cd2ce925797209e995621ee7b0acc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.3.3/LionWifi-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.3.3/LionWifi-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.3.4/LionWifi-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.3.4.tar.gz",
+    "size_bytes": 51697,
+    "sha256": "36a1530b3424c41e2668e12d5d26e91e1f924f9e5076d253814a6f78e387fbcd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.3.4/LionWifi-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.3.4/LionWifi-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.4.0/LionWifi-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.4.0.tar.gz",
+    "size_bytes": 56273,
+    "sha256": "b96caa3f837ee34a3c408ca9ea1d58858ebed9e7b64b0b26b03141b13c64292a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.4.0/LionWifi-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.4.0/LionWifi-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.5.0/LionWifi-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.5.0.tar.gz",
+    "size_bytes": 64080,
+    "sha256": "bde11e921f0bc0931a76165c57c04c3750edb0af57e3b08104015c0ad4d71842",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.5.0/LionWifi-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.5.0/LionWifi-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.6.0/LionWifi-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.6.0.tar.gz",
+    "size_bytes": 89719,
+    "sha256": "f8a36f69d5c060f9a353e9056c7ce07cf68d1cecf71bae9c059bd7dd30acb817",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.6.0/LionWifi-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.6.0/LionWifi-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.7.0/LionWifi-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.7.0.tar.gz",
+    "size_bytes": 92198,
+    "sha256": "846f57c0d50e125210174afb52cee35cc3fde1b722ddd38af17ed0342d5e3903",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.7.0/LionWifi-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.7.0/LionWifi-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.7.1/LionWifi-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.7.1.tar.gz",
+    "size_bytes": 93104,
+    "sha256": "f2e8cc6ac027fc51b0def1db388dba3aaa049cfd9659033fb883d3ac7ef32b2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.7.1/LionWifi-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.7.1/LionWifi-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.7.2/LionWifi-1.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.7.2.tar.gz",
+    "size_bytes": 93340,
+    "sha256": "6246f00d57c004284a0e8a00456b95f80ea88224533c4ed0a148c9f38fe6ce41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.7.2/LionWifi-1.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.7.2/LionWifi-1.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.8.0/LionWifi-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.8.0.tar.gz",
+    "size_bytes": 97005,
+    "sha256": "9628e3a45c4f54757fe1a7f07eb7c122fc2b3549c618bc52b649c3fe09a15305",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.8.0/LionWifi-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.8.0/LionWifi-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "leva/library/LionWifi/1.9.0/LionWifi-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LionWifi-1.9.0.tar.gz",
+    "size_bytes": 102011,
+    "sha256": "3c362f56b1ecf0aaf81417d801df2c7d83eacaefec07ff228a9fd24ac7012d34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leva/library/LionWifi/1.9.0/LionWifi-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leva/library/LionWifi/1.9.0/LionWifi-1.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/levosos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "levosos/library/Controlino/1.2.2/Controlino-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Controlino-1.2.2.tar.gz",
+    "size_bytes": 8908,
+    "sha256": "b1ea46c6ca79127c50c65640e3984f0fa2cf6872bf5e2614f48830bdb7f107c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/levosos/library/Controlino/1.2.2/Controlino-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/levosos/library/Controlino/1.2.2/Controlino-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "levosos/library/Midier/1.0.1/Midier-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Midier-1.0.1.tar.gz",
+    "size_bytes": 31367,
+    "sha256": "98997b2bb3179b4417b7ec3e301e8cabbe3c79b31f80084b71dd96a3c38f5b18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/levosos/library/Midier/1.0.1/Midier-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/levosos/library/Midier/1.0.1/Midier-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

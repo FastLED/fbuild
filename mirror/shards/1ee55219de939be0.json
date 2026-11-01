@@ -1,0 +1,334 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/uutzinger",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "uutzinger/library/AFE44XX%20library/1.0.0/AFE44XXlibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AFE44XXlibrary-1.0.0.tar.gz",
+    "size_bytes": 28020,
+    "sha256": "add3a95540be9f17672aba4fa67894cff338d818ad137d272cada42f34885f13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/AFE44XX%2520library/1.0.0/AFE44XXlibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/AFE44XX%20library/1.0.0/AFE44XXlibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/AFE44XX%20library/1.1.0/AFE44XXlibrary-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AFE44XXlibrary-1.1.0.tar.gz",
+    "size_bytes": 27489,
+    "sha256": "05f93bc0424171d589bbb012f040e82eff5876755e3edccb6450b450da51e16d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/AFE44XX%2520library/1.1.0/AFE44XXlibrary-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/AFE44XX%20library/1.1.0/AFE44XXlibrary-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/BLE%20Serial%20-%20NUS/1.0.0/BLESerial-NUS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLESerial-NUS-1.0.0.tar.gz",
+    "size_bytes": 30253,
+    "sha256": "8382ddbeb825f70a46dea1a4c5e562147d0af7807cf0058d4c9e0a312b448954",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/BLE%2520Serial%2520-%2520NUS/1.0.0/BLESerial-NUS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/BLE%20Serial%20-%20NUS/1.0.0/BLESerial-NUS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/BLE%20Serial%20-%20NUS/1.1.0/BLESerial-NUS-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLESerial-NUS-1.1.0.tar.gz",
+    "size_bytes": 72769,
+    "sha256": "d5e0218aa984e873c3d0ffda3a6576043fafd8e94b5a47c50f2ef86af2d6476b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/BLE%2520Serial%2520-%2520NUS/1.1.0/BLESerial-NUS-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/BLE%20Serial%20-%20NUS/1.1.0/BLESerial-NUS-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/BLE%20Serial%20-%20NUS/1.1.2/BLESerial-NUS-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLESerial-NUS-1.1.2.tar.gz",
+    "size_bytes": 48480,
+    "sha256": "03245d6c5d7dd1cac6f17df9c448ddb8bba70225fa0f3d47a022ab2c28b8413d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/BLE%2520Serial%2520-%2520NUS/1.1.2/BLESerial-NUS-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/BLE%20Serial%20-%20NUS/1.1.2/BLESerial-NUS-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/BLE%20Serial%20-%20NUS/1.2.0/BLESerial-NUS-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLESerial-NUS-1.2.0.tar.gz",
+    "size_bytes": 48709,
+    "sha256": "648e30a1535e8a7f63cb5c8ab6a0e3b78064a0ed6c7b18da1c49f37274f4aa95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/BLE%2520Serial%2520-%2520NUS/1.2.0/BLESerial-NUS-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/BLE%20Serial%20-%20NUS/1.2.0/BLESerial-NUS-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/BLE%20Serial%20-%20NUS/1.3.0/BLESerial-NUS-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLESerial-NUS-1.3.0.tar.gz",
+    "size_bytes": 52140,
+    "sha256": "6a0f261b6b1e785c6f95b6e4d27bd436bb211d07c1bd51b29b4e5cabcf8ab230",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/BLE%2520Serial%2520-%2520NUS/1.3.0/BLESerial-NUS-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/BLE%20Serial%20-%20NUS/1.3.0/BLESerial-NUS-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/BLE%20Serial%20-%20NUS/1.3.2/BLESerial-NUS-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLESerial-NUS-1.3.2.tar.gz",
+    "size_bytes": 67036,
+    "sha256": "f8ca03fbc1467a1c67c83939401eb2c230bc0224b168748d7afa26e6a522dd3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/BLE%2520Serial%2520-%2520NUS/1.3.2/BLESerial-NUS-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/BLE%20Serial%20-%20NUS/1.3.2/BLESerial-NUS-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/MAX30001/1.0.2/MAX30001-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30001-1.0.2.tar.gz",
+    "size_bytes": 98243,
+    "sha256": "616ed745077ee19852cbf3ababd9fee85e7dcaa94e6dac80851fd7f512ef3148",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/MAX30001/1.0.2/MAX30001-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/MAX30001/1.0.2/MAX30001-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/MAX30001/1.1.1/Arduino_MAX30001G-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_MAX30001G-1.1.1.tar.gz",
+    "size_bytes": 132732,
+    "sha256": "6e40456829601ad1865dfc37efe3bc4cc9031549e5952184d760d774404b269e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/MAX30001/1.1.1/Arduino_MAX30001G-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/MAX30001/1.1.1/Arduino_MAX30001G-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/MAX30001/1.2.0/Arduino_MAX30001G-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_MAX30001G-1.2.0.tar.gz",
+    "size_bytes": 148165,
+    "sha256": "d593c0d18ef6ddf566020db25b543eaa1c32abe3beb58a3fc016d93992b1e459",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/MAX30001/1.2.0/Arduino_MAX30001G-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/MAX30001/1.2.0/Arduino_MAX30001G-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/MAX30001/1.3.0/Arduino_MAX30001G-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_MAX30001G-1.3.0.tar.gz",
+    "size_bytes": 153931,
+    "sha256": "b462d727841797573b535067032abc994f8e5c050550eabd9eda79e10181339e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/MAX30001/1.3.0/Arduino_MAX30001G-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/MAX30001/1.3.0/Arduino_MAX30001G-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/MAX30001/1.3.1/MAX30001-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30001-1.3.1.tar.gz",
+    "size_bytes": 153949,
+    "sha256": "13c0266f5ceb413db8eba73f8dea72ffbab6fa07afda6feb45c7aff4d7192869",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/MAX30001/1.3.1/MAX30001-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/MAX30001/1.3.1/MAX30001-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/MAX30001/1.4.0/MAX30001-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30001-1.4.0.tar.gz",
+    "size_bytes": 202411,
+    "sha256": "ad08752a8ac02aa777c73fdde7327d5597466fe2cda362cc39206a9e1109348f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/MAX30001/1.4.0/MAX30001-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/MAX30001/1.4.0/MAX30001-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/MAX30001/1.4.1/MAX30001-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30001-1.4.1.tar.gz",
+    "size_bytes": 211539,
+    "sha256": "0e78b1ce2ee8e099e5a9195d49abda4d945fab92cc94a8360ae191d22f8fc3bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/MAX30001/1.4.1/MAX30001-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/MAX30001/1.4.1/MAX30001-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/MAX30001/1.4.2/MAX30001-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30001-1.4.2.tar.gz",
+    "size_bytes": 259630,
+    "sha256": "43ae8a6ea6c47096fe464be250f96ce12b1cfe0575acb6c426960ab3c02e6da1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/MAX30001/1.4.2/MAX30001-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/MAX30001/1.4.2/MAX30001-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/SavitzkyGolayFilter/1.3.2/SavitzkyGolayFilter-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SavitzkyGolayFilter-1.3.2.tar.gz",
+    "size_bytes": 28463,
+    "sha256": "b6b40c07783f7c0be96115c4d8768cb77d5d7a4b9566cc3808c0c114f9099d60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/SavitzkyGolayFilter/1.3.2/SavitzkyGolayFilter-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/SavitzkyGolayFilter/1.3.2/SavitzkyGolayFilter-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/UUtzinger_DRV8704/0.1.0/UUtzinger_DRV8704-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUtzinger_DRV8704-0.1.0.tar.gz",
+    "size_bytes": 36461,
+    "sha256": "2ea8fa0bd003748b6a73ed095315777d05f1c890222d7d49b6674915c05ac14e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/UUtzinger_DRV8704/0.1.0/UUtzinger_DRV8704-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/UUtzinger_DRV8704/0.1.0/UUtzinger_DRV8704-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/UUtzinger_DRV8704/0.1.1/UUtzinger_DRV8704-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUtzinger_DRV8704-0.1.1.tar.gz",
+    "size_bytes": 51762,
+    "sha256": "c4fd5b3ebbc94a7e37720559da02401d300f15b93b9f3eec5d9b3cc75594335c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/UUtzinger_DRV8704/0.1.1/UUtzinger_DRV8704-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/UUtzinger_DRV8704/0.1.1/UUtzinger_DRV8704-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/UUtzinger_RingBuffer/2.0.0/UUtzinger_RingBuffer-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUtzinger_RingBuffer-2.0.0.tar.gz",
+    "size_bytes": 7857,
+    "sha256": "c689c5f04278f6c1d18b6bdce4ff463c89bc7520242a7689eed6eb119d4096b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/UUtzinger_RingBuffer/2.0.0/UUtzinger_RingBuffer-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/UUtzinger_RingBuffer/2.0.0/UUtzinger_RingBuffer-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/UUtzinger_RingBuffer/2.0.1/UUtzinger_RingBuffer-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUtzinger_RingBuffer-2.0.1.tar.gz",
+    "size_bytes": 8004,
+    "sha256": "85eb47c36e6b45ae21368945460c0eb502e455ba9b37c0c4abb77a258190e032",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/UUtzinger_RingBuffer/2.0.1/UUtzinger_RingBuffer-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/UUtzinger_RingBuffer/2.0.1/UUtzinger_RingBuffer-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/UUtzinger_logger/2.0.0/UUtzinger_logger-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUtzinger_logger-2.0.0.tar.gz",
+    "size_bytes": 5642,
+    "sha256": "ec8bc863de57020bebadecb156261191e6f0c74c91a1c1ef9d1232ff066be6f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/UUtzinger_logger/2.0.0/UUtzinger_logger-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/UUtzinger_logger/2.0.0/UUtzinger_logger-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/UUtzinger_logger/2.1.0/UUtzinger_logger-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUtzinger_logger-2.1.0.tar.gz",
+    "size_bytes": 5897,
+    "sha256": "8f7ac2ca228751fb153e383060047957088c1bdf12d683ddfdcc3892b2c08f0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/UUtzinger_logger/2.1.0/UUtzinger_logger-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/UUtzinger_logger/2.1.0/UUtzinger_logger-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/UUtzinger_logger/2.2.0/UUtzinger_logger-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUtzinger_logger-2.2.0.tar.gz",
+    "size_bytes": 6919,
+    "sha256": "33e84867aabd34bcbdcc96accbc7860168b2624aa972de701eb423b11ae2e246",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/UUtzinger_logger/2.2.0/UUtzinger_logger-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/UUtzinger_logger/2.2.0/UUtzinger_logger-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "uutzinger/library/UUtzinger_logger/2.2.1/UUtzinger_logger-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UUtzinger_logger-2.2.1.tar.gz",
+    "size_bytes": 7041,
+    "sha256": "efafc2f2dd0be1e07c3f3d744e698252b65bd00a5453ecba17ec12467524a7b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/uutzinger/library/UUtzinger_logger/2.2.1/UUtzinger_logger-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/uutzinger/library/UUtzinger_logger/2.2.1/UUtzinger_logger-2.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

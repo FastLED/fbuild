@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jjones646",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jjones646/library/Radios/0.0.0+sha.4a3dbfbc30f1/Radios-0.0.0+sha.4a3dbfbc30f1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Radios-0.0.0+sha.4a3dbfbc30f1.tar.gz",
+    "size_bytes": 21058,
+    "sha256": "3dd69bdf00fc765e4bc79f609d7e4be22ddabcc6f7ceeb21526711b9b88be135",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jjones646/library/Radios/0.0.0%2Bsha.4a3dbfbc30f1/Radios-0.0.0%2Bsha.4a3dbfbc30f1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jjones646/library/Radios/0.0.0%2Bsha.4a3dbfbc30f1/Radios-0.0.0%2Bsha.4a3dbfbc30f1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jjones646/library/SX1509/0.0.0+sha.fd95a990c3b7/SX1509-0.0.0+sha.fd95a990c3b7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX1509-0.0.0+sha.fd95a990c3b7.tar.gz",
+    "size_bytes": 4340,
+    "sha256": "4e0484694b5628a532669e1c0b7e370c7ec3c4505dce0dbb5bc79f9cd0f06a7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jjones646/library/SX1509/0.0.0%2Bsha.fd95a990c3b7/SX1509-0.0.0%2Bsha.fd95a990c3b7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jjones646/library/SX1509/0.0.0%2Bsha.fd95a990c3b7/SX1509-0.0.0%2Bsha.fd95a990c3b7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jjones646/library/Wireless%20Drivers/0.0.0+sha.c42a035d71ed/WirelessDrivers-0.0.0+sha.c42a035d71ed.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WirelessDrivers-0.0.0+sha.c42a035d71ed.tar.gz",
+    "size_bytes": 30507,
+    "sha256": "ecd2a83448ed39ca9409bce34abdd8cd1a8fcc0de0d1ffcc404c09c0a3cbaa9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jjones646/library/Wireless%2520Drivers/0.0.0%2Bsha.c42a035d71ed/WirelessDrivers-0.0.0%2Bsha.c42a035d71ed.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jjones646/library/Wireless%20Drivers/0.0.0%2Bsha.c42a035d71ed/WirelessDrivers-0.0.0%2Bsha.c42a035d71ed.tar.gz"
+    ]
+   }
+  }
+ ]
+}

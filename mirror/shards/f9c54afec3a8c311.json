@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nerdsiah",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nerdsiah/library/NeoStreaming/1.0.0/NeoStreaming-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoStreaming-1.0.0.tar.gz",
+    "size_bytes": 18874,
+    "sha256": "9d19b8c7ae2dde288f187fc77baede9445c3fc9e7092bf1ed53a4cfb8cb5d468",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nerdsiah/library/NeoStreaming/1.0.0/NeoStreaming-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nerdsiah/library/NeoStreaming/1.0.0/NeoStreaming-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nerdsiah/library/NeoStreaming/1.0.1/NeoStreaming-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoStreaming-1.0.1.tar.gz",
+    "size_bytes": 18809,
+    "sha256": "f4deb76bc9dbb8a0ac52ff1221e45bdacda385d62f8d4a943561734a50570268",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nerdsiah/library/NeoStreaming/1.0.1/NeoStreaming-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nerdsiah/library/NeoStreaming/1.0.1/NeoStreaming-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nerdsiah/library/NeoStreaming/1.0.2/NeoStreaming-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoStreaming-1.0.2.tar.gz",
+    "size_bytes": 18803,
+    "sha256": "ff41330b5f8856ea1f9c28a381aa738bb2f823d6e2cdfeaa259123c1de4dcc1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nerdsiah/library/NeoStreaming/1.0.2/NeoStreaming-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nerdsiah/library/NeoStreaming/1.0.2/NeoStreaming-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

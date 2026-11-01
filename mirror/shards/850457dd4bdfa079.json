@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bmellink",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bmellink/library/IBusBM/1.1.4/IBusBM-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IBusBM-1.1.4.tar.gz",
+    "size_bytes": 482538,
+    "sha256": "c6d4ae2c9a6fe980fa5dd4b88ebc8f65dc9e5a31e16ac765bde7997505e85899",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bmellink/library/IBusBM/1.1.4/IBusBM-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/bmellink/library/IBusBM/1.1.4/IBusBM-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bmellink/library/VNH3SP30/1.0.1/VNH3SP30-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VNH3SP30-1.0.1.tar.gz",
+    "size_bytes": 17491,
+    "sha256": "fff6c9eca32b11201849815fab5aacb07fcfc058fa98c7c674db9b359fb2cdb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bmellink/library/VNH3SP30/1.0.1/VNH3SP30-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bmellink/library/VNH3SP30/1.0.1/VNH3SP30-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

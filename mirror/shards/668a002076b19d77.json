@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robobob68",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robobob68/library/LVGLPlusPlus/1.4.1/LVGLPlusPlus-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LVGLPlusPlus-1.4.1.tar.gz",
+    "size_bytes": 76281,
+    "sha256": "df1aaace621d53987e5e71813fa2a4cfc67bf3ad9aab8ed08b93de3ee9d3cdbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robobob68/library/LVGLPlusPlus/1.4.1/LVGLPlusPlus-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robobob68/library/LVGLPlusPlus/1.4.1/LVGLPlusPlus-1.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

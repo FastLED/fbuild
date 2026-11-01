@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nik-sharky",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nik-sharky/library/Log/1.0.1/Log-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Log-1.0.1.tar.gz",
+    "size_bytes": 2013,
+    "sha256": "92ccd266bacffa28995c15e6a59fa1cbf3558fd256fb915d3167592d903ab060",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nik-sharky/library/Log/1.0.1/Log-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nik-sharky/library/Log/1.0.1/Log-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

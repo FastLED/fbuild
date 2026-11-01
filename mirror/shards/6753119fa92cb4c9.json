@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vermut",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vermut/library/Modbus/1.0.0/Modbus-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modbus-1.0.0.tar.gz",
+    "size_bytes": 4887,
+    "sha256": "cdee6a288d1eca929d68b9824fea5ff2dfe70b8779e3d56aebf4320b1206afe4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vermut/library/Modbus/1.0.0/Modbus-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vermut/library/Modbus/1.0.0/Modbus-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vermut/library/ModbusIP/1.0.0/ModbusIP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusIP-1.0.0.tar.gz",
+    "size_bytes": 3384,
+    "sha256": "802f254316cd475b5effdcc2f0fbb3e0672a8a29f6f818650a69f40a3b574a0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vermut/library/ModbusIP/1.0.0/ModbusIP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vermut/library/ModbusIP/1.0.0/ModbusIP-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vermut/library/ModbusIP_ENC28J60/1.0.0/ModbusIP_ENC28J60-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusIP_ENC28J60-1.0.0.tar.gz",
+    "size_bytes": 3479,
+    "sha256": "f3e3f03f2622a19868a975f98d2004656137855b3dbcefbfbaeb441170a7bd10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vermut/library/ModbusIP_ENC28J60/1.0.0/ModbusIP_ENC28J60-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vermut/library/ModbusIP_ENC28J60/1.0.0/ModbusIP_ENC28J60-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vermut/library/ModbusIP_ESP8266/1.0.0/ModbusIP_ESP8266-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusIP_ESP8266-1.0.0.tar.gz",
+    "size_bytes": 3851,
+    "sha256": "6cba339406fc3c913ca2fd38fa18f93109d4193f9df6d928e50bfa5ab2e9426b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vermut/library/ModbusIP_ESP8266/1.0.0/ModbusIP_ESP8266-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vermut/library/ModbusIP_ESP8266/1.0.0/ModbusIP_ESP8266-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vermut/library/ModbusIP_ESP8266AT/1.0.1/ModbusIP_ESP8266AT-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusIP_ESP8266AT-1.0.1.tar.gz",
+    "size_bytes": 3379,
+    "sha256": "b1a118e74fe6ca4c2ad02567958b728d2b14b9db7aaeb7d266b8543b925f4837",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vermut/library/ModbusIP_ESP8266AT/1.0.1/ModbusIP_ESP8266AT-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vermut/library/ModbusIP_ESP8266AT/1.0.1/ModbusIP_ESP8266AT-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vermut/library/ModbusSerial/1.0.1/ModbusSerial-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusSerial-1.0.1.tar.gz",
+    "size_bytes": 4782,
+    "sha256": "9ef3a088e59dba7c65c8635455ce9a785d9aa7b86ea6bc6bb2f6b7abfa726f25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vermut/library/ModbusSerial/1.0.1/ModbusSerial-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vermut/library/ModbusSerial/1.0.1/ModbusSerial-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

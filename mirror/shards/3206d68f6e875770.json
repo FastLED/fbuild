@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kiryanenko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kiryanenko/library/SimpleTimer/1.0.0/SimpleTimer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleTimer-1.0.0.tar.gz",
+    "size_bytes": 2060,
+    "sha256": "cfbbd450efd5640f3628f1dcc5a46a5558344a68615fb2552c9bbb0ca5135a4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kiryanenko/library/SimpleTimer/1.0.0/SimpleTimer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kiryanenko/library/SimpleTimer/1.0.0/SimpleTimer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kiryanenko/library/TTP229/1.1.0/TTP229-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTP229-1.1.0.tar.gz",
+    "size_bytes": 2593,
+    "sha256": "9573f2895b6fa11f2604031b97de8fb46c0f259b6afd0d3fbdbd9d6b0ec97cc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kiryanenko/library/TTP229/1.1.0/TTP229-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kiryanenko/library/TTP229/1.1.0/TTP229-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

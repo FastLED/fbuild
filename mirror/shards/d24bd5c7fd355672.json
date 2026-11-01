@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/init-io",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "init-io/library/InitJson/1.0.0/InitJson-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InitJson-1.0.0.tar.gz",
+    "size_bytes": 6068,
+    "sha256": "c5663d7d7b410853a18208b911d09d48aebcc4384036b3d33f7d33cd209c06c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/init-io/library/InitJson/1.0.0/InitJson-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/init-io/library/InitJson/1.0.0/InitJson-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "init-io/library/InitMQTT/1.0.0/InitMQTT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InitMQTT-1.0.0.tar.gz",
+    "size_bytes": 5283,
+    "sha256": "6818f0c927580e0e66cecbdfa8519f1607afc6e9bc89ef28de4e78e034c6993d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/init-io/library/InitMQTT/1.0.0/InitMQTT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/init-io/library/InitMQTT/1.0.0/InitMQTT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "init-io/library/OTAEsp/1.0.2/OTAEsp-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OTAEsp-1.0.2.tar.gz",
+    "size_bytes": 4913,
+    "sha256": "a9b7f9328737b671d8eee9a5e11ac3338422ca659ad5b88753b5ec88ebe994fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/init-io/library/OTAEsp/1.0.2/OTAEsp-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/init-io/library/OTAEsp/1.0.2/OTAEsp-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "init-io/library/PinScribe/1.0.0/PinScribe-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinScribe-1.0.0.tar.gz",
+    "size_bytes": 6239,
+    "sha256": "e3428681834f5db4e8aeae64e6b624960d879a017a9481f0fe196d82d061f045",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/init-io/library/PinScribe/1.0.0/PinScribe-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/init-io/library/PinScribe/1.0.0/PinScribe-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

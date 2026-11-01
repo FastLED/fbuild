@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-renishaw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-renishaw/library/RenBuggy_Timed/0.0.0+sha.a413eedb9896/RenBuggy_Timed-0.0.0+sha.a413eedb9896.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RenBuggy_Timed-0.0.0+sha.a413eedb9896.tar.gz",
+    "size_bytes": 2215,
+    "sha256": "a32c7e81edb92393cdcbf48627862a389a7b5cff12063a4ba31e239168f74e79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-renishaw/library/RenBuggy_Timed/0.0.0%2Bsha.a413eedb9896/RenBuggy_Timed-0.0.0%2Bsha.a413eedb9896.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-renishaw/library/RenBuggy_Timed/0.0.0%2Bsha.a413eedb9896/RenBuggy_Timed-0.0.0%2Bsha.a413eedb9896.tar.gz"
+    ]
+   }
+  }
+ ]
+}

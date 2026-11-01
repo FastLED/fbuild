@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-emoninet2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-emoninet2/library/NRF24L01P/0.0.0+sha.795de307e97f/NRF24L01P-0.0.0+sha.795de307e97f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NRF24L01P-0.0.0+sha.795de307e97f.tar.gz",
+    "size_bytes": 7837,
+    "sha256": "d15bf20b49b4155a857539b0ec20288697c65b00f2cb8b0f39750a08fbaef4e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-emoninet2/library/NRF24L01P/0.0.0%2Bsha.795de307e97f/NRF24L01P-0.0.0%2Bsha.795de307e97f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-emoninet2/library/NRF24L01P/0.0.0%2Bsha.795de307e97f/NRF24L01P-0.0.0%2Bsha.795de307e97f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

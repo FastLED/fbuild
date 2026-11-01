@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/htmltiger",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "htmltiger/library/dhtESP32-rmt/2.0.2/dhtESP32-rmt-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dhtESP32-rmt-2.0.2.tar.gz",
+    "size_bytes": 3336,
+    "sha256": "be0fe4012eae6c7ae089274b1d5bacf5cdb565a550eb3ffaed13ecde88811bbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/htmltiger/library/dhtESP32-rmt/2.0.2/dhtESP32-rmt-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/htmltiger/library/dhtESP32-rmt/2.0.2/dhtESP32-rmt-2.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

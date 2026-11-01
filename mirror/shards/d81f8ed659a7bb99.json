@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cyrusbuilt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cyrusbuilt/library/ArduinoCrashMonitor/1.4.0/ArduinoCrashMonitor-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoCrashMonitor-1.4.0.tar.gz",
+    "size_bytes": 48086,
+    "sha256": "9a74c436b61484117ca555b9f529d406e1f616d10ebb93e2acc3ce4ce1811d2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyrusbuilt/library/ArduinoCrashMonitor/1.4.0/ArduinoCrashMonitor-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cyrusbuilt/library/ArduinoCrashMonitor/1.4.0/ArduinoCrashMonitor-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyrusbuilt/library/ArduinoHAF/1.1.9/ArduinoHAF-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoHAF-1.1.9.tar.gz",
+    "size_bytes": 66370,
+    "sha256": "d1f7817c983c01f07130f747f2f06bdc803c77227aa8a96c12448649c5abf212",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyrusbuilt/library/ArduinoHAF/1.1.9/ArduinoHAF-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/cyrusbuilt/library/ArduinoHAF/1.1.9/ArduinoHAF-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyrusbuilt/library/CrystalFontz632/1.0.3/CrystalFontz632-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CrystalFontz632-1.0.3.tar.gz",
+    "size_bytes": 47939,
+    "sha256": "bacbeb59aa7f24e136ef02a0e21aa1865a1bc763caf9a9016b89a876dbeb0049",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyrusbuilt/library/CrystalFontz632/1.0.3/CrystalFontz632-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cyrusbuilt/library/CrystalFontz632/1.0.3/CrystalFontz632-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyrusbuilt/library/CyMCP23016/1.0.1/CyMCP23016-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CyMCP23016-1.0.1.tar.gz",
+    "size_bytes": 6857,
+    "sha256": "3a49f91390ccf0fb8ded796b7d9df9d546ab44e8d66c382882d495bc2bf2f5fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyrusbuilt/library/CyMCP23016/1.0.1/CyMCP23016-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cyrusbuilt/library/CyMCP23016/1.0.1/CyMCP23016-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyrusbuilt/library/ESPCrashMonitor/1.0.2/ESPCrashMonitor-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPCrashMonitor-1.0.2.tar.gz",
+    "size_bytes": 46041,
+    "sha256": "8d6042a407adea0aa1e1d795cf6024369dc8f29853e3207ad5b27ffae319b605",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyrusbuilt/library/ESPCrashMonitor/1.0.2/ESPCrashMonitor-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cyrusbuilt/library/ESPCrashMonitor/1.0.2/ESPCrashMonitor-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyrusbuilt/library/HidProxWeigand/1.0.3/HidProxWeigand-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HidProxWeigand-1.0.3.tar.gz",
+    "size_bytes": 47826,
+    "sha256": "cf31b45d25de9537077a21fe140cd5f704aadc42ce220163a0662476ccaa7d33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyrusbuilt/library/HidProxWeigand/1.0.3/HidProxWeigand-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cyrusbuilt/library/HidProxWeigand/1.0.3/HidProxWeigand-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyrusbuilt/library/JoystickLib/1.0.3/JoystickLib-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JoystickLib-1.0.3.tar.gz",
+    "size_bytes": 46611,
+    "sha256": "2ebaf4ce4001be5e547b8346c0f9aace43b05bbaa978abfa04e5d1530f360082",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyrusbuilt/library/JoystickLib/1.0.3/JoystickLib-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cyrusbuilt/library/JoystickLib/1.0.3/JoystickLib-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cyrusbuilt/library/SAMCrashMonitor/1.0.1/SAMCrashMonitor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SAMCrashMonitor-1.0.1.tar.gz",
+    "size_bytes": 38341,
+    "sha256": "d1567a8b19d1c489d3ee4dcdd82a73685cccfd6c94deb33eadc33e545f7dddff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cyrusbuilt/library/SAMCrashMonitor/1.0.1/SAMCrashMonitor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cyrusbuilt/library/SAMCrashMonitor/1.0.1/SAMCrashMonitor-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

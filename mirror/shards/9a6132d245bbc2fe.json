@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ababdelo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ababdelo/library/ESPDiscordClient/1.0.0/ESPDiscordClient-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPDiscordClient-1.0.0.tar.gz",
+    "size_bytes": 8300,
+    "sha256": "29c639c1b6177dc06c60750ad7d95e17c92e8fa9cc32a74719d00e83e3c3cdbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ababdelo/library/ESPDiscordClient/1.0.0/ESPDiscordClient-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ababdelo/library/ESPDiscordClient/1.0.0/ESPDiscordClient-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ababdelo/library/ESPDiscordClient/1.1.0/ESPDiscordClient-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPDiscordClient-1.1.0.tar.gz",
+    "size_bytes": 9139,
+    "sha256": "cc073b6b18d460a12944d0433b8470dae67e0d3c9419928f1c1d39a305175086",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ababdelo/library/ESPDiscordClient/1.1.0/ESPDiscordClient-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ababdelo/library/ESPDiscordClient/1.1.0/ESPDiscordClient-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

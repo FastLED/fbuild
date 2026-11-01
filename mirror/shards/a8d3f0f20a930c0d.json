@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/herobrine-pixel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "herobrine-pixel/library/AudioCompass/1.0.3/AudioCompass-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AudioCompass-1.0.3.tar.gz",
+    "size_bytes": 4002,
+    "sha256": "66b0955b2769800381b74df247c15bd43a5817541a34bec9ce7e7f9e5bb96e47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/herobrine-pixel/library/AudioCompass/1.0.3/AudioCompass-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/herobrine-pixel/library/AudioCompass/1.0.3/AudioCompass-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "herobrine-pixel/library/BluetoothTonePlayer/1.0.2/BluetoothTonePlayer-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BluetoothTonePlayer-1.0.2.tar.gz",
+    "size_bytes": 5383,
+    "sha256": "b31c99333b2f105f48a0e7c0fe1b256267679200614d409a67be3f0fe90a4468",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/herobrine-pixel/library/BluetoothTonePlayer/1.0.2/BluetoothTonePlayer-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/herobrine-pixel/library/BluetoothTonePlayer/1.0.2/BluetoothTonePlayer-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "herobrine-pixel/library/LEDPatternLib/1.0.1/LEDPatternLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEDPatternLib-1.0.1.tar.gz",
+    "size_bytes": 4319,
+    "sha256": "838ffe0129d3aacc114386954655a9d328cf12e77266bd9cb636223caa1fcb29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/herobrine-pixel/library/LEDPatternLib/1.0.1/LEDPatternLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/herobrine-pixel/library/LEDPatternLib/1.0.1/LEDPatternLib-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "herobrine-pixel/library/LaserToMap360/1.0.1/LaserToMap360-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LaserToMap360-1.0.1.tar.gz",
+    "size_bytes": 3996,
+    "sha256": "fc1df3fe7bdafd971bcc2248101632fdffc4f130247a54d7578bf0086db2ed14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/herobrine-pixel/library/LaserToMap360/1.0.1/LaserToMap360-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/herobrine-pixel/library/LaserToMap360/1.0.1/LaserToMap360-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "herobrine-pixel/library/MultiGestureLib/1.0.0/MultiGestureLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiGestureLib-1.0.0.tar.gz",
+    "size_bytes": 7107,
+    "sha256": "32c2e3fe2dd1e57df9afbbc50bff77837e4313018fae03d6a6b5413008bec269",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/herobrine-pixel/library/MultiGestureLib/1.0.0/MultiGestureLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/herobrine-pixel/library/MultiGestureLib/1.0.0/MultiGestureLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "herobrine-pixel/library/TouchSensorLib/1.0.1/TouchSensorLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchSensorLib-1.0.1.tar.gz",
+    "size_bytes": 3822,
+    "sha256": "167f1a3381df08a3076f101b07ce9b83529bd4a96c51f2a9ae7edf777e44a7d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/herobrine-pixel/library/TouchSensorLib/1.0.1/TouchSensorLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/herobrine-pixel/library/TouchSensorLib/1.0.1/TouchSensorLib-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

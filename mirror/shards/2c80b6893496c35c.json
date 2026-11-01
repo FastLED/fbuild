@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jakkapan-a",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jakkapan-a/library/AssuraVisionSerial/1.0.1/AssuraVisionSerial-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AssuraVisionSerial-1.0.1.tar.gz",
+    "size_bytes": 15918,
+    "sha256": "32ab8ff33a7133c38701ffc7db41f911e63765dd9b4b7a26883b410c00326e2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jakkapan-a/library/AssuraVisionSerial/1.0.1/AssuraVisionSerial-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jakkapan-a/library/AssuraVisionSerial/1.0.1/AssuraVisionSerial-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jakkapan-a/library/TcBUTTON/1.1.1/TcBUTTON-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TcBUTTON-1.1.1.tar.gz",
+    "size_bytes": 7950,
+    "sha256": "f6701c2d7c619119416cc77c0be5219775ba4b83a9a8602c0d30b11332b142aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jakkapan-a/library/TcBUTTON/1.1.1/TcBUTTON-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jakkapan-a/library/TcBUTTON/1.1.1/TcBUTTON-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

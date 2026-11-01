@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gowired",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gowired/library/GoWired-lib/1.1.0/GoWired-lib-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GoWired-lib-1.1.0.tar.gz",
+    "size_bytes": 21556,
+    "sha256": "179471dea5f58a1a2de0e5d62686b4ba44f21b4e88e2576851b908bd77cff3b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gowired/library/GoWired-lib/1.1.0/GoWired-lib-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gowired/library/GoWired-lib/1.1.0/GoWired-lib-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

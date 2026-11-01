@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/djwinter29",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "djwinter29/library/IOFusion/0.1.0/IOFusion-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOFusion-0.1.0.tar.gz",
+    "size_bytes": 17629007,
+    "sha256": "cc092f1f3ed81af538e85f30d88483c1b3bd545c10303b119424fd980d98fa5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/djwinter29/library/IOFusion/0.1.0/IOFusion-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/djwinter29/library/IOFusion/0.1.0/IOFusion-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "djwinter29/library/IOFusion/0.1.1/IOFusion-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOFusion-0.1.1.tar.gz",
+    "size_bytes": 17631203,
+    "sha256": "3f041116609a94d522f87a7996299bfecf2bc3b009ae3cb1cc6c81b0eb97d1a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/djwinter29/library/IOFusion/0.1.1/IOFusion-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/djwinter29/library/IOFusion/0.1.1/IOFusion-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "djwinter29/library/IOFusion/0.1.2/IOFusion-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOFusion-0.1.2.tar.gz",
+    "size_bytes": 24981481,
+    "sha256": "c6557d4a25c0525ab4af341efc47bbc87e45f95829ca797ee9b4ba311c9d5235",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/djwinter29/library/IOFusion/0.1.2/IOFusion-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/djwinter29/library/IOFusion/0.1.2/IOFusion-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "djwinter29/library/IOFusion/0.1.5/IOFusion-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOFusion-0.1.5.tar.gz",
+    "size_bytes": 24978854,
+    "sha256": "67c859c579d1a9fa144b5f73daa5caf5f409c538cf5e02bb61e36c2d3a6a14e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/djwinter29/library/IOFusion/0.1.5/IOFusion-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/djwinter29/library/IOFusion/0.1.5/IOFusion-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "djwinter29/library/IOFusion/0.2.0/IOFusion-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOFusion-0.2.0.tar.gz",
+    "size_bytes": 24983890,
+    "sha256": "27538f8ae924f6331ae7caf14a371ab39f6c1c325511ef17240e4d035ba46261",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/djwinter29/library/IOFusion/0.2.0/IOFusion-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/djwinter29/library/IOFusion/0.2.0/IOFusion-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "djwinter29/library/IOFusion/0.2.5/IOFusion-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOFusion-0.2.5.tar.gz",
+    "size_bytes": 17723,
+    "sha256": "0aa53c7e0e9db75ddd9b8c7e460680d7e0e8c0340b4fd33685b6410de50bd476",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/djwinter29/library/IOFusion/0.2.5/IOFusion-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/djwinter29/library/IOFusion/0.2.5/IOFusion-0.2.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

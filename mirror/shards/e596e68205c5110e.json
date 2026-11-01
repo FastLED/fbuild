@@ -1,0 +1,399 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/deneyapkart",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "deneyapkart/library/Deneyap%205x7%20LED%20Matris/1.0.3/Deneyap5x7LEDMatris-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Deneyap5x7LEDMatris-1.0.3.tar.gz",
+    "size_bytes": 7134,
+    "sha256": "e6085ef67737544ea49e09026ddd6d1de19610c3ba3ee4aa4ae21876ee8acffa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%25205x7%2520LED%2520Matris/1.0.3/Deneyap5x7LEDMatris-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%205x7%20LED%20Matris/1.0.3/Deneyap5x7LEDMatris-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%205x7%20LED%20Matris/1.1.0/Deneyap5x7LEDMatris-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Deneyap5x7LEDMatris-1.1.0.tar.gz",
+    "size_bytes": 12862,
+    "sha256": "488a8ff8489374bec36f47f4ac7fb94578e6cc6023d95d6686069ee5686052cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%25205x7%2520LED%2520Matris/1.1.0/Deneyap5x7LEDMatris-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%205x7%20LED%20Matris/1.1.0/Deneyap5x7LEDMatris-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%206%20Eksen%20Alaletsel%20Olcum%20Birimi/1.0.2/Deneyap6EksenAlaletselOlcumBirimi-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Deneyap6EksenAlaletselOlcumBirimi-1.0.2.tar.gz",
+    "size_bytes": 15163,
+    "sha256": "bfd36171216a22d61be086fa9f7b74fe43b7bf6247bbc6828b533f86d7c9915f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%25206%2520Eksen%2520Alaletsel%2520Olcum%2520Birimi/1.0.2/Deneyap6EksenAlaletselOlcumBirimi-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%206%20Eksen%20Alaletsel%20Olcum%20Birimi/1.0.2/Deneyap6EksenAlaletselOlcumBirimi-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%209-Eksen%20Ataletsel%20Olcum%20Birimi/1.1.0/Deneyap9-EksenAtaletselOlcumBirimi-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Deneyap9-EksenAtaletselOlcumBirimi-1.1.0.tar.gz",
+    "size_bytes": 4886,
+    "sha256": "21d6378b78b6f6d9dae71489ebd00a996b06ba32925f1f228ec70f8fb68768ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%25209-Eksen%2520Ataletsel%2520Olcum%2520Birimi/1.1.0/Deneyap9-EksenAtaletselOlcumBirimi-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%209-Eksen%20Ataletsel%20Olcum%20Birimi/1.1.0/Deneyap9-EksenAtaletselOlcumBirimi-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Basinc%20Olcer/1.0.3/DeneyapBasincOlcer-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapBasincOlcer-1.0.3.tar.gz",
+    "size_bytes": 5643,
+    "sha256": "312e71d8e4548210f150fe89f235b0cb6fa71a427c99dd2c34635a2c6eec9469",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Basinc%2520Olcer/1.0.3/DeneyapBasincOlcer-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Basinc%20Olcer/1.0.3/DeneyapBasincOlcer-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Cift%20Kanalli%20Cizgi%20Algilayici/1.0.2/DeneyapCiftKanalliCizgiAlgilayici-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapCiftKanalliCizgiAlgilayici-1.0.2.tar.gz",
+    "size_bytes": 5834,
+    "sha256": "41c5accf672b61e7915a2898536cff5f4baa8d006af0c7d779a2cbba8a5ac5c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Cift%2520Kanalli%2520Cizgi%2520Algilayici/1.0.2/DeneyapCiftKanalliCizgiAlgilayici-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Cift%20Kanalli%20Cizgi%20Algilayici/1.0.2/DeneyapCiftKanalliCizgiAlgilayici-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Cift%20Kanalli%20Cizgi%20Algilayici/1.1.0/DeneyapCiftKanalliCizgiAlgilayici-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapCiftKanalliCizgiAlgilayici-1.1.0.tar.gz",
+    "size_bytes": 13659,
+    "sha256": "4499e31bed5def120c1564d9c88ce3975c56b18d2f32ba7e6e162f907f569155",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Cift%2520Kanalli%2520Cizgi%2520Algilayici/1.1.0/DeneyapCiftKanalliCizgiAlgilayici-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Cift%20Kanalli%20Cizgi%20Algilayici/1.1.0/DeneyapCiftKanalliCizgiAlgilayici-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Cift%20Kanalli%20Cizgi%20Algilayici/1.1.1/DeneyapCiftKanalliCizgiAlgilayici-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapCiftKanalliCizgiAlgilayici-1.1.1.tar.gz",
+    "size_bytes": 14566,
+    "sha256": "30d5117e66fd8ca7de3214a5831db67d93ac5e09ffbe572ba1250b1193197cfe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Cift%2520Kanalli%2520Cizgi%2520Algilayici/1.1.1/DeneyapCiftKanalliCizgiAlgilayici-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Cift%20Kanalli%20Cizgi%20Algilayici/1.1.1/DeneyapCiftKanalliCizgiAlgilayici-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Cift%20Kanalli%20Motor%20Surucu/1.1.2/DeneyapCiftKanalliMotorSurucu-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapCiftKanalliMotorSurucu-1.1.2.tar.gz",
+    "size_bytes": 9254,
+    "sha256": "50aec06fbfec9628f022470376704af4a81b51f1d0ef474e10da11cb4278ba7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Cift%2520Kanalli%2520Motor%2520Surucu/1.1.2/DeneyapCiftKanalliMotorSurucu-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Cift%20Kanalli%20Motor%20Surucu/1.1.2/DeneyapCiftKanalliMotorSurucu-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Derinlik%20Olcer/1.0.4/DeneyapDerinlikOlcer-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapDerinlikOlcer-1.0.4.tar.gz",
+    "size_bytes": 4337,
+    "sha256": "84bb9211fc9ccb08b4d79534814963d9e0737b8876e896f2851ee98139971c8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Derinlik%2520Olcer/1.0.4/DeneyapDerinlikOlcer-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Derinlik%20Olcer/1.0.4/DeneyapDerinlikOlcer-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Dokunmatik%20Tus%20Takimi/1.0.4/DeneyapDokunmatikTusTakimi-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapDokunmatikTusTakimi-1.0.4.tar.gz",
+    "size_bytes": 5600,
+    "sha256": "7cfb33aac93fc192bc9416318e2a2597fdfa78e572f41d6b075b0c05d4e86a4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Dokunmatik%2520Tus%2520Takimi/1.0.4/DeneyapDokunmatikTusTakimi-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Dokunmatik%20Tus%20Takimi/1.0.4/DeneyapDokunmatikTusTakimi-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Duman%20Dedektoru/1.0.2/DeneyapDumanDedektoru-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapDumanDedektoru-1.0.2.tar.gz",
+    "size_bytes": 5726,
+    "sha256": "24b44093dc99829984f9807059f0bb0a5fa4acbc16534af6416db1f1eb864185",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Duman%2520Dedektoru/1.0.2/DeneyapDumanDedektoru-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Duman%20Dedektoru/1.0.2/DeneyapDumanDedektoru-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20GPS%20ve%20GLONASS%20Konum%20Belirleyici/1.0.4/DeneyapGPSveGLONASSKonumBelirleyici-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapGPSveGLONASSKonumBelirleyici-1.0.4.tar.gz",
+    "size_bytes": 20006,
+    "sha256": "07e5c24ef064f10e8c3b26388daf0eb24148ddf6cc4ffc4d661aaf53819251a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520GPS%2520ve%2520GLONASS%2520Konum%2520Belirleyici/1.0.4/DeneyapGPSveGLONASSKonumBelirleyici-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20GPS%20ve%20GLONASS%20Konum%20Belirleyici/1.0.4/DeneyapGPSveGLONASSKonumBelirleyici-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Gercek%20Zamanli%20Saat/1.0.2/DeneyapGercekZamanliSaat-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapGercekZamanliSaat-1.0.2.tar.gz",
+    "size_bytes": 28602,
+    "sha256": "3fb1b8b88dbcf57fc99cfa9a11b402fc3135116e7b96cfb2fbc265d61ca08698",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Gercek%2520Zamanli%2520Saat/1.0.2/DeneyapGercekZamanliSaat-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Gercek%20Zamanli%20Saat/1.0.2/DeneyapGercekZamanliSaat-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Hareket%20Algilama/1.0.2/DeneyapHareketAlgilama-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapHareketAlgilama-1.0.2.tar.gz",
+    "size_bytes": 4959,
+    "sha256": "7d934908a9af111de1f70161ef9b495b454a88878c8aada68a4f71e69eb147a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Hareket%2520Algilama/1.0.2/DeneyapHareketAlgilama-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Hareket%20Algilama/1.0.2/DeneyapHareketAlgilama-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Hareket%20Isik%20Renk%20Algilayici%20Mesafe%20Olcer/1.0.2/DeneyapHareketIsikRenkAlgilayiciMesafeOlcer-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapHareketIsikRenkAlgilayiciMesafeOlcer-1.0.2.tar.gz",
+    "size_bytes": 8072,
+    "sha256": "27d6b3027c69280c661b06635c66afa82738758778f0ea757bede35fcc91a0f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Hareket%2520Isik%2520Renk%2520Algilayici%2520Mesafe%2520Olcer/1.0.2/DeneyapHareketIsikRenkAlgilayiciMesafeOlcer-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Hareket%20Isik%20Renk%20Algilayici%20Mesafe%20Olcer/1.0.2/DeneyapHareketIsikRenkAlgilayiciMesafeOlcer-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Hoparlor/2.0.1/DeneyapHoparlor-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapHoparlor-2.0.1.tar.gz",
+    "size_bytes": 1427087,
+    "sha256": "6fc2808b5e5b6aef76a5e1a2146bab56797ae4cf33d349819459abae805e13ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Hoparlor/2.0.1/DeneyapHoparlor-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Hoparlor/2.0.1/DeneyapHoparlor-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Kizilotesi%20Alici%20Verici/1.0.4/DeneyapKizilotesiAliciVerici-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapKizilotesiAliciVerici-1.0.4.tar.gz",
+    "size_bytes": 5635,
+    "sha256": "7cbca72d8045de78fcf82134ea2e4298035717bb25e7a839782ea05e34ec0669",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Kizilotesi%2520Alici%2520Verici/1.0.4/DeneyapKizilotesiAliciVerici-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Kizilotesi%20Alici%20Verici/1.0.4/DeneyapKizilotesiAliciVerici-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Kumanda%20Kolu/1.0.2/DeneyapKumandaKolu-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapKumandaKolu-1.0.2.tar.gz",
+    "size_bytes": 5355,
+    "sha256": "a0abdcb3f659f4899c143773803591b2fb4b44c6a58b1adbf17baeb373e5effc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Kumanda%2520Kolu/1.0.2/DeneyapKumandaKolu-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Kumanda%20Kolu/1.0.2/DeneyapKumandaKolu-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Mesafe%20Olcer%20Isik%20Algilayici/1.0.2/DeneyapMesafeOlcerIsikAlgilayici-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapMesafeOlcerIsikAlgilayici-1.0.2.tar.gz",
+    "size_bytes": 5765,
+    "sha256": "fbd8e4c7b0be34708b78b184971ae0e8c4113be14b6b40ac8f67b04d3e4fc899",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Mesafe%2520Olcer%2520Isik%2520Algilayici/1.0.2/DeneyapMesafeOlcerIsikAlgilayici-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Mesafe%20Olcer%20Isik%20Algilayici/1.0.2/DeneyapMesafeOlcerIsikAlgilayici-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Mikrofon/1.0.4/DeneyapMikrofon-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapMikrofon-1.0.4.tar.gz",
+    "size_bytes": 5135,
+    "sha256": "c376ce33d25cbac476beb1bfdf7a628911166a8047539244a60324007a9ab682",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Mikrofon/1.0.4/DeneyapMikrofon-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Mikrofon/1.0.4/DeneyapMikrofon-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20OLED%20Ekran/1.0.6/DeneyapOLEDEkran-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapOLEDEkran-1.0.6.tar.gz",
+    "size_bytes": 17035,
+    "sha256": "30bc8dd328d666edf26ed5b477e0540ea04cc722d2d0436e525f432136ad644c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520OLED%2520Ekran/1.0.6/DeneyapOLEDEkran-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20OLED%20Ekran/1.0.6/DeneyapOLEDEkran-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Renk%20Donusturme/1.0.1/DeneyapRenkDonusturme-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapRenkDonusturme-1.0.1.tar.gz",
+    "size_bytes": 6860,
+    "sha256": "0a598d5402fbaeca52c5626e575456f7928a3bbb48ee19a50f89219637dbad9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Renk%2520Donusturme/1.0.1/DeneyapRenkDonusturme-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Renk%20Donusturme/1.0.1/DeneyapRenkDonusturme-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Role/1.0.3/DeneyapRole-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapRole-1.0.3.tar.gz",
+    "size_bytes": 4976,
+    "sha256": "a4568926aeda97c02f6163ba2477de0ff28c803bae128065d34e574afe109390",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Role/1.0.3/DeneyapRole-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Role/1.0.3/DeneyapRole-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Servo/1.1.1/DeneyapServo-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapServo-1.1.1.tar.gz",
+    "size_bytes": 4717,
+    "sha256": "133b9c30e692558d19d02abb0a89a50bfcf54f71c60548fe1179486dbec07371",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Servo/1.1.1/DeneyapServo-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Servo/1.1.1/DeneyapServo-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Sicaklik%20Nem%20Basinc%20Olcer/1.0.3/DeneyapSicaklikNemBasincOlcer-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapSicaklikNemBasincOlcer-1.0.3.tar.gz",
+    "size_bytes": 7708,
+    "sha256": "c6c43cba6e7faf4db43c31040335776b295c36c843ba309a3c40111ae26a673a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Sicaklik%2520Nem%2520Basinc%2520Olcer/1.0.3/DeneyapSicaklikNemBasincOlcer-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Sicaklik%20Nem%20Basinc%20Olcer/1.0.3/DeneyapSicaklikNemBasincOlcer-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Sicaklik%20Nem%20Olcer/1.0.3/DeneyapSicaklikNemOlcer-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapSicaklikNemOlcer-1.0.3.tar.gz",
+    "size_bytes": 4688,
+    "sha256": "f423b4a956cd4154a59fdd4d2868bac3bfef068fa799c3348cc9c8b3d817b97c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Sicaklik%2520Nem%2520Olcer/1.0.3/DeneyapSicaklikNemOlcer-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Sicaklik%20Nem%20Olcer/1.0.3/DeneyapSicaklikNemOlcer-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Toprak%20Nemi%20Olcer/1.0.4/DeneyapToprakNemiOlcer-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapToprakNemiOlcer-1.0.4.tar.gz",
+    "size_bytes": 4866,
+    "sha256": "f44278febbb6bc915dfd3dca5b3162bd5a8e35bb620d8860c5f4ca68c7a4f018",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Toprak%2520Nemi%2520Olcer/1.0.4/DeneyapToprakNemiOlcer-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Toprak%20Nemi%20Olcer/1.0.4/DeneyapToprakNemiOlcer-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Ultraviyole%20Isik%20Algilayici/1.0.3/DeneyapUltraviyoleIsikAlgilayici-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapUltraviyoleIsikAlgilayici-1.0.3.tar.gz",
+    "size_bytes": 7853,
+    "sha256": "127ce78305f42d343e9c1588dc9f5612db6b1abd63f787376f5e1adf8c8edbcf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Ultraviyole%2520Isik%2520Algilayici/1.0.3/DeneyapUltraviyoleIsikAlgilayici-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Ultraviyole%20Isik%20Algilayici/1.0.3/DeneyapUltraviyoleIsikAlgilayici-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "deneyapkart/library/Deneyap%20Yagmur%20Algilayici/1.0.4/DeneyapYagmurAlgilayici-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeneyapYagmurAlgilayici-1.0.4.tar.gz",
+    "size_bytes": 5059,
+    "sha256": "6a91cab0ff236c095ece13049a29fed0121b9b49954bb6fb684917eeba27a75f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/deneyapkart/library/Deneyap%2520Yagmur%2520Algilayici/1.0.4/DeneyapYagmurAlgilayici-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/deneyapkart/library/Deneyap%20Yagmur%20Algilayici/1.0.4/DeneyapYagmurAlgilayici-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

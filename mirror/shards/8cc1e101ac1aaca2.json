@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/elpaso",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "elpaso/library/Rtc_Pcf8563/0.0.0-alpha+sha.6b5adc2ced/Rtc_Pcf8563-0.0.0-alphasha.6b5adc2ced.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rtc_Pcf8563-0.0.0-alphasha.6b5adc2ced.tar.gz",
+    "size_bytes": 8975,
+    "sha256": "51db0ff59af43133b877ae6cc92d24d44152290bad3fae5574f017cd0f0a148b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/elpaso/library/Rtc_Pcf8563/0.0.0-alpha%2Bsha.6b5adc2ced/Rtc_Pcf8563-0.0.0-alphasha.6b5adc2ced.tar.gz",
+     "https://dl.registry.platformio.org/download/elpaso/library/Rtc_Pcf8563/0.0.0-alpha%2Bsha.6b5adc2ced/Rtc_Pcf8563-0.0.0-alphasha.6b5adc2ced.tar.gz"
+    ]
+   }
+  }
+ ]
+}

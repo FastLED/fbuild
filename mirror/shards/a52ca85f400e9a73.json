@@ -1,0 +1,3896 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gyverlibs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gyverlibs/library/AccelMotor/1.3/AccelMotor-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AccelMotor-1.3.tar.gz",
+    "size_bytes": 11143,
+    "sha256": "e3c99ef8c2ea65fe481face60ade78869f136434b4888e745d5f3b597a5b0502",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/AccelMotor/1.3/AccelMotor-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/AccelMotor/1.3/AccelMotor-1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/AnalogKey/1.1/AnalogKey-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogKey-1.1.tar.gz",
+    "size_bytes": 4495,
+    "sha256": "0c70c86da40f78dc10404a811d23970c1a3ddced274b9f82ad7a753d83bb5d3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/AnalogKey/1.1/AnalogKey-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/AnalogKey/1.1/AnalogKey-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Any/1.0.0/Any-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Any-1.0.0.tar.gz",
+    "size_bytes": 8725,
+    "sha256": "2e075e2b78ddda837e4db83e54c7c629e1125297602d5899338f088b540d29ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Any/1.0.0/Any-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Any/1.0.0/Any-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Approxy/1.1.1/Approxy-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Approxy-1.1.1.tar.gz",
+    "size_bytes": 8047,
+    "sha256": "6f419df7ac369c695603e77d94084a7480b72f4a23be40c67851f7c0aa7c3d80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Approxy/1.1.1/Approxy-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Approxy/1.1.1/Approxy-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Approxy/1.1.2/Approxy-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Approxy-1.1.2.tar.gz",
+    "size_bytes": 8248,
+    "sha256": "3445fec485d66be1d04ce84822d5a1fa799803ed3ea8fdc66a8bbab9ba26c03f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Approxy/1.1.2/Approxy-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Approxy/1.1.2/Approxy-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/AsyncStream/1.1.1/AsyncStream-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncStream-1.1.1.tar.gz",
+    "size_bytes": 6473,
+    "sha256": "192c961d8d261cf12fa97f3d46e7c4ec8753f7f0eeb11120a8455180660e62f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/AsyncStream/1.1.1/AsyncStream-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/AsyncStream/1.1.1/AsyncStream-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/AsyncStream/1.1.2/AsyncStream-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncStream-1.1.2.tar.gz",
+    "size_bytes": 7262,
+    "sha256": "74e470b8bbcbfae2f3b1a9d2534cbefa59f5e342423e28fd9fb3d29281fef57a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/AsyncStream/1.1.2/AsyncStream-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/AsyncStream/1.1.2/AsyncStream-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/AutoOTA/1.2.0/AutoOTA-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AutoOTA-1.2.0.tar.gz",
+    "size_bytes": 9830,
+    "sha256": "846bb6ab32015fe3eb0f08fe5b4c0557349d3dd09ee6e1eb5a457358a52eedb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/AutoOTA/1.2.0/AutoOTA-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/AutoOTA/1.2.0/AutoOTA-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BLESerial_ESP32/1.0.0/BLESerial_ESP32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLESerial_ESP32-1.0.0.tar.gz",
+    "size_bytes": 1893,
+    "sha256": "c3192e166ff439bd0cf2198b6676750c6bf82be1264503560b84ccf222b38c1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BLESerial_ESP32/1.0.0/BLESerial_ESP32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BLESerial_ESP32/1.0.0/BLESerial_ESP32-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BLESerial_ESP32/1.0.2/BLESerial_ESP32-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLESerial_ESP32-1.0.2.tar.gz",
+    "size_bytes": 1911,
+    "sha256": "a0731511f339c8b2a3f0b87d696b942000fe76fde277c5e59792de55af1e443f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BLESerial_ESP32/1.0.2/BLESerial_ESP32-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BLESerial_ESP32/1.0.2/BLESerial_ESP32-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BSON/2.2.3/BSON-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSON-2.2.3.tar.gz",
+    "size_bytes": 12990,
+    "sha256": "71a7fceab688251bbf8254d50ab750eef33d87bb8d040906c2d5e52521d7194e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BSON/2.2.3/BSON-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BSON/2.2.3/BSON-2.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BSON/2.2.4/BSON-2.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSON-2.2.4.tar.gz",
+    "size_bytes": 13006,
+    "sha256": "365ba316c46b0ea774ec13c0644ee77e986607932544a97e20911cddf9359d33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BSON/2.2.4/BSON-2.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BSON/2.2.4/BSON-2.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BSON/2.2.5/BSON-2.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSON-2.2.5.tar.gz",
+    "size_bytes": 13017,
+    "sha256": "2967bf6cb1f88c42120285ec9dbc1531c48286386c01dba7250edeb4eba186da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BSON/2.2.5/BSON-2.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BSON/2.2.5/BSON-2.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BSON/2.3.0/BSON-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSON-2.3.0.tar.gz",
+    "size_bytes": 14309,
+    "sha256": "d75c871ab6c66f24dd012c40de5a60736bb90494f65105d63f65e279a9f28914",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BSON/2.3.0/BSON-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BSON/2.3.0/BSON-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BSON/2.3.1/BSON-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSON-2.3.1.tar.gz",
+    "size_bytes": 14658,
+    "sha256": "e1ba36c40193a9070c98beba3ac80730042787333a1123be98f82a14e0ad6efa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BSON/2.3.1/BSON-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BSON/2.3.1/BSON-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BSON/2.3.2/BSON-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSON-2.3.2.tar.gz",
+    "size_bytes": 14682,
+    "sha256": "0d535dfaedebf1f95497253532821a6f9432d875b994dcf0b90738f6985e8c91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BSON/2.3.2/BSON-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BSON/2.3.2/BSON-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BSON/2.3.3/BSON-2.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSON-2.3.3.tar.gz",
+    "size_bytes": 14684,
+    "sha256": "f4697cde15c12d804f9b41e8e16f8c45b041acd45dcc166496c72119a0473d5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BSON/2.3.3/BSON-2.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BSON/2.3.3/BSON-2.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BSON/2.3.4/BSON-2.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSON-2.3.4.tar.gz",
+    "size_bytes": 15838,
+    "sha256": "581752c0f71a12cc87c8e12d1676a1ef337b62c88c95ee12637ebe454a9cae4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BSON/2.3.4/BSON-2.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BSON/2.3.4/BSON-2.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BSON/2.3.5/BSON-2.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSON-2.3.5.tar.gz",
+    "size_bytes": 15842,
+    "sha256": "e592ae7e32907c3933774273e20f6ff6d14477f36052b197f23e2c9ecb544e7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BSON/2.3.5/BSON-2.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BSON/2.3.5/BSON-2.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BSON/3.0.0/BSON-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSON-3.0.0.tar.gz",
+    "size_bytes": 18096,
+    "sha256": "82b6cffee8eac2ff75c6e8882f1b71a24881675a892962f61ffb4a6e91be42da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BSON/3.0.0/BSON-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BSON/3.0.0/BSON-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BSON/3.0.1/BSON-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSON-3.0.1.tar.gz",
+    "size_bytes": 18100,
+    "sha256": "500577a27903668c252c87f1bbadb93b69c85376af992e62bb94274a8933b993",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BSON/3.0.1/BSON-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BSON/3.0.1/BSON-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Benchmark/1.0.2/Benchmark-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Benchmark-1.0.2.tar.gz",
+    "size_bytes": 5401,
+    "sha256": "10cd400b81782213799095ba68a522bcaec2428a3562ff0da7afe9255b32b51b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Benchmark/1.0.2/Benchmark-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Benchmark/1.0.2/Benchmark-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Benchmark/1.0.3/Benchmark-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Benchmark-1.0.3.tar.gz",
+    "size_bytes": 6461,
+    "sha256": "30e7225e7a2ea7027bf1bb870a52a09700abc89ffc86c07e7b367df35c40a2e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Benchmark/1.0.3/Benchmark-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Benchmark/1.0.3/Benchmark-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Benchmark/1.0.4/Benchmark-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Benchmark-1.0.4.tar.gz",
+    "size_bytes": 7910,
+    "sha256": "48a9eb004c0ef8b7f39116d92ce5442a58a89b3853b15b31bac9f336562e4d84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Benchmark/1.0.4/Benchmark-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Benchmark/1.0.4/Benchmark-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BitPack/1.3.6/BitPack-1.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BitPack-1.3.6.tar.gz",
+    "size_bytes": 9013,
+    "sha256": "d1942fb50149d058a8d37a4a99a76da322aeec56dd9560e3a442f9e65d787c69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BitPack/1.3.6/BitPack-1.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BitPack/1.3.6/BitPack-1.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BitPack/1.3.7/BitPack-1.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BitPack-1.3.7.tar.gz",
+    "size_bytes": 9307,
+    "sha256": "c56b19a57dd7c5d52030cac6a986c25a2f9064eda676e381122e5d8cd99361d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BitPack/1.3.7/BitPack-1.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BitPack/1.3.7/BitPack-1.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BitPack/1.3.8/BitPack-1.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BitPack-1.3.8.tar.gz",
+    "size_bytes": 10254,
+    "sha256": "07ba4159ac6f387dc98d6bc04d1f9e130d2f0067290065e5e30532e36b439a8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BitPack/1.3.8/BitPack-1.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BitPack/1.3.8/BitPack-1.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/BitPack/1.3.9/BitPack-1.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BitPack-1.3.9.tar.gz",
+    "size_bytes": 10294,
+    "sha256": "00e822981eca8e83461585eb6f3c72c7cb1cdd1b5a1a5500d426534283fde030",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/BitPack/1.3.9/BitPack-1.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/BitPack/1.3.9/BitPack-1.3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/CRT/1.0/CRT-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRT-1.0.tar.gz",
+    "size_bytes": 3812,
+    "sha256": "bba163f85ecece6916d6a1e1504b185dd738a0b8a3c21547a5a1aa0001ddfa70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/CRT/1.0/CRT-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/CRT/1.0/CRT-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/CharDisplay/1.1.2/CharDisplay-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CharDisplay-1.1.2.tar.gz",
+    "size_bytes": 9731,
+    "sha256": "142e167d95a7aa843674835b336f46161f20f3c1b6862ac44f531ec31e79b07a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/CharDisplay/1.1.2/CharDisplay-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/CharDisplay/1.1.2/CharDisplay-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Clap/1.0/Clap-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Clap-1.0.tar.gz",
+    "size_bytes": 3619,
+    "sha256": "44ef2bfab6120e5f5d9c74de329f9f6ed1b629df239a43dda7b900f9b866dff1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Clap/1.0/Clap-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Clap/1.0/Clap-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Dict/1.0.0/Dict-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dict-1.0.0.tar.gz",
+    "size_bytes": 18399,
+    "sha256": "af288fc83431768e25fec13b27dfb93c1393565a54caf049da7ee7a6fb4cf625",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Dict/1.0.0/Dict-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Dict/1.0.0/Dict-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/EEManager/2.0.1/EEManager-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEManager-2.0.1.tar.gz",
+    "size_bytes": 11017,
+    "sha256": "49734901668a9b53228dc699f634f5f329180127e13debd8e6e332ed7e1316f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/EEManager/2.0.1/EEManager-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/EEManager/2.0.1/EEManager-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/EEManager/2.0.2/EEManager-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEManager-2.0.2.tar.gz",
+    "size_bytes": 11211,
+    "sha256": "785d316700234d578f7a782f0a81a0be2ce799ccfbf16c963e2b420555a39a5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/EEManager/2.0.2/EEManager-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/EEManager/2.0.2/EEManager-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/EasyHID/1.0.0/EasyHID-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyHID-1.0.0.tar.gz",
+    "size_bytes": 60895,
+    "sha256": "9b634e3a8d83384f3d7fbb744e1cfbe264e866a21e438f8a1435f511d15a65a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/EasyHID/1.0.0/EasyHID-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/EasyHID/1.0.0/EasyHID-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/EncButton/2.0/EncButton-2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EncButton-2.0.tar.gz",
+    "size_bytes": 22529,
+    "sha256": "a23a6551b0b47414b7bda2e2fd6f58b3449f789f780ddc0840dd54efd7f616bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/EncButton/2.0/EncButton-2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/EncButton/2.0/EncButton-2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/EncButton/3.7.3/EncButton-3.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EncButton-3.7.3.tar.gz",
+    "size_bytes": 54578,
+    "sha256": "a8ea85be8be511fddd2bec21ab42f57a35623eb592b428ec7210f37c31b52d08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/EncButton/3.7.3/EncButton-3.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/EncButton/3.7.3/EncButton-3.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/EncButton/3.7.4/EncButton-3.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EncButton-3.7.4.tar.gz",
+    "size_bytes": 55101,
+    "sha256": "8fb0604ba02d9db0242db0a1747f99bfbae8c51bb1877ef977696acfa6d7399b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/EncButton/3.7.4/EncButton-3.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/EncButton/3.7.4/EncButton-3.7.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/EncButton/3.7.5/EncButton-3.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EncButton-3.7.5.tar.gz",
+    "size_bytes": 57086,
+    "sha256": "fbd5ed9c9a812a30ca5684f4a8b877834f4ef4c8075f5d1c3bc0bddec2977d75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/EncButton/3.7.5/EncButton-3.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/EncButton/3.7.5/EncButton-3.7.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/EncButton/3.7.6/EncButton-3.7.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EncButton-3.7.6.tar.gz",
+    "size_bytes": 57132,
+    "sha256": "fb70f46fbf8c3e6ae3a8bc193076c46b35a64a32f5046f37724b1c020f0f0989",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/EncButton/3.7.6/EncButton-3.7.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/EncButton/3.7.6/EncButton-3.7.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/EspSleep/1.0.3/EspSleep-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspSleep-1.0.3.tar.gz",
+    "size_bytes": 8616,
+    "sha256": "f9f916d6f4e6c735fa4ff18acae58b8cd6b538a68ddb2c2b8736a124799901c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/EspSleep/1.0.3/EspSleep-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/EspSleep/1.0.3/EspSleep-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/ExpInt/1.0.0/ExpInt-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExpInt-1.0.0.tar.gz",
+    "size_bytes": 5026,
+    "sha256": "09669252813267704a5b1d764043e4212199693b9c54f1c6f11847815701ef15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/ExpInt/1.0.0/ExpInt-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/ExpInt/1.0.0/ExpInt-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/ExpInt/1.0.1/ExpInt-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExpInt-1.0.1.tar.gz",
+    "size_bytes": 7370,
+    "sha256": "d799c4a9fd2b4caff2edc9f6867b3faba6fbff2e017fcf3874bb66a81acd365e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/ExpInt/1.0.1/ExpInt-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/ExpInt/1.0.1/ExpInt-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/FFT_C/1.0/FFT_C-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FFT_C-1.0.tar.gz",
+    "size_bytes": 4764,
+    "sha256": "5df18c0ec0fec5ca1ab1ceb04d1b94a7a7a75525da550120bacfa8465eb43412",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/FFT_C/1.0/FFT_C-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/FFT_C/1.0/FFT_C-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/FOR_MACRO/1.0.0/FOR_MACRO-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FOR_MACRO-1.0.0.tar.gz",
+    "size_bytes": 11974,
+    "sha256": "dd811578f48aa7babb6373888c3087bf98bddd3a5bd80e08c7725e77ef91bf07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/FOR_MACRO/1.0.0/FOR_MACRO-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/FOR_MACRO/1.0.0/FOR_MACRO-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/FastBot/2.27.3/FastBot-2.27.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastBot-2.27.3.tar.gz",
+    "size_bytes": 64639,
+    "sha256": "e3075321969d7139d50390598143c5498013b37f5e9298c1231cd99859e76cfa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/FastBot/2.27.3/FastBot-2.27.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/FastBot/2.27.3/FastBot-2.27.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/FastBot/2.27.4/FastBot-2.27.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastBot-2.27.4.tar.gz",
+    "size_bytes": 64771,
+    "sha256": "8618c5ac2f62f3d57148a63cea27db6c2c0563099e8fd2f582b02a2a24b8b555",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/FastBot/2.27.4/FastBot-2.27.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/FastBot/2.27.4/FastBot-2.27.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/FastBot2/1.2.4/FastBot2-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastBot2-1.2.4.tar.gz",
+    "size_bytes": 61961,
+    "sha256": "7ca8c58c33e7c422b7f8d36609678fe74f2c39ea8dfeb40a0a87f77562e162e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/FastBot2/1.2.4/FastBot2-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/FastBot2/1.2.4/FastBot2-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/FastBot2/1.2.5/FastBot2-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastBot2-1.2.5.tar.gz",
+    "size_bytes": 62585,
+    "sha256": "78e6883ce1fc8692bf47a7a3b90737ed8f0b37cd3e0c04ac5561d2a3af8295be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/FastBot2/1.2.5/FastBot2-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/FastBot2/1.2.5/FastBot2-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/FastBot2/1.2.6/FastBot2-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastBot2-1.2.6.tar.gz",
+    "size_bytes": 64053,
+    "sha256": "ceae2acafbc1b7417357af4529edde210fa23c2d694805816204f38b549015ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/FastBot2/1.2.6/FastBot2-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/FastBot2/1.2.6/FastBot2-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/FastBot2/1.2.7/FastBot2-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastBot2-1.2.7.tar.gz",
+    "size_bytes": 64057,
+    "sha256": "b994c85bf8b99670a7302351f7f3cb31570cfa4ee540110db056b92c2e8a6a48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/FastBot2/1.2.7/FastBot2-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/FastBot2/1.2.7/FastBot2-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/FastBot2/1.2.8/FastBot2-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastBot2-1.2.8.tar.gz",
+    "size_bytes": 65853,
+    "sha256": "b3ed78a4e0f838bc8fc354702b5cc58306b3c121fa6ab5511e1150f2813dd6ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/FastBot2/1.2.8/FastBot2-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/FastBot2/1.2.8/FastBot2-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/FileData/1.0.3/FileData-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FileData-1.0.3.tar.gz",
+    "size_bytes": 11677,
+    "sha256": "627ed3c86d396bed60cec4eddb7faa81654a156bcc577595c5a484ec6e79730e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/FileData/1.0.3/FileData-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/FileData/1.0.3/FileData-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/FileData/1.0.4/FileData-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FileData-1.0.4.tar.gz",
+    "size_bytes": 11561,
+    "sha256": "f4753e645720e11dc932f750188720d85ac9fe6ff48846c8e76fdc5fb0d4589b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/FileData/1.0.4/FileData-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/FileData/1.0.4/FileData-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Forecaster/1.2.1/Forecaster-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Forecaster-1.2.1.tar.gz",
+    "size_bytes": 7153,
+    "sha256": "78d2ea102ec0486bc341f10201f8bf1e007bf71f36f8b9fc5c697d1a5cb7e147",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Forecaster/1.2.1/Forecaster-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Forecaster/1.2.1/Forecaster-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GParser/1.5.2/GParser-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GParser-1.5.2.tar.gz",
+    "size_bytes": 12708,
+    "sha256": "741f070b8d3d5e4a838352edd883a3db426bd443ac4d493733923fc57e766913",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GParser/1.5.2/GParser-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GParser/1.5.2/GParser-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GRGB/1.4.1/GRGB-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GRGB-1.4.1.tar.gz",
+    "size_bytes": 9366,
+    "sha256": "3a78832dbcb97825aab3521df2841554193b5e7349bbd4731c0c620ab41bd4d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GRGB/1.4.1/GRGB-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GRGB/1.4.1/GRGB-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GSON/1.8.1/GSON-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSON-1.8.1.tar.gz",
+    "size_bytes": 26879,
+    "sha256": "f3a22dc0267401662e0e932bac6826a2219f8a6a084798d308b4f6a8207347d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GSON/1.8.1/GSON-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GSON/1.8.1/GSON-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GSON/1.8.10/GSON-1.8.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSON-1.8.10.tar.gz",
+    "size_bytes": 26576,
+    "sha256": "9c179ecf962c1ae1c66731f06b7dfa55258c8c653e91080457a88800225974e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GSON/1.8.10/GSON-1.8.10.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GSON/1.8.10/GSON-1.8.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GSON/1.8.2/GSON-1.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSON-1.8.2.tar.gz",
+    "size_bytes": 26880,
+    "sha256": "8e67a2a3d3aef52e739fb6adb39241ba9b2ea72f737002c64915c193b5f3a422",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GSON/1.8.2/GSON-1.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GSON/1.8.2/GSON-1.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GSON/1.8.4/GSON-1.8.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSON-1.8.4.tar.gz",
+    "size_bytes": 26880,
+    "sha256": "cbffaa54eacafc13273bd32634d6e42d8ad4466429c820d118a9c56d172f0cf9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GSON/1.8.4/GSON-1.8.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GSON/1.8.4/GSON-1.8.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GSON/1.8.5/GSON-1.8.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSON-1.8.5.tar.gz",
+    "size_bytes": 26927,
+    "sha256": "321170cdfadacc873ed6cda6e25cbb8f120839f26b44fc7a16ec3ea8188b0278",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GSON/1.8.5/GSON-1.8.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GSON/1.8.5/GSON-1.8.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GSON/1.8.6/GSON-1.8.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSON-1.8.6.tar.gz",
+    "size_bytes": 26945,
+    "sha256": "6b2434b82c31a3b117bc46e643e3b8c00385a79c5f3bd41a0c65b2413cb45986",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GSON/1.8.6/GSON-1.8.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GSON/1.8.6/GSON-1.8.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GSON/1.8.8/GSON-1.8.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSON-1.8.8.tar.gz",
+    "size_bytes": 26939,
+    "sha256": "6e22535fa00a9a0c300f766c143a190df3b1268ee612dcbb781737641e4e0aa1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GSON/1.8.8/GSON-1.8.8.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GSON/1.8.8/GSON-1.8.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GSON/1.8.9/GSON-1.8.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GSON-1.8.9.tar.gz",
+    "size_bytes": 26946,
+    "sha256": "427ab1caa084cda56a4d22d8648f3a3b44940f9620fde001864f95a808cf0c26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GSON/1.8.9/GSON-1.8.9.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GSON/1.8.9/GSON-1.8.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.3.10/GTL-1.3.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.3.10.tar.gz",
+    "size_bytes": 17028,
+    "sha256": "398456b16abc6c4f23b9f6d15dcffecda81763357b708572378f9f909724b08c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.3.10/GTL-1.3.10.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.3.10/GTL-1.3.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.3.11/GTL-1.3.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.3.11.tar.gz",
+    "size_bytes": 17103,
+    "sha256": "ba114524905cbe1fdfe32e7d1b973b27ab3b54c1e0de34028e9480c436e0c5e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.3.11/GTL-1.3.11.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.3.11/GTL-1.3.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.3.12/GTL-1.3.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.3.12.tar.gz",
+    "size_bytes": 17189,
+    "sha256": "3680855dd0be8546e85985f7226a61053869b555eaddfaf539598fd4556d0073",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.3.12/GTL-1.3.12.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.3.12/GTL-1.3.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.3.13/GTL-1.3.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.3.13.tar.gz",
+    "size_bytes": 17194,
+    "sha256": "d6cd879b0404c34bd0613712743793e8635fe337925022b9e07a84039a682acd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.3.13/GTL-1.3.13.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.3.13/GTL-1.3.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.3.14/GTL-1.3.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.3.14.tar.gz",
+    "size_bytes": 17444,
+    "sha256": "102dcd4cc80a4f8f341d99d99280253a2b4ec8258f17c4190f5836410c811618",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.3.14/GTL-1.3.14.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.3.14/GTL-1.3.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.3.15/GTL-1.3.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.3.15.tar.gz",
+    "size_bytes": 17647,
+    "sha256": "1d77525bae42730cae0a73d47143d77da61d0e1774512fb2bcc807e678c0dc9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.3.15/GTL-1.3.15.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.3.15/GTL-1.3.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.3.16/GTL-1.3.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.3.16.tar.gz",
+    "size_bytes": 17937,
+    "sha256": "9e37e5ec04df2a9002c9ac403d82247ed98cafb158ae6c9588329f41394c2d65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.3.16/GTL-1.3.16.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.3.16/GTL-1.3.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.3.17/GTL-1.3.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.3.17.tar.gz",
+    "size_bytes": 18180,
+    "sha256": "1276b43734480c0d1b2e70733965c94cdbc44c63dcbcc9b297ebce791d15af6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.3.17/GTL-1.3.17.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.3.17/GTL-1.3.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.3.5/GTL-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.3.5.tar.gz",
+    "size_bytes": 16763,
+    "sha256": "1a07a117139aa65bcf50e822ea19718e5956521d323bbbc5aca20228627f3464",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.3.5/GTL-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.3.5/GTL-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.3.6/GTL-1.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.3.6.tar.gz",
+    "size_bytes": 16821,
+    "sha256": "d92f801acd5a74c669f169f00b7813ecaac55f09803a61898c4357f6f2d99115",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.3.6/GTL-1.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.3.6/GTL-1.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.3.7/GTL-1.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.3.7.tar.gz",
+    "size_bytes": 16838,
+    "sha256": "37c6d5341539f9c882549bfe11e8c1138aa2346cb34f65b301ec3588d77a0d50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.3.7/GTL-1.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.3.7/GTL-1.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.3.8/GTL-1.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.3.8.tar.gz",
+    "size_bytes": 17068,
+    "sha256": "fe3463c629996ae1efb58fc6675f265b6196b513e07c35fe8f97f7b03a427829",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.3.8/GTL-1.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.3.8/GTL-1.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.4.0/GTL-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.4.0.tar.gz",
+    "size_bytes": 18653,
+    "sha256": "1c0d4aa3b9fd66110a9698954318c39753df154e8dc1dc7037514df9e8f2b3da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.4.0/GTL-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.4.0/GTL-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.4.2/GTL-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.4.2.tar.gz",
+    "size_bytes": 18668,
+    "sha256": "222af1776a2dac52d9c25377330bc91532fbf55cb6695d23be4f3a6acfe3cd17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.4.2/GTL-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.4.2/GTL-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.4.3/GTL-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.4.3.tar.gz",
+    "size_bytes": 19572,
+    "sha256": "90f8c8d903de07592715c4c47f7f87a5c68e64149d43727c1e7814d58141a489",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.4.3/GTL-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.4.3/GTL-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.4.4/GTL-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.4.4.tar.gz",
+    "size_bytes": 19591,
+    "sha256": "7c77b7119b41f7aedecc8f5aa9e4ceebcdceb2bd53b31b2ae055993078788d3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.4.4/GTL-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.4.4/GTL-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.4.5/GTL-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.4.5.tar.gz",
+    "size_bytes": 19593,
+    "sha256": "0b05e15542f1556de1450ceb3ef4df716840881111b6f1c47b721141f74c22c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.4.5/GTL-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.4.5/GTL-1.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.4.6/GTL-1.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.4.6.tar.gz",
+    "size_bytes": 19643,
+    "sha256": "0495ca3f97f171bf039d844f7ad9208f47d110a90dc7983883bc0791a47835dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.4.6/GTL-1.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.4.6/GTL-1.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTL/1.4.7/GTL-1.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTL-1.4.7.tar.gz",
+    "size_bytes": 19665,
+    "sha256": "1802b3d8a2aa7ca365173a43542872c31bb3edb5aff9fedc309a46890adda0d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTL/1.4.7/GTL-1.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTL/1.4.7/GTL-1.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTimer/1.1.1/GTimer-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTimer-1.1.1.tar.gz",
+    "size_bytes": 11166,
+    "sha256": "b2f7730d35277161ca664e07536699adfa96f9968f26df04d68d9bcfc94a3c0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTimer/1.1.1/GTimer-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTimer/1.1.1/GTimer-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTimer/1.1.2/GTimer-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTimer-1.1.2.tar.gz",
+    "size_bytes": 11267,
+    "sha256": "20ef157d2573e21aab0bb07c383fdb6544fa1877744224d9f151a3e738a76137",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTimer/1.1.2/GTimer-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTimer/1.1.2/GTimer-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTimer/1.1.3/GTimer-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTimer-1.1.3.tar.gz",
+    "size_bytes": 11366,
+    "sha256": "d949828ea04dcad57ae9833fe3d13ec64f689b76204fa3ff0faa94851a44210c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTimer/1.1.3/GTimer-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTimer/1.1.3/GTimer-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GTimer/1.1.4/GTimer-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GTimer-1.1.4.tar.gz",
+    "size_bytes": 11365,
+    "sha256": "316f45ada1532bbb27e72fa7e091d5c9494f50837d894efc85904dbfeb2cd18f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GTimer/1.1.4/GTimer-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GTimer/1.1.4/GTimer-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GVector/1.0.3/GVector-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GVector-1.0.3.tar.gz",
+    "size_bytes": 13177,
+    "sha256": "563178d33c61a20326ba6f985cdce8629ea4be7ad11c873693607756045661cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GVector/1.0.3/GVector-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GVector/1.0.3/GVector-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GVector/1.0.4/GVector-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GVector-1.0.4.tar.gz",
+    "size_bytes": 12979,
+    "sha256": "5bfe6c2eb017c237b8cb379a0fe75a0a7717fec2e5a2060b5c440b7614483c2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GVector/1.0.4/GVector-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GVector/1.0.4/GVector-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Gyver433/2.1.1/Gyver433-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gyver433-2.1.1.tar.gz",
+    "size_bytes": 15127,
+    "sha256": "ca8c1d20fa3ade8cfeabbabf66c959c20fefe4e0b8aae6a978d244299021f61f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Gyver433/2.1.1/Gyver433-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Gyver433/2.1.1/Gyver433-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverBME280/1.5.3/GyverBME280-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverBME280-1.5.3.tar.gz",
+    "size_bytes": 11613,
+    "sha256": "5798c7c7fb1030594fcaffef5d8298e6ac1c850bbcb9b358225f09a836127c0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverBME280/1.5.3/GyverBME280-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverBME280/1.5.3/GyverBME280-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverBME280/1.5.4/GyverBME280-1.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverBME280-1.5.4.tar.gz",
+    "size_bytes": 11711,
+    "sha256": "029ba08862f636e2528653c6675da825b6d8c9e1bb25e7831718db08502e25a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverBME280/1.5.4/GyverBME280-1.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverBME280/1.5.4/GyverBME280-1.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverBeeper/1.1.0/GyverBeeper-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverBeeper-1.1.0.tar.gz",
+    "size_bytes": 9636,
+    "sha256": "8a2f2a7154d35deff1cfbf073265b28aa4d5ccdf809e9dbb649e9c29a86ee633",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverBeeper/1.1.0/GyverBeeper-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverBeeper/1.1.0/GyverBeeper-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverBeeper/1.1.1/GyverBeeper-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverBeeper-1.1.1.tar.gz",
+    "size_bytes": 10191,
+    "sha256": "9d5831c943cc561a10038d2c6c51785da6aabc792a6f039293295cbffb8da026",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverBeeper/1.1.1/GyverBeeper-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverBeeper/1.1.1/GyverBeeper-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverBlinker/1.1.1/GyverBlinker-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverBlinker-1.1.1.tar.gz",
+    "size_bytes": 7559,
+    "sha256": "8bcb179ce037bfa033effda147e2b605ab004109051a98966e23f7d23bf48680",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverBlinker/1.1.1/GyverBlinker-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverBlinker/1.1.1/GyverBlinker-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverBlinker/1.1.2/GyverBlinker-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverBlinker-1.1.2.tar.gz",
+    "size_bytes": 8028,
+    "sha256": "edf07a1e8dbe2ce9c4a66e2ad35d5fa835a7cb462d70963c6373ce40f4fb132c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverBlinker/1.1.2/GyverBlinker-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverBlinker/1.1.2/GyverBlinker-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverBus/2.5/GyverBus-2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverBus-2.5.tar.gz",
+    "size_bytes": 21773,
+    "sha256": "a07aff8bee7cf3aa9ad95304ccd4fd5511b5c4bc09c4c7a9e2442e6913b73de5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverBus/2.5/GyverBus-2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverBus/2.5/GyverBus-2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverButton/3.8/GyverButton-3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverButton-3.8.tar.gz",
+    "size_bytes": 12805,
+    "sha256": "0cb0fbcdddf261f38a759872440069bba7a202c57e3c82a7d88349bf9d3394bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverButton/3.8/GyverButton-3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverButton/3.8/GyverButton-3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverDB/1.3.2/GyverDB-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverDB-1.3.2.tar.gz",
+    "size_bytes": 22222,
+    "sha256": "7cbde416bbd7ecd482c3ef430fc56f8196176078e0cec6c1eed2f09dfcfb92d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverDB/1.3.2/GyverDB-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverDB/1.3.2/GyverDB-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverDB/1.4.0/GyverDB-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverDB-1.4.0.tar.gz",
+    "size_bytes": 22130,
+    "sha256": "2f000beab5c9892b2e565b2f5375ab9e116d03bcd4a9a28a87dd4f51a4210c74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverDB/1.4.0/GyverDB-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverDB/1.4.0/GyverDB-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverDB/1.4.1/GyverDB-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverDB-1.4.1.tar.gz",
+    "size_bytes": 22286,
+    "sha256": "45e947cec890cd03ca1df315177d1167bacd48f0ceeff110e7cbd0ad8d941584",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverDB/1.4.1/GyverDB-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverDB/1.4.1/GyverDB-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverDB/1.4.2/GyverDB-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverDB-1.4.2.tar.gz",
+    "size_bytes": 22293,
+    "sha256": "af23d43be482861b070f85ea133bbac375d958569b95205c161825baf426a7a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverDB/1.4.2/GyverDB-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverDB/1.4.2/GyverDB-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverDB/1.4.3/GyverDB-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverDB-1.4.3.tar.gz",
+    "size_bytes": 22351,
+    "sha256": "64967f28527c29a7ccf33ee67b267d73ec0f70fdde930808cd19668dbc2c75d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverDB/1.4.3/GyverDB-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverDB/1.4.3/GyverDB-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverDB/1.4.4/GyverDB-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverDB-1.4.4.tar.gz",
+    "size_bytes": 22375,
+    "sha256": "79edfcbc76e42da889f540efc7371fba114cb7fbccbec9ca5707c78f48ec5984",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverDB/1.4.4/GyverDB-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverDB/1.4.4/GyverDB-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverDS18/1.1.3/GyverDS18-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverDS18-1.1.3.tar.gz",
+    "size_bytes": 12615,
+    "sha256": "dbdbb0ac3b155becf00b88fddab40eeee9590e53e1f3ffb1a3fa169e639600f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverDS18/1.1.3/GyverDS18-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverDS18/1.1.3/GyverDS18-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverDS18/1.2.0/GyverDS18-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverDS18-1.2.0.tar.gz",
+    "size_bytes": 17539,
+    "sha256": "5d31bf748a6e4508aa64142212ae152d680361d2df83af18c25f77f456cd2da4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverDS18/1.2.0/GyverDS18-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverDS18/1.2.0/GyverDS18-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverDS18/1.2.1/GyverDS18-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverDS18-1.2.1.tar.gz",
+    "size_bytes": 25880,
+    "sha256": "e231a9fc8db998cc4cb1232b11ebe17ed4cdd340cfeb7f222e0ae891793fab7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverDS18/1.2.1/GyverDS18-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverDS18/1.2.1/GyverDS18-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverDS3231/1.1.0/GyverDS3231-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverDS3231-1.1.0.tar.gz",
+    "size_bytes": 9229,
+    "sha256": "1972ae7ac2ef4120a824d9916509e3f687013cfd52ddd5982ad277b87a7d2117",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverDS3231/1.1.0/GyverDS3231-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverDS3231/1.1.0/GyverDS3231-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverDS3231/1.1.1/GyverDS3231-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverDS3231-1.1.1.tar.gz",
+    "size_bytes": 9227,
+    "sha256": "c839ea6654d0ec210bb83205172a2a3e886abaaa82bb6891b5857dfbddba3337",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverDS3231/1.1.1/GyverDS3231-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverDS3231/1.1.1/GyverDS3231-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverDS3231/1.2.0/GyverDS3231-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverDS3231-1.2.0.tar.gz",
+    "size_bytes": 9252,
+    "sha256": "0a7053021ef0778c26db2270754ff7aa319a39df6b101617aa13082413435e53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverDS3231/1.2.0/GyverDS3231-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverDS3231/1.2.0/GyverDS3231-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverDS3231/1.2.1/GyverDS3231-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverDS3231-1.2.1.tar.gz",
+    "size_bytes": 9159,
+    "sha256": "ac35eb64d6b243a890635fb8ef3b4917ea1df0f57776543fba6319e61677a3b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverDS3231/1.2.1/GyverDS3231-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverDS3231/1.2.1/GyverDS3231-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverDimmer/1.2.1/GyverDimmer-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverDimmer-1.2.1.tar.gz",
+    "size_bytes": 7298,
+    "sha256": "f59eb7d4693f14d981acd8cdcd082f329364daed397e6d90e69ba6cfa2d57ef9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverDimmer/1.2.1/GyverDimmer-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverDimmer/1.2.1/GyverDimmer-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverEncoder/4.10/GyverEncoder-4.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverEncoder-4.10.tar.gz",
+    "size_bytes": 11653,
+    "sha256": "bb85ffd55bd13b5fb3d2e6f917196ea25e415417f27edaac6691dadc6d4d7fe1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverEncoder/4.10/GyverEncoder-4.10.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverEncoder/4.10/GyverEncoder-4.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverFIFO/1.2.0/GyverFIFO-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverFIFO-1.2.0.tar.gz",
+    "size_bytes": 5594,
+    "sha256": "7fd844d51cf891e230f793cd413da49497f72ead303552f0aa3c6053b7c2d2cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverFIFO/1.2.0/GyverFIFO-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverFIFO/1.2.0/GyverFIFO-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverFilters/3.2/GyverFilters-3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverFilters-3.2.tar.gz",
+    "size_bytes": 9938,
+    "sha256": "93a20c60a468415b5c2f9b2eb07c234a7f50e337cd7207a1c275ad6c4b66d0e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverFilters/3.2/GyverFilters-3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverFilters/3.2/GyverFilters-3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverGFX/1.7.3/GyverGFX-1.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverGFX-1.7.3.tar.gz",
+    "size_bytes": 17921,
+    "sha256": "a247e0c1e1fb341f0024ba1497d721def235ee366c6636293bf1bc7eb79a467d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverGFX/1.7.3/GyverGFX-1.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverGFX/1.7.3/GyverGFX-1.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverHC595/1.2/GyverHC595-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverHC595-1.2.tar.gz",
+    "size_bytes": 8452,
+    "sha256": "28b41fa03b737c084046044f485fe6beff4e9306aff624eb376d5769176be29e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverHC595/1.2/GyverHC595-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverHC595/1.2/GyverHC595-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverHTTP/1.0.29/GyverHTTP-1.0.29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverHTTP-1.0.29.tar.gz",
+    "size_bytes": 18860,
+    "sha256": "10e69106c5112f2316a97e4f90df2a43435517d22d8c601f6a23bb4deacb501b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverHTTP/1.0.29/GyverHTTP-1.0.29.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverHTTP/1.0.29/GyverHTTP-1.0.29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverHTTP/1.0.30/GyverHTTP-1.0.30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverHTTP-1.0.30.tar.gz",
+    "size_bytes": 18960,
+    "sha256": "0771e8adb051fc0f1234d19bfc4dd89b878eace48e13887e681bd19ec65aa59c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverHTTP/1.0.30/GyverHTTP-1.0.30.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverHTTP/1.0.30/GyverHTTP-1.0.30.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverHTTP/1.0.31/GyverHTTP-1.0.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverHTTP-1.0.31.tar.gz",
+    "size_bytes": 18976,
+    "sha256": "8840318617e9080255070acc67c56456b7ab08aad582835743849dcb010a24e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverHTTP/1.0.31/GyverHTTP-1.0.31.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverHTTP/1.0.31/GyverHTTP-1.0.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverHTTP/1.0.32/GyverHTTP-1.0.32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverHTTP-1.0.32.tar.gz",
+    "size_bytes": 19232,
+    "sha256": "b209ed212de597b192c96d991492fc43fbaf00be15adbff3b474b727b93c1a17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverHTTP/1.0.32/GyverHTTP-1.0.32.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverHTTP/1.0.32/GyverHTTP-1.0.32.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverHTTP/1.0.33/GyverHTTP-1.0.33.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverHTTP-1.0.33.tar.gz",
+    "size_bytes": 19212,
+    "sha256": "ba2f78aa5c0a9b4aa2e08764961164694335f62f070e7ae5c7aef1834d1ed5c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverHTTP/1.0.33/GyverHTTP-1.0.33.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverHTTP/1.0.33/GyverHTTP-1.0.33.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverHTTP/1.0.34/GyverHTTP-1.0.34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverHTTP-1.0.34.tar.gz",
+    "size_bytes": 19322,
+    "sha256": "62bfdd067c81718510dd5c9f287b3bc707fb6b086062da1554f3e7f1725c7baa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverHTTP/1.0.34/GyverHTTP-1.0.34.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverHTTP/1.0.34/GyverHTTP-1.0.34.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverHTU21D/1.1.1/GyverHTU21D-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverHTU21D-1.1.1.tar.gz",
+    "size_bytes": 9664,
+    "sha256": "59ff17d17fecd881311817ebbfc0ddc10590e5bbec82a5e4921e3ada068e5a95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverHTU21D/1.1.1/GyverHTU21D-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverHTU21D/1.1.1/GyverHTU21D-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverHTU21D/1.1.2/GyverHTU21D-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverHTU21D-1.1.2.tar.gz",
+    "size_bytes": 9720,
+    "sha256": "80267bd8947edb375f9e1ef07fcc40fa733749ef57673f46a702dc7c360eb4cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverHTU21D/1.1.2/GyverHTU21D-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverHTU21D/1.1.2/GyverHTU21D-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverHTU21D/1.1/GyverHTU21D-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverHTU21D-1.1.tar.gz",
+    "size_bytes": 5714,
+    "sha256": "05c260e5a47a1391a446892f853a2afcdb1c3b75d0f35105ab2ca1594e0ac727",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverHTU21D/1.1/GyverHTU21D-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverHTU21D/1.1/GyverHTU21D-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverHX711/1.2.1/GyverHX711-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverHX711-1.2.1.tar.gz",
+    "size_bytes": 8390,
+    "sha256": "9f4c150ac98936ced23e06f12a9d9071c3204bacd0957a5e70802a58757000f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverHX711/1.2.1/GyverHX711-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverHX711/1.2.1/GyverHX711-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverHX711/1.2/GyverHX711-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverHX711-1.2.tar.gz",
+    "size_bytes": 7255,
+    "sha256": "b2fb77d8e761f38075a27f6ecb3e88338dd8954d6beee9f43b089131973e681d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverHX711/1.2/GyverHX711-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverHX711/1.2/GyverHX711-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverINA/1.2.3/GyverINA-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverINA-1.2.3.tar.gz",
+    "size_bytes": 16911,
+    "sha256": "87319ad5e178bbdb93425c9d74d6dfcd6e5b228e5b7888a06d271c2c036c5a58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverINA/1.2.3/GyverINA-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverINA/1.2.3/GyverINA-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverINA/1.2.4/GyverINA-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverINA-1.2.4.tar.gz",
+    "size_bytes": 16238,
+    "sha256": "cc7558f7fe66ce86abe7eff4f4f6e46c6cbd4c233d48851d408cb78e2f732ce1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverINA/1.2.4/GyverINA-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverINA/1.2.4/GyverINA-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverIO/1.3.11/GyverIO-1.3.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverIO-1.3.11.tar.gz",
+    "size_bytes": 16308,
+    "sha256": "dac55761a0d841470ef2833b64d8e3a8e0469ae2e93b05d0a05746cc6163a308",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverIO/1.3.11/GyverIO-1.3.11.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverIO/1.3.11/GyverIO-1.3.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverIO/1.3.12/GyverIO-1.3.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverIO-1.3.12.tar.gz",
+    "size_bytes": 16337,
+    "sha256": "afb1c6e91c66d7f78fbb048a6beaa02906ff10f2e24c630ac327ce1620e806cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverIO/1.3.12/GyverIO-1.3.12.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverIO/1.3.12/GyverIO-1.3.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverIO/1.3.13/GyverIO-1.3.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverIO-1.3.13.tar.gz",
+    "size_bytes": 16372,
+    "sha256": "7cf2d41dbbcb09ec824b0b531c5b38315bcf984951f8cf66de5fd59016fbf986",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverIO/1.3.13/GyverIO-1.3.13.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverIO/1.3.13/GyverIO-1.3.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverIO/1.3.14/GyverIO-1.3.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverIO-1.3.14.tar.gz",
+    "size_bytes": 16378,
+    "sha256": "f34eac1014b411039c13141be83f94d867cab79a5e553580fe9ee64a21f4c4f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverIO/1.3.14/GyverIO-1.3.14.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverIO/1.3.14/GyverIO-1.3.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverIO/1.3.15/GyverIO-1.3.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverIO-1.3.15.tar.gz",
+    "size_bytes": 17358,
+    "sha256": "9b1a2cce47bcd7f5f67b2e1ed181e2c16fa757bd709f3a08fb3209a5f81387a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverIO/1.3.15/GyverIO-1.3.15.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverIO/1.3.15/GyverIO-1.3.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverIO/1.4.0/GyverIO-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverIO-1.4.0.tar.gz",
+    "size_bytes": 19822,
+    "sha256": "c33db1bc2d6744892f1ad100e28887a87beb71318c25165d324eeeec3c50bdbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverIO/1.4.0/GyverIO-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverIO/1.4.0/GyverIO-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverIO/1.4.1/GyverIO-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverIO-1.4.1.tar.gz",
+    "size_bytes": 21688,
+    "sha256": "08009e6dccbb8fae8807b1016b91d6e33183bfcb8585fcc6ae9b45b3975bc349",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverIO/1.4.1/GyverIO-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverIO/1.4.1/GyverIO-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverIO/1.4.2/GyverIO-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverIO-1.4.2.tar.gz",
+    "size_bytes": 21697,
+    "sha256": "f97093f706953040a0ce3d3e4bae93c70323873ee398042bc3930283eae49977",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverIO/1.4.2/GyverIO-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverIO/1.4.2/GyverIO-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverJoy/1.2.1/GyverJoy-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverJoy-1.2.1.tar.gz",
+    "size_bytes": 8125,
+    "sha256": "d1bb06b3a532d2b443e7cd228be3b0e7857ff8419fab3220fab113a8a99b2727",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverJoy/1.2.1/GyverJoy-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverJoy/1.2.1/GyverJoy-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverKey/1.0.0/GyverKey-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverKey-1.0.0.tar.gz",
+    "size_bytes": 5774,
+    "sha256": "101c8c074c9d01977ccda214c8a5ca071d9f4f165a8f8510b58f3bfa53b69c9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverKey/1.0.0/GyverKey-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverKey/1.0.0/GyverKey-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverKey/1.0.2/GyverKey-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverKey-1.0.2.tar.gz",
+    "size_bytes": 7828,
+    "sha256": "a9acef717365fa02564729d9079632fd01db4b1841e92ce788c6fdef811a1199",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverKey/1.0.2/GyverKey-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverKey/1.0.2/GyverKey-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverLBUF/1.1.0/GyverLBUF-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverLBUF-1.1.0.tar.gz",
+    "size_bytes": 6208,
+    "sha256": "9c62185a4b56b952338e42bff3e81cfcf9dc06b17f93043eb9bf3b9d430904ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverLBUF/1.1.0/GyverLBUF-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverLBUF/1.1.0/GyverLBUF-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverLCD/1.0.0/GyverLCD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverLCD-1.0.0.tar.gz",
+    "size_bytes": 18708,
+    "sha256": "86aa3624ad2fecf78d53b9a97ca7c363fff41ccf5903e659f89d653dcfe88bca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverLCD/1.0.0/GyverLCD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverLCD/1.0.0/GyverLCD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverLCD/1.0.1/GyverLCD-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverLCD-1.0.1.tar.gz",
+    "size_bytes": 19265,
+    "sha256": "f4956df407ab585556ca1801ad330f748c77d15168f18cbef763d6e7edad5533",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverLCD/1.0.1/GyverLCD-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverLCD/1.0.1/GyverLCD-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverLCD/1.0.2/GyverLCD-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverLCD-1.0.2.tar.gz",
+    "size_bytes": 19325,
+    "sha256": "f05e150463718145c6d48c670995d2372de7881f64b97dd054c1d48c57a4e7de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverLCD/1.0.2/GyverLCD-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverLCD/1.0.2/GyverLCD-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverLCD/1.0.3/GyverLCD-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverLCD-1.0.3.tar.gz",
+    "size_bytes": 21351,
+    "sha256": "ab5c374b8b0dc9601efc581a21c1174d5a5c90ebc25905b95c724e4908904d47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverLCD/1.0.3/GyverLCD-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverLCD/1.0.3/GyverLCD-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverLCD/1.0.4/GyverLCD-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverLCD-1.0.4.tar.gz",
+    "size_bytes": 21704,
+    "sha256": "882726f9c267e2443a3c6d12b259e43e5de2e2486367c6bc22735e49bf410485",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverLCD/1.0.4/GyverLCD-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverLCD/1.0.4/GyverLCD-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverLCD/1.0.5/GyverLCD-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverLCD-1.0.5.tar.gz",
+    "size_bytes": 21960,
+    "sha256": "a757e1a25a3880839c1c9603ac65a0667cd1abd41c84e926a01e8cf97eb089be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverLCD/1.0.5/GyverLCD-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverLCD/1.0.5/GyverLCD-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMAX6675/1.0.1/GyverMAX6675-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMAX6675-1.0.1.tar.gz",
+    "size_bytes": 7996,
+    "sha256": "57ebed8bc6805d9217d50233c3a974fd8d716ae5ad7d68351f86a24b24c59163",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMAX6675/1.0.1/GyverMAX6675-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMAX6675/1.0.1/GyverMAX6675-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMAX6675/1.0/GyverMAX6675-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMAX6675-1.0.tar.gz",
+    "size_bytes": 4532,
+    "sha256": "96f6ccb7313d5ab484e71e1463c8a6e7fa63a980a8d07c030926265ca159cf6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMAX6675/1.0/GyverMAX6675-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMAX6675/1.0/GyverMAX6675-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMAX7219/1.5.1/GyverMAX7219-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMAX7219-1.5.1.tar.gz",
+    "size_bytes": 12122,
+    "sha256": "883590eb602ea1ebd5195d27f91c11c5594084f004557d6c0eb7a056b2952c73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMAX7219/1.5.1/GyverMAX7219-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMAX7219/1.5.1/GyverMAX7219-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMAX7219/1.5.2/GyverMAX7219-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMAX7219-1.5.2.tar.gz",
+    "size_bytes": 12176,
+    "sha256": "e723a4c58f2f5185c822eb176e57f54fc4d29d2136b6b83393d8f6da483ae960",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMAX7219/1.5.2/GyverMAX7219-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMAX7219/1.5.2/GyverMAX7219-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMAX7219/1.5/GyverMAX7219-1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMAX7219-1.5.tar.gz",
+    "size_bytes": 11873,
+    "sha256": "eb63f32f7d7cd5174a98f6bffe8ccd0bcb32d6643374a39d4326e68bba65e45e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMAX7219/1.5/GyverMAX7219-1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMAX7219/1.5/GyverMAX7219-1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMIDI/2.0.0/GyverMIDI-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMIDI-2.0.0.tar.gz",
+    "size_bytes": 7205,
+    "sha256": "4e7d952c2849923ae0debf6ed43af2c37218d47200018c253e3b56a629031dee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMIDI/2.0.0/GyverMIDI-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMIDI/2.0.0/GyverMIDI-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMIDI/2.0.1/GyverMIDI-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMIDI-2.0.1.tar.gz",
+    "size_bytes": 10912,
+    "sha256": "6300ebc43ba82002ce7e98f8232e6b40e5c5910b732027021bb199c002a57f88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMIDI/2.0.1/GyverMIDI-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMIDI/2.0.1/GyverMIDI-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMag/1.0.0/GyverMag-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMag-1.0.0.tar.gz",
+    "size_bytes": 8183,
+    "sha256": "a7b7f4667acb206fe949c8ebbafe0982c95fcd0f8f62dbfbee24b7210447474e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMag/1.0.0/GyverMag-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMag/1.0.0/GyverMag-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMenu/1.0.1/GyverMenu-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMenu-1.0.1.tar.gz",
+    "size_bytes": 17952,
+    "sha256": "19be1b38c80224bbc3e0af6f392991c3f09e7a0e8e47daea16aebaca986cc8a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMenu/1.0.1/GyverMenu-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMenu/1.0.1/GyverMenu-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMenu/1.0.2/GyverMenu-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMenu-1.0.2.tar.gz",
+    "size_bytes": 22771,
+    "sha256": "224dbc839659925aa584e0b138dfc4d4db7d040256c056deb7653112a2612379",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMenu/1.0.2/GyverMenu-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMenu/1.0.2/GyverMenu-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMenu/1.1.0/GyverMenu-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMenu-1.1.0.tar.gz",
+    "size_bytes": 36211,
+    "sha256": "3e8acfce7ac7e3cee3999b62f893f29ac230d63ff6acba700fad0bbb46e579b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMenu/1.1.0/GyverMenu-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMenu/1.1.0/GyverMenu-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMenu/1.1.1/GyverMenu-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMenu-1.1.1.tar.gz",
+    "size_bytes": 36799,
+    "sha256": "d3a742a5c1c99d1dc41818c8e010affdc89be8745ecd30029f21104daf837a41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMenu/1.1.1/GyverMenu-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMenu/1.1.1/GyverMenu-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMenu/1.1.2/GyverMenu-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMenu-1.1.2.tar.gz",
+    "size_bytes": 36791,
+    "sha256": "d8a4a1edef8c058952354216968e50d410868f81dd09546ae1cf521eb968dca7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMenu/1.1.2/GyverMenu-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMenu/1.1.2/GyverMenu-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMenu/1.1.3/GyverMenu-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMenu-1.1.3.tar.gz",
+    "size_bytes": 36820,
+    "sha256": "aad359925420b8ecb74c39dd6b6a68a99a3a79f712f05121feba83e72284ac8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMenu/1.1.3/GyverMenu-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMenu/1.1.3/GyverMenu-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMenu/1.1.4/GyverMenu-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMenu-1.1.4.tar.gz",
+    "size_bytes": 37612,
+    "sha256": "c1315bf7395e7db0f90d65d069add4a48ba522a3517527fa802104d8aa7e45d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMenu/1.1.4/GyverMenu-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMenu/1.1.4/GyverMenu-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMenu/1.1.5/GyverMenu-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMenu-1.1.5.tar.gz",
+    "size_bytes": 43067,
+    "sha256": "26d8978aed24e588dad738b61088a742e23490aa130df299ed77b1db6a60b31f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMenu/1.1.5/GyverMenu-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMenu/1.1.5/GyverMenu-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMotor/4.2.2/GyverMotor-4.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMotor-4.2.2.tar.gz",
+    "size_bytes": 17490,
+    "sha256": "0afe686f408a7c47250b40c6c7e05746c3302517613deeb0bb2310c200f01ef1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMotor/4.2.2/GyverMotor-4.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMotor/4.2.2/GyverMotor-4.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMotor2/1.0.0/GyverMotor2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMotor2-1.0.0.tar.gz",
+    "size_bytes": 11448,
+    "sha256": "879e734fc255f11c7bbd8a8517cc05f626654a56d1b9cda21fe0880662cdc2f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMotor2/1.0.0/GyverMotor2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMotor2/1.0.0/GyverMotor2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverMotor2/1.0.1/GyverMotor2-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverMotor2-1.0.1.tar.gz",
+    "size_bytes": 12229,
+    "sha256": "3feb1f396ac8c494311973e90a380119ec6834c99b22b091ecf6ea24a9ad329f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverMotor2/1.0.1/GyverMotor2-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverMotor2/1.0.1/GyverMotor2-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverNTC/1.5.5/GyverNTC-1.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverNTC-1.5.5.tar.gz",
+    "size_bytes": 7769,
+    "sha256": "833ed9d2a8005a355491fef69fd170fc672f6f41df562952fa977faf22357bf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverNTC/1.5.5/GyverNTC-1.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverNTC/1.5.5/GyverNTC-1.5.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverNTC/1.5.6/GyverNTC-1.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverNTC-1.5.6.tar.gz",
+    "size_bytes": 7962,
+    "sha256": "caac5f7cc96b34beb9646db64007f0e2484dd8695a9531dba0e795f0ed44e241",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverNTC/1.5.6/GyverNTC-1.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverNTC/1.5.6/GyverNTC-1.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverNTP/1.3.1/GyverNTP-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverNTP-1.3.1.tar.gz",
+    "size_bytes": 9742,
+    "sha256": "d65d57c53a3b1bdf51f383263c0763b8b3b84a8e8d86517d9ad530e9bcbc5803",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverNTP/1.3.1/GyverNTP-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverNTP/1.3.1/GyverNTP-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverNTP/2.2.2/GyverNTP-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverNTP-2.2.2.tar.gz",
+    "size_bytes": 14659,
+    "sha256": "45d896d48b1b095e70bdc5b035af1efa249f7da7566d28aac201c74f46b9bdbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverNTP/2.2.2/GyverNTP-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverNTP/2.2.2/GyverNTP-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverNTP/2.2.3/GyverNTP-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverNTP-2.2.3.tar.gz",
+    "size_bytes": 14665,
+    "sha256": "c391404d8065ecc1b0e4e127cb43234c312d0b6c94ba723404ebf6642d3074d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverNTP/2.2.3/GyverNTP-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverNTP/2.2.3/GyverNTP-2.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverNTP/2.3.0/GyverNTP-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverNTP-2.3.0.tar.gz",
+    "size_bytes": 14533,
+    "sha256": "3b48fb3bf4ebd0314df376584839348822ed3ac1f45feddd98f73d078a5b6515",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverNTP/2.3.0/GyverNTP-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverNTP/2.3.0/GyverNTP-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverNTP/2.3.1/GyverNTP-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverNTP-2.3.1.tar.gz",
+    "size_bytes": 14746,
+    "sha256": "b1a88a7ee7388df21bbb25cfb1ee7a768a79e6c787ce52565845e29a566deade",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverNTP/2.3.1/GyverNTP-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverNTP/2.3.1/GyverNTP-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverNTP/2.3.2/GyverNTP-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverNTP-2.3.2.tar.gz",
+    "size_bytes": 16369,
+    "sha256": "1fb4d599d27cd1621d2c021f4eb1d34db47a3b52873c4b53224a8f976e3074a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverNTP/2.3.2/GyverNTP-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverNTP/2.3.2/GyverNTP-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverOLED/1.6.4/GyverOLED-1.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverOLED-1.6.4.tar.gz",
+    "size_bytes": 43549,
+    "sha256": "9f71d70fc8a064a032e34b9f815bbffa13af898fa3711ece9654c80be610ea3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverOLED/1.6.4/GyverOLED-1.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverOLED/1.6.4/GyverOLED-1.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverOS/1.2.2/GyverOS-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverOS-1.2.2.tar.gz",
+    "size_bytes": 8876,
+    "sha256": "43141b86b2d42142a4e541ffc84d088cd9e5ea5d12a26844a47b01dc1980c5d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverOS/1.2.2/GyverOS-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverOS/1.2.2/GyverOS-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverPID/3.3.2/GyverPID-3.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverPID-3.3.2.tar.gz",
+    "size_bytes": 24654,
+    "sha256": "707cead5d37e4949f8bd083080caa7e9723a2fd5db4474a110c03aa0011f5bec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverPID/3.3.2/GyverPID-3.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverPID/3.3.2/GyverPID-3.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverPWM/1.6.1/GyverPWM-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverPWM-1.6.1.tar.gz",
+    "size_bytes": 15212,
+    "sha256": "b2606ec15838f40bf27649a1cfaed6e3c91dcd9fc0ccdecbe850136f5c55d7c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverPWM/1.6.1/GyverPWM-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverPWM/1.6.1/GyverPWM-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverPing/1.0.2/GyverPing-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverPing-1.0.2.tar.gz",
+    "size_bytes": 11582,
+    "sha256": "a638a68459107e0ce4ae319d8f952e4a9e76b0e1cb067730864583d9c31b5f3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverPing/1.0.2/GyverPing-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverPing/1.0.2/GyverPing-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverPing/1.0.4/GyverPing-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverPing-1.0.4.tar.gz",
+    "size_bytes": 11629,
+    "sha256": "c2f70d1c36f9083a97583f8119fe92131ca0e2fdbf13f35c043a305ec80c3ead",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverPing/1.0.4/GyverPing-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverPing/1.0.4/GyverPing-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverPortal/3.6.6/GyverPortal-3.6.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverPortal-3.6.6.tar.gz",
+    "size_bytes": 87771,
+    "sha256": "33324336ce83fc1e3f80276be5a77c0dd13ea8ae3818796f53d56cef9a9f9cb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverPortal/3.6.6/GyverPortal-3.6.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverPortal/3.6.6/GyverPortal-3.6.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverPower/2.2.2/GyverPower-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverPower-2.2.2.tar.gz",
+    "size_bytes": 18987,
+    "sha256": "f997d32ef6d8fcf4c3161a736d284c0ff2b72aff339622e9cce0af7e1b86e1c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverPower/2.2.2/GyverPower-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverPower/2.2.2/GyverPower-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverPower/2.2.4/GyverPower-2.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverPower-2.2.4.tar.gz",
+    "size_bytes": 18851,
+    "sha256": "7c86a3d7b3554c861b1b403d34b28d928a903afa7f81b29c95e86822cdfc0d04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverPower/2.2.4/GyverPower-2.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverPower/2.2.4/GyverPower-2.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverPush/1.0.3/GyverPush-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverPush-1.0.3.tar.gz",
+    "size_bytes": 10546,
+    "sha256": "b40ec785ccb98f119e79ce8ac5bbd7561c091d612d3e13c5843193e8b7507a01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverPush/1.0.3/GyverPush-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverPush/1.0.3/GyverPush-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverPush/1.0.5/GyverPush-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverPush-1.0.5.tar.gz",
+    "size_bytes": 11197,
+    "sha256": "dee22a65c86286c64f3bf13a13968abc7841f3ec93b99dac2f9d004514fc0315",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverPush/1.0.5/GyverPush-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverPush/1.0.5/GyverPush-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverRelay/2.2.1/GyverRelay-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverRelay-2.2.1.tar.gz",
+    "size_bytes": 8502,
+    "sha256": "afa20c56b5575883a9c5633c15b07735462fd24e7e30c82b607f5a4251d0a998",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverRelay/2.2.1/GyverRelay-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverRelay/2.2.1/GyverRelay-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverSegment/1.4.12/GyverSegment-1.4.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverSegment-1.4.12.tar.gz",
+    "size_bytes": 94366,
+    "sha256": "9829c19f2ef92d9814377e594e81fa2ca8eddb6037cdb02ec5c816c9c5e5ba76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverSegment/1.4.12/GyverSegment-1.4.12.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverSegment/1.4.12/GyverSegment-1.4.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverSegment/1.4.13/GyverSegment-1.4.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverSegment-1.4.13.tar.gz",
+    "size_bytes": 94364,
+    "sha256": "d8571856506a93930766d04d91f22f9a8ea6c4368ce5f5f7717d0bdf47b6fea3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverSegment/1.4.13/GyverSegment-1.4.13.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverSegment/1.4.13/GyverSegment-1.4.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverSegment/1.4.14/GyverSegment-1.4.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverSegment-1.4.14.tar.gz",
+    "size_bytes": 93992,
+    "sha256": "5d1b934f143d2df28d66233baa7a5d2538b4c925d2e9273ca3303b12705011fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverSegment/1.4.14/GyverSegment-1.4.14.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverSegment/1.4.14/GyverSegment-1.4.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverSegment/1.4.9/GyverSegment-1.4.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverSegment-1.4.9.tar.gz",
+    "size_bytes": 94250,
+    "sha256": "1b1178f2107c46138a58ef300b47386fed27cbc38f843754fcbdbc175981c7d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverSegment/1.4.9/GyverSegment-1.4.9.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverSegment/1.4.9/GyverSegment-1.4.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverShift/1.1.5/GyverShift-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverShift-1.1.5.tar.gz",
+    "size_bytes": 8830,
+    "sha256": "fa5c64945de09720238c7e30c2097b875cff4feba4ce5c37c2214fb215b84af6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverShift/1.1.5/GyverShift-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverShift/1.1.5/GyverShift-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverShift/1.1.6/GyverShift-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverShift-1.1.6.tar.gz",
+    "size_bytes": 9542,
+    "sha256": "5d23a2f3f2f7df9cf6af44a7fc5b08c471b448c0ab830e350d524e7feef30363",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverShift/1.1.6/GyverShift-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverShift/1.1.6/GyverShift-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverStepper/2.7.1/GyverStepper-2.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverStepper-2.7.1.tar.gz",
+    "size_bytes": 62170,
+    "sha256": "5c55db51687837c28d1b13135d99c698c1eadb1704cd68044f2aba0f234d6779",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverStepper/2.7.1/GyverStepper-2.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverStepper/2.7.1/GyverStepper-2.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverStepper/2.7.2/GyverStepper-2.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverStepper-2.7.2.tar.gz",
+    "size_bytes": 62190,
+    "sha256": "a8c37b2dc9537be53648233ffab5726c1f99f1ccff1fcb8ad8c0fe76f5d91262",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverStepper/2.7.2/GyverStepper-2.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverStepper/2.7.2/GyverStepper-2.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverStepper/2.7.3/GyverStepper-2.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverStepper-2.7.3.tar.gz",
+    "size_bytes": 62268,
+    "sha256": "016bc4169e5672272e33183b8ae58088509dd62ddcd440adeb66f404333ce1dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverStepper/2.7.3/GyverStepper-2.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverStepper/2.7.3/GyverStepper-2.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverTM1637/1.4.2/GyverTM1637-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverTM1637-1.4.2.tar.gz",
+    "size_bytes": 10532,
+    "sha256": "87eb4da5a3477f3d2859b4cf61870dacfa43fd4c511b148f896ce48615625290",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverTM1637/1.4.2/GyverTM1637-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverTM1637/1.4.2/GyverTM1637-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverTimer/3.2/GyverTimer-3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverTimer-3.2.tar.gz",
+    "size_bytes": 7647,
+    "sha256": "82b77b01515f43a834a38a332dea0680ae9f4e5649e01e3ad375d3fd4c81d27c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverTimer/3.2/GyverTimer-3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverTimer/3.2/GyverTimer-3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverTimers/1.10/GyverTimers-1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverTimers-1.10.tar.gz",
+    "size_bytes": 13625,
+    "sha256": "ebca95f4c61dad7520672bbfd5a5085481204bae03e68a4910dd4d862c502381",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverTimers/1.10/GyverTimers-1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverTimers/1.10/GyverTimers-1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverTransfer/1.3.1/GyverTransfer-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverTransfer-1.3.1.tar.gz",
+    "size_bytes": 12363,
+    "sha256": "38ea40048444577f59200ed5365780caae2268fe22f676098b29492adf5f99e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverTransfer/1.3.1/GyverTransfer-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverTransfer/1.3.1/GyverTransfer-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverUART/1.10.1/GyverUART-1.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverUART-1.10.1.tar.gz",
+    "size_bytes": 9237,
+    "sha256": "48bae816322d605c1994bc5f93c401e66cf5eaff168ec64d57f68ba6bc0ddc7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverUART/1.10.1/GyverUART-1.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverUART/1.10.1/GyverUART-1.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverWDT/2.3.1/GyverWDT-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverWDT-2.3.1.tar.gz",
+    "size_bytes": 10205,
+    "sha256": "2f0799171d771360f0930a1e6ce4f17104e3f08dab6e2d81c297ffd5386f4a5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverWDT/2.3.1/GyverWDT-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverWDT/2.3.1/GyverWDT-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverWire/1.1.4/GyverWire-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverWire-1.1.4.tar.gz",
+    "size_bytes": 18062,
+    "sha256": "dbe41052cfdcdc840ef1768ac751e96e5a0f49a55f9d167e21f2a0cadd16c91c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverWire/1.1.4/GyverWire-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverWire/1.1.4/GyverWire-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverWire/1.1.5/GyverWire-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverWire-1.1.5.tar.gz",
+    "size_bytes": 17445,
+    "sha256": "bb735e992b6851726dc2d50b694243f7a8c192525c0b39ccac6bb14a406fd801",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverWire/1.1.5/GyverWire-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverWire/1.1.5/GyverWire-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverWire/1.1.6/GyverWire-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverWire-1.1.6.tar.gz",
+    "size_bytes": 17452,
+    "sha256": "703595334a80813cb397f785db1daf76b72e9315272c648485cecdfd925e875c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverWire/1.1.6/GyverWire-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverWire/1.1.6/GyverWire-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/GyverWire/1.1.7/GyverWire-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GyverWire-1.1.7.tar.gz",
+    "size_bytes": 17445,
+    "sha256": "f1204603acd9bdf488b9f5baea83a95e3568edb338471e2c78080830a41a336a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/GyverWire/1.1.7/GyverWire-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/GyverWire/1.1.7/GyverWire-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Hamming/2.0.3/Hamming-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hamming-2.0.3.tar.gz",
+    "size_bytes": 14353,
+    "sha256": "d2d9215fd604d23cb0baa0e29e9d6a47b5cb1e194685f67ff462571f8107ec7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Hamming/2.0.3/Hamming-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Hamming/2.0.3/Hamming-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/HybridFS/1.0.0/HybridFS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HybridFS-1.0.0.tar.gz",
+    "size_bytes": 9284,
+    "sha256": "b46a92a9f63fff14e86edaf66a72d1fc306a840ac18950f951563a5d581d683e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/HybridFS/1.0.0/HybridFS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/HybridFS/1.0.0/HybridFS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Looper/1.1.7/Looper-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Looper-1.1.7.tar.gz",
+    "size_bytes": 17978,
+    "sha256": "6f63d9bc323b7900c1193316d1572ffd73679373b62d68852c5abc51fee23599",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Looper/1.1.7/Looper-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Looper/1.1.7/Looper-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Looper/1.2.1/Looper-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Looper-1.2.1.tar.gz",
+    "size_bytes": 17985,
+    "sha256": "3598ac53846d067d56bdc7c3c54d669155328fd28971a40bc541694c2008a555",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Looper/1.2.1/Looper-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Looper/1.2.1/Looper-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Looper/1.2.2/Looper-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Looper-1.2.2.tar.gz",
+    "size_bytes": 18206,
+    "sha256": "8e0c714d54b85405bdaa3b5e1de46ba303de382d2b9dc4c9cc4635a82d817ff9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Looper/1.2.2/Looper-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Looper/1.2.2/Looper-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/MicroUART/1.0.3/MicroUART-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroUART-1.0.3.tar.gz",
+    "size_bytes": 7129,
+    "sha256": "cf676d7d69bda0a3a6cc6aebbef4d3d304739fd1d0878c0c62bf39a217534d44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/MicroUART/1.0.3/MicroUART-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/MicroUART/1.0.3/MicroUART-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/MultiServo/1.0.0/MultiServo-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiServo-1.0.0.tar.gz",
+    "size_bytes": 6791,
+    "sha256": "075363fae6a6d84bf9e2faff67bd546df5a89a8cb4f0ec026fa50504b03fccd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/MultiServo/1.0.0/MultiServo-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/MultiServo/1.0.0/MultiServo-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/NecDecoder/3.0.3/NecDecoder-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NecDecoder-3.0.3.tar.gz",
+    "size_bytes": 8456,
+    "sha256": "d3ae2b2d382730f2184cd09c16dcfba263f7c35c3485b65ee78049b532fa1484",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/NecDecoder/3.0.3/NecDecoder-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/NecDecoder/3.0.3/NecDecoder-3.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/NecDecoder/3.0.4/NecDecoder-3.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NecDecoder-3.0.4.tar.gz",
+    "size_bytes": 8589,
+    "sha256": "098d845beda141de178e7e9ea1d19f3d9b8f091acb2fc041db1236684da927ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/NecDecoder/3.0.4/NecDecoder-3.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/NecDecoder/3.0.4/NecDecoder-3.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/OVS/1.2.1/OVS-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OVS-1.2.1.tar.gz",
+    "size_bytes": 7932,
+    "sha256": "afcd79c02f3147a2f56b0f32a9c5cb83643d587dd690d81510bfe1e31e27e949",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/OVS/1.2.1/OVS-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/OVS/1.2.1/OVS-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/PWMrelay/1.2.1/PWMrelay-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWMrelay-1.2.1.tar.gz",
+    "size_bytes": 7316,
+    "sha256": "273d86098e6f63ce5a5d4cae0450680f98d06a38b3114976f07a093d13ff0533",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/PWMrelay/1.2.1/PWMrelay-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/PWMrelay/1.2.1/PWMrelay-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Pairs/1.4.5/Pairs-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pairs-1.4.5.tar.gz",
+    "size_bytes": 16711,
+    "sha256": "16007c0176fa3e8d57762c6801550b554020a51ba7a392996b75b9b9f35dd289",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Pairs/1.4.5/Pairs-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Pairs/1.4.5/Pairs-1.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Pairs/1.4.6/Pairs-1.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pairs-1.4.6.tar.gz",
+    "size_bytes": 16714,
+    "sha256": "631386916a4109c40fdf3cf9e2e4c577f108f6ec7564775ced27a41bd14071cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Pairs/1.4.6/Pairs-1.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Pairs/1.4.6/Pairs-1.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Psychrometer/1.0.1/Psychrometer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Psychrometer-1.0.1.tar.gz",
+    "size_bytes": 7432,
+    "sha256": "1d1790e6f33eaa8a7aa801d1a1d4fea11599c58c35891f1422a61358d82ed0bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Psychrometer/1.0.1/Psychrometer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Psychrometer/1.0.1/Psychrometer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/QuickCharge/1.0.1/QuickCharge-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuickCharge-1.0.1.tar.gz",
+    "size_bytes": 11558,
+    "sha256": "e0f88c0e56b516b52e778532062ecb15113998592cbb46f660275d604a2b0780",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/QuickCharge/1.0.1/QuickCharge-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/QuickCharge/1.0.1/QuickCharge-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/RGBLED/1.0.0/RGBLED-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RGBLED-1.0.0.tar.gz",
+    "size_bytes": 9593,
+    "sha256": "38a225ecc04239cf59080361e95f5ca6ae7bc6de0a540f085b7041864b0c9c04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/RGBLED/1.0.0/RGBLED-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/RGBLED/1.0.0/RGBLED-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/RGBLED/1.0.4/RGBLED-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RGBLED-1.0.4.tar.gz",
+    "size_bytes": 12366,
+    "sha256": "5ec8150d1d4333b02ac0c49e0f94e79b1a608dc265fa2aa456a3f977e8bc96bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/RGBLED/1.0.4/RGBLED-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/RGBLED/1.0.4/RGBLED-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/RGBLED/1.0.5/RGBLED-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RGBLED-1.0.5.tar.gz",
+    "size_bytes": 12569,
+    "sha256": "93174aa99b96da516077e4d1f04783e8606a985fb9e60e08b03f56e2f87d891d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/RGBLED/1.0.5/RGBLED-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/RGBLED/1.0.5/RGBLED-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/RGBLED/2.0.0/RGBLED-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RGBLED-2.0.0.tar.gz",
+    "size_bytes": 13073,
+    "sha256": "e107678d2a69422f3bcf94e0ff04ded6e7db9a90367cea2a3ed9e66afa5e9afe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/RGBLED/2.0.0/RGBLED-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/RGBLED/2.0.0/RGBLED-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Random16/1.0/Random16-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Random16-1.0.tar.gz",
+    "size_bytes": 3039,
+    "sha256": "f5e726b958e85e7a2ceee03d110f84d4dbe1c83a45da95bc680d2d84542e4c2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Random16/1.0/Random16-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Random16/1.0/Random16-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Saver/1.0.0/Saver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Saver-1.0.0.tar.gz",
+    "size_bytes": 14049,
+    "sha256": "fbde4ab0b0111f67dc730742e34d9935669c95372706545456091ce9127346b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Saver/1.0.0/Saver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Saver/1.0.0/Saver-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Saver/1.0.1/Saver-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Saver-1.0.1.tar.gz",
+    "size_bytes": 14234,
+    "sha256": "32f87a036c9a362c06b73a69a1893c316d5ad2aeba84324bf240cb18a6f3e41e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Saver/1.0.1/Saver-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Saver/1.0.1/Saver-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Saver/1.1.0/Saver-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Saver-1.1.0.tar.gz",
+    "size_bytes": 20338,
+    "sha256": "834105ff2a163ebdc76a46840f963f0d4606950886ee063b87dc964522799770",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Saver/1.1.0/Saver-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Saver/1.1.0/Saver-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/ServoSmooth/3.9/ServoSmooth-3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoSmooth-3.9.tar.gz",
+    "size_bytes": 17067,
+    "sha256": "139b5964ebdf4dae00c614c12a8b98707656525d2d47e7b101e2fd6f74a33a7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/ServoSmooth/3.9/ServoSmooth-3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/ServoSmooth/3.9/ServoSmooth-3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Settings/1.3.12/Settings-1.3.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settings-1.3.12.tar.gz",
+    "size_bytes": 99639,
+    "sha256": "0b7242a49c396f67e16d0867be2969d6cdd7d08b0796626c5e4043be67736801",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Settings/1.3.12/Settings-1.3.12.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Settings/1.3.12/Settings-1.3.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Settings/1.3.13/Settings-1.3.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settings-1.3.13.tar.gz",
+    "size_bytes": 99761,
+    "sha256": "07171edba86ccf5b7d3c672dc241085e9ac2177491c464b1970bcffdd1df513f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Settings/1.3.13/Settings-1.3.13.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Settings/1.3.13/Settings-1.3.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Settings/1.3.14/Settings-1.3.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settings-1.3.14.tar.gz",
+    "size_bytes": 99834,
+    "sha256": "9fde0464efc449743032620112fc87a04c2a9307d3d76a13ce5f95712f1dd3c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Settings/1.3.14/Settings-1.3.14.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Settings/1.3.14/Settings-1.3.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Settings/1.3.15/Settings-1.3.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settings-1.3.15.tar.gz",
+    "size_bytes": 100101,
+    "sha256": "1d66369e69f47143244a26742d55d8048cf00861f3a161ce67f1e16283393082",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Settings/1.3.15/Settings-1.3.15.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Settings/1.3.15/Settings-1.3.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Settings/1.3.16/Settings-1.3.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settings-1.3.16.tar.gz",
+    "size_bytes": 100056,
+    "sha256": "0e88780256075b543f01addf7b0d03349c9ce1f94bf459868f6ebe118197358e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Settings/1.3.16/Settings-1.3.16.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Settings/1.3.16/Settings-1.3.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Settings/1.3.17/Settings-1.3.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settings-1.3.17.tar.gz",
+    "size_bytes": 100048,
+    "sha256": "70e90866e3212b02923c925dbadec207d2a1a550d59fd627267c8469104150f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Settings/1.3.17/Settings-1.3.17.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Settings/1.3.17/Settings-1.3.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Settings/1.4.0/Settings-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settings-1.4.0.tar.gz",
+    "size_bytes": 94319,
+    "sha256": "8df85196dab706f3039b3f23756ee994973a36969b7d76f1aa9c137bdbbbee7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Settings/1.4.0/Settings-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Settings/1.4.0/Settings-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Settings/1.4.1/Settings-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settings-1.4.1.tar.gz",
+    "size_bytes": 94340,
+    "sha256": "a9e63004919ec9a1d145b272ba9ab8d788480e4292bc1d9a3a2b05dc1e41d772",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Settings/1.4.1/Settings-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Settings/1.4.1/Settings-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Settings/1.4.2/Settings-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settings-1.4.2.tar.gz",
+    "size_bytes": 94366,
+    "sha256": "439782ff03fa3de020b4120471a9b1fca95ab49f657e5ad4eeea4af7aaf0149a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Settings/1.4.2/Settings-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Settings/1.4.2/Settings-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Settings/1.4.3/Settings-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Settings-1.4.3.tar.gz",
+    "size_bytes": 94540,
+    "sha256": "65126cafc40dcf0ba953dc68a37d59527079374d22186adc5ed2287169301329",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Settings/1.4.3/Settings-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Settings/1.4.3/Settings-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/SevenSegmentsDisp/1.0/SevenSegmentsDisp-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSegmentsDisp-1.0.tar.gz",
+    "size_bytes": 13638,
+    "sha256": "656dd81dfca0b34fa44904714c9913f2c893054cc4aa8ea1ec634357dd127538",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/SevenSegmentsDisp/1.0/SevenSegmentsDisp-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/SevenSegmentsDisp/1.0/SevenSegmentsDisp-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/SimplePortal/1.2/SimplePortal-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimplePortal-1.2.tar.gz",
+    "size_bytes": 7699,
+    "sha256": "02d1129b1a2b909d70ac7e5d58e40717a86513490cf10e4861562f25b699ee66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/SimplePortal/1.2/SimplePortal-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/SimplePortal/1.2/SimplePortal-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/SoftServo/2.0.0/SoftServo-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftServo-2.0.0.tar.gz",
+    "size_bytes": 7152,
+    "sha256": "e75ec591633016d82ccb6eeb32bdf05820ebbe72bd91ce8dd2fba019f993724d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/SoftServo/2.0.0/SoftServo-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/SoftServo/2.0.0/SoftServo-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/SoftServo/2.0.2/SoftServo-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftServo-2.0.2.tar.gz",
+    "size_bytes": 7438,
+    "sha256": "266261f298dad2bf3645f98279311fb3b2be7b6d26798b7f2934b9b73c31037b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/SoftServo/2.0.2/SoftServo-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/SoftServo/2.0.2/SoftServo-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/SoftServo/2.0.3/SoftServo-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftServo-2.0.3.tar.gz",
+    "size_bytes": 7926,
+    "sha256": "d48ac742413e591c093a926ed20eaf1f4490447a73dbd8c5d3795442fae2eaec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/SoftServo/2.0.3/SoftServo-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/SoftServo/2.0.3/SoftServo-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/SoftServo/2.0.5/SoftServo-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftServo-2.0.5.tar.gz",
+    "size_bytes": 7853,
+    "sha256": "c0e617d9b116f4636c702bc62cd279c23f6e75078584b636ca07d81df07b4f04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/SoftServo/2.0.5/SoftServo-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/SoftServo/2.0.5/SoftServo-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Stamp/1.4.3/Stamp-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stamp-1.4.3.tar.gz",
+    "size_bytes": 22606,
+    "sha256": "257a573f082ea1c9c6d3a7f8935c2fa475f490dfb478169f292907241c26a4b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Stamp/1.4.3/Stamp-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Stamp/1.4.3/Stamp-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Stamp/1.4.4/Stamp-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stamp-1.4.4.tar.gz",
+    "size_bytes": 22607,
+    "sha256": "d4114e221101ed7aaad171388b2d0a3c411b158d0269630b001d39f132742ec9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Stamp/1.4.4/Stamp-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Stamp/1.4.4/Stamp-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Stamp/1.5.0/Stamp-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stamp-1.5.0.tar.gz",
+    "size_bytes": 22954,
+    "sha256": "24e5868bb6ab5e92026379e5cfa80f9dcb8584cd3a34814702351b793bd75557",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Stamp/1.5.0/Stamp-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Stamp/1.5.0/Stamp-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Stamp/1.5.1/Stamp-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stamp-1.5.1.tar.gz",
+    "size_bytes": 24012,
+    "sha256": "1413c1132c3a602f77e83d79ca62024cd00f8d88827b13c49510f34532aaa85b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Stamp/1.5.1/Stamp-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Stamp/1.5.1/Stamp-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/StreamIO/1.0.5/StreamIO-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamIO-1.0.5.tar.gz",
+    "size_bytes": 4244,
+    "sha256": "78dc9b03e465e4a5449bf9e9b3fc30e190c9c6600f9cea3bda5e134b711a6b18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/StreamIO/1.0.5/StreamIO-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/StreamIO/1.0.5/StreamIO-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/StreamPacket/1.0.3/StreamPacket-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamPacket-1.0.3.tar.gz",
+    "size_bytes": 9952,
+    "sha256": "c4bedb2360a40c9abf0aedad37ed2eaaae0d7b23de9f67f44521e1bb0b9acd6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/StreamPacket/1.0.3/StreamPacket-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/StreamPacket/1.0.3/StreamPacket-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/StringN/1.0.6/StringN-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StringN-1.0.6.tar.gz",
+    "size_bytes": 9813,
+    "sha256": "0e7c2214f20e8273d76a41fac34551a5480186e16a6ad88ec5fc382321e5a7b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/StringN/1.0.6/StringN-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/StringN/1.0.6/StringN-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/StringN/1.0.7/StringN-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StringN-1.0.7.tar.gz",
+    "size_bytes": 9970,
+    "sha256": "2b97570e53b03f4dd907e555741d27631fb6e3aabf6ffb6c83ff0da97aa7381a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/StringN/1.0.7/StringN-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/StringN/1.0.7/StringN-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/StringN/1.0.8/StringN-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StringN-1.0.8.tar.gz",
+    "size_bytes": 12256,
+    "sha256": "8f270e344c2277736eec99695e0ec5e826b5ca5d2ce6df9562d3e4bb3a121fd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/StringN/1.0.8/StringN-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/StringN/1.0.8/StringN-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/StringUtils/1.5.3/StringUtils-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StringUtils-1.5.3.tar.gz",
+    "size_bytes": 43823,
+    "sha256": "88025dbcbe4bcbf710fff29045db5ebd4d16abdfc84c1f249beb497a1f177e99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/StringUtils/1.5.3/StringUtils-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/StringUtils/1.5.3/StringUtils-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/StringUtils/1.5.4/StringUtils-1.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StringUtils-1.5.4.tar.gz",
+    "size_bytes": 43758,
+    "sha256": "03ce78962276b3dc84cee86f0ae9c0a881d1bb29b037ac70ee3273c374676055",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/StringUtils/1.5.4/StringUtils-1.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/StringUtils/1.5.4/StringUtils-1.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/StringUtils/1.6.0/StringUtils-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StringUtils-1.6.0.tar.gz",
+    "size_bytes": 45390,
+    "sha256": "c0e9405e7e0e1219f6dfe58420fcdb07578b9851ce1386744d3a5a1a100ad3c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/StringUtils/1.6.0/StringUtils-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/StringUtils/1.6.0/StringUtils-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/StringUtils/1.6.1/StringUtils-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StringUtils-1.6.1.tar.gz",
+    "size_bytes": 47464,
+    "sha256": "53834400a44bb91d065d1d6cd96e86fc9c683d855d1122903c45f867b4cbfde2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/StringUtils/1.6.1/StringUtils-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/StringUtils/1.6.1/StringUtils-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/SunPosition/1.2.0/SunPosition-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SunPosition-1.2.0.tar.gz",
+    "size_bytes": 9410,
+    "sha256": "7408da299f2f960170aedf1959ddbdd313b3dcec8f0c2b56800e9260fa955169",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/SunPosition/1.2.0/SunPosition-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/SunPosition/1.2.0/SunPosition-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Table/1.3.4/Table-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Table-1.3.4.tar.gz",
+    "size_bytes": 17525,
+    "sha256": "23042844527ba4566f14d571ae9c8157d6a15297f51128af1db0f272b4d89ee4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Table/1.3.4/Table-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Table/1.3.4/Table-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Table/1.3.5/Table-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Table-1.3.5.tar.gz",
+    "size_bytes": 17515,
+    "sha256": "c306363be06eb259a9a010ed7d03560364ad0f0aa73ac9a23b3113cde5f22b79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Table/1.3.5/Table-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Table/1.3.5/Table-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Table/1.3.6/Table-1.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Table-1.3.6.tar.gz",
+    "size_bytes": 17916,
+    "sha256": "f59729f6cabfa1eca41d0fbcd1a924bfcc2f08a3ec57194311325708f6d3035b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Table/1.3.6/Table-1.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Table/1.3.6/Table-1.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/Tachometer/1.3/Tachometer-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tachometer-1.3.tar.gz",
+    "size_bytes": 4113,
+    "sha256": "a9dc60cf8272c18be55cd00b64d6a01ef9158fa52f9357878caa5ce403c83500",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/Tachometer/1.3/Tachometer-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/Tachometer/1.3/Tachometer-1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/TimeRandom/1.0/TimeRandom-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimeRandom-1.0.tar.gz",
+    "size_bytes": 3525,
+    "sha256": "feefe49fa1f9569df533e6975ea74778d32f1e7361d85c680f40a0275fa63ca4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/TimeRandom/1.0/TimeRandom-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/TimeRandom/1.0/TimeRandom-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/TimerMs/1.2/TimerMs-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerMs-1.2.tar.gz",
+    "size_bytes": 6666,
+    "sha256": "033b2553c219e66d6489c86987e30372addc2ef5f9c770c4c783f2d3e59aaf4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/TimerMs/1.2/TimerMs-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/TimerMs/1.2/TimerMs-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/UART_RF/1.0.1/UART_RF-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UART_RF-1.0.1.tar.gz",
+    "size_bytes": 16021,
+    "sha256": "5f0693610e0fab96b07d781980a5f27e12c7221151450c5b0bc5fb76f9487ac1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/UART_RF/1.0.1/UART_RF-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/UART_RF/1.0.1/UART_RF-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/UnixTime/1.1/UnixTime-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UnixTime-1.1.tar.gz",
+    "size_bytes": 4571,
+    "sha256": "ba154de4f344f2a06f920d8d22a9ef9b20c0ad59d6a8c636bd78eb2b3e45ab61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/UnixTime/1.1/UnixTime-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/UnixTime/1.1/UnixTime-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/VirtualButton/1.1/VirtualButton-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VirtualButton-1.1.tar.gz",
+    "size_bytes": 8888,
+    "sha256": "919a98912781e0d5e71e602436fc88ecf333779fe482a23ff8dff39c919394b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/VirtualButton/1.1/VirtualButton-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/VirtualButton/1.1/VirtualButton-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/VolAnalyzer/1.9/VolAnalyzer-1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VolAnalyzer-1.9.tar.gz",
+    "size_bytes": 7234,
+    "sha256": "c9456bfc5f8b62d2ee49ab0c8ae6f98f0ec568ed16e3d5738c89ccc95b17da16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/VolAnalyzer/1.9/VolAnalyzer-1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/VolAnalyzer/1.9/VolAnalyzer-1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/WiFiConnector/1.0.4/WiFiConnector-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiConnector-1.0.4.tar.gz",
+    "size_bytes": 5103,
+    "sha256": "8c3cd2ca124db0a4348a21afe54774df769670f6777a460234ad8eed437857b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/WiFiConnector/1.0.4/WiFiConnector-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/WiFiConnector/1.0.4/WiFiConnector-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/WiFiConnector/1.0.6/WiFiConnector-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiConnector-1.0.6.tar.gz",
+    "size_bytes": 6886,
+    "sha256": "4074529ec6d443464b120faaf549ca996fab8350314fb78f09c21cef361763a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/WiFiConnector/1.0.6/WiFiConnector-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/WiFiConnector/1.0.6/WiFiConnector-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/buildTime/1.0/buildTime-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "buildTime-1.0.tar.gz",
+    "size_bytes": 3535,
+    "sha256": "89366ef0d9cebe92b1186e28cad3898b36cb1b839a67e6f86c1c5525db584b7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/buildTime/1.0/buildTime-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/buildTime/1.0/buildTime-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/directADC/1.1/directADC-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "directADC-1.1.tar.gz",
+    "size_bytes": 8933,
+    "sha256": "1bdec985ce02f35dca8a883e684c7eb20072588357e27e97aa90cadb2de09dd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/directADC/1.1/directADC-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/directADC/1.1/directADC-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/directTimers/1.0/directTimers-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "directTimers-1.0.tar.gz",
+    "size_bytes": 10038,
+    "sha256": "87c0801ee396631ba70ac91ae41411218d05a0cbafa6fe57b0b670d8e5a96712",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/directTimers/1.0/directTimers-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/directTimers/1.0/directTimers-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/fixed/2.0.2/fixed-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fixed-2.0.2.tar.gz",
+    "size_bytes": 7531,
+    "sha256": "f7b9e26a9110076d1c6af53a757ef9a7f8d9d37dd3e69e456745b0eec6186ecd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/fixed/2.0.2/fixed-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/fixed/2.0.2/fixed-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/fixed/2.0.3/fixed-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fixed-2.0.3.tar.gz",
+    "size_bytes": 8528,
+    "sha256": "51962fa0cd0c82d60e9b2f0890dc1462e37808dafd121eb87115aac5fbb836d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/fixed/2.0.3/fixed-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/fixed/2.0.3/fixed-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/mString/1.7.3/mString-1.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mString-1.7.3.tar.gz",
+    "size_bytes": 12751,
+    "sha256": "33b26ea8a787563deaa22c92842a607c709c8f612188ca224d5522ca8fa04e31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/mString/1.7.3/mString-1.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/mString/1.7.3/mString-1.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/microDS18B20/3.10/microDS18B20-3.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microDS18B20-3.10.tar.gz",
+    "size_bytes": 13519,
+    "sha256": "a76841b0c5947895a0dfc8c315fc1acdbc2e2ccf000e0fdadb7b24fab28a69bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/microDS18B20/3.10/microDS18B20-3.10.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/microDS18B20/3.10/microDS18B20-3.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/microDS3231/2.7/microDS3231-2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microDS3231-2.7.tar.gz",
+    "size_bytes": 11520,
+    "sha256": "fb3d68d23b4ae0b5e659bd4cd68034a30a703023934ebe5abf1c29faa956710b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/microDS3231/2.7/microDS3231-2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/microDS3231/2.7/microDS3231-2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/microLED/3.6/microLED-3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microLED-3.6.tar.gz",
+    "size_bytes": 37333,
+    "sha256": "c655ff72dd6277a6dd13eb1e041b55789fe101b1603654aef6970e8b3ec7acc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/microLED/3.6/microLED-3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/microLED/3.6/microLED-3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/microWire/2.2/microWire-2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microWire-2.2.tar.gz",
+    "size_bytes": 6808,
+    "sha256": "0e008a98f1d7f499be39c299eb53eb1ffe4aee9e86ef8daf8e3de5f791360ff1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/microWire/2.2/microWire-2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/microWire/2.2/microWire-2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/pgm_utils/1.0.5/pgm_utils-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pgm_utils-1.0.5.tar.gz",
+    "size_bytes": 9283,
+    "sha256": "017e0a7a60197a4973546bce1e115a87d64f57a1d7852eae323b65761ea9894c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/pgm_utils/1.0.5/pgm_utils-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/pgm_utils/1.0.5/pgm_utils-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/rtc_utils/1.0.4/rtc_utils-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rtc_utils-1.0.4.tar.gz",
+    "size_bytes": 6295,
+    "sha256": "137cc9362470ae76f747cf8ca82d9c2619ef501c61325b5ffbafb118218da53a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/rtc_utils/1.0.4/rtc_utils-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/rtc_utils/1.0.4/rtc_utils-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/rtc_utils/1.0.5/rtc_utils-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rtc_utils-1.0.5.tar.gz",
+    "size_bytes": 6692,
+    "sha256": "17050cad0f719f51f40b961a14361a6a08abe439cd5b95675c924916d9830265",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/rtc_utils/1.0.5/rtc_utils-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/rtc_utils/1.0.5/rtc_utils-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/uButton/1.1.1/uButton-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uButton-1.1.1.tar.gz",
+    "size_bytes": 7552,
+    "sha256": "9902d4335a6a9b87baf53e6c9c9958bcbc1b09f267577442e02b4ef78c0508c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/uButton/1.1.1/uButton-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/uButton/1.1.1/uButton-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/uButton/1.1.2/uButton-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uButton-1.1.2.tar.gz",
+    "size_bytes": 7603,
+    "sha256": "faee976fbfcc1389fffeb2882adae2f60061ca270a76e799caf18674bc6c2882",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/uButton/1.1.2/uButton-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/uButton/1.1.2/uButton-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/uButton/1.1.3/uButton-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uButton-1.1.3.tar.gz",
+    "size_bytes": 11797,
+    "sha256": "ca0e49337c957944500f3760ae9d388606f4ef75657ca2e15e8845fcd3c2c514",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/uButton/1.1.3/uButton-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/uButton/1.1.3/uButton-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/uEncoder/1.0.0/uEncoder-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uEncoder-1.0.0.tar.gz",
+    "size_bytes": 5908,
+    "sha256": "2b59ddacecea056ad01bd1e0c883eabed4d174f3eabae28bacb5721fd8a0d921",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/uEncoder/1.0.0/uEncoder-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/uEncoder/1.0.0/uEncoder-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/uEncoder/1.0.1/uEncoder-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uEncoder-1.0.1.tar.gz",
+    "size_bytes": 8332,
+    "sha256": "2e62b38800db310147a5a426791a60ce5405b1856b2d48f08345e706be8a8254",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/uEncoder/1.0.1/uEncoder-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/uEncoder/1.0.1/uEncoder-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/uEncoder/1.0.2/uEncoder-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uEncoder-1.0.2.tar.gz",
+    "size_bytes": 8912,
+    "sha256": "9a8c744682d09a5ac81ba96589994ea8edff361a67b28eed82eb1a8455da8203",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/uEncoder/1.0.2/uEncoder-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/uEncoder/1.0.2/uEncoder-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/uEncoder/1.1.0/uEncoder-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uEncoder-1.1.0.tar.gz",
+    "size_bytes": 9370,
+    "sha256": "3c6cca2bc8036a84e48b7a9165859eca66ea54523f59749a24010a4ff4c9f0c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/uEncoder/1.1.0/uEncoder-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/uEncoder/1.1.0/uEncoder-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/uPID/1.0.1/uPID-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uPID-1.0.1.tar.gz",
+    "size_bytes": 10189,
+    "sha256": "683a51d8b340c4386bbe3d21956b27137608a750f0c4af4185d84b325f811af2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/uPID/1.0.1/uPID-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/uPID/1.0.1/uPID-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/uPID/1.0.3/uPID-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uPID-1.0.3.tar.gz",
+    "size_bytes": 10235,
+    "sha256": "a4d9e229cda593fd881a6deca7df17946fed037aa40c78f211d973fba67b2e3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/uPID/1.0.3/uPID-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/uPID/1.0.3/uPID-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/uPID/1.0.4/uPID-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uPID-1.0.4.tar.gz",
+    "size_bytes": 10483,
+    "sha256": "08011aa3f2ffafb997abc553337da2c270d1412a4a4bcbfba4015ebd63ac7a2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/uPID/1.0.4/uPID-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/uPID/1.0.4/uPID-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/uPerlin/1.0.0/uPerlin-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uPerlin-1.0.0.tar.gz",
+    "size_bytes": 7100,
+    "sha256": "51294b09ee2dca5265b29ada4443d4a6a8525191c26755c815e3c8dff923852c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/uPerlin/1.0.0/uPerlin-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/uPerlin/1.0.0/uPerlin-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/uWire/1.0.1/uWire-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uWire-1.0.1.tar.gz",
+    "size_bytes": 6572,
+    "sha256": "90102d3888772276f8c46b91508fad65b2a3a2104cbe645d06d8195b976dc2ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/uWire/1.0.1/uWire-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/uWire/1.0.1/uWire-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gyverlibs/library/uWire/1.0.2/uWire-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uWire-1.0.2.tar.gz",
+    "size_bytes": 6711,
+    "sha256": "4d848352d8190e8b24a7b058c3f1d4b329aa4d35ce3583173b697931a8a0850b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gyverlibs/library/uWire/1.0.2/uWire-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gyverlibs/library/uWire/1.0.2/uWire-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

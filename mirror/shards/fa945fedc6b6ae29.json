@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nikolajrfa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nikolajrfa/library/LINQish/1.0.0/LINQish-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LINQish-1.0.0.tar.gz",
+    "size_bytes": 12100,
+    "sha256": "9cbe1c0f582bee3bf758a0fd58d00fcab7edbbc3500e69426f2282cfbc0de908",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nikolajrfa/library/LINQish/1.0.0/LINQish-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nikolajrfa/library/LINQish/1.0.0/LINQish-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

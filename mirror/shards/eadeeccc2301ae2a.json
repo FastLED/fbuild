@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/atrivatech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "atrivatech/library/AtrivaTECH%20PicUNO/1.0.1/AtrivaTECHPicUNO-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AtrivaTECHPicUNO-1.0.1.tar.gz",
+    "size_bytes": 18237,
+    "sha256": "85ca4825e2b3ae93aaaf490b64a3d09a056db4985842a7ff3e38437b2eb200cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/atrivatech/library/AtrivaTECH%2520PicUNO/1.0.1/AtrivaTECHPicUNO-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/atrivatech/library/AtrivaTECH%20PicUNO/1.0.1/AtrivaTECHPicUNO-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

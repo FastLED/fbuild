@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-volundr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-volundr/library/BattleBots2016/0.0.0+sha.17628f05a166/BattleBots2016-0.0.0+sha.17628f05a166.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BattleBots2016-0.0.0+sha.17628f05a166.tar.gz",
+    "size_bytes": 2344,
+    "sha256": "566a8117b1283967c6642f134fb3e450849b59abd8d62987cbd4dc07edd3ebec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-volundr/library/BattleBots2016/0.0.0%2Bsha.17628f05a166/BattleBots2016-0.0.0%2Bsha.17628f05a166.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-volundr/library/BattleBots2016/0.0.0%2Bsha.17628f05a166/BattleBots2016-0.0.0%2Bsha.17628f05a166.tar.gz"
+    ]
+   }
+  }
+ ]
+}

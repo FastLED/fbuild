@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gabdisi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gabdisi/library/TS_DISCO_F746NG/0.0.0+sha.ecae68a77c28/TS_DISCO_F746NG-0.0.0+sha.ecae68a77c28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TS_DISCO_F746NG-0.0.0+sha.ecae68a77c28.tar.gz",
+    "size_bytes": 2438,
+    "sha256": "39d2985ff1671a3eebef6387925825fa439e87645dc6845d8eda0224d03d8bce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gabdisi/library/TS_DISCO_F746NG/0.0.0%2Bsha.ecae68a77c28/TS_DISCO_F746NG-0.0.0%2Bsha.ecae68a77c28.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gabdisi/library/TS_DISCO_F746NG/0.0.0%2Bsha.ecae68a77c28/TS_DISCO_F746NG-0.0.0%2Bsha.ecae68a77c28.tar.gz"
+    ]
+   }
+  }
+ ]
+}

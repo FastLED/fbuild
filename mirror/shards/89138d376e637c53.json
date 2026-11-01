@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lucasromeiro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lucasromeiro/library/DropboxManager/1.1.2/DropboxManager-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DropboxManager-1.1.2.tar.gz",
+    "size_bytes": 9127,
+    "sha256": "885de7f48c3a2d906ddbca69456c0f9b8afa4d72ef14f85017afdc42d1cdec7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lucasromeiro/library/DropboxManager/1.1.2/DropboxManager-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lucasromeiro/library/DropboxManager/1.1.2/DropboxManager-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

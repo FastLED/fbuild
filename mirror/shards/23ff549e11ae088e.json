@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-emh203",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-emh203/library/CMSIS_DSP_401/0.0.0+sha.3d9c67d97d6f/CMSIS_DSP_401-0.0.0+sha.3d9c67d97d6f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMSIS_DSP_401-0.0.0+sha.3d9c67d97d6f.tar.gz",
+    "size_bytes": 1291654,
+    "sha256": "ab28fcc2f91108e8f92336c5593f033ee5790cd206a42606f223a63148d087e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-emh203/library/CMSIS_DSP_401/0.0.0%2Bsha.3d9c67d97d6f/CMSIS_DSP_401-0.0.0%2Bsha.3d9c67d97d6f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-emh203/library/CMSIS_DSP_401/0.0.0%2Bsha.3d9c67d97d6f/CMSIS_DSP_401-0.0.0%2Bsha.3d9c67d97d6f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-emh203/library/FRDM-TFC/0.0.0+sha.24430a0d7fd8/FRDM-TFC-0.0.0+sha.24430a0d7fd8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FRDM-TFC-0.0.0+sha.24430a0d7fd8.tar.gz",
+    "size_bytes": 11309,
+    "sha256": "745ed2218752d5da93324eb96d18390b0666b9b3cf374285cbe0beb1643c541b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-emh203/library/FRDM-TFC/0.0.0%2Bsha.24430a0d7fd8/FRDM-TFC-0.0.0%2Bsha.24430a0d7fd8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-emh203/library/FRDM-TFC/0.0.0%2Bsha.24430a0d7fd8/FRDM-TFC-0.0.0%2Bsha.24430a0d7fd8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-emh203/library/chan_fatfs/0.0.0+sha.68378811b1e2/chan_fatfs-0.0.0+sha.68378811b1e2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "chan_fatfs-0.0.0+sha.68378811b1e2.tar.gz",
+    "size_bytes": 41735,
+    "sha256": "762fce7253dcfa858b46ffeb0042391277cf154db2cf2451399b350e2d72fedb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-emh203/library/chan_fatfs/0.0.0%2Bsha.68378811b1e2/chan_fatfs-0.0.0%2Bsha.68378811b1e2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-emh203/library/chan_fatfs/0.0.0%2Bsha.68378811b1e2/chan_fatfs-0.0.0%2Bsha.68378811b1e2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

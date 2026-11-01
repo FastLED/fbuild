@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/developer-39",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "developer-39/library/Simple%20QR%20Code/0.9.0/SimpleQRCode-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleQRCode-0.9.0.tar.gz",
+    "size_bytes": 17289,
+    "sha256": "77191288cc30c7acc80d014ffdbc8f7852a1e91fdc841ee5d3b32763444f175c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/developer-39/library/Simple%2520QR%2520Code/0.9.0/SimpleQRCode-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/developer-39/library/Simple%20QR%20Code/0.9.0/SimpleQRCode-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

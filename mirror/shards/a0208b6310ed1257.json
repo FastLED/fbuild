@@ -1,0 +1,1777 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tanakamasayuki",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tanakamasayuki/library/ArduTest/0.2.1/ArduTest-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduTest-0.2.1.tar.gz",
+    "size_bytes": 20088,
+    "sha256": "f73a1f587660e58eeaa6e514fe368978e884eeb5b55d30bb3af659b16bedd0f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ArduTest/0.2.1/ArduTest-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ArduTest/0.2.1/ArduTest-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ArduTest/0.2.2/ArduTest-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduTest-0.2.2.tar.gz",
+    "size_bytes": 21780,
+    "sha256": "103ae6a05c50a96a0a478a3317a08ba93a3735dc4cdc9523abb9c1119bce6038",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ArduTest/0.2.2/ArduTest-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ArduTest/0.2.2/ArduTest-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/AssocTree/1.0.0/AssocTree-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AssocTree-1.0.0.tar.gz",
+    "size_bytes": 25199,
+    "sha256": "71d746450925bb4743591a42d85297ca49bde4eaacd5e6170b9951f25b0b44d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/AssocTree/1.0.0/AssocTree-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/AssocTree/1.0.0/AssocTree-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/AssocTree/1.0.2/AssocTree-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AssocTree-1.0.2.tar.gz",
+    "size_bytes": 26261,
+    "sha256": "25f2401be85c52b7ed39b2f9283cd4c008f68ea1e75d3fedc143e8c0afe52347",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/AssocTree/1.0.2/AssocTree-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/AssocTree/1.0.2/AssocTree-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/AssocTree/1.0.3/AssocTree-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AssocTree-1.0.3.tar.gz",
+    "size_bytes": 27734,
+    "sha256": "50e21583300899a9e78058837d38dfebeea0037f4826e9b4a1ea222c914098c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/AssocTree/1.0.3/AssocTree-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/AssocTree/1.0.3/AssocTree-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/AssocTree/1.0.4/AssocTree-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AssocTree-1.0.4.tar.gz",
+    "size_bytes": 28020,
+    "sha256": "bdac05e0db4c2ae729ba9a511b9f1c0146db91ad3230f70ef0038fb90e49622c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/AssocTree/1.0.4/AssocTree-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/AssocTree/1.0.4/AssocTree-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32%20Lite%20Pack%20Library/1.3.2/ESP32LitePackLibrary-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32LitePackLibrary-1.3.2.tar.gz",
+    "size_bytes": 68688,
+    "sha256": "51e51ce3e7cd7ef8c809111cfd2868327b3652fddc5b2462006a9aa8c0542945",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32%2520Lite%2520Pack%2520Library/1.3.2/ESP32LitePackLibrary-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32%20Lite%20Pack%20Library/1.3.2/ESP32LitePackLibrary-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32%20ULP%20Debugger/1.1.3/ESP32ULPDebugger-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32ULPDebugger-1.1.3.tar.gz",
+    "size_bytes": 3549,
+    "sha256": "0578c5d610a2eb6a60181feeba7df225c0012cfec60622abdc89c6c0a0299689",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32%2520ULP%2520Debugger/1.1.3/ESP32ULPDebugger-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32%20ULP%20Debugger/1.1.3/ESP32ULPDebugger-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32AutoTask/1.0.0/ESP32AutoTask-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32AutoTask-1.0.0.tar.gz",
+    "size_bytes": 16470,
+    "sha256": "d246ff5d39a643c2c759af3788227e48a03c44a7a45e72a68a2a72325f4226a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32AutoTask/1.0.0/ESP32AutoTask-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32AutoTask/1.0.0/ESP32AutoTask-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32AutoTask/1.0.3/ESP32AutoTask-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32AutoTask-1.0.3.tar.gz",
+    "size_bytes": 20112,
+    "sha256": "f264336aad9ec8f89c55ea4f6533fc8b76ae4df1db482f8581508c6c86357ff7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32AutoTask/1.0.3/ESP32AutoTask-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32AutoTask/1.0.3/ESP32AutoTask-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32AutoTask/1.0.4/ESP32AutoTask-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32AutoTask-1.0.4.tar.gz",
+    "size_bytes": 20403,
+    "sha256": "3b2385889bb6efa1d8dedf41619e8c1a79598dfbb81425d0a14cfab747f0e90d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32AutoTask/1.0.4/ESP32AutoTask-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32AutoTask/1.0.4/ESP32AutoTask-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32CertBundle/1.0.0/ESP32CertBundle-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32CertBundle-1.0.0.tar.gz",
+    "size_bytes": 106520,
+    "sha256": "a8749eb939423decf972cc34d7110a2d76b78304a517c02f23cf445d622c5cf5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32CertBundle/1.0.0/ESP32CertBundle-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32CertBundle/1.0.0/ESP32CertBundle-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32CertBundle/1.0.1/ESP32CertBundle-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32CertBundle-1.0.1.tar.gz",
+    "size_bytes": 107569,
+    "sha256": "c4b159e37e69c165072f8e3903a0fd414bbe7644cbedb0fd99c057980fb404cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32CertBundle/1.0.1/ESP32CertBundle-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32CertBundle/1.0.1/ESP32CertBundle-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32CertBundle/1.0.2/ESP32CertBundle-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32CertBundle-1.0.2.tar.gz",
+    "size_bytes": 105342,
+    "sha256": "6a57a520ff8cb85ccd56ec43101a247b2656313151eb6df119430736c4c2cdbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32CertBundle/1.0.2/ESP32CertBundle-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32CertBundle/1.0.2/ESP32CertBundle-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32CertBundle/20251202.0.0/ESP32CertBundle-20251202.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32CertBundle-20251202.0.0.tar.gz",
+    "size_bytes": 106816,
+    "sha256": "ad0e0327ecaeadd137b3e4509ecc81c978ed010cd48e125629fc5e55124b9752",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32CertBundle/20251202.0.0/ESP32CertBundle-20251202.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32CertBundle/20251202.0.0/ESP32CertBundle-20251202.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32CertBundle/20260211.0.0/ESP32CertBundle-20260211.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32CertBundle-20260211.0.0.tar.gz",
+    "size_bytes": 107188,
+    "sha256": "750df3cccdff75f913f90d9ccb7e80f7b3bfbbf1d080d5e891e089e2399533fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32CertBundle/20260211.0.0/ESP32CertBundle-20260211.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32CertBundle/20260211.0.0/ESP32CertBundle-20260211.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32CertBundle/20260211.0.1/ESP32CertBundle-20260211.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32CertBundle-20260211.0.1.tar.gz",
+    "size_bytes": 107347,
+    "sha256": "a9c73e4cdf8c7fc422f4c66fcd38f99b99ee1e5e694abedb391a3a0feaba07a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32CertBundle/20260211.0.1/ESP32CertBundle-20260211.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32CertBundle/20260211.0.1/ESP32CertBundle-20260211.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32CertBundle/20260514.0.0/ESP32CertBundle-20260514.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32CertBundle-20260514.0.0.tar.gz",
+    "size_bytes": 93234,
+    "sha256": "360e923f5f9f269f8a4040fb28f4e2909c3a23378b2d42b7e3e7b6037a21069e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32CertBundle/20260514.0.0/ESP32CertBundle-20260514.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32CertBundle/20260514.0.0/ESP32CertBundle-20260514.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32CertBundle/20260716.0.0/ESP32CertBundle-20260716.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32CertBundle-20260716.0.0.tar.gz",
+    "size_bytes": 92069,
+    "sha256": "5b1377846684f1ad6bc0dab7545b5d24b82b1cee8d292471be8da79057162a63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32CertBundle/20260716.0.0/ESP32CertBundle-20260716.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32CertBundle/20260716.0.0/ESP32CertBundle-20260716.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32CertBundle/20260813.0.0/ESP32CertBundle-20260813.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32CertBundle-20260813.0.0.tar.gz",
+    "size_bytes": 92868,
+    "sha256": "492bddbfae1663cd55d1d8d8d934d1d29108fa334a7f6b6f16a2018194d6f2b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32CertBundle/20260813.0.0/ESP32CertBundle-20260813.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32CertBundle/20260813.0.0/ESP32CertBundle-20260813.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32CertBundle/20260925.0.0/ESP32CertBundle-20260925.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32CertBundle-20260925.0.0.tar.gz",
+    "size_bytes": 92907,
+    "sha256": "b02707ed38d5ae0a143cdf6bf874133d566ae4879dc76df3e9cdcad7d66ded3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32CertBundle/20260925.0.0/ESP32CertBundle-20260925.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32CertBundle/20260925.0.0/ESP32CertBundle-20260925.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32CertBundle/20261020.0.0/ESP32CertBundle-20261020.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32CertBundle-20261020.0.0.tar.gz",
+    "size_bytes": 91888,
+    "sha256": "e6d2eae60dff970795885b1b896943c320d359ea2e59a162a1e0f4d7a6bcd724",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32CertBundle/20261020.0.0/ESP32CertBundle-20261020.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32CertBundle/20261020.0.0/ESP32CertBundle-20261020.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32IRPulseKit/1.0.0/ESP32IRPulseKit-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32IRPulseKit-1.0.0.tar.gz",
+    "size_bytes": 59988,
+    "sha256": "5152e29d028caa4a41c2d4a742271c146514fd3028ab7ee82055e0a09ab344f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32IRPulseKit/1.0.0/ESP32IRPulseKit-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32IRPulseKit/1.0.0/ESP32IRPulseKit-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32IRPulseKit/1.0.3/ESP32IRPulseKit-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32IRPulseKit-1.0.3.tar.gz",
+    "size_bytes": 108967,
+    "sha256": "13790bac2c204bbf6dd16792314aef26827529f3896bf12486643d3e7ebc22b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32IRPulseKit/1.0.3/ESP32IRPulseKit-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32IRPulseKit/1.0.3/ESP32IRPulseKit-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32IRPulseKit/1.0.4/ESP32IRPulseKit-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32IRPulseKit-1.0.4.tar.gz",
+    "size_bytes": 133344,
+    "sha256": "c03b0958afdce64604a0e53cecadce1467f264a3f2da884c0cfaaa54847b5dc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32IRPulseKit/1.0.4/ESP32IRPulseKit-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32IRPulseKit/1.0.4/ESP32IRPulseKit-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32IRPulseKit/1.0.5/ESP32IRPulseKit-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32IRPulseKit-1.0.5.tar.gz",
+    "size_bytes": 165225,
+    "sha256": "4f33674e443c0fb1b4feed988df729971a6957a4bf789d33c0c3be3c4a6034a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32IRPulseKit/1.0.5/ESP32IRPulseKit-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32IRPulseKit/1.0.5/ESP32IRPulseKit-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32IRPulseKit/1.0.6/ESP32IRPulseKit-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32IRPulseKit-1.0.6.tar.gz",
+    "size_bytes": 168819,
+    "sha256": "ed9eef3668c18ee44ecde4f86ac069627c270c57e7831f5d2d989163ed26b7fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32IRPulseKit/1.0.6/ESP32IRPulseKit-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32IRPulseKit/1.0.6/ESP32IRPulseKit-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32IRPulseKit/1.0.7/ESP32IRPulseKit-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32IRPulseKit-1.0.7.tar.gz",
+    "size_bytes": 179835,
+    "sha256": "9e2b587beecd6759801051180072c7efe1b367d04b3c85b71f639d5d2f4b5971",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32IRPulseKit/1.0.7/ESP32IRPulseKit-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32IRPulseKit/1.0.7/ESP32IRPulseKit-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32KeyBridge/1.0.0/ESP32KeyBridge-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32KeyBridge-1.0.0.tar.gz",
+    "size_bytes": 117283,
+    "sha256": "139c3b4e63059b7e1688d21ca7a7506a60b19d0f47fb4f288ee91032534efb06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32KeyBridge/1.0.0/ESP32KeyBridge-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32KeyBridge/1.0.0/ESP32KeyBridge-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32KeyBridge/1.0.1/ESP32KeyBridge-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32KeyBridge-1.0.1.tar.gz",
+    "size_bytes": 115107,
+    "sha256": "8651a7bcd95ee3a56f8140d66ff3d68f791ef980b6cb7aab1839040c32434fa1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32KeyBridge/1.0.1/ESP32KeyBridge-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32KeyBridge/1.0.1/ESP32KeyBridge-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32PsramLock/1.0.0/ESP32PsramLock-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32PsramLock-1.0.0.tar.gz",
+    "size_bytes": 4227,
+    "sha256": "ed523cfa758d25fab71ec31ff483056108c06e4c1c7368fa3a1e037fa97c3ce5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32PsramLock/1.0.0/ESP32PsramLock-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32PsramLock/1.0.0/ESP32PsramLock-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32SerialCtl/0.1.1/ESP32SerialCtl-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32SerialCtl-0.1.1.tar.gz",
+    "size_bytes": 42018,
+    "sha256": "db23f89ba388930e0d125bc278f6fef28cef4d14b5e132559c809956f2c9771a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32SerialCtl/0.1.1/ESP32SerialCtl-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32SerialCtl/0.1.1/ESP32SerialCtl-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32SerialCtl/1.0.0/ESP32SerialCtl-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32SerialCtl-1.0.0.tar.gz",
+    "size_bytes": 49609,
+    "sha256": "eb631ceab0880305f29c1ad77b9bb7fdc5e85f67ae407ef59502e82397e84669",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32SerialCtl/1.0.0/ESP32SerialCtl-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32SerialCtl/1.0.0/ESP32SerialCtl-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32SerialCtl/1.0.1/ESP32SerialCtl-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32SerialCtl-1.0.1.tar.gz",
+    "size_bytes": 51565,
+    "sha256": "851008a7f46c71da3535b5e2e3d6d335fe3ebbc39a15496de9637483c5186d6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32SerialCtl/1.0.1/ESP32SerialCtl-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32SerialCtl/1.0.1/ESP32SerialCtl-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32SerialCtl/1.0.2/ESP32SerialCtl-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32SerialCtl-1.0.2.tar.gz",
+    "size_bytes": 51913,
+    "sha256": "b93db778a361bfbf9f9cea4566c59f797011d32857938bc44257c4f572582a6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32SerialCtl/1.0.2/ESP32SerialCtl-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32SerialCtl/1.0.2/ESP32SerialCtl-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32SyncKit/1.0.0/ESP32SyncKit-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32SyncKit-1.0.0.tar.gz",
+    "size_bytes": 34148,
+    "sha256": "16cd5e0b6e05e786a1fb40430501f603f0bc28e1f9cb4574696829ea63b560ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32SyncKit/1.0.0/ESP32SyncKit-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32SyncKit/1.0.0/ESP32SyncKit-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32TaskKit/1.0.0/ESP32TaskKit-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32TaskKit-1.0.0.tar.gz",
+    "size_bytes": 19011,
+    "sha256": "6a7605e0b1b32da0cec2b676cac9716fe09615a4fb300769affaa21297c99f8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32TaskKit/1.0.0/ESP32TaskKit-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32TaskKit/1.0.0/ESP32TaskKit-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32TaskKit/1.1.0/ESP32TaskKit-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32TaskKit-1.1.0.tar.gz",
+    "size_bytes": 23958,
+    "sha256": "3d2f23460857bf7518b38459dc05ba9b7faa66006324a419e876fa1f8be7bd29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32TaskKit/1.1.0/ESP32TaskKit-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32TaskKit/1.1.0/ESP32TaskKit-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/ESP32TaskKit/1.1.1/ESP32TaskKit-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32TaskKit-1.1.1.tar.gz",
+    "size_bytes": 24238,
+    "sha256": "996489ae5ff8be292627e77255c73955b36409a93ef59e656e61111ce7cd640c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/ESP32TaskKit/1.1.1/ESP32TaskKit-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/ESP32TaskKit/1.1.1/ESP32TaskKit-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EmbedFS/0.1.1/EmbedFS-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbedFS-0.1.1.tar.gz",
+    "size_bytes": 16971,
+    "sha256": "1f9d2b1f8e7f61db27bbbb514d6eb6dcd4ecd8e8fec4aa88581ffe263aa2faae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EmbedFS/0.1.1/EmbedFS-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EmbedFS/0.1.1/EmbedFS-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EmbedFS/1.0.0/EmbedFS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbedFS-1.0.0.tar.gz",
+    "size_bytes": 18048,
+    "sha256": "a0b7e6aa71e5b562c61afe8adc1415b4475ed65994ee3716bec1a5b796b3d028",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EmbedFS/1.0.0/EmbedFS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EmbedFS/1.0.0/EmbedFS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EmbedFS/1.0.1/EmbedFS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbedFS-1.0.1.tar.gz",
+    "size_bytes": 18375,
+    "sha256": "f2881fd12fa2f1461135a1b0fdf567ab8249ea345bfe582aa750a2f021465c85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EmbedFS/1.0.1/EmbedFS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EmbedFS/1.0.1/EmbedFS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EmbedFS/1.0.2/EmbedFS-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbedFS-1.0.2.tar.gz",
+    "size_bytes": 18943,
+    "sha256": "20c6dc90efd376f604c933db1c6a4a3b22132a5cdf65af4272fe887be8208561",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EmbedFS/1.0.2/EmbedFS-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EmbedFS/1.0.2/EmbedFS-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspBle/1.0.0/EspBle-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspBle-1.0.0.tar.gz",
+    "size_bytes": 296737,
+    "sha256": "e14438f5b73c6e789bec415a9dac1a1c2c333ea1167136779f3d3be5c5db7ba7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspBle/1.0.0/EspBle-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspBle/1.0.0/EspBle-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspBle/1.1.0/EspBle-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspBle-1.1.0.tar.gz",
+    "size_bytes": 305858,
+    "sha256": "85ba2cd439ea2375f7fb96fc7bd9311578418ad20c5753d3321c43430139acb7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspBle/1.1.0/EspBle-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspBle/1.1.0/EspBle-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspBle/1.2.0/EspBle-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspBle-1.2.0.tar.gz",
+    "size_bytes": 850792,
+    "sha256": "9b9c84b90adc6ece47f17e2a935b8e07757d710ddb4a15d4a6adaa8faf61a10d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspBle/1.2.0/EspBle-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspBle/1.2.0/EspBle-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspBle/1.3.0/EspBle-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspBle-1.3.0.tar.gz",
+    "size_bytes": 2328550,
+    "sha256": "16d50bdb5d406080dffd27fc3283218b205a77320e3b83af669d6251076c3485",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspBle/1.3.0/EspBle-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspBle/1.3.0/EspBle-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspEasyUtils/1.0.8/EspEasyUtils-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspEasyUtils-1.0.8.tar.gz",
+    "size_bytes": 10316,
+    "sha256": "90047c35ae8a523b363dbd6071901c7bc9b09388b1e91101bdd646f0e9475fa9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspEasyUtils/1.0.8/EspEasyUtils-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspEasyUtils/1.0.8/EspEasyUtils-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspHttpServer/0.0.2/EspHttpServer-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspHttpServer-0.0.2.tar.gz",
+    "size_bytes": 33827,
+    "sha256": "8ddd1e9337f61501a8c128c4eca7324f5bc5f3393cb8f02798049f0769e013c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspHttpServer/0.0.2/EspHttpServer-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspHttpServer/0.0.2/EspHttpServer-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspHttpServer/0.1.1/EspHttpServer-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspHttpServer-0.1.1.tar.gz",
+    "size_bytes": 52264,
+    "sha256": "f79b2dd717fee461813cf44a2aa9d572576048b3764d08fed7462c81f951874e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspHttpServer/0.1.1/EspHttpServer-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspHttpServer/0.1.1/EspHttpServer-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspHttpServer/1.0.0/EspHttpServer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspHttpServer-1.0.0.tar.gz",
+    "size_bytes": 54222,
+    "sha256": "3282f15d9f4f008965efb9246d51a9b76a1b108634d26933b4e618ab18e9d4c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspHttpServer/1.0.0/EspHttpServer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspHttpServer/1.0.0/EspHttpServer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspHttpServer/1.0.1/EspHttpServer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspHttpServer-1.0.1.tar.gz",
+    "size_bytes": 54498,
+    "sha256": "ff7c19f96d62bf058d209fe2db84f15fe7c6dccf4c08f361ab99d4e5d1abb709",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspHttpServer/1.0.1/EspHttpServer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspHttpServer/1.0.1/EspHttpServer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspNowBus/0.0.2/EspNowBus-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowBus-0.0.2.tar.gz",
+    "size_bytes": 38745,
+    "sha256": "622e98b23c2feb221739001d2e29a39e1452e5fdef1db55c681acc5518329c0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspNowBus/0.0.2/EspNowBus-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspNowBus/0.0.2/EspNowBus-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspNowBus/1.0.0/EspNowBus-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowBus-1.0.0.tar.gz",
+    "size_bytes": 49803,
+    "sha256": "1f0a4f21138a8b71cac9943c59a9767dae07b804ae6b8839b05d77be669e731c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspNowBus/1.0.0/EspNowBus-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspNowBus/1.0.0/EspNowBus-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspNowBus/1.0.1/EspNowBus-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowBus-1.0.1.tar.gz",
+    "size_bytes": 50132,
+    "sha256": "21fbe3c6df53fe0eb047198e3fea106e27c1aecf628779a2ec5177b115699489",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspNowBus/1.0.1/EspNowBus-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspNowBus/1.0.1/EspNowBus-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspNowBus/1.1.0/EspNowBus-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowBus-1.1.0.tar.gz",
+    "size_bytes": 72265,
+    "sha256": "0b3356492fad1f13da10d8b86df5a7ff11a8c88d9fe57a7d5cd4616b6afbb084",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspNowBus/1.1.0/EspNowBus-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspNowBus/1.1.0/EspNowBus-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspNowBus/1.2.0/EspNowBus-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowBus-1.2.0.tar.gz",
+    "size_bytes": 110095,
+    "sha256": "55d5969a95ff6dffc2077738e26e09f2d1da78d816f68d83512b8cf83ae069ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspNowBus/1.2.0/EspNowBus-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspNowBus/1.2.0/EspNowBus-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspNowBus/1.2.1/EspNowBus-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNowBus-1.2.1.tar.gz",
+    "size_bytes": 110574,
+    "sha256": "70b55de9e8c01745ab63f2e718acdd106a02c9af7a40cdf9051f27bc6f4c351d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspNowBus/1.2.1/EspNowBus-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspNowBus/1.2.1/EspNowBus-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/1.0.0/EspUsbDevice-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-1.0.0.tar.gz",
+    "size_bytes": 69806,
+    "sha256": "5bfe24c07a60f9268387cbfa28a5513f2c4aa49ea11a28ef97e6a07c12c3d337",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/1.0.0/EspUsbDevice-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/1.0.0/EspUsbDevice-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/1.2.0/EspUsbDevice-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-1.2.0.tar.gz",
+    "size_bytes": 95572,
+    "sha256": "f4df632af3e9fae23ead8a2331f62249f85b5da0d89423f55203acc44fb6dcab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/1.2.0/EspUsbDevice-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/1.2.0/EspUsbDevice-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/1.2.3/EspUsbDevice-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-1.2.3.tar.gz",
+    "size_bytes": 120026,
+    "sha256": "19fd2b19827e0a78cd1f3ec3875cfe5c3e4f8b47c1013f13a287e8d15cc4bb7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/1.2.3/EspUsbDevice-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/1.2.3/EspUsbDevice-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/1.2.5/EspUsbDevice-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-1.2.5.tar.gz",
+    "size_bytes": 126040,
+    "sha256": "3cd1b7584cf419d869e6add7d4566d5d066c51cafee2c661cb7f3e4796f90e1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/1.2.5/EspUsbDevice-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/1.2.5/EspUsbDevice-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/1.2.6/EspUsbDevice-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-1.2.6.tar.gz",
+    "size_bytes": 140020,
+    "sha256": "9342520082960520e9211ab9fb2778965e3d6c943bb6eedfeafc01b665a21126",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/1.2.6/EspUsbDevice-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/1.2.6/EspUsbDevice-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/1.2.7/EspUsbDevice-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-1.2.7.tar.gz",
+    "size_bytes": 141005,
+    "sha256": "e712844f1ed18c46fe0c31f22de0bcf425274b32a578e061d10a54184f23e4db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/1.2.7/EspUsbDevice-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/1.2.7/EspUsbDevice-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/2.0.0/EspUsbDevice-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-2.0.0.tar.gz",
+    "size_bytes": 400569,
+    "sha256": "864be257e0677b0107ae0b1bcff249d749571f1a12cfe93e5acb8b28793dbf13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/2.0.0/EspUsbDevice-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/2.0.0/EspUsbDevice-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/2.0.1/EspUsbDevice-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-2.0.1.tar.gz",
+    "size_bytes": 420932,
+    "sha256": "6738054e79d8e9658dd69bd6028f2e1bb3be882d3777e187bc5d3e07031f247c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/2.0.1/EspUsbDevice-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/2.0.1/EspUsbDevice-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/2.0.2/EspUsbDevice-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-2.0.2.tar.gz",
+    "size_bytes": 430580,
+    "sha256": "863f85b1f676ce071eb12491c3c5b11af5346ad08b25e9ad341940cacd7e0b17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/2.0.2/EspUsbDevice-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/2.0.2/EspUsbDevice-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/2.1.0/EspUsbDevice-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-2.1.0.tar.gz",
+    "size_bytes": 438818,
+    "sha256": "68a29437f704534c6a26b24820b9bc9cc09adeef10b50e83dad4b2480f9d94f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/2.1.0/EspUsbDevice-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/2.1.0/EspUsbDevice-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/2.2.0/EspUsbDevice-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-2.2.0.tar.gz",
+    "size_bytes": 473269,
+    "sha256": "e40fa5766695cbb08b88456b48452ea02c5a6041766b4421ac5e536c8aed17a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/2.2.0/EspUsbDevice-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/2.2.0/EspUsbDevice-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/2.3.0/EspUsbDevice-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-2.3.0.tar.gz",
+    "size_bytes": 496846,
+    "sha256": "ab74f164a52c80f65903385590aa08003b5e1d0c5a0484b188d096dbcb61bc3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/2.3.0/EspUsbDevice-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/2.3.0/EspUsbDevice-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/2.4.0/EspUsbDevice-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-2.4.0.tar.gz",
+    "size_bytes": 574081,
+    "sha256": "306e5adb81fd43e6fc30b6130fbd3d538ba5bc9c2fc072bd8bf846118debc45f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/2.4.0/EspUsbDevice-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/2.4.0/EspUsbDevice-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/2.5.1/EspUsbDevice-2.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-2.5.1.tar.gz",
+    "size_bytes": 619005,
+    "sha256": "9a9d5a3ef9ee156ea974f636890cb1887abca17f9ae131c4be3607de38f9b221",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/2.5.1/EspUsbDevice-2.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/2.5.1/EspUsbDevice-2.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/2.6.0/EspUsbDevice-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-2.6.0.tar.gz",
+    "size_bytes": 621737,
+    "sha256": "14f7ba393830f8dcb854dae18604d6a62c90dbe70fbf842e9cee85cd419db7f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/2.6.0/EspUsbDevice-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/2.6.0/EspUsbDevice-2.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbDevice/2.6.1/EspUsbDevice-2.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbDevice-2.6.1.tar.gz",
+    "size_bytes": 622505,
+    "sha256": "a022ddca3f1043123cee9ff9fbb6eb2aeaa431734e60ba0a88a81aa96dde6add",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbDevice/2.6.1/EspUsbDevice-2.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbDevice/2.6.1/EspUsbDevice-2.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/1.0.2/EspUsbHost-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-1.0.2.tar.gz",
+    "size_bytes": 8254,
+    "sha256": "3b84ac7b0fdd9f173b8d63b20863dc1d8a33b961b3d8533ae1cb1b11d60288a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/1.0.2/EspUsbHost-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/1.0.2/EspUsbHost-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.0.0/EspUsbHost-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.0.0.tar.gz",
+    "size_bytes": 351503,
+    "sha256": "7f0906bf46c8636030789f63e31497b981443fbc559af82ba049fe20a5d8c309",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.0.0/EspUsbHost-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.0.0/EspUsbHost-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.0.1/EspUsbHost-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.0.1.tar.gz",
+    "size_bytes": 351687,
+    "sha256": "be1bde0170a003d87f94faddcb7d32c45a0104262933464e23f3d02fdd893221",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.0.1/EspUsbHost-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.0.1/EspUsbHost-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.1.0/EspUsbHost-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.1.0.tar.gz",
+    "size_bytes": 357718,
+    "sha256": "20c338cbc4cb5e50c51d842804aaf367127d5f32169511ed432b13371d94fd8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.1.0/EspUsbHost-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.1.0/EspUsbHost-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.1.1/EspUsbHost-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.1.1.tar.gz",
+    "size_bytes": 383579,
+    "sha256": "a3272d510b4ab5580085272fe9fda624b67c639245254a471d09e7aa8cc82d0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.1.1/EspUsbHost-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.1.1/EspUsbHost-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.1.2/EspUsbHost-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.1.2.tar.gz",
+    "size_bytes": 387384,
+    "sha256": "429dae3766a3ade70ee39f0811e1e4a228dd7ac3eb5cd025c52f4152d3a54460",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.1.2/EspUsbHost-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.1.2/EspUsbHost-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.1.3/EspUsbHost-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.1.3.tar.gz",
+    "size_bytes": 388731,
+    "sha256": "ad346eec35f95bb2691f72e7c468a82ba5f9175390d6f6f4b5a84f63303958f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.1.3/EspUsbHost-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.1.3/EspUsbHost-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.10.0/EspUsbHost-2.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.10.0.tar.gz",
+    "size_bytes": 874300,
+    "sha256": "25dd8e82a4e4936851ce409df836d695b6d59a0786f9b63a1d015f98d65ead6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.10.0/EspUsbHost-2.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.10.0/EspUsbHost-2.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.10.1/EspUsbHost-2.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.10.1.tar.gz",
+    "size_bytes": 881943,
+    "sha256": "5c11949f4f4f04dac88237ff32457fbe296388454b11cc52aafcf79a63bf5b20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.10.1/EspUsbHost-2.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.10.1/EspUsbHost-2.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.3.0/EspUsbHost-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.3.0.tar.gz",
+    "size_bytes": 400886,
+    "sha256": "a06ef078103d1b9f79d1d978923bcd65bb7c2e45cd3ad96a4b123ebc50333361",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.3.0/EspUsbHost-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.3.0/EspUsbHost-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.3.1/EspUsbHost-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.3.1.tar.gz",
+    "size_bytes": 415149,
+    "sha256": "5632ec1e4a5c98cb73eab8ed3b68954aac4ea6b0abf3da936bc53ee68c4c2629",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.3.1/EspUsbHost-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.3.1/EspUsbHost-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.3.2/EspUsbHost-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.3.2.tar.gz",
+    "size_bytes": 431585,
+    "sha256": "38c30ca8a34b03673c7d04379326ffa7ce925d62f3eef27da93cfe1dbe14e1bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.3.2/EspUsbHost-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.3.2/EspUsbHost-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.4.0/EspUsbHost-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.4.0.tar.gz",
+    "size_bytes": 435279,
+    "sha256": "80e93a2c84e0d5db5d2b6ef493b27cb73adb0c3a9189c5622e229416e921b830",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.4.0/EspUsbHost-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.4.0/EspUsbHost-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.4.1/EspUsbHost-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.4.1.tar.gz",
+    "size_bytes": 443080,
+    "sha256": "9ba272d9f924312a632555151c5df983ac45719d0787479ed04a35ff75f7dde7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.4.1/EspUsbHost-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.4.1/EspUsbHost-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.5.0/EspUsbHost-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.5.0.tar.gz",
+    "size_bytes": 444062,
+    "sha256": "ee0dbd09866c76804afd1d2c5f599c7dbe92c4f1a33dbfb9eb3997b581765555",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.5.0/EspUsbHost-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.5.0/EspUsbHost-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.5.2/EspUsbHost-2.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.5.2.tar.gz",
+    "size_bytes": 447373,
+    "sha256": "5cfc40feb319d752132e090b47db27a99a6c4137e8e76ef10d838b821df9d5c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.5.2/EspUsbHost-2.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.5.2/EspUsbHost-2.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.5.3/EspUsbHost-2.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.5.3.tar.gz",
+    "size_bytes": 496174,
+    "sha256": "ac991ccb708fc2be5deb10c790cab7e71a5ca48a0f15233ca2394f0f2274c090",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.5.3/EspUsbHost-2.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.5.3/EspUsbHost-2.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.7.0/EspUsbHost-2.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.7.0.tar.gz",
+    "size_bytes": 507288,
+    "sha256": "47fc8f4ac3c698d5a72ae0132ec880341f3120cb688275a2176201489cb4855d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.7.0/EspUsbHost-2.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.7.0/EspUsbHost-2.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.7.1/EspUsbHost-2.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.7.1.tar.gz",
+    "size_bytes": 556917,
+    "sha256": "5076ed61a569676feebaa17093a41d7d590775032efc51b851661899e4244761",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.7.1/EspUsbHost-2.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.7.1/EspUsbHost-2.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.7.2/EspUsbHost-2.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.7.2.tar.gz",
+    "size_bytes": 564457,
+    "sha256": "ea77761828d9854e6f33646238e7fea98574f372946f147d89f5723516f4fa2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.7.2/EspUsbHost-2.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.7.2/EspUsbHost-2.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.7.4/EspUsbHost-2.7.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.7.4.tar.gz",
+    "size_bytes": 704387,
+    "sha256": "b2ff5811ef5b54a6e796b52edd78068af2bf668cd42386b6f3b9d0973f6b4a40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.7.4/EspUsbHost-2.7.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.7.4/EspUsbHost-2.7.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.7.5/EspUsbHost-2.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.7.5.tar.gz",
+    "size_bytes": 708807,
+    "sha256": "c3bed046bf42b4cfff853c5f173db4e9701b67f513131f546a08ddbf35df9b1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.7.5/EspUsbHost-2.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.7.5/EspUsbHost-2.7.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.7.7/EspUsbHost-2.7.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.7.7.tar.gz",
+    "size_bytes": 721234,
+    "sha256": "48a230fff04273d84894f82f799cf140f12e6a95b3053f6e1e2724fcf59b5ba7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.7.7/EspUsbHost-2.7.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.7.7/EspUsbHost-2.7.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.7.8/EspUsbHost-2.7.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.7.8.tar.gz",
+    "size_bytes": 753073,
+    "sha256": "8acf1cc3aa1075e1a92a2189f6d4261ba3824650b0a50af3a0c7ff309a6e7cda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.7.8/EspUsbHost-2.7.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.7.8/EspUsbHost-2.7.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.7.9/EspUsbHost-2.7.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.7.9.tar.gz",
+    "size_bytes": 784795,
+    "sha256": "a0ddceec8658c763288722eeea3e605d3064e5bc69aeb7c73f9b1e098e7d7249",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.7.9/EspUsbHost-2.7.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.7.9/EspUsbHost-2.7.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.8.0/EspUsbHost-2.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.8.0.tar.gz",
+    "size_bytes": 801831,
+    "sha256": "211b4f6b667a2e0feab4c8d18ba2487f88fb668b2ca3de2f34ec5ff18f83e6c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.8.0/EspUsbHost-2.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.8.0/EspUsbHost-2.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.9.0/EspUsbHost-2.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.9.0.tar.gz",
+    "size_bytes": 827983,
+    "sha256": "7e553ea6c1507d06f90165eb87da8615fad737f22ff2609fb9e1b76125c47da5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.9.0/EspUsbHost-2.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.9.0/EspUsbHost-2.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.9.1/EspUsbHost-2.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.9.1.tar.gz",
+    "size_bytes": 831489,
+    "sha256": "c60347a8ba6120d73e01e69d04d8a638f485617498ae42f57d850b37c04477c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.9.1/EspUsbHost-2.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.9.1/EspUsbHost-2.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/EspUsbHost/2.9.4/EspUsbHost-2.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspUsbHost-2.9.4.tar.gz",
+    "size_bytes": 835829,
+    "sha256": "36fb3c94dce58435c828115569c8d32dbf1d6f556e7868715d9af9a134dd523c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/EspUsbHost/2.9.4/EspUsbHost-2.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/EspUsbHost/2.9.4/EspUsbHost-2.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/I2C%20AXP192%20Power%20management/1.0.4/I2CAXP192Powermanagement-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2CAXP192Powermanagement-1.0.4.tar.gz",
+    "size_bytes": 3009,
+    "sha256": "06609de74879db4d20b7be0feb7b7658e1a98000a1f95feb5deef772b6dd9c98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/I2C%2520AXP192%2520Power%2520management/1.0.4/I2CAXP192Powermanagement-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/I2C%20AXP192%20Power%20management/1.0.4/I2CAXP192Powermanagement-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/I2C%20BM8563%20RTC/1.0.4/I2CBM8563RTC-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2CBM8563RTC-1.0.4.tar.gz",
+    "size_bytes": 7162,
+    "sha256": "86d4f4022e7b69ece33e9cd84eeef4bc03eacaa2a46b134fc9a70f0ce5fadbff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/I2C%2520BM8563%2520RTC/1.0.4/I2CBM8563RTC-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/I2C%20BM8563%20RTC/1.0.4/I2CBM8563RTC-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/I2C%20MPU6886%20IMU/1.0.0/I2CMPU6886IMU-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2CMPU6886IMU-1.0.0.tar.gz",
+    "size_bytes": 2043,
+    "sha256": "4f7f2c3c55b637cb27e8b62908cb0f20f179e25e40c44e4575addb4a1251ab35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/I2C%2520MPU6886%2520IMU/1.0.0/I2CMPU6886IMU-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/I2C%20MPU6886%20IMU/1.0.0/I2CMPU6886IMU-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/I2C%20SLG/1.0.3/I2CSLG-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2CSLG-1.0.3.tar.gz",
+    "size_bytes": 17124,
+    "sha256": "cd0da797ce7103666bc08bf16fd6b69589e8b8e83ecad5bc77dc0683fbe0c39f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/I2C%2520SLG/1.0.3/I2CSLG-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/I2C%20SLG/1.0.3/I2CSLG-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/LGFXScreenBuilder/0.2.0/LGFXScreenBuilder-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFXScreenBuilder-0.2.0.tar.gz",
+    "size_bytes": 104468,
+    "sha256": "7835f5b99c32c952e9355164497e7019e3c2d3817c2432befe231bb65cadd55f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/LGFXScreenBuilder/0.2.0/LGFXScreenBuilder-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/LGFXScreenBuilder/0.2.0/LGFXScreenBuilder-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/LGFXVirtualCanvas/0.2.0/LGFXVirtualCanvas-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFXVirtualCanvas-0.2.0.tar.gz",
+    "size_bytes": 41504,
+    "sha256": "6aba8b6395c8706fb8b07d0ecb3d0623a2567f448825c4060b986705e95ed5c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/LGFXVirtualCanvas/0.2.0/LGFXVirtualCanvas-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/LGFXVirtualCanvas/0.2.0/LGFXVirtualCanvas-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/LGFXVirtualCanvas/1.0.0/LGFXVirtualCanvas-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFXVirtualCanvas-1.0.0.tar.gz",
+    "size_bytes": 66893,
+    "sha256": "ee85123ea2fb86f6be3b9b829d045d7212993f5a453ce147e393fa7a644e68bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/LGFXVirtualCanvas/1.0.0/LGFXVirtualCanvas-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/LGFXVirtualCanvas/1.0.0/LGFXVirtualCanvas-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/LGFXVirtualCanvas/1.0.1/LGFXVirtualCanvas-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFXVirtualCanvas-1.0.1.tar.gz",
+    "size_bytes": 67377,
+    "sha256": "fb335e71375b92b5075bfa4124991b9c306a58641696652315805e0540abba99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/LGFXVirtualCanvas/1.0.1/LGFXVirtualCanvas-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/LGFXVirtualCanvas/1.0.1/LGFXVirtualCanvas-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/LGFXVirtualCanvas/1.0.2/LGFXVirtualCanvas-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFXVirtualCanvas-1.0.2.tar.gz",
+    "size_bytes": 71905,
+    "sha256": "f57defc89176a691995692487afb7affd82dfdb69b45ba0c503f0e47fdfbe103",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/LGFXVirtualCanvas/1.0.2/LGFXVirtualCanvas-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/LGFXVirtualCanvas/1.0.2/LGFXVirtualCanvas-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/LGFXVirtualCanvas/1.1.0/LGFXVirtualCanvas-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFXVirtualCanvas-1.1.0.tar.gz",
+    "size_bytes": 79552,
+    "sha256": "c561df765172ba176560e05dbb85aef158354326dc17eb4adf11ec7213b65693",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/LGFXVirtualCanvas/1.1.0/LGFXVirtualCanvas-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/LGFXVirtualCanvas/1.1.0/LGFXVirtualCanvas-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/LGFXVirtualCanvas/1.2.0/LGFXVirtualCanvas-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFXVirtualCanvas-1.2.0.tar.gz",
+    "size_bytes": 100158,
+    "sha256": "e183b8c2fa5e4835f1df80f4838097b5785855bb795e0581fc1d8296748fcd6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/LGFXVirtualCanvas/1.2.0/LGFXVirtualCanvas-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/LGFXVirtualCanvas/1.2.0/LGFXVirtualCanvas-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/LGFXVirtualCanvas/1.4.0/LGFXVirtualCanvas-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LGFXVirtualCanvas-1.4.0.tar.gz",
+    "size_bytes": 128899,
+    "sha256": "4887a3380391b23b51652482ca692d0105d210f4a14534b8ae7f3fe5f07a0751",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/LGFXVirtualCanvas/1.4.0/LGFXVirtualCanvas-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/LGFXVirtualCanvas/1.4.0/LGFXVirtualCanvas-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/LinxESP32/0.1.1/LinxESP32-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LinxESP32-0.1.1.tar.gz",
+    "size_bytes": 36645,
+    "sha256": "93fc153c07356290d90380d99c4b1b8f489d1d2bbf24593b61d6e0360bfd86c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/LinxESP32/0.1.1/LinxESP32-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/LinxESP32/0.1.1/LinxESP32-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/PCMFlow/0.1.0/PCMFlow-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCMFlow-0.1.0.tar.gz",
+    "size_bytes": 192649,
+    "sha256": "cb736969bb7b076c2bd1b4ad9e195c3eead8faeabdecccac120c7de4dd983ed7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/PCMFlow/0.1.0/PCMFlow-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/PCMFlow/0.1.0/PCMFlow-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/PCMFlowBluetooth/1.0.1/PCMFlowBluetooth-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCMFlowBluetooth-1.0.1.tar.gz",
+    "size_bytes": 174368,
+    "sha256": "48f7b9f330023455078600d4ebab897c966a28b588c37f5507baf434eed8cc58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/PCMFlowBluetooth/1.0.1/PCMFlowBluetooth-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/PCMFlowBluetooth/1.0.1/PCMFlowBluetooth-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/PCMFlowDevice/0.1.0/PCMFlowDevice-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCMFlowDevice-0.1.0.tar.gz",
+    "size_bytes": 13843,
+    "sha256": "7e3e8b16939d11005ec53a00d04b29344017bfe186f6c25cbc9299bc99f2f7f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/PCMFlowDevice/0.1.0/PCMFlowDevice-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/PCMFlowDevice/0.1.0/PCMFlowDevice-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/PCMFlowG711/0.1.0/PCMFlowG711-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCMFlowG711-0.1.0.tar.gz",
+    "size_bytes": 28234,
+    "sha256": "4b65ad73edd872c8d0e943ce7ff1516805f69da3c0bd2eb6e40bea1903b6a2fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/PCMFlowG711/0.1.0/PCMFlowG711-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/PCMFlowG711/0.1.0/PCMFlowG711-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/PCMFlowG722/0.1.0/PCMFlowG722-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCMFlowG722-0.1.0.tar.gz",
+    "size_bytes": 39253,
+    "sha256": "069acc73ece10ff7b2ca78a5ec6baed07d0dcce7780e645c343f165b292d562a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/PCMFlowG722/0.1.0/PCMFlowG722-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/PCMFlowG722/0.1.0/PCMFlowG722-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/PCMFlowOpus/0.1.0/PCMFlowOpus-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCMFlowOpus-0.1.0.tar.gz",
+    "size_bytes": 670181,
+    "sha256": "65796a5d0c22d004e186357ffff642d245de93d082d41b20c990d000cb82fe54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/PCMFlowOpus/0.1.0/PCMFlowOpus-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/PCMFlowOpus/0.1.0/PCMFlowOpus-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/PCMFlowUDP/0.1.0/PCMFlowUDP-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCMFlowUDP-0.1.0.tar.gz",
+    "size_bytes": 49000,
+    "sha256": "3f3960f65fb33060dd896fb265ad872948263928253cd679eb856ae7d50d5809",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/PCMFlowUDP/0.1.0/PCMFlowUDP-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/PCMFlowUDP/0.1.0/PCMFlowUDP-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/TensorFlowLite_ESP32/1.0.0/TensorFlowLite_ESP32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TensorFlowLite_ESP32-1.0.0.tar.gz",
+    "size_bytes": 2535670,
+    "sha256": "6f2a029a5f4db094d1e88e876700734e8a570477dcf68336faad681bf3d51ab6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/TensorFlowLite_ESP32/1.0.0/TensorFlowLite_ESP32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/TensorFlowLite_ESP32/1.0.0/TensorFlowLite_ESP32-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/efont%20Unicode%20Font%20Data/1.0.9/efontUnicodeFontData-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "efontUnicodeFontData-1.0.9.tar.gz",
+    "size_bytes": 1747046,
+    "sha256": "40d7a8293b9409982bf348f8cdb622ecf8f96b7fdb884b5e42b3ffafd910e951",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/efont%2520Unicode%2520Font%2520Data/1.0.9/efontUnicodeFontData-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/efont%20Unicode%20Font%20Data/1.0.9/efontUnicodeFontData-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/variants_collector/0.1.11/variants_collector-0.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "variants_collector-0.1.11.tar.gz",
+    "size_bytes": 71677,
+    "sha256": "c5fbb0018fe32acacde20340a9dc698882ca6460895e13f1be75844e2dc4fbb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/variants_collector/0.1.11/variants_collector-0.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/variants_collector/0.1.11/variants_collector-0.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/variants_collector/0.1.12/variants_collector-0.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "variants_collector-0.1.12.tar.gz",
+    "size_bytes": 72022,
+    "sha256": "5906348f0a0f6c04c9b9c8c6177095f3efaae20c7e20b2dd64d3eba12f93d0a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/variants_collector/0.1.12/variants_collector-0.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/variants_collector/0.1.12/variants_collector-0.1.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/variants_collector/0.1.13/variants_collector-0.1.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "variants_collector-0.1.13.tar.gz",
+    "size_bytes": 72050,
+    "sha256": "accc48e4ee2503078729784885f78022bf3300dc29888849913a23409c14d07f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/variants_collector/0.1.13/variants_collector-0.1.13.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/variants_collector/0.1.13/variants_collector-0.1.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/variants_collector/0.1.14/variants_collector-0.1.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "variants_collector-0.1.14.tar.gz",
+    "size_bytes": 72109,
+    "sha256": "c2ac29baa590665cd81f492c85607e767b6cd81766836ad546cd8173b0baf7af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/variants_collector/0.1.14/variants_collector-0.1.14.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/variants_collector/0.1.14/variants_collector-0.1.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/variants_collector/0.1.2/variants_collector-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "variants_collector-0.1.2.tar.gz",
+    "size_bytes": 69514,
+    "sha256": "887d503fef0612473c89f97b1b678927f60bb02e1ce49c1d2e3414c124481fbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/variants_collector/0.1.2/variants_collector-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/variants_collector/0.1.2/variants_collector-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/variants_collector/0.1.4/variants_collector-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "variants_collector-0.1.4.tar.gz",
+    "size_bytes": 70007,
+    "sha256": "c34fa0c70e82d8ccd87fb7c54e188ab89546bad507e3b656712320e5ec0c721d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/variants_collector/0.1.4/variants_collector-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/variants_collector/0.1.4/variants_collector-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/variants_collector/0.1.5/variants_collector-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "variants_collector-0.1.5.tar.gz",
+    "size_bytes": 70206,
+    "sha256": "fa4104a8505b9eff8146e093f17b67883fc356fe96d744aab4f3d9816d9e778a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/variants_collector/0.1.5/variants_collector-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/variants_collector/0.1.5/variants_collector-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/variants_collector/0.1.6/variants_collector-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "variants_collector-0.1.6.tar.gz",
+    "size_bytes": 71177,
+    "sha256": "80f8e811eb67600708ef4060f08bfe033fc34c9708d8e545c7a773bfe516f095",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/variants_collector/0.1.6/variants_collector-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/variants_collector/0.1.6/variants_collector-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/variants_collector/0.1.7/variants_collector-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "variants_collector-0.1.7.tar.gz",
+    "size_bytes": 71349,
+    "sha256": "720b34b14bd81a2a3f7ea9f362c0b448f6b73f8d097601a274054ef992b26012",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/variants_collector/0.1.7/variants_collector-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/variants_collector/0.1.7/variants_collector-0.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/variants_collector/0.1.8/variants_collector-0.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "variants_collector-0.1.8.tar.gz",
+    "size_bytes": 71357,
+    "sha256": "b324b8e9581f510022409c9b47eaa276df8afcaad2b21b2c2ffcccab410684a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/variants_collector/0.1.8/variants_collector-0.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/variants_collector/0.1.8/variants_collector-0.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanakamasayuki/library/variants_collector/0.1.9/variants_collector-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "variants_collector-0.1.9.tar.gz",
+    "size_bytes": 71333,
+    "sha256": "20d7b0213de7f7deb0b1ec4d5c49725a6c2bb7850d428dfd8d94bb30e23c1469",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanakamasayuki/library/variants_collector/0.1.9/variants_collector-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/tanakamasayuki/library/variants_collector/0.1.9/variants_collector-0.1.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

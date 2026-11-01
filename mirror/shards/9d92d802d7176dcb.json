@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/teamong",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "teamong/library/Mechatro/1.0.0/Mechatro-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mechatro-1.0.0.tar.gz",
+    "size_bytes": 3743,
+    "sha256": "9cd1e0b2647e342c49a7e7f2225a9090880050da2bc104c570168c85d21b386a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamong/library/Mechatro/1.0.0/Mechatro-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teamong/library/Mechatro/1.0.0/Mechatro-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

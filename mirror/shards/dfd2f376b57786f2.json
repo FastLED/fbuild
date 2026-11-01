@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nyatla",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nyatla/library/libMiMic/0.0.0+sha.f6aef16d4e60/libMiMic-0.0.0+sha.f6aef16d4e60.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libMiMic-0.0.0+sha.f6aef16d4e60.tar.gz",
+    "size_bytes": 237701,
+    "sha256": "a74d5b69ba9e2bee0e99fa67007c93c72bf0097f166ba8f141e567752904acef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nyatla/library/libMiMic/0.0.0%2Bsha.f6aef16d4e60/libMiMic-0.0.0%2Bsha.f6aef16d4e60.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nyatla/library/libMiMic/0.0.0%2Bsha.f6aef16d4e60/libMiMic-0.0.0%2Bsha.f6aef16d4e60.tar.gz"
+    ]
+   }
+  }
+ ]
+}

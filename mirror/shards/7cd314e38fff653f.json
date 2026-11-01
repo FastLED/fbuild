@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rufus31415",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rufus31415/library/Sharer/1.0.1/Sharer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sharer-1.0.1.tar.gz",
+    "size_bytes": 14534,
+    "sha256": "2e723107978a28783e8b2e3581fccb06a8d08f967ad4290e5ac862ee59048051",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rufus31415/library/Sharer/1.0.1/Sharer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rufus31415/library/Sharer/1.0.1/Sharer-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

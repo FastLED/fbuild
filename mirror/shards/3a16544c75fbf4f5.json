@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/clemensatelektor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "clemensatelektor/library/Elektor_AudioDSP/0.4.0/Elektor_AudioDSP-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Elektor_AudioDSP-0.4.0.tar.gz",
+    "size_bytes": 282181,
+    "sha256": "a7e48ea28c55ef3998ff2cdc1e7ef183c57c6242f6a9eb7dd7b005c3ea6e1e90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clemensatelektor/library/Elektor_AudioDSP/0.4.0/Elektor_AudioDSP-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/clemensatelektor/library/Elektor_AudioDSP/0.4.0/Elektor_AudioDSP-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "clemensatelektor/library/Nano_Every_WS2812B/1.0.5/Nano_Every_WS2812B-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nano_Every_WS2812B-1.0.5.tar.gz",
+    "size_bytes": 17478,
+    "sha256": "ae4bc54c301f465c335ac2fa7e505847b3f02d0325fef8e8a4e97c8a46ef43ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/clemensatelektor/library/Nano_Every_WS2812B/1.0.5/Nano_Every_WS2812B-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/clemensatelektor/library/Nano_Every_WS2812B/1.0.5/Nano_Every_WS2812B-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

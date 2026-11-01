@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-corentinlambert70100",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-corentinlambert70100/library/C12832/0.0.0+sha.e03dd378e2b0/C12832-0.0.0+sha.e03dd378e2b0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C12832-0.0.0+sha.e03dd378e2b0.tar.gz",
+    "size_bytes": 10481,
+    "sha256": "ce011f7c5cf648c0ce6e6af834229bf1cc8d7fc4d9b99bfd148fc6ba814d6bd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-corentinlambert70100/library/C12832/0.0.0%2Bsha.e03dd378e2b0/C12832-0.0.0%2Bsha.e03dd378e2b0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-corentinlambert70100/library/C12832/0.0.0%2Bsha.e03dd378e2b0/C12832-0.0.0%2Bsha.e03dd378e2b0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

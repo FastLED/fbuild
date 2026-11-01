@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nuxeh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nuxeh/library/LilProg/0.2.3/LilProg-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LilProg-0.2.3.tar.gz",
+    "size_bytes": 6613,
+    "sha256": "c23a5495f5c042fdb4930f0400af1a1172e7e70cdcf6e00250a1994cdcb65670",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nuxeh/library/LilProg/0.2.3/LilProg-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nuxeh/library/LilProg/0.2.3/LilProg-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nuxeh/library/superFreq/0.3.0/superFreq-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "superFreq-0.3.0.tar.gz",
+    "size_bytes": 7535,
+    "sha256": "481ac7aecc207793545f3fe0f784467ffbd81ca71377442e2bf2f3c43a7cb072",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nuxeh/library/superFreq/0.3.0/superFreq-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nuxeh/library/superFreq/0.3.0/superFreq-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nuxeh/library/treaclePWM/0.1.0/treaclePWM-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "treaclePWM-0.1.0.tar.gz",
+    "size_bytes": 2717,
+    "sha256": "680c949289125a47f2578f54278aa133146ee9fb7c112b083359eb224ace3b01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nuxeh/library/treaclePWM/0.1.0/treaclePWM-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nuxeh/library/treaclePWM/0.1.0/treaclePWM-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

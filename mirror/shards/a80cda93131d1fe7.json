@@ -1,0 +1,4065 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dejwk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dejwk/library/roo_backport/1.1.0/roo_backport-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_backport-1.1.0.tar.gz",
+    "size_bytes": 3372,
+    "sha256": "d134d8bedb4ab8d030714dd3950b7e19d997c6a79748e2ede82c933f8aeb040d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_backport/1.1.0/roo_backport-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_backport/1.1.0/roo_backport-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_backport/1.1.1/roo_backport-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_backport-1.1.1.tar.gz",
+    "size_bytes": 3427,
+    "sha256": "875e87930f91967a7f3f9395d821469aef493c589c55ed41ea5df89188460104",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_backport/1.1.1/roo_backport-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_backport/1.1.1/roo_backport-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_backport/1.2.0/roo_backport-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_backport-1.2.0.tar.gz",
+    "size_bytes": 3461,
+    "sha256": "de4776fdcd3a632e52bc163e36e6f0d1e784be2de8f4dd089e56d6fe7cc5ce8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_backport/1.2.0/roo_backport-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_backport/1.2.0/roo_backport-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_backport/1.2.1/roo_backport-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_backport-1.2.1.tar.gz",
+    "size_bytes": 3582,
+    "sha256": "6c528b64470a7f771475338dc43555567b5a4d4cee178270fa297b80573ae198",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_backport/1.2.1/roo_backport-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_backport/1.2.1/roo_backport-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_backport/1.2.2/roo_backport-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_backport-1.2.2.tar.gz",
+    "size_bytes": 3520,
+    "sha256": "13a85756cc07ca6d3d5627a131855485496d491e4436ce2b7e1fcf5c24b7c16f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_backport/1.2.2/roo_backport-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_backport/1.2.2/roo_backport-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_backport/1.2.3/roo_backport-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_backport-1.2.3.tar.gz",
+    "size_bytes": 4310,
+    "sha256": "34ab07219f10e21c892e1f083053407ab008f59cbf4dd768f15a7047085f9770",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_backport/1.2.3/roo_backport-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_backport/1.2.3/roo_backport-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_backport/1.2.4/roo_backport-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_backport-1.2.4.tar.gz",
+    "size_bytes": 4893,
+    "sha256": "2afe438a75a876bdfdce4469988d0a8e035857c54a3033c546b96908833b135b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_backport/1.2.4/roo_backport-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_backport/1.2.4/roo_backport-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_blink/1.0.0/roo_blink-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_blink-1.0.0.tar.gz",
+    "size_bytes": 9211,
+    "sha256": "f56c3c12b366231b8b416ffcab09cc7678b95858af6bbf7d1ea466837617d4e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_blink/1.0.0/roo_blink-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_blink/1.0.0/roo_blink-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_blink/1.0.1/roo_blink-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_blink-1.0.1.tar.gz",
+    "size_bytes": 9516,
+    "sha256": "17831e3d40d9e8293e114036695539841af036e51d1b0cc57f7a03ab4c75672a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_blink/1.0.1/roo_blink-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_blink/1.0.1/roo_blink-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_blink/1.0.2/roo_blink-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_blink-1.0.2.tar.gz",
+    "size_bytes": 9518,
+    "sha256": "8a1acc5f6429b168e4685a4d0bc195cc127cbfb2cf49d169beab4c20bc88a810",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_blink/1.0.2/roo_blink-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_blink/1.0.2/roo_blink-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_blink/1.0.3/roo_blink-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_blink-1.0.3.tar.gz",
+    "size_bytes": 9174,
+    "sha256": "b771366fd04dc4838e804b95f6c705d0303007339e7ec57e5c23f11cd4a2e3f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_blink/1.0.3/roo_blink-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_blink/1.0.3/roo_blink-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_blink/1.0.4/roo_blink-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_blink-1.0.4.tar.gz",
+    "size_bytes": 9169,
+    "sha256": "ebba6940c98ca1aed4feeceebdd18e64f1fd6f7519bab3cec41b4f3ce7080b43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_blink/1.0.4/roo_blink-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_blink/1.0.4/roo_blink-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_blink/1.0.5/roo_blink-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_blink-1.0.5.tar.gz",
+    "size_bytes": 9546,
+    "sha256": "58d4025a1b8cf1d29b8881c8ac0d326ddf09bf6b541f34584dfa07700fe4c4f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_blink/1.0.5/roo_blink-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_blink/1.0.5/roo_blink-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_blink/1.0.6/roo_blink-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_blink-1.0.6.tar.gz",
+    "size_bytes": 9596,
+    "sha256": "3f6046ead6814588e3cabffc0381de5d13e0b4f23b237bd15b1deb4690443126",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_blink/1.0.6/roo_blink-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_blink/1.0.6/roo_blink-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_blink/1.0.7/roo_blink-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_blink-1.0.7.tar.gz",
+    "size_bytes": 15117,
+    "sha256": "35d78cad0b2bf99e3c15c7a3bef7bccd1f756871e9fde121579e61318077732d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_blink/1.0.7/roo_blink-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_blink/1.0.7/roo_blink-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_blink/1.1.0/roo_blink-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_blink-1.1.0.tar.gz",
+    "size_bytes": 17048,
+    "sha256": "44ca7262e5b6e97439c634447dc8f2c753ff188fadff524f120a9d7cfa04cf54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_blink/1.1.0/roo_blink-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_blink/1.1.0/roo_blink-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_blink/1.1.1/roo_blink-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_blink-1.1.1.tar.gz",
+    "size_bytes": 27042,
+    "sha256": "083d7e914090a378800d563045c8f66965788d32d1a094ae70c12a1c0f71a3ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_blink/1.1.1/roo_blink-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_blink/1.1.1/roo_blink-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_blink/1.2.0/roo_blink-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_blink-1.2.0.tar.gz",
+    "size_bytes": 27277,
+    "sha256": "5e9439d7abf24d006d86f0c594b73976d052384625b5efdf69604b4f994628ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_blink/1.2.0/roo_blink-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_blink/1.2.0/roo_blink-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_collections/1.3.1/roo_collections-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_collections-1.3.1.tar.gz",
+    "size_bytes": 10608,
+    "sha256": "ed4b56881711489e0152d6ac721555404ad9aec7687114d8920fb392d0c039ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_collections/1.3.1/roo_collections-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_collections/1.3.1/roo_collections-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_collections/1.3.2/roo_collections-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_collections-1.3.2.tar.gz",
+    "size_bytes": 10424,
+    "sha256": "22e1594b61ae8ee2a0e99960f740b445159de45dd6307319260ad6d918042610",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_collections/1.3.2/roo_collections-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_collections/1.3.2/roo_collections-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_collections/1.4.0/roo_collections-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_collections-1.4.0.tar.gz",
+    "size_bytes": 10840,
+    "sha256": "782735a63ce35d0d3db1d8673eb0febb7b137681e39166523d55aa5833e7d7a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_collections/1.4.0/roo_collections-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_collections/1.4.0/roo_collections-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_collections/1.4.1/roo_collections-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_collections-1.4.1.tar.gz",
+    "size_bytes": 11477,
+    "sha256": "7555636d9ca61fb164641010d492e287143c0c748521b1f0851daa0541a4a3d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_collections/1.4.1/roo_collections-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_collections/1.4.1/roo_collections-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_collections/1.4.2/roo_collections-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_collections-1.4.2.tar.gz",
+    "size_bytes": 11339,
+    "sha256": "8a0c66b96fddc6a740720d8a7ed09bc78b949f0fbdf5115f54b74bf40883fb9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_collections/1.4.2/roo_collections-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_collections/1.4.2/roo_collections-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_collections/1.4.3/roo_collections-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_collections-1.4.3.tar.gz",
+    "size_bytes": 13099,
+    "sha256": "a6f08ae9d2d14533297bc3a968538c679015ecd9068ef53af015e4f1bf4666d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_collections/1.4.3/roo_collections-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_collections/1.4.3/roo_collections-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_collections/1.4.4/roo_collections-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_collections-1.4.4.tar.gz",
+    "size_bytes": 19859,
+    "sha256": "6db15962825e79eabd8ed5b079eaa35921c277be8830f852dc878aa5eb58d328",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_collections/1.4.4/roo_collections-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_collections/1.4.4/roo_collections-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_collections/1.4.5/roo_collections-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_collections-1.4.5.tar.gz",
+    "size_bytes": 20017,
+    "sha256": "8f193f458727fd578ae13c2304804eb4e4a521ec5cfac3a8d91f88ecee2b4635",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_collections/1.4.5/roo_collections-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_collections/1.4.5/roo_collections-1.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_collections/1.4.6/roo_collections-1.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_collections-1.4.6.tar.gz",
+    "size_bytes": 24136,
+    "sha256": "49551878fb0e2751af8e5ee7f6c351f2fd711f61822282d4d4164033ea414a54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_collections/1.4.6/roo_collections-1.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_collections/1.4.6/roo_collections-1.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_collections/1.4.7/roo_collections-1.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_collections-1.4.7.tar.gz",
+    "size_bytes": 25782,
+    "sha256": "bb773bf61b1a9ae13e074e6081a56b2d9c4962b0d9c5d67b0e88ae14cb42a62f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_collections/1.4.7/roo_collections-1.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_collections/1.4.7/roo_collections-1.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_collections/1.4.8/roo_collections-1.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_collections-1.4.8.tar.gz",
+    "size_bytes": 29726,
+    "sha256": "120e98f5784c48c3648cdbd5124363d17ddd0c355aa09d2c5613423c41d878ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_collections/1.4.8/roo_collections-1.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_collections/1.4.8/roo_collections-1.4.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_comms/1.0.0/roo_comms-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_comms-1.0.0.tar.gz",
+    "size_bytes": 20084,
+    "sha256": "d66fae4225125c2b339f8705e39d64773d0f85c063c8dd216ef65a41c6613a19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_comms/1.0.0/roo_comms-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_comms/1.0.0/roo_comms-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_comms/1.1.2/roo_comms-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_comms-1.1.2.tar.gz",
+    "size_bytes": 21298,
+    "sha256": "df94d9396b1c84fc505a999df7723f251570ff6a68b8286b4e771dda596cc381",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_comms/1.1.2/roo_comms-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_comms/1.1.2/roo_comms-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_comms/1.1.3/roo_comms-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_comms-1.1.3.tar.gz",
+    "size_bytes": 21001,
+    "sha256": "6d14048599c6359ec9365bc9d5bbb2b840546202f88fd6aefb9a9d76d203196b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_comms/1.1.3/roo_comms-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_comms/1.1.3/roo_comms-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_comms/1.1.4/roo_comms-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_comms-1.1.4.tar.gz",
+    "size_bytes": 22915,
+    "sha256": "07b06532531a6d1457ecfdc23d2eebfcb7382d80acfe5c25d1fb709a27261a75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_comms/1.1.4/roo_comms-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_comms/1.1.4/roo_comms-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_comms/1.1.5/roo_comms-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_comms-1.1.5.tar.gz",
+    "size_bytes": 28530,
+    "sha256": "f1c4770b317e0e526aeeb12f56a13dc0e835c0a4dcb9b1c7b7693a0f5b03ae49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_comms/1.1.5/roo_comms-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_comms/1.1.5/roo_comms-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_comms/1.1.6/roo_comms-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_comms-1.1.6.tar.gz",
+    "size_bytes": 29445,
+    "sha256": "19e07df8b57beb7bbb8ad9578af6e2d1d22d4b57449d981552a037cccf11e5b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_comms/1.1.6/roo_comms-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_comms/1.1.6/roo_comms-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_comms/1.2.0/roo_comms-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_comms-1.2.0.tar.gz",
+    "size_bytes": 43505,
+    "sha256": "7a8339e5a3cc87af452ed7dc64bf0fe83a0fb296449fba2968aed74918a046b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_comms/1.2.0/roo_comms-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_comms/1.2.0/roo_comms-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_comms/1.2.1/roo_comms-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_comms-1.2.1.tar.gz",
+    "size_bytes": 43320,
+    "sha256": "76e8bbfdfe93f1a156137e77942a2d3f3461fe4d00d6870f3a6f05a5b5e61452",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_comms/1.2.1/roo_comms-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_comms/1.2.1/roo_comms-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_control/1.2.0/roo_control-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_control-1.2.0.tar.gz",
+    "size_bytes": 10517,
+    "sha256": "254adae28942c58b9d6dd9405391c219ade88d2ebf73261475614cfbf1afccf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_control/1.2.0/roo_control-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_control/1.2.0/roo_control-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_control/1.2.1/roo_control-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_control-1.2.1.tar.gz",
+    "size_bytes": 10832,
+    "sha256": "df845f07e1c543abe7ab7ce6ac7451ba764388b03716f8692445c8ec5cda8342",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_control/1.2.1/roo_control-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_control/1.2.1/roo_control-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_control/1.2.10/roo_control-1.2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_control-1.2.10.tar.gz",
+    "size_bytes": 24884,
+    "sha256": "b984bc5024ef88c74f4c6700f7bcde794476c2898f399023a69522c0e8cbecfb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_control/1.2.10/roo_control-1.2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_control/1.2.10/roo_control-1.2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_control/1.2.2/roo_control-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_control-1.2.2.tar.gz",
+    "size_bytes": 10840,
+    "sha256": "491d974631b38d7d8dc556a599b0d4f2dae8ef97cd70fea74141c9e760394bc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_control/1.2.2/roo_control-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_control/1.2.2/roo_control-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_control/1.2.3/roo_control-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_control-1.2.3.tar.gz",
+    "size_bytes": 10724,
+    "sha256": "c49299923ed04ae7bfc42a267e8163d738cf93581a8255310ba8619a66bd2c0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_control/1.2.3/roo_control-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_control/1.2.3/roo_control-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_control/1.2.4/roo_control-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_control-1.2.4.tar.gz",
+    "size_bytes": 10895,
+    "sha256": "c16573ce6c1309d75495d311d4f66c19999ef513570894e3e0e675e8d6c799f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_control/1.2.4/roo_control-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_control/1.2.4/roo_control-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_control/1.2.5/roo_control-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_control-1.2.5.tar.gz",
+    "size_bytes": 10951,
+    "sha256": "d79e212773df5838c460886a213e1945847eb1e035f156e7512e51b4da83e3e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_control/1.2.5/roo_control-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_control/1.2.5/roo_control-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_control/1.2.6/roo_control-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_control-1.2.6.tar.gz",
+    "size_bytes": 13751,
+    "sha256": "e42079876ad8fca00c61c898046629e16bd0f9f98a3a76e6ff240b1fec49e649",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_control/1.2.6/roo_control-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_control/1.2.6/roo_control-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_control/1.2.7/roo_control-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_control-1.2.7.tar.gz",
+    "size_bytes": 14717,
+    "sha256": "69b03608e91d68450af587c70fb1f99387c84fa30009e85b02541ac32a172cbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_control/1.2.7/roo_control-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_control/1.2.7/roo_control-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_control/1.2.8/roo_control-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_control-1.2.8.tar.gz",
+    "size_bytes": 24744,
+    "sha256": "458c3cabc9a4d7606c96adc9197a12b30f9b018d32396ba577386152e4886f46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_control/1.2.8/roo_control-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_control/1.2.8/roo_control-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_control/1.2.9/roo_control-1.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_control-1.2.9.tar.gz",
+    "size_bytes": 24619,
+    "sha256": "6f35a8c97fe43ffe9b46bc058322938049093722bb362d4d819ae8eadcefa2f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_control/1.2.9/roo_control-1.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_control/1.2.9/roo_control-1.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_dashboard/1.0.0/roo_dashboard-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_dashboard-1.0.0.tar.gz",
+    "size_bytes": 12138,
+    "sha256": "95dc33a90ca6fd095fe4c8ce2f23773115e915045473d83345858c565c546f62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_dashboard/1.0.0/roo_dashboard-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_dashboard/1.0.0/roo_dashboard-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_dashboard/1.0.1/roo_dashboard-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_dashboard-1.0.1.tar.gz",
+    "size_bytes": 12556,
+    "sha256": "b243f5fd3b58e7f13806bb4968419bce1aa13d225f839a134f4853ccb7970a18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_dashboard/1.0.1/roo_dashboard-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_dashboard/1.0.1/roo_dashboard-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_dashboard/1.0.2/roo_dashboard-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_dashboard-1.0.2.tar.gz",
+    "size_bytes": 16395,
+    "sha256": "d9ecb038dba846a7c6213db036c5a3e7baff9c743ff1b6d0511f46098954a673",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_dashboard/1.0.2/roo_dashboard-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_dashboard/1.0.2/roo_dashboard-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/2.2.1/roo_display-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-2.2.1.tar.gz",
+    "size_bytes": 9782179,
+    "sha256": "37fb63cc82383cff5d18465f32d21995402a0233b9b31f69e70bd45dae93f962",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/2.2.1/roo_display-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/2.2.1/roo_display-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/2.2.2/roo_display-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-2.2.2.tar.gz",
+    "size_bytes": 9780130,
+    "sha256": "26507c18adc3f9d0e7efb2c53e267a101de4bf1f8f7fdd8602846d7dd432dd72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/2.2.2/roo_display-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/2.2.2/roo_display-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/2.3.1/roo_display-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-2.3.1.tar.gz",
+    "size_bytes": 9784428,
+    "sha256": "5e4c44211199a0ee881715d1076108e351ca0623602d8ef5a74c449cdac5bd58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/2.3.1/roo_display-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/2.3.1/roo_display-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/2.3.2/roo_display-2.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-2.3.2.tar.gz",
+    "size_bytes": 9719257,
+    "sha256": "f0d8a6b539909eaf35e2a609c6d5b090f2817953f2c61ef096bc21888aba10a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/2.3.2/roo_display-2.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/2.3.2/roo_display-2.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/3.0.0/roo_display-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-3.0.0.tar.gz",
+    "size_bytes": 2359595,
+    "sha256": "693db7cc8c32232be3d331411885033a6e4d098e50d91c1c53b1c25c0bd9c965",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/3.0.0/roo_display-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/3.0.0/roo_display-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/3.0.1/roo_display-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-3.0.1.tar.gz",
+    "size_bytes": 2359506,
+    "sha256": "24eb06e4112176365f52a7988db7ef8d07b5d1150afa2865866600e2e5c54ae8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/3.0.1/roo_display-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/3.0.1/roo_display-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/3.0.2/roo_display-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-3.0.2.tar.gz",
+    "size_bytes": 2359491,
+    "sha256": "7a6e985c146ce868d30832f4f671f10843ef55aaea0c309d0b319a8141868aef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/3.0.2/roo_display-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/3.0.2/roo_display-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/3.0.3/roo_display-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-3.0.3.tar.gz",
+    "size_bytes": 2366444,
+    "sha256": "e2b9a7d76164519210f85f8a15566d7b02769385cca6fd3792d055afd536661d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/3.0.3/roo_display-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/3.0.3/roo_display-3.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/3.0.4/roo_display-3.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-3.0.4.tar.gz",
+    "size_bytes": 2367839,
+    "sha256": "fe66f97bc954088aa2a7bddc0747a50c38bd76bd5680c85b3404e1ffc55e3d71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/3.0.4/roo_display-3.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/3.0.4/roo_display-3.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/3.1.0/roo_display-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-3.1.0.tar.gz",
+    "size_bytes": 2405619,
+    "sha256": "0b9dd7508279f37de46882336098b4ab3cc2ad20172f5afe3282de17bf55e89f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/3.1.0/roo_display-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/3.1.0/roo_display-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/3.1.1/roo_display-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-3.1.1.tar.gz",
+    "size_bytes": 2406254,
+    "sha256": "11767a9ce0e92ecc46ff5d801f140fbf6286bcccbeaa3b062b81541469483b0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/3.1.1/roo_display-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/3.1.1/roo_display-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/3.1.2/roo_display-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-3.1.2.tar.gz",
+    "size_bytes": 2440243,
+    "sha256": "ca90b1b9d9b15837a7c6813cf7f29d40c6cb013c9b4975a83eef6923c2db76cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/3.1.2/roo_display-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/3.1.2/roo_display-3.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/3.2.0/roo_display-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-3.2.0.tar.gz",
+    "size_bytes": 2457765,
+    "sha256": "29bb40b1b7ab9a1f06ab84938291650ab3665d0e42b7c98b945e239bfdae0981",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/3.2.0/roo_display-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/3.2.0/roo_display-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/3.2.2/roo_display-3.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-3.2.2.tar.gz",
+    "size_bytes": 2471664,
+    "sha256": "4b22082bc52eea2d553f6c74bd7627a29cba8bcbea7c786b4e407f76b2cdef30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/3.2.2/roo_display-3.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/3.2.2/roo_display-3.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/3.3.0/roo_display-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-3.3.0.tar.gz",
+    "size_bytes": 2477083,
+    "sha256": "b029f1e209d53275f366a46a80b8a15dddbaf23c65f5f0fcc4b837732207dc3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/3.3.0/roo_display-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/3.3.0/roo_display-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/3.3.1/roo_display-3.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-3.3.1.tar.gz",
+    "size_bytes": 2479108,
+    "sha256": "87e5c504ef8d51a1956b84ecbf61ed5976ef61fc896286788474f301fc34e05d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/3.3.1/roo_display-3.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/3.3.1/roo_display-3.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/3.3.2/roo_display-3.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-3.3.2.tar.gz",
+    "size_bytes": 2480032,
+    "sha256": "020dbdb425e7fb481e8c818ab37c9a049bd80056c08099be1ee400e1afcca582",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/3.3.2/roo_display-3.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/3.3.2/roo_display-3.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_display/3.4.0/roo_display-3.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_display-3.4.0.tar.gz",
+    "size_bytes": 2495740,
+    "sha256": "4014281642ee9317321178cc9b98c22e7e716d95e35aafa771c9c5fe8f839c74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_display/3.4.0/roo_display-3.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_display/3.4.0/roo_display-3.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_flags/1.1.0/roo_flags-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_flags-1.1.0.tar.gz",
+    "size_bytes": 2503,
+    "sha256": "f534b3209e557bbb8c94e57dcedb65bc3674598a087459fc9ecf3cc7b68425f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_flags/1.1.0/roo_flags-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_flags/1.1.0/roo_flags-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_flags/1.1.1/roo_flags-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_flags-1.1.1.tar.gz",
+    "size_bytes": 2799,
+    "sha256": "fd39bfd1c0103ab62813237116923e3db2bcd292e7b8f5599b74b310a88f9ef8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_flags/1.1.1/roo_flags-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_flags/1.1.1/roo_flags-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_flags/1.2.0/roo_flags-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_flags-1.2.0.tar.gz",
+    "size_bytes": 2791,
+    "sha256": "acbe717d77b9d4237c30e5b574b42241eefac1185a292bdd763d3f784bfd3dbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_flags/1.2.0/roo_flags-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_flags/1.2.0/roo_flags-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_flags/1.2.1/roo_flags-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_flags-1.2.1.tar.gz",
+    "size_bytes": 2931,
+    "sha256": "d70e0ea925071b9c726bfc48c64ae6e25af737fc8b1f1c807d0a9ed6ff82a5c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_flags/1.2.1/roo_flags-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_flags/1.2.1/roo_flags-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_flags/1.2.2/roo_flags-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_flags-1.2.2.tar.gz",
+    "size_bytes": 2884,
+    "sha256": "b4744a4b3fd93a1667a0892d4e9026014b35ce787c1c8173ac4c70d640b43cda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_flags/1.2.2/roo_flags-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_flags/1.2.2/roo_flags-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_flags/1.2.3/roo_flags-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_flags-1.2.3.tar.gz",
+    "size_bytes": 3081,
+    "sha256": "5cc37fb8f61d09733735b074d9f4eec93df06130270df69325f3b331f4e1d2cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_flags/1.2.3/roo_flags-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_flags/1.2.3/roo_flags-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_flags/1.2.4/roo_flags-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_flags-1.2.4.tar.gz",
+    "size_bytes": 3367,
+    "sha256": "3889b7c9a06506449d19390fb60fbf3847fa9c7576db2a1610d2125f23864f05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_flags/1.2.4/roo_flags-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_flags/1.2.4/roo_flags-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_flags/1.2.5/roo_flags-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_flags-1.2.5.tar.gz",
+    "size_bytes": 4139,
+    "sha256": "7573fce58ab6a2a0902dcdfa1e40461ba0f728adc91cd51c26222e8c0609b872",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_flags/1.2.5/roo_flags-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_flags/1.2.5/roo_flags-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_fonts_basic/1.0.1/roo_fonts_basic-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_fonts_basic-1.0.1.tar.gz",
+    "size_bytes": 5157059,
+    "sha256": "5b9afd560e9600022b969c9540db259c239d9da32ac03043a8b11a5fe142df27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_fonts_basic/1.0.1/roo_fonts_basic-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_fonts_basic/1.0.1/roo_fonts_basic-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_fonts_basic/1.0.2/roo_fonts_basic-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_fonts_basic-1.0.2.tar.gz",
+    "size_bytes": 5157068,
+    "sha256": "6b0a69139922dbf6145bec13e9a40f84eb4fcb49b488b5e723b17bca221d49be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_fonts_basic/1.0.2/roo_fonts_basic-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_fonts_basic/1.0.2/roo_fonts_basic-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_fonts_basic/1.0.3/roo_fonts_basic-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_fonts_basic-1.0.3.tar.gz",
+    "size_bytes": 5199466,
+    "sha256": "60da46d680358614fa02228b3d1345cac32fe3323e7e805190256f1b16f4edf9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_fonts_basic/1.0.3/roo_fonts_basic-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_fonts_basic/1.0.3/roo_fonts_basic-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_fonts_basic/1.0.4/roo_fonts_basic-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_fonts_basic-1.0.4.tar.gz",
+    "size_bytes": 5201041,
+    "sha256": "e744fd1522a84d35d2edbf7e338c99545fc67be6c08f9fd3121346da39082060",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_fonts_basic/1.0.4/roo_fonts_basic-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_fonts_basic/1.0.4/roo_fonts_basic-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_fonts_basic/1.0.5/roo_fonts_basic-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_fonts_basic-1.0.5.tar.gz",
+    "size_bytes": 5203030,
+    "sha256": "2944847d18e6ad65b79b5a8e696f553689a657a9f5f7cffd0b93f9dc17ff4882",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_fonts_basic/1.0.5/roo_fonts_basic-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_fonts_basic/1.0.5/roo_fonts_basic-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_fonts_basic/1.0.6/roo_fonts_basic-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_fonts_basic-1.0.6.tar.gz",
+    "size_bytes": 5212415,
+    "sha256": "4b1a705d330fe51f197bdb0fda11be58fa1030ace959175ca1bc5613fca1744a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_fonts_basic/1.0.6/roo_fonts_basic-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_fonts_basic/1.0.6/roo_fonts_basic-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_fonts_material/1.0.0/roo_fonts_material-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_fonts_material-1.0.0.tar.gz",
+    "size_bytes": 4758886,
+    "sha256": "a38a57702de4451f4a5a6a38a0372be8e6cecb665df939f905bf1205b3354041",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_fonts_material/1.0.0/roo_fonts_material-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_fonts_material/1.0.0/roo_fonts_material-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_fonts_material/1.1.0/roo_fonts_material-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_fonts_material-1.1.0.tar.gz",
+    "size_bytes": 5913931,
+    "sha256": "048166c80fc6b0f27429e9e7a48de529ac933cbf1c0848f79f7ee96c64849711",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_fonts_material/1.1.0/roo_fonts_material-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_fonts_material/1.1.0/roo_fonts_material-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_fonts_material/1.1.1/roo_fonts_material-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_fonts_material-1.1.1.tar.gz",
+    "size_bytes": 5916890,
+    "sha256": "43083cc625e384488e794b1cd54b2d6fe256da79dc8c508b742f0e9a260a64e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_fonts_material/1.1.1/roo_fonts_material-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_fonts_material/1.1.1/roo_fonts_material-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_fonts_material/1.1.2/roo_fonts_material-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_fonts_material-1.1.2.tar.gz",
+    "size_bytes": 5918139,
+    "sha256": "571cd8ff7c4d4e711bacbcc441266dcf918e6ce7c29ce003940e7c1aeaadcbb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_fonts_material/1.1.2/roo_fonts_material-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_fonts_material/1.1.2/roo_fonts_material-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_glog/1.0.0/roo_glog-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_glog-1.0.0.tar.gz",
+    "size_bytes": 88164,
+    "sha256": "e775fbcc0da5c86b039183142fea3f55901b5ea6dcd8a0ba00d6a74a2aae8609",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_glog/1.0.0/roo_glog-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_glog/1.0.0/roo_glog-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_icons/1.2.0/roo_icons-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_icons-1.2.0.tar.gz",
+    "size_bytes": 22744263,
+    "sha256": "a4fa4cff9ea468ccd50c610b6f35c98b1f95a5caf391119a72627e8780c7e593",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_icons/1.2.0/roo_icons-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_icons/1.2.0/roo_icons-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_icons/1.2.1/roo_icons-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_icons-1.2.1.tar.gz",
+    "size_bytes": 22752114,
+    "sha256": "9dd483b5306c4d2279138d869dc3971c80c3ef1b423759aecf1e306b59131b3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_icons/1.2.1/roo_icons-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_icons/1.2.1/roo_icons-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_icons/1.2.2/roo_icons-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_icons-1.2.2.tar.gz",
+    "size_bytes": 22744726,
+    "sha256": "d5df99e2fa7d98a26a97ced8b1893dfd77a2f7b0b41430e11fdc6801792f1221",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_icons/1.2.2/roo_icons-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_icons/1.2.2/roo_icons-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_icons/1.2.3/roo_icons-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_icons-1.2.3.tar.gz",
+    "size_bytes": 22744665,
+    "sha256": "96616540bb2177c1409fb1ec7d135c263aa6f26adb9a7f4a402cfd4d188b2b82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_icons/1.2.3/roo_icons-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_icons/1.2.3/roo_icons-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_icons/1.2.4/roo_icons-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_icons-1.2.4.tar.gz",
+    "size_bytes": 22755957,
+    "sha256": "269dc6379fb413191770bc8f4c6919b0bb243b7fd2ce565d4c5f1376c47113e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_icons/1.2.4/roo_icons-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_icons/1.2.4/roo_icons-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_icons/1.2.5/roo_icons-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_icons-1.2.5.tar.gz",
+    "size_bytes": 22749564,
+    "sha256": "6b5cd64f3b91ba45cc7be57e370fc1af05074535eabd8fa2ee664aa838d41451",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_icons/1.2.5/roo_icons-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_icons/1.2.5/roo_icons-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/1.3.0/roo_io-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-1.3.0.tar.gz",
+    "size_bytes": 52529,
+    "sha256": "a2248dc2c02c485d108c7a0812e934eb0c8f989d847b2e009fb6e943e8819ece",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/1.3.0/roo_io-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/1.3.0/roo_io-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/1.4.0/roo_io-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-1.4.0.tar.gz",
+    "size_bytes": 55066,
+    "sha256": "46dc76b5787d4d44e9cebf5fb400e6b8d0bbb1a31e74bf5f2a211ddc3f520c6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/1.4.0/roo_io-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/1.4.0/roo_io-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.0.0/roo_io-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.0.0.tar.gz",
+    "size_bytes": 71259,
+    "sha256": "3fec02c1dc4ba62ce19f5250de15c4e9cbb5df9485c2437f6b78e6cfbc75ecce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.0.0/roo_io-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.0.0/roo_io-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.0.1/roo_io-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.0.1.tar.gz",
+    "size_bytes": 70979,
+    "sha256": "fc24999bd65df24dac81423af9a3dc388cf018883bda80b373e4bc6017d7940c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.0.1/roo_io-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.0.1/roo_io-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.0.2/roo_io-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.0.2.tar.gz",
+    "size_bytes": 70939,
+    "sha256": "ac6d105e846bd5a983e832969786518f724774903badc986f5b18974d8956493",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.0.2/roo_io-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.0.2/roo_io-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.0.3/roo_io-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.0.3.tar.gz",
+    "size_bytes": 71327,
+    "sha256": "bcb9770ad0ef2f9a2850b1773ff904ae56dd15829a4ab73e08195abc50c240a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.0.3/roo_io-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.0.3/roo_io-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.1.0/roo_io-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.1.0.tar.gz",
+    "size_bytes": 70389,
+    "sha256": "dc9de755d269d9078fe66182ad11370413687e2dfb4865e26ee39f071e4fce1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.1.0/roo_io-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.1.0/roo_io-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.1.1/roo_io-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.1.1.tar.gz",
+    "size_bytes": 70397,
+    "sha256": "afe3c78d4b503a3ededd023ea34fe50bb6f85d6b829d304643d4f391ddee979d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.1.1/roo_io-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.1.1/roo_io-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.1.2/roo_io-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.1.2.tar.gz",
+    "size_bytes": 70380,
+    "sha256": "7d51ab6a9bddd94335dc570b29f0919516dd913d981060dd67827c81f59a6ef9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.1.2/roo_io-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.1.2/roo_io-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.1.3/roo_io-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.1.3.tar.gz",
+    "size_bytes": 71886,
+    "sha256": "5e7831d1ccba99d724df28f4eed649b2e69707bdb234c63dbda1f9d01b40c6b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.1.3/roo_io-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.1.3/roo_io-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.1.4/roo_io-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.1.4.tar.gz",
+    "size_bytes": 71915,
+    "sha256": "9220604ad5710cd251b59fd15db186293bfc5894e890c464fe6b1dc0f2a08e3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.1.4/roo_io-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.1.4/roo_io-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.1.5/roo_io-2.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.1.5.tar.gz",
+    "size_bytes": 76712,
+    "sha256": "eb7a8ec70dc798ffed55c00bfdd310bb4f05e014d161b82e764b2403189a733e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.1.5/roo_io-2.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.1.5/roo_io-2.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.1.6/roo_io-2.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.1.6.tar.gz",
+    "size_bytes": 76752,
+    "sha256": "c51a3c3bfb0f94cbd8a9b1dd5652cb80bfe567fe035cae82d696d3fef64a4804",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.1.6/roo_io-2.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.1.6/roo_io-2.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.1.7/roo_io-2.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.1.7.tar.gz",
+    "size_bytes": 76765,
+    "sha256": "341618f241affb2abe8499c1b2bc19764b01f11458af2b4ee2070d95ba40f366",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.1.7/roo_io-2.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.1.7/roo_io-2.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.1.8/roo_io-2.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.1.8.tar.gz",
+    "size_bytes": 77613,
+    "sha256": "4975bc054390eae31a34b9c3cb231208528cc25fff8bc6a524654307dd54930a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.1.8/roo_io-2.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.1.8/roo_io-2.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.2.0/roo_io-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.2.0.tar.gz",
+    "size_bytes": 83043,
+    "sha256": "a8cbe9dc3bbd38a18362ece76bf9dcb87381da0eb07621321e38ee9e9826fc96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.2.0/roo_io-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.2.0/roo_io-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.2.1/roo_io-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.2.1.tar.gz",
+    "size_bytes": 82847,
+    "sha256": "a075e15db4d4ce0c90de703e3051ca45385a61ab93893346860bd42b17f6d0c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.2.1/roo_io-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.2.1/roo_io-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.2.2/roo_io-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.2.2.tar.gz",
+    "size_bytes": 82988,
+    "sha256": "4ad1fb7a3a047a41a273c9fbaa352fbdd541250f6f38b6c2063d4862b338417f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.2.2/roo_io-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.2.2/roo_io-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.2.3/roo_io-2.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.2.3.tar.gz",
+    "size_bytes": 91772,
+    "sha256": "9f1eaac9a39eaa52c145e0ef08b38c0718f620e842a6c448bff3a37d6ec36820",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.2.3/roo_io-2.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.2.3/roo_io-2.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.2.4/roo_io-2.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.2.4.tar.gz",
+    "size_bytes": 91940,
+    "sha256": "b37f9b2c5529a153bea102376e644e8fed73743fcf745a7d70320a1629bf3229",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.2.4/roo_io-2.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.2.4/roo_io-2.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.2.5/roo_io-2.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.2.5.tar.gz",
+    "size_bytes": 92111,
+    "sha256": "1efbcdaad2c596e7e09b8df90c41893d5a2e1408889580a8a3d3a7690a784619",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.2.5/roo_io-2.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.2.5/roo_io-2.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.2.6/roo_io-2.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.2.6.tar.gz",
+    "size_bytes": 98464,
+    "sha256": "2f23faee2afb4bfd93fa822f025657c276fba265b076c170d62621d60e2ca28f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.2.6/roo_io-2.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.2.6/roo_io-2.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.2.7/roo_io-2.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.2.7.tar.gz",
+    "size_bytes": 98471,
+    "sha256": "3e27c7fab8c6eb5351d5abc0f043d2dc7acecfe0163d9efa11a931b0fa080133",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.2.7/roo_io-2.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.2.7/roo_io-2.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.3.0/roo_io-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.3.0.tar.gz",
+    "size_bytes": 106210,
+    "sha256": "98dc2ae621ec86e04e0cd32f1ec009e1f7765e7b6ece91e70dfcad376c489c28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.3.0/roo_io-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.3.0/roo_io-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.3.1/roo_io-2.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.3.1.tar.gz",
+    "size_bytes": 106829,
+    "sha256": "e62700e1484b68e153c3f97b3f5b34ed9daa7d6795bdb3a232acdf036a54b225",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.3.1/roo_io-2.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.3.1/roo_io-2.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.4.0/roo_io-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.4.0.tar.gz",
+    "size_bytes": 112662,
+    "sha256": "00e34e3dbd5aaea588fc52982345565dc3f9176fce6627b904c988b970ac4b2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.4.0/roo_io-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.4.0/roo_io-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io/2.4.1/roo_io-2.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io-2.4.1.tar.gz",
+    "size_bytes": 112532,
+    "sha256": "1774653be31ee8aa5310c09a772a940c60ce78dece10425901358f591ea988b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io/2.4.1/roo_io-2.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io/2.4.1/roo_io-2.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io_arduino/1.2.0/roo_io_arduino-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io_arduino-1.2.0.tar.gz",
+    "size_bytes": 8951,
+    "sha256": "a4865971caddc37b32ff7232c87ef5f52682465caf47f1cd92dbc875b4ce158b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io_arduino/1.2.0/roo_io_arduino-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io_arduino/1.2.0/roo_io_arduino-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io_arduino/1.2.1/roo_io_arduino-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io_arduino-1.2.1.tar.gz",
+    "size_bytes": 9085,
+    "sha256": "c933dca82ce0beac2a46ee87a6ab3558fdd889bcd386313e5c023ba383e3d6a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io_arduino/1.2.1/roo_io_arduino-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io_arduino/1.2.1/roo_io_arduino-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io_arduino/1.2.2/roo_io_arduino-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io_arduino-1.2.2.tar.gz",
+    "size_bytes": 9294,
+    "sha256": "1697744f17ab6a25bbc38d2e699d87ee093da773db8b4e1345698bdbd7e06209",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io_arduino/1.2.2/roo_io_arduino-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io_arduino/1.2.2/roo_io_arduino-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_io_arduino/1.2.4/roo_io_arduino-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_io_arduino-1.2.4.tar.gz",
+    "size_bytes": 3250,
+    "sha256": "a3912bfbad3f6fac916942734fba53c7695bb762ea4cdd7beaaa10f30ac2290e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_io_arduino/1.2.4/roo_io_arduino-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_io_arduino/1.2.4/roo_io_arduino-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_locale/1.1.0/roo_locale-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_locale-1.1.0.tar.gz",
+    "size_bytes": 5281,
+    "sha256": "3dc8fe0812c058b9f151344e408a3be0b6c006fe0744ae7582b4e85dd3dc9e68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_locale/1.1.0/roo_locale-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_locale/1.1.0/roo_locale-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_locale/1.1.1/roo_locale-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_locale-1.1.1.tar.gz",
+    "size_bytes": 5614,
+    "sha256": "d894730ad5b4df3b5467b13025460204c9814da1fc83ef1f2cc1eb8c0a49ac48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_locale/1.1.1/roo_locale-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_locale/1.1.1/roo_locale-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_locale/1.1.2/roo_locale-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_locale-1.1.2.tar.gz",
+    "size_bytes": 5852,
+    "sha256": "4ba598ad8f102be5ef488c1e0832d021a161a1c8206a8f83546ec08c1d0e3f92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_locale/1.1.2/roo_locale-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_locale/1.1.2/roo_locale-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_locale/1.1.3/roo_locale-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_locale-1.1.3.tar.gz",
+    "size_bytes": 6233,
+    "sha256": "84e16a21e35a934fd5ed586ceee26060473859c858f01658d2bcf2d822c91032",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_locale/1.1.3/roo_locale-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_locale/1.1.3/roo_locale-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_locale/1.1.4/roo_locale-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_locale-1.1.4.tar.gz",
+    "size_bytes": 6840,
+    "sha256": "c73b19fb834b6c2663781cc86f7bf1ac1e2d59ddd7cc1eb227144e615a1b7707",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_locale/1.1.4/roo_locale-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_locale/1.1.4/roo_locale-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.2.0/roo_logging-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.2.0.tar.gz",
+    "size_bytes": 56049,
+    "sha256": "04d3c5792fc7f89cada378c1163e419d6cc507896c846f1796d40cdf130fbd30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.2.0/roo_logging-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.2.0/roo_logging-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.3.0/roo_logging-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.3.0.tar.gz",
+    "size_bytes": 56270,
+    "sha256": "ead725391e2b715eef9cf246314c93590be274838670c551683da38879c57bad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.3.0/roo_logging-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.3.0/roo_logging-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.4.0/roo_logging-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.4.0.tar.gz",
+    "size_bytes": 56690,
+    "sha256": "ad56a8e9a76e892365ca1a673b0051c602813b7ea029c0a16f6a84bdba8d5adc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.4.0/roo_logging-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.4.0/roo_logging-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.4.2/roo_logging-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.4.2.tar.gz",
+    "size_bytes": 56795,
+    "sha256": "540b687ca0382f2bd918391ff1131cb6d34ee68a930623cab601891ba119d157",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.4.2/roo_logging-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.4.2/roo_logging-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.4.3/roo_logging-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.4.3.tar.gz",
+    "size_bytes": 56819,
+    "sha256": "3bab7793ddded0c442a69422773fff27ca36ec13c8615ab9d7c6da7aa021cfb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.4.3/roo_logging-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.4.3/roo_logging-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.5.0/roo_logging-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.5.0.tar.gz",
+    "size_bytes": 58107,
+    "sha256": "97d484dff786b4784da9bf440f8ed557c7928fdb8a0b0d3124a6ef7a498aa3d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.5.0/roo_logging-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.5.0/roo_logging-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.5.1/roo_logging-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.5.1.tar.gz",
+    "size_bytes": 58238,
+    "sha256": "eaf579f00908b2aa45f8de34fc40bf1cdcdabb095d807699fd89d09151e3af1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.5.1/roo_logging-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.5.1/roo_logging-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.5.10/roo_logging-1.5.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.5.10.tar.gz",
+    "size_bytes": 65394,
+    "sha256": "72b2336ceeb08b0666a343e6e8ba738b8ea5461e0e93213586176364794f93b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.5.10/roo_logging-1.5.10.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.5.10/roo_logging-1.5.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.5.11/roo_logging-1.5.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.5.11.tar.gz",
+    "size_bytes": 74840,
+    "sha256": "02e2337c51706054cf22ef63f1d1c510cfd175c246ba917bd49b24633a3a2814",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.5.11/roo_logging-1.5.11.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.5.11/roo_logging-1.5.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.5.2/roo_logging-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.5.2.tar.gz",
+    "size_bytes": 58232,
+    "sha256": "885b3ce039ce165ea3663c07c7db30b596cbe4be1d932cbed4578d83ef3603c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.5.2/roo_logging-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.5.2/roo_logging-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.5.3/roo_logging-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.5.3.tar.gz",
+    "size_bytes": 58624,
+    "sha256": "ed1c10f7092c9a16e1bfe51275d43f81d9b1beeed775d5dbb6f8be695ca38c1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.5.3/roo_logging-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.5.3/roo_logging-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.5.4/roo_logging-1.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.5.4.tar.gz",
+    "size_bytes": 58399,
+    "sha256": "bf1b6f1a88f5217a4112a1575370a99edc0c1449be61e3fd2c3dc1f2a79f19fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.5.4/roo_logging-1.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.5.4/roo_logging-1.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.5.5/roo_logging-1.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.5.5.tar.gz",
+    "size_bytes": 58488,
+    "sha256": "6369ce05564feed5703e2186f7b280168cb82928d57dbad7e38ceb2f3cd2f10b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.5.5/roo_logging-1.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.5.5/roo_logging-1.5.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.5.6/roo_logging-1.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.5.6.tar.gz",
+    "size_bytes": 58863,
+    "sha256": "dc4fac56c78b335383b8ccb16a308b88e28ab93fc8a8676309d2977a1da9616e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.5.6/roo_logging-1.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.5.6/roo_logging-1.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.5.7/roo_logging-1.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.5.7.tar.gz",
+    "size_bytes": 58608,
+    "sha256": "49cec9c25627fc85b29f3840fb50c05635d163653c6739a384e2df39e38d825a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.5.7/roo_logging-1.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.5.7/roo_logging-1.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.5.8/roo_logging-1.5.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.5.8.tar.gz",
+    "size_bytes": 63537,
+    "sha256": "6a1dbdc018208071c5c1cab3276e0a00845eaa42cb2bce1ff8fc895be264ade7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.5.8/roo_logging-1.5.8.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.5.8/roo_logging-1.5.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_logging/1.5.9/roo_logging-1.5.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_logging-1.5.9.tar.gz",
+    "size_bytes": 63569,
+    "sha256": "e05e4790467738a30009a302c99c6b256b1f87089cd18f7ae60da2b987480bf6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_logging/1.5.9/roo_logging-1.5.9.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_logging/1.5.9/roo_logging-1.5.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_material_icons/1.0.2/roo_material_icons-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_material_icons-1.0.2.tar.gz",
+    "size_bytes": 6398794,
+    "sha256": "62eba6cff273a091433bb0369afcd489fa753114c4f7fa94f6caebb3ade6eb39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_material_icons/1.0.2/roo_material_icons-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_material_icons/1.0.2/roo_material_icons-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_material_icons_filled/1.0.1/roo_material_icons_filled-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_material_icons_filled-1.0.1.tar.gz",
+    "size_bytes": 1610993,
+    "sha256": "678a5441e84057af293a12b72944053ebfab6cca2bdee217e53da301668d58b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_material_icons_filled/1.0.1/roo_material_icons_filled-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_material_icons_filled/1.0.1/roo_material_icons_filled-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_material_icons_outlined/1.0.1/roo_material_icons_outlined-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_material_icons_outlined-1.0.1.tar.gz",
+    "size_bytes": 1666276,
+    "sha256": "bb1a431346fcce6201bf1ce608f3b6f20986281a6b26bbbcbc7c043fff53bfaf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_material_icons_outlined/1.0.1/roo_material_icons_outlined-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_material_icons_outlined/1.0.1/roo_material_icons_outlined-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_material_icons_round/1.0.1/roo_material_icons_round-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_material_icons_round-1.0.1.tar.gz",
+    "size_bytes": 1597656,
+    "sha256": "7d970421b9cefc6863390448438274821dc6d69dfd942c9db0dc37cd977d1a88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_material_icons_round/1.0.1/roo_material_icons_round-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_material_icons_round/1.0.1/roo_material_icons_round-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_material_icons_sharp/1.0.1/roo_material_icons_sharp-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_material_icons_sharp-1.0.1.tar.gz",
+    "size_bytes": 1597689,
+    "sha256": "d43d0987d3b183d8a797ed88f58f9973e0f2f1454268b09f2de8b55b3a992902",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_material_icons_sharp/1.0.1/roo_material_icons_sharp-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_material_icons_sharp/1.0.1/roo_material_icons_sharp-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_monitoring/1.0.0/roo_monitoring-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_monitoring-1.0.0.tar.gz",
+    "size_bytes": 15739,
+    "sha256": "b690822c15eef75d965b0e04ef2aa9498991a4929668a392b4afb27d7a17e2e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_monitoring/1.0.0/roo_monitoring-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_monitoring/1.0.0/roo_monitoring-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_monitoring/1.1.0/roo_monitoring-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_monitoring-1.1.0.tar.gz",
+    "size_bytes": 17795,
+    "sha256": "21e0f6451637ffac5b21e9d4218e0706ae622f985d0290c7bbf77163d165f735",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_monitoring/1.1.0/roo_monitoring-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_monitoring/1.1.0/roo_monitoring-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_monitoring/1.1.1/roo_monitoring-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_monitoring-1.1.1.tar.gz",
+    "size_bytes": 17805,
+    "sha256": "d7af9e0f51a0bb300519b78537149e73a7fe78e2d5502543748a81fb05fcc615",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_monitoring/1.1.1/roo_monitoring-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_monitoring/1.1.1/roo_monitoring-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_monitoring/1.1.2/roo_monitoring-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_monitoring-1.1.2.tar.gz",
+    "size_bytes": 18345,
+    "sha256": "1b39af138856a2f0fe565064f82d5375aeef98faeba4ceb6710b1cc13ff36438",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_monitoring/1.1.2/roo_monitoring-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_monitoring/1.1.2/roo_monitoring-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_monitoring/1.1.3/roo_monitoring-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_monitoring-1.1.3.tar.gz",
+    "size_bytes": 21083,
+    "sha256": "b84ee7a7d2f1d102359dd715dfe40271a8babd5fe898ec75482b746b12067682",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_monitoring/1.1.3/roo_monitoring-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_monitoring/1.1.3/roo_monitoring-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_monitoring/1.1.4/roo_monitoring-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_monitoring-1.1.4.tar.gz",
+    "size_bytes": 21950,
+    "sha256": "acfa19dc8b2912ba1e06435fa47184128f593ab3415fb8e7ada5f3a9329350db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_monitoring/1.1.4/roo_monitoring-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_monitoring/1.1.4/roo_monitoring-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_monitoring/1.1.5/roo_monitoring-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_monitoring-1.1.5.tar.gz",
+    "size_bytes": 32058,
+    "sha256": "6e4ce5ed6603a1e3af919e6223ca0747b9d47e3a44fe24dc45eef73656fe6b38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_monitoring/1.1.5/roo_monitoring-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_monitoring/1.1.5/roo_monitoring-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_onewire/2.0.0/roo_onewire-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_onewire-2.0.0.tar.gz",
+    "size_bytes": 24170,
+    "sha256": "772edf3ee163ac5aac82f6227dc00431fec6c12536ce3f0d85c20bdf95328fe8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_onewire/2.0.0/roo_onewire-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_onewire/2.0.0/roo_onewire-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_onewire/2.0.1/roo_onewire-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_onewire-2.0.1.tar.gz",
+    "size_bytes": 24160,
+    "sha256": "cb74941f40c7b76eaffcb4818dfdc8fe0e0f3fbf20db7ca191a3acaa2620ab8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_onewire/2.0.1/roo_onewire-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_onewire/2.0.1/roo_onewire-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_onewire/2.0.10/roo_onewire-2.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_onewire-2.0.10.tar.gz",
+    "size_bytes": 28297,
+    "sha256": "83de7e8736bae29c42a6cbf67c7a203e5cb1e1b022daeab3af2386b49381056f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_onewire/2.0.10/roo_onewire-2.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_onewire/2.0.10/roo_onewire-2.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_onewire/2.0.11/roo_onewire-2.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_onewire-2.0.11.tar.gz",
+    "size_bytes": 29215,
+    "sha256": "6a520c599f747eacb8d7ed7841f72fad3f4f5020d6d6d91f601e96d0ef23d2d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_onewire/2.0.11/roo_onewire-2.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_onewire/2.0.11/roo_onewire-2.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_onewire/2.0.12/roo_onewire-2.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_onewire-2.0.12.tar.gz",
+    "size_bytes": 29248,
+    "sha256": "98d1a620fc0a06e2ced97b96f4fedddf1807d473928512a4f97cc86c1c82e7b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_onewire/2.0.12/roo_onewire-2.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_onewire/2.0.12/roo_onewire-2.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_onewire/2.0.13/roo_onewire-2.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_onewire-2.0.13.tar.gz",
+    "size_bytes": 39177,
+    "sha256": "5b4b4ece7b799319be694259db8481ec8247a22bb48fd38db714c073baefd6a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_onewire/2.0.13/roo_onewire-2.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_onewire/2.0.13/roo_onewire-2.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_onewire/2.0.14/roo_onewire-2.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_onewire-2.0.14.tar.gz",
+    "size_bytes": 39262,
+    "sha256": "385152c332fcd44f8f4b021428a87a69b5432c4bac4bbd3df91e5a883cbb2651",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_onewire/2.0.14/roo_onewire-2.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_onewire/2.0.14/roo_onewire-2.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_onewire/2.0.2/roo_onewire-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_onewire-2.0.2.tar.gz",
+    "size_bytes": 24172,
+    "sha256": "d27d3939599c28c18f8313b742918dac2aced33d2972ea9c1bf03a4719b08807",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_onewire/2.0.2/roo_onewire-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_onewire/2.0.2/roo_onewire-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_onewire/2.0.3/roo_onewire-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_onewire-2.0.3.tar.gz",
+    "size_bytes": 24159,
+    "sha256": "aeb48cee9f0355fbe19be1c5e2327c57bc1849321ef55191a3f47276300b7eb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_onewire/2.0.3/roo_onewire-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_onewire/2.0.3/roo_onewire-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_onewire/2.0.4/roo_onewire-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_onewire-2.0.4.tar.gz",
+    "size_bytes": 24185,
+    "sha256": "daf71a4a26fb6c8531ab1e6dbe1b2a33f5f9b02c58139c87e38f493c55c831bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_onewire/2.0.4/roo_onewire-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_onewire/2.0.4/roo_onewire-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_onewire/2.0.5/roo_onewire-2.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_onewire-2.0.5.tar.gz",
+    "size_bytes": 24523,
+    "sha256": "235bf13255c829ff81ad65d8c2061d06152e25164c6993b1d2cca1ac39090f9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_onewire/2.0.5/roo_onewire-2.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_onewire/2.0.5/roo_onewire-2.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_onewire/2.0.6/roo_onewire-2.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_onewire-2.0.6.tar.gz",
+    "size_bytes": 24197,
+    "sha256": "7a181cc5de1cadf0f99b1e9316e23b2a06a3ef9d97b3648f2be5a4ba021a9d06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_onewire/2.0.6/roo_onewire-2.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_onewire/2.0.6/roo_onewire-2.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_onewire/2.0.7/roo_onewire-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_onewire-2.0.7.tar.gz",
+    "size_bytes": 24184,
+    "sha256": "231455404e47a5fb23bf32614db59e58aeeb0329047b383026083ebdbc8ff060",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_onewire/2.0.7/roo_onewire-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_onewire/2.0.7/roo_onewire-2.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_onewire/2.0.8/roo_onewire-2.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_onewire-2.0.8.tar.gz",
+    "size_bytes": 24600,
+    "sha256": "f807545ee09f9bd25af3cff82dee5db31b3de89bbacdea01a3d567c3b2a10f30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_onewire/2.0.8/roo_onewire-2.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_onewire/2.0.8/roo_onewire-2.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_onewire/2.0.9/roo_onewire-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_onewire-2.0.9.tar.gz",
+    "size_bytes": 24882,
+    "sha256": "8c4dfe5e467c0e2b21c84929996022e424c0121a1f778be8470964b4a8e7f6c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_onewire/2.0.9/roo_onewire-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_onewire/2.0.9/roo_onewire-2.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_pb/0.1.0/roo_pb-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_pb-0.1.0.tar.gz",
+    "size_bytes": 108050,
+    "sha256": "2604916f8c8fda16675cef12a16dd037f137a3b5f590da4f72d6a7e50406c155",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_pb/0.1.0/roo_pb-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_pb/0.1.0/roo_pb-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_pb/0.1.1/roo_pb-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_pb-0.1.1.tar.gz",
+    "size_bytes": 104901,
+    "sha256": "b48bb9629af9b5c463fd3446f5c3e5cb8854847a547626834e0dfab8dac6a322",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_pb/0.1.1/roo_pb-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_pb/0.1.1/roo_pb-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_powersafefs/1.0.2/roo_powersafefs-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_powersafefs-1.0.2.tar.gz",
+    "size_bytes": 6583,
+    "sha256": "0b63c310170463485c25f6d0054134277487f11b31236791432043b94a669731",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_powersafefs/1.0.2/roo_powersafefs-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_powersafefs/1.0.2/roo_powersafefs-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_powersafefs/1.0.3/roo_powersafefs-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_powersafefs-1.0.3.tar.gz",
+    "size_bytes": 16576,
+    "sha256": "53ada6ae9c619265bfde5d3ba26a70870bdded6a6397f290355c79ccdcdc8d25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_powersafefs/1.0.3/roo_powersafefs-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_powersafefs/1.0.3/roo_powersafefs-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/1.2.0/roo_prefs-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-1.2.0.tar.gz",
+    "size_bytes": 8808,
+    "sha256": "74380ee5089f1f45265ea1dd33680abbc92a6b982ce252b33ede482dfc5ec94c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/1.2.0/roo_prefs-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/1.2.0/roo_prefs-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/1.2.1/roo_prefs-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-1.2.1.tar.gz",
+    "size_bytes": 8822,
+    "sha256": "cde2cb08d847ca5867d9bb7004f51fcce817ebbafa3a26ccca8cd1348e304f59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/1.2.1/roo_prefs-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/1.2.1/roo_prefs-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/1.2.10/roo_prefs-1.2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-1.2.10.tar.gz",
+    "size_bytes": 9460,
+    "sha256": "95f5d1ba5f9877175afe148ee052bd09ed1418651e8a72727a5686b4d42868b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/1.2.10/roo_prefs-1.2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/1.2.10/roo_prefs-1.2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/1.2.11/roo_prefs-1.2.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-1.2.11.tar.gz",
+    "size_bytes": 9462,
+    "sha256": "8658cffc6db59e7fabd823243cbed4699eb3ac2ef5ebd25df6857ef3e8733dde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/1.2.11/roo_prefs-1.2.11.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/1.2.11/roo_prefs-1.2.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/1.2.2/roo_prefs-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-1.2.2.tar.gz",
+    "size_bytes": 8858,
+    "sha256": "85d62542a815e47ad89922606e4942af3491ac3900b926a5ccd5a485b4d97ad8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/1.2.2/roo_prefs-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/1.2.2/roo_prefs-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/1.2.3/roo_prefs-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-1.2.3.tar.gz",
+    "size_bytes": 8880,
+    "sha256": "9cb2ee16253256ec4230e959905637ae9b266dd2983d1abac72544c7ef44827f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/1.2.3/roo_prefs-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/1.2.3/roo_prefs-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/1.2.6/roo_prefs-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-1.2.6.tar.gz",
+    "size_bytes": 8635,
+    "sha256": "482653acc2cc14a1823f293f74eaa62b4fefd30d30f5bcf6480fa21aec1e8f1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/1.2.6/roo_prefs-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/1.2.6/roo_prefs-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/1.2.7/roo_prefs-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-1.2.7.tar.gz",
+    "size_bytes": 8639,
+    "sha256": "45b1ba75c5aa7624455009b0fe5a9b8a2a882d88eb2c16423e13629622d54982",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/1.2.7/roo_prefs-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/1.2.7/roo_prefs-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/1.2.8/roo_prefs-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-1.2.8.tar.gz",
+    "size_bytes": 8919,
+    "sha256": "6d767aa1795d289c8315b89736ff2f80cecb5bf10ed773bc277365961e446902",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/1.2.8/roo_prefs-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/1.2.8/roo_prefs-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/1.2.9/roo_prefs-1.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-1.2.9.tar.gz",
+    "size_bytes": 9100,
+    "sha256": "20317c116f82d53461d191bee180297976fc8164baf9d9a4d58c139541cdd271",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/1.2.9/roo_prefs-1.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/1.2.9/roo_prefs-1.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/1.3.0/roo_prefs-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-1.3.0.tar.gz",
+    "size_bytes": 10979,
+    "sha256": "7e11411005b130c75d4d432c08fb73fb95851594834a0e6833d5675d69214586",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/1.3.0/roo_prefs-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/1.3.0/roo_prefs-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/1.3.1/roo_prefs-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-1.3.1.tar.gz",
+    "size_bytes": 14087,
+    "sha256": "92b988ecbdcb5b0d7f9336103e1e8b6a5a7a9e6644218a424d47aab6ef85449c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/1.3.1/roo_prefs-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/1.3.1/roo_prefs-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/1.3.2/roo_prefs-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-1.3.2.tar.gz",
+    "size_bytes": 15335,
+    "sha256": "72c15bc741e7e1c3a1fdee49594529f2fe9b839693936b8853f3ed808f285867",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/1.3.2/roo_prefs-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/1.3.2/roo_prefs-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/1.4.0/roo_prefs-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-1.4.0.tar.gz",
+    "size_bytes": 18536,
+    "sha256": "756108ed83b7cc789f576c3bf0c0beae46d3f83dda7c39e14a34d7e1105fcbc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/1.4.0/roo_prefs-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/1.4.0/roo_prefs-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/2.0.0/roo_prefs-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-2.0.0.tar.gz",
+    "size_bytes": 24550,
+    "sha256": "62ae2e94d40e1ef5f20e657f8a8bb4825406ff9a8bc79d327d08317cfb76d107",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/2.0.0/roo_prefs-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/2.0.0/roo_prefs-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/2.0.1/roo_prefs-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-2.0.1.tar.gz",
+    "size_bytes": 24721,
+    "sha256": "8b7e7432d3e8fc996ea3e5c7462c2eabf0ad11a69634c474018fc15472504944",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/2.0.1/roo_prefs-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/2.0.1/roo_prefs-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/2.0.2/roo_prefs-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-2.0.2.tar.gz",
+    "size_bytes": 34502,
+    "sha256": "cf2354122b0168bf5717172d87a61cecf130eaa3d93eff6c15db9cd04085c8b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/2.0.2/roo_prefs-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/2.0.2/roo_prefs-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_prefs/2.0.3/roo_prefs-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_prefs-2.0.3.tar.gz",
+    "size_bytes": 34373,
+    "sha256": "1d406a178814a252c832dd52ecb7b148f816284aada1ef84fab7d6b649192a6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_prefs/2.0.3/roo_prefs-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_prefs/2.0.3/roo_prefs-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_quantity/1.1.0/roo_quantity-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_quantity-1.1.0.tar.gz",
+    "size_bytes": 23458,
+    "sha256": "64b999ae1e8cbe0e35736f5a2ba7abd1fc57c424995462fc4a1a04c8f1999e67",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_quantity/1.1.0/roo_quantity-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_quantity/1.1.0/roo_quantity-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_quantity/1.1.1/roo_quantity-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_quantity-1.1.1.tar.gz",
+    "size_bytes": 24277,
+    "sha256": "7883b24f7c137aaf6d9bb8dbea68d4a35be9f5d53398f5730636ae43ad5e9da4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_quantity/1.1.1/roo_quantity-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_quantity/1.1.1/roo_quantity-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_quantity/1.1.10/roo_quantity-1.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_quantity-1.1.10.tar.gz",
+    "size_bytes": 28039,
+    "sha256": "051e9e97e225382084134bf62b1ca45cc8fae6f680453cef8313fa447660b844",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_quantity/1.1.10/roo_quantity-1.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_quantity/1.1.10/roo_quantity-1.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_quantity/1.1.11/roo_quantity-1.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_quantity-1.1.11.tar.gz",
+    "size_bytes": 38045,
+    "sha256": "5fc915c0e609991ec163e496da9af6a336779de4781cda36535a5ce6935e6a25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_quantity/1.1.11/roo_quantity-1.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_quantity/1.1.11/roo_quantity-1.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_quantity/1.1.2/roo_quantity-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_quantity-1.1.2.tar.gz",
+    "size_bytes": 24263,
+    "sha256": "35dcfc1efab833c79bfda09365fa3316446ab41ffcc4c40fe9e029ade9844352",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_quantity/1.1.2/roo_quantity-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_quantity/1.1.2/roo_quantity-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_quantity/1.1.3/roo_quantity-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_quantity-1.1.3.tar.gz",
+    "size_bytes": 24272,
+    "sha256": "1fd1829d05f9f6e12cf27b668a485aaa2cb63a325ec7b25f4c757286c372e7a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_quantity/1.1.3/roo_quantity-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_quantity/1.1.3/roo_quantity-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_quantity/1.1.4/roo_quantity-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_quantity-1.1.4.tar.gz",
+    "size_bytes": 23363,
+    "sha256": "f2f6762fd307f317d5a361afa5aff36ed226f30abbb169be53a8aabb233470f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_quantity/1.1.4/roo_quantity-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_quantity/1.1.4/roo_quantity-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_quantity/1.1.5/roo_quantity-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_quantity-1.1.5.tar.gz",
+    "size_bytes": 23368,
+    "sha256": "118b04137cb7efcb1ca54a8710ae7c68e1c81bd1727bca4482ff2ee06ca0a460",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_quantity/1.1.5/roo_quantity-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_quantity/1.1.5/roo_quantity-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_quantity/1.1.6/roo_quantity-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_quantity-1.1.6.tar.gz",
+    "size_bytes": 23369,
+    "sha256": "32ca67be5972828ce9e5b2f560f21421c435c729611110a56093b3ca4a81f15d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_quantity/1.1.6/roo_quantity-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_quantity/1.1.6/roo_quantity-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_quantity/1.1.7/roo_quantity-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_quantity-1.1.7.tar.gz",
+    "size_bytes": 24335,
+    "sha256": "4d06fc7ced7f2f21b12a0dc53c8b6bb0c026253d30a54e5ea6fcb48cca7508b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_quantity/1.1.7/roo_quantity-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_quantity/1.1.7/roo_quantity-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_quantity/1.1.8/roo_quantity-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_quantity-1.1.8.tar.gz",
+    "size_bytes": 23847,
+    "sha256": "b9a22cbb12582e15a7ece8994baba90ee7ea124469afe5866e4f30c78f312ca2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_quantity/1.1.8/roo_quantity-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_quantity/1.1.8/roo_quantity-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_quantity/1.1.9/roo_quantity-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_quantity-1.1.9.tar.gz",
+    "size_bytes": 27349,
+    "sha256": "64d48516cb7d117ff7a33b97bf9bca352eac97ffe7856f069c83428181db93b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_quantity/1.1.9/roo_quantity-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_quantity/1.1.9/roo_quantity-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_scheduler/2.1.0/roo_scheduler-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_scheduler-2.1.0.tar.gz",
+    "size_bytes": 12111,
+    "sha256": "a2a01f23476ca1f00a223defbcb014f8cd45ada8137a4c7070e75f9c818a4061",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_scheduler/2.1.0/roo_scheduler-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_scheduler/2.1.0/roo_scheduler-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_scheduler/2.1.1/roo_scheduler-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_scheduler-2.1.1.tar.gz",
+    "size_bytes": 11931,
+    "sha256": "5ab1a79600b062e20dbcbcb1f88af7771fe49e1af181be3c9efb7fb84acaf270",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_scheduler/2.1.1/roo_scheduler-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_scheduler/2.1.1/roo_scheduler-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_scheduler/2.1.10/roo_scheduler-2.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_scheduler-2.1.10.tar.gz",
+    "size_bytes": 14549,
+    "sha256": "ae06e944d76d8c1a935379d0e3c77781519e74c97dd2b80f3df240096a81a266",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_scheduler/2.1.10/roo_scheduler-2.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_scheduler/2.1.10/roo_scheduler-2.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_scheduler/2.1.2/roo_scheduler-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_scheduler-2.1.2.tar.gz",
+    "size_bytes": 11994,
+    "sha256": "8042fe952756f1c4421681ad9ead932735c16eec3ef932799cad9028513575b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_scheduler/2.1.2/roo_scheduler-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_scheduler/2.1.2/roo_scheduler-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_scheduler/2.1.3/roo_scheduler-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_scheduler-2.1.3.tar.gz",
+    "size_bytes": 11981,
+    "sha256": "e0aac928f911002cd7f0d4f8918a2499c62afadced22d5df86fab7933ebc25c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_scheduler/2.1.3/roo_scheduler-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_scheduler/2.1.3/roo_scheduler-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_scheduler/2.1.4/roo_scheduler-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_scheduler-2.1.4.tar.gz",
+    "size_bytes": 12047,
+    "sha256": "5ece54bc9cff063fe09836a755d271686852f8208e002f96db96b0766e44447c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_scheduler/2.1.4/roo_scheduler-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_scheduler/2.1.4/roo_scheduler-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_scheduler/2.1.5/roo_scheduler-2.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_scheduler-2.1.5.tar.gz",
+    "size_bytes": 12071,
+    "sha256": "faccbfeaa144401efad3123c55de4996031f944ddd4037f33485afb0eb9d9afb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_scheduler/2.1.5/roo_scheduler-2.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_scheduler/2.1.5/roo_scheduler-2.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_scheduler/2.1.6/roo_scheduler-2.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_scheduler-2.1.6.tar.gz",
+    "size_bytes": 11880,
+    "sha256": "2827827654078a1ae67dd1e5d55319124b244e6db4de4e5fb2e8246ac16f9c5b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_scheduler/2.1.6/roo_scheduler-2.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_scheduler/2.1.6/roo_scheduler-2.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_scheduler/2.1.7/roo_scheduler-2.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_scheduler-2.1.7.tar.gz",
+    "size_bytes": 12151,
+    "sha256": "809ea5c861a76df03aa514759129f500eb166aa15b87cd165f50d4bd88451c49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_scheduler/2.1.7/roo_scheduler-2.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_scheduler/2.1.7/roo_scheduler-2.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_scheduler/2.1.8/roo_scheduler-2.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_scheduler-2.1.8.tar.gz",
+    "size_bytes": 11102,
+    "sha256": "bd4612daedf9c34e3ab3536b3e543a517e6cf7b6795b0acd15439981df3d3487",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_scheduler/2.1.8/roo_scheduler-2.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_scheduler/2.1.8/roo_scheduler-2.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_scheduler/2.1.9/roo_scheduler-2.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_scheduler-2.1.9.tar.gz",
+    "size_bytes": 11230,
+    "sha256": "647da21a26f2737364389c016ed236255fa33e536dd63ddf601ec0ec58a40d64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_scheduler/2.1.9/roo_scheduler-2.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_scheduler/2.1.9/roo_scheduler-2.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_scheduler/2.2.0/roo_scheduler-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_scheduler-2.2.0.tar.gz",
+    "size_bytes": 21429,
+    "sha256": "f1d5ea27a2013c05a80e4dd2c0d70aa0bd8a95222b275d3a9a8ebfb2eda833e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_scheduler/2.2.0/roo_scheduler-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_scheduler/2.2.0/roo_scheduler-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_scheduler/2.2.1/roo_scheduler-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_scheduler-2.2.1.tar.gz",
+    "size_bytes": 31303,
+    "sha256": "f0d08406d4b2c9858f763b89ad5f3bb21c39bc74656cb07743bc45e3c471bf25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_scheduler/2.2.1/roo_scheduler-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_scheduler/2.2.1/roo_scheduler-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_scheduler/2.3.0/roo_scheduler-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_scheduler-2.3.0.tar.gz",
+    "size_bytes": 32661,
+    "sha256": "dc9683d215b3d3f720451dc68c6c79ce7891bdb5a488322083f63fef4dd58731",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_scheduler/2.3.0/roo_scheduler-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_scheduler/2.3.0/roo_scheduler-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_temperature/1.1.0/roo_temperature-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_temperature-1.1.0.tar.gz",
+    "size_bytes": 3020,
+    "sha256": "d65d07b64fac34b6513425c6221faee53c7da2f49f7ee5c1b928273d34d9802a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_temperature/1.1.0/roo_temperature-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_temperature/1.1.0/roo_temperature-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.1.0/roo_threads-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.1.0.tar.gz",
+    "size_bytes": 10459,
+    "sha256": "7b231917f2e1654d4f904115c1b569ed1e6c06acabeb3f610a69cbdef643c8d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.1.0/roo_threads-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.1.0/roo_threads-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.1.1/roo_threads-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.1.1.tar.gz",
+    "size_bytes": 10941,
+    "sha256": "d811b20e4617df9bdc2d1dbe741d251d008859facb3c0bbbb8406b9f6e1a7092",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.1.1/roo_threads-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.1.1/roo_threads-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.1.2/roo_threads-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.1.2.tar.gz",
+    "size_bytes": 11146,
+    "sha256": "b759deba8c426506e8515df94160f3b3251e06ec144a7a7ca4abc8b46ec31b91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.1.2/roo_threads-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.1.2/roo_threads-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.1.3/roo_threads-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.1.3.tar.gz",
+    "size_bytes": 11251,
+    "sha256": "43e7348c3c77dad267aee2357f79a9eebd33b3cc2c5712ef6df3eb84c3164d40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.1.3/roo_threads-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.1.3/roo_threads-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.1.4/roo_threads-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.1.4.tar.gz",
+    "size_bytes": 11275,
+    "sha256": "7696b4f9ae7d566f28ee1b3b708c7351c4cb586f55d399252fa13e55c44234a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.1.4/roo_threads-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.1.4/roo_threads-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.1.5/roo_threads-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.1.5.tar.gz",
+    "size_bytes": 11277,
+    "sha256": "0005deb773bdde6f376ac3defd0ca622da326f68cc88acab2e47181242ee898f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.1.5/roo_threads-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.1.5/roo_threads-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.1.6/roo_threads-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.1.6.tar.gz",
+    "size_bytes": 11992,
+    "sha256": "a9dd8663851d5677e2cd40fdbab30207ee6141fdfa662ca8b2649771e21793df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.1.6/roo_threads-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.1.6/roo_threads-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.2.0/roo_threads-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.2.0.tar.gz",
+    "size_bytes": 18848,
+    "sha256": "4bafc930c942b84e52c4691341b0edfe544f3cd3aa0eaa988ee4de2c340ee6e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.2.0/roo_threads-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.2.0/roo_threads-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.2.1/roo_threads-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.2.1.tar.gz",
+    "size_bytes": 19577,
+    "sha256": "e0336615c229ac557ff1aca29268bef9d86cc0f5531c9205bbf792d3bc7a9abb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.2.1/roo_threads-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.2.1/roo_threads-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.2.2/roo_threads-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.2.2.tar.gz",
+    "size_bytes": 19073,
+    "sha256": "805e406cf75aada018673d90414c96cce279cb71a22e599df3210711b4131544",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.2.2/roo_threads-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.2.2/roo_threads-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.2.3/roo_threads-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.2.3.tar.gz",
+    "size_bytes": 24103,
+    "sha256": "edde9e132a2ace08979baac5d88f4c864a0279e4c560eb97993db64d98f1c60d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.2.3/roo_threads-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.2.3/roo_threads-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.2.4/roo_threads-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.2.4.tar.gz",
+    "size_bytes": 23975,
+    "sha256": "6f4f19e613e5960060d89921c30736428bd1fa26d377e01d261faf2ed8bfe26a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.2.4/roo_threads-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.2.4/roo_threads-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.2.5/roo_threads-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.2.5.tar.gz",
+    "size_bytes": 24009,
+    "sha256": "7c9201b010253c4edc91b511540207262fd17172291ff2b91d0b5f2262638f58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.2.5/roo_threads-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.2.5/roo_threads-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.2.6/roo_threads-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.2.6.tar.gz",
+    "size_bytes": 27667,
+    "sha256": "1f933230e29bb18f2cf2be6cb37f5ef1f6f69c5388452516891599f08fa7fc0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.2.6/roo_threads-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.2.6/roo_threads-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.2.7/roo_threads-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.2.7.tar.gz",
+    "size_bytes": 27982,
+    "sha256": "57f197d4ced4d181d4eaa463e23353eab32e33cd0797e786091841dbfa87a646",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.2.7/roo_threads-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.2.7/roo_threads-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.2.8/roo_threads-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.2.8.tar.gz",
+    "size_bytes": 29688,
+    "sha256": "bc45956e32f78ab9f650513f82d4705313e61f9095f085199f7bc6540a244984",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.2.8/roo_threads-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.2.8/roo_threads-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_threads/1.2.9/roo_threads-1.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_threads-1.2.9.tar.gz",
+    "size_bytes": 39158,
+    "sha256": "bb284e1b1218989e7b05d54a08984a58caa0a498c3882a691ca40b8a2186cb09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_threads/1.2.9/roo_threads-1.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_threads/1.2.9/roo_threads-1.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/1.2.1/roo_time-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-1.2.1.tar.gz",
+    "size_bytes": 11302,
+    "sha256": "a00f3dd0350a1b686c931575a9e4702ca6f930e1d318b8f45128bef5641e3e08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/1.2.1/roo_time-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/1.2.1/roo_time-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/1.3.0/roo_time-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-1.3.0.tar.gz",
+    "size_bytes": 11627,
+    "sha256": "b84bd8508d707ba7ea7f0cf3bce8bed927390378ee468379829a0ff5772c5fe4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/1.3.0/roo_time-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/1.3.0/roo_time-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/1.3.1/roo_time-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-1.3.1.tar.gz",
+    "size_bytes": 11648,
+    "sha256": "6ff66810e1aefbecba485c78b7380af6c02d2aeb20b88658f80290327caf374b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/1.3.1/roo_time-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/1.3.1/roo_time-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/1.3.2/roo_time-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-1.3.2.tar.gz",
+    "size_bytes": 11647,
+    "sha256": "7dd7ae3abe61efbb5528913bb03dd9b28c08da6657d4b20d7d318560a580c1d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/1.3.2/roo_time-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/1.3.2/roo_time-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/1.3.3/roo_time-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-1.3.3.tar.gz",
+    "size_bytes": 11653,
+    "sha256": "90254882353d9f02d0e92252c63bec99ed367ddb3508f36115e30fd138613845",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/1.3.3/roo_time-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/1.3.3/roo_time-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/1.4.0/roo_time-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-1.4.0.tar.gz",
+    "size_bytes": 11603,
+    "sha256": "e2c68f4932dedbf6e1442b4a1f9ecb9a05ec0acceee846ed9951f1cee6d9f2de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/1.4.0/roo_time-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/1.4.0/roo_time-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/1.4.1/roo_time-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-1.4.1.tar.gz",
+    "size_bytes": 11895,
+    "sha256": "4805b301df9a256ea2e3e01e3e1be9b2000e6c1b6f72c33e9f599c69e405dece",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/1.4.1/roo_time-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/1.4.1/roo_time-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/1.4.2/roo_time-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-1.4.2.tar.gz",
+    "size_bytes": 11914,
+    "sha256": "e57fc93bfb3fd0397cd5d1d9a2c23cfcc4bc7289461d0b69c4985b7de87e9d66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/1.4.2/roo_time-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/1.4.2/roo_time-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/1.4.3/roo_time-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-1.4.3.tar.gz",
+    "size_bytes": 13229,
+    "sha256": "82f5e9ac76dbaf1f0e212d5ff0738dbc4eb80ca5c1f696a879cf12abead07f0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/1.4.3/roo_time-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/1.4.3/roo_time-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/1.4.4/roo_time-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-1.4.4.tar.gz",
+    "size_bytes": 13289,
+    "sha256": "3245c99375f60c07cffa1339fc20bc2e50eca03261cda18a58bcc7364a7ae433",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/1.4.4/roo_time-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/1.4.4/roo_time-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/1.4.5/roo_time-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-1.4.5.tar.gz",
+    "size_bytes": 16484,
+    "sha256": "f93290932f5073966b1c6166d234f1d4e2f11a0601d8d74e384f9654a9151da2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/1.4.5/roo_time-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/1.4.5/roo_time-1.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/1.4.6/roo_time-1.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-1.4.6.tar.gz",
+    "size_bytes": 16565,
+    "sha256": "83b0462178a40ab444e0c7bf5911c2166d97edc05c2f8b91eec0c855f8eee783",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/1.4.6/roo_time-1.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/1.4.6/roo_time-1.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/1.4.7/roo_time-1.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-1.4.7.tar.gz",
+    "size_bytes": 17147,
+    "sha256": "fc15129371ac741fa2b4e221c2b66e73f2b376467fd6d53c6f36a528f510ccf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/1.4.7/roo_time-1.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/1.4.7/roo_time-1.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/1.5.0/roo_time-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-1.5.0.tar.gz",
+    "size_bytes": 39096,
+    "sha256": "4c77776715fc8121451dfb0e3af9b9b46d3469cbb1b7d6e3567010bd242335b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/1.5.0/roo_time-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/1.5.0/roo_time-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/2.0.0/roo_time-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-2.0.0.tar.gz",
+    "size_bytes": 50894,
+    "sha256": "bd030263b0c5b8579916307926de3e8f5ebb1258c5516e88d7556050a9108934",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/2.0.0/roo_time-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/2.0.0/roo_time-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time/2.0.1/roo_time-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time-2.0.1.tar.gz",
+    "size_bytes": 57640,
+    "sha256": "958946bea8ecd91dcbf4f12cb0222b5594bb6aab36b45b06f386fcdd477397ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time/2.0.1/roo_time-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time/2.0.1/roo_time-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time_ds3231/1.1.0/roo_time_ds3231-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time_ds3231-1.1.0.tar.gz",
+    "size_bytes": 3973,
+    "sha256": "dce0fde2ba57e76abe00b6b76bd0fbe4822901180b42c1a548528ca8ff1baf41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time_ds3231/1.1.0/roo_time_ds3231-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time_ds3231/1.1.0/roo_time_ds3231-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time_ds3231/1.1.1/roo_time_ds3231-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time_ds3231-1.1.1.tar.gz",
+    "size_bytes": 4035,
+    "sha256": "ff920c2cf23e0789df2f1fc7b159e126e4ddf62cdcce8f307445756b29db70db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time_ds3231/1.1.1/roo_time_ds3231-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time_ds3231/1.1.1/roo_time_ds3231-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time_ds3231/1.1.2/roo_time_ds3231-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time_ds3231-1.1.2.tar.gz",
+    "size_bytes": 4035,
+    "sha256": "028958d3e8d10b6e77a2674fb9a169b6fde714b851460ac56b494cadebdde689",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time_ds3231/1.1.2/roo_time_ds3231-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time_ds3231/1.1.2/roo_time_ds3231-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time_ds3231/1.1.3/roo_time_ds3231-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time_ds3231-1.1.3.tar.gz",
+    "size_bytes": 4043,
+    "sha256": "e8203c750416da15eb081bb15cf042738911e1429766dc64ff5fdb77590d6b6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time_ds3231/1.1.3/roo_time_ds3231-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time_ds3231/1.1.3/roo_time_ds3231-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time_ds3231/1.1.4/roo_time_ds3231-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time_ds3231-1.1.4.tar.gz",
+    "size_bytes": 3888,
+    "sha256": "e391fa4bec20101779256b5ed472cc745eaf082cc6a3aaecffd19be8c4bb33b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time_ds3231/1.1.4/roo_time_ds3231-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time_ds3231/1.1.4/roo_time_ds3231-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time_ds3231/1.1.5/roo_time_ds3231-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time_ds3231-1.1.5.tar.gz",
+    "size_bytes": 4084,
+    "sha256": "41a3fc7ccd203b771a4fdb4777ca47216b27470c390a62a071ce55c747dfa389",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time_ds3231/1.1.5/roo_time_ds3231-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time_ds3231/1.1.5/roo_time_ds3231-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time_ds3231/1.1.6/roo_time_ds3231-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time_ds3231-1.1.6.tar.gz",
+    "size_bytes": 4176,
+    "sha256": "5990c891c21da13a8c58a509f8ce44d0815cba7f8a2a39119a988281494f4a73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time_ds3231/1.1.6/roo_time_ds3231-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time_ds3231/1.1.6/roo_time_ds3231-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time_ds3231/1.1.7/roo_time_ds3231-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time_ds3231-1.1.7.tar.gz",
+    "size_bytes": 7219,
+    "sha256": "62d6f28e288b11927ae1cff2e06f69ca43881e35a5f3d9e4740df5d3fe55c46f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time_ds3231/1.1.7/roo_time_ds3231-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time_ds3231/1.1.7/roo_time_ds3231-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time_ds3231/1.1.8/roo_time_ds3231-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time_ds3231-1.1.8.tar.gz",
+    "size_bytes": 7225,
+    "sha256": "de5754c9a0d36cc40e4b04d50e2733700a8d9e89dd899890415096356384db27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time_ds3231/1.1.8/roo_time_ds3231-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time_ds3231/1.1.8/roo_time_ds3231-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_time_ds3231/2.0.0/roo_time_ds3231-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_time_ds3231-2.0.0.tar.gz",
+    "size_bytes": 11775,
+    "sha256": "6d049305d303de845530129806a9e4e1ed817eb8f97647d86d011df276f34d73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_time_ds3231/2.0.0/roo_time_ds3231-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_time_ds3231/2.0.0/roo_time_ds3231-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transceivers/1.1.0/roo_transceivers-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transceivers-1.1.0.tar.gz",
+    "size_bytes": 25067,
+    "sha256": "5c9dcb9723e4304d0148a2d63d622f8ed2cdc3b3a1cac89e33520bb6d2471755",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transceivers/1.1.0/roo_transceivers-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transceivers/1.1.0/roo_transceivers-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transceivers/1.1.1/roo_transceivers-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transceivers-1.1.1.tar.gz",
+    "size_bytes": 25099,
+    "sha256": "b541112e569f8b2240f493bae09a78377dc1946056b96baaf57db5610a258102",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transceivers/1.1.1/roo_transceivers-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transceivers/1.1.1/roo_transceivers-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transceivers/1.1.2/roo_transceivers-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transceivers-1.1.2.tar.gz",
+    "size_bytes": 27568,
+    "sha256": "48fded77f4a437081327f55154fe02958efd176c70aa07cf2956e48276b04b45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transceivers/1.1.2/roo_transceivers-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transceivers/1.1.2/roo_transceivers-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transceivers/1.1.3/roo_transceivers-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transceivers-1.1.3.tar.gz",
+    "size_bytes": 27650,
+    "sha256": "dbecc518766695ebde20728c07a1608ba239273295f044505119187408a57690",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transceivers/1.1.3/roo_transceivers-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transceivers/1.1.3/roo_transceivers-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transceivers/1.1.4/roo_transceivers-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transceivers-1.1.4.tar.gz",
+    "size_bytes": 27419,
+    "sha256": "002a259405254c9df4600934bba5521ea1e68d23c55aaf39ccf21aa1bb18ff38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transceivers/1.1.4/roo_transceivers-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transceivers/1.1.4/roo_transceivers-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transceivers/1.1.5/roo_transceivers-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transceivers-1.1.5.tar.gz",
+    "size_bytes": 28737,
+    "sha256": "cfc39f1cef94db902d79b1c377821504b1ece8f8b4f8183c465e5322f8a8c756",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transceivers/1.1.5/roo_transceivers-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transceivers/1.1.5/roo_transceivers-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transceivers/1.1.6/roo_transceivers-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transceivers-1.1.6.tar.gz",
+    "size_bytes": 29281,
+    "sha256": "06d7f67e188cf75c22affd6ffa08778fcb567d75627dc339e692fbd1db0614aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transceivers/1.1.6/roo_transceivers-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transceivers/1.1.6/roo_transceivers-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transceivers/1.1.7/roo_transceivers-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transceivers-1.1.7.tar.gz",
+    "size_bytes": 32128,
+    "sha256": "148ca3389e62e432f80f7bff48842866384a80e7d8eaf45cc21df479d942858b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transceivers/1.1.7/roo_transceivers-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transceivers/1.1.7/roo_transceivers-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transceivers/1.2.0/roo_transceivers-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transceivers-1.2.0.tar.gz",
+    "size_bytes": 33204,
+    "sha256": "8fce05c00e79abc6d734566d52e26dc0830b2cd0120fdf660a6b7c238c33e016",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transceivers/1.2.0/roo_transceivers-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transceivers/1.2.0/roo_transceivers-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transceivers/1.3.0/roo_transceivers-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transceivers-1.3.0.tar.gz",
+    "size_bytes": 48804,
+    "sha256": "c4ba299df97b709784d940898cb6095ba88c12edac62b0796bf149f9d7f7b088",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transceivers/1.3.0/roo_transceivers-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transceivers/1.3.0/roo_transceivers-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transport/1.0.0/roo_transport-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transport-1.0.0.tar.gz",
+    "size_bytes": 40913,
+    "sha256": "6db6fad9c0eb6b2353270dbe2eba5b98c203c5f9fcfe8e37fc312d404df1338d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transport/1.0.0/roo_transport-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transport/1.0.0/roo_transport-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transport/1.0.1/roo_transport-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transport-1.0.1.tar.gz",
+    "size_bytes": 42225,
+    "sha256": "bd5e477d5d289b576e0bc2e60ffac67c3ca166182cea3a3ed11dc92d75760ada",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transport/1.0.1/roo_transport-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transport/1.0.1/roo_transport-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transport/1.0.2/roo_transport-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transport-1.0.2.tar.gz",
+    "size_bytes": 42350,
+    "sha256": "19bc81e0d7f5fb4a24fe775aea795b617328753c0e3702b8ddc3800c36980bf9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transport/1.0.2/roo_transport-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transport/1.0.2/roo_transport-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transport/1.1.0/roo_transport-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transport-1.1.0.tar.gz",
+    "size_bytes": 59164,
+    "sha256": "dd06ff5e7ea8c390c391febde4cfe850a529f0c36b7980a6015436dd54ac2eb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transport/1.1.0/roo_transport-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transport/1.1.0/roo_transport-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transport/1.1.1/roo_transport-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transport-1.1.1.tar.gz",
+    "size_bytes": 59436,
+    "sha256": "bd7480952551d8dad0d1aa7f23ae9d9552948ba022fe90b64b7ae88647e47ead",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transport/1.1.1/roo_transport-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transport/1.1.1/roo_transport-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transport/1.1.2/roo_transport-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transport-1.1.2.tar.gz",
+    "size_bytes": 59388,
+    "sha256": "f373354de818594ca52bcfd1ecdb89304b7715f970d10cfe4a7b8815ba7db2fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transport/1.1.2/roo_transport-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transport/1.1.2/roo_transport-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transport/1.1.3/roo_transport-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transport-1.1.3.tar.gz",
+    "size_bytes": 69838,
+    "sha256": "45967dfd4408f91594a062034bfde55702299ddba2486de25be8cbf983448114",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transport/1.1.3/roo_transport-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transport/1.1.3/roo_transport-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transport/1.1.4/roo_transport-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transport-1.1.4.tar.gz",
+    "size_bytes": 70083,
+    "sha256": "ea8fc632609c005e2347c7c875f83a4114f799006c2a0964bf4be1408108177a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transport/1.1.4/roo_transport-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transport/1.1.4/roo_transport-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transport/1.1.5/roo_transport-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transport-1.1.5.tar.gz",
+    "size_bytes": 75454,
+    "sha256": "39a05c573a6bf933b472bb702919a98391ac856ed970ef73c9e299dab96dc8e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transport/1.1.5/roo_transport-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transport/1.1.5/roo_transport-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transport/1.2.0/roo_transport-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transport-1.2.0.tar.gz",
+    "size_bytes": 78020,
+    "sha256": "cd8ab449feefd9f7da88ca94d38a9532e8351b224acc17d2b81cd555ccdab815",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transport/1.2.0/roo_transport-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transport/1.2.0/roo_transport-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transport/1.2.1/roo_transport-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transport-1.2.1.tar.gz",
+    "size_bytes": 81693,
+    "sha256": "b6741143cf7e9fe3cb7159176d53e57e79023fd7dc8058b3153d574c784fd09d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transport/1.2.1/roo_transport-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transport/1.2.1/roo_transport-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_transport/1.2.2/roo_transport-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_transport-1.2.2.tar.gz",
+    "size_bytes": 81992,
+    "sha256": "91b8fdc8e21fff282dfa77f69e7d7ea0203573cc791cdbf1b6cd0142026f1d9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_transport/1.2.2/roo_transport-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_transport/1.2.2/roo_transport-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_wifi/1.1.0/roo_wifi-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_wifi-1.1.0.tar.gz",
+    "size_bytes": 8832,
+    "sha256": "a51d1470c063d1f24faafb23e33a2e19c2c67e153f6535ee2bcfd340eacb5ac0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_wifi/1.1.0/roo_wifi-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_wifi/1.1.0/roo_wifi-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_wifi/1.1.1/roo_wifi-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_wifi-1.1.1.tar.gz",
+    "size_bytes": 9154,
+    "sha256": "cd703fdbb68a612b92266daeb108100cacd32788e7e589ae1a8ee96f008730b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_wifi/1.1.1/roo_wifi-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_wifi/1.1.1/roo_wifi-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_wifi/1.1.2/roo_wifi-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_wifi-1.1.2.tar.gz",
+    "size_bytes": 9160,
+    "sha256": "27f8da1d013d6d902de7f49e07181b2d23e400284fe0b91bd63acf82c886659f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_wifi/1.1.2/roo_wifi-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_wifi/1.1.2/roo_wifi-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_wifi/1.1.3/roo_wifi-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_wifi-1.1.3.tar.gz",
+    "size_bytes": 9057,
+    "sha256": "c4987da1fb0c7500dfd1b10352f7bd2519e7a6ec9b256689504f42c203af718a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_wifi/1.1.3/roo_wifi-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_wifi/1.1.3/roo_wifi-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_wifi/1.1.4/roo_wifi-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_wifi-1.1.4.tar.gz",
+    "size_bytes": 10219,
+    "sha256": "c2a2daf4b66234227fedd1d95deacb5710c713e0e219efca7e153ecc79a164bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_wifi/1.1.4/roo_wifi-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_wifi/1.1.4/roo_wifi-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_wifi/1.1.5/roo_wifi-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_wifi-1.1.5.tar.gz",
+    "size_bytes": 17982,
+    "sha256": "caefd8a16556ab48922aebedb4a53c9dda0beda3e8817df43bd7aa18b42539b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_wifi/1.1.5/roo_wifi-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_wifi/1.1.5/roo_wifi-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_wifi/1.1.6/roo_wifi-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_wifi-1.1.6.tar.gz",
+    "size_bytes": 18811,
+    "sha256": "fca2eed168cce3dd23ec4f33ba89175304d3b98ff945228896694a400b9b01d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_wifi/1.1.6/roo_wifi-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_wifi/1.1.6/roo_wifi-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_wifi/2.0.0/roo_wifi-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_wifi-2.0.0.tar.gz",
+    "size_bytes": 46128,
+    "sha256": "e80ccfc3263029f89023d78768fcda2479404becb9f6e774d3558e94321d28d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_wifi/2.0.0/roo_wifi-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_wifi/2.0.0/roo_wifi-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_wifi/3.0.0/roo_wifi-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_wifi-3.0.0.tar.gz",
+    "size_bytes": 56068,
+    "sha256": "45d99b2c7d55c467a1387ebb51ee75e2e7d81b694f4f72254968e80918fdce1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_wifi/3.0.0/roo_wifi-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_wifi/3.0.0/roo_wifi-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_wifi/3.1.0/roo_wifi-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_wifi-3.1.0.tar.gz",
+    "size_bytes": 62185,
+    "sha256": "39587853df8d880199f2c3d6bcc178eada25b81a18ca801797d484400573f1a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_wifi/3.1.0/roo_wifi-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_wifi/3.1.0/roo_wifi-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_windows/1.10.0/roo_windows-1.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_windows-1.10.0.tar.gz",
+    "size_bytes": 2724230,
+    "sha256": "17de4cdfaa0460991b7dc47dd46ff68995814b59300df7dc8e8b705e4fe6d052",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_windows/1.10.0/roo_windows-1.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_windows/1.10.0/roo_windows-1.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_windows/1.4.0/roo_windows-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_windows-1.4.0.tar.gz",
+    "size_bytes": 6258229,
+    "sha256": "66c458567f882fff5528bedf98919c540c9bd2ee0a25f541949825ec4e2e6309",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_windows/1.4.0/roo_windows-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_windows/1.4.0/roo_windows-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_windows/1.4.1/roo_windows-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_windows-1.4.1.tar.gz",
+    "size_bytes": 6258237,
+    "sha256": "224f36b4e53f2091e6fcceae613d874c63d38ea0c632c8da9db74a5d3d19f35d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_windows/1.4.1/roo_windows-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_windows/1.4.1/roo_windows-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_windows/1.4.2/roo_windows-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_windows-1.4.2.tar.gz",
+    "size_bytes": 6258980,
+    "sha256": "606a0d44d03cd5dcff2f27eea1a4a2e1cf07f9587ae1e3b35c5a3990538cea92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_windows/1.4.2/roo_windows-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_windows/1.4.2/roo_windows-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_windows/1.5.0/roo_windows-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_windows-1.5.0.tar.gz",
+    "size_bytes": 123585,
+    "sha256": "9afa47bb4132606d31045f2a2203bf8d37d18fa4ed05f6e2f7b2ad405943bd55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_windows/1.5.0/roo_windows-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_windows/1.5.0/roo_windows-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_windows/1.6.0/roo_windows-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_windows-1.6.0.tar.gz",
+    "size_bytes": 304150,
+    "sha256": "1c4a6791f4087842bedab5738c715de5372d9c82bfbfa0bc2376e91cb03367e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_windows/1.6.0/roo_windows-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_windows/1.6.0/roo_windows-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_windows/1.6.1/roo_windows-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_windows-1.6.1.tar.gz",
+    "size_bytes": 451520,
+    "sha256": "51c2cd1a25ff0bc7dd35f3402a9c62301cc4a6ff5c7bbaea93274aa6f26668d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_windows/1.6.1/roo_windows-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_windows/1.6.1/roo_windows-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_windows/1.7.0/roo_windows-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_windows-1.7.0.tar.gz",
+    "size_bytes": 576818,
+    "sha256": "650e4e32dc8255aaff405cad84c8b30550ea0961f22d958aa2d2a0047c7ebb0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_windows/1.7.0/roo_windows-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_windows/1.7.0/roo_windows-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_windows/1.8.1/roo_windows-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_windows-1.8.1.tar.gz",
+    "size_bytes": 650267,
+    "sha256": "be584f9df4512dab6050e3011467b0740cd9092f3a758731bcd3ebbe117b3e86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_windows/1.8.1/roo_windows-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_windows/1.8.1/roo_windows-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_windows_onewire/1.0.0/roo_windows_onewire-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_windows_onewire-1.0.0.tar.gz",
+    "size_bytes": 6621,
+    "sha256": "6c1306534bf48d94371b0e0e88c410b67ecef52b572a27065584bc666039121b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_windows_onewire/1.0.0/roo_windows_onewire-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_windows_onewire/1.0.0/roo_windows_onewire-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_windows_wifi/1.1.1/roo_windows_wifi-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_windows_wifi-1.1.1.tar.gz",
+    "size_bytes": 9190,
+    "sha256": "fe6a1b810aeda90c2aa28eaef8a8a90310e1501a3cd9be428784f6a610a301a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_windows_wifi/1.1.1/roo_windows_wifi-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_windows_wifi/1.1.1/roo_windows_wifi-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_windows_wifi/1.1.3/roo_windows_wifi-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_windows_wifi-1.1.3.tar.gz",
+    "size_bytes": 9321,
+    "sha256": "78ef7d2ada9b6165f01f29da27a93683bf795d2a26b525f9a3c0dbdefdff9915",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_windows_wifi/1.1.3/roo_windows_wifi-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_windows_wifi/1.1.3/roo_windows_wifi-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_windows_wifi/1.1.4/roo_windows_wifi-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_windows_wifi-1.1.4.tar.gz",
+    "size_bytes": 14079,
+    "sha256": "a02bb1c06b8d0ee98bc87eabcd7691390fac483ecee275c45d4707fac80d34e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_windows_wifi/1.1.4/roo_windows_wifi-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_windows_wifi/1.1.4/roo_windows_wifi-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dejwk/library/roo_windows_wifi/2.0.0/roo_windows_wifi-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "roo_windows_wifi-2.0.0.tar.gz",
+    "size_bytes": 62523,
+    "sha256": "eb56baa35c2549d3e4d0be72d08f2db0f966b66545315173fc8f738aa2bd17f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dejwk/library/roo_windows_wifi/2.0.0/roo_windows_wifi-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dejwk/library/roo_windows_wifi/2.0.0/roo_windows_wifi-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

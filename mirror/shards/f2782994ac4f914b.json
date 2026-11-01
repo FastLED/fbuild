@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/harmony-maker-club",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "harmony-maker-club/library/AIP1640_LED_Matrix/1.0.0/AIP1640_LED_Matrix-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AIP1640_LED_Matrix-1.0.0.tar.gz",
+    "size_bytes": 3431,
+    "sha256": "ddbef36509c6ba9d23291250d2acd586ceec3e48c4e3e37bdee390e04389cc45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harmony-maker-club/library/AIP1640_LED_Matrix/1.0.0/AIP1640_LED_Matrix-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/harmony-maker-club/library/AIP1640_LED_Matrix/1.0.0/AIP1640_LED_Matrix-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "harmony-maker-club/library/AIP1640_LED_Matrix/1.0.1/AIP1640_LED_Matrix-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AIP1640_LED_Matrix-1.0.1.tar.gz",
+    "size_bytes": 7174,
+    "sha256": "ff334992c99f2505167983e74d86632b0cd20913e5b323e3b1fba4d23b4f6f61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harmony-maker-club/library/AIP1640_LED_Matrix/1.0.1/AIP1640_LED_Matrix-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/harmony-maker-club/library/AIP1640_LED_Matrix/1.0.1/AIP1640_LED_Matrix-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

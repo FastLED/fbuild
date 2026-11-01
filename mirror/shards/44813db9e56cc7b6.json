@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-quicksand",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-quicksand/library/QW_NMEA/0.0.0+sha.67f22e813b74/QW_NMEA-0.0.0+sha.67f22e813b74.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QW_NMEA-0.0.0+sha.67f22e813b74.tar.gz",
+    "size_bytes": 4204,
+    "sha256": "bbf24edabbbde977b83811e4cf13632b8f758405cf4980f30c11c61e32d238fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-quicksand/library/QW_NMEA/0.0.0%2Bsha.67f22e813b74/QW_NMEA-0.0.0%2Bsha.67f22e813b74.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-quicksand/library/QW_NMEA/0.0.0%2Bsha.67f22e813b74/QW_NMEA-0.0.0%2Bsha.67f22e813b74.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-quicksand/library/QW_Sensors/0.0.0+sha.1b27ad5eb94a/QW_Sensors-0.0.0+sha.1b27ad5eb94a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QW_Sensors-0.0.0+sha.1b27ad5eb94a.tar.gz",
+    "size_bytes": 7652,
+    "sha256": "efa4b01aa3cd8d1d79f26c2cf5f626a809106b9a8761ec87f11e0d42aa3c2385",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-quicksand/library/QW_Sensors/0.0.0%2Bsha.1b27ad5eb94a/QW_Sensors-0.0.0%2Bsha.1b27ad5eb94a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-quicksand/library/QW_Sensors/0.0.0%2Bsha.1b27ad5eb94a/QW_Sensors-0.0.0%2Bsha.1b27ad5eb94a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

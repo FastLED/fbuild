@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fabriziop",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fabriziop/library/EEWL/0.7.0/EEWL-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEWL-0.7.0.tar.gz",
+    "size_bytes": 9693,
+    "sha256": "6f6eae6f05156093279a8e31995a0a7f467d7ff17b18638e42c3f5f27690aa78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabriziop/library/EEWL/0.7.0/EEWL-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fabriziop/library/EEWL/0.7.0/EEWL-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fabriziop/library/FIFOEE/0.1.0/FIFOEE-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FIFOEE-0.1.0.tar.gz",
+    "size_bytes": 16113,
+    "sha256": "57e106d669655a7e6be497d679cc468766843e64d571ae499c5b9e9e7f9eaab5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabriziop/library/FIFOEE/0.1.0/FIFOEE-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fabriziop/library/FIFOEE/0.1.0/FIFOEE-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fabriziop/library/Talking%20button/0.4.0/Talkingbutton-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Talkingbutton-0.4.0.tar.gz",
+    "size_bytes": 11819,
+    "sha256": "34f45b98b773b7a52ec9f5ef8a86e2b51f32408223e173d43c636e20a931b148",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabriziop/library/Talking%2520button/0.4.0/Talkingbutton-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fabriziop/library/Talking%20button/0.4.0/Talkingbutton-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fabriziop/library/TalkingLED/0.3.1/TalkingLED-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TalkingLED-0.3.1.tar.gz",
+    "size_bytes": 8459,
+    "sha256": "7cdd2d050b29d24cfbc56d2bda73c46acf7d33fd4ba479ec2ef931c794ffcea5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabriziop/library/TalkingLED/0.3.1/TalkingLED-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fabriziop/library/TalkingLED/0.3.1/TalkingLED-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fabriziop/library/aTalkArduino/0.2.1/aTalkArduino-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "aTalkArduino-0.2.1.tar.gz",
+    "size_bytes": 15660,
+    "sha256": "e8ca9b677553c70de57e32a1b55ac428780c98e2d63a440155d65f6d01856a5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabriziop/library/aTalkArduino/0.2.1/aTalkArduino-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fabriziop/library/aTalkArduino/0.2.1/aTalkArduino-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

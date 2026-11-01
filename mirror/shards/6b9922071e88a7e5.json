@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thingsly",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thingsly/library/Thingsly_IoT_Platform/1.0.7/Thingsly_IoT_Platform-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Thingsly_IoT_Platform-1.0.7.tar.gz",
+    "size_bytes": 9964,
+    "sha256": "3e1788c7fb69c686e3958e4ef697acd2969003b6750e3e037673f950a6371570",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thingsly/library/Thingsly_IoT_Platform/1.0.7/Thingsly_IoT_Platform-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/thingsly/library/Thingsly_IoT_Platform/1.0.7/Thingsly_IoT_Platform-1.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

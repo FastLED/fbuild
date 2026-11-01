@@ -1,0 +1,503 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/moononournation",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "moononournation/library/Dev%20Device%20Pins/0.0.6/DevDevicePins-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DevDevicePins-0.0.6.tar.gz",
+    "size_bytes": 27839,
+    "sha256": "b9547ab00aa5265f61280c4bbe30e463c40f09f5dcab44b4322289f80e4972b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/Dev%2520Device%2520Pins/0.0.6/DevDevicePins-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/Dev%20Device%20Pins/0.0.6/DevDevicePins-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.2.1/GFXLibraryforArduino-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.2.1.tar.gz",
+    "size_bytes": 6056023,
+    "sha256": "789ede09cdd01db355eb63d722cb391af41bba0fbe260e31ee286391bf786f85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.2.1/GFXLibraryforArduino-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.2.1/GFXLibraryforArduino-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.2.8/GFXLibraryforArduino-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.2.8.tar.gz",
+    "size_bytes": 6419507,
+    "sha256": "8b7d28cfd3ba978cf4c9a70c7fb29e8a1f4308533cdbc3350056108e3dbd0061",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.2.8/GFXLibraryforArduino-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.2.8/GFXLibraryforArduino-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.3.5/GFXLibraryforArduino-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.3.5.tar.gz",
+    "size_bytes": 7397627,
+    "sha256": "8ab5e20cdbc4c134a02d6ca228987bfd90f931c5d209efaa8b9a6e3c1de4afc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.3.5/GFXLibraryforArduino-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.3.5/GFXLibraryforArduino-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.3.6/GFXLibraryforArduino-1.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.3.6.tar.gz",
+    "size_bytes": 7407345,
+    "sha256": "8b064beb307dcb2f72964b32a0dbff5e7f573fa7f06fc2ef471bf81e4c7a60fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.3.6/GFXLibraryforArduino-1.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.3.6/GFXLibraryforArduino-1.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.3.7/GFXLibraryforArduino-1.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.3.7.tar.gz",
+    "size_bytes": 7409505,
+    "sha256": "8125b9dadf4079e05ee6ddf6672ec8f78ae0afdcebcb989f17a34c42bb368897",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.3.7/GFXLibraryforArduino-1.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.3.7/GFXLibraryforArduino-1.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.3.8/GFXLibraryforArduino-1.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.3.8.tar.gz",
+    "size_bytes": 7416095,
+    "sha256": "e0dc7810490220d9d2e258917cda2a7b9c44b0f108123413a9d52bc71a126299",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.3.8/GFXLibraryforArduino-1.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.3.8/GFXLibraryforArduino-1.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.3.9/GFXLibraryforArduino-1.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.3.9.tar.gz",
+    "size_bytes": 7427828,
+    "sha256": "57f78407ea3f27f55953a7b2c865dbef8beb67e56b8e0943b21b2910e757765f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.3.9/GFXLibraryforArduino-1.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.3.9/GFXLibraryforArduino-1.3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.4.0/GFXLibraryforArduino-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.4.0.tar.gz",
+    "size_bytes": 7427818,
+    "sha256": "1e0886cac237e23a48286b17aad9205fb6aed069501933708ecac0985d0859fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.4.0/GFXLibraryforArduino-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.4.0/GFXLibraryforArduino-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.4.1/GFXLibraryforArduino-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.4.1.tar.gz",
+    "size_bytes": 8712944,
+    "sha256": "b3fa8f675c441044907f3a8b5b95537d73310227c8f9bb3ce2087db78f549805",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.4.1/GFXLibraryforArduino-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.4.1/GFXLibraryforArduino-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.4.2/GFXLibraryforArduino-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.4.2.tar.gz",
+    "size_bytes": 8714055,
+    "sha256": "c10ab829b557e0d925ed9cf4a0caaf1a5616f4316ce9d2e2ea6aa71a9cbf8cd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.4.2/GFXLibraryforArduino-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.4.2/GFXLibraryforArduino-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.4.3/GFXLibraryforArduino-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.4.3.tar.gz",
+    "size_bytes": 8717408,
+    "sha256": "250aa1390bfb3e62178865fc4dfc901450a9b6a32d84ee3948de927eb76ee5f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.4.3/GFXLibraryforArduino-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.4.3/GFXLibraryforArduino-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.4.4/GFXLibraryforArduino-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.4.4.tar.gz",
+    "size_bytes": 8717300,
+    "sha256": "9497ae68c7503e6a9f67bebc7671fa078adbb58906a0f3623854007a0eaa1d93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.4.4/GFXLibraryforArduino-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.4.4/GFXLibraryforArduino-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.4.5/GFXLibraryforArduino-1.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.4.5.tar.gz",
+    "size_bytes": 8717406,
+    "sha256": "855764988a6b059f5bcb2e4223c413233adfcffa5860b52b440a0e5a5c933b08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.4.5/GFXLibraryforArduino-1.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.4.5/GFXLibraryforArduino-1.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.4.6/GFXLibraryforArduino-1.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.4.6.tar.gz",
+    "size_bytes": 8723248,
+    "sha256": "675b2dc2f1d3ab1a35434fb78ed59e67714787b11d70f78cdeeb01f21c67dc55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.4.6/GFXLibraryforArduino-1.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.4.6/GFXLibraryforArduino-1.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.4.7/GFXLibraryforArduino-1.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.4.7.tar.gz",
+    "size_bytes": 7877115,
+    "sha256": "4159a51d7da4c4a763733bb1da81cb850d9ca67fd533428b376d4f68fd907795",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.4.7/GFXLibraryforArduino-1.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.4.7/GFXLibraryforArduino-1.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.4.8/GFXLibraryforArduino-1.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.4.8.tar.gz",
+    "size_bytes": 7867379,
+    "sha256": "f2b76e3465a19aa36eaf7b4876df856e4f84c212c0ab346cfc466fcb4c9a9c60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.4.8/GFXLibraryforArduino-1.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.4.8/GFXLibraryforArduino-1.4.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.4.9/GFXLibraryforArduino-1.4.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.4.9.tar.gz",
+    "size_bytes": 7867897,
+    "sha256": "d5606a4cd57f79a045a9b87271f317e773cbe657d964ffeba9ef4d70508be803",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.4.9/GFXLibraryforArduino-1.4.9.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.4.9/GFXLibraryforArduino-1.4.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.5.0/GFXLibraryforArduino-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.5.0.tar.gz",
+    "size_bytes": 7869111,
+    "sha256": "aa00c0e25c732dc2cbc16f418f2b857e7ad84ac4b3cefb8a955cf6d8ca79dd56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.5.0/GFXLibraryforArduino-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.5.0/GFXLibraryforArduino-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.5.1/GFXLibraryforArduino-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.5.1.tar.gz",
+    "size_bytes": 7870287,
+    "sha256": "55a555ddf1fefd9caf9dcc9668486d35d17a405d3e78849e4307527826c5f769",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.5.1/GFXLibraryforArduino-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.5.1/GFXLibraryforArduino-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.5.2/GFXLibraryforArduino-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.5.2.tar.gz",
+    "size_bytes": 7870639,
+    "sha256": "bf40e44feb79042c1b27e32a0cfc3e3fb9d890606dd85b56057c05845d46540d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.5.2/GFXLibraryforArduino-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.5.2/GFXLibraryforArduino-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.5.3/GFXLibraryforArduino-1.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.5.3.tar.gz",
+    "size_bytes": 8496596,
+    "sha256": "ee347ddd256acf03b92a668b68c695d567faf5b9dd74dbb9a52d75e82502b6d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.5.3/GFXLibraryforArduino-1.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.5.3/GFXLibraryforArduino-1.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.5.4/GFXLibraryforArduino-1.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.5.4.tar.gz",
+    "size_bytes": 8497454,
+    "sha256": "10a05f6ea094fa3df7ba1d302d474d852288920816e611880e6f8b6053573fa4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.5.4/GFXLibraryforArduino-1.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.5.4/GFXLibraryforArduino-1.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.5.5/GFXLibraryforArduino-1.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.5.5.tar.gz",
+    "size_bytes": 8497690,
+    "sha256": "edc01dff6291b93f1ab687fbb80c42086aab7b9477e0bd14f775c873fbf6f011",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.5.5/GFXLibraryforArduino-1.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.5.5/GFXLibraryforArduino-1.5.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.5.6/GFXLibraryforArduino-1.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.5.6.tar.gz",
+    "size_bytes": 8498723,
+    "sha256": "f4db7ef6c4c6bc96553d10d71d99cd14cf216f9dca647bfcc10000135cd2b2ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.5.6/GFXLibraryforArduino-1.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.5.6/GFXLibraryforArduino-1.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.5.7/GFXLibraryforArduino-1.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.5.7.tar.gz",
+    "size_bytes": 8505983,
+    "sha256": "3646f6e4a9d068d8abf2f2a8bbf14bb2b21ee2643b6af54b829875afb2268770",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.5.7/GFXLibraryforArduino-1.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.5.7/GFXLibraryforArduino-1.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.5.8/GFXLibraryforArduino-1.5.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.5.8.tar.gz",
+    "size_bytes": 8505908,
+    "sha256": "7713a35199ab8cbd50d305a5f95690e09447aa356cce2cd4fbea1baeb33aa953",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.5.8/GFXLibraryforArduino-1.5.8.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.5.8/GFXLibraryforArduino-1.5.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.5.9/GFXLibraryforArduino-1.5.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.5.9.tar.gz",
+    "size_bytes": 8505892,
+    "sha256": "d39e9d489daba65a585cf6775217d6dc74c0ae59ad69de2d34bcd2d042661389",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.5.9/GFXLibraryforArduino-1.5.9.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.5.9/GFXLibraryforArduino-1.5.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.6.0/GFXLibraryforArduino-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.6.0.tar.gz",
+    "size_bytes": 8507406,
+    "sha256": "1a883278c9752ec0b5e2f4c19cf644235a789de8a3fb77a48b342dfb2ff59fdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.6.0/GFXLibraryforArduino-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.6.0/GFXLibraryforArduino-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.6.1/GFXLibraryforArduino-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.6.1.tar.gz",
+    "size_bytes": 8513731,
+    "sha256": "dcdbb0bd3b763328ba774f0c8a6eae0fadccd9f3884bc05f7568aa6850fe8f63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.6.1/GFXLibraryforArduino-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.6.1/GFXLibraryforArduino-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.6.2/GFXLibraryforArduino-1.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.6.2.tar.gz",
+    "size_bytes": 8517284,
+    "sha256": "774f139f5ecfa3a405bcf47e27dd80c4f75e93211a7a5761cb1cdb5fb90e743b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.6.2/GFXLibraryforArduino-1.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.6.2/GFXLibraryforArduino-1.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.6.3/GFXLibraryforArduino-1.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.6.3.tar.gz",
+    "size_bytes": 8513517,
+    "sha256": "746a2a369dd587b27fc91a49734799a64f6cd4ba848b169d5583767184cd229b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.6.3/GFXLibraryforArduino-1.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.6.3/GFXLibraryforArduino-1.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.6.4/GFXLibraryforArduino-1.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.6.4.tar.gz",
+    "size_bytes": 8515213,
+    "sha256": "6fe2b6a0521f5f42691248ef2c2e845e8ed6b50627b6737f3cb3092cd18e4d1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.6.4/GFXLibraryforArduino-1.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.6.4/GFXLibraryforArduino-1.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.6.5/GFXLibraryforArduino-1.6.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.6.5.tar.gz",
+    "size_bytes": 8516151,
+    "sha256": "e710146e52bfdc4338f3c033ac16014b51b5ba689d713e377561c3d5d06d7410",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.6.5/GFXLibraryforArduino-1.6.5.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.6.5/GFXLibraryforArduino-1.6.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.6.6/GFXLibraryforArduino-1.6.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.6.6.tar.gz",
+    "size_bytes": 8518121,
+    "sha256": "59c4f9e53ca42ddee7c977286c1b270c1a5cd5f632f1c38b7ee9f2c717492f57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.6.6/GFXLibraryforArduino-1.6.6.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.6.6/GFXLibraryforArduino-1.6.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.6.7/GFXLibraryforArduino-1.6.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.6.7.tar.gz",
+    "size_bytes": 8518253,
+    "sha256": "86157589fb401ebce6004089894cce5533707ca31e064440dc9d3dda7d95a9fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.6.7/GFXLibraryforArduino-1.6.7.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.6.7/GFXLibraryforArduino-1.6.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.6.8/GFXLibraryforArduino-1.6.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.6.8.tar.gz",
+    "size_bytes": 8522220,
+    "sha256": "89aedd61afd401b71665bb6bd0c899b7105ee64c310e11f02b82551c85ed47f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.6.8/GFXLibraryforArduino-1.6.8.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.6.8/GFXLibraryforArduino-1.6.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "moononournation/library/GFX%20Library%20for%20Arduino/1.6.9/GFXLibraryforArduino-1.6.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GFXLibraryforArduino-1.6.9.tar.gz",
+    "size_bytes": 8525771,
+    "sha256": "fbdb70fff8c20de4c81c9e6d9df884c82095613e511f22e5b6a48e409595e750",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/moononournation/library/GFX%2520Library%2520for%2520Arduino/1.6.9/GFXLibraryforArduino-1.6.9.tar.gz",
+     "https://dl.registry.platformio.org/download/moononournation/library/GFX%20Library%20for%20Arduino/1.6.9/GFXLibraryforArduino-1.6.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-goeckeritz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-goeckeritz/library/TSL2550/0.0.0+sha.7e6a051d1700/TSL2550-0.0.0+sha.7e6a051d1700.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSL2550-0.0.0+sha.7e6a051d1700.tar.gz",
+    "size_bytes": 1776,
+    "sha256": "019c97f236ce59eabc201c2e741dc68c3284432dd4cedef1d0d6e6b25a8e66e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-goeckeritz/library/TSL2550/0.0.0%2Bsha.7e6a051d1700/TSL2550-0.0.0%2Bsha.7e6a051d1700.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-goeckeritz/library/TSL2550/0.0.0%2Bsha.7e6a051d1700/TSL2550-0.0.0%2Bsha.7e6a051d1700.tar.gz"
+    ]
+   }
+  }
+ ]
+}

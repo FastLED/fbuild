@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sukkopera",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sukkopera/library/N64Pad/0.2.0/N64Pad-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "N64Pad-0.2.0.tar.gz",
+    "size_bytes": 32575,
+    "sha256": "87343900a0c19cc2dc1c8fc7abbb153d3230af45950e038770d0f4b4df7d5e01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sukkopera/library/N64Pad/0.2.0/N64Pad-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sukkopera/library/N64Pad/0.2.0/N64Pad-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sukkopera/library/PsxNewLib/0.4.0/PsxNewLib-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PsxNewLib-0.4.0.tar.gz",
+    "size_bytes": 40110,
+    "sha256": "391fb4d6540c2e72f3d5faf126727801444f81b17da501c9772bd14998991ffe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sukkopera/library/PsxNewLib/0.4.0/PsxNewLib-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sukkopera/library/PsxNewLib/0.4.0/PsxNewLib-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sukkopera/library/RokkitHash/0.0.0-alpha+sha.20151212/RokkitHash-0.0.0-alphasha.20151212.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RokkitHash-0.0.0-alphasha.20151212.tar.gz",
+    "size_bytes": 4101,
+    "sha256": "c7bb4e1e38d007c9f53af56af1dfbd19d33839c4d3c203d8802776f89d04f34e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sukkopera/library/RokkitHash/0.0.0-alpha%2Bsha.20151212/RokkitHash-0.0.0-alphasha.20151212.tar.gz",
+     "https://dl.registry.platformio.org/download/sukkopera/library/RokkitHash/0.0.0-alpha%2Bsha.20151212/RokkitHash-0.0.0-alphasha.20151212.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sukkopera/library/Webbino/0.9.99/Webbino-0.9.99.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Webbino-0.9.99.tar.gz",
+    "size_bytes": 77613,
+    "sha256": "27b88f84078c8701ab4e6483c17a0c4a02c99f35b07575a7497572b208ed9e4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sukkopera/library/Webbino/0.9.99/Webbino-0.9.99.tar.gz",
+     "https://dl.registry.platformio.org/download/sukkopera/library/Webbino/0.9.99/Webbino-0.9.99.tar.gz"
+    ]
+   }
+  }
+ ]
+}

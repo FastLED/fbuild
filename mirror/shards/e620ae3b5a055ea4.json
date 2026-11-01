@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/poma",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "poma/library/OLED_I2C/2.12/OLED_I2C-2.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OLED_I2C-2.12.tar.gz",
+    "size_bytes": 11761,
+    "sha256": "86f1b2bf375d49d8af28d519524f634cb32ea84156fd94b4a118c64b7561fc16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/poma/library/OLED_I2C/2.12/OLED_I2C-2.12.tar.gz",
+     "https://dl.registry.platformio.org/download/poma/library/OLED_I2C/2.12/OLED_I2C-2.12.tar.gz"
+    ]
+   }
+  }
+ ]
+}

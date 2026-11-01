@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/simsum",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "simsum/library/DTutils/1.1.0/DTutils-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DTutils-1.1.0.tar.gz",
+    "size_bytes": 14088,
+    "sha256": "b2b8432e593dda62406b3f550ae7ac93ff1bcb57a85d52cc802588ee6a904a93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simsum/library/DTutils/1.1.0/DTutils-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simsum/library/DTutils/1.1.0/DTutils-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

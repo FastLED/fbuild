@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adbancroft",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adbancroft/library/avr-fast-div/1.4.0/avr-fast-div-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "avr-fast-div-1.4.0.tar.gz",
+    "size_bytes": 19749,
+    "sha256": "58ca2406af99c87db978e91854ee6073f6b3df914f5d782759273bab64b27a40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adbancroft/library/avr-fast-div/1.4.0/avr-fast-div-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adbancroft/library/avr-fast-div/1.4.0/avr-fast-div-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adbancroft/library/avr-fast-map/1.0.2/avr-fast-map-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "avr-fast-map-1.0.2.tar.gz",
+    "size_bytes": 16029,
+    "sha256": "b3a184ed58528c9c72509f82534e216648754d6511474aced91c233adc4fd238",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adbancroft/library/avr-fast-map/1.0.2/avr-fast-map-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/adbancroft/library/avr-fast-map/1.0.2/avr-fast-map-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adbancroft/library/avr-fast-multiply/1.0.0/avr-fast-multiply-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "avr-fast-multiply-1.0.0.tar.gz",
+    "size_bytes": 47816,
+    "sha256": "3244e5bbbd790b9c0c7c843098abb12c5c3303177c36d4a73479bfa50628f800",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adbancroft/library/avr-fast-multiply/1.0.0/avr-fast-multiply-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adbancroft/library/avr-fast-multiply/1.0.0/avr-fast-multiply-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adbancroft/library/avr-fast-multiply/1.1.0/avr-fast-multiply-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "avr-fast-multiply-1.1.0.tar.gz",
+    "size_bytes": 47818,
+    "sha256": "4af36bf533b2c09cc920384bd71ec108b6f408e53e830b9f62f67ea3c5f1a191",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adbancroft/library/avr-fast-multiply/1.1.0/avr-fast-multiply-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adbancroft/library/avr-fast-multiply/1.1.0/avr-fast-multiply-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adbancroft/library/avr-fast-shift/1.1.0/avr-fast-shift-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "avr-fast-shift-1.1.0.tar.gz",
+    "size_bytes": 50384,
+    "sha256": "4f887fc50305f50c450f5a811c3f4c53c94c80d91fe630e6db867d6cab5622a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adbancroft/library/avr-fast-shift/1.1.0/avr-fast-shift-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adbancroft/library/avr-fast-shift/1.1.0/avr-fast-shift-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adbancroft/library/avr-fast-shift/2.0.0/avr-fast-shift-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "avr-fast-shift-2.0.0.tar.gz",
+    "size_bytes": 51206,
+    "sha256": "0f939cef7ca99a4db03ea36934ecbdf5c5140cd7c98a3cec45f9c0c89ab6d11c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adbancroft/library/avr-fast-shift/2.0.0/avr-fast-shift-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adbancroft/library/avr-fast-shift/2.0.0/avr-fast-shift-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

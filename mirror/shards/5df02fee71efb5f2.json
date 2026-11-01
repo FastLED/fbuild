@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/greenleaflocal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "greenleaflocal/library/HydroinoJobMgr/1.0.0/HydroinoJobMgr-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HydroinoJobMgr-1.0.0.tar.gz",
+    "size_bytes": 9869,
+    "sha256": "170281f2e8d78353556aa6ff8f98118e8bbaca1a275c92d334f12cff8ff9d50c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/greenleaflocal/library/HydroinoJobMgr/1.0.0/HydroinoJobMgr-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/greenleaflocal/library/HydroinoJobMgr/1.0.0/HydroinoJobMgr-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

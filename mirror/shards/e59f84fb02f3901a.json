@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bitbucket-amotzek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bitbucket-amotzek/library/Cooperative%20Multitasking/1.0.11/CooperativeMultitasking-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CooperativeMultitasking-1.0.11.tar.gz",
+    "size_bytes": 4520,
+    "sha256": "5188b15532a809bdb48a003fc9a0db8ef1dc7b124d5d34b7c547d84f62c2712b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-amotzek/library/Cooperative%2520Multitasking/1.0.11/CooperativeMultitasking-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-amotzek/library/Cooperative%20Multitasking/1.0.11/CooperativeMultitasking-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-amotzek/library/MQTT%20Client/1.0.2/MQTTClient-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTClient-1.0.2.tar.gz",
+    "size_bytes": 6284,
+    "sha256": "d5a1a761ad73f1c563e05181e6c4cb4ebc8b5d67a85b8406bd2875f405ca0bf7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-amotzek/library/MQTT%2520Client/1.0.2/MQTTClient-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-amotzek/library/MQTT%20Client/1.0.2/MQTTClient-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

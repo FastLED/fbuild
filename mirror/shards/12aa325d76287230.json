@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/somsinchai",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "somsinchai/library/CAGEduino/0.4/CAGEduino-0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CAGEduino-0.4.tar.gz",
+    "size_bytes": 18647,
+    "sha256": "0c746d4b775094b709b306e9b9a845558da6c519d8dc3c72ce0b80b45f92dcf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/somsinchai/library/CAGEduino/0.4/CAGEduino-0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/somsinchai/library/CAGEduino/0.4/CAGEduino-0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "somsinchai/library/IBot/1.3/IBot-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IBot-1.3.tar.gz",
+    "size_bytes": 3287,
+    "sha256": "05fedcfc0d115cd9315627171c8a46359a0052fa9ca4f407cee988b80016d41b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/somsinchai/library/IBot/1.3/IBot-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/somsinchai/library/IBot/1.3/IBot-1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

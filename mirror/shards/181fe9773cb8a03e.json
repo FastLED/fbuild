@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jean92",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jean92/library/yMOTOR/0.0.0+sha.3dce01a56e06/yMOTOR-0.0.0+sha.3dce01a56e06.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "yMOTOR-0.0.0+sha.3dce01a56e06.tar.gz",
+    "size_bytes": 2976,
+    "sha256": "029c36d695107089c32dbf0bf216dc1d1d41a7917a84552117faa2f88523ea94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jean92/library/yMOTOR/0.0.0%2Bsha.3dce01a56e06/yMOTOR-0.0.0%2Bsha.3dce01a56e06.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jean92/library/yMOTOR/0.0.0%2Bsha.3dce01a56e06/yMOTOR-0.0.0%2Bsha.3dce01a56e06.tar.gz"
+    ]
+   }
+  }
+ ]
+}

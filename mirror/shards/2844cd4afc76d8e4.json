@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/garfius",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "garfius/library/Menu-UI/1.2.0/Menu-UI-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Menu-UI-1.2.0.tar.gz",
+    "size_bytes": 26448,
+    "sha256": "4cb3f748fd17b9b3fea87445a18ebcc8913eaa551f13931fe2564ed83a2357c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/garfius/library/Menu-UI/1.2.0/Menu-UI-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/garfius/library/Menu-UI/1.2.0/Menu-UI-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "garfius/library/xModemArdiuno/1.0.1/xModemArdiuno-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xModemArdiuno-1.0.1.tar.gz",
+    "size_bytes": 12333,
+    "sha256": "192ca398fbd6907b0b7c186471fff59920fc4b43716112377a3d53f6aeeb1ea1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/garfius/library/xModemArdiuno/1.0.1/xModemArdiuno-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/garfius/library/xModemArdiuno/1.0.1/xModemArdiuno-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

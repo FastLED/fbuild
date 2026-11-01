@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/squaredpotato",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "squaredpotato/library/Result/1.0.1/Result-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Result-1.0.1.tar.gz",
+    "size_bytes": 9478,
+    "sha256": "64d2b04d5a13cab04c19fcf18676c47007a6f8ee23944654ec23b5034031573a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/squaredpotato/library/Result/1.0.1/Result-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/squaredpotato/library/Result/1.0.1/Result-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

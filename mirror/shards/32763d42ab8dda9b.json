@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hawkw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hawkw/library/3_clor/0.0.0-broken/3_clor-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "3_clor-0.1.tar.gz",
+    "size_bytes": 455,
+    "sha256": "374bdf76c96d7ec0cca7a64fa4d8d7390db2b32614463dc9761171388243d5bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hawkw/library/3_clor/0.0.0-broken/3_clor-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hawkw/library/3_clor/0.0.0-broken/3_clor-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

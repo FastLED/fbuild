@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sharc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sharc/library/PMW3389/1.0.0/PMW3389-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PMW3389-1.0.0.tar.gz",
+    "size_bytes": 13752,
+    "sha256": "cddf8674fb2cdf001c2d4e9d685158d39f8ea50aecd998fd040230ecc1d19865",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sharc/library/PMW3389/1.0.0/PMW3389-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sharc/library/PMW3389/1.0.0/PMW3389-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

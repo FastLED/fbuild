@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/i-connect",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "i-connect/library/BleScanner/1.1.0/BleScanner-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BleScanner-1.1.0.tar.gz",
+    "size_bytes": 16062,
+    "sha256": "a558c89b7c23de76b71643e3b8b51066f85d9106d6a156a049d0685e236bdba6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/i-connect/library/BleScanner/1.1.0/BleScanner-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/i-connect/library/BleScanner/1.1.0/BleScanner-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "i-connect/library/EnOceanBleDevices/3.0.1/EnOceanBleDevices-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EnOceanBleDevices-3.0.1.tar.gz",
+    "size_bytes": 15009,
+    "sha256": "06e922594de9c312a756f3383fe9125fbb2e609ddda2d0e5f785533124f56562",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/i-connect/library/EnOceanBleDevices/3.0.1/EnOceanBleDevices-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/i-connect/library/EnOceanBleDevices/3.0.1/EnOceanBleDevices-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "i-connect/library/NukiBleEsp/2.0.0/NukiBleEsp-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NukiBleEsp-2.0.0.tar.gz",
+    "size_bytes": 83591,
+    "sha256": "7472b280cd427924b613857b4f84cd8d0421946c4fde80f8ecdcfc430116ab53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/i-connect/library/NukiBleEsp/2.0.0/NukiBleEsp-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/i-connect/library/NukiBleEsp/2.0.0/NukiBleEsp-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

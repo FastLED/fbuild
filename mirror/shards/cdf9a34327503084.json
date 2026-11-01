@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thepudding",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thepudding/library/Bofu/1.0.0/Bofu-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bofu-1.0.0.tar.gz",
+    "size_bytes": 17343,
+    "sha256": "12b5673608406304173d6ba0baabcc4e602bbe690ed4ac853cdc6c3bed51ec01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thepudding/library/Bofu/1.0.0/Bofu-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thepudding/library/Bofu/1.0.0/Bofu-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thepudding/library/Bofu/1.0.1/Bofu-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bofu-1.0.1.tar.gz",
+    "size_bytes": 17391,
+    "sha256": "f8a61d6dd3a0ce72ff029cd04f9ca10f126a55f6ecc6651de60c5d2c03a722fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thepudding/library/Bofu/1.0.1/Bofu-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thepudding/library/Bofu/1.0.1/Bofu-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

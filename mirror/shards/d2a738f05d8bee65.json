@@ -1,0 +1,2024 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dfrobot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dfrobot/library/DFRobot%20SHT/1.0.0/DFRobotSHT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobotSHT-1.0.0.tar.gz",
+    "size_bytes": 10829,
+    "sha256": "bbc12e9c1acc90c29528a47e8141f59333e0809e18182eb7b0a3acc069b7e39b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot%2520SHT/1.0.0/DFRobotSHT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot%20SHT/1.0.0/DFRobotSHT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobotDFPlayerMini/1.0.5/DFRobotDFPlayerMini-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobotDFPlayerMini-1.0.5.tar.gz",
+    "size_bytes": 6243,
+    "sha256": "237c6e521160befcdabbd6eeb38668a9cbe051f21261ff79a78ca02df8bec6ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobotDFPlayerMini/1.0.5/DFRobotDFPlayerMini-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobotDFPlayerMini/1.0.5/DFRobotDFPlayerMini-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobotDFPlayerMini/1.0.6/DFRobotDFPlayerMini-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobotDFPlayerMini-1.0.6.tar.gz",
+    "size_bytes": 6621,
+    "sha256": "6318f1adac561be86edfeccd5771e88f7ee2f75b6b20f60289b316496a9a0169",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobotDFPlayerMini/1.0.6/DFRobotDFPlayerMini-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobotDFPlayerMini/1.0.6/DFRobotDFPlayerMini-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobotIRPosition/1.0.2/DFRobotIRPosition-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobotIRPosition-1.0.2.tar.gz",
+    "size_bytes": 2275,
+    "sha256": "b467c5c60cbab1d947b1b5e271641a31b3ef6d1c892d4f1f6559816285240c79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobotIRPosition/1.0.2/DFRobotIRPosition-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobotIRPosition/1.0.2/DFRobotIRPosition-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_A111/1.0.0/DFRobot_A111-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_A111-1.0.0.tar.gz",
+    "size_bytes": 19634,
+    "sha256": "393a027d5fa7498759c5ff35b957e813cc83cdb2140eaf12dc9223291a88af68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_A111/1.0.0/DFRobot_A111-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_A111/1.0.0/DFRobot_A111-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_AD9837/1.0.0/DFRobot_AD9837-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_AD9837-1.0.0.tar.gz",
+    "size_bytes": 16446,
+    "sha256": "2e67d8608b4e4f837923a0cc19a5e157d00bec30baf6ea9df8248e77c5f2edd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_AD9837/1.0.0/DFRobot_AD9837-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_AD9837/1.0.0/DFRobot_AD9837-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_ADS1115/1.0.0/DFRobot_ADS1115-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_ADS1115-1.0.0.tar.gz",
+    "size_bytes": 13580,
+    "sha256": "32b6afd5415d928d8a8f1b62bb5f439062c4d99a7fc1a6326888ee31745ea7a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_ADS1115/1.0.0/DFRobot_ADS1115-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_ADS1115/1.0.0/DFRobot_ADS1115-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_ADS1115_0_10V/1.0.1/DFRobot_ADS1115_0_10V-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_ADS1115_0_10V-1.0.1.tar.gz",
+    "size_bytes": 8312,
+    "sha256": "8c3f3d2840debf7d32bf943130858ea4d9c212cc3a4a14beb503953f7f138db8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_ADS1115_0_10V/1.0.1/DFRobot_ADS1115_0_10V-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_ADS1115_0_10V/1.0.1/DFRobot_ADS1115_0_10V-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_ADS1115_0_10V/1.0.2/DFRobot_ADS1115_0_10V-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_ADS1115_0_10V-1.0.2.tar.gz",
+    "size_bytes": 8782,
+    "sha256": "c37a3b2ccea09cddd3cb001d15ac628b00a17580381f48974cc32ed8a7c6b76e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_ADS1115_0_10V/1.0.2/DFRobot_ADS1115_0_10V-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_ADS1115_0_10V/1.0.2/DFRobot_ADS1115_0_10V-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_ADXL345/2.0.0/DFRobot_ADXL345-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_ADXL345-2.0.0.tar.gz",
+    "size_bytes": 13952,
+    "sha256": "82dd1c11ec1e6d0639009bac50846211dcaef84fd1462bb76e2c0d2ae7a57ef1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_ADXL345/2.0.0/DFRobot_ADXL345-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_ADXL345/2.0.0/DFRobot_ADXL345-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_AHT20/1.0.0/DFRobot_AHT20-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_AHT20-1.0.0.tar.gz",
+    "size_bytes": 10298,
+    "sha256": "56b6b0f6a04b3736fc634b308c8b38100edb76ea4a70c50f0ec0a4aa45d4cdcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_AHT20/1.0.0/DFRobot_AHT20-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_AHT20/1.0.0/DFRobot_AHT20-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_AI10/1.0.0/DFRobot_AI10-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_AI10-1.0.0.tar.gz",
+    "size_bytes": 19295,
+    "sha256": "faa2f96ed8a9d898ff6304b618a1187aeb4a78193647b2673c40be3ef701f6c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_AI10/1.0.0/DFRobot_AI10-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_AI10/1.0.0/DFRobot_AI10-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_AS3935/1.0.2/DFRobot_AS3935-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_AS3935-1.0.2.tar.gz",
+    "size_bytes": 16255,
+    "sha256": "a908fa941b4083218b64fc8a72668c5d9e631a257c79a8a91885974f7765d96f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_AS3935/1.0.2/DFRobot_AS3935-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_AS3935/1.0.2/DFRobot_AS3935-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_AS6221/1.0.0/DFRobot_AS6221-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_AS6221-1.0.0.tar.gz",
+    "size_bytes": 15725,
+    "sha256": "3920173aaf28f60ec9c98aaef04cc543c1e58f9e644f8966f97d9a6938e35cf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_AS6221/1.0.0/DFRobot_AS6221-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_AS6221/1.0.0/DFRobot_AS6221-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_AS7341/1.0.0/DFRobot_AS7341-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_AS7341-1.0.0.tar.gz",
+    "size_bytes": 10435,
+    "sha256": "0b7eae6ffc691635b22cc60a2b9d074986e3338d00fe3c1cb002c331c3238838",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_AS7341/1.0.0/DFRobot_AS7341-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_AS7341/1.0.0/DFRobot_AS7341-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_ASR/1.0.0/DFRobot_ASR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_ASR-1.0.0.tar.gz",
+    "size_bytes": 9055,
+    "sha256": "1f881e78c243442b5c68cc4f4381b2671cf88c25dccd0999d32aaceb135d8f76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_ASR/1.0.0/DFRobot_ASR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_ASR/1.0.0/DFRobot_ASR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_AirQualitySensor/1.0.0/DFRobot_AirQualitySensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_AirQualitySensor-1.0.0.tar.gz",
+    "size_bytes": 7931,
+    "sha256": "893d728152f8685e48c41d6a35182e9a6922f4d19ad5a14cb4269e72d65132cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_AirQualitySensor/1.0.0/DFRobot_AirQualitySensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_AirQualitySensor/1.0.0/DFRobot_AirQualitySensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_Alcohol/1.0.0/DFRobot_Alcohol-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_Alcohol-1.0.0.tar.gz",
+    "size_bytes": 9226,
+    "sha256": "820c7ea3bb200e4a0a8b6c4bedadfc2715864e4f495b0f68ce0084dbe2ed338d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_Alcohol/1.0.0/DFRobot_Alcohol-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_Alcohol/1.0.0/DFRobot_Alcohol-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_BC20_Gravity/1.0.0/DFRobot_BC20_Gravity-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_BC20_Gravity-1.0.0.tar.gz",
+    "size_bytes": 58682,
+    "sha256": "92ecb60631c25d0e1253076c7b3dc97908e77a0a9df11e789ab02f169ba23017",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_BC20_Gravity/1.0.0/DFRobot_BC20_Gravity-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_BC20_Gravity/1.0.0/DFRobot_BC20_Gravity-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_BME280/1.0.2/DFRobot_BME280-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_BME280-1.0.2.tar.gz",
+    "size_bytes": 28886,
+    "sha256": "609ec6fe6f134c788d7c81d81d07fae825ec6652d49c7de76d38d453a28ff0e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_BME280/1.0.2/DFRobot_BME280-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_BME280/1.0.2/DFRobot_BME280-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_BME680/2.0.0/DFRobot_BME680-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_BME680-2.0.0.tar.gz",
+    "size_bytes": 98646,
+    "sha256": "18019da1bf0bca861833323269b1acac5f6c74d1d0d2a55dad8a295c7da139df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_BME680/2.0.0/DFRobot_BME680-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_BME680/2.0.0/DFRobot_BME680-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_BMI160/1.0.0/DFRobot_BMI160-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_BMI160-1.0.0.tar.gz",
+    "size_bytes": 31763,
+    "sha256": "8c6ad19e7d2f15da4e3c8603c9ee74b17a070e83c70767e18e153f05444acbed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_BMI160/1.0.0/DFRobot_BMI160-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_BMI160/1.0.0/DFRobot_BMI160-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_BMM150/1.0.0/DFRobot_BMM150-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_BMM150-1.0.0.tar.gz",
+    "size_bytes": 35621,
+    "sha256": "2967ff30f5ee20bb62c37abef19eb2d34a0c71e08eec3c1a22ff3f2bbab0dffe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_BMM150/1.0.0/DFRobot_BMM150-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_BMM150/1.0.0/DFRobot_BMM150-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_BMP280/1.0.1/DFRobot_BMP280-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_BMP280-1.0.1.tar.gz",
+    "size_bytes": 16207,
+    "sha256": "326a1d03280adc6481ffb52c9604f4f21cf9f38bf6276f77a27ad77a8a45cd3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_BMP280/1.0.1/DFRobot_BMP280-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_BMP280/1.0.1/DFRobot_BMP280-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_BMP3XX/1.0.3/DFRobot_BMP3XX-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_BMP3XX-1.0.3.tar.gz",
+    "size_bytes": 40640,
+    "sha256": "033099a5b7c4ff5cbf4fbc170a958cdd7ded75a826f380328ef168ac557074e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_BMP3XX/1.0.3/DFRobot_BMP3XX-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_BMP3XX/1.0.3/DFRobot_BMP3XX-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_BMX160/1.0.1/DFRobot_BMX160-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_BMX160-1.0.1.tar.gz",
+    "size_bytes": 20143,
+    "sha256": "d82a44c2d6d314932bae1b7b25e47d7ecf1f998d121e231830f8d8e55e4adcf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_BMX160/1.0.1/DFRobot_BMX160-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_BMX160/1.0.1/DFRobot_BMX160-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_BMX160/1.0.2/DFRobot_BMX160-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_BMX160-1.0.2.tar.gz",
+    "size_bytes": 20421,
+    "sha256": "4e8310717ce12c8f40fa01b4006b21dd1775c530189b5298e15b0f95ebce7af4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_BMX160/1.0.2/DFRobot_BMX160-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_BMX160/1.0.2/DFRobot_BMX160-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_BMX160/1.0.3/DFRobot_BMX160-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_BMX160-1.0.3.tar.gz",
+    "size_bytes": 20603,
+    "sha256": "4065684c093285630f6c38e298f406f563cb277d8d97cb42cd03684963489d65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_BMX160/1.0.3/DFRobot_BMX160-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_BMX160/1.0.3/DFRobot_BMX160-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_BT401/1.0.0/DFRobot_BT401-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_BT401-1.0.0.tar.gz",
+    "size_bytes": 7404,
+    "sha256": "792ec2fb55717393ce95c16985680ac58d553d1f33ec5ad8655289965b2dc220",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_BT401/1.0.0/DFRobot_BT401-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_BT401/1.0.0/DFRobot_BT401-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_BT401/1.0.1/DFRobot_BT401-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_BT401-1.0.1.tar.gz",
+    "size_bytes": 7644,
+    "sha256": "89a4393349cd90cca38f08c07f94a23d4b08dd6409730c6b7049d4142e3b83e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_BT401/1.0.1/DFRobot_BT401-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_BT401/1.0.1/DFRobot_BT401-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_B_LUX_V30B/1.0.1/DFRobot_B_LUX_V30B-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_B_LUX_V30B-1.0.1.tar.gz",
+    "size_bytes": 7172,
+    "sha256": "8f377f54be4ae0127ab27ef0c061ea31baa4e48edc10276d64b8b1c51f111ebf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_B_LUX_V30B/1.0.1/DFRobot_B_LUX_V30B-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_B_LUX_V30B/1.0.1/DFRobot_B_LUX_V30B-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_BloodOxygen_S/1.0.0/DFRobot_BloodOxygen_S-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_BloodOxygen_S-1.0.0.tar.gz",
+    "size_bytes": 13295,
+    "sha256": "63790162cf27e9971aa7a5404c22d805a9977ea5624aaa784f7cf5d6cc76809b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_BloodOxygen_S/1.0.0/DFRobot_BloodOxygen_S-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_BloodOxygen_S/1.0.0/DFRobot_BloodOxygen_S-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_C4001/1.0.0/DFRobot_C4001-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_C4001-1.0.0.tar.gz",
+    "size_bytes": 22110,
+    "sha256": "f111a54c25e204e831cc0968e657e191b27331fea750426d2fb19b4cbe1fa72d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_C4001/1.0.0/DFRobot_C4001-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_C4001/1.0.0/DFRobot_C4001-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_C4001/1.0.1/DFRobot_C4001-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_C4001-1.0.1.tar.gz",
+    "size_bytes": 22246,
+    "sha256": "a18cb4f228795bebcc8647cde772eb1a8fc3b08e59f8feaf81a5984902ddf617",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_C4001/1.0.1/DFRobot_C4001-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_C4001/1.0.1/DFRobot_C4001-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_C4002/1.0.0/DFRobot_C4002-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_C4002-1.0.0.tar.gz",
+    "size_bytes": 33534,
+    "sha256": "76748cfa6222a3107b87b9759449335d1c76aaf2fcbe3c5ed2fda0266a00f435",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_C4002/1.0.0/DFRobot_C4002-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_C4002/1.0.0/DFRobot_C4002-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_CCS811/1.0.1/DFRobot_CCS811-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_CCS811-1.0.1.tar.gz",
+    "size_bytes": 10213,
+    "sha256": "8a813e3b6981454f6b33f6c01190e5fec508998d18ff40f4a27bb57e51544641",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_CCS811/1.0.1/DFRobot_CCS811-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_CCS811/1.0.1/DFRobot_CCS811-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_CH423/1.0.0/DFRobot_CH423-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_CH423-1.0.0.tar.gz",
+    "size_bytes": 37284,
+    "sha256": "0e4b60acf1712dacb4a34837769f9bad1ec6c5b13986d3400baee613e3cc7276",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_CH423/1.0.0/DFRobot_CH423-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_CH423/1.0.0/DFRobot_CH423-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_CT1780/1.0.0/DFRobot_CT1780-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_CT1780-1.0.0.tar.gz",
+    "size_bytes": 5985,
+    "sha256": "ad5f21a98748f555438e3e378b75531560897fa04fed8aa8b9d417571a793958",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_CT1780/1.0.0/DFRobot_CT1780-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_CT1780/1.0.0/DFRobot_CT1780-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_Cosmo/1.0.3/DFRobot_Cosmo-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_Cosmo-1.0.3.tar.gz",
+    "size_bytes": 57004,
+    "sha256": "d6a554af245e97e2f381c5dbad9565e27036d23b2855ff804947a7f0cfb13184",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_Cosmo/1.0.3/DFRobot_Cosmo-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_Cosmo/1.0.3/DFRobot_Cosmo-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_DF1101S/1.0.0/DFRobot_DF1101S-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_DF1101S-1.0.0.tar.gz",
+    "size_bytes": 6554,
+    "sha256": "eb22e9d2b56cedcc549109c548bd5fa4f9351bf7881ecf1445dc9953988f6d81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_DF1101S/1.0.0/DFRobot_DF1101S-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_DF1101S/1.0.0/DFRobot_DF1101S-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_DF1101S/1.0.1/DFRobot_DF1101S-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_DF1101S-1.0.1.tar.gz",
+    "size_bytes": 6677,
+    "sha256": "c89805b8ae2a2af8d586aff5e7891ad4116bff247b113aee19262a9ff28be771",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_DF1101S/1.0.1/DFRobot_DF1101S-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_DF1101S/1.0.1/DFRobot_DF1101S-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_DF1201S/1.0.2/DFRobot_DF1201S-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_DF1201S-1.0.2.tar.gz",
+    "size_bytes": 8855,
+    "sha256": "be04f0355ee43443ebfbf3a771456d14d1404c4c1c4b936853719ad3c5cb35de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_DF1201S/1.0.2/DFRobot_DF1201S-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_DF1201S/1.0.2/DFRobot_DF1201S-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_DF1201S/1.0.3/DFRobot_DF1201S-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_DF1201S-1.0.3.tar.gz",
+    "size_bytes": 8953,
+    "sha256": "684fa49c879526868bf0084b423d6bcb0683f1348dd0775acbaa11936b390a0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_DF1201S/1.0.3/DFRobot_DF1201S-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_DF1201S/1.0.3/DFRobot_DF1201S-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_DF2301Q/1.0.0/DFRobot_DF2301Q-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_DF2301Q-1.0.0.tar.gz",
+    "size_bytes": 15725,
+    "sha256": "4b6d9b9b8a17b2be53fae1473ff6444efedcd8a3930fcae452baca16cd6572c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_DF2301Q/1.0.0/DFRobot_DF2301Q-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_DF2301Q/1.0.0/DFRobot_DF2301Q-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_DF2301Q/1.0.1/DFRobot_DF2301Q-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_DF2301Q-1.0.1.tar.gz",
+    "size_bytes": 21645,
+    "sha256": "80f92c01f5b5650734b1f7a8843098526ac49853f1e7141b90a3b42afb041e5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_DF2301Q/1.0.1/DFRobot_DF2301Q-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_DF2301Q/1.0.1/DFRobot_DF2301Q-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_DHT11/1.0.0/DFRobot_DHT11-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_DHT11-1.0.0.tar.gz",
+    "size_bytes": 3262,
+    "sha256": "b0d7774edf8fee933917aa459210c243367df240fadd62210c10d0dc32c824a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_DHT11/1.0.0/DFRobot_DHT11-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_DHT11/1.0.0/DFRobot_DHT11-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_DHT20/1.0.0/DFRobot_DHT20-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_DHT20-1.0.0.tar.gz",
+    "size_bytes": 6381,
+    "sha256": "519b5b967ac5bb35f83642a07c935e3f49b3171433dda2ccaf2d91878bbe64c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_DHT20/1.0.0/DFRobot_DHT20-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_DHT20/1.0.0/DFRobot_DHT20-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_DS1307/1.0.0/DFRobot_DS1307-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_DS1307-1.0.0.tar.gz",
+    "size_bytes": 17078,
+    "sha256": "f3e11a65c1e5bb45faf16b355c3ee2c9fdf18ef18097175547e4e85aa78b70bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_DS1307/1.0.0/DFRobot_DS1307-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_DS1307/1.0.0/DFRobot_DS1307-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_DS323X/1.0.1/DFRobot_DS323X-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_DS323X-1.0.1.tar.gz",
+    "size_bytes": 23744,
+    "sha256": "7017c525fd3f64da7a10220a127718626f32e65b176d3655d9160e294f3758a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_DS323X/1.0.1/DFRobot_DS323X-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_DS323X/1.0.1/DFRobot_DS323X-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_EC10/1.0.0/DFRobot_EC10-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_EC10-1.0.0.tar.gz",
+    "size_bytes": 5800,
+    "sha256": "dcb61dc2513bacb30278890c9c4cedf7f4303ff8da8e7dc88ca2086263885d1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_EC10/1.0.0/DFRobot_EC10-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_EC10/1.0.0/DFRobot_EC10-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_ENS160/1.0.1/DFRobot_ENS160-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_ENS160-1.0.1.tar.gz",
+    "size_bytes": 20826,
+    "sha256": "f92b954fb3b7365924f1d01477a5f67e2ba357b4bbcbbf6766d70816a86da437",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_ENS160/1.0.1/DFRobot_ENS160-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_ENS160/1.0.1/DFRobot_ENS160-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_EOxygenSensor/1.0.0/DFRobot_EOxygenSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_EOxygenSensor-1.0.0.tar.gz",
+    "size_bytes": 8113,
+    "sha256": "5f5da7ba0ed1c4c878b8548813032c2e82da8e44fd07e944ebbcfed7303c7cf8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_EOxygenSensor/1.0.0/DFRobot_EOxygenSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_EOxygenSensor/1.0.0/DFRobot_EOxygenSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_EnvironmentalSensor/1.1.1/DFRobot_EnvironmentalSensor-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_EnvironmentalSensor-1.1.1.tar.gz",
+    "size_bytes": 11315,
+    "sha256": "89b9d6cae0ff6b988887355e5bac831b9b789569538220aeaa55f9054aab656d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_EnvironmentalSensor/1.1.1/DFRobot_EnvironmentalSensor-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_EnvironmentalSensor/1.1.1/DFRobot_EnvironmentalSensor-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_EnvironmentalSensor/1.1/DFRobot_EnvironmentalSensor-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_EnvironmentalSensor-1.1.tar.gz",
+    "size_bytes": 11261,
+    "sha256": "6dce930307bd2aa76c0390d62b720306aada1d5842a9cba7b88f2feeda06754a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_EnvironmentalSensor/1.1/DFRobot_EnvironmentalSensor-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_EnvironmentalSensor/1.1/DFRobot_EnvironmentalSensor-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_FreeTenIMU/1.0.0/DFRobot_FreeTenIMU-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_FreeTenIMU-1.0.0.tar.gz",
+    "size_bytes": 4673,
+    "sha256": "0f4fa86ec2afedc88a4caa8e7dace63e5e556e108a67c85e2ea7d0b6c961ac85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_FreeTenIMU/1.0.0/DFRobot_FreeTenIMU-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_FreeTenIMU/1.0.0/DFRobot_FreeTenIMU-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_GDL/1.0.4/DFRobot_GDL-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_GDL-1.0.4.tar.gz",
+    "size_bytes": 2439767,
+    "sha256": "5b7a71a0b87de77c302ef8b53def4af8f8271cf77291a1a91c95e96d08e67a74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_GDL/1.0.4/DFRobot_GDL-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_GDL/1.0.4/DFRobot_GDL-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_GDL/1.0.5/DFRobot_GDL-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_GDL-1.0.5.tar.gz",
+    "size_bytes": 2440387,
+    "sha256": "a078c3a6cd02e7f39c559b2c80d6223b16041cb24f91021c5db3282647eaf413",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_GDL/1.0.5/DFRobot_GDL-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_GDL/1.0.5/DFRobot_GDL-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_GM60/1.0.0/DFRobot_GM60-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_GM60-1.0.0.tar.gz",
+    "size_bytes": 9955,
+    "sha256": "2b9e6393e5481bbc4658b0711778be4b62148122e902c007927b47bb8000d7c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_GM60/1.0.0/DFRobot_GM60-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_GM60/1.0.0/DFRobot_GM60-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_GNSS/1.0.0/DFRobot_GNSS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_GNSS-1.0.0.tar.gz",
+    "size_bytes": 14662,
+    "sha256": "d6d3ceeda63286d897d0a28722c00e6eede357e7e9ce714d214baa1256d5ba5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_GNSS/1.0.0/DFRobot_GNSS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_GNSS/1.0.0/DFRobot_GNSS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_GNSS/1.0.1/DFRobot_GNSS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_GNSS-1.0.1.tar.gz",
+    "size_bytes": 14818,
+    "sha256": "d094f09597c2db1b95a3f8d9e83bb056688fc21f889b240aae225a520cb78942",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_GNSS/1.0.1/DFRobot_GNSS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_GNSS/1.0.1/DFRobot_GNSS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_GNSS/1.0.2/DFRobot_GNSS-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_GNSS-1.0.2.tar.gz",
+    "size_bytes": 14897,
+    "sha256": "c4943a2f2584544b569e9308a76b1c0a2d941849e9c16f3b93fc8102c63e1430",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_GNSS/1.0.2/DFRobot_GNSS-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_GNSS/1.0.2/DFRobot_GNSS-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_GNSSAndRTC/1.0.0/DFRobot_GNSSAndRTC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_GNSSAndRTC-1.0.0.tar.gz",
+    "size_bytes": 34185,
+    "sha256": "2b3bba19ec4411ec96073ffe36b35faf5412d972c06542d9f42c98049f725e41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_GNSSAndRTC/1.0.0/DFRobot_GNSSAndRTC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_GNSSAndRTC/1.0.0/DFRobot_GNSSAndRTC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_GP8302/1.0.0/DFRobot_GP8302-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_GP8302-1.0.0.tar.gz",
+    "size_bytes": 13245,
+    "sha256": "85817d0bb8923edbedee23f819d5b81e920f836c5af7e13ea3635447bcffa177",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_GP8302/1.0.0/DFRobot_GP8302-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_GP8302/1.0.0/DFRobot_GP8302-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_GP8302/1.0.1/DFRobot_GP8302-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_GP8302-1.0.1.tar.gz",
+    "size_bytes": 13463,
+    "sha256": "f1ca5434b807418d30b49a51d45e05c6384729df1f64ed39b6c9c6afafc6885b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_GP8302/1.0.1/DFRobot_GP8302-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_GP8302/1.0.1/DFRobot_GP8302-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_GP8403/1.0.0/DFRobot_GP8403-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_GP8403-1.0.0.tar.gz",
+    "size_bytes": 15330,
+    "sha256": "36569a5a4be89f24b79258cd8c9ea5e5a80bb6fb742bb73cfb50bd48e9438381",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_GP8403/1.0.0/DFRobot_GP8403-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_GP8403/1.0.0/DFRobot_GP8403-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_GP8XXX/1.0.1/DFRobot_GP8XXX-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_GP8XXX-1.0.1.tar.gz",
+    "size_bytes": 13797,
+    "sha256": "048d8e5b94ebd95d72851d71fbff1e27184fe707145dde0b3377247aa4b6e23d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_GP8XXX/1.0.1/DFRobot_GP8XXX-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_GP8XXX/1.0.1/DFRobot_GP8XXX-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_GP8XXX/1.1.0/DFRobot_GP8XXX-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_GP8XXX-1.1.0.tar.gz",
+    "size_bytes": 18555,
+    "sha256": "1e1a1530aab705cdb3637a2f834df31e413a14b909eef5239e6f087a2e571eee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_GP8XXX/1.1.0/DFRobot_GP8XXX-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_GP8XXX/1.1.0/DFRobot_GP8XXX-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_GestureFaceDetection/1.0.0/DFRobot_GestureFaceDetection-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_GestureFaceDetection-1.0.0.tar.gz",
+    "size_bytes": 20560,
+    "sha256": "98dba33ecc2573323740cd642b8699f8453471b0bbe4e77de0285cea4ec7614e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_GestureFaceDetection/1.0.0/DFRobot_GestureFaceDetection-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_GestureFaceDetection/1.0.0/DFRobot_GestureFaceDetection-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_HX711/1.0.0/DFRobot_HX711-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_HX711-1.0.0.tar.gz",
+    "size_bytes": 4025,
+    "sha256": "e091f62076a3812b102be7ae2a8506433eaa31c96bd50e8303a3b04cc4a5d2bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_HX711/1.0.0/DFRobot_HX711-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_HX711/1.0.0/DFRobot_HX711-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_HX711_I2C/1.0.0/DFRobot_HX711_I2C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_HX711_I2C-1.0.0.tar.gz",
+    "size_bytes": 8417,
+    "sha256": "680ea6679179f70a15d0aa8af6c64595ea7a105bfa933e84f4195d939d7e2ad7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_HX711_I2C/1.0.0/DFRobot_HX711_I2C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_HX711_I2C/1.0.0/DFRobot_HX711_I2C-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_Heartrate/1.0.0/DFRobot_Heartrate-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_Heartrate-1.0.0.tar.gz",
+    "size_bytes": 6362,
+    "sha256": "cf0432bf5fbe8aaac9dcdf142169dde1601b383760215283f84b514b6d77723f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_Heartrate/1.0.0/DFRobot_Heartrate-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_Heartrate/1.0.0/DFRobot_Heartrate-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_I2C_Multiplexer/1.0.2/DFRobot_I2C_Multiplexer-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_I2C_Multiplexer-1.0.2.tar.gz",
+    "size_bytes": 8862,
+    "sha256": "6eabb1385f9f06158ca24522ccb1132a91d14b912f64fa03c19a86b869867e9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_I2C_Multiplexer/1.0.2/DFRobot_I2C_Multiplexer-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_I2C_Multiplexer/1.0.2/DFRobot_I2C_Multiplexer-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_ICG20660L/1.0.0/DFRobot_ICG20660L-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_ICG20660L-1.0.0.tar.gz",
+    "size_bytes": 59827,
+    "sha256": "c526ecfd1f447032e71682b1586b2e26c5846cdbed79595f9ec4393f159360d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_ICG20660L/1.0.0/DFRobot_ICG20660L-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_ICG20660L/1.0.0/DFRobot_ICG20660L-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_ICP10111/1.0.0/DFRobot_ICP10111-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_ICP10111-1.0.0.tar.gz",
+    "size_bytes": 6569,
+    "sha256": "32dcc7cc1c4ffa1ea8adda2850b897d5ddbdfd40647b23c4548c513385a60f8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_ICP10111/1.0.0/DFRobot_ICP10111-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_ICP10111/1.0.0/DFRobot_ICP10111-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_ID809/1.0.0/DFRobot_ID809-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_ID809-1.0.0.tar.gz",
+    "size_bytes": 18564,
+    "sha256": "141dfcaf0fb1db597d1ef0a340878e781f3c6701d8a0e9be0f26487e70faf697",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_ID809/1.0.0/DFRobot_ID809-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_ID809/1.0.0/DFRobot_ID809-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_ID809_I2C/1.1.1/DFRobot_ID809_I2C-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_ID809_I2C-1.1.1.tar.gz",
+    "size_bytes": 16826,
+    "sha256": "421724681951b7029de565afbea70b4bad8acbb759ff3a3b1ed038282ad3bacc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_ID809_I2C/1.1.1/DFRobot_ID809_I2C-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_ID809_I2C/1.1.1/DFRobot_ID809_I2C-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_IICSerial/1.0.0/DFRobot_IICSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_IICSerial-1.0.0.tar.gz",
+    "size_bytes": 23590,
+    "sha256": "150a522cbeed6381848420e7110bbe1efe4c709337860d6a634272f6e551eb81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_IICSerial/1.0.0/DFRobot_IICSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_IICSerial/1.0.0/DFRobot_IICSerial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_IICSerial/1.0.2/DFRobot_IICSerial-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_IICSerial-1.0.2.tar.gz",
+    "size_bytes": 24930,
+    "sha256": "5318efdec0b6a2a9adeca4ed8fa1ba4c80c9e8bb4523ff920f6e6c6f92d2e78f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_IICSerial/1.0.2/DFRobot_IICSerial-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_IICSerial/1.0.2/DFRobot_IICSerial-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_IICSerial/1.0.3/DFRobot_IICSerial-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_IICSerial-1.0.3.tar.gz",
+    "size_bytes": 24970,
+    "sha256": "f3fa4716c7efd63c87b2a61dd3c8e3ded798a3f832d568ac2fbf5c26ac1c6a62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_IICSerial/1.0.3/DFRobot_IICSerial-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_IICSerial/1.0.3/DFRobot_IICSerial-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_IICSerial/1.0.4/DFRobot_IICSerial-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_IICSerial-1.0.4.tar.gz",
+    "size_bytes": 25143,
+    "sha256": "d26ca250f50efea43ac1159a947984ea63df7d1a58931284cad3be6fe962bbca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_IICSerial/1.0.4/DFRobot_IICSerial-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_IICSerial/1.0.4/DFRobot_IICSerial-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_IIS/1.0.1/DFRobot_IIS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_IIS-1.0.1.tar.gz",
+    "size_bytes": 34012,
+    "sha256": "8f77cb179d539f68952006817eadfee8acdb6cdb1e581c2c8dc0f55245dc0772",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_IIS/1.0.1/DFRobot_IIS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_IIS/1.0.1/DFRobot_IIS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_INA219/1.0.0/DFRobot_INA219-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_INA219-1.0.0.tar.gz",
+    "size_bytes": 11054,
+    "sha256": "e8496c0c8cfc8bd96b942b56268fb33c3eaf8aaf7ec471e0a725887f70aa7462",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_INA219/1.0.0/DFRobot_INA219-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_INA219/1.0.0/DFRobot_INA219-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_ITG3200/2.0.0/DFRobot_ITG3200-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_ITG3200-2.0.0.tar.gz",
+    "size_bytes": 9845,
+    "sha256": "6bece6031f90406c1ab651ae4de8c13de262e47a2957f94bfe20120ccde4ed28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_ITG3200/2.0.0/DFRobot_ITG3200-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_ITG3200/2.0.0/DFRobot_ITG3200-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_LIDAR07/2.0.0/DFRobot_LIDAR07-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_LIDAR07-2.0.0.tar.gz",
+    "size_bytes": 12351,
+    "sha256": "c8bc20683feb98f91ebb6556f3d21732e6c69e8def9643251d5b6c83b882e34f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_LIDAR07/2.0.0/DFRobot_LIDAR07-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_LIDAR07/2.0.0/DFRobot_LIDAR07-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_LIS/1.0.1/DFRobot_LIS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_LIS-1.0.1.tar.gz",
+    "size_bytes": 77296,
+    "sha256": "aae3a86894367677ed05be790faf7cefbe7e39a6bbf8570b6773e2eba799c019",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_LIS/1.0.1/DFRobot_LIS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_LIS/1.0.1/DFRobot_LIS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_LPUPS/1.0.1/DFRobot_LPUPS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_LPUPS-1.0.1.tar.gz",
+    "size_bytes": 11468,
+    "sha256": "906f26a263ae535fc9023746a4c3675d705066fc498b275007b7bd7fdfdd1db0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_LPUPS/1.0.1/DFRobot_LPUPS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_LPUPS/1.0.1/DFRobot_LPUPS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_LSM303/1.0.0/DFRobot_LSM303-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_LSM303-1.0.0.tar.gz",
+    "size_bytes": 11243,
+    "sha256": "31235ae8aa26eef6f5a153950f6f9934cf8dd6d75841bfb238aa2a01f02dc7c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_LSM303/1.0.0/DFRobot_LSM303-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_LSM303/1.0.0/DFRobot_LSM303-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_LTR308/1.0.0/DFRobot_LTR308-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_LTR308-1.0.0.tar.gz",
+    "size_bytes": 11502,
+    "sha256": "5b92c7c537f551efc9e59815c46c79ef10d25f00c897cb98cf901737bcb876b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_LTR308/1.0.0/DFRobot_LTR308-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_LTR308/1.0.0/DFRobot_LTR308-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_LWLP/1.0.0/DFRobot_LWLP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_LWLP-1.0.0.tar.gz",
+    "size_bytes": 6011,
+    "sha256": "8049892e4117f224659251e6552dc59834d5e591d2d55ee97f6e8c7981948c55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_LWLP/1.0.0/DFRobot_LWLP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_LWLP/1.0.0/DFRobot_LWLP-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_LcdDisplay/2.0.0/DFRobot_LcdDisplay-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_LcdDisplay-2.0.0.tar.gz",
+    "size_bytes": 32205,
+    "sha256": "e01620de9b15f9b30e4cef3e8cde6e926d359c615dc8f7995458d68f742c3500",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_LcdDisplay/2.0.0/DFRobot_LcdDisplay-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_LcdDisplay/2.0.0/DFRobot_LcdDisplay-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_LedDisplayModule/1.0.1/DFRobot_LedDisplayModule-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_LedDisplayModule-1.0.1.tar.gz",
+    "size_bytes": 11334,
+    "sha256": "c457e7415039ce26cfe7b81b1e9463c30a7cc52d98ea259366fb06ceebd8c31a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_LedDisplayModule/1.0.1/DFRobot_LedDisplayModule-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_LedDisplayModule/1.0.1/DFRobot_LedDisplayModule-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_LoRa/1.0.3/DFRobot_LoRa-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_LoRa-1.0.3.tar.gz",
+    "size_bytes": 11835,
+    "sha256": "ce1ace8cb41cdb7871f24789d4729b85b90b4e82b56ddd4ce36a88c74a246aac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_LoRa/1.0.3/DFRobot_LoRa-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_LoRa/1.0.3/DFRobot_LoRa-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_LoRaWAN_ESP32S3/1.0.0/DFRobot_LoRaWAN_ESP32S3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_LoRaWAN_ESP32S3-1.0.0.tar.gz",
+    "size_bytes": 2245506,
+    "sha256": "d6235633f22423f3db731bf617d7a7dbb36ee5382d94892e420b6e74cdc6ea12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_LoRaWAN_ESP32S3/1.0.0/DFRobot_LoRaWAN_ESP32S3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_LoRaWAN_ESP32S3/1.0.0/DFRobot_LoRaWAN_ESP32S3-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_LoRaWAN_ESP32S3/1.0.1/DFRobot_LoRaWAN_ESP32S3-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_LoRaWAN_ESP32S3-1.0.1.tar.gz",
+    "size_bytes": 2245552,
+    "sha256": "8fa1eb0df70a205663f50fa6ff05e460bbffebdc188b1b201b2d425444e63e34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_LoRaWAN_ESP32S3/1.0.1/DFRobot_LoRaWAN_ESP32S3-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_LoRaWAN_ESP32S3/1.0.1/DFRobot_LoRaWAN_ESP32S3-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_MAX17043/1.0.0/DFRobot_MAX17043-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_MAX17043-1.0.0.tar.gz",
+    "size_bytes": 8210,
+    "sha256": "038ca2db4318bddb2e1bffdb74784a6c5bfa9b417702852eb88b6f010c60a5eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_MAX17043/1.0.0/DFRobot_MAX17043-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_MAX17043/1.0.0/DFRobot_MAX17043-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_MAX31855/1.0.0/DFRobot_MAX31855-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_MAX31855-1.0.0.tar.gz",
+    "size_bytes": 5347,
+    "sha256": "e5e54a2a0c06776d571598c5f6b84eed2f3020145e1d51189d702a1024254061",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_MAX31855/1.0.0/DFRobot_MAX31855-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_MAX31855/1.0.0/DFRobot_MAX31855-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_MAX98357A/1.0.1/DFRobot_MAX98357A-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_MAX98357A-1.0.1.tar.gz",
+    "size_bytes": 20267,
+    "sha256": "d7f6e332fb9ef16d0f07f942eed7f4044a0760ca3c215cb425489261fa7e3ef0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_MAX98357A/1.0.1/DFRobot_MAX98357A-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_MAX98357A/1.0.1/DFRobot_MAX98357A-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_MAX98357A/1.0.2/DFRobot_MAX98357A-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_MAX98357A-1.0.2.tar.gz",
+    "size_bytes": 20445,
+    "sha256": "07059a70de260df324d6f344a48b78d08a50fae2bf3109c03db5dad85ad14f28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_MAX98357A/1.0.2/DFRobot_MAX98357A-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_MAX98357A/1.0.2/DFRobot_MAX98357A-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_MCP23017/1.0.0/DFRobot_MCP23017-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_MCP23017-1.0.0.tar.gz",
+    "size_bytes": 13507,
+    "sha256": "3c8189398a5f2aeb4154f8e4a9f2e43054d424123b5875083e8028516d380e8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_MCP23017/1.0.0/DFRobot_MCP23017-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_MCP23017/1.0.0/DFRobot_MCP23017-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_MCP2515/1.0.1/DFRobot_MCP2515-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_MCP2515-1.0.1.tar.gz",
+    "size_bytes": 12030,
+    "sha256": "8f4ddf87fba9d644172afe1949a6a6fc5b5d52bbd694e776f675f8ad1c530f15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_MCP2515/1.0.1/DFRobot_MCP2515-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_MCP2515/1.0.1/DFRobot_MCP2515-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_MCP4725/1.0.1/DFRobot_MCP4725-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_MCP4725-1.0.1.tar.gz",
+    "size_bytes": 13359,
+    "sha256": "fceb8bfca8d87f4d4a0f26cb60a52a66b66bc531d68266b7d885989a69cf9078",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_MCP4725/1.0.1/DFRobot_MCP4725-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_MCP4725/1.0.1/DFRobot_MCP4725-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_MCP9808/1.0.0/DFRobot_MCP9808-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_MCP9808-1.0.0.tar.gz",
+    "size_bytes": 28182,
+    "sha256": "ffa0971e4e39ef2ef440f55ffd2b452bb97f72a78484ad9a4b0d32f5d24d9f26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_MCP9808/1.0.0/DFRobot_MCP9808-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_MCP9808/1.0.0/DFRobot_MCP9808-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_MGC3130/1.0.1/DFRobot_MGC3130-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_MGC3130-1.0.1.tar.gz",
+    "size_bytes": 15383,
+    "sha256": "40c7ae0d9cd5bf29f06d52203f0c7e0a639398168bc9280dd0ce85d835babfd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_MGC3130/1.0.1/DFRobot_MGC3130-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_MGC3130/1.0.1/DFRobot_MGC3130-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_MHZ9041A/1.0.0/DFRobot_MHZ9041A-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_MHZ9041A-1.0.0.tar.gz",
+    "size_bytes": 15433,
+    "sha256": "e888b8ac500c0717db879dade7bdb6f95607e106dc6ca5702ed0039d0148a98d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_MHZ9041A/1.0.0/DFRobot_MHZ9041A-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_MHZ9041A/1.0.0/DFRobot_MHZ9041A-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_MLX90614/1.0.4/DFRobot_MLX90614-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_MLX90614-1.0.4.tar.gz",
+    "size_bytes": 11272,
+    "sha256": "d3a92754998bb5e58adc791d9fbbbe52740fffdb1ec0e3d9038b744d3e15dd10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_MLX90614/1.0.4/DFRobot_MLX90614-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_MLX90614/1.0.4/DFRobot_MLX90614-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_MPX5700/1.0.0/DFRobot_MPX5700-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_MPX5700-1.0.0.tar.gz",
+    "size_bytes": 6955,
+    "sha256": "e51846357b185d40d9bc3320425e334d5b263cae45d62fa782564d702fefcc58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_MPX5700/1.0.0/DFRobot_MPX5700-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_MPX5700/1.0.0/DFRobot_MPX5700-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_MaqueenPlus/1.0.1/DFRobot_MaqueenPlus-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_MaqueenPlus-1.0.1.tar.gz",
+    "size_bytes": 8189,
+    "sha256": "f4f616fcd52ef65eee5c01c9da2d8dcb2ef927a6bc0c583c4aea8f9cc6e7c24d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_MaqueenPlus/1.0.1/DFRobot_MaqueenPlus-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_MaqueenPlus/1.0.1/DFRobot_MaqueenPlus-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_MotorStepper/1.0.0/DFRobot_MotorStepper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_MotorStepper-1.0.0.tar.gz",
+    "size_bytes": 8711,
+    "sha256": "bfac12cd7df3683e4a83dba8a874fd8cd654acd5b4347e804fd01a9df36d8459",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_MotorStepper/1.0.0/DFRobot_MotorStepper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_MotorStepper/1.0.0/DFRobot_MotorStepper-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_OLED12864/1.0.0/DFRobot_OLED12864-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_OLED12864-1.0.0.tar.gz",
+    "size_bytes": 55395,
+    "sha256": "0256083ed633b571bb75e1594aa42d0fdf907cd7e2a770e1f66a3aa2dfab8735",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_OLED12864/1.0.0/DFRobot_OLED12864-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_OLED12864/1.0.0/DFRobot_OLED12864-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_OSD/1.0.0/DFRobot_OSD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_OSD-1.0.0.tar.gz",
+    "size_bytes": 7822,
+    "sha256": "4fc6b57f8a6a938d26832704376cfe9d9b4fdc4461c9cc0d7b60a6a751cd9738",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_OSD/1.0.0/DFRobot_OSD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_OSD/1.0.0/DFRobot_OSD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_OxygenSensor/1.0.2/DFRobot_OxygenSensor-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_OxygenSensor-1.0.2.tar.gz",
+    "size_bytes": 9558,
+    "sha256": "00d8cc9df203a06de432f6d933d2092b9d46dc2b735c39e9a97b7148f9a2012f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_OxygenSensor/1.0.2/DFRobot_OxygenSensor-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_OxygenSensor/1.0.2/DFRobot_OxygenSensor-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_PAJ7620U2/1.0.1/DFRobot_PAJ7620U2-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_PAJ7620U2-1.0.1.tar.gz",
+    "size_bytes": 20331,
+    "sha256": "95a54a6a03b50665c769d15bc4fd980e240ed90934a59b5ee29484ba477bb834",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_PAJ7620U2/1.0.1/DFRobot_PAJ7620U2-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_PAJ7620U2/1.0.1/DFRobot_PAJ7620U2-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_PH/1.0.0/DFRobot_PH-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_PH-1.0.0.tar.gz",
+    "size_bytes": 11321,
+    "sha256": "262b947de8539b05d194c94dabde9360004ed917cd3a242b6f379a0b31c02131",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_PH/1.0.0/DFRobot_PH-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_PH/1.0.0/DFRobot_PH-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_PN532/1.0.1/DFRobot_PN532-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_PN532-1.0.1.tar.gz",
+    "size_bytes": 14335,
+    "sha256": "fe8bdcf0c9736e44c056e02efab2c53137c178016325b052d6ae2c5df3885def",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_PN532/1.0.1/DFRobot_PN532-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_PN532/1.0.1/DFRobot_PN532-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_QMC5883/1.0.0/DFRobot_QMC5883-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_QMC5883-1.0.0.tar.gz",
+    "size_bytes": 7693,
+    "sha256": "c440fc248bc3c69ddd609681d2ccae863ecdb14323d340c24f6a2f151dfda07d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_QMC5883/1.0.0/DFRobot_QMC5883-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_QMC5883/1.0.0/DFRobot_QMC5883-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_RGBButton/1.0.0/DFRobot_RGBButton-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_RGBButton-1.0.0.tar.gz",
+    "size_bytes": 13242,
+    "sha256": "91faf79c123a3f8f2af38c3a1ab56143ec9cb4ac091d5f77332882a01983d1ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_RGBButton/1.0.0/DFRobot_RGBButton-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_RGBButton/1.0.0/DFRobot_RGBButton-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_RGBLCD1602/2.0.1/DFRobot_RGBLCD1602-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_RGBLCD1602-2.0.1.tar.gz",
+    "size_bytes": 19764,
+    "sha256": "91c426418e1c9ef7bf847ae4dbb9038a38714833a093c7e816243a9377ccde0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_RGBLCD1602/2.0.1/DFRobot_RGBLCD1602-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_RGBLCD1602/2.0.1/DFRobot_RGBLCD1602-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_RGBMatrix/1.0.1/DFRobot_RGBMatrix-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_RGBMatrix-1.0.1.tar.gz",
+    "size_bytes": 25934,
+    "sha256": "9aa966126b42545100ec46d425aa1050bc5d645e3c69c04313f7fbfb67edb2e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_RGBMatrix/1.0.1/DFRobot_RGBMatrix-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_RGBMatrix/1.0.1/DFRobot_RGBMatrix-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_RP2040_SCI/1.0.5/DFRobot_RP2040_SCI-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_RP2040_SCI-1.0.5.tar.gz",
+    "size_bytes": 50618,
+    "sha256": "e7af88fe47009f4f5dbebd3cc8c091ae96ce9e08a2cce98d8f8a54909b199985",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_RP2040_SCI/1.0.5/DFRobot_RP2040_SCI-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_RP2040_SCI/1.0.5/DFRobot_RP2040_SCI-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_RS01/1.0.0/DFRobot_RS01-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_RS01-1.0.0.tar.gz",
+    "size_bytes": 19834,
+    "sha256": "83762e1c5e14ca8395f199ae17aead8c03017b4f3ac07f6e06a43d523d470e84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_RS01/1.0.0/DFRobot_RS01-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_RS01/1.0.0/DFRobot_RS01-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_RTK_4G/1.0.0/DFRobot_RTK_4G-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_RTK_4G-1.0.0.tar.gz",
+    "size_bytes": 23813,
+    "sha256": "972e024ba1249da08d00d9e7adb44f727bf987d8b88447dc3c9d849af5ac5654",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_RTK_4G/1.0.0/DFRobot_RTK_4G-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_RTK_4G/1.0.0/DFRobot_RTK_4G-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_RTK_LoRa/1.0.1/DFRobot_RTK_LoRa-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_RTK_LoRa-1.0.1.tar.gz",
+    "size_bytes": 21042,
+    "sha256": "cb777b5bf862b0d05b5a1d083f59fcfd7d3f13c6deecd7b2b5161c33a60b31f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_RTK_LoRa/1.0.1/DFRobot_RTK_LoRa-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_RTK_LoRa/1.0.1/DFRobot_RTK_LoRa-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_RTU/1.0.3/DFRobot_RTU-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_RTU-1.0.3.tar.gz",
+    "size_bytes": 16749,
+    "sha256": "e6bd6e47cf713d82c7c7447151cf08fd97bae8f5c9478546a6f73a1e919dac7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_RTU/1.0.3/DFRobot_RTU-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_RTU/1.0.3/DFRobot_RTU-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_RTU/1.0.6/DFRobot_RTU-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_RTU-1.0.6.tar.gz",
+    "size_bytes": 16785,
+    "sha256": "d95c153af686ca62796a3334c9bf43d496c07524f709f48a6a0ad8784551602b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_RTU/1.0.6/DFRobot_RTU-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_RTU/1.0.6/DFRobot_RTU-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_RTU/1.0.7/DFRobot_RTU-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_RTU-1.0.7.tar.gz",
+    "size_bytes": 16880,
+    "sha256": "0a23271f791c3754ec410cfd662c793e6370193b83a56ec87c6003e24de55625",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_RTU/1.0.7/DFRobot_RTU-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_RTU/1.0.7/DFRobot_RTU-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_RainfallSensor/1.0.0/DFRobot_RainfallSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_RainfallSensor-1.0.0.tar.gz",
+    "size_bytes": 10641,
+    "sha256": "f4742b008642001d972a53e3c5c0a59e9aa5c07aff23e66e253ef23c47211e56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_RainfallSensor/1.0.0/DFRobot_RainfallSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_RainfallSensor/1.0.0/DFRobot_RainfallSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_SCD4X/1.0.1/DFRobot_SCD4X-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_SCD4X-1.0.1.tar.gz",
+    "size_bytes": 22793,
+    "sha256": "67c594f9f07be6b5232b3e5292a825034232e404014cb498ab71fc2d22b0a87e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_SCD4X/1.0.1/DFRobot_SCD4X-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_SCD4X/1.0.1/DFRobot_SCD4X-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_SFA40/1.0.1/DFRobot_SFA40-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_SFA40-1.0.1.tar.gz",
+    "size_bytes": 8176,
+    "sha256": "3f5e69c8d267d444e27d6995616e67310d188c4a83f420ebb8b6255fd7c38b1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_SFA40/1.0.1/DFRobot_SFA40-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_SFA40/1.0.1/DFRobot_SFA40-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_SFA40/1.0.2/DFRobot_SFA40-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_SFA40-1.0.2.tar.gz",
+    "size_bytes": 8290,
+    "sha256": "c2b9719cce5a6c7b30d4856c223da8f28618b9052979114032c502f7d4c57d9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_SFA40/1.0.2/DFRobot_SFA40-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_SFA40/1.0.2/DFRobot_SFA40-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_SFA40/1.0.3/DFRobot_SFA40-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_SFA40-1.0.3.tar.gz",
+    "size_bytes": 8393,
+    "sha256": "b7a8ed6613294b7bdc9c61f54d97e8ace61c26ef1b59b5d03a927c9adda0ca2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_SFA40/1.0.3/DFRobot_SFA40-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_SFA40/1.0.3/DFRobot_SFA40-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_SFA40/1.0.4/DFRobot_SFA40-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_SFA40-1.0.4.tar.gz",
+    "size_bytes": 9336,
+    "sha256": "27dbf6068fd4ba21b52f97a97266a482fc84fa4fcfd927eeee0de25a43e8fc21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_SFA40/1.0.4/DFRobot_SFA40-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_SFA40/1.0.4/DFRobot_SFA40-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_SGP40/1.0.4/DFRobot_SGP40-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_SGP40-1.0.4.tar.gz",
+    "size_bytes": 23008,
+    "sha256": "965ca62e6d1d8cb249a5ac7925509416199ad52d0f7dca7591a7cdf38ab82056",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_SGP40/1.0.4/DFRobot_SGP40-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_SGP40/1.0.4/DFRobot_SGP40-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_SHT20/1.0.0/DFRobot_SHT20-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_SHT20-1.0.0.tar.gz",
+    "size_bytes": 8465,
+    "sha256": "e00033a94ed4b63bed1cf1f40569bc8531bd69a349c412f7e77fe4578ceb169e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_SHT20/1.0.0/DFRobot_SHT20-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_SHT20/1.0.0/DFRobot_SHT20-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_SIM/1.0.1/DFRobot_SIM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_SIM-1.0.1.tar.gz",
+    "size_bytes": 7877,
+    "sha256": "ef79d42caa619f9df634ddae828d589743994d4aa9d102f341297f0ecf3b7481",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_SIM/1.0.1/DFRobot_SIM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_SIM/1.0.1/DFRobot_SIM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_SIM7000/1.0.2/DFRobot_SIM7000-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_SIM7000-1.0.2.tar.gz",
+    "size_bytes": 12225,
+    "sha256": "c1401bae98537cb5db763096191ab245a44153aa9ed2352033b0bfad2fb267f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_SIM7000/1.0.2/DFRobot_SIM7000-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_SIM7000/1.0.2/DFRobot_SIM7000-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_SIM808/1.0.1/DFRobot_SIM808-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_SIM808-1.0.1.tar.gz",
+    "size_bytes": 21721,
+    "sha256": "abe6e661e0995cd33be8b429533b52d4060f85e2b046519049d7e7003960edc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_SIM808/1.0.1/DFRobot_SIM808-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_SIM808/1.0.1/DFRobot_SIM808-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_ST7687S/1.0.0/DFRobot_ST7687S-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_ST7687S-1.0.0.tar.gz",
+    "size_bytes": 33657,
+    "sha256": "ff87af1b64fa2563d8d234884a2fa578fe435d0a936ce4b72683a5127976d69b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_ST7687S/1.0.0/DFRobot_ST7687S-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_ST7687S/1.0.0/DFRobot_ST7687S-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_STCC4/1.0.0/DFRobot_STCC4-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_STCC4-1.0.0.tar.gz",
+    "size_bytes": 16801,
+    "sha256": "161c999dece472af72c81aa90cdd3e19313012586b74f57d5e439008f1eef9be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_STCC4/1.0.0/DFRobot_STCC4-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_STCC4/1.0.0/DFRobot_STCC4-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_STS3X/1.0.2/DFRobot_STS3X-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_STS3X-1.0.2.tar.gz",
+    "size_bytes": 15389,
+    "sha256": "1cfd537005cb2109f6451b7f5d92c4dcc8fdc9bbef315899ba3c4bdb9aedb715",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_STS3X/1.0.2/DFRobot_STS3X-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_STS3X/1.0.2/DFRobot_STS3X-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_SU03T/1.0.0/DFRobot_SU03T-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_SU03T-1.0.0.tar.gz",
+    "size_bytes": 11503,
+    "sha256": "40859b97f09f1b0026ae4be392dbe9be9c1bab6beba3468d28b49fa1af72925b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_SU03T/1.0.0/DFRobot_SU03T-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_SU03T/1.0.0/DFRobot_SU03T-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_SerialScreen771/1.1.0/DFRobot_SerialScreen771-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_SerialScreen771-1.1.0.tar.gz",
+    "size_bytes": 10623,
+    "sha256": "5292e642cc5881f5723f34f4d6b1f0c4d0292bb8dcb0a313523938fb861b972f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_SerialScreen771/1.1.0/DFRobot_SerialScreen771-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_SerialScreen771/1.1.0/DFRobot_SerialScreen771-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_SpeechSynthesis/1.0.1/DFRobot_SpeechSynthesis-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_SpeechSynthesis-1.0.1.tar.gz",
+    "size_bytes": 13618,
+    "sha256": "573fbac1ea5d488f6ab1d81d3ea854b332a4458b3778f4d7e3d0e8fff7a89d0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_SpeechSynthesis/1.0.1/DFRobot_SpeechSynthesis-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_SpeechSynthesis/1.0.1/DFRobot_SpeechSynthesis-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_TCS3430/1.0.3/DFRobot_TCS3430-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_TCS3430-1.0.3.tar.gz",
+    "size_bytes": 15254,
+    "sha256": "ac17d1c1406006b1b4420757ecf9bee58297f91ea66c5aaf572f8b3e9938e172",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_TCS3430/1.0.3/DFRobot_TCS3430-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_TCS3430/1.0.3/DFRobot_TCS3430-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_TCS34725/1.0.0/DFRobot_TCS34725-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_TCS34725-1.0.0.tar.gz",
+    "size_bytes": 8671,
+    "sha256": "cda0e41be27934a6099af7371b9ffadf8369135f71a5ebc2a7dbf0d745915644",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_TCS34725/1.0.0/DFRobot_TCS34725-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_TCS34725/1.0.0/DFRobot_TCS34725-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_TM6605/1.0.0/DFRobot_TM6605-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_TM6605-1.0.0.tar.gz",
+    "size_bytes": 8714,
+    "sha256": "625a7fad1f21cf45d212bb0edeb38acebdf55a9c79687d9760749c940c4da0f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_TM6605/1.0.0/DFRobot_TM6605-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_TM6605/1.0.0/DFRobot_TM6605-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_TMF8x01/1.0.0/DFRobot_TMF8x01-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_TMF8x01-1.0.0.tar.gz",
+    "size_bytes": 114283,
+    "sha256": "ce34b0a65f2b782969c5f87407821ab72340ca56dd36774ffde2c2e4b8f0ee8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_TMF8x01/1.0.0/DFRobot_TMF8x01-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_TMF8x01/1.0.0/DFRobot_TMF8x01-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_URM07/1.0.0/DFRobot_URM07-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_URM07-1.0.0.tar.gz",
+    "size_bytes": 5930,
+    "sha256": "c401c4d4580c2335b5bfd421513d9279a85ffc9c4835d233e048b6528d90529b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_URM07/1.0.0/DFRobot_URM07-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_URM07/1.0.0/DFRobot_URM07-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_URM09/1.2.0/DFRobot_URM09-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_URM09-1.2.0.tar.gz",
+    "size_bytes": 10993,
+    "sha256": "be22a070fd409493e351e3dd18527d6d75dd3e76b483d1cc315eacc813ad9e08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_URM09/1.2.0/DFRobot_URM09-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_URM09/1.2.0/DFRobot_URM09-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_URM13/1.0.1/DFRobot_URM13-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_URM13-1.0.1.tar.gz",
+    "size_bytes": 25362,
+    "sha256": "65ff16dd4f384b369c47c487e0afe4cfadce90ea84488a97d46b6b3f37ad2951",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_URM13/1.0.1/DFRobot_URM13-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_URM13/1.0.1/DFRobot_URM13-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_VEML6075/1.0.1/DFRobot_VEML6075-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_VEML6075-1.0.1.tar.gz",
+    "size_bytes": 13138,
+    "sha256": "cd1c543e8815bd1be8f4701f60c5444b96ee9bc5f9e5d4ca2125fbac125ce551",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_VEML6075/1.0.1/DFRobot_VEML6075-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_VEML6075/1.0.1/DFRobot_VEML6075-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_VEML7700/1.0.0/DFRobot_VEML7700-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_VEML7700-1.0.0.tar.gz",
+    "size_bytes": 15057,
+    "sha256": "fcbe5dda977afd794161d005acfaaba00d76b5108aa933f0ed480956ee7196e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_VEML7700/1.0.0/DFRobot_VEML7700-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_VEML7700/1.0.0/DFRobot_VEML7700-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_VL53L0X/1.0.0/DFRobot_VL53L0X-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_VL53L0X-1.0.0.tar.gz",
+    "size_bytes": 5855,
+    "sha256": "7098566a269d1d0d3ff400e0328688cf4cf2c9e54460ca2902bc18ee442fda86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_VL53L0X/1.0.0/DFRobot_VL53L0X-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_VL53L0X/1.0.0/DFRobot_VL53L0X-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_VL6180X/1.0.0/DFRobot_VL6180X-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_VL6180X-1.0.0.tar.gz",
+    "size_bytes": 20863,
+    "sha256": "b84328393ff435dcd07056a46d69170daf14c6d88b6c4da11a20328a10d1b4e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_VL6180X/1.0.0/DFRobot_VL6180X-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_VL6180X/1.0.0/DFRobot_VL6180X-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_VisualRotaryEncoder/1.0.1/DFRobot_VisualRotaryEncoder-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_VisualRotaryEncoder-1.0.1.tar.gz",
+    "size_bytes": 12224,
+    "sha256": "d3cd7319d1275f178c3fff8fd3a1847dc2cfce9d2b8997fb5c532c6f6cd44249",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_VisualRotaryEncoder/1.0.1/DFRobot_VisualRotaryEncoder-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_VisualRotaryEncoder/1.0.1/DFRobot_VisualRotaryEncoder-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dfrobot/library/DFRobot_digitalPot/1.0.0/DFRobot_digitalPot-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DFRobot_digitalPot-1.0.0.tar.gz",
+    "size_bytes": 4837,
+    "sha256": "b720b00ba9855d045586c27cf67bbcf9381eebe2de9af89469eb03f869b50cf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dfrobot/library/DFRobot_digitalPot/1.0.0/DFRobot_digitalPot-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dfrobot/library/DFRobot_digitalPot/1.0.0/DFRobot_digitalPot-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

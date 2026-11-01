@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/darkautism",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "darkautism/library/libradiocontroller/0.0.1/libradiocontroller-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libradiocontroller-0.0.1.tar.gz",
+    "size_bytes": 3599,
+    "sha256": "d4d1eda9e6468f7a2fee810542be743a1d81ea7280d4135c2929eba74f84381e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/darkautism/library/libradiocontroller/0.0.1/libradiocontroller-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/darkautism/library/libradiocontroller/0.0.1/libradiocontroller-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "darkautism/platform/lgt8f/1.0.3/lgt8f-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lgt8f-1.0.3.tar.gz",
+    "size_bytes": 8271,
+    "sha256": "ab3dac2f77a9ab0afd71180a38456569ebe70957aeac108fa6aa514ccbcdc7d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/darkautism/platform/lgt8f/1.0.3/lgt8f-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/darkautism/platform/lgt8f/1.0.3/lgt8f-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "darkautism/tool/framework-lgt8fx/1.0.6/framework-lgt8fx-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-lgt8fx-1.0.6.tar.gz",
+    "size_bytes": 451878,
+    "sha256": "39f106fddf56bfbc2751df052a1aa4b1ad9c8b114515b2797cd27aa42a59f0ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/darkautism/tool/framework-lgt8fx/1.0.6/framework-lgt8fx-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/darkautism/tool/framework-lgt8fx/1.0.6/framework-lgt8fx-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "darkautism/tool/framework-lgt8fx/2.0.7/framework-lgt8fx-2.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "framework-lgt8fx-2.0.7.tar.gz",
+    "size_bytes": 514348,
+    "sha256": "254f899cc6fbca9c4091b3bf2caeccd30143a92ab4403bb4ef3ee715691262a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/darkautism/tool/framework-lgt8fx/2.0.7/framework-lgt8fx-2.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/darkautism/tool/framework-lgt8fx/2.0.7/framework-lgt8fx-2.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

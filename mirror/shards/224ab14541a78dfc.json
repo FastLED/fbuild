@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-yuliyasm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-yuliyasm/library/AccelStepper/0.0.0+sha.deef8c36d17a/AccelStepper-0.0.0+sha.deef8c36d17a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AccelStepper-0.0.0+sha.deef8c36d17a.tar.gz",
+    "size_bytes": 14807,
+    "sha256": "2c755977da608997b17f261e3a09e29f560999c3fa7fc4ee455e6233777422bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-yuliyasm/library/AccelStepper/0.0.0%2Bsha.deef8c36d17a/AccelStepper-0.0.0%2Bsha.deef8c36d17a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-yuliyasm/library/AccelStepper/0.0.0%2Bsha.deef8c36d17a/AccelStepper-0.0.0%2Bsha.deef8c36d17a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

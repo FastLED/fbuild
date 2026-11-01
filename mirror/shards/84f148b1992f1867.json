@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mega64",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mega64/library/mbed-STM32F030F4/0.0.0+sha.79a2d67cd509/mbed-STM32F030F4-0.0.0+sha.79a2d67cd509.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-STM32F030F4-0.0.0+sha.79a2d67cd509.tar.gz",
+    "size_bytes": 531052,
+    "sha256": "6eb277a3dd9441fd588b077f57e1338c900023c782e3ab26b6264f85790758d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mega64/library/mbed-STM32F030F4/0.0.0%2Bsha.79a2d67cd509/mbed-STM32F030F4-0.0.0%2Bsha.79a2d67cd509.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mega64/library/mbed-STM32F030F4/0.0.0%2Bsha.79a2d67cd509/mbed-STM32F030F4-0.0.0%2Bsha.79a2d67cd509.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mega64/library/mbed-STM32F103C8/0.0.0+sha.8b0b02bf146f/mbed-STM32F103C8-0.0.0+sha.8b0b02bf146f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-STM32F103C8-0.0.0+sha.8b0b02bf146f.tar.gz",
+    "size_bytes": 939143,
+    "sha256": "a611358295d61581a6456ec24344f4ebe56e1958886b64efa503dad46e990dae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mega64/library/mbed-STM32F103C8/0.0.0%2Bsha.8b0b02bf146f/mbed-STM32F103C8-0.0.0%2Bsha.8b0b02bf146f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mega64/library/mbed-STM32F103C8/0.0.0%2Bsha.8b0b02bf146f/mbed-STM32F103C8-0.0.0%2Bsha.8b0b02bf146f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

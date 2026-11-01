@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-keystoneelectronic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-keystoneelectronic/library/sara-n200-hello-mqtt-sn/0.0.0+sha.9a2dab9b927d/sara-n200-hello-mqtt-sn-0.0.0+sha.9a2dab9b927d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sara-n200-hello-mqtt-sn-0.0.0+sha.9a2dab9b927d.tar.gz",
+    "size_bytes": 12072,
+    "sha256": "0c461b02765f02db2ce0121b1986899742757895efe993f3d6faea1ec0bd7375",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-keystoneelectronic/library/sara-n200-hello-mqtt-sn/0.0.0%2Bsha.9a2dab9b927d/sara-n200-hello-mqtt-sn-0.0.0%2Bsha.9a2dab9b927d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-keystoneelectronic/library/sara-n200-hello-mqtt-sn/0.0.0%2Bsha.9a2dab9b927d/sara-n200-hello-mqtt-sn-0.0.0%2Bsha.9a2dab9b927d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

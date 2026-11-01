@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alvarowolfx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alvarowolfx/library/ESP32QRCodeReader/1.1.0/ESP32QRCodeReader-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32QRCodeReader-1.1.0.tar.gz",
+    "size_bytes": 29808,
+    "sha256": "a6e624379b1a30644d06b28eef8351a9fe45fd541415ced22fa1657066548e00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alvarowolfx/library/ESP32QRCodeReader/1.1.0/ESP32QRCodeReader-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alvarowolfx/library/ESP32QRCodeReader/1.1.0/ESP32QRCodeReader-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

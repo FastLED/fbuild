@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lbussy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lbussy/library/LCBUrl/1.1.9/LCBUrl-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCBUrl-1.1.9.tar.gz",
+    "size_bytes": 14847,
+    "sha256": "e6d447c65f0b2935f41097cd45a9ef70ab4c87ee17fc4c167818491146c83610",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lbussy/library/LCBUrl/1.1.9/LCBUrl-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/lbussy/library/LCBUrl/1.1.9/LCBUrl-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lbussy/library/mDNSResolver/1.0.0/mDNSResolver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mDNSResolver-1.0.0.tar.gz",
+    "size_bytes": 93629,
+    "sha256": "7dc7d5b6073a6437b47eb195a65fb7c297eb0d454df6d3fa9f7b40c5a3a07c04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lbussy/library/mDNSResolver/1.0.0/mDNSResolver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lbussy/library/mDNSResolver/1.0.0/mDNSResolver-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tifo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tifo/library/arch_temp_stack/0.0.0+sha.e98dbcd4f4e3/arch_temp_stack-0.0.0+sha.e98dbcd4f4e3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arch_temp_stack-0.0.0+sha.e98dbcd4f4e3.tar.gz",
+    "size_bytes": 2027,
+    "sha256": "af38f26df2fd6a6f025e28f1263f0eb74ba7bef3fabcbca14cfab2d0e7916895",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tifo/library/arch_temp_stack/0.0.0%2Bsha.e98dbcd4f4e3/arch_temp_stack-0.0.0%2Bsha.e98dbcd4f4e3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tifo/library/arch_temp_stack/0.0.0%2Bsha.e98dbcd4f4e3/arch_temp_stack-0.0.0%2Bsha.e98dbcd4f4e3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

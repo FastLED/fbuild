@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/byu-i-ebadge",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "byu-i-ebadge/library/BYUI%20EBadge/1.0.0/BYUIEBadge-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BYUIEBadge-1.0.0.tar.gz",
+    "size_bytes": 7966,
+    "sha256": "e8cca0606a8895a8a965e09dcd5c541b063818161429335ede3e69817f7103f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/byu-i-ebadge/library/BYUI%2520EBadge/1.0.0/BYUIEBadge-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/byu-i-ebadge/library/BYUI%20EBadge/1.0.0/BYUIEBadge-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

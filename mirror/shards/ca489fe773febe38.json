@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rad-hi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rad-hi/library/MacroDebugger/0.0.1/MacroDebugger-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MacroDebugger-0.0.1.tar.gz",
+    "size_bytes": 4171,
+    "sha256": "ea4040105e22da62dc22e06e39b3af6c83a8ebba7d7f797afe5b3398b60d1f40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rad-hi/library/MacroDebugger/0.0.1/MacroDebugger-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rad-hi/library/MacroDebugger/0.0.1/MacroDebugger-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rad-hi/library/MyButton/2.0.3/MyButton-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyButton-2.0.3.tar.gz",
+    "size_bytes": 12545,
+    "sha256": "e6b2a3f9b546279996c7afe5ff481f14e6a16687b52ad82c2e2fca9c74eb35b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rad-hi/library/MyButton/2.0.3/MyButton-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rad-hi/library/MyButton/2.0.3/MyButton-2.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

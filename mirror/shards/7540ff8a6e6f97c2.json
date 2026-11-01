@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bxd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bxd/library/Adafruit_PWMServoDriver/0.0.0+sha.41a00db32ae7/Adafruit_PWMServoDriver-0.0.0+sha.41a00db32ae7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_PWMServoDriver-0.0.0+sha.41a00db32ae7.tar.gz",
+    "size_bytes": 3225,
+    "sha256": "dca0e6f760d22e1fa22b777f5f057e4f6d444a8c709fab89988889fc3646e7d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bxd/library/Adafruit_PWMServoDriver/0.0.0%2Bsha.41a00db32ae7/Adafruit_PWMServoDriver-0.0.0%2Bsha.41a00db32ae7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bxd/library/Adafruit_PWMServoDriver/0.0.0%2Bsha.41a00db32ae7/Adafruit_PWMServoDriver-0.0.0%2Bsha.41a00db32ae7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

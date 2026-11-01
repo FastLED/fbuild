@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-meriac",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-meriac/library/CThunk/0.0.0+sha.d3b51b06ac54/CThunk-0.0.0+sha.d3b51b06ac54.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CThunk-0.0.0+sha.d3b51b06ac54.tar.gz",
+    "size_bytes": 2465,
+    "sha256": "36cac8479ea6d6b62e8d4123a736fb323d5d3faca6efd2589a0efc062f72cb38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-meriac/library/CThunk/0.0.0%2Bsha.d3b51b06ac54/CThunk-0.0.0%2Bsha.d3b51b06ac54.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-meriac/library/CThunk/0.0.0%2Bsha.d3b51b06ac54/CThunk-0.0.0%2Bsha.d3b51b06ac54.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-meriac/library/rgb_sensor/0.0.0+sha.b95dfd2d6d4d/rgb_sensor-0.0.0+sha.b95dfd2d6d4d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rgb_sensor-0.0.0+sha.b95dfd2d6d4d.tar.gz",
+    "size_bytes": 3558,
+    "sha256": "a237eabe31330262a71b1073314c4e07c49c03c3b53f8ee625d92ee2c3b5a523",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-meriac/library/rgb_sensor/0.0.0%2Bsha.b95dfd2d6d4d/rgb_sensor-0.0.0%2Bsha.b95dfd2d6d4d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-meriac/library/rgb_sensor/0.0.0%2Bsha.b95dfd2d6d4d/rgb_sensor-0.0.0%2Bsha.b95dfd2d6d4d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-meriac/library/rgb_sensor_buffer/0.0.0+sha.8fbb1cd0c2d9/rgb_sensor_buffer-0.0.0+sha.8fbb1cd0c2d9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rgb_sensor_buffer-0.0.0+sha.8fbb1cd0c2d9.tar.gz",
+    "size_bytes": 2173,
+    "sha256": "64d7cd2a63665467f2f1ab85d73981024c1ea81adc99e102654d24b9e2639e93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-meriac/library/rgb_sensor_buffer/0.0.0%2Bsha.8fbb1cd0c2d9/rgb_sensor_buffer-0.0.0%2Bsha.8fbb1cd0c2d9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-meriac/library/rgb_sensor_buffer/0.0.0%2Bsha.8fbb1cd0c2d9/rgb_sensor_buffer-0.0.0%2Bsha.8fbb1cd0c2d9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-s1020836",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-s1020836/library/DCmotor/0.0.0+sha.f2d651ae5188/DCmotor-0.0.0+sha.f2d651ae5188.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCmotor-0.0.0+sha.f2d651ae5188.tar.gz",
+    "size_bytes": 1324,
+    "sha256": "7460648f790684ef6bd6a4ef5c9462ca23d62b96059d793167e5bbf38f38c33f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-s1020836/library/DCmotor/0.0.0%2Bsha.f2d651ae5188/DCmotor-0.0.0%2Bsha.f2d651ae5188.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-s1020836/library/DCmotor/0.0.0%2Bsha.f2d651ae5188/DCmotor-0.0.0%2Bsha.f2d651ae5188.tar.gz"
+    ]
+   }
+  }
+ ]
+}

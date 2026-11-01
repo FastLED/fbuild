@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/edanpotter",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "edanpotter/library/RadioengeLoraWAN/0.0.1/RadioengeLoraWAN-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadioengeLoraWAN-0.0.1.tar.gz",
+    "size_bytes": 15388,
+    "sha256": "cea46e2918dfa8ebf68c2fee219686d2fcae9f308c2a493b7463f6256c48f32a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/edanpotter/library/RadioengeLoraWAN/0.0.1/RadioengeLoraWAN-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/edanpotter/library/RadioengeLoraWAN/0.0.1/RadioengeLoraWAN-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

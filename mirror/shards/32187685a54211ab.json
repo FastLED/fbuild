@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/slimecodex",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "slimecodex/library/ArcticTerminal/1.0.0/ArcticTerminal-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArcticTerminal-1.0.0.tar.gz",
+    "size_bytes": 21775,
+    "sha256": "20277150351bc889fed6cc559b551dc6ffa2c11e52cb2bad88bccfb367728da3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/slimecodex/library/ArcticTerminal/1.0.0/ArcticTerminal-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/slimecodex/library/ArcticTerminal/1.0.0/ArcticTerminal-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

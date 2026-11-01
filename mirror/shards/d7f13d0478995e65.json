@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jmerc77",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jmerc77/library/Fast4ier/1.0.0/Fast4ier-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Fast4ier-1.0.0.tar.gz",
+    "size_bytes": 17663,
+    "sha256": "1b536b90e535754c5e9bc025597d08fb43bc3b0137aacc0d7e29e13216fa5678",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jmerc77/library/Fast4ier/1.0.0/Fast4ier-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jmerc77/library/Fast4ier/1.0.0/Fast4ier-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

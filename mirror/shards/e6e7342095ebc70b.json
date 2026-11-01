@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lktronic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lktronic/library/LKTRONICS-IOT/1.0.0/LKTRONICS-IOT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LKTRONICS-IOT-1.0.0.tar.gz",
+    "size_bytes": 8707,
+    "sha256": "affb9cb5598e0abae871aee7095d51dcda2ff762bd23ca4d00a5b34861e59655",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lktronic/library/LKTRONICS-IOT/1.0.0/LKTRONICS-IOT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lktronic/library/LKTRONICS-IOT/1.0.0/LKTRONICS-IOT-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

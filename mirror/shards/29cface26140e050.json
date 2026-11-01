@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hallard",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hallard/library/DAC7565/0.0.0-alpha+sha.50931bc5c2/DAC7565-0.0.0-alphasha.50931bc5c2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DAC7565-0.0.0-alphasha.50931bc5c2.tar.gz",
+    "size_bytes": 5097,
+    "sha256": "5749a3ffdfaba88d2dc3f0d5b58029a417a79d2fb46e2a4913c7cedce5a92ae6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hallard/library/DAC7565/0.0.0-alpha%2Bsha.50931bc5c2/DAC7565-0.0.0-alphasha.50931bc5c2.tar.gz",
+     "https://dl.registry.platformio.org/download/hallard/library/DAC7565/0.0.0-alpha%2Bsha.50931bc5c2/DAC7565-0.0.0-alphasha.50931bc5c2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hallard/library/LibTeleinfo/1.1.7/LibTeleinfo-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibTeleinfo-1.1.7.tar.gz",
+    "size_bytes": 108525,
+    "sha256": "45168a3ab0690c0dd08f2dee1b9619e85b7509e63d0f50f89a1fda7dc427d925",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hallard/library/LibTeleinfo/1.1.7/LibTeleinfo-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/hallard/library/LibTeleinfo/1.1.7/LibTeleinfo-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hallard/library/TH02/0.0.0-alpha+sha.7832bd79e3/TH02-0.0.0-alphasha.7832bd79e3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TH02-0.0.0-alphasha.7832bd79e3.tar.gz",
+    "size_bytes": 7273,
+    "sha256": "cc1e441e94c4b73e86d04ddfedf44e67e1652d6c00e8b29c633d3b4f92634849",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hallard/library/TH02/0.0.0-alpha%2Bsha.7832bd79e3/TH02-0.0.0-alphasha.7832bd79e3.tar.gz",
+     "https://dl.registry.platformio.org/download/hallard/library/TH02/0.0.0-alpha%2Bsha.7832bd79e3/TH02-0.0.0-alphasha.7832bd79e3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

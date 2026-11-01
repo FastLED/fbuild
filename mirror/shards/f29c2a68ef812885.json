@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-stanley1228",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-stanley1228/library/DXL_SDK_For_F446RE/0.0.0+sha.edccfcb47ab8/DXL_SDK_For_F446RE-0.0.0+sha.edccfcb47ab8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DXL_SDK_For_F446RE-0.0.0+sha.edccfcb47ab8.tar.gz",
+    "size_bytes": 4764,
+    "sha256": "b62acd548ecb81d541bdd45c4fa87efda06153f934f2736cb501d81e7966be9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stanley1228/library/DXL_SDK_For_F446RE/0.0.0%2Bsha.edccfcb47ab8/DXL_SDK_For_F446RE-0.0.0%2Bsha.edccfcb47ab8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stanley1228/library/DXL_SDK_For_F446RE/0.0.0%2Bsha.edccfcb47ab8/DXL_SDK_For_F446RE-0.0.0%2Bsha.edccfcb47ab8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-stanley1228/library/Modbus_For_F446RE/0.0.0+sha.aefcdfe9ca2f/Modbus_For_F446RE-0.0.0+sha.aefcdfe9ca2f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modbus_For_F446RE-0.0.0+sha.aefcdfe9ca2f.tar.gz",
+    "size_bytes": 21882,
+    "sha256": "b15fe8c82d56d51eb3152ac0d1c857d665f21b5bfc1d459731267231ce2e7e84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stanley1228/library/Modbus_For_F446RE/0.0.0%2Bsha.aefcdfe9ca2f/Modbus_For_F446RE-0.0.0%2Bsha.aefcdfe9ca2f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stanley1228/library/Modbus_For_F446RE/0.0.0%2Bsha.aefcdfe9ca2f/Modbus_For_F446RE-0.0.0%2Bsha.aefcdfe9ca2f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-stanley1228/library/RobotControl_7Axis/0.0.0+sha.e380c7db9133/RobotControl_7Axis-0.0.0+sha.e380c7db9133.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RobotControl_7Axis-0.0.0+sha.e380c7db9133.tar.gz",
+    "size_bytes": 7285,
+    "sha256": "05f02ffbbf43bd745c0721da67207465a3abc43ecfe35f5bcff81d4e8942b270",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stanley1228/library/RobotControl_7Axis/0.0.0%2Bsha.e380c7db9133/RobotControl_7Axis-0.0.0%2Bsha.e380c7db9133.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stanley1228/library/RobotControl_7Axis/0.0.0%2Bsha.e380c7db9133/RobotControl_7Axis-0.0.0%2Bsha.e380c7db9133.tar.gz"
+    ]
+   }
+  }
+ ]
+}

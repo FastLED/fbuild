@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gramliu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gramliu/library/WiFiMQTT/1.0.3/WiFiMQTT-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiMQTT-1.0.3.tar.gz",
+    "size_bytes": 3831,
+    "sha256": "3b9cab8cb9e69b3d98e3d28f482fcb20d5d33680e4482018b5c1ad4927a09195",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gramliu/library/WiFiMQTT/1.0.3/WiFiMQTT-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gramliu/library/WiFiMQTT/1.0.3/WiFiMQTT-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

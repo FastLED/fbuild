@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/phracturedblue",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "phracturedblue/library/ESP8266MQTTMesh/1.0.4/ESP8266MQTTMesh-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266MQTTMesh-1.0.4.tar.gz",
+    "size_bytes": 151861,
+    "sha256": "e2d1f776d08088b7e486b71bab381507352f3a30818fe50a8a80511aeeac8cb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/phracturedblue/library/ESP8266MQTTMesh/1.0.4/ESP8266MQTTMesh-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/phracturedblue/library/ESP8266MQTTMesh/1.0.4/ESP8266MQTTMesh-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

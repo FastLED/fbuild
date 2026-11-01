@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/contaware",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "contaware/library/ButtonPoll_CW/1.0.0/ButtonPoll_CW-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonPoll_CW-1.0.0.tar.gz",
+    "size_bytes": 2682,
+    "sha256": "0b12aabc7e087329e14c6876f75510f6a5e342db9b938668c72ba9a03e2616fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/contaware/library/ButtonPoll_CW/1.0.0/ButtonPoll_CW-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/contaware/library/ButtonPoll_CW/1.0.0/ButtonPoll_CW-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "contaware/library/PrintCol_CW/1.0.0/PrintCol_CW-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PrintCol_CW-1.0.0.tar.gz",
+    "size_bytes": 5419,
+    "sha256": "109739fe66d3e1ab688db2628b63df853cde5a08c53dd92df7266ee47d6c529e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/contaware/library/PrintCol_CW/1.0.0/PrintCol_CW-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/contaware/library/PrintCol_CW/1.0.0/PrintCol_CW-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "contaware/library/RotaryEncoderPoll_CW/1.0.0/RotaryEncoderPoll_CW-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotaryEncoderPoll_CW-1.0.0.tar.gz",
+    "size_bytes": 3620,
+    "sha256": "d7bd91fa1c1a29893065bb45146d93fad5cc1d4dfdc824adb0cae2be8ebd46c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/contaware/library/RotaryEncoderPoll_CW/1.0.0/RotaryEncoderPoll_CW-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/contaware/library/RotaryEncoderPoll_CW/1.0.0/RotaryEncoderPoll_CW-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "contaware/library/TimerPoll_CW/1.0.0/TimerPoll_CW-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerPoll_CW-1.0.0.tar.gz",
+    "size_bytes": 2683,
+    "sha256": "6ea902c2ef3c916680634ceeae11faf2ff671e3383e0016a566117beacbb0d91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/contaware/library/TimerPoll_CW/1.0.0/TimerPoll_CW-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/contaware/library/TimerPoll_CW/1.0.0/TimerPoll_CW-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

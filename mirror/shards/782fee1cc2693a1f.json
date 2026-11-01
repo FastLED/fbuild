@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pmundt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pmundt/library/blueSMIRF/0.0.0+sha.c57439dbda24/blueSMIRF-0.0.0+sha.c57439dbda24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "blueSMIRF-0.0.0+sha.c57439dbda24.tar.gz",
+    "size_bytes": 4032,
+    "sha256": "8eefafe9cdfdfae6af8e6a43302ffea32d4b829cee977ffe5287d03b2c5b3c1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pmundt/library/blueSMIRF/0.0.0%2Bsha.c57439dbda24/blueSMIRF-0.0.0%2Bsha.c57439dbda24.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pmundt/library/blueSMIRF/0.0.0%2Bsha.c57439dbda24/blueSMIRF-0.0.0%2Bsha.c57439dbda24.tar.gz"
+    ]
+   }
+  }
+ ]
+}

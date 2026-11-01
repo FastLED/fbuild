@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jchisholm204",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jchisholm204/library/cal/2.1.4/cal-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cal-2.1.4.tar.gz",
+    "size_bytes": 10683,
+    "sha256": "fe75c6e2b5d6399aa4245742f87deea6d3d70ce116f1921de214f27e0c30370e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jchisholm204/library/cal/2.1.4/cal-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/jchisholm204/library/cal/2.1.4/cal-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jchisholm204/library/qfsae-dependencies/0.0.5/qfsae-dependencies-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "qfsae-dependencies-0.0.5.tar.gz",
+    "size_bytes": 1944,
+    "sha256": "744f363ffc3f798ca2982bbc7f32d277972bc80b1ad0d7cd1254f4b5cd2c5677",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jchisholm204/library/qfsae-dependencies/0.0.5/qfsae-dependencies-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/jchisholm204/library/qfsae-dependencies/0.0.5/qfsae-dependencies-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jchisholm204/library/st-f4can/1.0.8/st-f4can-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "st-f4can-1.0.8.tar.gz",
+    "size_bytes": 4834,
+    "sha256": "53ab0c15d607e43ac6e607b1fc8b10361712f2b5205fb6fab846cb0963c4067f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jchisholm204/library/st-f4can/1.0.8/st-f4can-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/jchisholm204/library/st-f4can/1.0.8/st-f4can-1.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

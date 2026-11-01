@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alexcajas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alexcajas/library/EmbeddedMqttBroker/2.0.10-qos0/EmbeddedMqttBroker-2.0.10-qos0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedMqttBroker-2.0.10-qos0.tar.gz",
+    "size_bytes": 52070,
+    "sha256": "1e05eff1057845058dda655b1156e6d8284ff59f25d1052f17e8ad4ad61ba8bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexcajas/library/EmbeddedMqttBroker/2.0.10-qos0/EmbeddedMqttBroker-2.0.10-qos0.tar.gz",
+     "https://dl.registry.platformio.org/download/alexcajas/library/EmbeddedMqttBroker/2.0.10-qos0/EmbeddedMqttBroker-2.0.10-qos0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alexcajas/library/EmbeddedMqttBroker/2.0.11-qos0/EmbeddedMqttBroker-2.0.11-qos0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedMqttBroker-2.0.11-qos0.tar.gz",
+    "size_bytes": 51976,
+    "sha256": "d2536a12a359bf982e75ee970899cabfbeb8d1ca4f3de33b0434edadc64725e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexcajas/library/EmbeddedMqttBroker/2.0.11-qos0/EmbeddedMqttBroker-2.0.11-qos0.tar.gz",
+     "https://dl.registry.platformio.org/download/alexcajas/library/EmbeddedMqttBroker/2.0.11-qos0/EmbeddedMqttBroker-2.0.11-qos0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alexcajas/library/EmbeddedMqttBroker/2.0.12-qos0/EmbeddedMqttBroker-2.0.12-qos0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedMqttBroker-2.0.12-qos0.tar.gz",
+    "size_bytes": 51971,
+    "sha256": "f2c7263aad8b6fecf9372f13104927ee261abb62c7d07c4857d229889e723dcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexcajas/library/EmbeddedMqttBroker/2.0.12-qos0/EmbeddedMqttBroker-2.0.12-qos0.tar.gz",
+     "https://dl.registry.platformio.org/download/alexcajas/library/EmbeddedMqttBroker/2.0.12-qos0/EmbeddedMqttBroker-2.0.12-qos0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alexcajas/library/EmbeddedMqttBroker/2.0.8-qos0/EmbeddedMqttBroker-2.0.8-qos0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedMqttBroker-2.0.8-qos0.tar.gz",
+    "size_bytes": 52054,
+    "sha256": "cd7347609153aaf64690ad7ff8129dbf56f5cf94ed24415f3777b905c4e972ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexcajas/library/EmbeddedMqttBroker/2.0.8-qos0/EmbeddedMqttBroker-2.0.8-qos0.tar.gz",
+     "https://dl.registry.platformio.org/download/alexcajas/library/EmbeddedMqttBroker/2.0.8-qos0/EmbeddedMqttBroker-2.0.8-qos0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alexcajas/library/EmbeddedMqttBroker/2.1.12-qos0/EmbeddedMqttBroker-2.1.12-qos0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmbeddedMqttBroker-2.1.12-qos0.tar.gz",
+    "size_bytes": 60018,
+    "sha256": "512f167692aacdce2d587c233d2c3911cb403b1d34493dddbe2a5d403270887f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexcajas/library/EmbeddedMqttBroker/2.1.12-qos0/EmbeddedMqttBroker-2.1.12-qos0.tar.gz",
+     "https://dl.registry.platformio.org/download/alexcajas/library/EmbeddedMqttBroker/2.1.12-qos0/EmbeddedMqttBroker-2.1.12-qos0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alexcajas/library/WrapperFreeRTOS/1.0.2/WrapperFreeRTOS-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WrapperFreeRTOS-1.0.2.tar.gz",
+    "size_bytes": 10942,
+    "sha256": "4b36d2b4bfcc6698bfca7cb6cfeaa26f753214bbe44e5fddc612185b93bcd8fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexcajas/library/WrapperFreeRTOS/1.0.2/WrapperFreeRTOS-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alexcajas/library/WrapperFreeRTOS/1.0.2/WrapperFreeRTOS-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

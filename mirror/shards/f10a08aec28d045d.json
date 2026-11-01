@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/de-ice47",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "de-ice47/library/ArduinoLinkPLC/0.0.0-alpha/ArduinoLinkPLC-0.0.0-alpha.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoLinkPLC-0.0.0-alpha.tar.gz",
+    "size_bytes": 5686,
+    "sha256": "be08f2262ed4aa2d85417f7fb42ee07d3983ab3d07fd5e902f41f03cbbe4b7ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/de-ice47/library/ArduinoLinkPLC/0.0.0-alpha/ArduinoLinkPLC-0.0.0-alpha.tar.gz",
+     "https://dl.registry.platformio.org/download/de-ice47/library/ArduinoLinkPLC/0.0.0-alpha/ArduinoLinkPLC-0.0.0-alpha.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "de-ice47/library/ArduinoLinkPLC/0.0.1-alpha/ArduinoLinkPLC-0.0.1-alpha.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoLinkPLC-0.0.1-alpha.tar.gz",
+    "size_bytes": 5690,
+    "sha256": "07c74b4c591f7607ccc99b68af69f67d1fe745a0abcd75ea2e571d1ea5f89b57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/de-ice47/library/ArduinoLinkPLC/0.0.1-alpha/ArduinoLinkPLC-0.0.1-alpha.tar.gz",
+     "https://dl.registry.platformio.org/download/de-ice47/library/ArduinoLinkPLC/0.0.1-alpha/ArduinoLinkPLC-0.0.1-alpha.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "de-ice47/library/ArduinoLinkPLC/0.1.0-alpha/ArduinoLinkPLC-0.1.0-alpha.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoLinkPLC-0.1.0-alpha.tar.gz",
+    "size_bytes": 7576,
+    "sha256": "ee95ce13499da662ad27af4655c734cc10e26369f69d0c5a59db9bd0e1a81be0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/de-ice47/library/ArduinoLinkPLC/0.1.0-alpha/ArduinoLinkPLC-0.1.0-alpha.tar.gz",
+     "https://dl.registry.platformio.org/download/de-ice47/library/ArduinoLinkPLC/0.1.0-alpha/ArduinoLinkPLC-0.1.0-alpha.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "de-ice47/library/VeloxityLink/0.2.0/VeloxityLink-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VeloxityLink-0.2.0.tar.gz",
+    "size_bytes": 7522,
+    "sha256": "bb025178d336075d2cf594fe131a2fcd306e53d30f9eb735df337942effa9d08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/de-ice47/library/VeloxityLink/0.2.0/VeloxityLink-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/de-ice47/library/VeloxityLink/0.2.0/VeloxityLink-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "de-ice47/library/VeloxityLink/0.2.1/VeloxityLink-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VeloxityLink-0.2.1.tar.gz",
+    "size_bytes": 7221,
+    "sha256": "9c4c6645a44f8158df017c24f4394bcdb67004acc3725c0241554a612627e920",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/de-ice47/library/VeloxityLink/0.2.1/VeloxityLink-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/de-ice47/library/VeloxityLink/0.2.1/VeloxityLink-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "de-ice47/library/VeloxityLink/0.2.2/VeloxityLink-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VeloxityLink-0.2.2.tar.gz",
+    "size_bytes": 7282,
+    "sha256": "1c3cc62207e0f1829a9c2dc3dc6264a12e136dd4c627a720da49894b81f3697b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/de-ice47/library/VeloxityLink/0.2.2/VeloxityLink-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/de-ice47/library/VeloxityLink/0.2.2/VeloxityLink-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "de-ice47/library/VeloxityLink/0.2.3/VeloxityLink-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VeloxityLink-0.2.3.tar.gz",
+    "size_bytes": 7303,
+    "sha256": "65f9214d68d8a4e45fd8a3308cfefed0831d333f083f9824d4adbd975b3bdacc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/de-ice47/library/VeloxityLink/0.2.3/VeloxityLink-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/de-ice47/library/VeloxityLink/0.2.3/VeloxityLink-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "de-ice47/library/VeloxityLink/0.2.4/VeloxityLink-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VeloxityLink-0.2.4.tar.gz",
+    "size_bytes": 7254,
+    "sha256": "d5c3718d16e1ce60eca58379c2a4d03ebdd97b6721a7b98b83b702cf14614988",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/de-ice47/library/VeloxityLink/0.2.4/VeloxityLink-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/de-ice47/library/VeloxityLink/0.2.4/VeloxityLink-0.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "de-ice47/library/VeloxityLink/0.2.5/VeloxityLink-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VeloxityLink-0.2.5.tar.gz",
+    "size_bytes": 6770,
+    "sha256": "a197be6af9131994651c0a596d016afda8c53ce2705ceee5368f0dd9034ae63d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/de-ice47/library/VeloxityLink/0.2.5/VeloxityLink-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/de-ice47/library/VeloxityLink/0.2.5/VeloxityLink-0.2.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

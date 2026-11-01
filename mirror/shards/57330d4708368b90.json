@@ -1,0 +1,1751 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/soosp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.1.0/AsyncConfigPortal-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.1.0.tar.gz",
+    "size_bytes": 110209,
+    "sha256": "d40440d14e401b27e87495611cac304ef211c9d4bcd238a780d0a6026949909a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.1.0/AsyncConfigPortal-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.1.0/AsyncConfigPortal-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.10.0/AsyncConfigPortal-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.10.0.tar.gz",
+    "size_bytes": 137814,
+    "sha256": "1e92d9f04d73314c3b4e3009665e1dfe2f61d0c7ea98c5f23ab232e58cae1724",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.10.0/AsyncConfigPortal-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.10.0/AsyncConfigPortal-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.11.0/AsyncConfigPortal-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.11.0.tar.gz",
+    "size_bytes": 139290,
+    "sha256": "1296a7287948b75019f835390f3483494b993785efd21cc22750cc19a32ffe41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.11.0/AsyncConfigPortal-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.11.0/AsyncConfigPortal-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.12.0/AsyncConfigPortal-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.12.0.tar.gz",
+    "size_bytes": 141283,
+    "sha256": "ea157ed6309a4e890faeed1defcdace67644f83536a0f1ad98a72daa9bf86e81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.12.0/AsyncConfigPortal-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.12.0/AsyncConfigPortal-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.13.0/AsyncConfigPortal-0.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.13.0.tar.gz",
+    "size_bytes": 142239,
+    "sha256": "3b95b0dc1fcdbf4cb5505db8363dc6cab12f5b4b29287a243eade945bba086bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.13.0/AsyncConfigPortal-0.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.13.0/AsyncConfigPortal-0.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.13.1/AsyncConfigPortal-0.13.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.13.1.tar.gz",
+    "size_bytes": 142437,
+    "sha256": "4bdb68881f3fa202a5d44a42cd40325dabe08b7f5af42f4ae09f62e53190019c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.13.1/AsyncConfigPortal-0.13.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.13.1/AsyncConfigPortal-0.13.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.13.2/AsyncConfigPortal-0.13.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.13.2.tar.gz",
+    "size_bytes": 142703,
+    "sha256": "75d6fde6ff4601cf748cd3488422d302e16f1fe5db05ac7327998b320324cbc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.13.2/AsyncConfigPortal-0.13.2.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.13.2/AsyncConfigPortal-0.13.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.14.0/AsyncConfigPortal-0.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.14.0.tar.gz",
+    "size_bytes": 146570,
+    "sha256": "8628af82d38d7ffb30b4815dbb6335e9b7d31d3d0d952ecc440a0b70974611b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.14.0/AsyncConfigPortal-0.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.14.0/AsyncConfigPortal-0.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.15.0/AsyncConfigPortal-0.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.15.0.tar.gz",
+    "size_bytes": 147473,
+    "sha256": "4569e62ab5b052d568b489952eb9a98bdca197763eed2841b356daa514734fcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.15.0/AsyncConfigPortal-0.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.15.0/AsyncConfigPortal-0.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.15.1/AsyncConfigPortal-0.15.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.15.1.tar.gz",
+    "size_bytes": 147483,
+    "sha256": "ce9c7e011ab6965de93e07ce3c253cbe89b925395c5f58ff17c69faf2f09d67a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.15.1/AsyncConfigPortal-0.15.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.15.1/AsyncConfigPortal-0.15.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.16.0/AsyncConfigPortal-0.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.16.0.tar.gz",
+    "size_bytes": 149031,
+    "sha256": "b2361f0d29ce79a3c7edc91c976dbbd89855c5de8933fae0f4e96e02b9858232",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.16.0/AsyncConfigPortal-0.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.16.0/AsyncConfigPortal-0.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.16.1/AsyncConfigPortal-0.16.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.16.1.tar.gz",
+    "size_bytes": 149738,
+    "sha256": "3d0d2669ebf2839c41632a1e381c977c385ac7426355cc6df4dfa730c24cc0ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.16.1/AsyncConfigPortal-0.16.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.16.1/AsyncConfigPortal-0.16.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.17.0/AsyncConfigPortal-0.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.17.0.tar.gz",
+    "size_bytes": 150201,
+    "sha256": "08c4c13924e2065bc7f0a05c3b8245e08f47df0002c706fcaadb8b72aa766022",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.17.0/AsyncConfigPortal-0.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.17.0/AsyncConfigPortal-0.17.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.18.0/AsyncConfigPortal-0.18.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.18.0.tar.gz",
+    "size_bytes": 166857,
+    "sha256": "e931208d3ad150b889a74ffca49dee1c9434e6cf2b03444f576c6dd26e9ec6df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.18.0/AsyncConfigPortal-0.18.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.18.0/AsyncConfigPortal-0.18.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.2.0/AsyncConfigPortal-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.2.0.tar.gz",
+    "size_bytes": 111400,
+    "sha256": "2989a44c9e148c14cdc40092bcb9639c2f90233d39fbf23917da5f069e9ea2dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.2.0/AsyncConfigPortal-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.2.0/AsyncConfigPortal-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.2.1/AsyncConfigPortal-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.2.1.tar.gz",
+    "size_bytes": 111915,
+    "sha256": "36e0d1774ad707aac24f1fb33a95c6092a99b0a1f3ff1dcc99b1b7425157587c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.2.1/AsyncConfigPortal-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.2.1/AsyncConfigPortal-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.3.0/AsyncConfigPortal-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.3.0.tar.gz",
+    "size_bytes": 113608,
+    "sha256": "1ea8551d53db6548ad55055182819a4a1434160c96ecae3704660b9601d30b03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.3.0/AsyncConfigPortal-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.3.0/AsyncConfigPortal-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.4.0/AsyncConfigPortal-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.4.0.tar.gz",
+    "size_bytes": 114650,
+    "sha256": "23dce94545151e8360cad3e1b5ea477b4757937b2e5e559ff5cbc1fbc116c9d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.4.0/AsyncConfigPortal-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.4.0/AsyncConfigPortal-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.4.1/AsyncConfigPortal-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.4.1.tar.gz",
+    "size_bytes": 115133,
+    "sha256": "5470c4514c8ec7f371d6ea1ff0ebd49e7d6eb2fb43c01149701a12088e99d7de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.4.1/AsyncConfigPortal-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.4.1/AsyncConfigPortal-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.4.2/AsyncConfigPortal-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.4.2.tar.gz",
+    "size_bytes": 115711,
+    "sha256": "e6589867699c4868970f57c483dec12fb61c69c3da2667daa8bbcdca07fcef8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.4.2/AsyncConfigPortal-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.4.2/AsyncConfigPortal-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.4.3/AsyncConfigPortal-0.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.4.3.tar.gz",
+    "size_bytes": 115798,
+    "sha256": "c8ba5deda8ea66a048f0d73372954842d68cd8a84e107285481c5cdbaad74a8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.4.3/AsyncConfigPortal-0.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.4.3/AsyncConfigPortal-0.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.5.0/AsyncConfigPortal-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.5.0.tar.gz",
+    "size_bytes": 121004,
+    "sha256": "df1cc8e98cc4396165b484313a1157a8590159f5715bb8c208cf38329bfad353",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.5.0/AsyncConfigPortal-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.5.0/AsyncConfigPortal-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.5.1/AsyncConfigPortal-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.5.1.tar.gz",
+    "size_bytes": 121871,
+    "sha256": "d109388939a0e444173801663bdc15852841bac77c55d669a975025aa113d48a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.5.1/AsyncConfigPortal-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.5.1/AsyncConfigPortal-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.5.2/AsyncConfigPortal-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.5.2.tar.gz",
+    "size_bytes": 122297,
+    "sha256": "a44abd78bc1c29b1b02388a8c1c498296f43212a512a886b40a9b301a49ece87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.5.2/AsyncConfigPortal-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.5.2/AsyncConfigPortal-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.6.0/AsyncConfigPortal-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.6.0.tar.gz",
+    "size_bytes": 123710,
+    "sha256": "0d0cae7f491eff96eade5d25d74cea1cb1f1cc936aa6ace893fb1bcf0be459ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.6.0/AsyncConfigPortal-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.6.0/AsyncConfigPortal-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.7.0/AsyncConfigPortal-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.7.0.tar.gz",
+    "size_bytes": 124822,
+    "sha256": "9bcd048f80c125b34271fca76d6bed3d5fc5b3a96a4901810f6e017df0032c4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.7.0/AsyncConfigPortal-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.7.0/AsyncConfigPortal-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.8.0/AsyncConfigPortal-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.8.0.tar.gz",
+    "size_bytes": 125130,
+    "sha256": "19f783cca77408b35af0dff1c7c08ec93f07e4195f0def789c45e0a9c244cc56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.8.0/AsyncConfigPortal-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.8.0/AsyncConfigPortal-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.9.0/AsyncConfigPortal-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.9.0.tar.gz",
+    "size_bytes": 129405,
+    "sha256": "745b5b564653ff704b531042600866bd636a863de2c282acaeddbffb6c97615a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.9.0/AsyncConfigPortal-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.9.0/AsyncConfigPortal-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.9.1/AsyncConfigPortal-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.9.1.tar.gz",
+    "size_bytes": 129460,
+    "sha256": "054bf3ede22124b950b02a3888ad2480a3aef1b2d73e110a9a239a3e731434df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.9.1/AsyncConfigPortal-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.9.1/AsyncConfigPortal-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncConfigPortal/0.9.2/AsyncConfigPortal-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncConfigPortal-0.9.2.tar.gz",
+    "size_bytes": 130031,
+    "sha256": "7fef035a53c566f5a1e8ae905bf74a8051a970aa74a7ab8d5d8931706957b528",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncConfigPortal/0.9.2/AsyncConfigPortal-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncConfigPortal/0.9.2/AsyncConfigPortal-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncWiFiPortal/0.1.0/AsyncWiFiPortal-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWiFiPortal-0.1.0.tar.gz",
+    "size_bytes": 25569,
+    "sha256": "be861d11023d34c797746c402cfd2dbc08837bf27eafbb3b8619688bcd21b416",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncWiFiPortal/0.1.0/AsyncWiFiPortal-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncWiFiPortal/0.1.0/AsyncWiFiPortal-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncWiFiPortal/0.2.0/AsyncWiFiPortal-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWiFiPortal-0.2.0.tar.gz",
+    "size_bytes": 26497,
+    "sha256": "edd2e09bdc55bf418d03b616a77705a2a5d04965dd2a59d571fc48bcd6c48de0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncWiFiPortal/0.2.0/AsyncWiFiPortal-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncWiFiPortal/0.2.0/AsyncWiFiPortal-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncWiFiPortal/0.2.1/AsyncWiFiPortal-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWiFiPortal-0.2.1.tar.gz",
+    "size_bytes": 26770,
+    "sha256": "17d9e1f8f77b7e1f684141d4a0a08f2ccdcc3d5c985f4629a815294f13475589",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncWiFiPortal/0.2.1/AsyncWiFiPortal-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncWiFiPortal/0.2.1/AsyncWiFiPortal-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/AsyncWiFiPortal/0.2.2/AsyncWiFiPortal-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWiFiPortal-0.2.2.tar.gz",
+    "size_bytes": 26875,
+    "sha256": "8e8ecd150be3bd69b0c9ecdcdfb0036da8c2212a9bcbd95f48f48333c04a1f9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/AsyncWiFiPortal/0.2.2/AsyncWiFiPortal-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/AsyncWiFiPortal/0.2.2/AsyncWiFiPortal-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/ButtonEvents/0.1.0/ButtonEvents-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonEvents-0.1.0.tar.gz",
+    "size_bytes": 11883,
+    "sha256": "dd7892e0aad06fac57f7e8ecdbc51217cc0fa0a838f967cc8c0a5fcd98d6c749",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/ButtonEvents/0.1.0/ButtonEvents-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/ButtonEvents/0.1.0/ButtonEvents-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/ButtonEvents/0.2.0/ButtonEvents-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonEvents-0.2.0.tar.gz",
+    "size_bytes": 13451,
+    "sha256": "0c1e139c085af3238abc823e2997b877e29de61e7b2a98044c8d0f2fe7f0e4a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/ButtonEvents/0.2.0/ButtonEvents-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/ButtonEvents/0.2.0/ButtonEvents-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/ButtonEvents/0.3.0/ButtonEvents-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonEvents-0.3.0.tar.gz",
+    "size_bytes": 13855,
+    "sha256": "c65e8570e909b9d9bd20894d6befc4d2be8230170a7ded812ce6686912237fec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/ButtonEvents/0.3.0/ButtonEvents-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/ButtonEvents/0.3.0/ButtonEvents-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/DS18B20Sensor/0.1.0/DS18B20Sensor-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS18B20Sensor-0.1.0.tar.gz",
+    "size_bytes": 12868,
+    "sha256": "bec3edec86c87d987438f0db81da47da75db635a816684c8c03431bf39185ce8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/DS18B20Sensor/0.1.0/DS18B20Sensor-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/DS18B20Sensor/0.1.0/DS18B20Sensor-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/DigitalOutput/0.1.2/DigitalOutput-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalOutput-0.1.2.tar.gz",
+    "size_bytes": 14963,
+    "sha256": "9c7ca1880a221f54e9f5459dd3eef99a1b525bb89829cd22e74bc674472f7222",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/DigitalOutput/0.1.2/DigitalOutput-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/DigitalOutput/0.1.2/DigitalOutput-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/DigitalOutput/0.2.0/DigitalOutput-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalOutput-0.2.0.tar.gz",
+    "size_bytes": 15541,
+    "sha256": "fd863abe3357675e54044ba6b0fc78c1a52dde888dff813b260f7474902c70ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/DigitalOutput/0.2.0/DigitalOutput-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/DigitalOutput/0.2.0/DigitalOutput-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/DigitalOutput/0.3.0/DigitalOutput-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalOutput-0.3.0.tar.gz",
+    "size_bytes": 18141,
+    "sha256": "75d46a5d4df93df4405bc2e1511a00f0037b32a8ced5273301b1478295aeace4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/DigitalOutput/0.3.0/DigitalOutput-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/DigitalOutput/0.3.0/DigitalOutput-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/DigitalOutput/0.3.1/DigitalOutput-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalOutput-0.3.1.tar.gz",
+    "size_bytes": 18970,
+    "sha256": "92b3a45d251ff003ebec17a67d649af7f1e153e7793933488a84771b40271526",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/DigitalOutput/0.3.1/DigitalOutput-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/DigitalOutput/0.3.1/DigitalOutput-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/DigitalOutput/0.4.0/DigitalOutput-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalOutput-0.4.0.tar.gz",
+    "size_bytes": 20105,
+    "sha256": "36c1c75ac172eb4a7816498cbb81bee392ba4c361159bb9d406a3bccfd42b97d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/DigitalOutput/0.4.0/DigitalOutput-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/DigitalOutput/0.4.0/DigitalOutput-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/DigitalOutput/0.4.1/DigitalOutput-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalOutput-0.4.1.tar.gz",
+    "size_bytes": 20656,
+    "sha256": "11d96c7e9fa90a52af4554be96e013ac3ce2f388dbe0e3aba5d6e0df5f87f0ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/DigitalOutput/0.4.1/DigitalOutput-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/DigitalOutput/0.4.1/DigitalOutput-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/DigitalOutput/0.5.0/DigitalOutput-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalOutput-0.5.0.tar.gz",
+    "size_bytes": 26081,
+    "sha256": "ac9c694f05b206c8025e0f4c31d278e97e7ce7f689de0f970c587e54c407bbd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/DigitalOutput/0.5.0/DigitalOutput-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/DigitalOutput/0.5.0/DigitalOutput-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/DigitalOutput/0.5.1/DigitalOutput-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalOutput-0.5.1.tar.gz",
+    "size_bytes": 26669,
+    "sha256": "5e1bced179e1d5cef1fba1c304b282306a21a42295a4d6e127dc87fd9ee8b39f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/DigitalOutput/0.5.1/DigitalOutput-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/DigitalOutput/0.5.1/DigitalOutput-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/EEPROMPreferences/0.1.0/EEPROMPreferences-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROMPreferences-0.1.0.tar.gz",
+    "size_bytes": 19994,
+    "sha256": "c20188e5e3596c9969afc10bafdbd06d503e605f415679251918ba7bcfc8385b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/EEPROMPreferences/0.1.0/EEPROMPreferences-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/EEPROMPreferences/0.1.0/EEPROMPreferences-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/EEPROMPreferences/0.2.0/EEPROMPreferences-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROMPreferences-0.2.0.tar.gz",
+    "size_bytes": 18986,
+    "sha256": "78a27bd08580f320ef599443764590650787ca30574140b376700d9a17b1d8de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/EEPROMPreferences/0.2.0/EEPROMPreferences-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/EEPROMPreferences/0.2.0/EEPROMPreferences-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/GeigerMeasurement/1.0.2/GeigerMeasurement-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeigerMeasurement-1.0.2.tar.gz",
+    "size_bytes": 43610,
+    "sha256": "7f88e3f642d93def437e25062aef7e477e0606dc22ff418cf6b7bd429af41b47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/GeigerMeasurement/1.0.2/GeigerMeasurement-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/GeigerMeasurement/1.0.2/GeigerMeasurement-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/GeigerMeasurement/1.0.3/GeigerMeasurement-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeigerMeasurement-1.0.3.tar.gz",
+    "size_bytes": 44332,
+    "sha256": "41f8ec2de540c0f379175f6d9745d25ac4608fb65d6947abdeb0c716853a1b03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/GeigerMeasurement/1.0.3/GeigerMeasurement-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/GeigerMeasurement/1.0.3/GeigerMeasurement-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/GeigerMeasurement/1.1.0/GeigerMeasurement-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeigerMeasurement-1.1.0.tar.gz",
+    "size_bytes": 50180,
+    "sha256": "95e841e308e1e727d3d5cd3175109abafb9976575bc1e662bdf60cbab533e22e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/GeigerMeasurement/1.1.0/GeigerMeasurement-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/GeigerMeasurement/1.1.0/GeigerMeasurement-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/GeigerMeasurement/1.1.1/GeigerMeasurement-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeigerMeasurement-1.1.1.tar.gz",
+    "size_bytes": 50632,
+    "sha256": "6f3423b0957c9f983dd4d98f9b688d4bef456e4b91ee3e4186ec41732edc9c5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/GeigerMeasurement/1.1.1/GeigerMeasurement-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/GeigerMeasurement/1.1.1/GeigerMeasurement-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/HomeAssistantDiscovery/0.1.0/HomeAssistantDiscovery-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantDiscovery-0.1.0.tar.gz",
+    "size_bytes": 18504,
+    "sha256": "1d9fd924af836bcc725b5645d54ea021e5d92f42f33812fd9b6f19786437f1b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/HomeAssistantDiscovery/0.1.0/HomeAssistantDiscovery-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/HomeAssistantDiscovery/0.1.0/HomeAssistantDiscovery-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/HomeAssistantDiscovery/0.1.1/HomeAssistantDiscovery-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantDiscovery-0.1.1.tar.gz",
+    "size_bytes": 19171,
+    "sha256": "6a026afec3fcfeca0182531f50889f0bbf5af632f64b4ccd02a2fd8f4b162490",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/HomeAssistantDiscovery/0.1.1/HomeAssistantDiscovery-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/HomeAssistantDiscovery/0.1.1/HomeAssistantDiscovery-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/HomeAssistantDiscovery/0.1.2/HomeAssistantDiscovery-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantDiscovery-0.1.2.tar.gz",
+    "size_bytes": 19459,
+    "sha256": "ea365dd01d0e4ad252be94a9f17176d226c8027d50eacb4c438cf99305f38120",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/HomeAssistantDiscovery/0.1.2/HomeAssistantDiscovery-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/HomeAssistantDiscovery/0.1.2/HomeAssistantDiscovery-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/HomeAssistantDiscovery/0.2.0/HomeAssistantDiscovery-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantDiscovery-0.2.0.tar.gz",
+    "size_bytes": 21401,
+    "sha256": "e8b008e6dca072ff4c9dffd74417d69e44a93e2727736dfa3f97905f2777fac0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/HomeAssistantDiscovery/0.2.0/HomeAssistantDiscovery-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/HomeAssistantDiscovery/0.2.0/HomeAssistantDiscovery-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/Host/0.1.1/Host-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Host-0.1.1.tar.gz",
+    "size_bytes": 6980,
+    "sha256": "8791aee76507ff68d56bbaf586fa3bf05d64006b287e161d9be195e596062321",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/Host/0.1.1/Host-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/Host/0.1.1/Host-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/Host/0.2.0/Host-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Host-0.2.0.tar.gz",
+    "size_bytes": 7714,
+    "sha256": "eea39b222bd3a23f1efef67e3a5a72dcc33542b02fc90929f302eba93c15d24d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/Host/0.2.0/Host-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/Host/0.2.0/Host-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/Host/0.2.1/Host-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Host-0.2.1.tar.gz",
+    "size_bytes": 7750,
+    "sha256": "5470f05fdbe790b67aa56ab391350cbac212d6577a3e9457a3bb277a06a10fb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/Host/0.2.1/Host-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/Host/0.2.1/Host-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/Host/0.3.0/Host-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Host-0.3.0.tar.gz",
+    "size_bytes": 8546,
+    "sha256": "b5a6147b86baba692f01cdecbd637833c2555f18b37bf1ab119c8834a8abacb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/Host/0.3.0/Host-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/Host/0.3.0/Host-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/Host/0.4.0/Host-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Host-0.4.0.tar.gz",
+    "size_bytes": 9455,
+    "sha256": "b0e70c8c677cadc99446c81daa1ee3e4fa9e84180adf984619ba1fd6a5eee18a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/Host/0.4.0/Host-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/Host/0.4.0/Host-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/Host/0.6.0/Host-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Host-0.6.0.tar.gz",
+    "size_bytes": 10798,
+    "sha256": "aa131b8cc563dff0d433dadf0f6f0cbca1e9db40518a2d075b6027b18f01057f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/Host/0.6.0/Host-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/Host/0.6.0/Host-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/Host/0.7.0/Host-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Host-0.7.0.tar.gz",
+    "size_bytes": 11878,
+    "sha256": "e407fbb25dbacb8e70ef6449216a069ebe8528e4979905697679d86d81141580",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/Host/0.7.0/Host-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/Host/0.7.0/Host-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/HttpDigestAuth/0.1.0/HttpDigestAuth-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HttpDigestAuth-0.1.0.tar.gz",
+    "size_bytes": 5700,
+    "sha256": "c870ab75d72fbf8205648f8cc68e8440744133af87c4a29311014720e397a6e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/HttpDigestAuth/0.1.0/HttpDigestAuth-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/HttpDigestAuth/0.1.0/HttpDigestAuth-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/HttpDigestAuth/0.2.0/HttpDigestAuth-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HttpDigestAuth-0.2.0.tar.gz",
+    "size_bytes": 6104,
+    "sha256": "5e29bde8083e72a9e0c30a4fb3bade4aa1692c5abb8f04b010f569c273ca2b4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/HttpDigestAuth/0.2.0/HttpDigestAuth-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/HttpDigestAuth/0.2.0/HttpDigestAuth-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/HttpDigestAuth/0.3.0/HttpDigestAuth-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HttpDigestAuth-0.3.0.tar.gz",
+    "size_bytes": 7290,
+    "sha256": "1dd6e2e61435ee6f38245bb2389973d22dedb69f8bea389a9672111d7bc0581b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/HttpDigestAuth/0.3.0/HttpDigestAuth-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/HttpDigestAuth/0.3.0/HttpDigestAuth-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/HttpDigestAuth/0.3.1/HttpDigestAuth-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HttpDigestAuth-0.3.1.tar.gz",
+    "size_bytes": 8186,
+    "sha256": "6dd1173b8ef4cf6a20ec9f1fcf0563bc6f9c98c3518510b49bbf7ee807c22e21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/HttpDigestAuth/0.3.1/HttpDigestAuth-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/HttpDigestAuth/0.3.1/HttpDigestAuth-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/HttpDigestAuth/0.4.0/HttpDigestAuth-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HttpDigestAuth-0.4.0.tar.gz",
+    "size_bytes": 9705,
+    "sha256": "0f763ee61070b3ec0720a6edb0a9e36e47e43dca855c80f2f35df20251630d56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/HttpDigestAuth/0.4.0/HttpDigestAuth-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/HttpDigestAuth/0.4.0/HttpDigestAuth-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/HttpDigestAuth/0.4.1/HttpDigestAuth-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HttpDigestAuth-0.4.1.tar.gz",
+    "size_bytes": 9825,
+    "sha256": "4314685e36f4e34e2b82e4d0ef10888bffa38625ed9623cbbe1b5cc91ce69b4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/HttpDigestAuth/0.4.1/HttpDigestAuth-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/HttpDigestAuth/0.4.1/HttpDigestAuth-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.1.0/NetworkManager-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.1.0.tar.gz",
+    "size_bytes": 83754,
+    "sha256": "ffc59d32ff361c7562eb13fb7ebdaa0c2f93ca44e0d3f154079d2a78321167fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.1.0/NetworkManager-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.1.0/NetworkManager-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.1.1/NetworkManager-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.1.1.tar.gz",
+    "size_bytes": 84378,
+    "sha256": "90a6a99e7b4bc2575b8974252ccdf761328f9c81c7c9d575cbcd5dab6dfe0df6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.1.1/NetworkManager-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.1.1/NetworkManager-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.1.2/NetworkManager-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.1.2.tar.gz",
+    "size_bytes": 84467,
+    "sha256": "d3f0f2c6f68f9548724505507d431315dc310ed1c17dc54b4319716f68f5c7b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.1.2/NetworkManager-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.1.2/NetworkManager-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.1.3/NetworkManager-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.1.3.tar.gz",
+    "size_bytes": 84605,
+    "sha256": "bc29b546754d45f4d59572fdd95f2deefc9d915770a6c8b4bf5d07ebd876098d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.1.3/NetworkManager-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.1.3/NetworkManager-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.1.4/NetworkManager-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.1.4.tar.gz",
+    "size_bytes": 84663,
+    "sha256": "cab8a7f03dbc30accc4c2cffdea3eb09f8ad7c879ae8390445ee647bc7d711c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.1.4/NetworkManager-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.1.4/NetworkManager-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.1.5/NetworkManager-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.1.5.tar.gz",
+    "size_bytes": 84820,
+    "sha256": "b36f0f5091f2a9a3119ffa5fdc11f385f9f1b13b7e7f20b6f4744d8a20e83f8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.1.5/NetworkManager-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.1.5/NetworkManager-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.1.6/NetworkManager-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.1.6.tar.gz",
+    "size_bytes": 84953,
+    "sha256": "b290ffbac5e3514bf3dc5befbff2bc8af1d15f652302dfa0df0843d58f82f6f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.1.6/NetworkManager-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.1.6/NetworkManager-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.1.7/NetworkManager-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.1.7.tar.gz",
+    "size_bytes": 85911,
+    "sha256": "5d12e898bd75712e4a8f1892e50a360ba76f4a7d93bbdcc217f3433b64ba8535",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.1.7/NetworkManager-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.1.7/NetworkManager-0.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.1.8/NetworkManager-0.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.1.8.tar.gz",
+    "size_bytes": 86347,
+    "sha256": "eddd355b81179d46bfb8105f387296f6bd539eedbf1963b22adef8b329545d1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.1.8/NetworkManager-0.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.1.8/NetworkManager-0.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.2.0/NetworkManager-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.2.0.tar.gz",
+    "size_bytes": 88148,
+    "sha256": "b975388a4bbb55129891e0f3332a5d45b8e08a50deb4cb448cffc004b9c3d315",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.2.0/NetworkManager-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.2.0/NetworkManager-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.3.0/NetworkManager-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.3.0.tar.gz",
+    "size_bytes": 115058,
+    "sha256": "3d618585c9b4310dc2f6e25567484d02bb9cc7d2469c2fb4794eda5f2a93a0bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.3.0/NetworkManager-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.3.0/NetworkManager-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.4.0/NetworkManager-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.4.0.tar.gz",
+    "size_bytes": 116845,
+    "sha256": "9311d9e91b0e1904abd0c69cac55db9954e9a3c72446d2864f14e7d5b47434af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.4.0/NetworkManager-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.4.0/NetworkManager-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.4.1/NetworkManager-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.4.1.tar.gz",
+    "size_bytes": 119520,
+    "sha256": "a3bff19bc912412632ad179cdc219aafa08cdcb33e99a7f249f3acde84c1c654",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.4.1/NetworkManager-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.4.1/NetworkManager-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.5.0/NetworkManager-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.5.0.tar.gz",
+    "size_bytes": 122385,
+    "sha256": "b07e788db41b73d65e472f555bb6786ea210cfe4a173ff1cbd7de8492e13c3b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.5.0/NetworkManager-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.5.0/NetworkManager-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.5.1/NetworkManager-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.5.1.tar.gz",
+    "size_bytes": 122405,
+    "sha256": "f7101dc36c28d9981404d262cf9bc78151027c35e32424ad24016ad13f924a65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.5.1/NetworkManager-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.5.1/NetworkManager-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkManager/0.5.2/NetworkManager-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkManager-0.5.2.tar.gz",
+    "size_bytes": 123079,
+    "sha256": "de110a955bef04c09b346936799f01918fb55e98441c9de236444382ccb07a5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkManager/0.5.2/NetworkManager-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkManager/0.5.2/NetworkManager-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.1.0/NetworkProfile-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.1.0.tar.gz",
+    "size_bytes": 31572,
+    "sha256": "b6012dfd7e231d77fe069ec8045e1c49a3a575e2afd03aeac4bc98fbcfd44964",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.1.0/NetworkProfile-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.1.0/NetworkProfile-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.10.0/NetworkProfile-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.10.0.tar.gz",
+    "size_bytes": 76398,
+    "sha256": "a5eb7be09e3ebd2ae03487ff49dd4e8aef809d7e24028ad2483e7ac32cc6c410",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.10.0/NetworkProfile-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.10.0/NetworkProfile-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.10.1/NetworkProfile-0.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.10.1.tar.gz",
+    "size_bytes": 76816,
+    "sha256": "c15426282257d1cb02961b16cc390492b32943eac6a5d78172a8376700f11928",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.10.1/NetworkProfile-0.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.10.1/NetworkProfile-0.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.11.0/NetworkProfile-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.11.0.tar.gz",
+    "size_bytes": 80012,
+    "sha256": "77279147d5b609909156642e7add7de0d912ae55a06aff3edb2cdbf7725370cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.11.0/NetworkProfile-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.11.0/NetworkProfile-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.11.1/NetworkProfile-0.11.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.11.1.tar.gz",
+    "size_bytes": 80292,
+    "sha256": "c6a12c034fe110bbff21cb9962d8385e80bed44f26593850ef2b03d3386adce8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.11.1/NetworkProfile-0.11.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.11.1/NetworkProfile-0.11.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.11.2/NetworkProfile-0.11.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.11.2.tar.gz",
+    "size_bytes": 80334,
+    "sha256": "91c280c5daa109f15fc2fdc703c005ecbd2853113b41fc2f7bc3d52d5e97b2f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.11.2/NetworkProfile-0.11.2.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.11.2/NetworkProfile-0.11.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.11.3/NetworkProfile-0.11.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.11.3.tar.gz",
+    "size_bytes": 81071,
+    "sha256": "0f129374248ed500a7d9bc5e47834bc0c5d0b8b9f6d06543c39295c14907ee43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.11.3/NetworkProfile-0.11.3.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.11.3/NetworkProfile-0.11.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.2.0/NetworkProfile-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.2.0.tar.gz",
+    "size_bytes": 32177,
+    "sha256": "534e1870e13e40e64b984977df8175556f998e8560db4459456b24965249b564",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.2.0/NetworkProfile-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.2.0/NetworkProfile-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.3.0/NetworkProfile-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.3.0.tar.gz",
+    "size_bytes": 32964,
+    "sha256": "ac06b390bd727e89ef817993be918db259a8e9410d12c1c624b09f1c4a80167a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.3.0/NetworkProfile-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.3.0/NetworkProfile-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.4.0/NetworkProfile-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.4.0.tar.gz",
+    "size_bytes": 34902,
+    "sha256": "aed848a0a0bc3ec2c5d65f1f4347a2a22e3ed1a87e5357feddf93988cfa3122d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.4.0/NetworkProfile-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.4.0/NetworkProfile-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.4.1/NetworkProfile-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.4.1.tar.gz",
+    "size_bytes": 35005,
+    "sha256": "b0d2547a275909bef991d65cebf45f9ca6becf9640bb6bd9eecec11589e52fdb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.4.1/NetworkProfile-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.4.1/NetworkProfile-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.5.0/NetworkProfile-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.5.0.tar.gz",
+    "size_bytes": 37739,
+    "sha256": "d34b21657fdc1160ccdddd269aa79745361eed3a41167cd2f8bd215322e5afe4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.5.0/NetworkProfile-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.5.0/NetworkProfile-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.5.1/NetworkProfile-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.5.1.tar.gz",
+    "size_bytes": 38128,
+    "sha256": "7ed2b76a060fcfe4cc9054c4402e2b18969832a288b56fd0c5c4fd38833b952a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.5.1/NetworkProfile-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.5.1/NetworkProfile-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.5.2/NetworkProfile-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.5.2.tar.gz",
+    "size_bytes": 40059,
+    "sha256": "6198bffb335d5a226b57ea40fb897e50d54fda26146685931bb254a969d1985d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.5.2/NetworkProfile-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.5.2/NetworkProfile-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.5.3/NetworkProfile-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.5.3.tar.gz",
+    "size_bytes": 40511,
+    "sha256": "ff57ee7d3d0e6a9a15dda111c4ef087619189162e9260b29319d5970cff0e3a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.5.3/NetworkProfile-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.5.3/NetworkProfile-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.6.0/NetworkProfile-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.6.0.tar.gz",
+    "size_bytes": 50294,
+    "sha256": "25adedd5f6cb2ebd99a6ed07091b22163b1bdd14131b506988ae753dbfc24d4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.6.0/NetworkProfile-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.6.0/NetworkProfile-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.7.0/NetworkProfile-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.7.0.tar.gz",
+    "size_bytes": 68025,
+    "sha256": "b4700a71db2d6b708448add59da539c99c341079f54b8896ed09e23c68c7f5fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.7.0/NetworkProfile-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.7.0/NetworkProfile-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.8.0/NetworkProfile-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.8.0.tar.gz",
+    "size_bytes": 70943,
+    "sha256": "556169aae7682383fa537a78b56b227282801901502bc08203f674eab27b64ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.8.0/NetworkProfile-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.8.0/NetworkProfile-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/NetworkProfile/0.9.0/NetworkProfile-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkProfile-0.9.0.tar.gz",
+    "size_bytes": 74000,
+    "sha256": "87fc71c0d2394a7a43483ed83ef32ba781f9c5c79e112fa517f257c73e41f64a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/NetworkProfile/0.9.0/NetworkProfile-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/NetworkProfile/0.9.0/NetworkProfile-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/RangeMonitor/0.1.0/RangeMonitor-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RangeMonitor-0.1.0.tar.gz",
+    "size_bytes": 16630,
+    "sha256": "b79ca7645d91e65e7fdd64d922758da9c59a4026bebbcf92ccbde1e9b32e2c47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/RangeMonitor/0.1.0/RangeMonitor-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/RangeMonitor/0.1.0/RangeMonitor-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/RangeMonitor/0.2.0/RangeMonitor-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RangeMonitor-0.2.0.tar.gz",
+    "size_bytes": 16991,
+    "sha256": "6959966a6b2ba0765a8fa7867aff415cad4c8b992925edeb6a7ce4ed72532e1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/RangeMonitor/0.2.0/RangeMonitor-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/RangeMonitor/0.2.0/RangeMonitor-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/RangeMonitor/0.3.0/RangeMonitor-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RangeMonitor-0.3.0.tar.gz",
+    "size_bytes": 17683,
+    "sha256": "4d7097fd7e3e0c9b205dcf3cffb3efe4886f2b10cbba83630e8e5d3dddd7adfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/RangeMonitor/0.3.0/RangeMonitor-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/RangeMonitor/0.3.0/RangeMonitor-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/RangeMonitor/0.4.0/RangeMonitor-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RangeMonitor-0.4.0.tar.gz",
+    "size_bytes": 18234,
+    "sha256": "db879cd99657d4aff4ccbb2c54476f7994a1d4ef5e724cddd38471e64620f89a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/RangeMonitor/0.4.0/RangeMonitor-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/RangeMonitor/0.4.0/RangeMonitor-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/RunningStatistics/1.0.1/RunningStatistics-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RunningStatistics-1.0.1.tar.gz",
+    "size_bytes": 27293,
+    "sha256": "bda0937b214383224397bc2ef8f112994a390a50c828fbf3db4a79eda75ee154",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/RunningStatistics/1.0.1/RunningStatistics-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/RunningStatistics/1.0.1/RunningStatistics-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/RunningStatistics/1.1.0/RunningStatistics-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RunningStatistics-1.1.0.tar.gz",
+    "size_bytes": 27802,
+    "sha256": "1e2317ca3570901ee7df99da573ba16cd715d271705a5f6f9261384dbf1659a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/RunningStatistics/1.1.0/RunningStatistics-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/RunningStatistics/1.1.0/RunningStatistics-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/RunningStatistics/1.1.1/RunningStatistics-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RunningStatistics-1.1.1.tar.gz",
+    "size_bytes": 29137,
+    "sha256": "06e371ea0421e16ccd3d9a8ea6210724131822cfbac16a9f5818b395b1ee8458",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/RunningStatistics/1.1.1/RunningStatistics-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/RunningStatistics/1.1.1/RunningStatistics-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SafeSerial/1.0.0/SafeSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SafeSerial-1.0.0.tar.gz",
+    "size_bytes": 14787,
+    "sha256": "39b27531b0e3feb73e158287869b2c8a609b9bf3cb095392edbdab0fdd64ff8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SafeSerial/1.0.0/SafeSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SafeSerial/1.0.0/SafeSerial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SafeSerial/1.0.3/SafeSerial-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SafeSerial-1.0.3.tar.gz",
+    "size_bytes": 15990,
+    "sha256": "53883e0d6f316e62826da68faeb2e4c7b03fe2a409029080465ed71535b1f92b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SafeSerial/1.0.3/SafeSerial-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SafeSerial/1.0.3/SafeSerial-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SafeSerial/1.1.0/SafeSerial-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SafeSerial-1.1.0.tar.gz",
+    "size_bytes": 18901,
+    "sha256": "3de9297cb0a9c3afce5205250c36db75a57018b17bc59dcca9223a19c370248c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SafeSerial/1.1.0/SafeSerial-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SafeSerial/1.1.0/SafeSerial-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SafeSerial/1.1.1/SafeSerial-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SafeSerial-1.1.1.tar.gz",
+    "size_bytes": 19369,
+    "sha256": "17b6b231da83049a2b10571aef9e87ec2ccc4904d7d02402a0e1ab9dd3dfc2b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SafeSerial/1.1.1/SafeSerial-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SafeSerial/1.1.1/SafeSerial-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SimcomA76xx/0.1.1/SimcomA76xx-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimcomA76xx-0.1.1.tar.gz",
+    "size_bytes": 8925,
+    "sha256": "dcbf51f12e37abac1f194895c5fc7d84dc10572f9440985b43f13b53635d9d50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SimcomA76xx/0.1.1/SimcomA76xx-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SimcomA76xx/0.1.1/SimcomA76xx-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SimcomA76xx/0.2.0/SimcomA76xx-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimcomA76xx-0.2.0.tar.gz",
+    "size_bytes": 9741,
+    "sha256": "f4500e4e81308aeef6b38fdbac16c191645835f01aacb0df74640d9c16b64b81",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SimcomA76xx/0.2.0/SimcomA76xx-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SimcomA76xx/0.2.0/SimcomA76xx-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SimcomA76xx/0.3.0/SimcomA76xx-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimcomA76xx-0.3.0.tar.gz",
+    "size_bytes": 16347,
+    "sha256": "cce41a0cb3a38db056e1adfe1ab0cbb8922f85ccbd2ecc73bd0ae8841adde423",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SimcomA76xx/0.3.0/SimcomA76xx-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SimcomA76xx/0.3.0/SimcomA76xx-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SimcomA76xx/0.4.0/SimcomA76xx-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimcomA76xx-0.4.0.tar.gz",
+    "size_bytes": 17381,
+    "sha256": "cda4b194bae714acd2f6a8d4a80145fbe245a32c6c6a57b58b7a6674258693ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SimcomA76xx/0.4.0/SimcomA76xx-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SimcomA76xx/0.4.0/SimcomA76xx-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SimcomA76xx/0.4.1/SimcomA76xx-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimcomA76xx-0.4.1.tar.gz",
+    "size_bytes": 17943,
+    "sha256": "c297205647da8ed534356d9bc2a607e4c402a26e59d4b0e091321f17bdf57af1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SimcomA76xx/0.4.1/SimcomA76xx-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SimcomA76xx/0.4.1/SimcomA76xx-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SimcomA76xx/0.5.0/SimcomA76xx-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimcomA76xx-0.5.0.tar.gz",
+    "size_bytes": 19533,
+    "sha256": "07016592c4ab17916088eb9733da3b2398a566867945f70ac571c15cf4617e14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SimcomA76xx/0.5.0/SimcomA76xx-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SimcomA76xx/0.5.0/SimcomA76xx-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SimcomA76xx/0.5.1/SimcomA76xx-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimcomA76xx-0.5.1.tar.gz",
+    "size_bytes": 19851,
+    "sha256": "7033c93d0934458d6e8cadfa8a4d3515119131576f98618bd0e0857dee75c4ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SimcomA76xx/0.5.1/SimcomA76xx-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SimcomA76xx/0.5.1/SimcomA76xx-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SimcomA76xx/0.6.0/SimcomA76xx-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimcomA76xx-0.6.0.tar.gz",
+    "size_bytes": 20738,
+    "sha256": "059499faf4c9801e206c2db3e48c3e6b1d61473b52f72f929179b7cf76256bdb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SimcomA76xx/0.6.0/SimcomA76xx-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SimcomA76xx/0.6.0/SimcomA76xx-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SimcomA76xx/0.7.0/SimcomA76xx-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimcomA76xx-0.7.0.tar.gz",
+    "size_bytes": 21831,
+    "sha256": "bd3916ad3cc69ce1095e188f0f9afef48e5921d56125f5830dfb51f9a6cdb4c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SimcomA76xx/0.7.0/SimcomA76xx-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SimcomA76xx/0.7.0/SimcomA76xx-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SyslogSender/0.1.0/SyslogSender-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyslogSender-0.1.0.tar.gz",
+    "size_bytes": 16413,
+    "sha256": "9bd200c708a873234f2be97a97bc9dffa0bd932302e8f89b2f55fd75002293e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SyslogSender/0.1.0/SyslogSender-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SyslogSender/0.1.0/SyslogSender-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SyslogSender/0.1.1/SyslogSender-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyslogSender-0.1.1.tar.gz",
+    "size_bytes": 16931,
+    "sha256": "19897ce945af6b155f635428f2ce08ab6c79df47dcc791bd98940b5dba0ec326",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SyslogSender/0.1.1/SyslogSender-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SyslogSender/0.1.1/SyslogSender-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SyslogSender/0.1.2/SyslogSender-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyslogSender-0.1.2.tar.gz",
+    "size_bytes": 17566,
+    "sha256": "38d4f29782e79cb19c41e95aed253c1b8bac334199b427f0cd784b03039e7b2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SyslogSender/0.1.2/SyslogSender-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SyslogSender/0.1.2/SyslogSender-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SyslogSender/0.1.3/SyslogSender-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyslogSender-0.1.3.tar.gz",
+    "size_bytes": 18167,
+    "sha256": "331adc18ecba3384e0e7b4b9fb4ee0446e1f706da56475b2f14ca9cf68025267",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SyslogSender/0.1.3/SyslogSender-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SyslogSender/0.1.3/SyslogSender-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SyslogSender/0.1.4/SyslogSender-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyslogSender-0.1.4.tar.gz",
+    "size_bytes": 18915,
+    "sha256": "b9f960a2ad943257446402e0f189ffa4ba0f0c047b47ac72ef548f091328675d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SyslogSender/0.1.4/SyslogSender-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SyslogSender/0.1.4/SyslogSender-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SyslogSender/0.2.0/SyslogSender-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyslogSender-0.2.0.tar.gz",
+    "size_bytes": 19860,
+    "sha256": "1f9b1bc84efcd2ac504e6dd5f774e0ea2535b0b8ee81223a0dea9abc4fbf2a14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SyslogSender/0.2.0/SyslogSender-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SyslogSender/0.2.0/SyslogSender-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/SyslogSender/0.2.1/SyslogSender-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyslogSender-0.2.1.tar.gz",
+    "size_bytes": 20317,
+    "sha256": "f196fe36806b841d5d39a460efaf9c5c34c8cf49ac8af3df7a51a90fafb3a643",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/SyslogSender/0.2.1/SyslogSender-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/SyslogSender/0.2.1/SyslogSender-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/TemperatureMonitor/0.1.0/TemperatureMonitor-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TemperatureMonitor-0.1.0.tar.gz",
+    "size_bytes": 19951,
+    "sha256": "d8abd4d02dfddb6598b421c3639fded3bf231a578119f6b12519783db43c19c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/TemperatureMonitor/0.1.0/TemperatureMonitor-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/TemperatureMonitor/0.1.0/TemperatureMonitor-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/TemperatureMonitor/0.2.0/TemperatureMonitor-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TemperatureMonitor-0.2.0.tar.gz",
+    "size_bytes": 20381,
+    "sha256": "6a9880f48d7ec1079b34c8d4121ca5a105461145df2e0d7e061c8e6c36cac838",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/TemperatureMonitor/0.2.0/TemperatureMonitor-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/TemperatureMonitor/0.2.0/TemperatureMonitor-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "soosp/library/TemperatureMonitor/0.3.0/TemperatureMonitor-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TemperatureMonitor-0.3.0.tar.gz",
+    "size_bytes": 20780,
+    "sha256": "c80d4742ddb8074848cd23deddbac9dd65c3a5f8f6b599706c332b95a310b3c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/soosp/library/TemperatureMonitor/0.3.0/TemperatureMonitor-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/soosp/library/TemperatureMonitor/0.3.0/TemperatureMonitor-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

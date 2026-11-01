@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/forrest",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "forrest/library/BQ25798/1.0.1/BQ25798-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BQ25798-1.0.1.tar.gz",
+    "size_bytes": 96748,
+    "sha256": "b578a348df60dfdd826d30e9db739078be2839c636418ea1b16b8370920ff326",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forrest/library/BQ25798/1.0.1/BQ25798-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/forrest/library/BQ25798/1.0.1/BQ25798-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forrest/library/BQ25798/1.0.2/BQ25798-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BQ25798-1.0.2.tar.gz",
+    "size_bytes": 96720,
+    "sha256": "02c5c5fbe8083339987239f3a2a0e67f4480ae56c8066dc5a0e493850d7d00b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forrest/library/BQ25798/1.0.2/BQ25798-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/forrest/library/BQ25798/1.0.2/BQ25798-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forrest/library/BQ25798/1.0.3/BQ25798-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BQ25798-1.0.3.tar.gz",
+    "size_bytes": 96708,
+    "sha256": "a9f3d24203a6d591f52f387afe770d081d5641c2c0dfe7acc41e8040c92f5a19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forrest/library/BQ25798/1.0.3/BQ25798-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/forrest/library/BQ25798/1.0.3/BQ25798-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forrest/library/TPS25751/2.0.0/TPS25751-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TPS25751-2.0.0.tar.gz",
+    "size_bytes": 144984,
+    "sha256": "a5f38976c8efceaf7a2a30f8624be6567d57316d2d9deb73ae879a0478abc25b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forrest/library/TPS25751/2.0.0/TPS25751-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/forrest/library/TPS25751/2.0.0/TPS25751-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forrest/library/TPS25751/2.0.1/TPS25751-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TPS25751-2.0.1.tar.gz",
+    "size_bytes": 145004,
+    "sha256": "91132011f56322f4675ed4287f8e6fb10ad4417f3e7126174cfe7047f2b1b6c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forrest/library/TPS25751/2.0.1/TPS25751-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/forrest/library/TPS25751/2.0.1/TPS25751-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "forrest/library/TPS25751/2.0.2/TPS25751-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TPS25751-2.0.2.tar.gz",
+    "size_bytes": 182983,
+    "sha256": "5ab67d1ca8258937855be84c8204cad5c358baff27306690dbd6f806343b4d75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/forrest/library/TPS25751/2.0.2/TPS25751-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/forrest/library/TPS25751/2.0.2/TPS25751-2.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

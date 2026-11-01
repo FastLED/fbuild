@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ptpaterson",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ptpaterson/library/CanPipe/0.0.0+sha.bf0682e6b1c8/CanPipe-0.0.0+sha.bf0682e6b1c8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CanPipe-0.0.0+sha.bf0682e6b1c8.tar.gz",
+    "size_bytes": 3700,
+    "sha256": "f140cb9575bd0651e4dc0963f5b37e08047318cf76d155f88105aee059ab1868",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ptpaterson/library/CanPipe/0.0.0%2Bsha.bf0682e6b1c8/CanPipe-0.0.0%2Bsha.bf0682e6b1c8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ptpaterson/library/CanPipe/0.0.0%2Bsha.bf0682e6b1c8/CanPipe-0.0.0%2Bsha.bf0682e6b1c8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ptpaterson/library/ppCANOpen/0.0.0+sha.22a337cdc0e3/ppCANOpen-0.0.0+sha.22a337cdc0e3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ppCANOpen-0.0.0+sha.22a337cdc0e3.tar.gz",
+    "size_bytes": 13971,
+    "sha256": "537d85a6b9a80cf8e0dd29acedd9b715e8eb1c0fbeb13da31280bb75e37d71f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ptpaterson/library/ppCANOpen/0.0.0%2Bsha.22a337cdc0e3/ppCANOpen-0.0.0%2Bsha.22a337cdc0e3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ptpaterson/library/ppCANOpen/0.0.0%2Bsha.22a337cdc0e3/ppCANOpen-0.0.0%2Bsha.22a337cdc0e3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

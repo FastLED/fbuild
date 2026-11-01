@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/monsieurv",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "monsieurv/library/RadiationWatch/0.6.4/RadiationWatch-0.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RadiationWatch-0.6.4.tar.gz",
+    "size_bytes": 11298,
+    "sha256": "c3c89b27e307c12b8c592176bf4a33be938c3c77134da759dcfef1b681e99cfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/monsieurv/library/RadiationWatch/0.6.4/RadiationWatch-0.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/monsieurv/library/RadiationWatch/0.6.4/RadiationWatch-0.6.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

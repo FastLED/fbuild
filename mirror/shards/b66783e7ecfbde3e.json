@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/steamicc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "steamicc/library/MCP23009E/1.0.1/MCP23009E-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23009E-1.0.1.tar.gz",
+    "size_bytes": 25766,
+    "sha256": "85929fc665f1d282611fa92aec11a56b2c041ff8f1a400787feaee46902dc18d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steamicc/library/MCP23009E/1.0.1/MCP23009E-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/steamicc/library/MCP23009E/1.0.1/MCP23009E-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

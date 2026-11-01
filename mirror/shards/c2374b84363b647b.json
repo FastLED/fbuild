@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lenvm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lenvm/library/SercomSPISlave/0.2.0/SercomSPISlave-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SercomSPISlave-0.2.0.tar.gz",
+    "size_bytes": 21930,
+    "sha256": "fad0a1ad61414a27c0b91ce6d1b7d2a2e7582b5536bf952ccdc0a6ba89f54f78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lenvm/library/SercomSPISlave/0.2.0/SercomSPISlave-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lenvm/library/SercomSPISlave/0.2.0/SercomSPISlave-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

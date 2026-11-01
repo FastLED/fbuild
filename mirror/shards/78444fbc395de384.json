@@ -1,0 +1,490 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/paulstoffregen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "paulstoffregen/library/AltSoftSerial/1.4/AltSoftSerial-1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AltSoftSerial-1.4.tar.gz",
+    "size_bytes": 6937,
+    "sha256": "ff71358744ed90263e88ed4a07ab7b78702076702f8c92bcee87a518fbce8960",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/AltSoftSerial/1.4/AltSoftSerial-1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/AltSoftSerial/1.4/AltSoftSerial-1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/Audio/1.3/Audio-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Audio-1.3.tar.gz",
+    "size_bytes": 1192781,
+    "sha256": "1e424e1c115a96dc43b593df86b16259697818b87b54cadb09548cf3834b5021",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/Audio/1.3/Audio-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/Audio/1.3/Audio-1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/CapacitiveSensor/0.5.1/CapacitiveSensor-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CapacitiveSensor-0.5.1.tar.gz",
+    "size_bytes": 5068,
+    "sha256": "9bf24c82e2468a0717a62e6fb6585206bb4872bd0c209a90712dbd0391f1bb9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/CapacitiveSensor/0.5.1/CapacitiveSensor-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/CapacitiveSensor/0.5.1/CapacitiveSensor-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/DS1307RTC/0.0.0-alpha+sha.c2590c0033/DS1307RTC-0.0.0-alphasha.c2590c0033.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1307RTC-0.0.0-alphasha.c2590c0033.tar.gz",
+    "size_bytes": 4113,
+    "sha256": "1b5b0910c24112e3b0a340fcf9eb787bec74b4795812256607c6396aab65314e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/DS1307RTC/0.0.0-alpha%2Bsha.c2590c0033/DS1307RTC-0.0.0-alphasha.c2590c0033.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/DS1307RTC/0.0.0-alpha%2Bsha.c2590c0033/DS1307RTC-0.0.0-alphasha.c2590c0033.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/DmxSimple/3.1/DmxSimple-3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DmxSimple-3.1.tar.gz",
+    "size_bytes": 6158,
+    "sha256": "dc47aaa4bd62a5f430e1b70a3ddc02a6be40b9b8e13c9be9a5cf009bbe32019d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/DmxSimple/3.1/DmxSimple-3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/DmxSimple/3.1/DmxSimple-3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/Encoder/1.4.2/Encoder-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Encoder-1.4.2.tar.gz",
+    "size_bytes": 11801,
+    "sha256": "dd021aa6b533049c90adfc8b70c688faf0cdb17d92beb2f2e28e55e85ae062c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/Encoder/1.4.2/Encoder-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/Encoder/1.4.2/Encoder-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/Encoder/1.4.4/Encoder-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Encoder-1.4.4.tar.gz",
+    "size_bytes": 12081,
+    "sha256": "eba45f282f34c6169367417bc9f9035119fc847c3fbb76b5f46becee13bd3ac1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/Encoder/1.4.4/Encoder-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/Encoder/1.4.4/Encoder-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/Ethernet/2.0.0/Ethernet-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ethernet-2.0.0.tar.gz",
+    "size_bytes": 43581,
+    "sha256": "90d7224fc69873950161430745c952f6662dcc5d28a9e8403a8d25376cfc41ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/Ethernet/2.0.0/Ethernet-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/Ethernet/2.0.0/Ethernet-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/FlexiTimer2/1.1.0/FlexiTimer2-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlexiTimer2-1.1.0.tar.gz",
+    "size_bytes": 3539,
+    "sha256": "4420b5f2106936b97bbb98eb04584544211d7c4f46f4be74d2fc05f67582069e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/FlexiTimer2/1.1.0/FlexiTimer2-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/FlexiTimer2/1.1.0/FlexiTimer2-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/FreqCount/1.3/FreqCount-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreqCount-1.3.tar.gz",
+    "size_bytes": 5413,
+    "sha256": "cdd6e991d768d1111ad8541557af8d6741e15a8c14592456c851c2ee83ee5ca1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/FreqCount/1.3/FreqCount-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/FreqCount/1.3/FreqCount-1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/FreqMeasure/1.2/FreqMeasure-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreqMeasure-1.2.tar.gz",
+    "size_bytes": 4430,
+    "sha256": "c40dace0ccf864a46e04da3310efbd17893df26dd53829ec76b3a8f23009e766",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/FreqMeasure/1.2/FreqMeasure-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/FreqMeasure/1.2/FreqMeasure-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/FrequencyTimer2/2.2/FrequencyTimer2-2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FrequencyTimer2-2.2.tar.gz",
+    "size_bytes": 4064,
+    "sha256": "0988c467f408b590d38efb50451b2534ca446d7ec790c4668b04101c3716365e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/FrequencyTimer2/2.2/FrequencyTimer2-2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/FrequencyTimer2/2.2/FrequencyTimer2-2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/ILI9341_fonts/0.0.0-alpha+sha.e2cbd959a2/ILI9341_fonts-0.0.0-alphasha.e2cbd959a2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341_fonts-0.0.0-alphasha.e2cbd959a2.tar.gz",
+    "size_bytes": 7851228,
+    "sha256": "08e9eb64e06f8099e8128cd0c0a7a0515df35df69b07666c0aaecf3a811a0a45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/ILI9341_fonts/0.0.0-alpha%2Bsha.e2cbd959a2/ILI9341_fonts-0.0.0-alphasha.e2cbd959a2.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/ILI9341_fonts/0.0.0-alpha%2Bsha.e2cbd959a2/ILI9341_fonts-0.0.0-alphasha.e2cbd959a2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/ILI9341_t3/0.0.0-alpha+sha.ff4bba3e15/ILI9341_t3-0.0.0-alphasha.ff4bba3e15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341_t3-0.0.0-alphasha.ff4bba3e15.tar.gz",
+    "size_bytes": 318756,
+    "sha256": "f0f85b1af7f36069a37bd665036dfcce61060509fad4f56da3dc3234dc2a5f2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/ILI9341_t3/0.0.0-alpha%2Bsha.ff4bba3e15/ILI9341_t3-0.0.0-alphasha.ff4bba3e15.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/ILI9341_t3/0.0.0-alpha%2Bsha.ff4bba3e15/ILI9341_t3-0.0.0-alphasha.ff4bba3e15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/LedDisplay/0.4.1/LedDisplay-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedDisplay-0.4.1.tar.gz",
+    "size_bytes": 19444,
+    "sha256": "cdd2703403e19d4c5b0ea9c66b409ed9128814fccbe732eef68c251a299c2ace",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/LedDisplay/0.4.1/LedDisplay-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/LedDisplay/0.4.1/LedDisplay-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/Mahony/1.2/Mahony-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mahony-1.2.tar.gz",
+    "size_bytes": 4142,
+    "sha256": "44b31f8ad2f64c610f0f0e9c65a7b2d984cc46032cc7d3e8ca69bcb909932355",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/Mahony/1.2/Mahony-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/Mahony/1.2/Mahony-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/MsTimer2/1.1/MsTimer2-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MsTimer2-1.1.tar.gz",
+    "size_bytes": 3270,
+    "sha256": "d88a7a1489a5234800ad0a778e1241d57d6c78902403ee027b348c40168a1ee7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/MsTimer2/1.1/MsTimer2-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/MsTimer2/1.1/MsTimer2-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/NXPMotionSense/1.0/NXPMotionSense-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NXPMotionSense-1.0.tar.gz",
+    "size_bytes": 29309,
+    "sha256": "c679bbda0cd2d0b2839a2e1800ee4298bd7e39906c62aa88f2cb1478d70b136e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/NXPMotionSense/1.0/NXPMotionSense-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/NXPMotionSense/1.0/NXPMotionSense-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/OctoWS2811/1.5/OctoWS2811-1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OctoWS2811-1.5.tar.gz",
+    "size_bytes": 32589,
+    "sha256": "36e52393bd6c7e3c28d0b4af7fcbcaba038d6b028612e95bce031efb6f2e52a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/OctoWS2811/1.5/OctoWS2811-1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/OctoWS2811/1.5/OctoWS2811-1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/OneWire/2.3.5/OneWire-2.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneWire-2.3.5.tar.gz",
+    "size_bytes": 16012,
+    "sha256": "dfdf98622f32f7d7cb8c6b1be557f138547cb9b0845fdb4cf28de50a16b8864e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/OneWire/2.3.5/OneWire-2.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/OneWire/2.3.5/OneWire-2.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/OneWire/2.3.7/OneWire-2.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneWire-2.3.7.tar.gz",
+    "size_bytes": 16275,
+    "sha256": "d19365aae2d846e7cafc991db6d2b0e45ebc2894fc83aa6459492b615a400c9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/OneWire/2.3.7/OneWire-2.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/OneWire/2.3.7/OneWire-2.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/OneWire/2.3.8/OneWire-2.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneWire-2.3.8.tar.gz",
+    "size_bytes": 17047,
+    "sha256": "7adcd40e82fb25c2d5b636ea1f4de28d264087827c3b223ac9faae9dfe75687b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/OneWire/2.3.8/OneWire-2.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/OneWire/2.3.8/OneWire-2.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/PS2Keyboard/2.4/PS2Keyboard-2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS2Keyboard-2.4.tar.gz",
+    "size_bytes": 8183,
+    "sha256": "492284f7c3d9949c310a466a65c7a671439b5107cdbb2a9cd673096f2cf661ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/PS2Keyboard/2.4/PS2Keyboard-2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/PS2Keyboard/2.4/PS2Keyboard-2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/PWMServo/2.1/PWMServo-2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWMServo-2.1.tar.gz",
+    "size_bytes": 4405,
+    "sha256": "652bf4a08096b739faf76e695e5f3b552c4baebdb8f7d00fd84ae8ac73a2ca71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/PWMServo/2.1/PWMServo-2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/PWMServo/2.1/PWMServo-2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/PulsePosition/1.0/PulsePosition-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulsePosition-1.0.tar.gz",
+    "size_bytes": 6590,
+    "sha256": "f78d057b65c2ed3c9da239069db2c3ac1bbc3986441475751fb3d875b73a75a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/PulsePosition/1.0/PulsePosition-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/PulsePosition/1.0/PulsePosition-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/SerialFlash/0.0.0-alpha+sha.2b86eb1e43/SerialFlash-0.0.0-alphasha.2b86eb1e43.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialFlash-0.0.0-alphasha.2b86eb1e43.tar.gz",
+    "size_bytes": 21260,
+    "sha256": "cdf61db96523364cffd3c1cc0079e09f440575aed03044a7877d5547d9fa2066",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/SerialFlash/0.0.0-alpha%2Bsha.2b86eb1e43/SerialFlash-0.0.0-alphasha.2b86eb1e43.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/SerialFlash/0.0.0-alpha%2Bsha.2b86eb1e43/SerialFlash-0.0.0-alphasha.2b86eb1e43.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/Time/1.5/Time-1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Time-1.5.tar.gz",
+    "size_bytes": 16068,
+    "sha256": "52f8abe30fbd73efc427ad34856ff712db056bb3316487734efd9d5c5b4061bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/Time/1.5/Time-1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/Time/1.5/Time-1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/Time/1.6.1/Time-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Time-1.6.1.tar.gz",
+    "size_bytes": 17438,
+    "sha256": "ac9c97cbc81c20197e6620bb730813e14bdc890da15bd33d51dedb21b83b5aa0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/Time/1.6.1/Time-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/Time/1.6.1/Time-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/TimeAlarms/0.0.0-alpha+sha.c291c1ddad/TimeAlarms-0.0.0-alphasha.c291c1ddad.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimeAlarms-0.0.0-alphasha.c291c1ddad.tar.gz",
+    "size_bytes": 9004,
+    "sha256": "5b690ed4dbcc4cbff61bec58b6af314fb2a1bb7ff7a1cb44bf21c9fedaec4e40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/TimeAlarms/0.0.0-alpha%2Bsha.c291c1ddad/TimeAlarms-0.0.0-alphasha.c291c1ddad.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/TimeAlarms/0.0.0-alpha%2Bsha.c291c1ddad/TimeAlarms-0.0.0-alphasha.c291c1ddad.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/TimerOne/1.1.1/TimerOne-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerOne-1.1.1.tar.gz",
+    "size_bytes": 7481,
+    "sha256": "7c453ba2bec288d01e9a876c38cef4e3061b9409a50067eb986404b26be2f349",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/TimerOne/1.1.1/TimerOne-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/TimerOne/1.1.1/TimerOne-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/TimerOne/1.2/TimerOne-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerOne-1.2.tar.gz",
+    "size_bytes": 8366,
+    "sha256": "cdd2bc529490b9ad96569ab7f4f38831e7ead0ab79944531571660e09edd7180",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/TimerOne/1.2/TimerOne-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/TimerOne/1.2/TimerOne-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/TimerThree/1.1/TimerThree-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimerThree-1.1.tar.gz",
+    "size_bytes": 5380,
+    "sha256": "eeb6a0a10acbecf29db2a7223eee02b3b72cdf618857b68401c9015161fd0563",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/TimerThree/1.1/TimerThree-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/TimerThree/1.1/TimerThree-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/Tlc5940/0.16/Tlc5940-0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tlc5940-0.16.tar.gz",
+    "size_bytes": 54159,
+    "sha256": "94df68601557e0cc97968da6130829c71ea953b000dcd1d18ae59a6f598e39e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/Tlc5940/0.16/Tlc5940-0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/Tlc5940/0.16/Tlc5940-0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/USBHost_t36/0.2/USBHost_t36-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBHost_t36-0.2.tar.gz",
+    "size_bytes": 315255,
+    "sha256": "63efd1769efb797ee3a7481cc829ab8fe158c93856fbcd55666db0d6a233bd6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/USBHost_t36/0.2/USBHost_t36-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/USBHost_t36/0.2/USBHost_t36-0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/WS2812Capture/1.0.0/WS2812Capture-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS2812Capture-1.0.0.tar.gz",
+    "size_bytes": 7925,
+    "sha256": "d796009f28cc23166f9e06ee53a1d5bd9b372ff038472a9047cdba6590e68804",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/WS2812Capture/1.0.0/WS2812Capture-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/WS2812Capture/1.0.0/WS2812Capture-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/XPT2046_Touchscreen/0.0.0-alpha+sha.26b691b2c8/XPT2046_Touchscreen-0.0.0-alphasha.26b691b2c8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPT2046_Touchscreen-0.0.0-alphasha.26b691b2c8.tar.gz",
+    "size_bytes": 6638,
+    "sha256": "317f8eb09571afd22f11ca185b749efc58daa4f588b0c2fb340f38068e544bc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/XPT2046_Touchscreen/0.0.0-alpha%2Bsha.26b691b2c8/XPT2046_Touchscreen-0.0.0-alphasha.26b691b2c8.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/XPT2046_Touchscreen/0.0.0-alpha%2Bsha.26b691b2c8/XPT2046_Touchscreen-0.0.0-alphasha.26b691b2c8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "paulstoffregen/library/ht1632c/1.0.0/ht1632c-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ht1632c-1.0.0.tar.gz",
+    "size_bytes": 46239,
+    "sha256": "c0e32c4f6badcfea77047673bed84e14f909f06c5669d2dbec405b1cde6b2884",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/paulstoffregen/library/ht1632c/1.0.0/ht1632c-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/paulstoffregen/library/ht1632c/1.0.0/ht1632c-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

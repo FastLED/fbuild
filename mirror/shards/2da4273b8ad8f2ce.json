@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-grantphillips",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-grantphillips/library/DISCOF469LCD/0.0.0+sha.d8d53c5e721e/DISCOF469LCD-0.0.0+sha.d8d53c5e721e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DISCOF469LCD-0.0.0+sha.d8d53c5e721e.tar.gz",
+    "size_bytes": 4128,
+    "sha256": "8d5cd39ad95f230ea1c24980bfe56c8950e66a2e99d06bf2c69bd59023e2e831",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-grantphillips/library/DISCOF469LCD/0.0.0%2Bsha.d8d53c5e721e/DISCOF469LCD-0.0.0%2Bsha.d8d53c5e721e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-grantphillips/library/DISCOF469LCD/0.0.0%2Bsha.d8d53c5e721e/DISCOF469LCD-0.0.0%2Bsha.d8d53c5e721e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-grantphillips/library/DISCOF469SerialLCD/0.0.0+sha.df0201a66e39/DISCOF469SerialLCD-0.0.0+sha.df0201a66e39.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DISCOF469SerialLCD-0.0.0+sha.df0201a66e39.tar.gz",
+    "size_bytes": 4665,
+    "sha256": "3b3dd73436f7a3650b0a85ab063c7e6c7bbf3374df3f1cdeb22acb8cc7f85f3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-grantphillips/library/DISCOF469SerialLCD/0.0.0%2Bsha.df0201a66e39/DISCOF469SerialLCD-0.0.0%2Bsha.df0201a66e39.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-grantphillips/library/DISCOF469SerialLCD/0.0.0%2Bsha.df0201a66e39/DISCOF469SerialLCD-0.0.0%2Bsha.df0201a66e39.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-grantphillips/library/ESP8266/0.0.0+sha.30dd9c0f7559/ESP8266-0.0.0+sha.30dd9c0f7559.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266-0.0.0+sha.30dd9c0f7559.tar.gz",
+    "size_bytes": 5501,
+    "sha256": "208c0778af360cb1814bb62f71947da21395ee0c075578fbc86597f2ed96a410",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-grantphillips/library/ESP8266/0.0.0%2Bsha.30dd9c0f7559/ESP8266-0.0.0%2Bsha.30dd9c0f7559.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-grantphillips/library/ESP8266/0.0.0%2Bsha.30dd9c0f7559/ESP8266-0.0.0%2Bsha.30dd9c0f7559.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-grantphillips/library/KEYPAD_DISCO_F429ZI/0.0.0+sha.9d6ea6fbb67f/KEYPAD_DISCO_F429ZI-0.0.0+sha.9d6ea6fbb67f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KEYPAD_DISCO_F429ZI-0.0.0+sha.9d6ea6fbb67f.tar.gz",
+    "size_bytes": 4383,
+    "sha256": "33294c6ee26f222b08383ad4204a1353b0308407a716a00f10f04a50aca6401a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-grantphillips/library/KEYPAD_DISCO_F429ZI/0.0.0%2Bsha.9d6ea6fbb67f/KEYPAD_DISCO_F429ZI-0.0.0%2Bsha.9d6ea6fbb67f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-grantphillips/library/KEYPAD_DISCO_F429ZI/0.0.0%2Bsha.9d6ea6fbb67f/KEYPAD_DISCO_F429ZI-0.0.0%2Bsha.9d6ea6fbb67f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-grantphillips/library/LIS3DSH/0.0.0+sha.e6a312714223/LIS3DSH-0.0.0+sha.e6a312714223.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIS3DSH-0.0.0+sha.e6a312714223.tar.gz",
+    "size_bytes": 3698,
+    "sha256": "292ca347449713b67a7ce3a552d797aa5d739dc242b1884bc7f54f8945f90445",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-grantphillips/library/LIS3DSH/0.0.0%2Bsha.e6a312714223/LIS3DSH-0.0.0%2Bsha.e6a312714223.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-grantphillips/library/LIS3DSH/0.0.0%2Bsha.e6a312714223/LIS3DSH-0.0.0%2Bsha.e6a312714223.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-grantphillips/library/LM6029ACW/0.0.0+sha.79ef6ebe51ae/LM6029ACW-0.0.0+sha.79ef6ebe51ae.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM6029ACW-0.0.0+sha.79ef6ebe51ae.tar.gz",
+    "size_bytes": 6530,
+    "sha256": "65107cea423bf843b0c54d502ca9020e75cc9face26d1b65a9ea77d2986253c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-grantphillips/library/LM6029ACW/0.0.0%2Bsha.79ef6ebe51ae/LM6029ACW-0.0.0%2Bsha.79ef6ebe51ae.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-grantphillips/library/LM6029ACW/0.0.0%2Bsha.79ef6ebe51ae/LM6029ACW-0.0.0%2Bsha.79ef6ebe51ae.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-grantphillips/library/MCP23008_Keypad/0.0.0+sha.7d6b9684595c/MCP23008_Keypad-0.0.0+sha.7d6b9684595c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23008_Keypad-0.0.0+sha.7d6b9684595c.tar.gz",
+    "size_bytes": 2985,
+    "sha256": "b962df7622e1a275bc724bd6f8ff2ff2ec741b64b70a6f5a160788ebb40e7b4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-grantphillips/library/MCP23008_Keypad/0.0.0%2Bsha.7d6b9684595c/MCP23008_Keypad-0.0.0%2Bsha.7d6b9684595c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-grantphillips/library/MCP23008_Keypad/0.0.0%2Bsha.7d6b9684595c/MCP23008_Keypad-0.0.0%2Bsha.7d6b9684595c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-grantphillips/library/NextionLCD/0.0.0+sha.72f3dadfab71/NextionLCD-0.0.0+sha.72f3dadfab71.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NextionLCD-0.0.0+sha.72f3dadfab71.tar.gz",
+    "size_bytes": 3670,
+    "sha256": "1e4233bbeac8ae2979e27885a78b0f703ab6ab06bde76ec2152113dd5506b142",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-grantphillips/library/NextionLCD/0.0.0%2Bsha.72f3dadfab71/NextionLCD-0.0.0%2Bsha.72f3dadfab71.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-grantphillips/library/NextionLCD/0.0.0%2Bsha.72f3dadfab71/NextionLCD-0.0.0%2Bsha.72f3dadfab71.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-grantphillips/library/STM32F4_RNG/0.0.0+sha.1c605984e361/STM32F4_RNG-0.0.0+sha.1c605984e361.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32F4_RNG-0.0.0+sha.1c605984e361.tar.gz",
+    "size_bytes": 2064,
+    "sha256": "e59580fe900864da32e99676f550c4183727c050ee92953f5d3f119d84a7a989",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-grantphillips/library/STM32F4_RNG/0.0.0%2Bsha.1c605984e361/STM32F4_RNG-0.0.0%2Bsha.1c605984e361.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-grantphillips/library/STM32F4_RNG/0.0.0%2Bsha.1c605984e361/STM32F4_RNG-0.0.0%2Bsha.1c605984e361.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-grantphillips/library/TCS3200/0.0.0+sha.b98e768bc655/TCS3200-0.0.0+sha.b98e768bc655.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCS3200-0.0.0+sha.b98e768bc655.tar.gz",
+    "size_bytes": 2741,
+    "sha256": "628846f15aa1cc545e303dda6e240e681c4ab80a7308791f8243e8cdec9bd3a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-grantphillips/library/TCS3200/0.0.0%2Bsha.b98e768bc655/TCS3200-0.0.0%2Bsha.b98e768bc655.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-grantphillips/library/TCS3200/0.0.0%2Bsha.b98e768bc655/TCS3200-0.0.0%2Bsha.b98e768bc655.tar.gz"
+    ]
+   }
+  }
+ ]
+}

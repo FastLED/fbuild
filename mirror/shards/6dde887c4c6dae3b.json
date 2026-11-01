@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-physix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-physix/library/HMC5883L/0.0.0+sha.5104b90e3f0f/HMC5883L-0.0.0+sha.5104b90e3f0f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC5883L-0.0.0+sha.5104b90e3f0f.tar.gz",
+    "size_bytes": 4341,
+    "sha256": "b72b45f2ac012f2215d282c309d8eb27da9c2aec531e69ff7e19810d2d202c48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-physix/library/HMC5883L/0.0.0%2Bsha.5104b90e3f0f/HMC5883L-0.0.0%2Bsha.5104b90e3f0f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-physix/library/HMC5883L/0.0.0%2Bsha.5104b90e3f0f/HMC5883L-0.0.0%2Bsha.5104b90e3f0f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-physix/library/I2cRtosDriver/0.0.0+sha.2c6432b37cce/I2cRtosDriver-0.0.0+sha.2c6432b37cce.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2cRtosDriver-0.0.0+sha.2c6432b37cce.tar.gz",
+    "size_bytes": 12119,
+    "sha256": "db9fdc25b648761e5236e225b8d3a3efd03a4c9e75920ab91a97cfc617777176",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-physix/library/I2cRtosDriver/0.0.0%2Bsha.2c6432b37cce/I2cRtosDriver-0.0.0%2Bsha.2c6432b37cce.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-physix/library/I2cRtosDriver/0.0.0%2Bsha.2c6432b37cce/I2cRtosDriver-0.0.0%2Bsha.2c6432b37cce.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-physix/library/MPL3115A2/0.0.0+sha.fb9726aaa41d/MPL3115A2-0.0.0+sha.fb9726aaa41d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPL3115A2-0.0.0+sha.fb9726aaa41d.tar.gz",
+    "size_bytes": 1848,
+    "sha256": "f8e902fd05cddd2680eafe3d0530e3dcee2e7ad235299b982e1aaf2924245baf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-physix/library/MPL3115A2/0.0.0%2Bsha.fb9726aaa41d/MPL3115A2-0.0.0%2Bsha.fb9726aaa41d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-physix/library/MPL3115A2/0.0.0%2Bsha.fb9726aaa41d/MPL3115A2-0.0.0%2Bsha.fb9726aaa41d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-physix/library/MPU6050-DMP-Ian/0.0.0+sha.86afc8447df9/MPU6050-DMP-Ian-0.0.0+sha.86afc8447df9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050-DMP-Ian-0.0.0+sha.86afc8447df9.tar.gz",
+    "size_bytes": 43441,
+    "sha256": "00a45ae4dc5f090a2b507bcd2caf177556e1c58e43322dbcc6c595f407324ff4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-physix/library/MPU6050-DMP-Ian/0.0.0%2Bsha.86afc8447df9/MPU6050-DMP-Ian-0.0.0%2Bsha.86afc8447df9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-physix/library/MPU6050-DMP-Ian/0.0.0%2Bsha.86afc8447df9/MPU6050-DMP-Ian-0.0.0%2Bsha.86afc8447df9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-physix/library/PwmInRC/0.0.0+sha.2a58e3363242/PwmInRC-0.0.0+sha.2a58e3363242.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwmInRC-0.0.0+sha.2a58e3363242.tar.gz",
+    "size_bytes": 2247,
+    "sha256": "c916e2934a87729cc980e8dd679b8ffd2f6112398bb8cb9d2230b3e30fc8b7aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-physix/library/PwmInRC/0.0.0%2Bsha.2a58e3363242/PwmInRC-0.0.0%2Bsha.2a58e3363242.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-physix/library/PwmInRC/0.0.0%2Bsha.2a58e3363242/PwmInRC-0.0.0%2Bsha.2a58e3363242.tar.gz"
+    ]
+   }
+  }
+ ]
+}

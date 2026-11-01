@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/skaniel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "skaniel/library/MPU6050_IPASS/1.0.0/MPU6050_IPASS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050_IPASS-1.0.0.tar.gz",
+    "size_bytes": 3956,
+    "sha256": "03c9f9f9521b99325c123ea4371c9d0d2c93176a5ea945cea4d8ee0bbfae1d0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skaniel/library/MPU6050_IPASS/1.0.0/MPU6050_IPASS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/skaniel/library/MPU6050_IPASS/1.0.0/MPU6050_IPASS-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kmilogp8496",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kmilogp8496/library/IoT%20Platform%20API%20WebSockets/0.0.17/IoTPlatformAPIWebSockets-0.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTPlatformAPIWebSockets-0.0.17.tar.gz",
+    "size_bytes": 2137,
+    "sha256": "454025582fc48dab94874760391ba731575cfd696c08d750293334ffa69593a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kmilogp8496/library/IoT%2520Platform%2520API%2520WebSockets/0.0.17/IoTPlatformAPIWebSockets-0.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/kmilogp8496/library/IoT%20Platform%20API%20WebSockets/0.0.17/IoTPlatformAPIWebSockets-0.0.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kmilogp8496/library/IoT%20Platform%20API/0.0.14/IoTPlatformAPI-0.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IoTPlatformAPI-0.0.14.tar.gz",
+    "size_bytes": 2149,
+    "sha256": "3476c26692331558af5cb669e54d2f2030ad99d8f137a8c6dbc02a034f6eb422",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kmilogp8496/library/IoT%2520Platform%2520API/0.0.14/IoTPlatformAPI-0.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/kmilogp8496/library/IoT%20Platform%20API/0.0.14/IoTPlatformAPI-0.0.14.tar.gz"
+    ]
+   }
+  }
+ ]
+}

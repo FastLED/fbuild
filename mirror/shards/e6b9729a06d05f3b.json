@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mprostakk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mprostakk/library/CommonIO/1.0.2/CommonIO-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CommonIO-1.0.2.tar.gz",
+    "size_bytes": 6257,
+    "sha256": "bd0eb1239e9720d8e8a4f2a9d02eb3e33cb77e2fd085ce97fe6cb0d4086193f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mprostakk/library/CommonIO/1.0.2/CommonIO-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mprostakk/library/CommonIO/1.0.2/CommonIO-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

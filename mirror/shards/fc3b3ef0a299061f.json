@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thedzhon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thedzhon/library/DHT22/0.0.0-alpha+sha.416d1471a0/DHT22-0.0.0-alphasha.416d1471a0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT22-0.0.0-alphasha.416d1471a0.tar.gz",
+    "size_bytes": 3427,
+    "sha256": "76b62e633ddcefe514256394f854b8bf3c245327c2333f493af3ae4c7744f4ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thedzhon/library/DHT22/0.0.0-alpha%2Bsha.416d1471a0/DHT22-0.0.0-alphasha.416d1471a0.tar.gz",
+     "https://dl.registry.platformio.org/download/thedzhon/library/DHT22/0.0.0-alpha%2Bsha.416d1471a0/DHT22-0.0.0-alphasha.416d1471a0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

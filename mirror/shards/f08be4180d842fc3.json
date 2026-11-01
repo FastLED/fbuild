@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rmick",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rmick/library/Arduino-LTTO/0.9.6/Arduino-LTTO-0.9.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino-LTTO-0.9.6.tar.gz",
+    "size_bytes": 39981,
+    "sha256": "a346bcf626b547697d6d827cdb84949c453968bb0562e6b3987d1f7735716716",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rmick/library/Arduino-LTTO/0.9.6/Arduino-LTTO-0.9.6.tar.gz",
+     "https://dl.registry.platformio.org/download/rmick/library/Arduino-LTTO/0.9.6/Arduino-LTTO-0.9.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

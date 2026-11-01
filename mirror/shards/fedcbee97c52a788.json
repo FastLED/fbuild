@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/multiaxis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "multiaxis/library/TempestTCode/0.4.2/TempestTCode-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TempestTCode-0.4.2.tar.gz",
+    "size_bytes": 15216,
+    "sha256": "cc3403706bc42485b36b5c89dad305d75a1ab2c6f170d595c335e767fa7b7567",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/multiaxis/library/TempestTCode/0.4.2/TempestTCode-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/multiaxis/library/TempestTCode/0.4.2/TempestTCode-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "multiaxis/library/TempestTCode/0.4.3/TempestTCode-0.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TempestTCode-0.4.3.tar.gz",
+    "size_bytes": 15868,
+    "sha256": "d34587ec56c1f84e2e7ef78660d3b9e31f70db1833657df2dd0c19f87e695043",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/multiaxis/library/TempestTCode/0.4.3/TempestTCode-0.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/multiaxis/library/TempestTCode/0.4.3/TempestTCode-0.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "multiaxis/library/TempestTCode/0.4.4/TempestTCode-0.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TempestTCode-0.4.4.tar.gz",
+    "size_bytes": 15918,
+    "sha256": "bcc9224efb104fd352342b55566db3bce9733bce544a54d9b2b1f06ce89f5b6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/multiaxis/library/TempestTCode/0.4.4/TempestTCode-0.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/multiaxis/library/TempestTCode/0.4.4/TempestTCode-0.4.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

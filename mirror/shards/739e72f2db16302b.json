@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gandalf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gandalf/library/TroykaMeteoSensor/1.0.0/TroykaMeteoSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TroykaMeteoSensor-1.0.0.tar.gz",
+    "size_bytes": 3689,
+    "sha256": "f486e93dc7e86ca3897b540eadf75b57ae8c7c0d6ac5e36d6dd739d7848e5436",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gandalf/library/TroykaMeteoSensor/1.0.0/TroykaMeteoSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gandalf/library/TroykaMeteoSensor/1.0.0/TroykaMeteoSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gandalf/library/arduino-dataflash/2.2.0/arduino-dataflash-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-dataflash-2.2.0.tar.gz",
+    "size_bytes": 16024,
+    "sha256": "6a1bbb244ec000d4df5670fc48c8afc0a7cde3c2184763f823a89425f89266f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gandalf/library/arduino-dataflash/2.2.0/arduino-dataflash-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gandalf/library/arduino-dataflash/2.2.0/arduino-dataflash-2.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sollemdev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sollemdev/library/QSetun/2.0.0/QSetun-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QSetun-2.0.0.tar.gz",
+    "size_bytes": 32220,
+    "sha256": "ae9f5b1fea23c70cc209d51681bf01863c21b36ddcac92c70a0a23b1ade8b246",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sollemdev/library/QSetun/2.0.0/QSetun-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sollemdev/library/QSetun/2.0.0/QSetun-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sollemdev/library/QSetun/2.1.0/QSetun-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QSetun-2.1.0.tar.gz",
+    "size_bytes": 46458,
+    "sha256": "130ff3a93b585a399632e9956f3a6d84727400378f26b67231ab25e0585cb6d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sollemdev/library/QSetun/2.1.0/QSetun-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sollemdev/library/QSetun/2.1.0/QSetun-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

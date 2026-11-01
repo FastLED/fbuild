@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-karimazzouz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-karimazzouz/library/MovingAverageFilter/0.0.0+sha.fbc57eb4e61d/MovingAverageFilter-0.0.0+sha.fbc57eb4e61d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MovingAverageFilter-0.0.0+sha.fbc57eb4e61d.tar.gz",
+    "size_bytes": 2162,
+    "sha256": "e7a74b8a4cd4420e26168be9fa1858c620b354081349c76343d4daaa45ad51ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-karimazzouz/library/MovingAverageFilter/0.0.0%2Bsha.fbc57eb4e61d/MovingAverageFilter-0.0.0%2Bsha.fbc57eb4e61d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-karimazzouz/library/MovingAverageFilter/0.0.0%2Bsha.fbc57eb4e61d/MovingAverageFilter-0.0.0%2Bsha.fbc57eb4e61d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-karimazzouz/library/MyI2C/0.0.0+sha.1c722325e933/MyI2C-0.0.0+sha.1c722325e933.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyI2C-0.0.0+sha.1c722325e933.tar.gz",
+    "size_bytes": 2192,
+    "sha256": "c00f9fcef3f9ed3e5b7f65fea48c360696d01bbdfaa525a130c69ae63ddc7ba6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-karimazzouz/library/MyI2C/0.0.0%2Bsha.1c722325e933/MyI2C-0.0.0%2Bsha.1c722325e933.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-karimazzouz/library/MyI2C/0.0.0%2Bsha.1c722325e933/MyI2C-0.0.0%2Bsha.1c722325e933.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-karimazzouz/library/RC/0.0.0+sha.c98b23d53e42/RC-0.0.0+sha.c98b23d53e42.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RC-0.0.0+sha.c98b23d53e42.tar.gz",
+    "size_bytes": 1023,
+    "sha256": "ccf9265408dcd51cfa164815d673a29e06bc7ce84c2815bd032eb554842fad96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-karimazzouz/library/RC/0.0.0%2Bsha.c98b23d53e42/RC-0.0.0%2Bsha.c98b23d53e42.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-karimazzouz/library/RC/0.0.0%2Bsha.c98b23d53e42/RC-0.0.0%2Bsha.c98b23d53e42.tar.gz"
+    ]
+   }
+  }
+ ]
+}

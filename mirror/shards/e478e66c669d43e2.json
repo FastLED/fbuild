@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-h29ateam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-h29ateam/library/PS4%20Serial/0.0.0+sha.c961d228b63e/PS4Serial-0.0.0+sha.c961d228b63e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS4Serial-0.0.0+sha.c961d228b63e.tar.gz",
+    "size_bytes": 1619,
+    "sha256": "bf8c5fa12225204d24c3f6f59d7d9904c94f1bc1166149a297591b12857e9a39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-h29ateam/library/PS4%2520Serial/0.0.0%2Bsha.c961d228b63e/PS4Serial-0.0.0%2Bsha.c961d228b63e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-h29ateam/library/PS4%20Serial/0.0.0%2Bsha.c961d228b63e/PS4Serial-0.0.0%2Bsha.c961d228b63e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-h29ateam/library/PS4/0.0.0+sha.ffa4066a789d/PS4-0.0.0+sha.ffa4066a789d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS4-0.0.0+sha.ffa4066a789d.tar.gz",
+    "size_bytes": 1667,
+    "sha256": "5b04652d7664c3da03a9230005652d83be759131cca20bfd6cbddf17f24233cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-h29ateam/library/PS4/0.0.0%2Bsha.ffa4066a789d/PS4-0.0.0%2Bsha.ffa4066a789d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-h29ateam/library/PS4/0.0.0%2Bsha.ffa4066a789d/PS4-0.0.0%2Bsha.ffa4066a789d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

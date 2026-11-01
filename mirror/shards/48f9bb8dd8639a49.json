@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nurulislam21",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nurulislam21/library/Motor/1.0.1/Motor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor-1.0.1.tar.gz",
+    "size_bytes": 3289,
+    "sha256": "9e8584cc680cfde5e9a315145c15d9107abe1feec51bea0972389260b20d9d77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nurulislam21/library/Motor/1.0.1/Motor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nurulislam21/library/Motor/1.0.1/Motor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nurulislam21/library/SparkMotor/1.0.1/SparkMotor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SparkMotor-1.0.1.tar.gz",
+    "size_bytes": 3367,
+    "sha256": "1a75836e196e7de130907d11709fcd62b1d19a48b06d9276d79de446924f101c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nurulislam21/library/SparkMotor/1.0.1/SparkMotor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nurulislam21/library/SparkMotor/1.0.1/SparkMotor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nurulislam21/library/stm32-ssd1306/1.0.0/stm32-ssd1306-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stm32-ssd1306-1.0.0.tar.gz",
+    "size_bytes": 112305,
+    "sha256": "c88a7d853671583e4427cab744e9a21d77491cec774e4d3a0f0e512ad329cb63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nurulislam21/library/stm32-ssd1306/1.0.0/stm32-ssd1306-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nurulislam21/library/stm32-ssd1306/1.0.0/stm32-ssd1306-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

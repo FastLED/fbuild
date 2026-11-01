@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nedesico",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nedesico/library/ESP32_Thermistor/1.0.4/ESP32_Thermistor-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Thermistor-1.0.4.tar.gz",
+    "size_bytes": 15017,
+    "sha256": "75d012c89ffbe44fabbdd7aaaa48d4d527ea5aef54c0f2fd7d35aa58105a568e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nedesico/library/ESP32_Thermistor/1.0.4/ESP32_Thermistor-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nedesico/library/ESP32_Thermistor/1.0.4/ESP32_Thermistor-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nedesico/library/ESP32_Thermistor/1.1.4/ESP32_Thermistor-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Thermistor-1.1.4.tar.gz",
+    "size_bytes": 15726,
+    "sha256": "f9f058bd6d9010fa2fffe3ded5110b0d76f297d67b2eececd52cc29dd3993bfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nedesico/library/ESP32_Thermistor/1.1.4/ESP32_Thermistor-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nedesico/library/ESP32_Thermistor/1.1.4/ESP32_Thermistor-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nedesico/library/ESP32_Thermistor/1.1.5/ESP32_Thermistor-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Thermistor-1.1.5.tar.gz",
+    "size_bytes": 15731,
+    "sha256": "f31cb51b27d49fd38f1f6147056945875c0315a8b58c49398c8421bf02fa83a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nedesico/library/ESP32_Thermistor/1.1.5/ESP32_Thermistor-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nedesico/library/ESP32_Thermistor/1.1.5/ESP32_Thermistor-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nedesico/library/ESP32_Thermistor/1.2.1/ESP32_Thermistor-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Thermistor-1.2.1.tar.gz",
+    "size_bytes": 15781,
+    "sha256": "3f468e1fc4b6229db47b66ae02e46531164e9f7ddcf4559a248b818592c011c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nedesico/library/ESP32_Thermistor/1.2.1/ESP32_Thermistor-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nedesico/library/ESP32_Thermistor/1.2.1/ESP32_Thermistor-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nedesico/library/ESP32_Thermistor/1.2.2/ESP32_Thermistor-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_Thermistor-1.2.2.tar.gz",
+    "size_bytes": 15765,
+    "sha256": "fbf9dc7dd52dcbe7e09d8684a38429aae0de6249c47b5e42b0335af4038c6fd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nedesico/library/ESP32_Thermistor/1.2.2/ESP32_Thermistor-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nedesico/library/ESP32_Thermistor/1.2.2/ESP32_Thermistor-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nedesico/library/ESP32_WiFi_Connect/1.0.2/ESP32_WiFi_Connect-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_WiFi_Connect-1.0.2.tar.gz",
+    "size_bytes": 21579,
+    "sha256": "51f26442c9a373234e3ae73e047039915743ac1396d5c848da2a6d8cf52f7525",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nedesico/library/ESP32_WiFi_Connect/1.0.2/ESP32_WiFi_Connect-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nedesico/library/ESP32_WiFi_Connect/1.0.2/ESP32_WiFi_Connect-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nedesico/library/ESP32_WiFi_Connect/1.3.1/ESP32_WiFi_Connect-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_WiFi_Connect-1.3.1.tar.gz",
+    "size_bytes": 21529,
+    "sha256": "b663eb87153933eb459ce6cd6c0c138b7d7171e57b2c69d999dff5c81603e4be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nedesico/library/ESP32_WiFi_Connect/1.3.1/ESP32_WiFi_Connect-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nedesico/library/ESP32_WiFi_Connect/1.3.1/ESP32_WiFi_Connect-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nedesico/library/ESP32_WiFi_Connect/1.3.2/ESP32_WiFi_Connect-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_WiFi_Connect-1.3.2.tar.gz",
+    "size_bytes": 21546,
+    "sha256": "67367c194e441d3111ec16b86a33b0d8761093d7112473ca26b5d03dec5c1e46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nedesico/library/ESP32_WiFi_Connect/1.3.2/ESP32_WiFi_Connect-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nedesico/library/ESP32_WiFi_Connect/1.3.2/ESP32_WiFi_Connect-1.3.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

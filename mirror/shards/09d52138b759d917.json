@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/invensenseinc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "invensenseinc/library/ICM42670P/1.0.8/ICM42670P-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM42670P-1.0.8.tar.gz",
+    "size_bytes": 60289,
+    "sha256": "5447fd2c5b42c09daf84c142c5529dea9b7556f4dacf37dc3bf406ca96d95ddc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/invensenseinc/library/ICM42670P/1.0.8/ICM42670P-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/invensenseinc/library/ICM42670P/1.0.8/ICM42670P-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "invensenseinc/library/ICM42670P/1.0.9/ICM42670P-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM42670P-1.0.9.tar.gz",
+    "size_bytes": 62461,
+    "sha256": "e6784e3bb331f2af479eaf9b5821a0789963b302aea20f8484c51ad435daa4d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/invensenseinc/library/ICM42670P/1.0.9/ICM42670P-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/invensenseinc/library/ICM42670P/1.0.9/ICM42670P-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

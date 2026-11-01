@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wjohnsto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wjohnsto/library/NokiaLCD/0.0.0+sha.740a742e0efa/NokiaLCD-0.0.0+sha.740a742e0efa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NokiaLCD-0.0.0+sha.740a742e0efa.tar.gz",
+    "size_bytes": 5093,
+    "sha256": "4376047c281bba16d7540aea52a882bf73288c3d42bd90f2afab7626c2a3a2c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wjohnsto/library/NokiaLCD/0.0.0%2Bsha.740a742e0efa/NokiaLCD-0.0.0%2Bsha.740a742e0efa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wjohnsto/library/NokiaLCD/0.0.0%2Bsha.740a742e0efa/NokiaLCD-0.0.0%2Bsha.740a742e0efa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-wjohnsto/library/PS2/0.0.0+sha.ce15490e89e9/PS2-0.0.0+sha.ce15490e89e9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS2-0.0.0+sha.ce15490e89e9.tar.gz",
+    "size_bytes": 5257,
+    "sha256": "d62fa9618c25ab3c4c119a70148edbb8753c2e1aafab19dbfde12388dd242760",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wjohnsto/library/PS2/0.0.0%2Bsha.ce15490e89e9/PS2-0.0.0%2Bsha.ce15490e89e9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wjohnsto/library/PS2/0.0.0%2Bsha.ce15490e89e9/PS2-0.0.0%2Bsha.ce15490e89e9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

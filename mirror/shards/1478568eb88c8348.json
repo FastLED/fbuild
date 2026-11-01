@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bomilkar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bomilkar/library/QEI/0.0.0+sha.ef2f1bbeb8e1/QEI-0.0.0+sha.ef2f1bbeb8e1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QEI-0.0.0+sha.ef2f1bbeb8e1.tar.gz",
+    "size_bytes": 4510,
+    "sha256": "b42ac02fccc603ce0b08a8f4e25babd0aad304d1a91fa75bb959d8436cc2c328",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bomilkar/library/QEI/0.0.0%2Bsha.ef2f1bbeb8e1/QEI-0.0.0%2Bsha.ef2f1bbeb8e1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bomilkar/library/QEI/0.0.0%2Bsha.ef2f1bbeb8e1/QEI-0.0.0%2Bsha.ef2f1bbeb8e1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

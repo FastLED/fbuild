@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ks-tec",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ks-tec/library/BME280_I2C/1.4.1+002/BME280_I2C-1.4.1002.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280_I2C-1.4.1002.tar.gz",
+    "size_bytes": 10484,
+    "sha256": "9bd189dfc7e64373f1169a9d4f7b28e77722129116650ebadb78769614b3deca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ks-tec/library/BME280_I2C/1.4.1%2B002/BME280_I2C-1.4.1002.tar.gz",
+     "https://dl.registry.platformio.org/download/ks-tec/library/BME280_I2C/1.4.1%2B002/BME280_I2C-1.4.1002.tar.gz"
+    ]
+   }
+  }
+ ]
+}

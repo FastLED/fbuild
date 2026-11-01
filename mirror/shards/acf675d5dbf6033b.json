@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gissio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gissio/library/mcu-max/1.0.7/mcu-max-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcu-max-1.0.7.tar.gz",
+    "size_bytes": 10489,
+    "sha256": "a9dea21c95a4b43302a0fed96d2c0a2cb9003b350dd3710b7703963e0bf3c815",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gissio/library/mcu-max/1.0.7/mcu-max-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/gissio/library/mcu-max/1.0.7/mcu-max-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gissio/library/mcu-renderer/1.0.2/mcu-renderer-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcu-renderer-1.0.2.tar.gz",
+    "size_bytes": 872329,
+    "sha256": "8d5da08dc8df0b39d03645e9a16a2250bcd3ef41f35dced02f3b99f09ace3c36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gissio/library/mcu-renderer/1.0.2/mcu-renderer-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gissio/library/mcu-renderer/1.0.2/mcu-renderer-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

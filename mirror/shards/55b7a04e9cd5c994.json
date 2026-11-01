@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vitan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vitan/library/FT800_2/0.0.0+sha.beba364d8636/FT800_2-0.0.0+sha.beba364d8636.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FT800_2-0.0.0+sha.beba364d8636.tar.gz",
+    "size_bytes": 14641,
+    "sha256": "0be636262ddb8b64cbfbf4225313362dbfa5ef853dec55ceb287c73ae4e8c050",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vitan/library/FT800_2/0.0.0%2Bsha.beba364d8636/FT800_2-0.0.0%2Bsha.beba364d8636.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vitan/library/FT800_2/0.0.0%2Bsha.beba364d8636/FT800_2-0.0.0%2Bsha.beba364d8636.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gerth",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gerth/library/Biquad/0.0.0+sha.3a80d1f8f30a/Biquad-0.0.0+sha.3a80d1f8f30a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Biquad-0.0.0+sha.3a80d1f8f30a.tar.gz",
+    "size_bytes": 1197,
+    "sha256": "bbe814fd7bd777785d441661ae083ce4b1fd9c3caeccf900038ebc0cbe815aa0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gerth/library/Biquad/0.0.0%2Bsha.3a80d1f8f30a/Biquad-0.0.0%2Bsha.3a80d1f8f30a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gerth/library/Biquad/0.0.0%2Bsha.3a80d1f8f30a/Biquad-0.0.0%2Bsha.3a80d1f8f30a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gerth/library/controlandadjust/0.0.0+sha.a9a6ffb32dbf/controlandadjust-0.0.0+sha.a9a6ffb32dbf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "controlandadjust-0.0.0+sha.a9a6ffb32dbf.tar.gz",
+    "size_bytes": 2409,
+    "sha256": "b74a607418740b407c2192658bd1fa09fa11ed588e724ab77c066ffcb024e242",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gerth/library/controlandadjust/0.0.0%2Bsha.a9a6ffb32dbf/controlandadjust-0.0.0%2Bsha.a9a6ffb32dbf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gerth/library/controlandadjust/0.0.0%2Bsha.a9a6ffb32dbf/controlandadjust-0.0.0%2Bsha.a9a6ffb32dbf.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/spaziochirale",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "spaziochirale/library/ArduTFLite/1.0.2/ArduTFLite-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduTFLite-1.0.2.tar.gz",
+    "size_bytes": 224628,
+    "sha256": "1e70676dca269355e315a1739255c6b5abc8af53fbd06c4303146b902c20a596",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spaziochirale/library/ArduTFLite/1.0.2/ArduTFLite-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/spaziochirale/library/ArduTFLite/1.0.2/ArduTFLite-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "spaziochirale/library/Chirale_TensorFLowLite/2.0.0/Chirale_TensorFLowLite-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Chirale_TensorFLowLite-2.0.0.tar.gz",
+    "size_bytes": 1001521,
+    "sha256": "74c2c4ccac54a3ee8febadb7c9f4a141f86c88f649e7487f56bdefabceabb233",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/spaziochirale/library/Chirale_TensorFLowLite/2.0.0/Chirale_TensorFLowLite-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/spaziochirale/library/Chirale_TensorFLowLite/2.0.0/Chirale_TensorFLowLite-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

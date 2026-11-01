@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wloche",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wloche/library/LcdProgressBar/1.0.1/LcdProgressBar-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdProgressBar-1.0.1.tar.gz",
+    "size_bytes": 15097,
+    "sha256": "5cf18b97139ece6ab2bda617974058f1362b3d2aa7b08075354ea4b5f83f9bda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wloche/library/LcdProgressBar/1.0.1/LcdProgressBar-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/wloche/library/LcdProgressBar/1.0.1/LcdProgressBar-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wloche/library/LcdProgressBarDouble/1.1.0/LcdProgressBarDouble-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdProgressBarDouble-1.1.0.tar.gz",
+    "size_bytes": 17048,
+    "sha256": "bbe4879373ab7813492f76345e4129a768697608ba773cf00201213d85c62a7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wloche/library/LcdProgressBarDouble/1.1.0/LcdProgressBarDouble-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wloche/library/LcdProgressBarDouble/1.1.0/LcdProgressBarDouble-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

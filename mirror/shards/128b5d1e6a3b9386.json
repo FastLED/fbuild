@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tzapu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tzapu/library/WiFiManager/0.15.0/WiFiManager-0.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiManager-0.15.0.tar.gz",
+    "size_bytes": 22224,
+    "sha256": "948e5d1b41886d3e25f9eed5c5755c61ceae0eaff649210afcc15898ccdb4a5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tzapu/library/WiFiManager/0.15.0/WiFiManager-0.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tzapu/library/WiFiManager/0.15.0/WiFiManager-0.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tzapu/library/WiFiManager/0.16.0/WiFiManager-0.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiManager-0.16.0.tar.gz",
+    "size_bytes": 23607,
+    "sha256": "e3c84c0a46097fcbfdafe3fbb43c6266b4d4a6ff2fea5daeee4bf3207d0d4dec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tzapu/library/WiFiManager/0.16.0/WiFiManager-0.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tzapu/library/WiFiManager/0.16.0/WiFiManager-0.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tzapu/library/WiFiManager/2.0.17/WiFiManager-2.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiManager-2.0.17.tar.gz",
+    "size_bytes": 77101,
+    "sha256": "0258c470efe3d595735b742c3b6448cdf854d43d44ac34342c964f23a65a26ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tzapu/library/WiFiManager/2.0.17/WiFiManager-2.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/tzapu/library/WiFiManager/2.0.17/WiFiManager-2.0.17.tar.gz"
+    ]
+   }
+  }
+ ]
+}

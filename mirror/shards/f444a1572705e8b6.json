@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cattanimarco",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cattanimarco/library/Grafici-GFX/4.0/Grafici-GFX-4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grafici-GFX-4.0.tar.gz",
+    "size_bytes": 24073,
+    "sha256": "c2113e98890c538076cb873cf2555b2f5a14972c266032f7e37df2046c62ee8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cattanimarco/library/Grafici-GFX/4.0/Grafici-GFX-4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cattanimarco/library/Grafici-GFX/4.0/Grafici-GFX-4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

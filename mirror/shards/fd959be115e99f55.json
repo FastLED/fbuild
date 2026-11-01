@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jenertsa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jenertsa/library/VCNL3040%20Proximity%20Sensor%20Library/0.1.0/VCNL3040ProximitySensorLibrary-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VCNL3040ProximitySensorLibrary-0.1.0.tar.gz",
+    "size_bytes": 5670,
+    "sha256": "52616051f57f22f6d06ea943f68220b9e00a5ca1f90383f3e6f87dad9d2ec391",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jenertsa/library/VCNL3040%2520Proximity%2520Sensor%2520Library/0.1.0/VCNL3040ProximitySensorLibrary-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jenertsa/library/VCNL3040%20Proximity%20Sensor%20Library/0.1.0/VCNL3040ProximitySensorLibrary-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

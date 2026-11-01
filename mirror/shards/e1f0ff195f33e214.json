@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mclarkdev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mclarkdev/library/ArylicHTTP/0.0.3/ArylicHTTP-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArylicHTTP-0.0.3.tar.gz",
+    "size_bytes": 2320,
+    "sha256": "ca5f7386a0b18700488628631a9e853511165710e5dc31ed6bfcc42c309fb7d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mclarkdev/library/ArylicHTTP/0.0.3/ArylicHTTP-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mclarkdev/library/ArylicHTTP/0.0.3/ArylicHTTP-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mclarkdev/library/BleepingLibrary/0.0.2/BleepingLibrary-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BleepingLibrary-0.0.2.tar.gz",
+    "size_bytes": 8284,
+    "sha256": "48623b109485cbd829f45298cdc125d9aa38356354f569a1ffa699972521bcb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mclarkdev/library/BleepingLibrary/0.0.2/BleepingLibrary-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mclarkdev/library/BleepingLibrary/0.0.2/BleepingLibrary-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

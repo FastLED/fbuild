@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iharyakimush",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iharyakimush/library/DS18B20Events/1.0.0/DS18B20Events-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS18B20Events-1.0.0.tar.gz",
+    "size_bytes": 2682,
+    "sha256": "92e013e367b8a73b97fead775f4943a07a7bfd67f7c2e9cb166f7308b168aec7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iharyakimush/library/DS18B20Events/1.0.0/DS18B20Events-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iharyakimush/library/DS18B20Events/1.0.0/DS18B20Events-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

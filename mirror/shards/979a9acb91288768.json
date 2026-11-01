@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cat-bot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cat-bot/library/jy901/0.0.0+sha.a93909601341/jy901-0.0.0+sha.a93909601341.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jy901-0.0.0+sha.a93909601341.tar.gz",
+    "size_bytes": 2431,
+    "sha256": "2f169a21cc0a4f2775afbc3d8347adb3b6ce92f58724e7bc478fd39914ca3c35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cat-bot/library/jy901/0.0.0%2Bsha.a93909601341/jy901-0.0.0%2Bsha.a93909601341.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cat-bot/library/jy901/0.0.0%2Bsha.a93909601341/jy901-0.0.0%2Bsha.a93909601341.tar.gz"
+    ]
+   }
+  }
+ ]
+}

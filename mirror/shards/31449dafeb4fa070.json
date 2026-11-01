@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-leong-kum-loong",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-leong-kum-loong/library/tone_h/0.0.0+sha.d76458b00616/tone_h-0.0.0+sha.d76458b00616.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tone_h-0.0.0+sha.d76458b00616.tar.gz",
+    "size_bytes": 1554,
+    "sha256": "9441cbcbf7c0890aae14a96f4018196e5a27b3c6a3cebf8d70bea3eca4ba8e85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-leong-kum-loong/library/tone_h/0.0.0%2Bsha.d76458b00616/tone_h-0.0.0%2Bsha.d76458b00616.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-leong-kum-loong/library/tone_h/0.0.0%2Bsha.d76458b00616/tone_h-0.0.0%2Bsha.d76458b00616.tar.gz"
+    ]
+   }
+  }
+ ]
+}

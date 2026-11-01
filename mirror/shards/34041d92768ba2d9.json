@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/belaplatform",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "belaplatform/library/Trill/1.1.7/Trill-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trill-1.1.7.tar.gz",
+    "size_bytes": 18937,
+    "sha256": "0e88b79f6aea5934f1fb7a2ba96995692c2830bf7aa4bdc8b97e2a6dcf997439",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/belaplatform/library/Trill/1.1.7/Trill-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/belaplatform/library/Trill/1.1.7/Trill-1.1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

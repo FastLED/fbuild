@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/k3vin135",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "k3vin135/library/EasyAzureIoT/1.0.0/EasyAzureIoT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyAzureIoT-1.0.0.tar.gz",
+    "size_bytes": 4987,
+    "sha256": "ec5600e5d2f51010acf0b462801ed561934e8cac6325e10692909dfd5799a356",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/k3vin135/library/EasyAzureIoT/1.0.0/EasyAzureIoT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/k3vin135/library/EasyAzureIoT/1.0.0/EasyAzureIoT-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

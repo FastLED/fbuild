@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/allan-cedric",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "allan-cedric/library/DC-Motor-Arduino/1.0.0/DC-Motor-Arduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DC-Motor-Arduino-1.0.0.tar.gz",
+    "size_bytes": 2420,
+    "sha256": "38686a3dd1b60365f2be8b90295ba39a6ca2781d04c8e7411a23a19b4d729e71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/allan-cedric/library/DC-Motor-Arduino/1.0.0/DC-Motor-Arduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/allan-cedric/library/DC-Motor-Arduino/1.0.0/DC-Motor-Arduino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "allan-cedric/library/JS40F-Arduino/1.0.0/JS40F-Arduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JS40F-Arduino-1.0.0.tar.gz",
+    "size_bytes": 1920,
+    "sha256": "76944d090151f90508d8f6b24661fecfc0bcd406721300138a65b0651fecadda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/allan-cedric/library/JS40F-Arduino/1.0.0/JS40F-Arduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/allan-cedric/library/JS40F-Arduino/1.0.0/JS40F-Arduino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "allan-cedric/library/LED-Arduino/1.0.0/LED-Arduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LED-Arduino-1.0.0.tar.gz",
+    "size_bytes": 2110,
+    "sha256": "7635dbab2fb8b413f2d2f3796fc800d36d09bee5b1463248d733ec98a83c74bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/allan-cedric/library/LED-Arduino/1.0.0/LED-Arduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/allan-cedric/library/LED-Arduino/1.0.0/LED-Arduino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "allan-cedric/library/QRE1113-Arduino/1.0.0/QRE1113-Arduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QRE1113-Arduino-1.0.0.tar.gz",
+    "size_bytes": 2297,
+    "sha256": "c106a19b42b33d03ecb6d3c8be7740cc86e497e74e2bf79676d7f1696338ddb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/allan-cedric/library/QRE1113-Arduino/1.0.0/QRE1113-Arduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/allan-cedric/library/QRE1113-Arduino/1.0.0/QRE1113-Arduino-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

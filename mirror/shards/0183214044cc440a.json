@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ftjuh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ftjuh/library/AccelStepperI2C/0.2.2/AccelStepperI2C-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AccelStepperI2C-0.2.2.tar.gz",
+    "size_bytes": 75475,
+    "sha256": "46ed68a42b67a4d7e19f606871dab5c9b77e5f004f17e35e074581ecd11f44ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ftjuh/library/AccelStepperI2C/0.2.2/AccelStepperI2C-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ftjuh/library/AccelStepperI2C/0.2.2/AccelStepperI2C-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ftjuh/library/I2Cwrapper/0.5.0/I2Cwrapper-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2Cwrapper-0.5.0.tar.gz",
+    "size_bytes": 125362,
+    "sha256": "fa3d7dfa846a80cbd1291c1ea5bbaab0bbe7b1cc7bc96374b3ba665841de5877",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ftjuh/library/I2Cwrapper/0.5.0/I2Cwrapper-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ftjuh/library/I2Cwrapper/0.5.0/I2Cwrapper-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ftjuh/library/RCWL_1X05/1.0.0/RCWL_1X05-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RCWL_1X05-1.0.0.tar.gz",
+    "size_bytes": 48604,
+    "sha256": "a197bca615166bf2eb318d4b59ffd492e12f545beb6577b32f42763618bd2af9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ftjuh/library/RCWL_1X05/1.0.0/RCWL_1X05-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ftjuh/library/RCWL_1X05/1.0.0/RCWL_1X05-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

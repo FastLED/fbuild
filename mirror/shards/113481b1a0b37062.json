@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tass",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tass/library/lpc1768-picotcp-eth/0.0.0+sha.53fd77850eee/lpc1768-picotcp-eth-0.0.0+sha.53fd77850eee.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lpc1768-picotcp-eth-0.0.0+sha.53fd77850eee.tar.gz",
+    "size_bytes": 11029,
+    "sha256": "2d07e20d528340dd31dae886e6cf34e3f6440b77b78fa2ddd77bb7bdc6bfe437",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tass/library/lpc1768-picotcp-eth/0.0.0%2Bsha.53fd77850eee/lpc1768-picotcp-eth-0.0.0%2Bsha.53fd77850eee.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tass/library/lpc1768-picotcp-eth/0.0.0%2Bsha.53fd77850eee/lpc1768-picotcp-eth-0.0.0%2Bsha.53fd77850eee.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tass/library/picotcp-demo-printf/0.0.0+sha.aa3b196cf64f/picotcp-demo-printf-0.0.0+sha.aa3b196cf64f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "picotcp-demo-printf-0.0.0+sha.aa3b196cf64f.tar.gz",
+    "size_bytes": 4086,
+    "sha256": "bbaa3d8ee9077283075d23f9f45eb002112dc77aa1296eec9f375c65834c9294",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tass/library/picotcp-demo-printf/0.0.0%2Bsha.aa3b196cf64f/picotcp-demo-printf-0.0.0%2Bsha.aa3b196cf64f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tass/library/picotcp-demo-printf/0.0.0%2Bsha.aa3b196cf64f/picotcp-demo-printf-0.0.0%2Bsha.aa3b196cf64f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

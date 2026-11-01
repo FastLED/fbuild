@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-the-a-team",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-the-a-team/library/MPU6050IMU/0.0.0+sha.5835b443885d/MPU6050IMU-0.0.0+sha.5835b443885d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050IMU-0.0.0+sha.5835b443885d.tar.gz",
+    "size_bytes": 9707,
+    "sha256": "760461f4fa689dd7a305d0e4d6610d33305e9a798d7a2468fa30dbdd4c2d2e78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-the-a-team/library/MPU6050IMU/0.0.0%2Bsha.5835b443885d/MPU6050IMU-0.0.0%2Bsha.5835b443885d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-the-a-team/library/MPU6050IMU/0.0.0%2Bsha.5835b443885d/MPU6050IMU-0.0.0%2Bsha.5835b443885d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-the-a-team/library/Mouse/0.0.0+sha.11b4710b30c2/Mouse-0.0.0+sha.11b4710b30c2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mouse-0.0.0+sha.11b4710b30c2.tar.gz",
+    "size_bytes": 1410,
+    "sha256": "3eae611ce1a1adaafb465e9e09ae720b0aed9391b38a313f67b315b178a40a45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-the-a-team/library/Mouse/0.0.0%2Bsha.11b4710b30c2/Mouse-0.0.0%2Bsha.11b4710b30c2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-the-a-team/library/Mouse/0.0.0%2Bsha.11b4710b30c2/Mouse-0.0.0%2Bsha.11b4710b30c2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

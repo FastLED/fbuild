@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-renemagrit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-renemagrit/library/CANlibrary/0.0.0+sha.b42c40844d4c/CANlibrary-0.0.0+sha.b42c40844d4c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CANlibrary-0.0.0+sha.b42c40844d4c.tar.gz",
+    "size_bytes": 3241,
+    "sha256": "c749f577c1879caf6015fa742121af8a6fbfb031683c46541a072bf33d533c0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-renemagrit/library/CANlibrary/0.0.0%2Bsha.b42c40844d4c/CANlibrary-0.0.0%2Bsha.b42c40844d4c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-renemagrit/library/CANlibrary/0.0.0%2Bsha.b42c40844d4c/CANlibrary-0.0.0%2Bsha.b42c40844d4c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

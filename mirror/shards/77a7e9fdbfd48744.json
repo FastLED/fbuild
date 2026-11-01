@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jimmythehack",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jimmythehack/library/DAC/0.0.0+sha.679fa19d91b2/DAC-0.0.0+sha.679fa19d91b2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DAC-0.0.0+sha.679fa19d91b2.tar.gz",
+    "size_bytes": 1874,
+    "sha256": "21bc2d291b33c954a85235a91a2cfff91aa5f7cc1151b4fc3f5b47978cdb696f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jimmythehack/library/DAC/0.0.0%2Bsha.679fa19d91b2/DAC-0.0.0%2Bsha.679fa19d91b2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jimmythehack/library/DAC/0.0.0%2Bsha.679fa19d91b2/DAC-0.0.0%2Bsha.679fa19d91b2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jimmythehack/library/MAX500/0.0.0+sha.90b59ae53d25/MAX500-0.0.0+sha.90b59ae53d25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX500-0.0.0+sha.90b59ae53d25.tar.gz",
+    "size_bytes": 2836,
+    "sha256": "f9d926643d828aa5cff3b89bea4e4cad47bfa1ebd0c1e4fc3e1251a2cfa94bcf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jimmythehack/library/MAX500/0.0.0%2Bsha.90b59ae53d25/MAX500-0.0.0%2Bsha.90b59ae53d25.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jimmythehack/library/MAX500/0.0.0%2Bsha.90b59ae53d25/MAX500-0.0.0%2Bsha.90b59ae53d25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jimmythehack/library/MCP4822/0.0.0+sha.39a2c041eefe/MCP4822-0.0.0+sha.39a2c041eefe.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP4822-0.0.0+sha.39a2c041eefe.tar.gz",
+    "size_bytes": 2690,
+    "sha256": "9e7c2785adb9ae4b22f90d41ba03f3cb9556d975dea43f74e4d6752557cd0f10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jimmythehack/library/MCP4822/0.0.0%2Bsha.39a2c041eefe/MCP4822-0.0.0%2Bsha.39a2c041eefe.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jimmythehack/library/MCP4822/0.0.0%2Bsha.39a2c041eefe/MCP4822-0.0.0%2Bsha.39a2c041eefe.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jimmythehack/library/MCP4922/0.0.0+sha.454c4d3eeae9/MCP4922-0.0.0+sha.454c4d3eeae9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP4922-0.0.0+sha.454c4d3eeae9.tar.gz",
+    "size_bytes": 2943,
+    "sha256": "eb6d1ad0b456228fb5ba8aaa2e3e593c4c97b60200038cb696ab230b9e3a2fd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jimmythehack/library/MCP4922/0.0.0%2Bsha.454c4d3eeae9/MCP4922-0.0.0%2Bsha.454c4d3eeae9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jimmythehack/library/MCP4922/0.0.0%2Bsha.454c4d3eeae9/MCP4922-0.0.0%2Bsha.454c4d3eeae9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

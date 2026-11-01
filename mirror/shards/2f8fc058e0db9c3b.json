@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-anunnaki",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-anunnaki/library/ACD52832_LSM9DS1/0.0.0+sha.45447b012eea/ACD52832_LSM9DS1-0.0.0+sha.45447b012eea.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACD52832_LSM9DS1-0.0.0+sha.45447b012eea.tar.gz",
+    "size_bytes": 2064,
+    "sha256": "b8bc0f69bebae718ed9d65998c998637e05202160bfc4b284ab4467c33f55a35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-anunnaki/library/ACD52832_LSM9DS1/0.0.0%2Bsha.45447b012eea/ACD52832_LSM9DS1-0.0.0%2Bsha.45447b012eea.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-anunnaki/library/ACD52832_LSM9DS1/0.0.0%2Bsha.45447b012eea/ACD52832_LSM9DS1-0.0.0%2Bsha.45447b012eea.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-anunnaki/library/ACD_ePaper/0.0.0+sha.dc7b794b59b7/ACD_ePaper-0.0.0+sha.dc7b794b59b7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACD_ePaper-0.0.0+sha.dc7b794b59b7.tar.gz",
+    "size_bytes": 4403,
+    "sha256": "b31c6be61410010b0b4d5e9060521b976991b8506283da8ddf7b260b54204d0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-anunnaki/library/ACD_ePaper/0.0.0%2Bsha.dc7b794b59b7/ACD_ePaper-0.0.0%2Bsha.dc7b794b59b7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-anunnaki/library/ACD_ePaper/0.0.0%2Bsha.dc7b794b59b7/ACD_ePaper-0.0.0%2Bsha.dc7b794b59b7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

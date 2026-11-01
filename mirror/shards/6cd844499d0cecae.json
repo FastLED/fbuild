@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-garyservin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-garyservin/library/ros_lib_indigo/0.0.0+sha.fd24f7ca9688/ros_lib_indigo-0.0.0+sha.fd24f7ca9688.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ros_lib_indigo-0.0.0+sha.fd24f7ca9688.tar.gz",
+    "size_bytes": 120166,
+    "sha256": "5c688719c833e9869b312fe1ba48821b8d732ef4261efb9060665ddc8ff9bffb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-garyservin/library/ros_lib_indigo/0.0.0%2Bsha.fd24f7ca9688/ros_lib_indigo-0.0.0%2Bsha.fd24f7ca9688.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-garyservin/library/ros_lib_indigo/0.0.0%2Bsha.fd24f7ca9688/ros_lib_indigo-0.0.0%2Bsha.fd24f7ca9688.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-garyservin/library/ros_lib_jade/0.0.0+sha.a906bb7c7831/ros_lib_jade-0.0.0+sha.a906bb7c7831.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ros_lib_jade-0.0.0+sha.a906bb7c7831.tar.gz",
+    "size_bytes": 120242,
+    "sha256": "3c6a9d376a85044311c8770ff2fa1c14ddef30c6c318213d21514ec5acf4ec21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-garyservin/library/ros_lib_jade/0.0.0%2Bsha.a906bb7c7831/ros_lib_jade-0.0.0%2Bsha.a906bb7c7831.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-garyservin/library/ros_lib_jade/0.0.0%2Bsha.a906bb7c7831/ros_lib_jade-0.0.0%2Bsha.a906bb7c7831.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-garyservin/library/ros_lib_kinetic/0.0.0+sha.a849bf78d77f/ros_lib_kinetic-0.0.0+sha.a849bf78d77f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ros_lib_kinetic-0.0.0+sha.a849bf78d77f.tar.gz",
+    "size_bytes": 125625,
+    "sha256": "2510660001570f453bc0eaa9465cc3027590fc23be09f2ee578b6d3305358bcf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-garyservin/library/ros_lib_kinetic/0.0.0%2Bsha.a849bf78d77f/ros_lib_kinetic-0.0.0%2Bsha.a849bf78d77f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-garyservin/library/ros_lib_kinetic/0.0.0%2Bsha.a849bf78d77f/ros_lib_kinetic-0.0.0%2Bsha.a849bf78d77f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-garyservin/library/ros_lib_melodic/0.0.0+sha.da82487f547e/ros_lib_melodic-0.0.0+sha.da82487f547e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ros_lib_melodic-0.0.0+sha.da82487f547e.tar.gz",
+    "size_bytes": 132937,
+    "sha256": "cf6f034b5dc7e1fbdb2ae7094ea6b742de5377c08599a5465966c5e49211769d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-garyservin/library/ros_lib_melodic/0.0.0%2Bsha.da82487f547e/ros_lib_melodic-0.0.0%2Bsha.da82487f547e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-garyservin/library/ros_lib_melodic/0.0.0%2Bsha.da82487f547e/ros_lib_melodic-0.0.0%2Bsha.da82487f547e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-garyservin/library/rosserial_mbed_lib/0.0.0+sha.19c5437ed9fe/rosserial_mbed_lib-0.0.0+sha.19c5437ed9fe.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rosserial_mbed_lib-0.0.0+sha.19c5437ed9fe.tar.gz",
+    "size_bytes": 37932,
+    "sha256": "b5d471aa5b30642fcc52cfeaa0f4647a45f0a8a7e3954c75c4adacd7f82f004c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-garyservin/library/rosserial_mbed_lib/0.0.0%2Bsha.19c5437ed9fe/rosserial_mbed_lib-0.0.0%2Bsha.19c5437ed9fe.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-garyservin/library/rosserial_mbed_lib/0.0.0%2Bsha.19c5437ed9fe/rosserial_mbed_lib-0.0.0%2Bsha.19c5437ed9fe.tar.gz"
+    ]
+   }
+  }
+ ]
+}

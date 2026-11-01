@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jwrw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jwrw/library/ESP_EEPROM/2.2.1/ESP_EEPROM-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_EEPROM-2.2.1.tar.gz",
+    "size_bytes": 10078,
+    "sha256": "8293cecf32f958f9bf6c640c1f06816d53122b1b2f0f73964f2b306365a61894",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jwrw/library/ESP_EEPROM/2.2.1/ESP_EEPROM-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jwrw/library/ESP_EEPROM/2.2.1/ESP_EEPROM-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jwrw/library/Executive/1.1.1/Executive-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Executive-1.1.1.tar.gz",
+    "size_bytes": 10151,
+    "sha256": "de86ce90166511bc7a3c0a121c52dae77f647faecc3f248dc0df091a89d8491c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jwrw/library/Executive/1.1.1/Executive-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jwrw/library/Executive/1.1.1/Executive-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jwrw/library/Matrix/1.2/Matrix-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Matrix-1.2.tar.gz",
+    "size_bytes": 4543,
+    "sha256": "4050e3160ba7f5271ee4a5053b0faf159daa70682f6f5ce6c74682a46c4dac90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jwrw/library/Matrix/1.2/Matrix-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jwrw/library/Matrix/1.2/Matrix-1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/axlan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "axlan/library/pixels-dice-interface/1.2.0/pixels-dice-interface-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pixels-dice-interface-1.2.0.tar.gz",
+    "size_bytes": 13046,
+    "sha256": "5584bcd720164c18c12da4e480b0ae48474a4eb112249c7ea251445f3f1b1927",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/axlan/library/pixels-dice-interface/1.2.0/pixels-dice-interface-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/axlan/library/pixels-dice-interface/1.2.0/pixels-dice-interface-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

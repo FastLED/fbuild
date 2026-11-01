@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-marvas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-marvas/library/hcsr04_TR/0.0.0+sha.530d4c35d92a/hcsr04_TR-0.0.0+sha.530d4c35d92a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hcsr04_TR-0.0.0+sha.530d4c35d92a.tar.gz",
+    "size_bytes": 1283,
+    "sha256": "de2945eb900845dfaf5b51540d060a2f29e13f9372d0568f595d8c570fb206fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-marvas/library/hcsr04_TR/0.0.0%2Bsha.530d4c35d92a/hcsr04_TR-0.0.0%2Bsha.530d4c35d92a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-marvas/library/hcsr04_TR/0.0.0%2Bsha.530d4c35d92a/hcsr04_TR-0.0.0%2Bsha.530d4c35d92a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-marvas/library/servo_motor/0.0.0+sha.d9dc08980d89/servo_motor-0.0.0+sha.d9dc08980d89.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "servo_motor-0.0.0+sha.d9dc08980d89.tar.gz",
+    "size_bytes": 1366,
+    "sha256": "c6a89ede47718e359b277a87606f9f7aa324b510e1d99e383d92caa1e91efae9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-marvas/library/servo_motor/0.0.0%2Bsha.d9dc08980d89/servo_motor-0.0.0%2Bsha.d9dc08980d89.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-marvas/library/servo_motor/0.0.0%2Bsha.d9dc08980d89/servo_motor-0.0.0%2Bsha.d9dc08980d89.tar.gz"
+    ]
+   }
+  }
+ ]
+}

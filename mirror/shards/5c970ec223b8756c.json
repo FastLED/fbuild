@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/omseven",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "omseven/library/JDateLib/1.0.0/JDateLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JDateLib-1.0.0.tar.gz",
+    "size_bytes": 1535,
+    "sha256": "4c3225d2fe17b6e07a20c39996bb18db9d2f2f6b0529f88f0d0b43729b5e82c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/omseven/library/JDateLib/1.0.0/JDateLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/omseven/library/JDateLib/1.0.0/JDateLib-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nickp005",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nickp005/library/Plynx/1.0.2/Plynx-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plynx-1.0.2.tar.gz",
+    "size_bytes": 264756,
+    "sha256": "4dd425e2cd047e5c869eae877ba0869e6b98958037841856b3d001d1e3dfeba7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nickp005/library/Plynx/1.0.2/Plynx-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nickp005/library/Plynx/1.0.2/Plynx-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nickp005/library/Plynx/1.0.5/Plynx-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plynx-1.0.5.tar.gz",
+    "size_bytes": 281436,
+    "sha256": "81cf2dc46e4f9ec0b543024ad68d9ffc14a3782194fab1424511325e7bdd14f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nickp005/library/Plynx/1.0.5/Plynx-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nickp005/library/Plynx/1.0.5/Plynx-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nickp005/library/Plynx/1.4.1/Plynx-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plynx-1.4.1.tar.gz",
+    "size_bytes": 360970,
+    "sha256": "088b512eade718b31f26893a188759ee8e7a3d09f7ef22ace73d7fa3033b5e5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nickp005/library/Plynx/1.4.1/Plynx-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nickp005/library/Plynx/1.4.1/Plynx-1.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

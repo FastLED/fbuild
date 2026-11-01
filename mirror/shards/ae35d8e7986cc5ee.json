@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/plasmapper",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "plasmapper/library/PL%20ADXL355/1.4.0/PLADXL355-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PLADXL355-1.4.0.tar.gz",
+    "size_bytes": 11123,
+    "sha256": "7ceac30edf3bcbf057bb4f9987289737bda4804d786cdbcb838f751c6320f5e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plasmapper/library/PL%2520ADXL355/1.4.0/PLADXL355-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/plasmapper/library/PL%20ADXL355/1.4.0/PLADXL355-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plasmapper/library/PL%20ADXL355/1.4.1/PLADXL355-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PLADXL355-1.4.1.tar.gz",
+    "size_bytes": 11152,
+    "sha256": "db4216ede7db37ab224226a12b0c6df6bf974fccc34b4edcbd1a9dbd22c905ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plasmapper/library/PL%2520ADXL355/1.4.1/PLADXL355-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/plasmapper/library/PL%20ADXL355/1.4.1/PLADXL355-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plasmapper/library/PL%20ADXL355/1.4.2/PLADXL355-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PLADXL355-1.4.2.tar.gz",
+    "size_bytes": 11721,
+    "sha256": "4308461e4326ca9c6dd8c4af737cf70b4319ae2f00c8a271af8952fdd4215658",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plasmapper/library/PL%2520ADXL355/1.4.2/PLADXL355-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/plasmapper/library/PL%20ADXL355/1.4.2/PLADXL355-1.4.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

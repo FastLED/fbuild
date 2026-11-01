@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/starmbi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "starmbi/library/hp_BH1750/1.0.2/hp_BH1750-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hp_BH1750-1.0.2.tar.gz",
+    "size_bytes": 17543,
+    "sha256": "150ff2e25e0a7522f0a7047191acf5c8ed2eb0bd304503cca6289003f2f5c18b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/starmbi/library/hp_BH1750/1.0.2/hp_BH1750-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/starmbi/library/hp_BH1750/1.0.2/hp_BH1750-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

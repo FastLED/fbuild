@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/seeedjp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "seeedjp/library/GroveDriverPack/1.12.0/GroveDriverPack-1.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveDriverPack-1.12.0.tar.gz",
+    "size_bytes": 39513,
+    "sha256": "c21affb48f6dcce2f6c6de210e0c45f0de6d9f8bba21f87e3ee21ff687df379c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeedjp/library/GroveDriverPack/1.12.0/GroveDriverPack-1.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeedjp/library/GroveDriverPack/1.12.0/GroveDriverPack-1.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeedjp/library/GroveDriverPack/1.13.0/GroveDriverPack-1.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroveDriverPack-1.13.0.tar.gz",
+    "size_bytes": 39663,
+    "sha256": "2936ddc5e83b07dbfa8b4ee4d972b8ec296f07d0063d7db5a2a7d79bb4ae65c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeedjp/library/GroveDriverPack/1.13.0/GroveDriverPack-1.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeedjp/library/GroveDriverPack/1.13.0/GroveDriverPack-1.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeedjp/library/Wio%203G%20for%20Arduino/1.6.0/Wio3GforArduino-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Wio3GforArduino-1.6.0.tar.gz",
+    "size_bytes": 19815,
+    "sha256": "6671e1563007b0b8414b5ee41979e5ca102d493c8577ba51146a55fe1c6ac77c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeedjp/library/Wio%25203G%2520for%2520Arduino/1.6.0/Wio3GforArduino-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeedjp/library/Wio%203G%20for%20Arduino/1.6.0/Wio3GforArduino-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeedjp/library/Wio%20LTE%20for%20Arduino/2.13.0/WioLTEforArduino-2.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WioLTEforArduino-2.13.0.tar.gz",
+    "size_bytes": 27028,
+    "sha256": "e72c4baf0ddcf6d97b3f0e16188af1641d77eba4c985999ef1972ab0ce78874c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeedjp/library/Wio%2520LTE%2520for%2520Arduino/2.13.0/WioLTEforArduino-2.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeedjp/library/Wio%20LTE%20for%20Arduino/2.13.0/WioLTEforArduino-2.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeedjp/library/Wio%20cell%20lib%20for%20Arduino/1.7.0/WiocelllibforArduino-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiocelllibforArduino-1.7.0.tar.gz",
+    "size_bytes": 28778,
+    "sha256": "4107e5d6494cdf9830476930e4d3de35e3cdd60029227aa445276deaa95db701",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeedjp/library/Wio%2520cell%2520lib%2520for%2520Arduino/1.7.0/WiocelllibforArduino-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeedjp/library/Wio%20cell%20lib%20for%20Arduino/1.7.0/WiocelllibforArduino-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeedjp/library/WioCellular/0.3.13/WioCellular-0.3.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WioCellular-0.3.13.tar.gz",
+    "size_bytes": 82434,
+    "sha256": "575feff9988aaa3bbe1f96205a2a7d5af64ba62dfc9885760cc4f86022b41de7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeedjp/library/WioCellular/0.3.13/WioCellular-0.3.13.tar.gz",
+     "https://dl.registry.platformio.org/download/seeedjp/library/WioCellular/0.3.13/WioCellular-0.3.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeedjp/library/WioCellular/0.3.14/WioCellular-0.3.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WioCellular-0.3.14.tar.gz",
+    "size_bytes": 82394,
+    "sha256": "9d791e0cd0860d4cc5ca9a5612a724b5a7c8dc08ddfd4026d26c5e9f8bdddbaf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeedjp/library/WioCellular/0.3.14/WioCellular-0.3.14.tar.gz",
+     "https://dl.registry.platformio.org/download/seeedjp/library/WioCellular/0.3.14/WioCellular-0.3.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeedjp/library/WioCellular/0.3.15/WioCellular-0.3.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WioCellular-0.3.15.tar.gz",
+    "size_bytes": 82908,
+    "sha256": "06adc642fdca092a67b57326fd2225661bbb280323cc38c853ad6a582ff59074",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeedjp/library/WioCellular/0.3.15/WioCellular-0.3.15.tar.gz",
+     "https://dl.registry.platformio.org/download/seeedjp/library/WioCellular/0.3.15/WioCellular-0.3.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "seeedjp/library/WioCellular/0.3.16/WioCellular-0.3.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WioCellular-0.3.16.tar.gz",
+    "size_bytes": 83386,
+    "sha256": "cf64374921b0de35eaa2cffa702e450d39a65b52013dcf2702e6f396de58fb55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeedjp/library/WioCellular/0.3.16/WioCellular-0.3.16.tar.gz",
+     "https://dl.registry.platformio.org/download/seeedjp/library/WioCellular/0.3.16/WioCellular-0.3.16.tar.gz"
+    ]
+   }
+  }
+ ]
+}

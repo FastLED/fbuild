@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aungmoekhine",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aungmoekhine/library/AMK_CYD_Universal_TFT/1.2.1/AMK_CYD_Universal_TFT-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMK_CYD_Universal_TFT-1.2.1.tar.gz",
+    "size_bytes": 355011,
+    "sha256": "94643e932151557989dbe352f5f65b93926a1d4e219f04a6c8cf2c558b54dc37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aungmoekhine/library/AMK_CYD_Universal_TFT/1.2.1/AMK_CYD_Universal_TFT-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aungmoekhine/library/AMK_CYD_Universal_TFT/1.2.1/AMK_CYD_Universal_TFT-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yostlabs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yostlabs/library/YostLabs%203-Space%20Sensors/1.0.0/YostLabs3-SpaceSensors-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YostLabs3-SpaceSensors-1.0.0.tar.gz",
+    "size_bytes": 81236,
+    "sha256": "0af9591af7860970392e346b593e1533e444695c58118a485dbca27fbfc3a6c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yostlabs/library/YostLabs%25203-Space%2520Sensors/1.0.0/YostLabs3-SpaceSensors-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yostlabs/library/YostLabs%203-Space%20Sensors/1.0.0/YostLabs3-SpaceSensors-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

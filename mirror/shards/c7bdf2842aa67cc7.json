@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/obdevel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "obdevel/library/ACAN2040/0.0.3/ACAN2040-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACAN2040-0.0.3.tar.gz",
+    "size_bytes": 25991,
+    "sha256": "2bc7670c8004e4850ceb07f7e2e8b5bcd65a25077956decab9a66efc8b8c361f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/obdevel/library/ACAN2040/0.0.3/ACAN2040-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/obdevel/library/ACAN2040/0.0.3/ACAN2040-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "obdevel/library/CBUS/1.1.22/CBUS-1.1.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CBUS-1.1.22.tar.gz",
+    "size_bytes": 26203,
+    "sha256": "0ce2eb6dea365a84f3eeed7e987fe792b041c8d2ff11cf89a2dee817f35e470a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/obdevel/library/CBUS/1.1.22/CBUS-1.1.22.tar.gz",
+     "https://dl.registry.platformio.org/download/obdevel/library/CBUS/1.1.22/CBUS-1.1.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "obdevel/library/CBUS2515/1.2.2/CBUS2515-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CBUS2515-1.2.2.tar.gz",
+    "size_bytes": 10073,
+    "sha256": "9849733ff03c242c68420409acb7202bf55b2f885212f0ab51955e5681b6911d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/obdevel/library/CBUS2515/1.2.2/CBUS2515-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/obdevel/library/CBUS2515/1.2.2/CBUS2515-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "obdevel/library/CBUSACAN2040/1.2.3/CBUSACAN2040-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CBUSACAN2040-1.2.3.tar.gz",
+    "size_bytes": 19650,
+    "sha256": "e434efbe6a0736fc13b2a57b1c806119385471c5fce6cff9162ea1db7d72e733",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/obdevel/library/CBUSACAN2040/1.2.3/CBUSACAN2040-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/obdevel/library/CBUSACAN2040/1.2.3/CBUSACAN2040-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "obdevel/library/CBUSLED/1.1.9/CBUSLED-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CBUSLED-1.1.9.tar.gz",
+    "size_bytes": 2845,
+    "sha256": "d34fe6a761c8f3e4b711be379ac5174085ecef486ab411f74ab79b75062714ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/obdevel/library/CBUSLED/1.1.9/CBUSLED-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/obdevel/library/CBUSLED/1.1.9/CBUSLED-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "obdevel/library/CBUSSwitch/1.1.9/CBUSSwitch-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CBUSSwitch-1.1.9.tar.gz",
+    "size_bytes": 2920,
+    "sha256": "e0e08cbace0244d53f2cad763c2a368f520d62ce5b3a24296c939d2d90d49ef7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/obdevel/library/CBUSSwitch/1.1.9/CBUSSwitch-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/obdevel/library/CBUSSwitch/1.1.9/CBUSSwitch-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "obdevel/library/CBUSconfig/1.1.19/CBUSconfig-1.1.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CBUSconfig-1.1.19.tar.gz",
+    "size_bytes": 9362,
+    "sha256": "993ea31dee7f5bb9a61b417386593f0161f67f7aa1f090eb809cbb9048bb968d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/obdevel/library/CBUSconfig/1.1.19/CBUSconfig-1.1.19.tar.gz",
+     "https://dl.registry.platformio.org/download/obdevel/library/CBUSconfig/1.1.19/CBUSconfig-1.1.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "obdevel/library/CBUSconfig/1.1.20/CBUSconfig-1.1.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CBUSconfig-1.1.20.tar.gz",
+    "size_bytes": 9371,
+    "sha256": "5dccb3ad9aa507b2d2a3cac77bf675df8fb9be3b327de45f2a969b0ee65ff9cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/obdevel/library/CBUSconfig/1.1.20/CBUSconfig-1.1.20.tar.gz",
+     "https://dl.registry.platformio.org/download/obdevel/library/CBUSconfig/1.1.20/CBUSconfig-1.1.20.tar.gz"
+    ]
+   }
+  }
+ ]
+}

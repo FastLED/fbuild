@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kenken0721",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kenken0721/library/PwmSpeedServo/0.0.0+sha.80c1c369a6f4/PwmSpeedServo-0.0.0+sha.80c1c369a6f4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PwmSpeedServo-0.0.0+sha.80c1c369a6f4.tar.gz",
+    "size_bytes": 1064,
+    "sha256": "6880946aeae402c8ca5375be9db0be36956569383431d8be943d074a0e10187b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kenken0721/library/PwmSpeedServo/0.0.0%2Bsha.80c1c369a6f4/PwmSpeedServo-0.0.0%2Bsha.80c1c369a6f4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kenken0721/library/PwmSpeedServo/0.0.0%2Bsha.80c1c369a6f4/PwmSpeedServo-0.0.0%2Bsha.80c1c369a6f4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kenken0721/library/Serialservo/0.0.0+sha.42687d677641/Serialservo-0.0.0+sha.42687d677641.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Serialservo-0.0.0+sha.42687d677641.tar.gz",
+    "size_bytes": 1640,
+    "sha256": "693b15abc96bd29bb1456655ceacbb13b0c1a0fb563bab2b1beb8556abcedd48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kenken0721/library/Serialservo/0.0.0%2Bsha.42687d677641/Serialservo-0.0.0%2Bsha.42687d677641.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kenken0721/library/Serialservo/0.0.0%2Bsha.42687d677641/Serialservo-0.0.0%2Bsha.42687d677641.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kenken0721/library/kondoSerialServo/0.0.0+sha.490e970d2795/kondoSerialServo-0.0.0+sha.490e970d2795.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kondoSerialServo-0.0.0+sha.490e970d2795.tar.gz",
+    "size_bytes": 1330,
+    "sha256": "403cd54f14b19fe073f1f6022f574be6839991dd8ac0c112dd7625da9b87ba58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kenken0721/library/kondoSerialServo/0.0.0%2Bsha.490e970d2795/kondoSerialServo-0.0.0%2Bsha.490e970d2795.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kenken0721/library/kondoSerialServo/0.0.0%2Bsha.490e970d2795/kondoSerialServo-0.0.0%2Bsha.490e970d2795.tar.gz"
+    ]
+   }
+  }
+ ]
+}

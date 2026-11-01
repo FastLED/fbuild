@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nm500",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nm500/library/NeuroShield/0.0.0+sha.6163399b611e/NeuroShield-0.0.0+sha.6163399b611e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeuroShield-0.0.0+sha.6163399b611e.tar.gz",
+    "size_bytes": 8321,
+    "sha256": "333e44f61dc8b8d34e0bd3dde9d89098f7dc1500217e3716f171c5d1f16e5830",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nm500/library/NeuroShield/0.0.0%2Bsha.6163399b611e/NeuroShield-0.0.0%2Bsha.6163399b611e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nm500/library/NeuroShield/0.0.0%2Bsha.6163399b611e/NeuroShield-0.0.0%2Bsha.6163399b611e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

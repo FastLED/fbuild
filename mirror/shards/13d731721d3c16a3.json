@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jorgen-vikinggod",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jorgen-vikinggod/library/FastLED%20GFX%20Library/0.1.0/FastLEDGFXLibrary-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLEDGFXLibrary-0.1.0.tar.gz",
+    "size_bytes": 264047,
+    "sha256": "3ebf1850b6940b675d4fe938662167bb31e006bdf9874bd908a8cd3b38e62328",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jorgen-vikinggod/library/FastLED%2520GFX%2520Library/0.1.0/FastLEDGFXLibrary-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jorgen-vikinggod/library/FastLED%20GFX%20Library/0.1.0/FastLEDGFXLibrary-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

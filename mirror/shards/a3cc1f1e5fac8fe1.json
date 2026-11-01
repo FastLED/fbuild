@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ianmcc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ianmcc/library/VNH5019/0.0.0+sha.b5f360a16354/VNH5019-0.0.0+sha.b5f360a16354.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VNH5019-0.0.0+sha.b5f360a16354.tar.gz",
+    "size_bytes": 3214,
+    "sha256": "769657f766967ddc622d0f21205f8187800b671fb63cd8ecdadb3392d74c4517",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ianmcc/library/VNH5019/0.0.0%2Bsha.b5f360a16354/VNH5019-0.0.0%2Bsha.b5f360a16354.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ianmcc/library/VNH5019/0.0.0%2Bsha.b5f360a16354/VNH5019-0.0.0%2Bsha.b5f360a16354.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ianmcc/library/nRF24L01/0.0.0+sha.952996e3abdb/nRF24L01-0.0.0+sha.952996e3abdb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF24L01-0.0.0+sha.952996e3abdb.tar.gz",
+    "size_bytes": 8063,
+    "sha256": "00e4c2f78ba39c86d37dda3fb364cc8bc6027629d6e6f8a8ffac88753f5e14b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ianmcc/library/nRF24L01/0.0.0%2Bsha.952996e3abdb/nRF24L01-0.0.0%2Bsha.952996e3abdb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ianmcc/library/nRF24L01/0.0.0%2Bsha.952996e3abdb/nRF24L01-0.0.0%2Bsha.952996e3abdb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

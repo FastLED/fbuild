@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/henriksod",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "henriksod/library/Fabrik2D/1.0.6/Fabrik2D-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Fabrik2D-1.0.6.tar.gz",
+    "size_bytes": 13550,
+    "sha256": "eeecf6ac2f39ac64a5da1f994552a9837914684a706f1477bc8af76263f215ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/henriksod/library/Fabrik2D/1.0.6/Fabrik2D-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/henriksod/library/Fabrik2D/1.0.6/Fabrik2D-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "henriksod/library/SerialCAN/1.0.0/SerialCAN-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialCAN-1.0.0.tar.gz",
+    "size_bytes": 8951,
+    "sha256": "13a9f3a3d8569cfefa6fba69c70f7b04aadb9da9daa9b1b5e22ab4ff965b1124",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/henriksod/library/SerialCAN/1.0.0/SerialCAN-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/henriksod/library/SerialCAN/1.0.0/SerialCAN-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

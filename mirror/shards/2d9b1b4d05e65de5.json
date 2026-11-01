@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-enenkel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-enenkel/library/B16_SHOW2/0.0.0+sha.ca2a3ef9ab9c/B16_SHOW2-0.0.0+sha.ca2a3ef9ab9c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "B16_SHOW2-0.0.0+sha.ca2a3ef9ab9c.tar.gz",
+    "size_bytes": 3096,
+    "sha256": "52e4bac22c765f0813bf512a651fce65627408c0b9a65ee68b083a1e53640eea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-enenkel/library/B16_SHOW2/0.0.0%2Bsha.ca2a3ef9ab9c/B16_SHOW2-0.0.0%2Bsha.ca2a3ef9ab9c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-enenkel/library/B16_SHOW2/0.0.0%2Bsha.ca2a3ef9ab9c/B16_SHOW2-0.0.0%2Bsha.ca2a3ef9ab9c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

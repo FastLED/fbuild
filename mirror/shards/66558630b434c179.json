@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/makeblock-official",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "makeblock-official/library/MakeBlock%20Drive%20Updated/3.27/MakeBlockDrive-3.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MakeBlockDrive-3.27.tar.gz",
+    "size_bytes": 214737,
+    "sha256": "f766ae54b459c4eff20e93f54c6da0ed3e54c21eb71af09c4fe1efaa3abbebed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makeblock-official/library/MakeBlock%2520Drive%2520Updated/3.27/MakeBlockDrive-3.27.tar.gz",
+     "https://dl.registry.platformio.org/download/makeblock-official/library/MakeBlock%20Drive%20Updated/3.27/MakeBlockDrive-3.27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makeblock-official/library/MakeBlock%20Drive%20Updated/3.31.0/MakeBlockDriveUpdated-3.31.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MakeBlockDriveUpdated-3.31.0.tar.gz",
+    "size_bytes": 237365,
+    "sha256": "0070a2fb6ad6a96c0d8f06111a665096d4f07d6314154e58f00f39321e1119b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makeblock-official/library/MakeBlock%2520Drive%2520Updated/3.31.0/MakeBlockDriveUpdated-3.31.0.tar.gz",
+     "https://dl.registry.platformio.org/download/makeblock-official/library/MakeBlock%20Drive%20Updated/3.31.0/MakeBlockDriveUpdated-3.31.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

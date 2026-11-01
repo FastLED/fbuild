@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/woodinspector",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "woodinspector/library/ContrIO/1.0.2/ContrIO-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ContrIO-1.0.2.tar.gz",
+    "size_bytes": 6376,
+    "sha256": "a20f65698bcac41cc2f5bfbab1b2cb2041e1c6c2ae7dc93dc5c7cff6b30d1d0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/woodinspector/library/ContrIO/1.0.2/ContrIO-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/woodinspector/library/ContrIO/1.0.2/ContrIO-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

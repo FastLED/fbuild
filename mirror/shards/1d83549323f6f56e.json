@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/5pio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "5pio/library/BLESerial/1.1/BLESerial-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLESerial-1.1.tar.gz",
+    "size_bytes": 2232,
+    "sha256": "b9bb218f05dc0c92e12256ac29d171d09e665d80e8aeb014c5311b9edd8696e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/5pio/library/BLESerial/1.1/BLESerial-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/5pio/library/BLESerial/1.1/BLESerial-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

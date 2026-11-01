@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/u-blox",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "u-blox/library/ubxlib/1.5.0/ubxlib-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ubxlib-1.5.0.tar.gz",
+    "size_bytes": 6603668,
+    "sha256": "85b49ab402ae0dad40614570896b4a4751533f4008ee226d7406d3e78cc3082e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/u-blox/library/ubxlib/1.5.0/ubxlib-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/u-blox/library/ubxlib/1.5.0/ubxlib-1.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

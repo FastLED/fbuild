@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/smgvbest",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "smgvbest/library/DCS-BIOS%20FP-Fork/0.3.9-rc1/DCS-BIOSFP-Fork-0.3.9-rc1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCS-BIOSFP-Fork-0.3.9-rc1.tar.gz",
+    "size_bytes": 267240,
+    "sha256": "753ab9e49e33c954159c340008ee59334c67bd73aacbef2cbc7271653c47d494",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smgvbest/library/DCS-BIOS%2520FP-Fork/0.3.9-rc1/DCS-BIOSFP-Fork-0.3.9-rc1.tar.gz",
+     "https://dl.registry.platformio.org/download/smgvbest/library/DCS-BIOS%20FP-Fork/0.3.9-rc1/DCS-BIOSFP-Fork-0.3.9-rc1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

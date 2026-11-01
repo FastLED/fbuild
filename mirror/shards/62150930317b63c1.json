@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ntwanderer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ntwanderer/library/serial-eeprom-config/1.0.1/serial-eeprom-config-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "serial-eeprom-config-1.0.1.tar.gz",
+    "size_bytes": 3161,
+    "sha256": "a1425eb2548d467a477153d231d26bfd7ce349f7601e9e292cd23a25f9372a91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ntwanderer/library/serial-eeprom-config/1.0.1/serial-eeprom-config-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ntwanderer/library/serial-eeprom-config/1.0.1/serial-eeprom-config-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ntwanderer/library/serial-eeprom-config/1.0.2/serial-eeprom-config-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "serial-eeprom-config-1.0.2.tar.gz",
+    "size_bytes": 3171,
+    "sha256": "62f02e7bffcdc7644d971c36a1b3a7266cb98cd9728ccac383e7aa76689721ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ntwanderer/library/serial-eeprom-config/1.0.2/serial-eeprom-config-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ntwanderer/library/serial-eeprom-config/1.0.2/serial-eeprom-config-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

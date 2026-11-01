@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dl3ebb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dl3ebb/library/openIot/1.1.0/openIot-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "openIot-1.1.0.tar.gz",
+    "size_bytes": 31527,
+    "sha256": "cf322596766e5c96b088252f4787ebfc1206344b4a333c2b5b8d74cbcd5aac29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dl3ebb/library/openIot/1.1.0/openIot-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dl3ebb/library/openIot/1.1.0/openIot-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

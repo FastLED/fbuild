@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-steve918",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-steve918/library/SX1276RonothLib/0.0.0+sha.f2826a8fbff2/SX1276RonothLib-0.0.0+sha.f2826a8fbff2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SX1276RonothLib-0.0.0+sha.f2826a8fbff2.tar.gz",
+    "size_bytes": 35498,
+    "sha256": "47a97a2a472293ef76a46eb3006d5853352775b90c4d58877cc947c66431344a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-steve918/library/SX1276RonothLib/0.0.0%2Bsha.f2826a8fbff2/SX1276RonothLib-0.0.0%2Bsha.f2826a8fbff2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-steve918/library/SX1276RonothLib/0.0.0%2Bsha.f2826a8fbff2/SX1276RonothLib-0.0.0%2Bsha.f2826a8fbff2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

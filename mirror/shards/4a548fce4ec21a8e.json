@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ggoraa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ggoraa/library/MorseDuino/1.0/MorseDuino-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MorseDuino-1.0.tar.gz",
+    "size_bytes": 14281,
+    "sha256": "d2746244e6658274331ad44b5d20aa8f4a9c37bbc0d0f915800abdc67d651af7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ggoraa/library/MorseDuino/1.0/MorseDuino-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ggoraa/library/MorseDuino/1.0/MorseDuino-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

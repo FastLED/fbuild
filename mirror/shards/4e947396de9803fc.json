@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lukasynkowy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lukasynkowy/library/OTAWIFIAsyncBar/1.0.0/OTAWIFIAsyncBar-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OTAWIFIAsyncBar-1.0.0.tar.gz",
+    "size_bytes": 6895,
+    "sha256": "4fa72f4204ea3003d2fd3625908a32b1395c320da332a802eb2ee571d6a4fb07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lukasynkowy/library/OTAWIFIAsyncBar/1.0.0/OTAWIFIAsyncBar-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lukasynkowy/library/OTAWIFIAsyncBar/1.0.0/OTAWIFIAsyncBar-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lukasynkowy/library/OTAWIFIAsyncBar/1.2.0/OTAWIFIAsyncBar-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OTAWIFIAsyncBar-1.2.0.tar.gz",
+    "size_bytes": 10390,
+    "sha256": "c8f10b09a14bd24a790ca9892df83d1ee4b1274541b07e398d88d94c98e98989",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lukasynkowy/library/OTAWIFIAsyncBar/1.2.0/OTAWIFIAsyncBar-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lukasynkowy/library/OTAWIFIAsyncBar/1.2.0/OTAWIFIAsyncBar-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

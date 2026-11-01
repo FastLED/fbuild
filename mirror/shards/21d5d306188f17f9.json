@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mm1kee",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mm1kee/library/SmoothTouch/1.0.0/SmoothTouch-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmoothTouch-1.0.0.tar.gz",
+    "size_bytes": 15655,
+    "sha256": "27f720ae75d765e73752f8a9b9b5984ceed9b581ebb99ec74ae127148adc08a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mm1kee/library/SmoothTouch/1.0.0/SmoothTouch-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mm1kee/library/SmoothTouch/1.0.0/SmoothTouch-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

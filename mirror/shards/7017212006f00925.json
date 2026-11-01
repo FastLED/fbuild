@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dadangjia",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dadangjia/library/wifi_example/0.0.0+sha.8512a7d76959/wifi_example-0.0.0+sha.8512a7d76959.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wifi_example-0.0.0+sha.8512a7d76959.tar.gz",
+    "size_bytes": 2489,
+    "sha256": "09a8fc1b79dedec1ff569ef46a52eb91ba7f17304dde1d6c0c05f4c5984b47b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dadangjia/library/wifi_example/0.0.0%2Bsha.8512a7d76959/wifi_example-0.0.0%2Bsha.8512a7d76959.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dadangjia/library/wifi_example/0.0.0%2Bsha.8512a7d76959/wifi_example-0.0.0%2Bsha.8512a7d76959.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sndnvaps",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sndnvaps/library/Esp_Software_Serial/8.3.1/Esp_Software_Serial-8.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Esp_Software_Serial-8.3.1.tar.gz",
+    "size_bytes": 28239,
+    "sha256": "5f759dbe4dd1698a365ce05fd6d826b20c704801c799d2966dd4558e6c8a7819",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sndnvaps/library/Esp_Software_Serial/8.3.1/Esp_Software_Serial-8.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sndnvaps/library/Esp_Software_Serial/8.3.1/Esp_Software_Serial-8.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mgaman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mgaman/library/pdulib/0.5.11/pdulib-0.5.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdulib-0.5.11.tar.gz",
+    "size_bytes": 336538,
+    "sha256": "42d36acf87348b1d45694de25b6b0663390897e8a63dba4668426262437cf706",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mgaman/library/pdulib/0.5.11/pdulib-0.5.11.tar.gz",
+     "https://dl.registry.platformio.org/download/mgaman/library/pdulib/0.5.11/pdulib-0.5.11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

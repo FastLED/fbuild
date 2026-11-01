@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/steven-gh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "steven-gh/library/Xsens_MTi_I2C/2.0.0/Xsens_MTi_I2C-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Xsens_MTi_I2C-2.0.0.tar.gz",
+    "size_bytes": 6522,
+    "sha256": "ffa2d9fd185442f1e62bcafbf83321611dca589fe93271eedcd0991be5556b14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steven-gh/library/Xsens_MTi_I2C/2.0.0/Xsens_MTi_I2C-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/steven-gh/library/Xsens_MTi_I2C/2.0.0/Xsens_MTi_I2C-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "steven-gh/library/Xsens_MTi_SPI/1.0.0/Xsens_MTi_SPI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Xsens_MTi_SPI-1.0.0.tar.gz",
+    "size_bytes": 6586,
+    "sha256": "276848b2fa044837c9f9f1b7c64bc0c53480fd39b6cd47c6824be224c6b1693d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/steven-gh/library/Xsens_MTi_SPI/1.0.0/Xsens_MTi_SPI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/steven-gh/library/Xsens_MTi_SPI/1.0.0/Xsens_MTi_SPI-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

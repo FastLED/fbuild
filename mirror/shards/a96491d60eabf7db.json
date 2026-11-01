@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pommzorz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pommzorz/library/ADXL345_I2C/0.0.0+sha.755d80b05eea/ADXL345_I2C-0.0.0+sha.755d80b05eea.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL345_I2C-0.0.0+sha.755d80b05eea.tar.gz",
+    "size_bytes": 6711,
+    "sha256": "a81ade8b8c0aec83e1b9a947edfae6a2210dcd829edafce4fdf0f1f86324bd83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pommzorz/library/ADXL345_I2C/0.0.0%2Bsha.755d80b05eea/ADXL345_I2C-0.0.0%2Bsha.755d80b05eea.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pommzorz/library/ADXL345_I2C/0.0.0%2Bsha.755d80b05eea/ADXL345_I2C-0.0.0%2Bsha.755d80b05eea.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pommzorz/library/Adafruit_GFX_I2C_SPI/0.0.0+sha.b8313591b561/Adafruit_GFX_I2C_SPI-0.0.0+sha.b8313591b561.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_GFX_I2C_SPI-0.0.0+sha.b8313591b561.tar.gz",
+    "size_bytes": 9221,
+    "sha256": "55694dedf22f1e874e814b40d30a8680bcabf1d513e1f6206d5e423022bc576f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pommzorz/library/Adafruit_GFX_I2C_SPI/0.0.0%2Bsha.b8313591b561/Adafruit_GFX_I2C_SPI-0.0.0%2Bsha.b8313591b561.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pommzorz/library/Adafruit_GFX_I2C_SPI/0.0.0%2Bsha.b8313591b561/Adafruit_GFX_I2C_SPI-0.0.0%2Bsha.b8313591b561.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pommzorz/library/BMP085/0.0.0+sha.4b39f695e72a/BMP085-0.0.0+sha.4b39f695e72a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP085-0.0.0+sha.4b39f695e72a.tar.gz",
+    "size_bytes": 2185,
+    "sha256": "c6261c3e99bc7f6cf3571571c81c5e81de39b2b4c58578b604fe3c1299ac7b7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pommzorz/library/BMP085/0.0.0%2Bsha.4b39f695e72a/BMP085-0.0.0%2Bsha.4b39f695e72a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pommzorz/library/BMP085/0.0.0%2Bsha.4b39f695e72a/BMP085-0.0.0%2Bsha.4b39f695e72a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pommzorz/library/HK10DOF/0.0.0+sha.85fcfcb7b137/HK10DOF-0.0.0+sha.85fcfcb7b137.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HK10DOF-0.0.0+sha.85fcfcb7b137.tar.gz",
+    "size_bytes": 28323,
+    "sha256": "11241f49a06abe87d0055bacbcfa66e56316255b60f32812817f33518502cc89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pommzorz/library/HK10DOF/0.0.0%2Bsha.85fcfcb7b137/HK10DOF-0.0.0%2Bsha.85fcfcb7b137.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pommzorz/library/HK10DOF/0.0.0%2Bsha.85fcfcb7b137/HK10DOF-0.0.0%2Bsha.85fcfcb7b137.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pommzorz/library/HMC58X3/0.0.0+sha.72ecf7399250/HMC58X3-0.0.0+sha.72ecf7399250.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC58X3-0.0.0+sha.72ecf7399250.tar.gz",
+    "size_bytes": 5571,
+    "sha256": "81b2f8265916c988ca768f2231c26a0223179751157e9905eb82be6e89048007",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pommzorz/library/HMC58X3/0.0.0%2Bsha.72ecf7399250/HMC58X3-0.0.0%2Bsha.72ecf7399250.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pommzorz/library/HMC58X3/0.0.0%2Bsha.72ecf7399250/HMC58X3-0.0.0%2Bsha.72ecf7399250.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pommzorz/library/L3G4200D/0.0.0+sha.d9e8ea9b4e20/L3G4200D-0.0.0+sha.d9e8ea9b4e20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L3G4200D-0.0.0+sha.d9e8ea9b4e20.tar.gz",
+    "size_bytes": 2922,
+    "sha256": "0b2687c78f90d37a581b7e6149603bbeeddf816c5743e18e4407b2d786ff6a12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pommzorz/library/L3G4200D/0.0.0%2Bsha.d9e8ea9b4e20/L3G4200D-0.0.0%2Bsha.d9e8ea9b4e20.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pommzorz/library/L3G4200D/0.0.0%2Bsha.d9e8ea9b4e20/L3G4200D-0.0.0%2Bsha.d9e8ea9b4e20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pommzorz/library/MbedFreeIMU/0.0.0+sha.907803d8be4d/MbedFreeIMU-0.0.0+sha.907803d8be4d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MbedFreeIMU-0.0.0+sha.907803d8be4d.tar.gz",
+    "size_bytes": 7356,
+    "sha256": "ff344b0b1d9fdab17d43c465c2e63645d552d239f0373979a23c2c92786e25a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pommzorz/library/MbedFreeIMU/0.0.0%2Bsha.907803d8be4d/MbedFreeIMU-0.0.0%2Bsha.907803d8be4d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pommzorz/library/MbedFreeIMU/0.0.0%2Bsha.907803d8be4d/MbedFreeIMU-0.0.0%2Bsha.907803d8be4d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

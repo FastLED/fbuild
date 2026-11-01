@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-vinajarr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-vinajarr/library/LSM303D/0.0.0+sha.fcd607760ee8/LSM303D-0.0.0+sha.fcd607760ee8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM303D-0.0.0+sha.fcd607760ee8.tar.gz",
+    "size_bytes": 2840,
+    "sha256": "4bbb271bb75f420f18cbf99a59700343319b7cf7196a5fb9b30f57df1f3e3490",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-vinajarr/library/LSM303D/0.0.0%2Bsha.fcd607760ee8/LSM303D-0.0.0%2Bsha.fcd607760ee8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-vinajarr/library/LSM303D/0.0.0%2Bsha.fcd607760ee8/LSM303D-0.0.0%2Bsha.fcd607760ee8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

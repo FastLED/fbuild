@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/macroyau",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "macroyau/library/LTC2942/1.2.2/LTC2942-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTC2942-1.2.2.tar.gz",
+    "size_bytes": 4925,
+    "sha256": "e4c9581cca7ef867031c4db5b2bfd6256310254fe82289e1dfaf10383004815b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macroyau/library/LTC2942/1.2.2/LTC2942-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/macroyau/library/LTC2942/1.2.2/LTC2942-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "macroyau/library/RV-1805-C3/1.0.0/RV-1805-C3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RV-1805-C3-1.0.0.tar.gz",
+    "size_bytes": 7646,
+    "sha256": "b605f8cbfd53af20d2d0dfeb323a79583db40d3d570406fc81d9c7be3b401ee8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macroyau/library/RV-1805-C3/1.0.0/RV-1805-C3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/macroyau/library/RV-1805-C3/1.0.0/RV-1805-C3-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "macroyau/library/RV-3028-C7/1.1.2/RV-3028-C7-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RV-3028-C7-1.1.2.tar.gz",
+    "size_bytes": 9391,
+    "sha256": "30e56af6d012cb960da51e5bef0c8bce433cb815c4b254a8f95487a5453566a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/macroyau/library/RV-3028-C7/1.1.2/RV-3028-C7-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/macroyau/library/RV-3028-C7/1.1.2/RV-3028-C7-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

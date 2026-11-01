@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gordonthree",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gordonthree/library/pca9633/1.0.0/pca9633-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pca9633-1.0.0.tar.gz",
+    "size_bytes": 4432,
+    "sha256": "8d11aa2cfae27416735ccfda736a434372c810136b418ff423e2e2bc9d793590",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordonthree/library/pca9633/1.0.0/pca9633-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordonthree/library/pca9633/1.0.0/pca9633-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

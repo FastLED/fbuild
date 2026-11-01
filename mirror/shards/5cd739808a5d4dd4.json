@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/drrnb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "drrnb/library/SingleSevenSegment/1.0.0/SingleSevenSegment-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SingleSevenSegment-1.0.0.tar.gz",
+    "size_bytes": 15112,
+    "sha256": "3c8fec79d54b64722bc6f1c2eee14d9e9dcef1cea484f38afce1fca0bf2036b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drrnb/library/SingleSevenSegment/1.0.0/SingleSevenSegment-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/drrnb/library/SingleSevenSegment/1.0.0/SingleSevenSegment-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

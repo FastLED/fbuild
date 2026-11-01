@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ore-takagi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ore-takagi/library/xbeeTxRx/0.0.0+sha.f0fdbe6e3249/xbeeTxRx-0.0.0+sha.f0fdbe6e3249.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xbeeTxRx-0.0.0+sha.f0fdbe6e3249.tar.gz",
+    "size_bytes": 4603,
+    "sha256": "feb63224cf7c6f20fe757b18f0e743427581c51ec3bb3e712afd8619fd8b51bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ore-takagi/library/xbeeTxRx/0.0.0%2Bsha.f0fdbe6e3249/xbeeTxRx-0.0.0%2Bsha.f0fdbe6e3249.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ore-takagi/library/xbeeTxRx/0.0.0%2Bsha.f0fdbe6e3249/xbeeTxRx-0.0.0%2Bsha.f0fdbe6e3249.tar.gz"
+    ]
+   }
+  }
+ ]
+}

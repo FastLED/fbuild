@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kubiche",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kubiche/library/CUSTOM_MAX72XX/1.2.2/CUSTOM_MAX72XX-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CUSTOM_MAX72XX-1.2.2.tar.gz",
+    "size_bytes": 5546,
+    "sha256": "9d773bc3ed10cb8dbb3f300fcc3aaefa48a6464aa372efc0b3c4c1e3f6045501",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kubiche/library/CUSTOM_MAX72XX/1.2.2/CUSTOM_MAX72XX-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kubiche/library/CUSTOM_MAX72XX/1.2.2/CUSTOM_MAX72XX-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

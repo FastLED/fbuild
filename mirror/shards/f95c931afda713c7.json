@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/2dom",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "2dom/library/32x16%20P10%20LED%20MATRIX%20library%20based%20on%20Adafruit%20Nokia%205110%20library/1.0.0/32x16P10LEDMATRIXlibrarybasedonAdafruitNokia5110library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "32x16P10LEDMATRIXlibrarybasedonAdafruitNokia5110library-1.0.0.tar.gz",
+    "size_bytes": 8524,
+    "sha256": "1eb91d15a86e6f6be894e2e623cc51d9fec870a53c86164a412954304c85a8b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/2dom/library/32x16%2520P10%2520LED%2520MATRIX%2520library%2520based%2520on%2520Adafruit%2520Nokia%25205110%2520library/1.0.0/32x16P10LEDMATRIXlibrarybasedonAdafruitNokia5110library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/2dom/library/32x16%20P10%20LED%20MATRIX%20library%20based%20on%20Adafruit%20Nokia%205110%20library/1.0.0/32x16P10LEDMATRIXlibrarybasedonAdafruitNokia5110library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "2dom/library/PxMatrix%20LED%20MATRIX%20library/1.8.2/PxMatrixLEDMATRIXlibrary-1.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PxMatrixLEDMATRIXlibrary-1.8.2.tar.gz",
+    "size_bytes": 54054,
+    "sha256": "74244f7d1570ad4cfe7f21fa15562127b270b25b0bd3ac9eec3cdfc307d66440",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/2dom/library/PxMatrix%2520LED%2520MATRIX%2520library/1.8.2/PxMatrixLEDMATRIXlibrary-1.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/2dom/library/PxMatrix%20LED%20MATRIX%20library/1.8.2/PxMatrixLEDMATRIXlibrary-1.8.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-niv17",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-niv17/library/include/0.0.0+sha.5347612e39a3/include-0.0.0+sha.5347612e39a3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "include-0.0.0+sha.5347612e39a3.tar.gz",
+    "size_bytes": 9538,
+    "sha256": "4006e674f9061c96a6dab192f8f163560127ff8f6199b41017fc1cdf4c704ef4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-niv17/library/include/0.0.0%2Bsha.5347612e39a3/include-0.0.0%2Bsha.5347612e39a3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-niv17/library/include/0.0.0%2Bsha.5347612e39a3/include-0.0.0%2Bsha.5347612e39a3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

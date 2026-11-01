@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/delta-g",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "delta-g/library/EventLinkInterrupt/0.1.0/EventLinkInterrupt-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EventLinkInterrupt-0.1.0.tar.gz",
+    "size_bytes": 16329,
+    "sha256": "0b1daca9d1ccc630dfc1d0a66f66ee4dccfc4d36921e9cc0d6022b84c77f19ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/delta-g/library/EventLinkInterrupt/0.1.0/EventLinkInterrupt-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/delta-g/library/EventLinkInterrupt/0.1.0/EventLinkInterrupt-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "delta-g/library/GPT_Stepper/0.4.0/GPT_Stepper-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPT_Stepper-0.4.0.tar.gz",
+    "size_bytes": 19311,
+    "sha256": "d8bfc5c38d1c7045982e17848d13a83a80471285fde1c76a7dfb869845e72f08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/delta-g/library/GPT_Stepper/0.4.0/GPT_Stepper-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/delta-g/library/GPT_Stepper/0.4.0/GPT_Stepper-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "delta-g/library/LoveButton/1.2/LoveButton-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoveButton-1.2.tar.gz",
+    "size_bytes": 15990,
+    "sha256": "f14c0b9dbc9b3f5ae1301acf967b3a6866d095a2c070cee6ffa831adb455ab08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/delta-g/library/LoveButton/1.2/LoveButton-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/delta-g/library/LoveButton/1.2/LoveButton-1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "delta-g/library/PID_DG/0.0.1/PID_DG-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PID_DG-0.0.1.tar.gz",
+    "size_bytes": 14788,
+    "sha256": "3f76d86b09deb5134ec97d9ec379ff6720ffe732efe5ce1839174a80162dd1e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/delta-g/library/PID_DG/0.0.1/PID_DG-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/delta-g/library/PID_DG/0.0.1/PID_DG-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "delta-g/library/R4_Touch/1.1/R4_Touch-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "R4_Touch-1.1.tar.gz",
+    "size_bytes": 25348,
+    "sha256": "f66605aa935fe0b1d2b6c5e0007e453ad9b07eb6ba84d68e16cee71ca7132e40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/delta-g/library/R4_Touch/1.1/R4_Touch-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/delta-g/library/R4_Touch/1.1/R4_Touch-1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

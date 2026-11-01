@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bluemurder",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bluemurder/library/DS1624/2.0.1/DS1624-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1624-2.0.1.tar.gz",
+    "size_bytes": 3194,
+    "sha256": "4b5ab647870b3236a02c699c6a6885fdd797dbbf4bd340082b9c8db300b5cf46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bluemurder/library/DS1624/2.0.1/DS1624-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bluemurder/library/DS1624/2.0.1/DS1624-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bluemurder/library/ESP8266-ping/2.0.1/ESP8266-ping-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266-ping-2.0.1.tar.gz",
+    "size_bytes": 7493,
+    "sha256": "bfebddfdc280c82b0bf916ce554030b442c73971b8e5ec523e8bf5d07f91b030",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bluemurder/library/ESP8266-ping/2.0.1/ESP8266-ping-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bluemurder/library/ESP8266-ping/2.0.1/ESP8266-ping-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bluemurder/library/EveryTimer/1.1.2/EveryTimer-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EveryTimer-1.1.2.tar.gz",
+    "size_bytes": 3641,
+    "sha256": "a1009cbc46d22537a2fa8268b86bbf927b4f35b439dcaa46a6c29aed13142c85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bluemurder/library/EveryTimer/1.1.2/EveryTimer-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bluemurder/library/EveryTimer/1.1.2/EveryTimer-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

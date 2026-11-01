@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-unix-guru",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-unix-guru/library/Thermistor/0.0.0+sha.601e1435dfb8/Thermistor-0.0.0+sha.601e1435dfb8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Thermistor-0.0.0+sha.601e1435dfb8.tar.gz",
+    "size_bytes": 2715,
+    "sha256": "2bd78d7f5c0aef2cd4e56de9050db395db7e202c8ae1d06468c1c899e368bbd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-unix-guru/library/Thermistor/0.0.0%2Bsha.601e1435dfb8/Thermistor-0.0.0%2Bsha.601e1435dfb8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-unix-guru/library/Thermistor/0.0.0%2Bsha.601e1435dfb8/Thermistor-0.0.0%2Bsha.601e1435dfb8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-unix-guru/library/lodePNG/0.0.0+sha.6b244485c156/lodePNG-0.0.0+sha.6b244485c156.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lodePNG-0.0.0+sha.6b244485c156.tar.gz",
+    "size_bytes": 73829,
+    "sha256": "c441e545dab5fcb0d059face59b6f97647831d5bacea8439ca069dfe82c30608",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-unix-guru/library/lodePNG/0.0.0%2Bsha.6b244485c156/lodePNG-0.0.0%2Bsha.6b244485c156.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-unix-guru/library/lodePNG/0.0.0%2Bsha.6b244485c156/lodePNG-0.0.0%2Bsha.6b244485c156.tar.gz"
+    ]
+   }
+  }
+ ]
+}

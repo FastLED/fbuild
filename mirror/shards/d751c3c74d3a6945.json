@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/snowfoxlab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "snowfoxlab/library/SyncItIOT/1.0.0/SyncItIOT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyncItIOT-1.0.0.tar.gz",
+    "size_bytes": 6999,
+    "sha256": "c0de798ff6dbc68983a21a1bb2263dc4cfe004f5e558009c8e7292ad24206099",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snowfoxlab/library/SyncItIOT/1.0.0/SyncItIOT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snowfoxlab/library/SyncItIOT/1.0.0/SyncItIOT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "snowfoxlab/library/SyncItIOT/1.1.0/SyncItIOT-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyncItIOT-1.1.0.tar.gz",
+    "size_bytes": 9905,
+    "sha256": "8c4342c786755f1f02ccf9d01b0086226ee0e135bea8caa3cdf3814a87909089",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snowfoxlab/library/SyncItIOT/1.1.0/SyncItIOT-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snowfoxlab/library/SyncItIOT/1.1.0/SyncItIOT-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

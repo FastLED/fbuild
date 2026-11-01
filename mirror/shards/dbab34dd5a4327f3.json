@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nickryder",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nickryder/library/IrcBot/0.0.0+sha.e4c74eb20586/IrcBot-0.0.0+sha.e4c74eb20586.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IrcBot-0.0.0+sha.e4c74eb20586.tar.gz",
+    "size_bytes": 3883,
+    "sha256": "a9843527c381463c9120ad2fc54813146949e4e580de4b39c93774bc3296f828",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nickryder/library/IrcBot/0.0.0%2Bsha.e4c74eb20586/IrcBot-0.0.0%2Bsha.e4c74eb20586.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nickryder/library/IrcBot/0.0.0%2Bsha.e4c74eb20586/IrcBot-0.0.0%2Bsha.e4c74eb20586.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nickryder/library/MCP4822lib/0.0.0+sha.7484c0fe6f4d/MCP4822lib-0.0.0+sha.7484c0fe6f4d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP4822lib-0.0.0+sha.7484c0fe6f4d.tar.gz",
+    "size_bytes": 2320,
+    "sha256": "1249ad49597fd69c5aad1967ddc530f1a6e46ed20b6830ff6df52cb9d33c599a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nickryder/library/MCP4822lib/0.0.0%2Bsha.7484c0fe6f4d/MCP4822lib-0.0.0%2Bsha.7484c0fe6f4d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nickryder/library/MCP4822lib/0.0.0%2Bsha.7484c0fe6f4d/MCP4822lib-0.0.0%2Bsha.7484c0fe6f4d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nickryder/library/Pulse/0.0.0+sha.fb79a4637a64/Pulse-0.0.0+sha.fb79a4637a64.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pulse-0.0.0+sha.fb79a4637a64.tar.gz",
+    "size_bytes": 2315,
+    "sha256": "6af90195e84d1717421476a7afc11d205bc326f88b05a758be9db5ed9d1e36b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nickryder/library/Pulse/0.0.0%2Bsha.fb79a4637a64/Pulse-0.0.0%2Bsha.fb79a4637a64.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nickryder/library/Pulse/0.0.0%2Bsha.fb79a4637a64/Pulse-0.0.0%2Bsha.fb79a4637a64.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nickryder/library/RangeFinder/0.0.0+sha.cf496fb70317/RangeFinder-0.0.0+sha.cf496fb70317.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RangeFinder-0.0.0+sha.cf496fb70317.tar.gz",
+    "size_bytes": 2258,
+    "sha256": "3467a0f6538c080c144761aaa13f11e7a71af4cd2146195bed1d93e3b7c3d43f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nickryder/library/RangeFinder/0.0.0%2Bsha.cf496fb70317/RangeFinder-0.0.0%2Bsha.cf496fb70317.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nickryder/library/RangeFinder/0.0.0%2Bsha.cf496fb70317/RangeFinder-0.0.0%2Bsha.cf496fb70317.tar.gz"
+    ]
+   }
+  }
+ ]
+}

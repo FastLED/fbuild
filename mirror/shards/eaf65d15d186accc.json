@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hhdang",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hhdang/library/%20Trialcommand/1.0.0/Trialcommand-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trialcommand-1.0.0.tar.gz",
+    "size_bytes": 5824,
+    "sha256": "3bb2e2f682cdade5aeaccaa611a7fcc8074fd75e24e3c486580dfc690c668d7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hhdang/library/%2520Trialcommand/1.0.0/Trialcommand-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hhdang/library/%20Trialcommand/1.0.0/Trialcommand-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hhdang/library/ESP8266-Modbus-RTU-Master/1.0.2/ESP8266-Modbus-RTU-Master-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266-Modbus-RTU-Master-1.0.2.tar.gz",
+    "size_bytes": 9956,
+    "sha256": "a6a1c867c32e73edcabc11d1cb6da2903488ba4ef2e11d1c67450e428faf96f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hhdang/library/ESP8266-Modbus-RTU-Master/1.0.2/ESP8266-Modbus-RTU-Master-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hhdang/library/ESP8266-Modbus-RTU-Master/1.0.2/ESP8266-Modbus-RTU-Master-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

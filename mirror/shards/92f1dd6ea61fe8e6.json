@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/patrick-thomas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "patrick-thomas/library/SixAxisRing/0.0.3/SixAxisRing-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SixAxisRing-0.0.3.tar.gz",
+    "size_bytes": 2230,
+    "sha256": "95249b5f55b166c70fc664832a0d0920889195e178471861a164018d34cd649f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/patrick-thomas/library/SixAxisRing/0.0.3/SixAxisRing-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/patrick-thomas/library/SixAxisRing/0.0.3/SixAxisRing-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "patrick-thomas/library/Sparkpad/0.2.1/Sparkpad-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sparkpad-0.2.1.tar.gz",
+    "size_bytes": 13361,
+    "sha256": "38ac68a45370fc4c06e319dd4992aec12c3c74f822185a699c115b57b5062252",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/patrick-thomas/library/Sparkpad/0.2.1/Sparkpad-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/patrick-thomas/library/Sparkpad/0.2.1/Sparkpad-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/whykickamoocow",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "whykickamoocow/library/Sensirion%20SPS30%20Arduino%20Library/0.1/SensirionSPS30ArduinoLibrary-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensirionSPS30ArduinoLibrary-0.1.tar.gz",
+    "size_bytes": 7313,
+    "sha256": "0c6a4a9fe43522d2de365e46df5e560f9c35bcef40cad5f0f3c64ad06c49c12d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/whykickamoocow/library/Sensirion%2520SPS30%2520Arduino%2520Library/0.1/SensirionSPS30ArduinoLibrary-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/whykickamoocow/library/Sensirion%20SPS30%20Arduino%20Library/0.1/SensirionSPS30ArduinoLibrary-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

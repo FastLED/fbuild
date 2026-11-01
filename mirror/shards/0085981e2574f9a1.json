@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aerobyte",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aerobyte/library/ChipCommander/1.0.12/ChipCommander-1.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChipCommander-1.0.12.tar.gz",
+    "size_bytes": 17818,
+    "sha256": "326e74bf8979f31684948409a0a45ae1764e8fc823d036d1d6a748452a0c64d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aerobyte/library/ChipCommander/1.0.12/ChipCommander-1.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/aerobyte/library/ChipCommander/1.0.12/ChipCommander-1.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aerobyte/library/ChipCommander/1.0.2/ChipCommander-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChipCommander-1.0.2.tar.gz",
+    "size_bytes": 8371,
+    "sha256": "f38bd2c07cad1cebf51ed737c7509b7b3030ea09562c3d1416546dd21e63d7de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aerobyte/library/ChipCommander/1.0.2/ChipCommander-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/aerobyte/library/ChipCommander/1.0.2/ChipCommander-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aerobyte/library/ChipCommander/1.0.3/ChipCommander-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChipCommander-1.0.3.tar.gz",
+    "size_bytes": 9126,
+    "sha256": "064b5ac661a868b181df886153c60d94c04a5a10f10697e9c0e871d2f0df2e33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aerobyte/library/ChipCommander/1.0.3/ChipCommander-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/aerobyte/library/ChipCommander/1.0.3/ChipCommander-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aerobyte/library/ChipCommander/1.0.4/ChipCommander-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChipCommander-1.0.4.tar.gz",
+    "size_bytes": 9335,
+    "sha256": "9f2704281c35a34a8bc039dd14cc68a4ab81481091d4dbba45b65336b50f020a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aerobyte/library/ChipCommander/1.0.4/ChipCommander-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/aerobyte/library/ChipCommander/1.0.4/ChipCommander-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aerobyte/library/ChipCommander/1.0.5/ChipCommander-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChipCommander-1.0.5.tar.gz",
+    "size_bytes": 10845,
+    "sha256": "9c62ac776d8b2a87d1ed7cad131834f906c7975fd5284b7be90cd14aa7b631cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aerobyte/library/ChipCommander/1.0.5/ChipCommander-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/aerobyte/library/ChipCommander/1.0.5/ChipCommander-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aerobyte/library/ChipCommander/1.0.6/ChipCommander-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChipCommander-1.0.6.tar.gz",
+    "size_bytes": 11404,
+    "sha256": "35dfeb49a3ad3bcad80578003d50f8726809d2785fde5a12c73a91b9c4ef5549",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aerobyte/library/ChipCommander/1.0.6/ChipCommander-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/aerobyte/library/ChipCommander/1.0.6/ChipCommander-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aerobyte/library/ChipCommander/1.0.7/ChipCommander-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChipCommander-1.0.7.tar.gz",
+    "size_bytes": 12581,
+    "sha256": "f961272795efd656a6aade0ae2014c1f08a1d972645b815054f4f896c02d332b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aerobyte/library/ChipCommander/1.0.7/ChipCommander-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/aerobyte/library/ChipCommander/1.0.7/ChipCommander-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aerobyte/library/ChipCommander/1.0.8/ChipCommander-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChipCommander-1.0.8.tar.gz",
+    "size_bytes": 12620,
+    "sha256": "d2af583407637ec4795a6d0dc65443b179f1480cdebeacdea6979c21eaafb880",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aerobyte/library/ChipCommander/1.0.8/ChipCommander-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/aerobyte/library/ChipCommander/1.0.8/ChipCommander-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aerobyte/library/ChipCommander/1.0.9/ChipCommander-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChipCommander-1.0.9.tar.gz",
+    "size_bytes": 13111,
+    "sha256": "520dfdc8554f59f052b932391c9ecf17ccd6c37a33706568403051d01e17f570",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aerobyte/library/ChipCommander/1.0.9/ChipCommander-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/aerobyte/library/ChipCommander/1.0.9/ChipCommander-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aerobyte/library/ChipCommander/1.1.2/ChipCommander-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChipCommander-1.1.2.tar.gz",
+    "size_bytes": 21193,
+    "sha256": "22b5a37186d6d27045ea3e4133edb44d0f5f3a381ae0367a5c598e9db51dc86e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aerobyte/library/ChipCommander/1.1.2/ChipCommander-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/aerobyte/library/ChipCommander/1.1.2/ChipCommander-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

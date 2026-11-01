@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-texas-state-ieee-robotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-texas-state-ieee-robotics/library/DigitalInOut2/0.0.0+sha.edc96c27c5c2/DigitalInOut2-0.0.0+sha.edc96c27c5c2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalInOut2-0.0.0+sha.edc96c27c5c2.tar.gz",
+    "size_bytes": 1040,
+    "sha256": "cf556e1ab43546ce8f790996fef9cc6ed7635bb5ee3db906586be2ee3586d27b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-texas-state-ieee-robotics/library/DigitalInOut2/0.0.0%2Bsha.edc96c27c5c2/DigitalInOut2-0.0.0%2Bsha.edc96c27c5c2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-texas-state-ieee-robotics/library/DigitalInOut2/0.0.0%2Bsha.edc96c27c5c2/DigitalInOut2-0.0.0%2Bsha.edc96c27c5c2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-texas-state-ieee-robotics/library/LongRangeSensor/0.0.0+sha.ed1f0f09eb5b/LongRangeSensor-0.0.0+sha.ed1f0f09eb5b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LongRangeSensor-0.0.0+sha.ed1f0f09eb5b.tar.gz",
+    "size_bytes": 1520,
+    "sha256": "842f5ea96e32358c3ef8d2424b30bfeadee30bf436f0f4be5f70ed4b083edb06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-texas-state-ieee-robotics/library/LongRangeSensor/0.0.0%2Bsha.ed1f0f09eb5b/LongRangeSensor-0.0.0%2Bsha.ed1f0f09eb5b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-texas-state-ieee-robotics/library/LongRangeSensor/0.0.0%2Bsha.ed1f0f09eb5b/LongRangeSensor-0.0.0%2Bsha.ed1f0f09eb5b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-texas-state-ieee-robotics/library/ShortRangeSensor/0.0.0+sha.fba97a03cd3c/ShortRangeSensor-0.0.0+sha.fba97a03cd3c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ShortRangeSensor-0.0.0+sha.fba97a03cd3c.tar.gz",
+    "size_bytes": 1645,
+    "sha256": "f312098569ebe1347c80b705212265baa1c17256f26c94143eb39ab4a2d65f98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-texas-state-ieee-robotics/library/ShortRangeSensor/0.0.0%2Bsha.fba97a03cd3c/ShortRangeSensor-0.0.0%2Bsha.fba97a03cd3c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-texas-state-ieee-robotics/library/ShortRangeSensor/0.0.0%2Bsha.fba97a03cd3c/ShortRangeSensor-0.0.0%2Bsha.fba97a03cd3c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fretke",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fretke/library/fretke_sdk/1.3.1/fretke_sdk-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fretke_sdk-1.3.1.tar.gz",
+    "size_bytes": 4392,
+    "sha256": "597cc41ff1cc88c04dbb6f5b5d3fae20b8851fa46f2e0c79979038a191b213da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fretke/library/fretke_sdk/1.3.1/fretke_sdk-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fretke/library/fretke_sdk/1.3.1/fretke_sdk-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

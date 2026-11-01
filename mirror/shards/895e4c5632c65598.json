@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rominos2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rominos2/library/CommandDispatcher/0.0.0+sha.ca5d575c03c8/CommandDispatcher-0.0.0+sha.ca5d575c03c8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CommandDispatcher-0.0.0+sha.ca5d575c03c8.tar.gz",
+    "size_bytes": 3225,
+    "sha256": "32fdc5bafbddc8c8e2d7632cbc5453d9a42c797d257a9d5a8a3a727ae6bf9be7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rominos2/library/CommandDispatcher/0.0.0%2Bsha.ca5d575c03c8/CommandDispatcher-0.0.0%2Bsha.ca5d575c03c8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rominos2/library/CommandDispatcher/0.0.0%2Bsha.ca5d575c03c8/CommandDispatcher-0.0.0%2Bsha.ca5d575c03c8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rominos2/library/Menu/0.0.0+sha.0f92518679f3/Menu-0.0.0+sha.0f92518679f3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Menu-0.0.0+sha.0f92518679f3.tar.gz",
+    "size_bytes": 2702,
+    "sha256": "4e2952074c4e6e977acbdb9f45f86bce127d2642ba250a6fe48496c4818f9978",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rominos2/library/Menu/0.0.0%2Bsha.0f92518679f3/Menu-0.0.0%2Bsha.0f92518679f3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rominos2/library/Menu/0.0.0%2Bsha.0f92518679f3/Menu-0.0.0%2Bsha.0f92518679f3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rominos2/library/Morse/0.0.0+sha.84ef66bf435d/Morse-0.0.0+sha.84ef66bf435d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Morse-0.0.0+sha.84ef66bf435d.tar.gz",
+    "size_bytes": 4940,
+    "sha256": "4c6c7d814c8c52b6dbc0a80d1190e96ee99129c4e61ba6fbd7cae1b1be87cc70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rominos2/library/Morse/0.0.0%2Bsha.84ef66bf435d/Morse-0.0.0%2Bsha.84ef66bf435d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rominos2/library/Morse/0.0.0%2Bsha.84ef66bf435d/Morse-0.0.0%2Bsha.84ef66bf435d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rominos2/library/RGBLed/0.0.0+sha.9b7ee7ba4109/RGBLed-0.0.0+sha.9b7ee7ba4109.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RGBLed-0.0.0+sha.9b7ee7ba4109.tar.gz",
+    "size_bytes": 2410,
+    "sha256": "abd756895df2bb5d1b15da341e279214b7ce1663ecfddf21e7b28fe5d1b084d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rominos2/library/RGBLed/0.0.0%2Bsha.9b7ee7ba4109/RGBLed-0.0.0%2Bsha.9b7ee7ba4109.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rominos2/library/RGBLed/0.0.0%2Bsha.9b7ee7ba4109/RGBLed-0.0.0%2Bsha.9b7ee7ba4109.tar.gz"
+    ]
+   }
+  }
+ ]
+}

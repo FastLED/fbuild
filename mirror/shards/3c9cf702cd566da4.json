@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-purplelion",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-purplelion/library/N64Controller/0.0.0+sha.24ca81215179/N64Controller-0.0.0+sha.24ca81215179.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "N64Controller-0.0.0+sha.24ca81215179.tar.gz",
+    "size_bytes": 4195,
+    "sha256": "14a791bd38aaa94bf0a0e6313c040d3bbffa55cde48096be7d5e63f887cd6824",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-purplelion/library/N64Controller/0.0.0%2Bsha.24ca81215179/N64Controller-0.0.0%2Bsha.24ca81215179.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-purplelion/library/N64Controller/0.0.0%2Bsha.24ca81215179/N64Controller-0.0.0%2Bsha.24ca81215179.tar.gz"
+    ]
+   }
+  }
+ ]
+}

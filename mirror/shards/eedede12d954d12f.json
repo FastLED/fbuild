@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kriedel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kriedel/library/DS18B20/0.0.0+sha.21c0c97a5d7c/DS18B20-0.0.0+sha.21c0c97a5d7c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS18B20-0.0.0+sha.21c0c97a5d7c.tar.gz",
+    "size_bytes": 11366,
+    "sha256": "2d6ba834c96a9fcd8628ca2bfffc1816895cd66cbf597977c5f42c2bb23a788a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kriedel/library/DS18B20/0.0.0%2Bsha.21c0c97a5d7c/DS18B20-0.0.0%2Bsha.21c0c97a5d7c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kriedel/library/DS18B20/0.0.0%2Bsha.21c0c97a5d7c/DS18B20-0.0.0%2Bsha.21c0c97a5d7c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kriedel/library/TextLCD_ST7036/0.0.0+sha.815abe961826/TextLCD_ST7036-0.0.0+sha.815abe961826.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TextLCD_ST7036-0.0.0+sha.815abe961826.tar.gz",
+    "size_bytes": 3310,
+    "sha256": "377b8ff7550a735da4c1c572655fb45abe221d28282ca79da72b6ac7900c8c23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kriedel/library/TextLCD_ST7036/0.0.0%2Bsha.815abe961826/TextLCD_ST7036-0.0.0%2Bsha.815abe961826.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kriedel/library/TextLCD_ST7036/0.0.0%2Bsha.815abe961826/TextLCD_ST7036-0.0.0%2Bsha.815abe961826.tar.gz"
+    ]
+   }
+  }
+ ]
+}

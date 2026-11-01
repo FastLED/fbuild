@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/limitium",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "limitium/library/MQTTWIFI/1.1.1/MQTTWIFI-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTWIFI-1.1.1.tar.gz",
+    "size_bytes": 4215,
+    "sha256": "2d12200a3237ef4f6c3caf4df9e79321de010f3cd0108935262e3e726860bfa1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/limitium/library/MQTTWIFI/1.1.1/MQTTWIFI-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/limitium/library/MQTTWIFI/1.1.1/MQTTWIFI-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "limitium/library/Ward/1.0.0/Ward-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ward-1.0.0.tar.gz",
+    "size_bytes": 5769,
+    "sha256": "d1ce76b12a406751b8c265077327f1edcd551f1e9aa8e5f48bb2db9022f36150",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/limitium/library/Ward/1.0.0/Ward-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/limitium/library/Ward/1.0.0/Ward-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

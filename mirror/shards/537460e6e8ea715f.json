@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/teamsunride",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "teamsunride/library/Arduino-LSM6DSO32/1.1.2/Arduino-LSM6DSO32-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino-LSM6DSO32-1.1.2.tar.gz",
+    "size_bytes": 3282882,
+    "sha256": "c7e92333c81ac1b8edd75727edd0c93715b5b415a350461af5d1c4f896944b4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teamsunride/library/Arduino-LSM6DSO32/1.1.2/Arduino-LSM6DSO32-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/teamsunride/library/Arduino-LSM6DSO32/1.1.2/Arduino-LSM6DSO32-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

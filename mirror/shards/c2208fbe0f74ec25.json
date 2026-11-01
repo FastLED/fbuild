@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-geremia",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-geremia/library/Crypto/0.0.0+sha.4399e2e6260b/Crypto-0.0.0+sha.4399e2e6260b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Crypto-0.0.0+sha.4399e2e6260b.tar.gz",
+    "size_bytes": 18512,
+    "sha256": "cc76ffa500d8901ae63a912814e8e568629c57c630bf4e180b00fafd3092e6fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-geremia/library/Crypto/0.0.0%2Bsha.4399e2e6260b/Crypto-0.0.0%2Bsha.4399e2e6260b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-geremia/library/Crypto/0.0.0%2Bsha.4399e2e6260b/Crypto-0.0.0%2Bsha.4399e2e6260b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-geremia/library/PinDetectMod/0.0.0+sha.3aca44118b7a/PinDetectMod-0.0.0+sha.3aca44118b7a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinDetectMod-0.0.0+sha.3aca44118b7a.tar.gz",
+    "size_bytes": 4048,
+    "sha256": "c6e98a8c5e1af2740fbcc5dbd5256413610de7bee5a879cc437c2f904eacba3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-geremia/library/PinDetectMod/0.0.0%2Bsha.3aca44118b7a/PinDetectMod-0.0.0%2Bsha.3aca44118b7a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-geremia/library/PinDetectMod/0.0.0%2Bsha.3aca44118b7a/PinDetectMod-0.0.0%2Bsha.3aca44118b7a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

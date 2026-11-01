@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/allenchak",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "allenchak/library/TA6932/1.0.0/TA6932-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TA6932-1.0.0.tar.gz",
+    "size_bytes": 2548,
+    "sha256": "de0956d4a754021792f01eed21b2d44410ebbb1f4e8f132b0e066ea1ef4d5194",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/allenchak/library/TA6932/1.0.0/TA6932-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/allenchak/library/TA6932/1.0.0/TA6932-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

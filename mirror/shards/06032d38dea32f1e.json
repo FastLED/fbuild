@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jgvmonteiro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jgvmonteiro/library/SerialBus/0.1.0/SerialBus-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialBus-0.1.0.tar.gz",
+    "size_bytes": 20835,
+    "sha256": "175dc8fc45864769d927c8986eb49cd2f75873c8dc2953f7f542bb22ff71dc37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jgvmonteiro/library/SerialBus/0.1.0/SerialBus-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jgvmonteiro/library/SerialBus/0.1.0/SerialBus-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/professorthiago",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "professorthiago/library/AtualizadorOTA/1.0.0/AtualizadorOTA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AtualizadorOTA-1.0.0.tar.gz",
+    "size_bytes": 16673,
+    "sha256": "42bbbb782abb9b0340813e742b0c732e3a547533c299faf44b3800dde69f385a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/professorthiago/library/AtualizadorOTA/1.0.0/AtualizadorOTA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/professorthiago/library/AtualizadorOTA/1.0.0/AtualizadorOTA-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "professorthiago/library/Botao/1.0.0/Botao-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Botao-1.0.0.tar.gz",
+    "size_bytes": 9394,
+    "sha256": "eb7e51bcc3573b5e26a6963d460636e8d402ed7427f3eac67d3077ec333b87f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/professorthiago/library/Botao/1.0.0/Botao-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/professorthiago/library/Botao/1.0.0/Botao-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "professorthiago/library/Botao/1.2.0/Botao-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Botao-1.2.0.tar.gz",
+    "size_bytes": 13104,
+    "sha256": "4e2983b6e4a1bd7bb1e5e488e5b51ab3bf86e00983cc1b1d4187895d3d6653a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/professorthiago/library/Botao/1.2.0/Botao-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/professorthiago/library/Botao/1.2.0/Botao-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "professorthiago/library/ConectividadeESP32/3.0.0/ConectividadeESP32-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConectividadeESP32-3.0.0.tar.gz",
+    "size_bytes": 19748,
+    "sha256": "62e07fea2869669ec3c4c39492c685f4897ed6e303af7fd41e9cd4a0c23db221",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/professorthiago/library/ConectividadeESP32/3.0.0/ConectividadeESP32-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/professorthiago/library/ConectividadeESP32/3.0.0/ConectividadeESP32-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "professorthiago/library/EpsonIR/1.0.0/EpsonIR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EpsonIR-1.0.0.tar.gz",
+    "size_bytes": 7560,
+    "sha256": "537faec1c6aaeccde781ea97ae918271fc70576e605e2d87a32c7754020fe588",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/professorthiago/library/EpsonIR/1.0.0/EpsonIR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/professorthiago/library/EpsonIR/1.0.0/EpsonIR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "professorthiago/library/Led/1.0.0/Led-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Led-1.0.0.tar.gz",
+    "size_bytes": 11454,
+    "sha256": "613369ea1cacdb1a972899e3ffd7f953f90718430deb28cf2185a9b9b097658a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/professorthiago/library/Led/1.0.0/Led-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/professorthiago/library/Led/1.0.0/Led-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "professorthiago/library/TelaProjecaoRF/1.1.0/TelaProjecaoRF-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TelaProjecaoRF-1.1.0.tar.gz",
+    "size_bytes": 13264,
+    "sha256": "7964ae2fd48bb3ba032541309c0c3bf91a6669162c05eef46cf2d72848400cae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/professorthiago/library/TelaProjecaoRF/1.1.0/TelaProjecaoRF-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/professorthiago/library/TelaProjecaoRF/1.1.0/TelaProjecaoRF-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

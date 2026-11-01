@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/redpanther",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "redpanther/library/CQRobotTDS/0.1.1/CQRobotTDS-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CQRobotTDS-0.1.1.tar.gz",
+    "size_bytes": 14529,
+    "sha256": "832a8bd8db2ebd9f953ab29076ccbb904c555d2ee5f69b561b5ee8b49011c3b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/redpanther/library/CQRobotTDS/0.1.1/CQRobotTDS-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/redpanther/library/CQRobotTDS/0.1.1/CQRobotTDS-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sanketsalvinitk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sanketsalvinitk/library/BeaconAria/1.0.0/BeaconAria-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeaconAria-1.0.0.tar.gz",
+    "size_bytes": 10001,
+    "sha256": "bd09afb145830fc4de414ac6f16b6907a892fbd9df25a1ef8fdc821bb3fb7b6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sanketsalvinitk/library/BeaconAria/1.0.0/BeaconAria-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sanketsalvinitk/library/BeaconAria/1.0.0/BeaconAria-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

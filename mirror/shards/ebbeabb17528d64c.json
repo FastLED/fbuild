@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mlaass",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mlaass/library/WAMR-ESP32/1.0.0/WAMR-ESP32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WAMR-ESP32-1.0.0.tar.gz",
+    "size_bytes": 670516,
+    "sha256": "83307a874154d1c9370316de00b5896eb99396b147a4471fcd4366729346e4e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlaass/library/WAMR-ESP32/1.0.0/WAMR-ESP32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mlaass/library/WAMR-ESP32/1.0.0/WAMR-ESP32-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

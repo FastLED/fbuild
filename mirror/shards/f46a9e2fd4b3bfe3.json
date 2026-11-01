@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/socialbodylab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "socialbodylab/library/UWB-MaUWB-AT/1.1.0/UWB-MaUWB-AT-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UWB-MaUWB-AT-1.1.0.tar.gz",
+    "size_bytes": 10075,
+    "sha256": "8f32ab2ca0a5f47c0d8cfef9b16f6738e6d7d5427c35c60f06b2b0304ece2fc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/socialbodylab/library/UWB-MaUWB-AT/1.1.0/UWB-MaUWB-AT-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/socialbodylab/library/UWB-MaUWB-AT/1.1.0/UWB-MaUWB-AT-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

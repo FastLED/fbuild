@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/seithan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "seithan/library/Easy%20Nextion%20Library/1.0.6/EasyNextionLibrary-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyNextionLibrary-1.0.6.tar.gz",
+    "size_bytes": 245842,
+    "sha256": "48c9d7c3299f25ba969b2032c1f121a6691f94143a5fae6259c04d60a5a6b9fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seithan/library/Easy%2520Nextion%2520Library/1.0.6/EasyNextionLibrary-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/seithan/library/Easy%20Nextion%20Library/1.0.6/EasyNextionLibrary-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

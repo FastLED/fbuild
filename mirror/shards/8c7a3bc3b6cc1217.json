@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bsch2734",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bsch2734/library/SPIShiftRegister/1.1.2/SPIShiftRegister-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPIShiftRegister-1.1.2.tar.gz",
+    "size_bytes": 5692,
+    "sha256": "285ad23cc062973dd03085f420c6e01c60ae39c406080b883e941da48711d27d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bsch2734/library/SPIShiftRegister/1.1.2/SPIShiftRegister-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bsch2734/library/SPIShiftRegister/1.1.2/SPIShiftRegister-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

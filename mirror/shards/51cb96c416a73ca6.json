@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gbr1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gbr1/library/rp2040-encoder-library/0.2.0/rp2040-encoder-library-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rp2040-encoder-library-0.2.0.tar.gz",
+    "size_bytes": 5837,
+    "sha256": "0be175d899ab54c109d1bf156c4264075818a816993fe9614061703c7e2a8108",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gbr1/library/rp2040-encoder-library/0.2.0/rp2040-encoder-library-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gbr1/library/rp2040-encoder-library/0.2.0/rp2040-encoder-library-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gbr1/library/ucPack/0.1.7/ucPack-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ucPack-0.1.7.tar.gz",
+    "size_bytes": 6257,
+    "sha256": "e7b11ce53de70210f77a8730923917275754c1816d4c8c57bb30caaf513ee586",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gbr1/library/ucPack/0.1.7/ucPack-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/gbr1/library/ucPack/0.1.7/ucPack-0.1.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

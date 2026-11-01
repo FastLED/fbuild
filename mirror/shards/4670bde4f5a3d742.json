@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ipdotsetaf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ipdotsetaf/library/ESPAsyncHTTPUpdateServer/2.0.0/ESPAsyncHTTPUpdateServer-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncHTTPUpdateServer-2.0.0.tar.gz",
+    "size_bytes": 17080,
+    "sha256": "3ad1f2b785fc9563df9ffce4da1d5059a274543ed4488c2e6731ebf0f5f4b585",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ipdotsetaf/library/ESPAsyncHTTPUpdateServer/2.0.0/ESPAsyncHTTPUpdateServer-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ipdotsetaf/library/ESPAsyncHTTPUpdateServer/2.0.0/ESPAsyncHTTPUpdateServer-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ipdotsetaf/library/ESPAsyncHTTPUpdateServer/3.0.0/ESPAsyncHTTPUpdateServer-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncHTTPUpdateServer-3.0.0.tar.gz",
+    "size_bytes": 22041,
+    "sha256": "bc1a5251034081ad15264239a3a355f59388cc33846cf514fdd3cfd3e7d9e999",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ipdotsetaf/library/ESPAsyncHTTPUpdateServer/3.0.0/ESPAsyncHTTPUpdateServer-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ipdotsetaf/library/ESPAsyncHTTPUpdateServer/3.0.0/ESPAsyncHTTPUpdateServer-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ipdotsetaf/library/EZButton/2.5.0/EZButton-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EZButton-2.5.0.tar.gz",
+    "size_bytes": 18703,
+    "sha256": "3ac81a11fdc9507faf799cfbc365428268c272169bd07c3476116c264ce8f571",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ipdotsetaf/library/EZButton/2.5.0/EZButton-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ipdotsetaf/library/EZButton/2.5.0/EZButton-2.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

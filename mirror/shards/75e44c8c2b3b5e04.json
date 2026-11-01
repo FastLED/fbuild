@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/haschke-felix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "haschke-felix/library/avr-utils/2.0.0/avr-utils-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "avr-utils-2.0.0.tar.gz",
+    "size_bytes": 10137,
+    "sha256": "4df9f9fbd638be81aca221fe488bef97dcea15748bed62993431f604f9257cab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/haschke-felix/library/avr-utils/2.0.0/avr-utils-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/haschke-felix/library/avr-utils/2.0.0/avr-utils-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "haschke-felix/library/led-matrix-display/2.0.0/led-matrix-display-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "led-matrix-display-2.0.0.tar.gz",
+    "size_bytes": 7243,
+    "sha256": "511a43545355ab31e50c1c0bc3a4c78660484940ab2902821148f8b182af81af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/haschke-felix/library/led-matrix-display/2.0.0/led-matrix-display-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/haschke-felix/library/led-matrix-display/2.0.0/led-matrix-display-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "haschke-felix/library/state-machine/2.0.1/state-machine-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "state-machine-2.0.1.tar.gz",
+    "size_bytes": 3707,
+    "sha256": "3d17faa5509f82b51ced8f3e1f348e23703dc9da3de59b819b6bb1d29ab4dc40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/haschke-felix/library/state-machine/2.0.1/state-machine-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/haschke-felix/library/state-machine/2.0.1/state-machine-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

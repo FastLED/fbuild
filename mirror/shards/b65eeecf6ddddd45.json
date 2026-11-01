@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-spiralray",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-spiralray/library/Motor_LockedAntiphase/0.0.0+sha.62943ca4f7a0/Motor_LockedAntiphase-0.0.0+sha.62943ca4f7a0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor_LockedAntiphase-0.0.0+sha.62943ca4f7a0.tar.gz",
+    "size_bytes": 1352,
+    "sha256": "dc67d5ed92c737c0266642464d26283aee59512816b9f631dc6a9c9130e43bc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-spiralray/library/Motor_LockedAntiphase/0.0.0%2Bsha.62943ca4f7a0/Motor_LockedAntiphase-0.0.0%2Bsha.62943ca4f7a0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-spiralray/library/Motor_LockedAntiphase/0.0.0%2Bsha.62943ca4f7a0/Motor_LockedAntiphase-0.0.0%2Bsha.62943ca4f7a0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

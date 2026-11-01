@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tabris2015",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tabris2015/library/motoresDC/0.0.0+sha.998fbdeb1ea4/motoresDC-0.0.0+sha.998fbdeb1ea4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "motoresDC-0.0.0+sha.998fbdeb1ea4.tar.gz",
+    "size_bytes": 2696,
+    "sha256": "f2d81e1d54fd9dda75ee12f1f474104546d8783920047d7615c70867009f981c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tabris2015/library/motoresDC/0.0.0%2Bsha.998fbdeb1ea4/motoresDC-0.0.0%2Bsha.998fbdeb1ea4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tabris2015/library/motoresDC/0.0.0%2Bsha.998fbdeb1ea4/motoresDC-0.0.0%2Bsha.998fbdeb1ea4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

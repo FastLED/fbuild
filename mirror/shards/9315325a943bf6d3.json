@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sauttefk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sauttefk/library/RS485HwSerial/1.1.2/RS485HwSerial-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RS485HwSerial-1.1.2.tar.gz",
+    "size_bytes": 22474,
+    "sha256": "ef7f9ecf893097ef77a20edbf6643a7d816cf1cb0d0e7c2f6cc8260587349627",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sauttefk/library/RS485HwSerial/1.1.2/RS485HwSerial-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sauttefk/library/RS485HwSerial/1.1.2/RS485HwSerial-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

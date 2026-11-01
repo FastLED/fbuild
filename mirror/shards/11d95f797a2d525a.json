@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/luc-github",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "luc-github/library/ESP32SSDP/1.1.1/ESP32SSDP-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32SSDP-1.1.1.tar.gz",
+    "size_bytes": 12466,
+    "sha256": "0d73e7a3304464d8f56942f95ee5f6f1870a03b1bd87c4879f76ceb2b00c227a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luc-github/library/ESP32SSDP/1.1.1/ESP32SSDP-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/luc-github/library/ESP32SSDP/1.1.1/ESP32SSDP-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "luc-github/library/ESP32SSDP/1.2.1/ESP32SSDP-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32SSDP-1.2.1.tar.gz",
+    "size_bytes": 25538,
+    "sha256": "341584be57948a83ff82db6d9f8ce61c1a1e5f45e596c96f52694ae15e5ba6ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luc-github/library/ESP32SSDP/1.2.1/ESP32SSDP-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/luc-github/library/ESP32SSDP/1.2.1/ESP32SSDP-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

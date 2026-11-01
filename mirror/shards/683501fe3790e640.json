@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pin-node",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pin-node/library/PinNode/0.3.12/PinNode-0.3.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinNode-0.3.12.tar.gz",
+    "size_bytes": 70865,
+    "sha256": "3737c0fb633e700892f9153843083a006eb57a9e2704d16ae841bdb88be540c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pin-node/library/PinNode/0.3.12/PinNode-0.3.12.tar.gz",
+     "https://dl.registry.platformio.org/download/pin-node/library/PinNode/0.3.12/PinNode-0.3.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pin-node/library/RPUMachines/0.3.0/RPUMachines-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RPUMachines-0.3.0.tar.gz",
+    "size_bytes": 21932,
+    "sha256": "61fc7f818ca0a19d8d51d8206a1cea1a5fd498640e7d09dbcba9a3097a1614f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pin-node/library/RPUMachines/0.3.0/RPUMachines-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pin-node/library/RPUMachines/0.3.0/RPUMachines-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pin-node/library/RPUMachines/0.3.6/RPUMachines-0.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RPUMachines-0.3.6.tar.gz",
+    "size_bytes": 25982,
+    "sha256": "aaf9ed625fc05221f7c09594d54408fb3243750706024b00d185521139588322",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pin-node/library/RPUMachines/0.3.6/RPUMachines-0.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/pin-node/library/RPUMachines/0.3.6/RPUMachines-0.3.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

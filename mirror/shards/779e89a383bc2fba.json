@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mikedombo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mikedombo/library/HV518/1.0.4/HV518-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HV518-1.0.4.tar.gz",
+    "size_bytes": 6780,
+    "sha256": "41b3a9029ef9e0ffed610ed5a87104e101422991895b2115054e413f6ca16836",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mikedombo/library/HV518/1.0.4/HV518-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mikedombo/library/HV518/1.0.4/HV518-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

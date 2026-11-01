@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tigaresi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tigaresi/library/24AA256/0.0.0+sha.d3c513175ce5/24AA256-0.0.0+sha.d3c513175ce5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "24AA256-0.0.0+sha.d3c513175ce5.tar.gz",
+    "size_bytes": 4567,
+    "sha256": "51f243f35e66b64c74b68b4109731be5dd57a1f70b687b697797477360f7ed8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tigaresi/library/24AA256/0.0.0%2Bsha.d3c513175ce5/24AA256-0.0.0%2Bsha.d3c513175ce5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tigaresi/library/24AA256/0.0.0%2Bsha.d3c513175ce5/24AA256-0.0.0%2Bsha.d3c513175ce5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

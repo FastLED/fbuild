@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thejlifex",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thejlifex/library/ScrollingText8x8Display/0.0.2/ScrollingText8x8Display-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScrollingText8x8Display-0.0.2.tar.gz",
+    "size_bytes": 9207,
+    "sha256": "1cd1113d26c71751d2d5b3e5ec8412e16a4bb3992c4e9e5a6a5dbda99f873ba3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thejlifex/library/ScrollingText8x8Display/0.0.2/ScrollingText8x8Display-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thejlifex/library/ScrollingText8x8Display/0.0.2/ScrollingText8x8Display-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dvddnr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dvddnr/library/es_wifi/0.0.0+sha.0ce37d60fe92/es_wifi-0.0.0+sha.0ce37d60fe92.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "es_wifi-0.0.0+sha.0ce37d60fe92.tar.gz",
+    "size_bytes": 14720,
+    "sha256": "7e0171a601dd84b4d1eef3ac1bd983eea5a831430840726d0e7fdf97f40e6369",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dvddnr/library/es_wifi/0.0.0%2Bsha.0ce37d60fe92/es_wifi-0.0.0%2Bsha.0ce37d60fe92.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dvddnr/library/es_wifi/0.0.0%2Bsha.0ce37d60fe92/es_wifi-0.0.0%2Bsha.0ce37d60fe92.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nickld",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nickld/library/STM32BootloaderInterface/1.0/STM32BootloaderInterface-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32BootloaderInterface-1.0.tar.gz",
+    "size_bytes": 13491,
+    "sha256": "2d1112ca7086ae82fa8f4c56b6ee3a3321fbcd46dcf6c835ed77c402906eaf27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nickld/library/STM32BootloaderInterface/1.0/STM32BootloaderInterface-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nickld/library/STM32BootloaderInterface/1.0/STM32BootloaderInterface-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

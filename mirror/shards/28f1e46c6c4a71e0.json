@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-istepura",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-istepura/library/kw41z-rf-driver/0.0.1/kw41z-rf-driver-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kw41z-rf-driver-0.0.1.tar.gz",
+    "size_bytes": 75358,
+    "sha256": "78a6aba79e8bf32848155b70137f89e20763e9a65ddbef0e96ada452f3477945",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-istepura/library/kw41z-rf-driver/0.0.1/kw41z-rf-driver-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-istepura/library/kw41z-rf-driver/0.0.1/kw41z-rf-driver-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

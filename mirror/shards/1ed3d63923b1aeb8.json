@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/basicmicro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "basicmicro/library/Basicmicro/1.0.2/Basicmicro-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Basicmicro-1.0.2.tar.gz",
+    "size_bytes": 113590,
+    "sha256": "4f16af94ccc0e6711e67d7e631bac446f308e77dd714bfedcca78024798538df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/basicmicro/library/Basicmicro/1.0.2/Basicmicro-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/basicmicro/library/Basicmicro/1.0.2/Basicmicro-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

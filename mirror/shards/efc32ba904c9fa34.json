@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/reefwing-software",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "reefwing-software/library/ReefwingAHRS/2.3.7/ReefwingAHRS-2.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReefwingAHRS-2.3.7.tar.gz",
+    "size_bytes": 34081,
+    "sha256": "f09b480e54adf253bbcb7f3cbd63871c120fe5e6a86434b671b3e52c165bb6a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reefwing-software/library/ReefwingAHRS/2.3.7/ReefwingAHRS-2.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/reefwing-software/library/ReefwingAHRS/2.3.7/ReefwingAHRS-2.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reefwing-software/library/ReefwingFilter/2.0.0/ReefwingFilter-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReefwingFilter-2.0.0.tar.gz",
+    "size_bytes": 13404,
+    "sha256": "5eaa4b28bf3758c20790e087b0530c360f9b9000ee45a8da6eef3a0cceca3ce6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reefwing-software/library/ReefwingFilter/2.0.0/ReefwingFilter-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/reefwing-software/library/ReefwingFilter/2.0.0/ReefwingFilter-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reefwing-software/library/ReefwingLPS22HB/1.0.1/ReefwingLPS22HB-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReefwingLPS22HB-1.0.1.tar.gz",
+    "size_bytes": 10646,
+    "sha256": "443f918c06b0369c2ede2daff096f98c2295ac4380bc83a7e6cd8c7ed25fbd66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reefwing-software/library/ReefwingLPS22HB/1.0.1/ReefwingLPS22HB-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/reefwing-software/library/ReefwingLPS22HB/1.0.1/ReefwingLPS22HB-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reefwing-software/library/ReefwingLSM9DS1/1.0.3/ReefwingLSM9DS1-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReefwingLSM9DS1-1.0.3.tar.gz",
+    "size_bytes": 29184,
+    "sha256": "0b93ee2b994f89f03a3f8528381a9ad5b81aa58899df2aeb826261a472d22e07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reefwing-software/library/ReefwingLSM9DS1/1.0.3/ReefwingLSM9DS1-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/reefwing-software/library/ReefwingLSM9DS1/1.0.3/ReefwingLSM9DS1-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reefwing-software/library/ReefwingMPU6050/1.0.0/ReefwingMPU6050-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReefwingMPU6050-1.0.0.tar.gz",
+    "size_bytes": 24205,
+    "sha256": "b1d199b79a42642832aa87b11e8a3b0ffaf5609b1c65dd61633a22276f189ed4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reefwing-software/library/ReefwingMPU6050/1.0.0/ReefwingMPU6050-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/reefwing-software/library/ReefwingMPU6050/1.0.0/ReefwingMPU6050-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reefwing-software/library/ReefwingMPU6x00/1.0.1/ReefwingMPU6x00-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReefwingMPU6x00-1.0.1.tar.gz",
+    "size_bytes": 7718,
+    "sha256": "62808d4192d3c49f68b90c6b67b35264402298739277dfd59908cd06ff66c1bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reefwing-software/library/ReefwingMPU6x00/1.0.1/ReefwingMPU6x00-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/reefwing-software/library/ReefwingMPU6x00/1.0.1/ReefwingMPU6x00-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reefwing-software/library/ReefwingMSP/2.0.0/ReefwingMSP-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReefwingMSP-2.0.0.tar.gz",
+    "size_bytes": 36155,
+    "sha256": "dad194f43d36454f94be6efd4ff3b9f66d3478eb1593906c68d6986237249823",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reefwing-software/library/ReefwingMSP/2.0.0/ReefwingMSP-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/reefwing-software/library/ReefwingMSP/2.0.0/ReefwingMSP-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reefwing-software/library/ReefwingMotorShield/3.0.0/ReefwingMotorShield-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReefwingMotorShield-3.0.0.tar.gz",
+    "size_bytes": 7005,
+    "sha256": "f614cacfe2163bbaf05762dd27f030f7180d7e3e3524602592fffade247d457c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reefwing-software/library/ReefwingMotorShield/3.0.0/ReefwingMotorShield-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/reefwing-software/library/ReefwingMotorShield/3.0.0/ReefwingMotorShield-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reefwing-software/library/ReefwingPWM/1.0.2/ReefwingPWM-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReefwingPWM-1.0.2.tar.gz",
+    "size_bytes": 15752,
+    "sha256": "13b51a00f1e546f65c15ad891f4a9af18c99b568b2d0237ee1596816368bf43d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reefwing-software/library/ReefwingPWM/1.0.2/ReefwingPWM-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/reefwing-software/library/ReefwingPWM/1.0.2/ReefwingPWM-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reefwing-software/library/ReefwingSBUS/2.0.1/ReefwingSBUS-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReefwingSBUS-2.0.1.tar.gz",
+    "size_bytes": 9284,
+    "sha256": "9d1999273070c2ec5026633bb7938271ed78377fbe16110f6ff16053b33a8c48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reefwing-software/library/ReefwingSBUS/2.0.1/ReefwingSBUS-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/reefwing-software/library/ReefwingSBUS/2.0.1/ReefwingSBUS-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reefwing-software/library/ReefwingTimer/2.0/ReefwingTimer-2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ReefwingTimer-2.0.tar.gz",
+    "size_bytes": 11679,
+    "sha256": "cca8df33b09209e457efae57b20d43457100a1db059c65cebe163ad53ec597b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reefwing-software/library/ReefwingTimer/2.0/ReefwingTimer-2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/reefwing-software/library/ReefwingTimer/2.0/ReefwingTimer-2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reefwing-software/library/Reefwing_imuTypes/2.0.3/Reefwing_imuTypes-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Reefwing_imuTypes-2.0.3.tar.gz",
+    "size_bytes": 4036,
+    "sha256": "4a223ee62bb71ad2738fcec15ff9e40707722e7eb07d5be2760dcecc7d05022a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reefwing-software/library/Reefwing_imuTypes/2.0.3/Reefwing_imuTypes-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/reefwing-software/library/Reefwing_imuTypes/2.0.3/Reefwing_imuTypes-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "reefwing-software/library/Reefwing_xIMU3/1.1.0/Reefwing_xIMU3-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Reefwing_xIMU3-1.1.0.tar.gz",
+    "size_bytes": 26233,
+    "sha256": "188d2c24f7a68e2a49ee4a3e7a91bcb4420dce0b7eff9550d8123ed76a015497",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reefwing-software/library/Reefwing_xIMU3/1.1.0/Reefwing_xIMU3-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/reefwing-software/library/Reefwing_xIMU3/1.1.0/Reefwing_xIMU3-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

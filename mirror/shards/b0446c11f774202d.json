@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sk398",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sk398/library/SerialComms/0.0.0+sha.b5f4a9e69d96/SerialComms-0.0.0+sha.b5f4a9e69d96.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialComms-0.0.0+sha.b5f4a9e69d96.tar.gz",
+    "size_bytes": 1519,
+    "sha256": "feb1748dd5a243caa0f052a11d3e781cd92940994de907c98faf5233335c30ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sk398/library/SerialComms/0.0.0%2Bsha.b5f4a9e69d96/SerialComms-0.0.0%2Bsha.b5f4a9e69d96.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sk398/library/SerialComms/0.0.0%2Bsha.b5f4a9e69d96/SerialComms-0.0.0%2Bsha.b5f4a9e69d96.tar.gz"
+    ]
+   }
+  }
+ ]
+}

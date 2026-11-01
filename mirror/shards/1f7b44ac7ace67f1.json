@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/danielmeza",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "danielmeza/library/SmartEnumCpp/1.0.3/SmartEnumCpp-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartEnumCpp-1.0.3.tar.gz",
+    "size_bytes": 16429,
+    "sha256": "7d1e28c48eaffe0d5cd60d1d1e5a7a4d2c23c994e3a3989741e305ed815363ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/danielmeza/library/SmartEnumCpp/1.0.3/SmartEnumCpp-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/danielmeza/library/SmartEnumCpp/1.0.3/SmartEnumCpp-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

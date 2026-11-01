@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/akarimiz1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "akarimiz1/library/E62Module/1.0.0/E62Module-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "E62Module-1.0.0.tar.gz",
+    "size_bytes": 3690,
+    "sha256": "7799b9259c916260c70a7179abec037331c9015441c4f2f43ad6ae45ab5eaea4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akarimiz1/library/E62Module/1.0.0/E62Module-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/akarimiz1/library/E62Module/1.0.0/E62Module-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

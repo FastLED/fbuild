@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chaos511",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chaos511/library/Alex2ESP/1.0.0/Alex2ESP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Alex2ESP-1.0.0.tar.gz",
+    "size_bytes": 22392,
+    "sha256": "77ac52e3c33928d1de4b8f54b6f689977361e5843ee3c533532914f3ec9749f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chaos511/library/Alex2ESP/1.0.0/Alex2ESP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chaos511/library/Alex2ESP/1.0.0/Alex2ESP-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

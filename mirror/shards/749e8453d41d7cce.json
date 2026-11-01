@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mariob",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mariob/library/ssWi/0.0.0+sha.83172a067b57/ssWi-0.0.0+sha.83172a067b57.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ssWi-0.0.0+sha.83172a067b57.tar.gz",
+    "size_bytes": 5585,
+    "sha256": "32194e5d3b3d88b11bfd934653d4ba699a4c1cfb1871c8f1e5fb7b7c552c2ecb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mariob/library/ssWi/0.0.0%2Bsha.83172a067b57/ssWi-0.0.0%2Bsha.83172a067b57.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mariob/library/ssWi/0.0.0%2Bsha.83172a067b57/ssWi-0.0.0%2Bsha.83172a067b57.tar.gz"
+    ]
+   }
+  }
+ ]
+}

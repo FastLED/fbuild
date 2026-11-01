@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/skyfroger",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "skyfroger/library/RLab/1.0.0/RLab-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RLab-1.0.0.tar.gz",
+    "size_bytes": 18198,
+    "sha256": "bd9e1ea605496e322605702b9e92bdd378b43dc297b704a7505205d4abb08d0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skyfroger/library/RLab/1.0.0/RLab-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/skyfroger/library/RLab/1.0.0/RLab-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "skyfroger/library/RPlatform/1.0.0/RPlatform-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RPlatform-1.0.0.tar.gz",
+    "size_bytes": 20998,
+    "sha256": "91a250ef9537d37e7bb0e2a34fe4e05b08c7d88de181a434048cba0ab463923a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skyfroger/library/RPlatform/1.0.0/RPlatform-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/skyfroger/library/RPlatform/1.0.0/RPlatform-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

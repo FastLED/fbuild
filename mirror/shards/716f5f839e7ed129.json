@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-eds-ltd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-eds-ltd/library/cmd_io/0.0.0+sha.4c93fc8735fa/cmd_io-0.0.0+sha.4c93fc8735fa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cmd_io-0.0.0+sha.4c93fc8735fa.tar.gz",
+    "size_bytes": 1556,
+    "sha256": "d3c18327b0c2ac4395bb6725d673feb4616106f05f303cd4e8909b80ae48ca17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eds-ltd/library/cmd_io/0.0.0%2Bsha.4c93fc8735fa/cmd_io-0.0.0%2Bsha.4c93fc8735fa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eds-ltd/library/cmd_io/0.0.0%2Bsha.4c93fc8735fa/cmd_io-0.0.0%2Bsha.4c93fc8735fa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eds-ltd/library/globals/0.0.0+sha.d27666de5f82/globals-0.0.0+sha.d27666de5f82.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "globals-0.0.0+sha.d27666de5f82.tar.gz",
+    "size_bytes": 825,
+    "sha256": "47d1447d901da525f01d097660bcf0b32367aa05dad630de0cb10df35d21acaa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eds-ltd/library/globals/0.0.0%2Bsha.d27666de5f82/globals-0.0.0%2Bsha.d27666de5f82.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eds-ltd/library/globals/0.0.0%2Bsha.d27666de5f82/globals-0.0.0%2Bsha.d27666de5f82.tar.gz"
+    ]
+   }
+  }
+ ]
+}

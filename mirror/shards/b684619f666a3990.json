@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pinski1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pinski1/library/I2S/0.0.0+sha.0408d1e354e7/I2S-0.0.0+sha.0408d1e354e7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2S-0.0.0+sha.0408d1e354e7.tar.gz",
+    "size_bytes": 2970,
+    "sha256": "3d8c2af5bc85bc7237b0095d37898c178ec04f4e562193cac535e33a4a555cad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pinski1/library/I2S/0.0.0%2Bsha.0408d1e354e7/I2S-0.0.0%2Bsha.0408d1e354e7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pinski1/library/I2S/0.0.0%2Bsha.0408d1e354e7/I2S-0.0.0%2Bsha.0408d1e354e7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pinski1/library/Lees_Algorithm/0.0.0+sha.5343f19381c8/Lees_Algorithm-0.0.0+sha.5343f19381c8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lees_Algorithm-0.0.0+sha.5343f19381c8.tar.gz",
+    "size_bytes": 2573,
+    "sha256": "5fcacdaf4b4352f05a117525c4224d824211a10a2b885a2a9f69531d7deabe59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pinski1/library/Lees_Algorithm/0.0.0%2Bsha.5343f19381c8/Lees_Algorithm-0.0.0%2Bsha.5343f19381c8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pinski1/library/Lees_Algorithm/0.0.0%2Bsha.5343f19381c8/Lees_Algorithm-0.0.0%2Bsha.5343f19381c8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pinski1/library/PAW3102DB/0.0.0+sha.dda73f38c264/PAW3102DB-0.0.0+sha.dda73f38c264.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PAW3102DB-0.0.0+sha.dda73f38c264.tar.gz",
+    "size_bytes": 1489,
+    "sha256": "5870597ee80ed2048c56cabfb5beb237671de211c846546b6e4e3fc13309f613",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pinski1/library/PAW3102DB/0.0.0%2Bsha.dda73f38c264/PAW3102DB-0.0.0%2Bsha.dda73f38c264.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pinski1/library/PAW3102DB/0.0.0%2Bsha.dda73f38c264/PAW3102DB-0.0.0%2Bsha.dda73f38c264.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pinski1/library/TB6612FNG/0.0.0+sha.7f18197d1210/TB6612FNG-0.0.0+sha.7f18197d1210.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TB6612FNG-0.0.0+sha.7f18197d1210.tar.gz",
+    "size_bytes": 1475,
+    "sha256": "775605dfbfff510e902f6d409aae869cbceb139b05e9af51f706cfb946b6ff7a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pinski1/library/TB6612FNG/0.0.0%2Bsha.7f18197d1210/TB6612FNG-0.0.0%2Bsha.7f18197d1210.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pinski1/library/TB6612FNG/0.0.0%2Bsha.7f18197d1210/TB6612FNG-0.0.0%2Bsha.7f18197d1210.tar.gz"
+    ]
+   }
+  }
+ ]
+}

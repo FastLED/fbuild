@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dt-art1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dt-art1/library/jpegenc-pio/1.0.0/jpegenc-pio-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "jpegenc-pio-1.0.0.tar.gz",
+    "size_bytes": 247965,
+    "sha256": "945d36581cfa05fab7d71fc4d217b37a1de7ec3302e2dec17ea0ad9f275b9350",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dt-art1/library/jpegenc-pio/1.0.0/jpegenc-pio-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dt-art1/library/jpegenc-pio/1.0.0/jpegenc-pio-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dt-art1/library/mlx90640-pio/1.0.0/mlx90640-pio-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mlx90640-pio-1.0.0.tar.gz",
+    "size_bytes": 12671,
+    "sha256": "0a834b869c60e2a7c9a3ae31ea116042cdc6ce05a0472056bc91280d84a65311",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dt-art1/library/mlx90640-pio/1.0.0/mlx90640-pio-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dt-art1/library/mlx90640-pio/1.0.0/mlx90640-pio-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hakan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hakan/library/DMD2TUR/1.0.2/DMD2TUR-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD2TUR-1.0.2.tar.gz",
+    "size_bytes": 19573,
+    "sha256": "0047b702539eb9997f4baaa4adb683e5b189a765492bbafe7def222874a75c27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hakan/library/DMD2TUR/1.0.2/DMD2TUR-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hakan/library/DMD2TUR/1.0.2/DMD2TUR-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

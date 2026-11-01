@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jkbusse",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jkbusse/library/ILI9341_GFX/1.0.0/ILI9341_GFX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341_GFX-1.0.0.tar.gz",
+    "size_bytes": 89094,
+    "sha256": "e143c8fefc31963538bc526d76b731bbfde469d8b129b5379de6e06bc74a65fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jkbusse/library/ILI9341_GFX/1.0.0/ILI9341_GFX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jkbusse/library/ILI9341_GFX/1.0.0/ILI9341_GFX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jkbusse/library/ILI9341_GFX/1.0.1/ILI9341_GFX-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341_GFX-1.0.1.tar.gz",
+    "size_bytes": 95143,
+    "sha256": "e0a85055b7ae3340fe35b19d9930867e6b0c13bc21a4bfd04711ca77b051dfcc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jkbusse/library/ILI9341_GFX/1.0.1/ILI9341_GFX-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jkbusse/library/ILI9341_GFX/1.0.1/ILI9341_GFX-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jkbusse/library/ILI9341_GFX/1.0.2/ILI9341_GFX-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341_GFX-1.0.2.tar.gz",
+    "size_bytes": 221153,
+    "sha256": "f3c94f1911cb4ba0823ebba285461f304729f42a100853896e50baab842139a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jkbusse/library/ILI9341_GFX/1.0.2/ILI9341_GFX-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jkbusse/library/ILI9341_GFX/1.0.2/ILI9341_GFX-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

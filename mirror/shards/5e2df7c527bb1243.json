@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/izerocs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "izerocs/library/Mesh/1.0.0/Mesh-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mesh-1.0.0.tar.gz",
+    "size_bytes": 12946,
+    "sha256": "f06e0f98faf0a321e19fe067203a7bbd9a171a83956d6781aec28472a53f993c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izerocs/library/Mesh/1.0.0/Mesh-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/izerocs/library/Mesh/1.0.0/Mesh-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

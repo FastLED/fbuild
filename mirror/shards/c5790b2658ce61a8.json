@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ypod520",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ypod520/library/lcd_SC2004C/0.0.0+sha.1e7a6dd294a7/lcd_SC2004C-0.0.0+sha.1e7a6dd294a7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lcd_SC2004C-0.0.0+sha.1e7a6dd294a7.tar.gz",
+    "size_bytes": 1201,
+    "sha256": "32615c3b78289acc0ae80b9d97537f119b4a5e3f4c4db55953b7b010dddb06af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ypod520/library/lcd_SC2004C/0.0.0%2Bsha.1e7a6dd294a7/lcd_SC2004C-0.0.0%2Bsha.1e7a6dd294a7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ypod520/library/lcd_SC2004C/0.0.0%2Bsha.1e7a6dd294a7/lcd_SC2004C-0.0.0%2Bsha.1e7a6dd294a7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rlanghbv",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rlanghbv/library/KeypadLib/0.0.0+sha.fb28bc08ded4/KeypadLib-0.0.0+sha.fb28bc08ded4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KeypadLib-0.0.0+sha.fb28bc08ded4.tar.gz",
+    "size_bytes": 3065,
+    "sha256": "7de2a61e5de3de959d1620b53cde07ff027c189208516e15e7352cedf3230f6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rlanghbv/library/KeypadLib/0.0.0%2Bsha.fb28bc08ded4/KeypadLib-0.0.0%2Bsha.fb28bc08ded4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rlanghbv/library/KeypadLib/0.0.0%2Bsha.fb28bc08ded4/KeypadLib-0.0.0%2Bsha.fb28bc08ded4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rlanghbv/library/LCDLib/0.0.0+sha.241842336d78/LCDLib-0.0.0+sha.241842336d78.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCDLib-0.0.0+sha.241842336d78.tar.gz",
+    "size_bytes": 3660,
+    "sha256": "61f9ebf7d2e486a4adeafe0734f1748d5bb619cfeb32c4d213fab79e7a62e7f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rlanghbv/library/LCDLib/0.0.0%2Bsha.241842336d78/LCDLib-0.0.0%2Bsha.241842336d78.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rlanghbv/library/LCDLib/0.0.0%2Bsha.241842336d78/LCDLib-0.0.0%2Bsha.241842336d78.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rlanghbv/library/mcufriend_24_tft_lcd/0.0.0+sha.ede1a0a32e04/mcufriend_24_tft_lcd-0.0.0+sha.ede1a0a32e04.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mcufriend_24_tft_lcd-0.0.0+sha.ede1a0a32e04.tar.gz",
+    "size_bytes": 28298,
+    "sha256": "34c8a577e30a2e1b12fb882e8cce8c472a96541d0ccc9b26a998e348fcf935d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rlanghbv/library/mcufriend_24_tft_lcd/0.0.0%2Bsha.ede1a0a32e04/mcufriend_24_tft_lcd-0.0.0%2Bsha.ede1a0a32e04.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rlanghbv/library/mcufriend_24_tft_lcd/0.0.0%2Bsha.ede1a0a32e04/mcufriend_24_tft_lcd-0.0.0%2Bsha.ede1a0a32e04.tar.gz"
+    ]
+   }
+  }
+ ]
+}

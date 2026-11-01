@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pu2clr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pu2clr/library/PU2CLR%20AKC695X/1.0.8/PU2CLRAKC695X-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PU2CLRAKC695X-1.0.8.tar.gz",
+    "size_bytes": 87390,
+    "sha256": "fff9eeeb9fa6572dd29f0384adc03b1d0d0b6fba3b03ca623b30b814aa1f5adc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pu2clr/library/PU2CLR%2520AKC695X/1.0.8/PU2CLRAKC695X-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/pu2clr/library/PU2CLR%20AKC695X/1.0.8/PU2CLRAKC695X-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pu2clr/library/PU2CLR%20BK108X/1.0.6/PU2CLRBK108X-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PU2CLRBK108X-1.0.6.tar.gz",
+    "size_bytes": 73596,
+    "sha256": "fb3fb669ab7ffe73a1479089a687f40969a46c8826a0ee892d9229011a956b11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pu2clr/library/PU2CLR%2520BK108X/1.0.6/PU2CLRBK108X-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/pu2clr/library/PU2CLR%20BK108X/1.0.6/PU2CLRBK108X-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pu2clr/library/PU2CLR%20KT0915/1.0.3/PU2CLRKT0915-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PU2CLRKT0915-1.0.3.tar.gz",
+    "size_bytes": 38784,
+    "sha256": "861798be0d61327c2fbaebbb604317fd4bf00bbb6f9d45f16aa0bca3d342e275",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pu2clr/library/PU2CLR%2520KT0915/1.0.3/PU2CLRKT0915-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pu2clr/library/PU2CLR%20KT0915/1.0.3/PU2CLRKT0915-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pu2clr/library/PU2CLR%20MCP23008/1.0.8/PU2CLRMCP23008-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PU2CLRMCP23008-1.0.8.tar.gz",
+    "size_bytes": 14869,
+    "sha256": "157fcecbd9e83cfd952803d5e8326f952972033b00e3802268dc4c7d56751687",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pu2clr/library/PU2CLR%2520MCP23008/1.0.8/PU2CLRMCP23008-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/pu2clr/library/PU2CLR%20MCP23008/1.0.8/PU2CLRMCP23008-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pu2clr/library/PU2CLR%20PCF8574/1.0.3/PU2CLRPCF8574-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PU2CLRPCF8574-1.0.3.tar.gz",
+    "size_bytes": 11378,
+    "sha256": "76521ed67f5dd73ee1c822b7ef0e65c60f35d31631c0b492b06de8c9123ca64a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pu2clr/library/PU2CLR%2520PCF8574/1.0.3/PU2CLRPCF8574-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pu2clr/library/PU2CLR%20PCF8574/1.0.3/PU2CLRPCF8574-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pu2clr/library/PU2CLR%20RDA5807/1.1.9/PU2CLRRDA5807-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PU2CLRRDA5807-1.1.9.tar.gz",
+    "size_bytes": 122225,
+    "sha256": "2e6bd29da7e1a1efaf70fb07cd78253d8870703f84e8be19c375fbeb6575c569",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pu2clr/library/PU2CLR%2520RDA5807/1.1.9/PU2CLRRDA5807-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/pu2clr/library/PU2CLR%20RDA5807/1.1.9/PU2CLRRDA5807-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pu2clr/library/PU2CLR%20SI470X/1.0.5/PU2CLRSI470X-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PU2CLRSI470X-1.0.5.tar.gz",
+    "size_bytes": 48722,
+    "sha256": "e51f104f4a205fa4fe88f46958c35c0d59d58eb0bceaa106e1546ebd9ca865fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pu2clr/library/PU2CLR%2520SI470X/1.0.5/PU2CLRSI470X-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pu2clr/library/PU2CLR%20SI470X/1.0.5/PU2CLRSI470X-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pu2clr/library/PU2CLR%20SI4735/2.1.8/PU2CLRSI4735-2.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PU2CLRSI4735-2.1.8.tar.gz",
+    "size_bytes": 1867372,
+    "sha256": "9a1dffebf1d7d462ad35f3f3b76bcc16066644b8254f0057d4a7dfd538903dbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pu2clr/library/PU2CLR%2520SI4735/2.1.8/PU2CLRSI4735-2.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/pu2clr/library/PU2CLR%20SI4735/2.1.8/PU2CLRSI4735-2.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pu2clr/library/PU2CLR%20SI4844/1.2.2/PU2CLRSI4844-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PU2CLRSI4844-1.2.2.tar.gz",
+    "size_bytes": 104885,
+    "sha256": "1deb7a71040e0d9c573160d34d1227c8cf7e218db4352bb66867dbba945d3230",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pu2clr/library/PU2CLR%2520SI4844/1.2.2/PU2CLRSI4844-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pu2clr/library/PU2CLR%20SI4844/1.2.2/PU2CLRSI4844-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pu2clr/library/QN8066/1.3.7/QN8066-1.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QN8066-1.3.7.tar.gz",
+    "size_bytes": 728218,
+    "sha256": "19111b4380847f7d59a42a29884d10e0d7e5014ca7ee38a135b1490a45f5f2a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pu2clr/library/QN8066/1.3.7/QN8066-1.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/pu2clr/library/QN8066/1.3.7/QN8066-1.3.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

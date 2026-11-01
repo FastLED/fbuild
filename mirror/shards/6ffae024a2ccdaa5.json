@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sefisher",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sefisher/library/fishyDIYdevices/1.5.0/fishyDIYdevices-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fishyDIYdevices-1.5.0.tar.gz",
+    "size_bytes": 407386,
+    "sha256": "e8cc925a64e84b3ba16c7fa2ba0ba78c668e3cb0a8b1ce48cfa2d7a877c7005c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sefisher/library/fishyDIYdevices/1.5.0/fishyDIYdevices-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sefisher/library/fishyDIYdevices/1.5.0/fishyDIYdevices-1.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

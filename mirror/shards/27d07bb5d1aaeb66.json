@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-apm-litoral",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-apm-litoral/library/MSCFileSystem_Sherckuith/0.0.0+sha.fdc81fb10bd5/MSCFileSystem_Sherckuith-0.0.0+sha.fdc81fb10bd5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MSCFileSystem_Sherckuith-0.0.0+sha.fdc81fb10bd5.tar.gz",
+    "size_bytes": 2257,
+    "sha256": "084310b31927f281320921411244a98efc9df27caefa0d7338c66a668ad37272",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-apm-litoral/library/MSCFileSystem_Sherckuith/0.0.0%2Bsha.fdc81fb10bd5/MSCFileSystem_Sherckuith-0.0.0%2Bsha.fdc81fb10bd5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-apm-litoral/library/MSCFileSystem_Sherckuith/0.0.0%2Bsha.fdc81fb10bd5/MSCFileSystem_Sherckuith-0.0.0%2Bsha.fdc81fb10bd5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-apm-litoral/library/SDFileSystem_Sherckuith/0.0.0+sha.b65664229800/SDFileSystem_Sherckuith-0.0.0+sha.b65664229800.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDFileSystem_Sherckuith-0.0.0+sha.b65664229800.tar.gz",
+    "size_bytes": 3648,
+    "sha256": "e29ec2df3a3330950ee589c9440f4844ee484b9c6e17382e22ae5b0083d2d0a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-apm-litoral/library/SDFileSystem_Sherckuith/0.0.0%2Bsha.b65664229800/SDFileSystem_Sherckuith-0.0.0%2Bsha.b65664229800.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-apm-litoral/library/SDFileSystem_Sherckuith/0.0.0%2Bsha.b65664229800/SDFileSystem_Sherckuith-0.0.0%2Bsha.b65664229800.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-apm-litoral/library/SPI_TFT_Sherckuith/0.0.0+sha.ea1b1135bb4e/SPI_TFT_Sherckuith-0.0.0+sha.ea1b1135bb4e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_TFT_Sherckuith-0.0.0+sha.ea1b1135bb4e.tar.gz",
+    "size_bytes": 17549,
+    "sha256": "429349585efecdea8f4c1feaa43dc0dc85342ac5e271be02f28c6fe86b948356",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-apm-litoral/library/SPI_TFT_Sherckuith/0.0.0%2Bsha.ea1b1135bb4e/SPI_TFT_Sherckuith-0.0.0%2Bsha.ea1b1135bb4e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-apm-litoral/library/SPI_TFT_Sherckuith/0.0.0%2Bsha.ea1b1135bb4e/SPI_TFT_Sherckuith-0.0.0%2Bsha.ea1b1135bb4e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-apm-litoral/library/TFT_fonts/0.0.0+sha.f0da0777fd45/TFT_fonts-0.0.0+sha.f0da0777fd45.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_fonts-0.0.0+sha.f0da0777fd45.tar.gz",
+    "size_bytes": 21038,
+    "sha256": "c7c9d0fdb1f464e0d88af78627c9265f4c7a7cbd8038ad11e58eb82510b21deb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-apm-litoral/library/TFT_fonts/0.0.0%2Bsha.f0da0777fd45/TFT_fonts-0.0.0%2Bsha.f0da0777fd45.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-apm-litoral/library/TFT_fonts/0.0.0%2Bsha.f0da0777fd45/TFT_fonts-0.0.0%2Bsha.f0da0777fd45.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-apm-litoral/library/Touch_tft_Sherckuith/0.0.0+sha.d0e2979d7ed6/Touch_tft_Sherckuith-0.0.0+sha.d0e2979d7ed6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Touch_tft_Sherckuith-0.0.0+sha.d0e2979d7ed6.tar.gz",
+    "size_bytes": 3664,
+    "sha256": "fc7734377df944459d2093817627cff59b672e8b06e31ca479951d1d848db7fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-apm-litoral/library/Touch_tft_Sherckuith/0.0.0%2Bsha.d0e2979d7ed6/Touch_tft_Sherckuith-0.0.0%2Bsha.d0e2979d7ed6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-apm-litoral/library/Touch_tft_Sherckuith/0.0.0%2Bsha.d0e2979d7ed6/Touch_tft_Sherckuith-0.0.0%2Bsha.d0e2979d7ed6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

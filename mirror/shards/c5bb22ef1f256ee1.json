@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/torica-org",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "torica-org/library/SerialWeb/1.0.0/SerialWeb-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWeb-1.0.0.tar.gz",
+    "size_bytes": 12994,
+    "sha256": "7f85e790b93017a70ad6b10da1e40b0d5f1232fa1739652355a8f5a3c19596a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/torica-org/library/SerialWeb/1.0.0/SerialWeb-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/torica-org/library/SerialWeb/1.0.0/SerialWeb-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "torica-org/library/SerialWeb/1.0.3/SerialWeb-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWeb-1.0.3.tar.gz",
+    "size_bytes": 13686,
+    "sha256": "50c4eebf185044d556c65052ab2fd11bd097c35edbb06ebe0aacbd62a31f73bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/torica-org/library/SerialWeb/1.0.3/SerialWeb-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/torica-org/library/SerialWeb/1.0.3/SerialWeb-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "torica-org/library/SerialWeb/1.0.5/SerialWeb-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWeb-1.0.5.tar.gz",
+    "size_bytes": 13844,
+    "sha256": "8333205aeeb3983c0c42b1490643908b47ed4cd217e89e6e186bdd2f8b894a10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/torica-org/library/SerialWeb/1.0.5/SerialWeb-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/torica-org/library/SerialWeb/1.0.5/SerialWeb-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "torica-org/library/SerialWeb/2.1.1/SerialWeb-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWeb-2.1.1.tar.gz",
+    "size_bytes": 13969,
+    "sha256": "9649e92d1dc71c40f18dbaf4384eb181f6c6d0ec2f3cff7ca02f9812aa98a047",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/torica-org/library/SerialWeb/2.1.1/SerialWeb-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/torica-org/library/SerialWeb/2.1.1/SerialWeb-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "torica-org/library/SerialWeb/3.0.0/SerialWeb-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialWeb-3.0.0.tar.gz",
+    "size_bytes": 14440,
+    "sha256": "3940ca742c45257160837546541a65718468e5fe1c806edd66f1f55e7b8b0b53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/torica-org/library/SerialWeb/3.0.0/SerialWeb-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/torica-org/library/SerialWeb/3.0.0/SerialWeb-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

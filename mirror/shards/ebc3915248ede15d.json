@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/centylab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "centylab/library/AP33772S/1.1.0/AP33772S-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AP33772S-1.1.0.tar.gz",
+    "size_bytes": 23478,
+    "sha256": "90ad2992b15c40895108a235432de1381c6a672116881aa274db2520024cb271",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/centylab/library/AP33772S/1.1.0/AP33772S-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/centylab/library/AP33772S/1.1.0/AP33772S-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "centylab/library/AP33772S/1.2.0/AP33772S-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AP33772S-1.2.0.tar.gz",
+    "size_bytes": 24137,
+    "sha256": "326d66e540179cd09ad37ae3f153a1c49d3770d659c79be881b697b9be7d45e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/centylab/library/AP33772S/1.2.0/AP33772S-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/centylab/library/AP33772S/1.2.0/AP33772S-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

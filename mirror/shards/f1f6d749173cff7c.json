@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rozzy1987",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rozzy1987/library/JsonStreamingParser/1.0.3/JsonStreamingParser-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JsonStreamingParser-1.0.3.tar.gz",
+    "size_bytes": 10318,
+    "sha256": "a5911e28c97965501118502186447f6cc39c5b7371b5d995fe38cb8119fe1d63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rozzy1987/library/JsonStreamingParser/1.0.3/JsonStreamingParser-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rozzy1987/library/JsonStreamingParser/1.0.3/JsonStreamingParser-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rozzy1987/library/R-QR/1.0.0/R-QR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "R-QR-1.0.0.tar.gz",
+    "size_bytes": 25721,
+    "sha256": "c1bf95eb7943077360ba969d68b2186d7c7e91d4c8abd65adb09edfc71c36df1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rozzy1987/library/R-QR/1.0.0/R-QR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rozzy1987/library/R-QR/1.0.0/R-QR-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

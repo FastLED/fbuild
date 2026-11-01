@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-adhithyan15",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-adhithyan15/library/esp8266/0.0.0+sha.a94222cedd2e/esp8266-0.0.0+sha.a94222cedd2e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp8266-0.0.0+sha.a94222cedd2e.tar.gz",
+    "size_bytes": 2836,
+    "sha256": "82860e549a5419f4b8f356f0243c4e9ec2614de8752db68c78c81a1f4f09a8ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adhithyan15/library/esp8266/0.0.0%2Bsha.a94222cedd2e/esp8266-0.0.0%2Bsha.a94222cedd2e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adhithyan15/library/esp8266/0.0.0%2Bsha.a94222cedd2e/esp8266-0.0.0%2Bsha.a94222cedd2e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

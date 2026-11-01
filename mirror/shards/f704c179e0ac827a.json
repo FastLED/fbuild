@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/diodeiot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "diodeiot/library/DiodeIoT_SI-1104/1.0.0/DiodeIoT_SI-1104-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DiodeIoT_SI-1104-1.0.0.tar.gz",
+    "size_bytes": 14033,
+    "sha256": "5f3caaa0aede634797f6f172d5c547f7b2fb9b3d7e885f6b2ee01c62a44bcf22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diodeiot/library/DiodeIoT_SI-1104/1.0.0/DiodeIoT_SI-1104-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diodeiot/library/DiodeIoT_SI-1104/1.0.0/DiodeIoT_SI-1104-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diodeiot/library/DiodeIoT_SI-1108/1.0.0/DiodeIoT_SI-1108-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DiodeIoT_SI-1108-1.0.0.tar.gz",
+    "size_bytes": 14231,
+    "sha256": "a9c247d73cf04d477aa335e39c0fe77387b1a984634e4b5a4e9e826f910e3171",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diodeiot/library/DiodeIoT_SI-1108/1.0.0/DiodeIoT_SI-1108-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diodeiot/library/DiodeIoT_SI-1108/1.0.0/DiodeIoT_SI-1108-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "diodeiot/library/DiodeIoT_SI-1116/1.0.0/DiodeIoT_SI-1116-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DiodeIoT_SI-1116-1.0.0.tar.gz",
+    "size_bytes": 14641,
+    "sha256": "f12b935f8a3010167863abbea530401e35b614d8a4ad70a0516a2dab2ea0b529",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/diodeiot/library/DiodeIoT_SI-1116/1.0.0/DiodeIoT_SI-1116-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/diodeiot/library/DiodeIoT_SI-1116/1.0.0/DiodeIoT_SI-1116-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

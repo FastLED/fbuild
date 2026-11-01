@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ean244",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ean244/library/Cytron%20ESPWiFi%20Shield/2.0.1/CytronESPWiFiShield-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CytronESPWiFiShield-2.0.1.tar.gz",
+    "size_bytes": 19989,
+    "sha256": "a114a238f1d7ec78c2c2a519bf000adc20d8b9b359ee549e84b02081a52af1db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ean244/library/Cytron%2520ESPWiFi%2520Shield/2.0.1/CytronESPWiFiShield-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ean244/library/Cytron%20ESPWiFi%20Shield/2.0.1/CytronESPWiFiShield-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

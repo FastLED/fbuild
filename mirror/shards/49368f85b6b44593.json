@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-samplecode",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-samplecode/library/NEO-6m-GPS/0.0.0+sha.7350eda5fa8c/NEO-6m-GPS-0.0.0+sha.7350eda5fa8c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NEO-6m-GPS-0.0.0+sha.7350eda5fa8c.tar.gz",
+    "size_bytes": 2866,
+    "sha256": "2b5bb97ac696eed5cfaac305106c5d47f86f37a4369dd76394c5b359c73a2378",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-samplecode/library/NEO-6m-GPS/0.0.0%2Bsha.7350eda5fa8c/NEO-6m-GPS-0.0.0%2Bsha.7350eda5fa8c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-samplecode/library/NEO-6m-GPS/0.0.0%2Bsha.7350eda5fa8c/NEO-6m-GPS-0.0.0%2Bsha.7350eda5fa8c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

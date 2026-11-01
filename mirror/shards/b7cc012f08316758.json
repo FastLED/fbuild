@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-emma-watson",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-emma-watson/library/KTM_vjezba5_by_Feri/0.0.0+sha.99b8d38961f3/KTM_vjezba5_by_Feri-0.0.0+sha.99b8d38961f3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KTM_vjezba5_by_Feri-0.0.0+sha.99b8d38961f3.tar.gz",
+    "size_bytes": 5483,
+    "sha256": "4a463d04674334e17fac2ee46e29abcd109f138126c13ee5fcdcee1a86dbfea3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-emma-watson/library/KTM_vjezba5_by_Feri/0.0.0%2Bsha.99b8d38961f3/KTM_vjezba5_by_Feri-0.0.0%2Bsha.99b8d38961f3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-emma-watson/library/KTM_vjezba5_by_Feri/0.0.0%2Bsha.99b8d38961f3/KTM_vjezba5_by_Feri-0.0.0%2Bsha.99b8d38961f3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

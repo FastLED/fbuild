@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/decoded-cipher",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "decoded-cipher/library/Nodrix/0.1.0/Nodrix-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nodrix-0.1.0.tar.gz",
+    "size_bytes": 10951,
+    "sha256": "4bb17555afba41cc9be4a2e16af4dd3247733fe7aac6688dd148638fb23df3cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/decoded-cipher/library/Nodrix/0.1.0/Nodrix-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/decoded-cipher/library/Nodrix/0.1.0/Nodrix-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "decoded-cipher/library/Nodrix/0.1.1/Nodrix-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Nodrix-0.1.1.tar.gz",
+    "size_bytes": 12474,
+    "sha256": "f9cb52c50b94bcfea2a9fc039e816afb8bc20bd95e2790bad61770c5d4e2cee7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/decoded-cipher/library/Nodrix/0.1.1/Nodrix-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/decoded-cipher/library/Nodrix/0.1.1/Nodrix-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

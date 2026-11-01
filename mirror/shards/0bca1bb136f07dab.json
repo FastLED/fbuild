@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-aidan1971",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-aidan1971/library/SGTL5000/0.0.0+sha.9043626add45/SGTL5000-0.0.0+sha.9043626add45.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SGTL5000-0.0.0+sha.9043626add45.tar.gz",
+    "size_bytes": 34216,
+    "sha256": "12e9da6e87525feeeaa40471df6e05c14a044cbfd2803171a8d0243625716ef2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-aidan1971/library/SGTL5000/0.0.0%2Bsha.9043626add45/SGTL5000-0.0.0%2Bsha.9043626add45.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-aidan1971/library/SGTL5000/0.0.0%2Bsha.9043626add45/SGTL5000-0.0.0%2Bsha.9043626add45.tar.gz"
+    ]
+   }
+  }
+ ]
+}

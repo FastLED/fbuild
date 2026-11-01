@@ -1,0 +1,1049 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/7semi-solutions",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "7semi-solutions/library/7Semi%20ADS7830/1.0.0/7SemiADS7830-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiADS7830-1.0.0.tar.gz",
+    "size_bytes": 4310,
+    "sha256": "9860b72a021a894d5c51dd7a5e4b8a3c9aa97f86fa86d40165d8cd176d24db77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520ADS7830/1.0.0/7SemiADS7830-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20ADS7830/1.0.0/7SemiADS7830-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20ADXL335%20Accelerometer/1.0.0/7SemiADXL335Accelerometer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiADXL335Accelerometer-1.0.0.tar.gz",
+    "size_bytes": 2910,
+    "sha256": "c7855a033d03a5b279c2e9f6959e6f8b486fe227aab3bc9e8941ebd9a8d5cc8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520ADXL335%2520Accelerometer/1.0.0/7SemiADXL335Accelerometer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20ADXL335%20Accelerometer/1.0.0/7SemiADXL335Accelerometer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20BME280/1.0.0/7SemiBME280-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiBME280-1.0.0.tar.gz",
+    "size_bytes": 23058,
+    "sha256": "258e82962cd1da116f4389eca2ddf47018226f04d5f4de0b270044fb255760b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520BME280/1.0.0/7SemiBME280-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20BME280/1.0.0/7SemiBME280-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20BME690/1.0.0/7SemiBME690-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiBME690-1.0.0.tar.gz",
+    "size_bytes": 23044,
+    "sha256": "3e26ab725ea6fc79183e4db0eca5a8467dd425e26702d19db0dc67a85900563d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520BME690/1.0.0/7SemiBME690-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20BME690/1.0.0/7SemiBME690-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20BME690/1.0.1/7SemiBME690-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiBME690-1.0.1.tar.gz",
+    "size_bytes": 23033,
+    "sha256": "587aa0d9456d5e78638998261310fff85e94e3546e43993798ccf7224a939d8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520BME690/1.0.1/7SemiBME690-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20BME690/1.0.1/7SemiBME690-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20BMI270/1.0.0/7SemiBMI270-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiBMI270-1.0.0.tar.gz",
+    "size_bytes": 114793,
+    "sha256": "fa18a6364116b9734036e88898e7fd2f244657135813339e3c0121b0b0a61baf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520BMI270/1.0.0/7SemiBMI270-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20BMI270/1.0.0/7SemiBMI270-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20BMI323/1.0.0/7SemiBMI323-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiBMI323-1.0.0.tar.gz",
+    "size_bytes": 91947,
+    "sha256": "d76251807d3d5350ea0a5a902ebc244af9238a495f1905b2551509a73e0314c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520BMI323/1.0.0/7SemiBMI323-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20BMI323/1.0.0/7SemiBMI323-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20BMM150/1.0.0/7SemiBMM150-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiBMM150-1.0.0.tar.gz",
+    "size_bytes": 11148,
+    "sha256": "0929324a0dfd276e96af5613b3bb7be52df982aaa6b66211dc27d0ce405ce112",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520BMM150/1.0.0/7SemiBMM150-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20BMM150/1.0.0/7SemiBMM150-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20BMP384/1.0.0/7SemiBMP384-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiBMP384-1.0.0.tar.gz",
+    "size_bytes": 36248,
+    "sha256": "f66688b66d2bd4b9cb1fbb85c5f129031d9463c5c2f4e935f094e2d16ef57a54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520BMP384/1.0.0/7SemiBMP384-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20BMP384/1.0.0/7SemiBMP384-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20BMP58x/1.1.1/7SemiBMP58x-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiBMP58x-1.1.1.tar.gz",
+    "size_bytes": 12411,
+    "sha256": "51b8b9a0d91b684a1ff5cfa3111451d181873ecd847148b936d67a434d1e46c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520BMP58x/1.1.1/7SemiBMP58x-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20BMP58x/1.1.1/7SemiBMP58x-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20BMV080/1.0.0/7SemiBMV080-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiBMV080-1.0.0.tar.gz",
+    "size_bytes": 13620,
+    "sha256": "76b6dd1cffa0113c88115e7fc4fc6b5a42dfb6be24d0c0344820bcda45082944",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520BMV080/1.0.0/7SemiBMV080-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20BMV080/1.0.0/7SemiBMV080-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20BNO08x/0.1.0/7SemiBNO08x-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiBNO08x-0.1.0.tar.gz",
+    "size_bytes": 16879,
+    "sha256": "cdd09baf87693570f4de08809c9cc6e783de6859acf4a98566dd719a629e6ab8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520BNO08x/0.1.0/7SemiBNO08x-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20BNO08x/0.1.0/7SemiBNO08x-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20BNO08x/1.0.1/7SemiBNO08x-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiBNO08x-1.0.1.tar.gz",
+    "size_bytes": 16888,
+    "sha256": "c0199bb82da9b9fba4ab1363f9730a33c05e22b9e7ecfd2b699c46d0fce8fac8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520BNO08x/1.0.1/7SemiBNO08x-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20BNO08x/1.0.1/7SemiBNO08x-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20Bus/1.0.0/7SemiBus-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiBus-1.0.0.tar.gz",
+    "size_bytes": 4691,
+    "sha256": "c08f81f85f6a8d08f84da56c1e242a2e08b94235e94b6bb02fb19ff1da63074c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520Bus/1.0.0/7SemiBus-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20Bus/1.0.0/7SemiBus-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20DAC7578/1.0.0/7SemiDAC7578-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiDAC7578-1.0.0.tar.gz",
+    "size_bytes": 7097,
+    "sha256": "744653c2efc519078c63cbbaf5c610497719db50e46853d2a255d07c7a38b787",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520DAC7578/1.0.0/7SemiDAC7578-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20DAC7578/1.0.0/7SemiDAC7578-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20DS2482/1.0.0/7SemiDS2482-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiDS2482-1.0.0.tar.gz",
+    "size_bytes": 6347,
+    "sha256": "0ea2ede75c6cd1f6ef5c8050772fadf9f0a2452c01c2cec8ef14f1637bfc0f9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520DS2482/1.0.0/7SemiDS2482-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20DS2482/1.0.0/7SemiDS2482-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20ENS210/1.0.0/7SemiENS210-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiENS210-1.0.0.tar.gz",
+    "size_bytes": 6380,
+    "sha256": "0a6fbb24a5d250dd7041be533ce2ff2b7c0351dfb70e9f9ee3d5f75738ea2896",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520ENS210/1.0.0/7SemiENS210-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20ENS210/1.0.0/7SemiENS210-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20HDC302x/1.0.0/7SemiHDC302x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiHDC302x-1.0.0.tar.gz",
+    "size_bytes": 10784,
+    "sha256": "dbf087e80e63d933f99f89350e3847b43866b8a6dde198b9f726a7ffd316a9fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520HDC302x/1.0.0/7SemiHDC302x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20HDC302x/1.0.0/7SemiHDC302x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20HMC6343%20Compass/1.0.0/7SemiHMC6343Compass-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiHMC6343Compass-1.0.0.tar.gz",
+    "size_bytes": 4592,
+    "sha256": "dca756d77e742053703a50127a0f7caa02f6859b31e3a1c2f98f6a1d670aae13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520HMC6343%2520Compass/1.0.0/7SemiHMC6343Compass-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20HMC6343%20Compass/1.0.0/7SemiHMC6343Compass-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20I2C%20Relay/1.0.0/7SemiI2CRelay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiI2CRelay-1.0.0.tar.gz",
+    "size_bytes": 2838,
+    "sha256": "6118d8b746ea5bbf0ba9149fb911e2acf136946dc26eee6b1a51ed6dee88eca6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520I2C%2520Relay/1.0.0/7SemiI2CRelay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20I2C%20Relay/1.0.0/7SemiI2CRelay-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20ICM20948/1.0.0/7SemiICM20948-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiICM20948-1.0.0.tar.gz",
+    "size_bytes": 19964,
+    "sha256": "8a43a25c51c385a544fcd6d600fa1f011331a38057a712e1d2deffd58abb8ee8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520ICM20948/1.0.0/7SemiICM20948-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20ICM20948/1.0.0/7SemiICM20948-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20INA240/1.0.0/7SemiINA240-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiINA240-1.0.0.tar.gz",
+    "size_bytes": 4460,
+    "sha256": "66b921a5be68716e5b130f82b78ff5aa8d057c873645ad803bfe1f8889c9c3dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520INA240/1.0.0/7SemiINA240-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20INA240/1.0.0/7SemiINA240-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20INA260/1.0.0/7SemiINA260-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiINA260-1.0.0.tar.gz",
+    "size_bytes": 3337,
+    "sha256": "ac7784b5c13fb564ef9a71a869b23704e5fced819654e25c45d68f1073c989c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520INA260/1.0.0/7SemiINA260-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20INA260/1.0.0/7SemiINA260-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20LIS3DH/1.0.0/7SemiLIS3DH-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiLIS3DH-1.0.0.tar.gz",
+    "size_bytes": 12506,
+    "sha256": "f58bd5961f65f6fecc73d6cf30268bfd5878dd95c6adef4b9ae6633ca5b19a4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520LIS3DH/1.0.0/7SemiLIS3DH-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20LIS3DH/1.0.0/7SemiLIS3DH-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20MAX31855/1.0.0/7SemiMAX31855-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiMAX31855-1.0.0.tar.gz",
+    "size_bytes": 5701,
+    "sha256": "f1d48f72a34236113046268449a1d108354d1925a0c1c36cae93b796284732fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520MAX31855/1.0.0/7SemiMAX31855-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20MAX31855/1.0.0/7SemiMAX31855-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20MCP4725/1.0.0/7SemiMCP4725-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiMCP4725-1.0.0.tar.gz",
+    "size_bytes": 5477,
+    "sha256": "044bd9b4c7067ce629ca10ee8073eb7a0857c4ef1b202682ee24080454526dc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520MCP4725/1.0.0/7SemiMCP4725-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20MCP4725/1.0.0/7SemiMCP4725-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20MCP4728/1.0.0/7SemiMCP4728-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiMCP4728-1.0.0.tar.gz",
+    "size_bytes": 7987,
+    "sha256": "acb3480957d484460872fa5e3e18249a197d7f6da2ebcf86d67caa898c84453d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520MCP4728/1.0.0/7SemiMCP4728-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20MCP4728/1.0.0/7SemiMCP4728-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20MCP9808/1.0.0/7SemiMCP9808-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiMCP9808-1.0.0.tar.gz",
+    "size_bytes": 7784,
+    "sha256": "60a39fd166c0868080d063b33a40964affe29018683e0be66f522674ac8a24d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520MCP9808/1.0.0/7SemiMCP9808-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20MCP9808/1.0.0/7SemiMCP9808-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20MLX90393/1.0.0/7SemiMLX90393-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiMLX90393-1.0.0.tar.gz",
+    "size_bytes": 10275,
+    "sha256": "90762faa9eebe3d9f7cc860c5d71717cfc730d372785877e05be77cfa13b6f88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520MLX90393/1.0.0/7SemiMLX90393-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20MLX90393/1.0.0/7SemiMLX90393-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20SHT2x/1.0.0/7SemiSHT2x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiSHT2x-1.0.0.tar.gz",
+    "size_bytes": 7428,
+    "sha256": "6e7eaebd663c24af877ebb38071ef89e8701188292902aa430dc87b9bacd4617",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520SHT2x/1.0.0/7SemiSHT2x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20SHT2x/1.0.0/7SemiSHT2x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20SHT4x/1.0.0/7SemiSHT4x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiSHT4x-1.0.0.tar.gz",
+    "size_bytes": 4042,
+    "sha256": "356be64c0585b3edc7d7141e1523ba73034def72b16065aa7b41a22ca298becb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520SHT4x/1.0.0/7SemiSHT4x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20SHT4x/1.0.0/7SemiSHT4x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20SHT4x/1.0.1/7SemiSHT4x-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiSHT4x-1.0.1.tar.gz",
+    "size_bytes": 5026,
+    "sha256": "0ae24cacd29c537d3f438c55fb9cf06821a9da64aa1ea4b7554998b45fa12b98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520SHT4x/1.0.1/7SemiSHT4x-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20SHT4x/1.0.1/7SemiSHT4x-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20STS3x/1.0.0/7SemiSTS3x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiSTS3x-1.0.0.tar.gz",
+    "size_bytes": 6626,
+    "sha256": "0f92625b4cd0ca44dcd2bba3fc4efef8cabe38dd7d619aa521842c58863fd438",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520STS3x/1.0.0/7SemiSTS3x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20STS3x/1.0.0/7SemiSTS3x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20STS3x/1.0.1/7SemiSTS3x-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiSTS3x-1.0.1.tar.gz",
+    "size_bytes": 6622,
+    "sha256": "b1259a24383c64891690f5450ac98297c7c1891cb2f6d4da522eb3b192b4e24a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520STS3x/1.0.1/7SemiSTS3x-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20STS3x/1.0.1/7SemiSTS3x-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20STS4x/1.0.0/7SemiSTS4x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiSTS4x-1.0.0.tar.gz",
+    "size_bytes": 5214,
+    "sha256": "212cb846d13f5fb0ea3a6c8667bbb17348c8ba19603391bd9e62a1d475e8b6c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520STS4x/1.0.0/7SemiSTS4x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20STS4x/1.0.0/7SemiSTS4x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20TMP11x/1.0.0/7SemiTMP11x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiTMP11x-1.0.0.tar.gz",
+    "size_bytes": 8626,
+    "sha256": "e482e6a3f8dd9b609ac399a89bdd04ebefce916058c47ef53f10eea9b27dfeec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520TMP11x/1.0.0/7SemiTMP11x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20TMP11x/1.0.0/7SemiTMP11x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20TMP23x/1.0.0/7SemiTMP23x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiTMP23x-1.0.0.tar.gz",
+    "size_bytes": 5349,
+    "sha256": "b8be9755b2ee6cb1c7be3ffba0d9f8ee6c63c4dffbad1b15ea9b37e583040bbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520TMP23x/1.0.0/7SemiTMP23x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20TMP23x/1.0.0/7SemiTMP23x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20VEML7700/1.0.0/7SemiVEML7700-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiVEML7700-1.0.0.tar.gz",
+    "size_bytes": 7691,
+    "sha256": "f7072cf6e3633ae6b55fad3643c06275a5ec50550a4036a37abd9a0fd702fd29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520VEML7700/1.0.0/7SemiVEML7700-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20VEML7700/1.0.0/7SemiVEML7700-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20VL53L1X/1.0.0/7SemiVL53L1X-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiVL53L1X-1.0.0.tar.gz",
+    "size_bytes": 12280,
+    "sha256": "25b5bb9fae3ac6933e44d0ae4bd0f73adcb9fa03efdac1cbde8b429e96c55e78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520VL53L1X/1.0.0/7SemiVL53L1X-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20VL53L1X/1.0.0/7SemiVL53L1X-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi%20VL6180X/1.0.0/7SemiVL6180X-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7SemiVL6180X-1.0.0.tar.gz",
+    "size_bytes": 12649,
+    "sha256": "8020f72a8e5879381b630bf517c126705827289ecb480141b8973a0a4c66a2ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi%2520VL6180X/1.0.0/7SemiVL6180X-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi%20VL6180X/1.0.0/7SemiVL6180X-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi-OPT3004-Digital-Ambient-Light-Sensor-Arduino-Library/1.0.0/7Semi-OPT3004-Digital-Ambient-Light-Sensor-Arduino-Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi-OPT3004-Digital-Ambient-Light-Sensor-Arduino-Library-1.0.0.tar.gz",
+    "size_bytes": 12474,
+    "sha256": "1f1cbf9fe3e7a54dc9eacc61f1ca6711339e46ed19f5f647523078a5a678ac4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi-OPT3004-Digital-Ambient-Light-Sensor-Arduino-Library/1.0.0/7Semi-OPT3004-Digital-Ambient-Light-Sensor-Arduino-Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi-OPT3004-Digital-Ambient-Light-Sensor-Arduino-Library/1.0.0/7Semi-OPT3004-Digital-Ambient-Light-Sensor-Arduino-Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi-RS485-Temperature-Humidity-Probe-Arduino-Library/1.0.0/7Semi-RS485-Temperature-Humidity-Probe-Arduino-Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi-RS485-Temperature-Humidity-Probe-Arduino-Library-1.0.0.tar.gz",
+    "size_bytes": 4116,
+    "sha256": "9e63653e1d51e030f9e33fd88273ab35e1a7963ddccfc352a3b0697447c2c9d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi-RS485-Temperature-Humidity-Probe-Arduino-Library/1.0.0/7Semi-RS485-Temperature-Humidity-Probe-Arduino-Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi-RS485-Temperature-Humidity-Probe-Arduino-Library/1.0.0/7Semi-RS485-Temperature-Humidity-Probe-Arduino-Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi-RS485-Temperature-Humidity-Probe-Arduino-Library/1.0.1/7Semi-RS485-Temperature-Humidity-Probe-Arduino-Library-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi-RS485-Temperature-Humidity-Probe-Arduino-Library-1.0.1.tar.gz",
+    "size_bytes": 4115,
+    "sha256": "134bf860f3bef9fc414bb17e5639c85364fc152254a43e6120cef444360b8d25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi-RS485-Temperature-Humidity-Probe-Arduino-Library/1.0.1/7Semi-RS485-Temperature-Humidity-Probe-Arduino-Library-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi-RS485-Temperature-Humidity-Probe-Arduino-Library/1.0.1/7Semi-RS485-Temperature-Humidity-Probe-Arduino-Library-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi-TMP102/1.0.0/7Semi-TMP102-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi-TMP102-1.0.0.tar.gz",
+    "size_bytes": 8046,
+    "sha256": "94ec1264277e4edaee4575daf1f0ef59e573994e64a249f8707a487df979c995",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi-TMP102/1.0.0/7Semi-TMP102-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi-TMP102/1.0.0/7Semi-TMP102-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_AD569x/1.0.0/7Semi_AD569x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_AD569x-1.0.0.tar.gz",
+    "size_bytes": 6644,
+    "sha256": "3cd7f3ff4ca984dd9a3cf29fa4531a2d66e9e18804e33a997e97e1875e53e391",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_AD569x/1.0.0/7Semi_AD569x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_AD569x/1.0.0/7Semi_AD569x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_AD849x/1.0.0/7Semi_AD849x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_AD849x-1.0.0.tar.gz",
+    "size_bytes": 6964,
+    "sha256": "9fed921099cb9d12f0acfdd37090bf7b99f649fff90fa6ecc9b69af8ef6aed14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_AD849x/1.0.0/7Semi_AD849x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_AD849x/1.0.0/7Semi_AD849x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_ADS126x/1.0.0/7Semi_ADS126x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_ADS126x-1.0.0.tar.gz",
+    "size_bytes": 4968,
+    "sha256": "2e9eb88b3c581cf5427940a10becb1d94cf1b0e7d672c0409fa396bf14c9dd35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_ADS126x/1.0.0/7Semi_ADS126x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_ADS126x/1.0.0/7Semi_ADS126x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_ADS1xx5/1.0.0/7Semi_ADS1xx5-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_ADS1xx5-1.0.0.tar.gz",
+    "size_bytes": 5002,
+    "sha256": "92a5b15ac5be4381582a04460683608a550e5628f536e60bfdbea1f05ad529c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_ADS1xx5/1.0.0/7Semi_ADS1xx5-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_ADS1xx5/1.0.0/7Semi_ADS1xx5-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_ADS1xx5/1.0.1/7Semi_ADS1xx5-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_ADS1xx5-1.0.1.tar.gz",
+    "size_bytes": 5005,
+    "sha256": "75d6eb913409685f8144be2d3d7cab0da9c01ff202b07d9f62ad07386e060213",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_ADS1xx5/1.0.1/7Semi_ADS1xx5-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_ADS1xx5/1.0.1/7Semi_ADS1xx5-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_BME68x/1.0.0/7Semi_BME68x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_BME68x-1.0.0.tar.gz",
+    "size_bytes": 30308,
+    "sha256": "d461f1bba59055aa4c3c0d726f396a8bc9bb2a1a2b6ff08df2321f910dc069c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_BME68x/1.0.0/7Semi_BME68x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_BME68x/1.0.0/7Semi_BME68x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_BMI330/1.0.0/7Semi_BMI330-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_BMI330-1.0.0.tar.gz",
+    "size_bytes": 35498,
+    "sha256": "17490948a2d4d7aa0001a920364961d55c77d03399b9cd4bab754ee0e7ee2d7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_BMI330/1.0.0/7Semi_BMI330-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_BMI330/1.0.0/7Semi_BMI330-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_BMP585/1.1.1/7Semi_BMP585-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_BMP585-1.1.1.tar.gz",
+    "size_bytes": 12389,
+    "sha256": "1eb14cf8991621745a34dfbffbe474c32092da007122dbe8bcd9d5032d914faf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_BMP585/1.1.1/7Semi_BMP585-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_BMP585/1.1.1/7Semi_BMP585-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_BNO055/1.0.0/7Semi_BNO055-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_BNO055-1.0.0.tar.gz",
+    "size_bytes": 12673,
+    "sha256": "18ea6beb21555690f2add1d45f1b3c401e84634050fb9d726af499f03762c233",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_BNO055/1.0.0/7Semi_BNO055-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_BNO055/1.0.0/7Semi_BNO055-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_BNO055/1.1.0/7Semi_BNO055-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_BNO055-1.1.0.tar.gz",
+    "size_bytes": 13372,
+    "sha256": "f183c2f324963bf7ddc9a6bfdb84fa0978f84bf97538d4ea0904a2e2539bf64d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_BNO055/1.1.0/7Semi_BNO055-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_BNO055/1.1.0/7Semi_BNO055-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_CO2TH/1.0.0/7Semi_CO2TH-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_CO2TH-1.0.0.tar.gz",
+    "size_bytes": 9429,
+    "sha256": "086f74e8f1d2f5c8d626c7f6d8f6f39aaa6cb569680ffa96e826abb6b5853fbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_CO2TH/1.0.0/7Semi_CO2TH-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_CO2TH/1.0.0/7Semi_CO2TH-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_CO2TH/1.0.1/7Semi_CO2TH-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_CO2TH-1.0.1.tar.gz",
+    "size_bytes": 9501,
+    "sha256": "056fd795c05adffec8d5b22b8bd639c79736c84edf53c50e1f369b6514258190",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_CO2TH/1.0.1/7Semi_CO2TH-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_CO2TH/1.0.1/7Semi_CO2TH-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_CO2TH/1.0.2/7Semi_CO2TH-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_CO2TH-1.0.2.tar.gz",
+    "size_bytes": 9423,
+    "sha256": "c9f88e8e1e36d8396c70c08115a62a586d28c1f2f287859a56948a7a2661efdc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_CO2TH/1.0.2/7Semi_CO2TH-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_CO2TH/1.0.2/7Semi_CO2TH-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_DS18B20/1.0.0/7Semi_DS18B20-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_DS18B20-1.0.0.tar.gz",
+    "size_bytes": 6224,
+    "sha256": "b1b231d836dcb3b442e9b88a770a516b62d2c5cb8e426d8eb0a67ec12624333a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_DS18B20/1.0.0/7Semi_DS18B20-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_DS18B20/1.0.0/7Semi_DS18B20-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_HX711/1.0.0/7Semi_HX711-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_HX711-1.0.0.tar.gz",
+    "size_bytes": 3585,
+    "sha256": "e606f808aa8a7c661b37dbc4699dd080c02563ab7eff5c82e71bb784cb7e18dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_HX711/1.0.0/7Semi_HX711-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_HX711/1.0.0/7Semi_HX711-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_HX711/1.0.1/7Semi_HX711-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_HX711-1.0.1.tar.gz",
+    "size_bytes": 5082,
+    "sha256": "7f183cff04f51f1a48eaa80e04c4d37f0b034a05431816aec91f0d3e4ef5b722",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_HX711/1.0.1/7Semi_HX711-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_HX711/1.0.1/7Semi_HX711-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_INA219/1.0.0/7Semi_INA219-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_INA219-1.0.0.tar.gz",
+    "size_bytes": 7315,
+    "sha256": "16c2ad198f9338a4fd52959340dcb4c867c4ad94e7fc648e16a78e9bb69de148",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_INA219/1.0.0/7Semi_INA219-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_INA219/1.0.0/7Semi_INA219-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_ISM330DHCX/1.0.0/7Semi_ISM330DHCX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_ISM330DHCX-1.0.0.tar.gz",
+    "size_bytes": 26257,
+    "sha256": "459e89cdb825f007a61f3f6cf195a8672dd08e27dcf21fda5bb34a5de26feff1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_ISM330DHCX/1.0.0/7Semi_ISM330DHCX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_ISM330DHCX/1.0.0/7Semi_ISM330DHCX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_LPS28DFW/1.0.0/7Semi_LPS28DFW-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_LPS28DFW-1.0.0.tar.gz",
+    "size_bytes": 12245,
+    "sha256": "0eea0d51b44165d2bc8e89d90fdd03fad6dcfb9463185d3aed14aa7cc1b54c77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_LPS28DFW/1.0.0/7Semi_LPS28DFW-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_LPS28DFW/1.0.0/7Semi_LPS28DFW-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_MAX17048/1.0.0/7Semi_MAX17048-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_MAX17048-1.0.0.tar.gz",
+    "size_bytes": 4338,
+    "sha256": "46aa2edbc3a92f569c82c280c13f2dd05b145d4257c83c109989055e8672209e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_MAX17048/1.0.0/7Semi_MAX17048-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_MAX17048/1.0.0/7Semi_MAX17048-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_MAX31856/1.0.0/7Semi_MAX31856-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_MAX31856-1.0.0.tar.gz",
+    "size_bytes": 9185,
+    "sha256": "04558e51e4fd6fa0746161e7453333fad961f78a294a481c281bffa21e3afe5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_MAX31856/1.0.0/7Semi_MAX31856-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_MAX31856/1.0.0/7Semi_MAX31856-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_MAX31865/1.0.0/7Semi_MAX31865-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_MAX31865-1.0.0.tar.gz",
+    "size_bytes": 8019,
+    "sha256": "112c339f3949eac702dfa3ca8ec7cf7a513be3d27c2393313a727ce3c396ef9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_MAX31865/1.0.0/7Semi_MAX31865-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_MAX31865/1.0.0/7Semi_MAX31865-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_MAX31865/1.0.1/7Semi_MAX31865-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_MAX31865-1.0.1.tar.gz",
+    "size_bytes": 8022,
+    "sha256": "be1039a5817d72e6a6aa59e43e028a166aed91377dbdfc3a6e4bf00041c33698",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_MAX31865/1.0.1/7Semi_MAX31865-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_MAX31865/1.0.1/7Semi_MAX31865-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_MCP23017/1.0.0/7Semi_MCP23017-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_MCP23017-1.0.0.tar.gz",
+    "size_bytes": 5657,
+    "sha256": "5ee96cc08b5d29ea465dfa1caaf36ddbe79032b121a0c68533f74e1987c34a76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_MCP23017/1.0.0/7Semi_MCP23017-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_MCP23017/1.0.0/7Semi_MCP23017-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_MMC5983MA/1.0.0/7Semi_MMC5983MA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_MMC5983MA-1.0.0.tar.gz",
+    "size_bytes": 13074,
+    "sha256": "195fc321c7454e231796e91c5798fcf26f2684cbd41ad0c8f719ce2195d7d52d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_MMC5983MA/1.0.0/7Semi_MMC5983MA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_MMC5983MA/1.0.0/7Semi_MMC5983MA-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_NAU7802_24bit_ADC_WeightScale/1.0.0/7Semi_NAU7802_24bit_ADC_WeightScale-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_NAU7802_24bit_ADC_WeightScale-1.0.0.tar.gz",
+    "size_bytes": 10651,
+    "sha256": "136c45f02cd8f166a510c8e2deb9876eb9a9bbfcbf7973a8407d953f3ada21b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_NAU7802_24bit_ADC_WeightScale/1.0.0/7Semi_NAU7802_24bit_ADC_WeightScale-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_NAU7802_24bit_ADC_WeightScale/1.0.0/7Semi_NAU7802_24bit_ADC_WeightScale-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_OPT4048/1.0.0/7Semi_OPT4048-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_OPT4048-1.0.0.tar.gz",
+    "size_bytes": 8229,
+    "sha256": "2181d7dbdaed427f0dc3a6a8cd974107b22bafe91cd41ea118056102fac00821",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_OPT4048/1.0.0/7Semi_OPT4048-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_OPT4048/1.0.0/7Semi_OPT4048-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_SCD4x/1.0.0/7semi_SCD4x_CO2_Sensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7semi_SCD4x_CO2_Sensor-1.0.0.tar.gz",
+    "size_bytes": 12528,
+    "sha256": "70335fcde356e052b858b165aac1983c1bcab3529e9ca8afa85e3964d00130fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_SCD4x/1.0.0/7semi_SCD4x_CO2_Sensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_SCD4x/1.0.0/7semi_SCD4x_CO2_Sensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_SCD4x/1.0.1/7semi_SCD4x_CO2_Sensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7semi_SCD4x_CO2_Sensor-1.0.1.tar.gz",
+    "size_bytes": 12533,
+    "sha256": "666cf781db0b570aaf6b26cf314ab0096136ef5218a57068c064c2fca0297a1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_SCD4x/1.0.1/7semi_SCD4x_CO2_Sensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_SCD4x/1.0.1/7semi_SCD4x_CO2_Sensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_SCD4x/1.0.2/7semi_SCD4x_CO2_Sensor-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7semi_SCD4x_CO2_Sensor-1.0.2.tar.gz",
+    "size_bytes": 12527,
+    "sha256": "f2ba47a4821172c6c5b3d9e0d41695e4b0eafe26cdc2c1140b88702ca3da08ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_SCD4x/1.0.2/7semi_SCD4x_CO2_Sensor-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_SCD4x/1.0.2/7semi_SCD4x_CO2_Sensor-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_SCD4x/1.0.3/7Semi_SCD4x-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_SCD4x-1.0.3.tar.gz",
+    "size_bytes": 10552,
+    "sha256": "9f0084e0c84b14175c4dda5be181609eb3f28038d28bec86e8072061e29650ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_SCD4x/1.0.3/7Semi_SCD4x-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_SCD4x/1.0.3/7Semi_SCD4x-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_SGP4x/1.0.0/7Semi_SGP4x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_SGP4x-1.0.0.tar.gz",
+    "size_bytes": 5479,
+    "sha256": "a57ea1e96116afed2061c19e294f6b788551dca79b166bd4ce5dc0f2d1c98c65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_SGP4x/1.0.0/7Semi_SGP4x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_SGP4x/1.0.0/7Semi_SGP4x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_SHT4x_analog_Arduino-Library/1.0.0/7Semi_SHT4x_analog_Arduino-Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_SHT4x_analog_Arduino-Library-1.0.0.tar.gz",
+    "size_bytes": 3663,
+    "sha256": "caca3739d7efa29e533c03d376a6c1761e1af94584958ff9329aa645f2723b24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_SHT4x_analog_Arduino-Library/1.0.0/7Semi_SHT4x_analog_Arduino-Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_SHT4x_analog_Arduino-Library/1.0.0/7Semi_SHT4x_analog_Arduino-Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7Semi_TMAG5273/1.0.0/7Semi_TMAG5273-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7Semi_TMAG5273-1.0.0.tar.gz",
+    "size_bytes": 13630,
+    "sha256": "c8c6c4999af75a0f3d08a7628133bdcf454291fc7701f10e0d68283ac01b39a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7Semi_TMAG5273/1.0.0/7Semi_TMAG5273-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7Semi_TMAG5273/1.0.0/7Semi_TMAG5273-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/7semi_L89HA/1.0.1/7semi_L89HA-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "7semi_L89HA-1.0.1.tar.gz",
+    "size_bytes": 3936,
+    "sha256": "59ae5c59b1b40d7b640de4ea8cff527cec433deb500b50aac7c142d2342171d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/7semi_L89HA/1.0.1/7semi_L89HA-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/7semi_L89HA/1.0.1/7semi_L89HA-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "7semi-solutions/library/ACS772_CurrentSensor/1.0.0/ACS772_CurrentSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACS772_CurrentSensor-1.0.0.tar.gz",
+    "size_bytes": 2475,
+    "sha256": "46fc157cf87f4f5f0d8035fcdafe14434f4a63cec8d6d77bbb54b0a2df8df870",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/7semi-solutions/library/ACS772_CurrentSensor/1.0.0/ACS772_CurrentSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/7semi-solutions/library/ACS772_CurrentSensor/1.0.0/ACS772_CurrentSensor-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

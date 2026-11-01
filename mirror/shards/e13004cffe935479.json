@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-stinno",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-stinno/library/LCD_DISCO_L152C/0.0.0+sha.86d2c60451ff/LCD_DISCO_L152C-0.0.0+sha.86d2c60451ff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_DISCO_L152C-0.0.0+sha.86d2c60451ff.tar.gz",
+    "size_bytes": 13346,
+    "sha256": "6653665c92fd2fe935deeb84ee72c93934bcb4132cc4460c2fa82c93590fd2fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stinno/library/LCD_DISCO_L152C/0.0.0%2Bsha.86d2c60451ff/LCD_DISCO_L152C-0.0.0%2Bsha.86d2c60451ff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stinno/library/LCD_DISCO_L152C/0.0.0%2Bsha.86d2c60451ff/LCD_DISCO_L152C-0.0.0%2Bsha.86d2c60451ff.tar.gz"
+    ]
+   }
+  }
+ ]
+}

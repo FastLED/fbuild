@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sidoh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sidoh/library/PathVariableHandlers/2.0.0/PathVariableHandlers-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PathVariableHandlers-2.0.0.tar.gz",
+    "size_bytes": 3494,
+    "sha256": "338253854636cc5ef9808e8d9ae9423a247e501b4ff3ac482d065f162f69aa85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sidoh/library/PathVariableHandlers/2.0.0/PathVariableHandlers-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sidoh/library/PathVariableHandlers/2.0.0/PathVariableHandlers-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sidoh/library/PathVariableHandlers/3.0.0/PathVariableHandlers-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PathVariableHandlers-3.0.0.tar.gz",
+    "size_bytes": 4427,
+    "sha256": "63a6196765c9973423efbdcc94e3996a148dff91ad05ab4f2a43f230c664d19b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sidoh/library/PathVariableHandlers/3.0.0/PathVariableHandlers-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sidoh/library/PathVariableHandlers/3.0.0/PathVariableHandlers-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sidoh/library/RichHttpServer/3.1.0/RichHttpServer-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RichHttpServer-3.1.0.tar.gz",
+    "size_bytes": 14121,
+    "sha256": "cb850af540a634f71ede44391e9b48f8652689d42dee6d5cbac8741e4c75cd80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sidoh/library/RichHttpServer/3.1.0/RichHttpServer-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sidoh/library/RichHttpServer/3.1.0/RichHttpServer-3.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

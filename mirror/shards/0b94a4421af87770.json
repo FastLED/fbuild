@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/geekblemaker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "geekblemaker/library/Geekble_Note2Freq/1.1.4/Geekble_Note2Freq-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Geekble_Note2Freq-1.1.4.tar.gz",
+    "size_bytes": 2267,
+    "sha256": "c8608b8ac44bd12e7174aa94a98d71ffb3bb4e3ebd5c5404c4f27d09395d213c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/geekblemaker/library/Geekble_Note2Freq/1.1.4/Geekble_Note2Freq-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/geekblemaker/library/Geekble_Note2Freq/1.1.4/Geekble_Note2Freq-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

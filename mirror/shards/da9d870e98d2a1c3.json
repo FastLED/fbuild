@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vertices",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vertices/library/mpack/1.0.0/mpack-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mpack-1.0.0.tar.gz",
+    "size_bytes": 165132,
+    "sha256": "99b52feea1c9fc4c8ec4822867c8864044944d419ad4a6a47e176b1e878eec47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vertices/library/mpack/1.0.0/mpack-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vertices/library/mpack/1.0.0/mpack-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vertices/library/vertices-sdk/0.1.12/vertices-sdk-0.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vertices-sdk-0.1.12.tar.gz",
+    "size_bytes": 6732493,
+    "sha256": "f18fc818975761837a7e5ab5196a1fee7d8e716ee75aa2e52cbb180f4180fdb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vertices/library/vertices-sdk/0.1.12/vertices-sdk-0.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/vertices/library/vertices-sdk/0.1.12/vertices-sdk-0.1.12.tar.gz"
+    ]
+   }
+  }
+ ]
+}

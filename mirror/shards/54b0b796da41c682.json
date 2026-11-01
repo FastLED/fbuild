@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mtd2a",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mtd2a/library/MTD2A/1.2.0/MTD2A-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTD2A-1.2.0.tar.gz",
+    "size_bytes": 41618,
+    "sha256": "197f9082ba0f766a8efc4d3dd0a476ae6d2f57c3f65d69109f8b62f273c06955",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mtd2a/library/MTD2A/1.2.0/MTD2A-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mtd2a/library/MTD2A/1.2.0/MTD2A-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mtd2a/library/MTD2A/1.3.1/MTD2A-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTD2A-1.3.1.tar.gz",
+    "size_bytes": 57547,
+    "sha256": "02466fb91983ca0d5149cc291d558575e7561df19afc38c812735e522603a3cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mtd2a/library/MTD2A/1.3.1/MTD2A-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mtd2a/library/MTD2A/1.3.1/MTD2A-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mtd2a/library/MTD2A/1.3.5/MTD2A-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTD2A-1.3.5.tar.gz",
+    "size_bytes": 66373,
+    "sha256": "4f5f08e38ebf177fb776503dad194119920e71b66ed36b5c2724cdb364c7cf2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mtd2a/library/MTD2A/1.3.5/MTD2A-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/mtd2a/library/MTD2A/1.3.5/MTD2A-1.3.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

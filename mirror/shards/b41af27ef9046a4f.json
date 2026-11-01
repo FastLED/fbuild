@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/merlinschumacher",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "merlinschumacher/library/Basecamp/0.1.8/Basecamp-0.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Basecamp-0.1.8.tar.gz",
+    "size_bytes": 35623,
+    "sha256": "42170882a8481dd613ded7a176b7e43d68e104a99fddc07b743f0aae28b98442",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/merlinschumacher/library/Basecamp/0.1.8/Basecamp-0.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/merlinschumacher/library/Basecamp/0.1.8/Basecamp-0.1.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

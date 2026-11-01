@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adamszadkowski",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adamszadkowski/library/Configurator/0.1.0/Configurator-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Configurator-0.1.0.tar.gz",
+    "size_bytes": 2180,
+    "sha256": "e7c7e333f10e62094ff10cdec8c02e36c84237b644c276b8f97a56983f601de4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adamszadkowski/library/Configurator/0.1.0/Configurator-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adamszadkowski/library/Configurator/0.1.0/Configurator-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adamszadkowski/library/Executor/0.2.2/Executor-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Executor-0.2.2.tar.gz",
+    "size_bytes": 2346,
+    "sha256": "f28555905868099f4352bab29e0110450a961d56c2cc04be95662795de237851",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adamszadkowski/library/Executor/0.2.2/Executor-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/adamszadkowski/library/Executor/0.2.2/Executor-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adamszadkowski/library/NtpSynchronization/0.2.1/NtpSynchronization-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NtpSynchronization-0.2.1.tar.gz",
+    "size_bytes": 3927,
+    "sha256": "f31802d1d41f9e920fe4953f9ebc40810992dbaf2585d2e9709d07a56edaf60c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adamszadkowski/library/NtpSynchronization/0.2.1/NtpSynchronization-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/adamszadkowski/library/NtpSynchronization/0.2.1/NtpSynchronization-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adamszadkowski/library/Serializer/0.2.0/Serializer-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Serializer-0.2.0.tar.gz",
+    "size_bytes": 3080,
+    "sha256": "541d063fbd15316009d01b8228151a59fbfe62a700bbba47890f52c36ff3e869",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adamszadkowski/library/Serializer/0.2.0/Serializer-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/adamszadkowski/library/Serializer/0.2.0/Serializer-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adamszadkowski/library/WifiConnection/0.2.2/WifiConnection-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WifiConnection-0.2.2.tar.gz",
+    "size_bytes": 2601,
+    "sha256": "d8033d9cd0f0d60b4874f8cc2895b61a3c6751076f70f9505f80aae5e2433e30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adamszadkowski/library/WifiConnection/0.2.2/WifiConnection-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/adamszadkowski/library/WifiConnection/0.2.2/WifiConnection-0.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

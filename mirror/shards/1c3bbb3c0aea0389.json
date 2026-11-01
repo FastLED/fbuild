@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arbotics-llc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arbotics-llc/library/databot/1.2.1/databot-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "databot-1.2.1.tar.gz",
+    "size_bytes": 151449,
+    "sha256": "2d4fc78aab9cd69a3bd84b8d95c7b819cfd5824353126a6b3ccec216b1f78963",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arbotics-llc/library/databot/1.2.1/databot-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arbotics-llc/library/databot/1.2.1/databot-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

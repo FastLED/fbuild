@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kay-bs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kay-bs/library/KK-Buffer/1.0.0/KK-Buffer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KK-Buffer-1.0.0.tar.gz",
+    "size_bytes": 19099,
+    "sha256": "a327647c90f3c0493988f9171617ee98ab85090b4013e3adb2a427afda862360",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kay-bs/library/KK-Buffer/1.0.0/KK-Buffer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kay-bs/library/KK-Buffer/1.0.0/KK-Buffer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kay-bs/library/KK-Poti/1.0.0/KK-Poti-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KK-Poti-1.0.0.tar.gz",
+    "size_bytes": 18912,
+    "sha256": "64c8c39a5594d1f008b755339d21161288e09046f5b36e3125af9caa23cbc106",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kay-bs/library/KK-Poti/1.0.0/KK-Poti-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kay-bs/library/KK-Poti/1.0.0/KK-Poti-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kay-bs/library/KK-Poti/1.1.0/KK-Poti-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KK-Poti-1.1.0.tar.gz",
+    "size_bytes": 20400,
+    "sha256": "d96da5658ff862f3946187ce63c93abe067a07d8f70e917c346f587af0a6105b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kay-bs/library/KK-Poti/1.1.0/KK-Poti-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kay-bs/library/KK-Poti/1.1.0/KK-Poti-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kay-bs/library/KK-Poti/1.1.1/KK-Poti-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KK-Poti-1.1.1.tar.gz",
+    "size_bytes": 20499,
+    "sha256": "1c6cc0b70cdad4b3e6df52aae1bd7c0ea580ca11e82d46a92a927d4553d1d07a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kay-bs/library/KK-Poti/1.1.1/KK-Poti-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kay-bs/library/KK-Poti/1.1.1/KK-Poti-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kay-bs/library/KK-Switch/1.0.0/KK-Switch-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KK-Switch-1.0.0.tar.gz",
+    "size_bytes": 15899,
+    "sha256": "eb54f640a65c49c7e10afff1d997e178589c7003e4adac20b0033d8ae8c07f4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kay-bs/library/KK-Switch/1.0.0/KK-Switch-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kay-bs/library/KK-Switch/1.0.0/KK-Switch-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kay-bs/library/KK-Switch/1.1.0/KK-Switch-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KK-Switch-1.1.0.tar.gz",
+    "size_bytes": 22525,
+    "sha256": "96a05bb56f1375d06d2b63568568c049144f8c849c67f18c41249363a59eca3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kay-bs/library/KK-Switch/1.1.0/KK-Switch-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kay-bs/library/KK-Switch/1.1.0/KK-Switch-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

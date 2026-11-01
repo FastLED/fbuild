@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kaiaai",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kaiaai/library/LDS/0.6.3/LDS-0.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LDS-0.6.3.tar.gz",
+    "size_bytes": 36121,
+    "sha256": "0f305f46315a5f28052c1699019a4d6aeac87913e9988e0cad9395f67b8caebc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kaiaai/library/LDS/0.6.3/LDS-0.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kaiaai/library/LDS/0.6.3/LDS-0.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kaiaai/library/PID_Timed/1.1.3/PID_Timed-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PID_Timed-1.1.3.tar.gz",
+    "size_bytes": 16549,
+    "sha256": "be50e981948d2baed3595fe88fba94bc9b456b8f43fc9d3ed80aef1207d7d1f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kaiaai/library/PID_Timed/1.1.3/PID_Timed-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kaiaai/library/PID_Timed/1.1.3/PID_Timed-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kaiaai/library/micro_ros_kaia/2.0.7-iron.5/micro_ros_kaia-2.0.7-iron.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "micro_ros_kaia-2.0.7-iron.5.tar.gz",
+    "size_bytes": 31089159,
+    "sha256": "5b04b779eda063a2a43b32bdb9933d49fcb088380e727e182cc7240f95f6e9b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kaiaai/library/micro_ros_kaia/2.0.7-iron.5/micro_ros_kaia-2.0.7-iron.5.tar.gz",
+     "https://dl.registry.platformio.org/download/kaiaai/library/micro_ros_kaia/2.0.7-iron.5/micro_ros_kaia-2.0.7-iron.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

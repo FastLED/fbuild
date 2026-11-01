@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/incuvers",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "incuvers/library/MacroLogger/1.0.0/MacroLogger-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MacroLogger-1.0.0.tar.gz",
+    "size_bytes": 3382,
+    "sha256": "644f0992b302632e90aea8f59f9689b22e750e9a5d036e35c4a13d6a13da83bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/incuvers/library/MacroLogger/1.0.0/MacroLogger-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/incuvers/library/MacroLogger/1.0.0/MacroLogger-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

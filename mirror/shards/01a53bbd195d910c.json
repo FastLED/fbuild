@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bongjun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bongjun/library/DS18B20Sensor/0.0.0+sha.0bcc4e42fec0/DS18B20Sensor-0.0.0+sha.0bcc4e42fec0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS18B20Sensor-0.0.0+sha.0bcc4e42fec0.tar.gz",
+    "size_bytes": 8343,
+    "sha256": "c1f754329c3efa1ce7cd3584c799c261b18ca3f63232a62bea5773bdfd8355f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bongjun/library/DS18B20Sensor/0.0.0%2Bsha.0bcc4e42fec0/DS18B20Sensor-0.0.0%2Bsha.0bcc4e42fec0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bongjun/library/DS18B20Sensor/0.0.0%2Bsha.0bcc4e42fec0/DS18B20Sensor-0.0.0%2Bsha.0bcc4e42fec0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bongjun/library/W5500Interface/0.0.0+sha.afec30f0922a/W5500Interface-0.0.0+sha.afec30f0922a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "W5500Interface-0.0.0+sha.afec30f0922a.tar.gz",
+    "size_bytes": 16555,
+    "sha256": "932e2d16e7b322bc284de5283d343ce25c5146ed91621dc5918cbe2e21159d61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bongjun/library/W5500Interface/0.0.0%2Bsha.afec30f0922a/W5500Interface-0.0.0%2Bsha.afec30f0922a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bongjun/library/W5500Interface/0.0.0%2Bsha.afec30f0922a/W5500Interface-0.0.0%2Bsha.afec30f0922a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bongjun/library/WIZnet_Library/0.0.0+sha.9997e2b7d459/WIZnet_Library-0.0.0+sha.9997e2b7d459.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WIZnet_Library-0.0.0+sha.9997e2b7d459.tar.gz",
+    "size_bytes": 15989,
+    "sha256": "3740752fc88bdd13ada639c632df0431adfb2bcecfc5f3fc1db5f533d641ee4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bongjun/library/WIZnet_Library/0.0.0%2Bsha.9997e2b7d459/WIZnet_Library-0.0.0%2Bsha.9997e2b7d459.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bongjun/library/WIZnet_Library/0.0.0%2Bsha.9997e2b7d459/WIZnet_Library-0.0.0%2Bsha.9997e2b7d459.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bongjun/library/easy-connect/0.0.0+sha.15287721e11b/easy-connect-0.0.0+sha.15287721e11b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "easy-connect-0.0.0+sha.15287721e11b.tar.gz",
+    "size_bytes": 6551,
+    "sha256": "917db2fd523c2eaf45f536ed2a0931350dd83255b5a12dffe453bc59bb1a66a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bongjun/library/easy-connect/0.0.0%2Bsha.15287721e11b/easy-connect-0.0.0%2Bsha.15287721e11b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bongjun/library/easy-connect/0.0.0%2Bsha.15287721e11b/easy-connect-0.0.0%2Bsha.15287721e11b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

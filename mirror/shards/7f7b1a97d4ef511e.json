@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nzbart",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nzbart/library/ArlecRC210Switch/0.1.0/ArlecRC210Switch-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArlecRC210Switch-0.1.0.tar.gz",
+    "size_bytes": 3508,
+    "sha256": "86fcff6883ab3097263f25f9b3087e97730d304ca51433070d8b140a701092e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nzbart/library/ArlecRC210Switch/0.1.0/ArlecRC210Switch-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nzbart/library/ArlecRC210Switch/0.1.0/ArlecRC210Switch-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

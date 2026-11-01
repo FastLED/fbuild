@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/neurotech-hub",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "neurotech-hub/library/Hublink%20BEAM/2.1.4/HublinkBEAM-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HublinkBEAM-2.1.4.tar.gz",
+    "size_bytes": 26107,
+    "sha256": "8107079c7948b42bda3a12ca526db42eeb6be6199c9be0efa428d6f939f22d4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neurotech-hub/library/Hublink%2520BEAM/2.1.4/HublinkBEAM-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/neurotech-hub/library/Hublink%20BEAM/2.1.4/HublinkBEAM-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neurotech-hub/library/Hublink%20BEAM/2.1.5/HublinkBEAM-2.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HublinkBEAM-2.1.5.tar.gz",
+    "size_bytes": 26113,
+    "sha256": "ede4e15e8ef4c26e70b10a0117fc841548cae3197fc79bed36456ad5110f7047",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neurotech-hub/library/Hublink%2520BEAM/2.1.5/HublinkBEAM-2.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/neurotech-hub/library/Hublink%20BEAM/2.1.5/HublinkBEAM-2.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neurotech-hub/library/Hublink-Node/1.0.10/Hublink-Node-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hublink-Node-1.0.10.tar.gz",
+    "size_bytes": 26493,
+    "sha256": "f283aea3be765e0eacf7d31869f8f59d4fee42f790d7b3c2d0c7a85e31574447",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neurotech-hub/library/Hublink-Node/1.0.10/Hublink-Node-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/neurotech-hub/library/Hublink-Node/1.0.10/Hublink-Node-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neurotech-hub/library/Hublink-Node/1.0.12/Hublink-Node-1.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hublink-Node-1.0.12.tar.gz",
+    "size_bytes": 26623,
+    "sha256": "fcbfd7c8fb49873c6880b45439cd9f243bd44762a195f84dcaed58b9d3b148b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neurotech-hub/library/Hublink-Node/1.0.12/Hublink-Node-1.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/neurotech-hub/library/Hublink-Node/1.0.12/Hublink-Node-1.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neurotech-hub/library/KepecsWheel/1.0.8/KepecsWheel-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KepecsWheel-1.0.8.tar.gz",
+    "size_bytes": 9830,
+    "sha256": "a718064c5761a8a24fd9eeb33141a21d9f486072cdacb5d05a9d18681fe8c18f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neurotech-hub/library/KepecsWheel/1.0.8/KepecsWheel-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/neurotech-hub/library/KepecsWheel/1.0.8/KepecsWheel-1.0.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

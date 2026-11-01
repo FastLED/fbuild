@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jbeatch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jbeatch/library/LPS331AP_SPI/0.0.0+sha.77cb7992a1a3/LPS331AP_SPI-0.0.0+sha.77cb7992a1a3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LPS331AP_SPI-0.0.0+sha.77cb7992a1a3.tar.gz",
+    "size_bytes": 2005,
+    "sha256": "2900ed9e7a5d4d070d04f4088f69293006069dc5bf5f100f2b74b56e84142797",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jbeatch/library/LPS331AP_SPI/0.0.0%2Bsha.77cb7992a1a3/LPS331AP_SPI-0.0.0%2Bsha.77cb7992a1a3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jbeatch/library/LPS331AP_SPI/0.0.0%2Bsha.77cb7992a1a3/LPS331AP_SPI-0.0.0%2Bsha.77cb7992a1a3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

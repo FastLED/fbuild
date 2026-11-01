@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/igb-germany",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "igb-germany/library/ComDriverSpi/1.1.5/ComDriverSpi-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ComDriverSpi-1.1.5.tar.gz",
+    "size_bytes": 3512,
+    "sha256": "5f9e20775baad8edf5bba9e41811053a3c5c4d020c2e0671e8be20af255f5f97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/igb-germany/library/ComDriverSpi/1.1.5/ComDriverSpi-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/igb-germany/library/ComDriverSpi/1.1.5/ComDriverSpi-1.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

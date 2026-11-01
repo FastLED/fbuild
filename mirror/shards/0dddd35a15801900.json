@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/leandrolimapro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "leandrolimapro/library/NXPPressureSensors/1.1.0/NXPPressureSensors-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NXPPressureSensors-1.1.0.tar.gz",
+    "size_bytes": 9627,
+    "sha256": "e1d3baafc6a965248059204e758a75d33f2bd22850997b56d1b2af60743197b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/leandrolimapro/library/NXPPressureSensors/1.1.0/NXPPressureSensors-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/leandrolimapro/library/NXPPressureSensors/1.1.0/NXPPressureSensors-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

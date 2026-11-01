@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/laurb9",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "laurb9/library/StepperDriver/1.4.1/StepperDriver-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperDriver-1.4.1.tar.gz",
+    "size_bytes": 22945,
+    "sha256": "79da1dbd8065d23833bcc2437c925b527126ff17b6fac0bb903d1e6875f6838b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/laurb9/library/StepperDriver/1.4.1/StepperDriver-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/laurb9/library/StepperDriver/1.4.1/StepperDriver-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "laurb9/library/StepperDriver/1.4.2/StepperDriver-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperDriver-1.4.2.tar.gz",
+    "size_bytes": 22475,
+    "sha256": "6404dec8f08c39578593c3fcead38660c6faa33451bf1287a9d45ee8e1e8746c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/laurb9/library/StepperDriver/1.4.2/StepperDriver-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/laurb9/library/StepperDriver/1.4.2/StepperDriver-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "laurb9/library/StepperDriver/1.5.0/StepperDriver-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperDriver-1.5.0.tar.gz",
+    "size_bytes": 28752,
+    "sha256": "a48df0bc473904197f061243be3a66e2d7c694b8fdc66b9312899507db7fc3c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/laurb9/library/StepperDriver/1.5.0/StepperDriver-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/laurb9/library/StepperDriver/1.5.0/StepperDriver-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "laurb9/library/StepperDriver/1.5.1/StepperDriver-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperDriver-1.5.1.tar.gz",
+    "size_bytes": 30141,
+    "sha256": "c126f0ad068988e007699747e14503e73b8c7aa057525567f53ccfa8215ec96a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/laurb9/library/StepperDriver/1.5.1/StepperDriver-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/laurb9/library/StepperDriver/1.5.1/StepperDriver-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "laurb9/library/StepperDriver/1.6.0/StepperDriver-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperDriver-1.6.0.tar.gz",
+    "size_bytes": 32064,
+    "sha256": "f105238e22e40606f88557b69225ffacff3385a7819017e4ac8a72b757de15d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/laurb9/library/StepperDriver/1.6.0/StepperDriver-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/laurb9/library/StepperDriver/1.6.0/StepperDriver-1.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

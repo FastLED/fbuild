@@ -1,0 +1,243 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mlesniew",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mlesniew/library/PicoCallback/0.1.0/PicoCallback-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoCallback-0.1.0.tar.gz",
+    "size_bytes": 20125,
+    "sha256": "8321dc72a5d7f2a8f5ccca695427a4d50e7020f2f388b440a3b6436cec4ac070",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoCallback/0.1.0/PicoCallback-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoCallback/0.1.0/PicoCallback-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoCallback/1.0.1/PicoCallback-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoCallback-1.0.1.tar.gz",
+    "size_bytes": 20409,
+    "sha256": "e569e2901ba21d03b39e5671dfa67e1a5d2482428b363c98cd008d086132dac5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoCallback/1.0.1/PicoCallback-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoCallback/1.0.1/PicoCallback-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoJson/0.1.0/PicoJson-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoJson-0.1.0.tar.gz",
+    "size_bytes": 16299,
+    "sha256": "c8ad5b0de6607552f82e3a40b36cca830fbdc203cea0075dd7ff14a0e8d6a93e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoJson/0.1.0/PicoJson-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoJson/0.1.0/PicoJson-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoJson/0.2.0/PicoJson-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoJson-0.2.0.tar.gz",
+    "size_bytes": 16659,
+    "sha256": "48273f7d2a24dbab3785f4df0777e04c465f6c1d4828d6c74c9c804705ed88ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoJson/0.2.0/PicoJson-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoJson/0.2.0/PicoJson-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoMQTT/0.3.8/PicoMQTT-0.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoMQTT-0.3.8.tar.gz",
+    "size_bytes": 26238,
+    "sha256": "d05f5b0b42122fcaed432427b9700b9964da039e74a0ed79f24cb930d55d1026",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoMQTT/0.3.8/PicoMQTT-0.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoMQTT/0.3.8/PicoMQTT-0.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoMQTT/1.1.1/PicoMQTT-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoMQTT-1.1.1.tar.gz",
+    "size_bytes": 29964,
+    "sha256": "29ad6466362e910438f4c6e6112752e5a53d7bf54997ac5ac8d7185cbaf605f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoMQTT/1.1.1/PicoMQTT-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoMQTT/1.1.1/PicoMQTT-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoMQTT/1.3.0/PicoMQTT-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoMQTT-1.3.0.tar.gz",
+    "size_bytes": 30742,
+    "sha256": "5fe467f8cc4a6022c4e0c7d2a81a2ad3904f3817e3c00b7ea3a5b113a6c33c40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoMQTT/1.3.0/PicoMQTT-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoMQTT/1.3.0/PicoMQTT-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoSlugify/0.1.0/PicoSlugify-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoSlugify-0.1.0.tar.gz",
+    "size_bytes": 16940,
+    "sha256": "c25f9a19d98312309d560b8930d42cb40200744ce656d2ac66051c7ccda4181a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoSlugify/0.1.0/PicoSlugify-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoSlugify/0.1.0/PicoSlugify-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoSlugify/1.0.0/PicoSlugify-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoSlugify-1.0.0.tar.gz",
+    "size_bytes": 17133,
+    "sha256": "d24e92db142c741bed6380a0ce548674d750bb389186d905415ac262f7a19429",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoSlugify/1.0.0/PicoSlugify-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoSlugify/1.0.0/PicoSlugify-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoString/0.1.0/PicoString-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoString-0.1.0.tar.gz",
+    "size_bytes": 8138,
+    "sha256": "e5151e53e6ec8b61ccfef5c250562a1d756c9835660176a4e6e3e72cbd6aaaa7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoString/0.1.0/PicoString-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoString/0.1.0/PicoString-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoString/0.2.0/PicoString-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoString-0.2.0.tar.gz",
+    "size_bytes": 8264,
+    "sha256": "1a11592a3e275871366a898c88f288d32905c045055a37067d4aec9b7d2b1bdc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoString/0.2.0/PicoString-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoString/0.2.0/PicoString-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoString/0.2.1/PicoString-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoString-0.2.1.tar.gz",
+    "size_bytes": 8290,
+    "sha256": "66e45e1f39e019a414a85963f3ac90514a35368aa543458b75955efd3cfe3009",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoString/0.2.1/PicoString-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoString/0.2.1/PicoString-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoString/1.0.0/PicoString-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoString-1.0.0.tar.gz",
+    "size_bytes": 8632,
+    "sha256": "1c85933f035fa08c0bca5fa0b29f6f12bf1c574b2367692e4d3b83d4b5835762",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoString/1.0.0/PicoString-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoString/1.0.0/PicoString-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoSyslog/1.0.0/PicoSyslog-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoSyslog-1.0.0.tar.gz",
+    "size_bytes": 7984,
+    "sha256": "54a6df872a79753e51593c75bb2910b7c656f52bcc03916f7554ca3fcaa915ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoSyslog/1.0.0/PicoSyslog-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoSyslog/1.0.0/PicoSyslog-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoSyslog/1.1.0/PicoSyslog-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoSyslog-1.1.0.tar.gz",
+    "size_bytes": 8972,
+    "sha256": "de06f13b35619b9a270280c6073e1aba4518c32cf4d08f6858c1b3495df42a4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoSyslog/1.1.0/PicoSyslog-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoSyslog/1.1.0/PicoSyslog-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoWebsocket/1.2.1/PicoWebsocket-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoWebsocket-1.2.1.tar.gz",
+    "size_bytes": 21763,
+    "sha256": "3bc2d6c60bc5dd33bfa12145c094e48cdfdda633283e686047bd6787440d28fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoWebsocket/1.2.1/PicoWebsocket-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoWebsocket/1.2.1/PicoWebsocket-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PicoWebsocket/1.2.3/PicoWebsocket-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoWebsocket-1.2.3.tar.gz",
+    "size_bytes": 16359,
+    "sha256": "1de9db2a317545e6c22815982db7ff12eedf17a3f9765a5ce1c7d5d94c788b42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PicoWebsocket/1.2.3/PicoWebsocket-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PicoWebsocket/1.2.3/PicoWebsocket-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlesniew/library/PsychicWebSocketProxy/1.1.0/PsychicWebSocketProxy-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PsychicWebSocketProxy-1.1.0.tar.gz",
+    "size_bytes": 20666,
+    "sha256": "77a858df4467e7d6a4945abde070710ebb197a7b20f6f2a1bdf09ec3a77a7ef7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlesniew/library/PsychicWebSocketProxy/1.1.0/PsychicWebSocketProxy-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mlesniew/library/PsychicWebSocketProxy/1.1.0/PsychicWebSocketProxy-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

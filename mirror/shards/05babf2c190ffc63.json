@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-men100",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-men100/library/SSD1332_OLED/0.0.0+sha.1b521852f785/SSD1332_OLED-0.0.0+sha.1b521852f785.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1332_OLED-0.0.0+sha.1b521852f785.tar.gz",
+    "size_bytes": 2479,
+    "sha256": "e7d97e4d0053a3d4b4b2ee990edb7721c7e38f3c211d16969ab3ed4898200e4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-men100/library/SSD1332_OLED/0.0.0%2Bsha.1b521852f785/SSD1332_OLED-0.0.0%2Bsha.1b521852f785.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-men100/library/SSD1332_OLED/0.0.0%2Bsha.1b521852f785/SSD1332_OLED-0.0.0%2Bsha.1b521852f785.tar.gz"
+    ]
+   }
+  }
+ ]
+}

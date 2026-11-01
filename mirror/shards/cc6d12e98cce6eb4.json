@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ardulite",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ardulite/library/ArduLite/1.4.0/ArduLite-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduLite-1.4.0.tar.gz",
+    "size_bytes": 11402,
+    "sha256": "165177f55353945e6ed6cb9f9fca238ad93741fc888a13f8aa2788bcc59885c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardulite/library/ArduLite/1.4.0/ArduLite-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardulite/library/ArduLite/1.4.0/ArduLite-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardulite/library/ArduLite/1.4.1/ArduLite-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduLite-1.4.1.tar.gz",
+    "size_bytes": 12273,
+    "sha256": "46265508545d91d4770b44486087c2035d5d0039fe1f0cd4fb3946f1c2625640",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardulite/library/ArduLite/1.4.1/ArduLite-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ardulite/library/ArduLite/1.4.1/ArduLite-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardulite/library/ArduLite/1.5.0/ArduLite-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduLite-1.5.0.tar.gz",
+    "size_bytes": 15992,
+    "sha256": "b68b68144df5f829628fd9eb30d7d1f9d83a93345ca8f8d9ea91313c79e61800",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardulite/library/ArduLite/1.5.0/ArduLite-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardulite/library/ArduLite/1.5.0/ArduLite-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardulite/library/ArduLite/1.6.0/ArduLite-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduLite-1.6.0.tar.gz",
+    "size_bytes": 24468,
+    "sha256": "573f00245d487c418772516dd6e0243a7b4565ecb33ba7fa96b7e0677eb158dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardulite/library/ArduLite/1.6.0/ArduLite-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardulite/library/ArduLite/1.6.0/ArduLite-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardulite/library/ArduLite/2.0.0/ArduLite-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduLite-2.0.0.tar.gz",
+    "size_bytes": 57751,
+    "sha256": "803103cbd556189e7eabf41aba3517f75238b972207cc78ea4ef51d1b9958c44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardulite/library/ArduLite/2.0.0/ArduLite-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardulite/library/ArduLite/2.0.0/ArduLite-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardulite/library/ArduLiteESP/0.1.0/ArduLiteESP-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduLiteESP-0.1.0.tar.gz",
+    "size_bytes": 14940,
+    "sha256": "b8ef1548e9d8c3ff956232e4ce32aedc6b1879c7a6bc46e8b3806b1066724ec2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardulite/library/ArduLiteESP/0.1.0/ArduLiteESP-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardulite/library/ArduLiteESP/0.1.0/ArduLiteESP-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardulite/library/ArduLiteESP/0.1.1/ArduLiteESP-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduLiteESP-0.1.1.tar.gz",
+    "size_bytes": 22897,
+    "sha256": "6ea5a825312f6b756887c8f5d750217b1ddaba639176f7b0f4516ec40c66741f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardulite/library/ArduLiteESP/0.1.1/ArduLiteESP-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ardulite/library/ArduLiteESP/0.1.1/ArduLiteESP-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

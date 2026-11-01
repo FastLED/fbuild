@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/s-schoen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "s-schoen/library/mbed-button/1.0.0/mbed-button-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-button-1.0.0.tar.gz",
+    "size_bytes": 3503,
+    "sha256": "70afe78a319c4eed5b1ede2688fe84e01109d94ee1fb192a0517a586e3fe929c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/s-schoen/library/mbed-button/1.0.0/mbed-button-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/s-schoen/library/mbed-button/1.0.0/mbed-button-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "s-schoen/library/mbed-extended/1.0.0/mbed-extended-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-extended-1.0.0.tar.gz",
+    "size_bytes": 12504,
+    "sha256": "c09f06bcf1a4a547a7d3e21ad223e882fc8e3430126a4eba1b8f1d7f2d983ed6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/s-schoen/library/mbed-extended/1.0.0/mbed-extended-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/s-schoen/library/mbed-extended/1.0.0/mbed-extended-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "s-schoen/library/mbed-servo/1.0.0/mbed-servo-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-servo-1.0.0.tar.gz",
+    "size_bytes": 13867,
+    "sha256": "fd257c34a0aae1e22372c8eae6d8236a84727e54d68a509048c6a3070e799457",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/s-schoen/library/mbed-servo/1.0.0/mbed-servo-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/s-schoen/library/mbed-servo/1.0.0/mbed-servo-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

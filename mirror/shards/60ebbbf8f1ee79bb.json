@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/makke",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "makke/library/DualAHT10/1.0.0/DualAHT10-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DualAHT10-1.0.0.tar.gz",
+    "size_bytes": 7223,
+    "sha256": "25f51976e04138d8153317b1f7f1221581dba1e168efaf40694e489c19e4ab75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makke/library/DualAHT10/1.0.0/DualAHT10-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/makke/library/DualAHT10/1.0.0/DualAHT10-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "makke/library/DualAHT10/1.0.1/DualAHT10-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DualAHT10-1.0.1.tar.gz",
+    "size_bytes": 7301,
+    "sha256": "f2fece8d6b8836a21823499d10a1dd3ef7e21c49ef24f375dfd498f7ca4ea9a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/makke/library/DualAHT10/1.0.1/DualAHT10-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/makke/library/DualAHT10/1.0.1/DualAHT10-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

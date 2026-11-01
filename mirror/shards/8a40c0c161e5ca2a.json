@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/navil2000",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "navil2000/library/IBT2_Eurobot_Navil/1.0.0/IBT2_Eurobot_Navil-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IBT2_Eurobot_Navil-1.0.0.tar.gz",
+    "size_bytes": 1544,
+    "sha256": "f92e05cd9b5bc0a9b89ccbe6382eeecf7c1ca028a4beb7e869dcc3a82394547f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/navil2000/library/IBT2_Eurobot_Navil/1.0.0/IBT2_Eurobot_Navil-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/navil2000/library/IBT2_Eurobot_Navil/1.0.0/IBT2_Eurobot_Navil-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

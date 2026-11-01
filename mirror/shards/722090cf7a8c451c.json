@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/drewmutt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "drewmutt/library/Firmwork-Common/1.0.1/Firmwork-Common-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Firmwork-Common-1.0.1.tar.gz",
+    "size_bytes": 5723,
+    "sha256": "59c28c6da6676659e43fc6d4251a570204278e26ec6420013a87b3b295dece8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drewmutt/library/Firmwork-Common/1.0.1/Firmwork-Common-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/drewmutt/library/Firmwork-Common/1.0.1/Firmwork-Common-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drewmutt/library/Firmwork-Graphics-Core/1.0.1/Firmwork-Graphics-Core-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Firmwork-Graphics-Core-1.0.1.tar.gz",
+    "size_bytes": 8815,
+    "sha256": "a3c846b187de303420765aad78215fd844b2ccc75d44b9a803a2b7d1cd30c3a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drewmutt/library/Firmwork-Graphics-Core/1.0.1/Firmwork-Graphics-Core-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/drewmutt/library/Firmwork-Graphics-Core/1.0.1/Firmwork-Graphics-Core-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drewmutt/library/Firmwork-Graphics-GrayU8G2/1.0.1/Firmwork-Graphics-GrayU8G2-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Firmwork-Graphics-GrayU8G2-1.0.1.tar.gz",
+    "size_bytes": 4594,
+    "sha256": "267826fdeeccae6161127e5213f4fefdbb0374d46e52696af191a0de9f51d665",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drewmutt/library/Firmwork-Graphics-GrayU8G2/1.0.1/Firmwork-Graphics-GrayU8G2-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/drewmutt/library/Firmwork-Graphics-GrayU8G2/1.0.1/Firmwork-Graphics-GrayU8G2-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drewmutt/library/Firmwork-Graphics-M5/1.0.1/Firmwork-Graphics-M5-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Firmwork-Graphics-M5-1.0.1.tar.gz",
+    "size_bytes": 2115,
+    "sha256": "67d982503e0c65868a07a6cc95d75f2fed9ada246827042d1d6136d724e63f0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drewmutt/library/Firmwork-Graphics-M5/1.0.1/Firmwork-Graphics-M5-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/drewmutt/library/Firmwork-Graphics-M5/1.0.1/Firmwork-Graphics-M5-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drewmutt/library/Firmwork-Mesh/1.0.1/Firmwork-Mesh-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Firmwork-Mesh-1.0.1.tar.gz",
+    "size_bytes": 4938,
+    "sha256": "09cc307f675ae36f146fe9bf55641edc00012686e8cb5c77ae7fbf140fe110dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drewmutt/library/Firmwork-Mesh/1.0.1/Firmwork-Mesh-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/drewmutt/library/Firmwork-Mesh/1.0.1/Firmwork-Mesh-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "drewmutt/library/Firmwork-Motion/1.0.1/Firmwork-Motion-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Firmwork-Motion-1.0.1.tar.gz",
+    "size_bytes": 1521,
+    "sha256": "0ba5e8cec444f680ed5ecb46bd0081d68eb4e9c0656cd0e8b4ccb1f89dbd4a22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/drewmutt/library/Firmwork-Motion/1.0.1/Firmwork-Motion-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/drewmutt/library/Firmwork-Motion/1.0.1/Firmwork-Motion-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

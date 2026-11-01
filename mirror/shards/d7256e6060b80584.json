@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-xiaofei",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-xiaofei/library/EasyVR3_LED_Library/0.0.0+sha.48b0f2d9c506/EasyVR3_LED_Library-0.0.0+sha.48b0f2d9c506.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyVR3_LED_Library-0.0.0+sha.48b0f2d9c506.tar.gz",
+    "size_bytes": 2642,
+    "sha256": "21d265578ed2da4acc4d622b907adbc5f7c000f6db7b2dbf03464e19ba1dbb5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-xiaofei/library/EasyVR3_LED_Library/0.0.0%2Bsha.48b0f2d9c506/EasyVR3_LED_Library-0.0.0%2Bsha.48b0f2d9c506.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-xiaofei/library/EasyVR3_LED_Library/0.0.0%2Bsha.48b0f2d9c506/EasyVR3_LED_Library-0.0.0%2Bsha.48b0f2d9c506.tar.gz"
+    ]
+   }
+  }
+ ]
+}

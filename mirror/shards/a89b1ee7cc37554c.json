@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/primuskirill",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "primuskirill/library/BD37033/1.0.2/BD37033-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BD37033-1.0.2.tar.gz",
+    "size_bytes": 8186,
+    "sha256": "c6f6ad2cd17bc200f7ff01e33421c3df4600f7f1e76d9408aabc6e69d8c9d449",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/primuskirill/library/BD37033/1.0.2/BD37033-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/primuskirill/library/BD37033/1.0.2/BD37033-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "primuskirill/library/BD37033/1.0.5/BD37033-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BD37033-1.0.5.tar.gz",
+    "size_bytes": 10375,
+    "sha256": "b56466835548ddf0749cbdc2559b38378b557813fb1b601be2db064ca25a5d9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/primuskirill/library/BD37033/1.0.5/BD37033-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/primuskirill/library/BD37033/1.0.5/BD37033-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

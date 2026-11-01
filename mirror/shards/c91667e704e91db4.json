@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marzogh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marzogh/library/SPIMemory/3.4.0/SPIMemory-3.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPIMemory-3.4.0.tar.gz",
+    "size_bytes": 72501,
+    "sha256": "f74642898ac22f1acb08c902e05674b5fb1c75da7fbfe4a76ab0cb687598b39d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marzogh/library/SPIMemory/3.4.0/SPIMemory-3.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/marzogh/library/SPIMemory/3.4.0/SPIMemory-3.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

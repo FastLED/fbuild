@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jhestolano",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jhestolano/library/Buffer/0.0.0+sha.f45f33d1febb/Buffer-0.0.0+sha.f45f33d1febb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Buffer-0.0.0+sha.f45f33d1febb.tar.gz",
+    "size_bytes": 1454,
+    "sha256": "cfae3cc5516685e291e5b85cd90fec0d7a53c9f9fd719586a1aa1c65dc411327",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jhestolano/library/Buffer/0.0.0%2Bsha.f45f33d1febb/Buffer-0.0.0%2Bsha.f45f33d1febb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jhestolano/library/Buffer/0.0.0%2Bsha.f45f33d1febb/Buffer-0.0.0%2Bsha.f45f33d1febb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jhestolano/library/MMA8451Q/0.0.0+sha.2511055a5dd2/MMA8451Q-0.0.0+sha.2511055a5dd2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8451Q-0.0.0+sha.2511055a5dd2.tar.gz",
+    "size_bytes": 3604,
+    "sha256": "b6d59d73d50af3a00afeefd6cbfd1120658a9fda19ec4b808cbde52f91450839",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jhestolano/library/MMA8451Q/0.0.0%2Bsha.2511055a5dd2/MMA8451Q-0.0.0%2Bsha.2511055a5dd2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jhestolano/library/MMA8451Q/0.0.0%2Bsha.2511055a5dd2/MMA8451Q-0.0.0%2Bsha.2511055a5dd2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jhestolano/library/RingBuffer/0.0.0+sha.831ea68a2334/RingBuffer-0.0.0+sha.831ea68a2334.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RingBuffer-0.0.0+sha.831ea68a2334.tar.gz",
+    "size_bytes": 1415,
+    "sha256": "2c3145eba9969d9d09ed8ff5f9f342d12b45a22265565c72b461e3d6e68338ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jhestolano/library/RingBuffer/0.0.0%2Bsha.831ea68a2334/RingBuffer-0.0.0%2Bsha.831ea68a2334.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jhestolano/library/RingBuffer/0.0.0%2Bsha.831ea68a2334/RingBuffer-0.0.0%2Bsha.831ea68a2334.tar.gz"
+    ]
+   }
+  }
+ ]
+}

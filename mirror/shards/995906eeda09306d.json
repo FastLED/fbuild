@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-alec1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-alec1/library/SPI_MX25R/0.0.0+sha.f72110475fec/SPI_MX25R-0.0.0+sha.f72110475fec.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_MX25R-0.0.0+sha.f72110475fec.tar.gz",
+    "size_bytes": 3432,
+    "sha256": "008444899f75b80688c7a41a5d538d0906b7e24d9130c3028b45e7a26356a987",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-alec1/library/SPI_MX25R/0.0.0%2Bsha.f72110475fec/SPI_MX25R-0.0.0%2Bsha.f72110475fec.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-alec1/library/SPI_MX25R/0.0.0%2Bsha.f72110475fec/SPI_MX25R-0.0.0%2Bsha.f72110475fec.tar.gz"
+    ]
+   }
+  }
+ ]
+}

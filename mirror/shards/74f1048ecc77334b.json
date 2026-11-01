@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thelastoutpostworkshop",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thelastoutpostworkshop/library/FastDisplayPrototyping/1.3.1/FastDisplayPrototyping-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastDisplayPrototyping-1.3.1.tar.gz",
+    "size_bytes": 11403,
+    "sha256": "0ddec2af0944b3482b5b82a2300bce7dab2074afc837f97a2120c52cd91f2558",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thelastoutpostworkshop/library/FastDisplayPrototyping/1.3.1/FastDisplayPrototyping-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thelastoutpostworkshop/library/FastDisplayPrototyping/1.3.1/FastDisplayPrototyping-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thelastoutpostworkshop/library/GPIOViewer/1.6.3/GPIOViewer-1.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPIOViewer-1.6.3.tar.gz",
+    "size_bytes": 14861,
+    "sha256": "4daba45e55454750d76633c43e7c59e61ff5b5bb7f6075988e778bdcf7699fc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thelastoutpostworkshop/library/GPIOViewer/1.6.3/GPIOViewer-1.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/thelastoutpostworkshop/library/GPIOViewer/1.6.3/GPIOViewer-1.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thelastoutpostworkshop/library/GPIOViewer/1.7.0/GPIOViewer-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPIOViewer-1.7.0.tar.gz",
+    "size_bytes": 16959,
+    "sha256": "da0c2ee4b7ee4bd4c0398ce89b42e10597eecfa0f94a1fd348f02d0c2868c9ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thelastoutpostworkshop/library/GPIOViewer/1.7.0/GPIOViewer-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thelastoutpostworkshop/library/GPIOViewer/1.7.0/GPIOViewer-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thelastoutpostworkshop/library/GPIOViewer/1.7.1/GPIOViewer-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPIOViewer-1.7.1.tar.gz",
+    "size_bytes": 17263,
+    "sha256": "3a00870714a19a35ebfe5be46cc06e8d5e35db6f9f285908fbb84b01ec3281d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thelastoutpostworkshop/library/GPIOViewer/1.7.1/GPIOViewer-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thelastoutpostworkshop/library/GPIOViewer/1.7.1/GPIOViewer-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thelastoutpostworkshop/library/VirtualScreen/2.0.2/VirtualScreen-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VirtualScreen-2.0.2.tar.gz",
+    "size_bytes": 5114717,
+    "sha256": "5820ba30cc1fbcefb39257df52e54aac3408faa54fcd5afc7093a7d73cbe63f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thelastoutpostworkshop/library/VirtualScreen/2.0.2/VirtualScreen-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thelastoutpostworkshop/library/VirtualScreen/2.0.2/VirtualScreen-2.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

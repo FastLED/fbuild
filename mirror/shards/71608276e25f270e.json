@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bollenn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bollenn/library/LIN/0.0.0+sha.63d341e53cce/LIN-0.0.0+sha.63d341e53cce.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIN-0.0.0+sha.63d341e53cce.tar.gz",
+    "size_bytes": 5637,
+    "sha256": "5ab363933ed004ca5a7f5064584192ec37c8b2387e0f99b96869d956854987e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bollenn/library/LIN/0.0.0%2Bsha.63d341e53cce/LIN-0.0.0%2Bsha.63d341e53cce.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bollenn/library/LIN/0.0.0%2Bsha.63d341e53cce/LIN-0.0.0%2Bsha.63d341e53cce.tar.gz"
+    ]
+   }
+  }
+ ]
+}

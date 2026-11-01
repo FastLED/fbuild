@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gatedclock",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gatedclock/library/mmSPI_RTOS/0.0.0+sha.7b8e6b90c874/mmSPI_RTOS-0.0.0+sha.7b8e6b90c874.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mmSPI_RTOS-0.0.0+sha.7b8e6b90c874.tar.gz",
+    "size_bytes": 6097,
+    "sha256": "59343440f87b1524adb7cb49538c409c392f1e29979fd71dec493c2e05174951",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gatedclock/library/mmSPI_RTOS/0.0.0%2Bsha.7b8e6b90c874/mmSPI_RTOS-0.0.0%2Bsha.7b8e6b90c874.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gatedclock/library/mmSPI_RTOS/0.0.0%2Bsha.7b8e6b90c874/mmSPI_RTOS-0.0.0%2Bsha.7b8e6b90c874.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gatedclock/library/watchdog/0.0.0+sha.f27d373a8e28/watchdog-0.0.0+sha.f27d373a8e28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "watchdog-0.0.0+sha.f27d373a8e28.tar.gz",
+    "size_bytes": 971,
+    "sha256": "0e25d7fa1d7964ae4a411882717ce93a475e99a836c9911566fda48f3634b024",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gatedclock/library/watchdog/0.0.0%2Bsha.f27d373a8e28/watchdog-0.0.0%2Bsha.f27d373a8e28.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gatedclock/library/watchdog/0.0.0%2Bsha.f27d373a8e28/watchdog-0.0.0%2Bsha.f27d373a8e28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gatedclock/library/watchdog_RTOS/0.0.0+sha.60654f9e0936/watchdog_RTOS-0.0.0+sha.60654f9e0936.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "watchdog_RTOS-0.0.0+sha.60654f9e0936.tar.gz",
+    "size_bytes": 1044,
+    "sha256": "c2e7343666cc5fc7dbaae9b97cf333918853912f8bc3bf23fe23adc4d1a5aefc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gatedclock/library/watchdog_RTOS/0.0.0%2Bsha.60654f9e0936/watchdog_RTOS-0.0.0%2Bsha.60654f9e0936.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gatedclock/library/watchdog_RTOS/0.0.0%2Bsha.60654f9e0936/watchdog_RTOS-0.0.0%2Bsha.60654f9e0936.tar.gz"
+    ]
+   }
+  }
+ ]
+}

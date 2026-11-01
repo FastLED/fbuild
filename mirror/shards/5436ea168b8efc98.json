@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ellor1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ellor1/library/LCD_Wait/0.0.0+sha.46e8391685c4/LCD_Wait-0.0.0+sha.46e8391685c4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_Wait-0.0.0+sha.46e8391685c4.tar.gz",
+    "size_bytes": 1656,
+    "sha256": "daf9e72bfb893687e401a30fe2b0fd64bf754010bdfdbcc24b229e754e4c411d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ellor1/library/LCD_Wait/0.0.0%2Bsha.46e8391685c4/LCD_Wait-0.0.0%2Bsha.46e8391685c4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ellor1/library/LCD_Wait/0.0.0%2Bsha.46e8391685c4/LCD_Wait-0.0.0%2Bsha.46e8391685c4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ellor1/library/PulseWidthCapture/0.0.0+sha.857c3c8e7a2f/PulseWidthCapture-0.0.0+sha.857c3c8e7a2f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseWidthCapture-0.0.0+sha.857c3c8e7a2f.tar.gz",
+    "size_bytes": 5259,
+    "sha256": "0673f4a8c05523627709e0c8e9b35b4364925bc1a52986730b33c48f325225c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ellor1/library/PulseWidthCapture/0.0.0%2Bsha.857c3c8e7a2f/PulseWidthCapture-0.0.0%2Bsha.857c3c8e7a2f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ellor1/library/PulseWidthCapture/0.0.0%2Bsha.857c3c8e7a2f/PulseWidthCapture-0.0.0%2Bsha.857c3c8e7a2f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

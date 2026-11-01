@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arms22",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arms22/library/GridEye/1.0.0/GridEye-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GridEye-1.0.0.tar.gz",
+    "size_bytes": 2695,
+    "sha256": "a9e6fd4f4910050505b3946409f7183a880b0d1d241c651cd9575d51c1dc5eba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arms22/library/GridEye/1.0.0/GridEye-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arms22/library/GridEye/1.0.0/GridEye-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arms22/library/SoftModem/1.0/SoftModem-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftModem-1.0.tar.gz",
+    "size_bytes": 4997,
+    "sha256": "71f70e806b34fbff16c96e35b5c817856570b563b1838ee594bbf8e9585daeaf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arms22/library/SoftModem/1.0/SoftModem-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arms22/library/SoftModem/1.0/SoftModem-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

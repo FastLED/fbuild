@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ittacco",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ittacco/library/SSLClient/1.1.1/SSLClient-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSLClient-1.1.1.tar.gz",
+    "size_bytes": 37930,
+    "sha256": "2d3ec984cfb510106d54904a7ce107610255e1ec37d2c983704cf642b8113249",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ittacco/library/SSLClient/1.1.1/SSLClient-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ittacco/library/SSLClient/1.1.1/SSLClient-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

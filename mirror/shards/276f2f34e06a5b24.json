@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-waynan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-waynan/library/INA260/0.0.0+sha.a1b8d2c9420d/INA260-0.0.0+sha.a1b8d2c9420d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA260-0.0.0+sha.a1b8d2c9420d.tar.gz",
+    "size_bytes": 1786,
+    "sha256": "6276efa53244f8e97515c3bf162afc08cb1ce3fe25ad602a17eaac40ca00716d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-waynan/library/INA260/0.0.0%2Bsha.a1b8d2c9420d/INA260-0.0.0%2Bsha.a1b8d2c9420d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-waynan/library/INA260/0.0.0%2Bsha.a1b8d2c9420d/INA260-0.0.0%2Bsha.a1b8d2c9420d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

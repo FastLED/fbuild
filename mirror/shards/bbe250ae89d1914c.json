@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/toggio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "toggio/library/PacketLED/1.0.2/PacketLED-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PacketLED-1.0.2.tar.gz",
+    "size_bytes": 30714,
+    "sha256": "2312d8bf729e79172e2ebae9566a724ffc40eaa0d72f509adf0646489941fa19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toggio/library/PacketLED/1.0.2/PacketLED-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/toggio/library/PacketLED/1.0.2/PacketLED-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "toggio/library/PacketLED/1.1.0/PacketLED-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PacketLED-1.1.0.tar.gz",
+    "size_bytes": 36384,
+    "sha256": "1550b2fcc9850a5dc41acedc4d0a03c33949e5473cb20743f4d4e1e5757439be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toggio/library/PacketLED/1.1.0/PacketLED-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/toggio/library/PacketLED/1.1.0/PacketLED-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "toggio/library/SecurePair/0.5.0/SecurePair-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SecurePair-0.5.0.tar.gz",
+    "size_bytes": 100422,
+    "sha256": "0324fd018803a57fda4d41c45f355b50283b96b95ba1d9468d4b85701f7e1263",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/toggio/library/SecurePair/0.5.0/SecurePair-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/toggio/library/SecurePair/0.5.0/SecurePair-0.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

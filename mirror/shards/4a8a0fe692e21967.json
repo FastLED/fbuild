@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/an7orahmed",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "an7orahmed/library/ADCButtons/1.0.0/ADCButtons-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADCButtons-1.0.0.tar.gz",
+    "size_bytes": 1424,
+    "sha256": "c647f498a59dc5272bed5a4daa3df0d064e108de53c6b2998530b0848ff45e7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/an7orahmed/library/ADCButtons/1.0.0/ADCButtons-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/an7orahmed/library/ADCButtons/1.0.0/ADCButtons-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "an7orahmed/library/LettersKeypad/1.0.0/LettersKeypad-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LettersKeypad-1.0.0.tar.gz",
+    "size_bytes": 16920,
+    "sha256": "a93bdbab2b657818401b1bed3110a8516bc129ce810fe2067427abf2b613124d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/an7orahmed/library/LettersKeypad/1.0.0/LettersKeypad-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/an7orahmed/library/LettersKeypad/1.0.0/LettersKeypad-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "an7orahmed/library/LiquidCrystalSerial/1.0.0/LiquidCrystalSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidCrystalSerial-1.0.0.tar.gz",
+    "size_bytes": 20801,
+    "sha256": "7c7aa12b411737b881da50187ac2f2ede531f71fac0cf18b672b6d9b51f7f44b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/an7orahmed/library/LiquidCrystalSerial/1.0.0/LiquidCrystalSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/an7orahmed/library/LiquidCrystalSerial/1.0.0/LiquidCrystalSerial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "an7orahmed/library/MAX7219Segment/1.0.0/MAX7219Segment-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX7219Segment-1.0.0.tar.gz",
+    "size_bytes": 31091,
+    "sha256": "bb88a3e06bc786f094f82dbd2fb0dd6411556c6bbf663939114721743c45626b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/an7orahmed/library/MAX7219Segment/1.0.0/MAX7219Segment-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/an7orahmed/library/MAX7219Segment/1.0.0/MAX7219Segment-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

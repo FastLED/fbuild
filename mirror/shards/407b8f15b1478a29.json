@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-llagendijk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-llagendijk/library/TextDisplays/0.0.0+sha.68ad299df12b/TextDisplays-0.0.0+sha.68ad299df12b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TextDisplays-0.0.0+sha.68ad299df12b.tar.gz",
+    "size_bytes": 9798,
+    "sha256": "413a2ae335c105f6c9808311cbef9d96b6625acc6ea0018c0488d75b51f04cd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-llagendijk/library/TextDisplays/0.0.0%2Bsha.68ad299df12b/TextDisplays-0.0.0%2Bsha.68ad299df12b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-llagendijk/library/TextDisplays/0.0.0%2Bsha.68ad299df12b/TextDisplays-0.0.0%2Bsha.68ad299df12b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

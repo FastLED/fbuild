@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thni323",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thni323/library/SoftwareSpiMaster/0.0.1/SoftwareSpiMaster-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftwareSpiMaster-0.0.1.tar.gz",
+    "size_bytes": 2648,
+    "sha256": "914cc9bd4c0538293e10ec8504d3b9efffef49f6a5d88a9215012c8aa6d95351",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thni323/library/SoftwareSpiMaster/0.0.1/SoftwareSpiMaster-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thni323/library/SoftwareSpiMaster/0.0.1/SoftwareSpiMaster-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thni323/library/TimingUtils/1.0.1/TimingUtils-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimingUtils-1.0.1.tar.gz",
+    "size_bytes": 2753,
+    "sha256": "ada899af9f4488aacf5434c0140b06c2fa2a34e668cf62e9f7ed066b8509b301",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thni323/library/TimingUtils/1.0.1/TimingUtils-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thni323/library/TimingUtils/1.0.1/TimingUtils-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

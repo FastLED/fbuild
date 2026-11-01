@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-networker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-networker/library/AvailableMemory/0.0.0+sha.2b2aa11cebd7/AvailableMemory-0.0.0+sha.2b2aa11cebd7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AvailableMemory-0.0.0+sha.2b2aa11cebd7.tar.gz",
+    "size_bytes": 1542,
+    "sha256": "f1b79057ce7ed4dd73c3de1e84e2a0a3dbd71a9f1f23b35027a6313e1e90e874",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-networker/library/AvailableMemory/0.0.0%2Bsha.2b2aa11cebd7/AvailableMemory-0.0.0%2Bsha.2b2aa11cebd7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-networker/library/AvailableMemory/0.0.0%2Bsha.2b2aa11cebd7/AvailableMemory-0.0.0%2Bsha.2b2aa11cebd7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-networker/library/filter/0.0.0+sha.46a72e790df8/filter-0.0.0+sha.46a72e790df8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "filter-0.0.0+sha.46a72e790df8.tar.gz",
+    "size_bytes": 1744,
+    "sha256": "135e5abaf1549e23ff8b7802d50f17d4ba986d39a5533fc468304e59dbb07a30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-networker/library/filter/0.0.0%2Bsha.46a72e790df8/filter-0.0.0%2Bsha.46a72e790df8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-networker/library/filter/0.0.0%2Bsha.46a72e790df8/filter-0.0.0%2Bsha.46a72e790df8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-networker/library/medianfilter/0.0.0+sha.9bd415456089/medianfilter-0.0.0+sha.9bd415456089.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "medianfilter-0.0.0+sha.9bd415456089.tar.gz",
+    "size_bytes": 1654,
+    "sha256": "589f0d695e69145dfbd2926bacae2f7de8fd8f6b90776c7f26b0bf5323dabf68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-networker/library/medianfilter/0.0.0%2Bsha.9bd415456089/medianfilter-0.0.0%2Bsha.9bd415456089.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-networker/library/medianfilter/0.0.0%2Bsha.9bd415456089/medianfilter-0.0.0%2Bsha.9bd415456089.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-networker/library/myUSBHost/0.0.0+sha.58c785c2b381/myUSBHost-0.0.0+sha.58c785c2b381.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "myUSBHost-0.0.0+sha.58c785c2b381.tar.gz",
+    "size_bytes": 14654,
+    "sha256": "5edd44a09644387d4a537852e7f7cc795cbea59d8075fb325ded125c09a48570",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-networker/library/myUSBHost/0.0.0%2Bsha.58c785c2b381/myUSBHost-0.0.0%2Bsha.58c785c2b381.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-networker/library/myUSBHost/0.0.0%2Bsha.58c785c2b381/myUSBHost-0.0.0%2Bsha.58c785c2b381.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-networker/library/neigbourhood/0.0.0+sha.6707543df242/neigbourhood-0.0.0+sha.6707543df242.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "neigbourhood-0.0.0+sha.6707543df242.tar.gz",
+    "size_bytes": 2204,
+    "sha256": "aea8f26167ea2d6ee71c3a95d42b67a3b542b4117a3761ee2023ceac8578697b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-networker/library/neigbourhood/0.0.0%2Bsha.6707543df242/neigbourhood-0.0.0%2Bsha.6707543df242.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-networker/library/neigbourhood/0.0.0%2Bsha.6707543df242/neigbourhood-0.0.0%2Bsha.6707543df242.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-networker/library/rfcomm/0.0.0+sha.1c90839a1e70/rfcomm-0.0.0+sha.1c90839a1e70.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rfcomm-0.0.0+sha.1c90839a1e70.tar.gz",
+    "size_bytes": 11252,
+    "sha256": "4d864ce87544807d0f3353f91be2f2ac83c76e4afa4bcd322c5da2f1a360c83e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-networker/library/rfcomm/0.0.0%2Bsha.1c90839a1e70/rfcomm-0.0.0%2Bsha.1c90839a1e70.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-networker/library/rfcomm/0.0.0%2Bsha.1c90839a1e70/rfcomm-0.0.0%2Bsha.1c90839a1e70.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-networker/library/sdp/0.0.0+sha.d5c3e499603d/sdp-0.0.0+sha.d5c3e499603d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sdp-0.0.0+sha.d5c3e499603d.tar.gz",
+    "size_bytes": 12462,
+    "sha256": "7f2b8e149577926b0665f5e514463ab9a9363bff126d79128f71604c45775c4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-networker/library/sdp/0.0.0%2Bsha.d5c3e499603d/sdp-0.0.0%2Bsha.d5c3e499603d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-networker/library/sdp/0.0.0%2Bsha.d5c3e499603d/sdp-0.0.0%2Bsha.d5c3e499603d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

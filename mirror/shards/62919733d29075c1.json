@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andyshinn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andyshinn/library/BQ4050/1.0.0/BQ4050-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BQ4050-1.0.0.tar.gz",
+    "size_bytes": 41383,
+    "sha256": "00e3d7e1d0ea8797eb8aa7271f812cf1871a03c2fa3c6260b0eecce3998dea15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andyshinn/library/BQ4050/1.0.0/BQ4050-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andyshinn/library/BQ4050/1.0.0/BQ4050-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andyshinn/library/Pixie_Chroma/1.2.3/Pixie_Chroma-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pixie_Chroma-1.2.3.tar.gz",
+    "size_bytes": 61341,
+    "sha256": "3464869779fea7c38c2d1bc20de1dfc933d27ee6c2a2853ae6afb6a355b6a4a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andyshinn/library/Pixie_Chroma/1.2.3/Pixie_Chroma-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/andyshinn/library/Pixie_Chroma/1.2.3/Pixie_Chroma-1.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

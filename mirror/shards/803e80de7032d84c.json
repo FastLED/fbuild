@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/manuelbl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "manuelbl/library/USBPowerDelivery/1.0.4/USBPowerDelivery-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBPowerDelivery-1.0.4.tar.gz",
+    "size_bytes": 39795,
+    "sha256": "d04a84ff5954195be6c8c5c5c5a52909687708ac3ffd1da325eff85c117924f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/manuelbl/library/USBPowerDelivery/1.0.4/USBPowerDelivery-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/manuelbl/library/USBPowerDelivery/1.0.4/USBPowerDelivery-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

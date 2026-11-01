@@ -1,0 +1,204 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-somerandombloke",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-somerandombloke/library/AdafruitThermalPrinter/0.0.0+sha.871ca02007be/AdafruitThermalPrinter-0.0.0+sha.871ca02007be.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdafruitThermalPrinter-0.0.0+sha.871ca02007be.tar.gz",
+    "size_bytes": 5123,
+    "sha256": "594214722f930633d3b3f3331092302dab2c7b097f9acf66ee64f3bb6b9bed95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-somerandombloke/library/AdafruitThermalPrinter/0.0.0%2Bsha.871ca02007be/AdafruitThermalPrinter-0.0.0%2Bsha.871ca02007be.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-somerandombloke/library/AdafruitThermalPrinter/0.0.0%2Bsha.871ca02007be/AdafruitThermalPrinter-0.0.0%2Bsha.871ca02007be.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-somerandombloke/library/Adafruit_PWMServoDriver/0.0.0+sha.9ff15661ddd6/Adafruit_PWMServoDriver-0.0.0+sha.9ff15661ddd6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_PWMServoDriver-0.0.0+sha.9ff15661ddd6.tar.gz",
+    "size_bytes": 3260,
+    "sha256": "b0918593b5eebf16b61e91578ff7e18b476bd0c5edaa07fc18165d5c86d48614",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-somerandombloke/library/Adafruit_PWMServoDriver/0.0.0%2Bsha.9ff15661ddd6/Adafruit_PWMServoDriver-0.0.0%2Bsha.9ff15661ddd6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-somerandombloke/library/Adafruit_PWMServoDriver/0.0.0%2Bsha.9ff15661ddd6/Adafruit_PWMServoDriver-0.0.0%2Bsha.9ff15661ddd6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-somerandombloke/library/Adafruit_ST7735/0.0.0+sha.c964b41674fc/Adafruit_ST7735-0.0.0+sha.c964b41674fc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_ST7735-0.0.0+sha.c964b41674fc.tar.gz",
+    "size_bytes": 5671,
+    "sha256": "31a22deef43a7025db59c633c4d5fd809e34d24f498f8635a9f97b9ee9a4106d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-somerandombloke/library/Adafruit_ST7735/0.0.0%2Bsha.c964b41674fc/Adafruit_ST7735-0.0.0%2Bsha.c964b41674fc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-somerandombloke/library/Adafruit_ST7735/0.0.0%2Bsha.c964b41674fc/Adafruit_ST7735-0.0.0%2Bsha.c964b41674fc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-somerandombloke/library/Adafruit_WS2801/0.0.0+sha.987c91c45188/Adafruit_WS2801-0.0.0+sha.987c91c45188.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_WS2801-0.0.0+sha.987c91c45188.tar.gz",
+    "size_bytes": 4836,
+    "sha256": "9e07d858d465d4a2075ccd90a191f46c639a766b39a176d7342635110e42d23d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-somerandombloke/library/Adafruit_WS2801/0.0.0%2Bsha.987c91c45188/Adafruit_WS2801-0.0.0%2Bsha.987c91c45188.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-somerandombloke/library/Adafruit_WS2801/0.0.0%2Bsha.987c91c45188/Adafruit_WS2801-0.0.0%2Bsha.987c91c45188.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-somerandombloke/library/BSP_DISCO_F429ZI/0.0.0+sha.a6fd0931a9e9/BSP_DISCO_F429ZI-0.0.0+sha.a6fd0931a9e9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSP_DISCO_F429ZI-0.0.0+sha.a6fd0931a9e9.tar.gz",
+    "size_bytes": 66634,
+    "sha256": "dc669da22a0dbc27e4050d5a16f30d926b0baf4d8abe7b85687107a027bfa258",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-somerandombloke/library/BSP_DISCO_F429ZI/0.0.0%2Bsha.a6fd0931a9e9/BSP_DISCO_F429ZI-0.0.0%2Bsha.a6fd0931a9e9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-somerandombloke/library/BSP_DISCO_F429ZI/0.0.0%2Bsha.a6fd0931a9e9/BSP_DISCO_F429ZI-0.0.0%2Bsha.a6fd0931a9e9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-somerandombloke/library/DS1820/0.0.0+sha.4760669f5f5e/DS1820-0.0.0+sha.4760669f5f5e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1820-0.0.0+sha.4760669f5f5e.tar.gz",
+    "size_bytes": 6598,
+    "sha256": "698f8daced59997057d048b97f1239d92aba08e2d6a8acbaa1b54cd5e254c9e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-somerandombloke/library/DS1820/0.0.0%2Bsha.4760669f5f5e/DS1820-0.0.0%2Bsha.4760669f5f5e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-somerandombloke/library/DS1820/0.0.0%2Bsha.4760669f5f5e/DS1820-0.0.0%2Bsha.4760669f5f5e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-somerandombloke/library/HT1632_LedMatrix/0.0.0+sha.9323fab1db01/HT1632_LedMatrix-0.0.0+sha.9323fab1db01.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HT1632_LedMatrix-0.0.0+sha.9323fab1db01.tar.gz",
+    "size_bytes": 9866,
+    "sha256": "4e7f00028049bd1f80fc30699249fae048bd6c7e4c6725a92d8b6a8bb6ddc743",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-somerandombloke/library/HT1632_LedMatrix/0.0.0%2Bsha.9323fab1db01/HT1632_LedMatrix-0.0.0%2Bsha.9323fab1db01.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-somerandombloke/library/HT1632_LedMatrix/0.0.0%2Bsha.9323fab1db01/HT1632_LedMatrix-0.0.0%2Bsha.9323fab1db01.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-somerandombloke/library/LLAPSerial/0.0.0+sha.51c8887d6822/LLAPSerial-0.0.0+sha.51c8887d6822.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LLAPSerial-0.0.0+sha.51c8887d6822.tar.gz",
+    "size_bytes": 4340,
+    "sha256": "1beaa7db340857e18a0c3303e26745d9215849c84479a1852d2e6f1d66cf8c01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-somerandombloke/library/LLAPSerial/0.0.0%2Bsha.51c8887d6822/LLAPSerial-0.0.0%2Bsha.51c8887d6822.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-somerandombloke/library/LLAPSerial/0.0.0%2Bsha.51c8887d6822/LLAPSerial-0.0.0%2Bsha.51c8887d6822.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-somerandombloke/library/MAG3110/0.0.0+sha.1da3fe7b3510/MAG3110-0.0.0+sha.1da3fe7b3510.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAG3110-0.0.0+sha.1da3fe7b3510.tar.gz",
+    "size_bytes": 3145,
+    "sha256": "281af32e3aaf3d2ffc3a15895082dfe2348338437a0308325f2dcd567475928b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-somerandombloke/library/MAG3110/0.0.0%2Bsha.1da3fe7b3510/MAG3110-0.0.0%2Bsha.1da3fe7b3510.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-somerandombloke/library/MAG3110/0.0.0%2Bsha.1da3fe7b3510/MAG3110-0.0.0%2Bsha.1da3fe7b3510.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-somerandombloke/library/MMA8451Q/0.0.0+sha.e8bacad228f6/MMA8451Q-0.0.0+sha.e8bacad228f6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8451Q-0.0.0+sha.e8bacad228f6.tar.gz",
+    "size_bytes": 3020,
+    "sha256": "d30a806b1275b3c5a351471a24171cf6e3c39b77ac31a35c68c0791522be6679",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-somerandombloke/library/MMA8451Q/0.0.0%2Bsha.e8bacad228f6/MMA8451Q-0.0.0%2Bsha.e8bacad228f6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-somerandombloke/library/MMA8451Q/0.0.0%2Bsha.e8bacad228f6/MMA8451Q-0.0.0%2Bsha.e8bacad228f6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-somerandombloke/library/MQTTClient/0.0.0+sha.a0e39cea763a/MQTTClient-0.0.0+sha.a0e39cea763a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTTClient-0.0.0+sha.a0e39cea763a.tar.gz",
+    "size_bytes": 5061,
+    "sha256": "74929ff1c4982f4765714bb866c41f1f2eff870bda9d3d3e71748228e1675f33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-somerandombloke/library/MQTTClient/0.0.0%2Bsha.a0e39cea763a/MQTTClient-0.0.0%2Bsha.a0e39cea763a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-somerandombloke/library/MQTTClient/0.0.0%2Bsha.a0e39cea763a/MQTTClient-0.0.0%2Bsha.a0e39cea763a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-somerandombloke/library/MaxbotixDriver/0.0.0+sha.95f696f59d94/MaxbotixDriver-0.0.0+sha.95f696f59d94.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MaxbotixDriver-0.0.0+sha.95f696f59d94.tar.gz",
+    "size_bytes": 3153,
+    "sha256": "c27991b64f7e7dd805ab8e5e5584b077b07aecf45d097c687a3f00360348c5fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-somerandombloke/library/MaxbotixDriver/0.0.0%2Bsha.95f696f59d94/MaxbotixDriver-0.0.0%2Bsha.95f696f59d94.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-somerandombloke/library/MaxbotixDriver/0.0.0%2Bsha.95f696f59d94/MaxbotixDriver-0.0.0%2Bsha.95f696f59d94.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-somerandombloke/library/N3310LCD/0.0.0+sha.46bcc4e584c4/N3310LCD-0.0.0+sha.46bcc4e584c4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "N3310LCD-0.0.0+sha.46bcc4e584c4.tar.gz",
+    "size_bytes": 10355,
+    "sha256": "c03289e3cfec88686e168fff95bd2d1231ee801221658ae48ed142430580238c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-somerandombloke/library/N3310LCD/0.0.0%2Bsha.46bcc4e584c4/N3310LCD-0.0.0%2Bsha.46bcc4e584c4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-somerandombloke/library/N3310LCD/0.0.0%2Bsha.46bcc4e584c4/N3310LCD-0.0.0%2Bsha.46bcc4e584c4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-somerandombloke/library/PCA9685/0.0.0+sha.f69f4e2c35b6/PCA9685-0.0.0+sha.f69f4e2c35b6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9685-0.0.0+sha.f69f4e2c35b6.tar.gz",
+    "size_bytes": 7286,
+    "sha256": "c4b588396648d124e5039ff7fb1e359145d40b2652449a0fd470be842c485b21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-somerandombloke/library/PCA9685/0.0.0%2Bsha.f69f4e2c35b6/PCA9685-0.0.0%2Bsha.f69f4e2c35b6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-somerandombloke/library/PCA9685/0.0.0%2Bsha.f69f4e2c35b6/PCA9685-0.0.0%2Bsha.f69f4e2c35b6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-somerandombloke/library/RF12B/0.0.0+sha.e724d8251cdc/RF12B-0.0.0+sha.e724d8251cdc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF12B-0.0.0+sha.e724d8251cdc.tar.gz",
+    "size_bytes": 4953,
+    "sha256": "c9d223e00e9b781e46203ea97d0903b08d41bf951a4eee3c0b92820f20cedc5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-somerandombloke/library/RF12B/0.0.0%2Bsha.e724d8251cdc/RF12B-0.0.0%2Bsha.e724d8251cdc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-somerandombloke/library/RF12B/0.0.0%2Bsha.e724d8251cdc/RF12B-0.0.0%2Bsha.e724d8251cdc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

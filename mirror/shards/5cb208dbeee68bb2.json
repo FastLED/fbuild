@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sylvainmontagny",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sylvainmontagny/library/LoRaWAN-Seeed-Grove-Wio-E5/3.0.0/LoRaWAN-Seeed-Grove-Wio-E5-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRaWAN-Seeed-Grove-Wio-E5-3.0.0.tar.gz",
+    "size_bytes": 11213,
+    "sha256": "55b8ebce1f0c643e3bd319f7b1ed7c22f937c4e75a92d6e2f70b795c24e737c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sylvainmontagny/library/LoRaWAN-Seeed-Grove-Wio-E5/3.0.0/LoRaWAN-Seeed-Grove-Wio-E5-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sylvainmontagny/library/LoRaWAN-Seeed-Grove-Wio-E5/3.0.0/LoRaWAN-Seeed-Grove-Wio-E5-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

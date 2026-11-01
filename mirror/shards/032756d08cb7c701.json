@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aditya-iot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aditya-iot/library/ESP32-BLE-Keyboard-Client/1.0.0/ESP32-BLE-Keyboard-Client-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-BLE-Keyboard-Client-1.0.0.tar.gz",
+    "size_bytes": 11983,
+    "sha256": "0b98ea12a269a85c749a37706759bc95075733b93098094cb7fe808678c2b402",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aditya-iot/library/ESP32-BLE-Keyboard-Client/1.0.0/ESP32-BLE-Keyboard-Client-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aditya-iot/library/ESP32-BLE-Keyboard-Client/1.0.0/ESP32-BLE-Keyboard-Client-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

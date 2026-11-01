@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stonelibrary",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stonelibrary/library/Stone_serial/1.0.7/Stone_serial-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Stone_serial-1.0.7.tar.gz",
+    "size_bytes": 15058,
+    "sha256": "2fce718fb9829397d3b9748022f978706a53ba8b3b9c27a80759d6ed0bc05439",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stonelibrary/library/Stone_serial/1.0.7/Stone_serial-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/stonelibrary/library/Stone_serial/1.0.7/Stone_serial-1.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

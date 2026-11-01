@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pebayle",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pebayle/library/A7105_FLYSKY_RX/0.0.0+sha.19d3601a7744/A7105_FLYSKY_RX-0.0.0+sha.19d3601a7744.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "A7105_FLYSKY_RX-0.0.0+sha.19d3601a7744.tar.gz",
+    "size_bytes": 5358,
+    "sha256": "e63499be4f423e24227bc3813ceb85917b9e53267f8f36f7e4ba07ec5b085400",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pebayle/library/A7105_FLYSKY_RX/0.0.0%2Bsha.19d3601a7744/A7105_FLYSKY_RX-0.0.0%2Bsha.19d3601a7744.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pebayle/library/A7105_FLYSKY_RX/0.0.0%2Bsha.19d3601a7744/A7105_FLYSKY_RX-0.0.0%2Bsha.19d3601a7744.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pebayle/library/SERVO_PPM/0.0.0+sha.e57e8eee5411/SERVO_PPM-0.0.0+sha.e57e8eee5411.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SERVO_PPM-0.0.0+sha.e57e8eee5411.tar.gz",
+    "size_bytes": 3368,
+    "sha256": "d5b0686bd57b0df92d009494f87668ee777b5f5b9ff2c508c6384d32d72c3257",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pebayle/library/SERVO_PPM/0.0.0%2Bsha.e57e8eee5411/SERVO_PPM-0.0.0%2Bsha.e57e8eee5411.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pebayle/library/SERVO_PPM/0.0.0%2Bsha.e57e8eee5411/SERVO_PPM-0.0.0%2Bsha.e57e8eee5411.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pebayle/library/mbed-STM32F030K6/0.0.0+sha.24a7119bd73a/mbed-STM32F030K6-0.0.0+sha.24a7119bd73a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-STM32F030K6-0.0.0+sha.24a7119bd73a.tar.gz",
+    "size_bytes": 9855789,
+    "sha256": "8a9c332cddf77303e9cfcb914b5e0bb58550c0fecaf5599fe24eebd2d48cee47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pebayle/library/mbed-STM32F030K6/0.0.0%2Bsha.24a7119bd73a/mbed-STM32F030K6-0.0.0%2Bsha.24a7119bd73a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pebayle/library/mbed-STM32F030K6/0.0.0%2Bsha.24a7119bd73a/mbed-STM32F030K6-0.0.0%2Bsha.24a7119bd73a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

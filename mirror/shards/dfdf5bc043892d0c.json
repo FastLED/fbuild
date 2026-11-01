@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/plantfactory",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "plantfactory/library/ADT74x0/0.0.0-alpha+sha.bfe8f1e3a5/ADT74x0-0.0.0-alphasha.bfe8f1e3a5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADT74x0-0.0.0-alphasha.bfe8f1e3a5.tar.gz",
+    "size_bytes": 1031,
+    "sha256": "aab6119acd1d3c888a1686508766a2f5d8292b3fe70212e1d73ad20ab9196ae6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plantfactory/library/ADT74x0/0.0.0-alpha%2Bsha.bfe8f1e3a5/ADT74x0-0.0.0-alphasha.bfe8f1e3a5.tar.gz",
+     "https://dl.registry.platformio.org/download/plantfactory/library/ADT74x0/0.0.0-alpha%2Bsha.bfe8f1e3a5/ADT74x0-0.0.0-alphasha.bfe8f1e3a5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plantfactory/library/NTP/0.0.0-alpha+sha.9eb8ccffae/NTP-0.0.0-alphasha.9eb8ccffae.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTP-0.0.0-alphasha.9eb8ccffae.tar.gz",
+    "size_bytes": 1360,
+    "sha256": "49bc9a163212e95ea75cf7262821669c3b98082beebee8fc80fd655b52e1e95c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plantfactory/library/NTP/0.0.0-alpha%2Bsha.9eb8ccffae/NTP-0.0.0-alphasha.9eb8ccffae.tar.gz",
+     "https://dl.registry.platformio.org/download/plantfactory/library/NTP/0.0.0-alpha%2Bsha.9eb8ccffae/NTP-0.0.0-alphasha.9eb8ccffae.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plantfactory/library/PFFIAPDownloadAgent/0.0.0-alpha+sha.d2796ae37b/PFFIAPDownloadAgent-0.0.0-alphasha.d2796ae37b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PFFIAPDownloadAgent-0.0.0-alphasha.d2796ae37b.tar.gz",
+    "size_bytes": 4166,
+    "sha256": "666556ba2b65d2c84a8b3937d61bbb27adbeb4653f892d3cc88138031fb1c044",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plantfactory/library/PFFIAPDownloadAgent/0.0.0-alpha%2Bsha.d2796ae37b/PFFIAPDownloadAgent-0.0.0-alphasha.d2796ae37b.tar.gz",
+     "https://dl.registry.platformio.org/download/plantfactory/library/PFFIAPDownloadAgent/0.0.0-alpha%2Bsha.d2796ae37b/PFFIAPDownloadAgent-0.0.0-alphasha.d2796ae37b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plantfactory/library/PFFIAPUploadAgent/0.0.0-alpha+sha.067d363324/PFFIAPUploadAgent-0.0.0-alphasha.067d363324.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PFFIAPUploadAgent-0.0.0-alphasha.067d363324.tar.gz",
+    "size_bytes": 13290,
+    "sha256": "f3765007b5a90b477391b2c35613affbeacc9b96fbe4e49eede1994fc6e3d919",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plantfactory/library/PFFIAPUploadAgent/0.0.0-alpha%2Bsha.067d363324/PFFIAPUploadAgent-0.0.0-alphasha.067d363324.tar.gz",
+     "https://dl.registry.platformio.org/download/plantfactory/library/PFFIAPUploadAgent/0.0.0-alpha%2Bsha.067d363324/PFFIAPUploadAgent-0.0.0-alphasha.067d363324.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plantfactory/library/SerialCLI/0.0.0-alpha+sha.8fb587a719/SerialCLI-0.0.0-alphasha.8fb587a719.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialCLI-0.0.0-alphasha.8fb587a719.tar.gz",
+    "size_bytes": 3322,
+    "sha256": "8be4f0275ebbbc0bb3db0d8681daa7521d9fa5a5304689a4319f1ee3c1d1f769",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plantfactory/library/SerialCLI/0.0.0-alpha%2Bsha.8fb587a719/SerialCLI-0.0.0-alphasha.8fb587a719.tar.gz",
+     "https://dl.registry.platformio.org/download/plantfactory/library/SerialCLI/0.0.0-alpha%2Bsha.8fb587a719/SerialCLI-0.0.0-alphasha.8fb587a719.tar.gz"
+    ]
+   }
+  }
+ ]
+}

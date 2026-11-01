@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sidcha",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sidcha/library/LibOSDP/3.0.9/LibOSDP-3.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibOSDP-3.0.9.tar.gz",
+    "size_bytes": 1300802,
+    "sha256": "2e5a371e353f69bcc4f385346ae4b04cdc32c4e3d082eedbf04014432bc5f5de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sidcha/library/LibOSDP/3.0.9/LibOSDP-3.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/sidcha/library/LibOSDP/3.0.9/LibOSDP-3.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sidcha/library/LibOSDP/3.1.0/LibOSDP-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibOSDP-3.1.0.tar.gz",
+    "size_bytes": 1300851,
+    "sha256": "d2269fec5cc20926e015dd94c80ffde5de88d188b17a0a16b1c1e5d89811ffb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sidcha/library/LibOSDP/3.1.0/LibOSDP-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sidcha/library/LibOSDP/3.1.0/LibOSDP-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sidcha/library/LibOSDP/3.2.0/LibOSDP-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibOSDP-3.2.0.tar.gz",
+    "size_bytes": 1310086,
+    "sha256": "7257fdfa7a7e1036a9e02c060e71d473df5b72e258caaf214ff213aa2fb04b8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sidcha/library/LibOSDP/3.2.0/LibOSDP-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sidcha/library/LibOSDP/3.2.0/LibOSDP-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sidcha/library/LibOSDP/3.2.7/LibOSDP-3.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibOSDP-3.2.7.tar.gz",
+    "size_bytes": 1316021,
+    "sha256": "537b17b967e8544efe5373abbcb989c1d68d4d35765ec0d027d12116aaee48d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sidcha/library/LibOSDP/3.2.7/LibOSDP-3.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/sidcha/library/LibOSDP/3.2.7/LibOSDP-3.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sidcha/library/LibOSDP/3.2.8/LibOSDP-3.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibOSDP-3.2.8.tar.gz",
+    "size_bytes": 1315595,
+    "sha256": "c231c5833df87554b6196ca8fb7cdf7092fba0df20a62ae49993ab6eaa51e81b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sidcha/library/LibOSDP/3.2.8/LibOSDP-3.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/sidcha/library/LibOSDP/3.2.8/LibOSDP-3.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sidcha/library/LibOSDP/3.2.9/LibOSDP-3.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibOSDP-3.2.9.tar.gz",
+    "size_bytes": 1315782,
+    "sha256": "4978b415adff1dd14055142977ae03b1bc9e05c8fc8db315cad31c74efdf70ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sidcha/library/LibOSDP/3.2.9/LibOSDP-3.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/sidcha/library/LibOSDP/3.2.9/LibOSDP-3.2.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

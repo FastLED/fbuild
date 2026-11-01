@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/blackketter",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "blackketter/library/Switch/0.0.0-alpha+sha.7ebb325fa1/Switch-0.0.0-alphasha.7ebb325fa1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Switch-0.0.0-alphasha.7ebb325fa1.tar.gz",
+    "size_bytes": 5749,
+    "sha256": "06b3923230eb0d767b27f3621e2ec7e82ae3b8897d927444bd23243a22ba96f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blackketter/library/Switch/0.0.0-alpha%2Bsha.7ebb325fa1/Switch-0.0.0-alphasha.7ebb325fa1.tar.gz",
+     "https://dl.registry.platformio.org/download/blackketter/library/Switch/0.0.0-alpha%2Bsha.7ebb325fa1/Switch-0.0.0-alphasha.7ebb325fa1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

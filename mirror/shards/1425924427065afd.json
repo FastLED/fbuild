@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/simonmonk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "simonmonk/library/ArduinoTEA5767/1.0/ArduinoTEA5767-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoTEA5767-1.0.tar.gz",
+    "size_bytes": 2243,
+    "sha256": "bf5a554d8e408bf6cde3e29d236f66b636a4a24459a2b3ab7e822349e48a4abd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simonmonk/library/ArduinoTEA5767/1.0/ArduinoTEA5767-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simonmonk/library/ArduinoTEA5767/1.0/ArduinoTEA5767-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

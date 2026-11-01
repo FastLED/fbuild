@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-negativeblack",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-negativeblack/library/NetworkAPI/0.0.0+sha.7ac7c29fea3d/NetworkAPI-0.0.0+sha.7ac7c29fea3d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NetworkAPI-0.0.0+sha.7ac7c29fea3d.tar.gz",
+    "size_bytes": 7791,
+    "sha256": "4eb29cc84a7be2dcb8a656438227e6a892013be0124345cab1fcb1fa4eae5f87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-negativeblack/library/NetworkAPI/0.0.0%2Bsha.7ac7c29fea3d/NetworkAPI-0.0.0%2Bsha.7ac7c29fea3d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-negativeblack/library/NetworkAPI/0.0.0%2Bsha.7ac7c29fea3d/NetworkAPI-0.0.0%2Bsha.7ac7c29fea3d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-negativeblack/library/SHTx/0.0.0+sha.8465801be23f/SHTx-0.0.0+sha.8465801be23f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHTx-0.0.0+sha.8465801be23f.tar.gz",
+    "size_bytes": 5640,
+    "sha256": "05540f3047c6a05eba5aa03b69374b190abd496f87162d0b47d628a285a4c26e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-negativeblack/library/SHTx/0.0.0%2Bsha.8465801be23f/SHTx-0.0.0%2Bsha.8465801be23f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-negativeblack/library/SHTx/0.0.0%2Bsha.8465801be23f/SHTx-0.0.0%2Bsha.8465801be23f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

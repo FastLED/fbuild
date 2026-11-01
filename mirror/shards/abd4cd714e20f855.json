@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hsaturn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hsaturn/library/TinyConsole/0.4.3/TinyConsole-0.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyConsole-0.4.3.tar.gz",
+    "size_bytes": 83461,
+    "sha256": "5325f241e39ee16c7edacef8ae8c5786182a0ae62b898a686732383dfab43572",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hsaturn/library/TinyConsole/0.4.3/TinyConsole-0.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hsaturn/library/TinyConsole/0.4.3/TinyConsole-0.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hsaturn/library/TinyMqtt/0.9.18/TinyMqtt-0.9.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyMqtt-0.9.18.tar.gz",
+    "size_bytes": 36630,
+    "sha256": "10f2c79a614e501dca55804d214e19e3704fd826784df940aee77952c86c20f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hsaturn/library/TinyMqtt/0.9.18/TinyMqtt-0.9.18.tar.gz",
+     "https://dl.registry.platformio.org/download/hsaturn/library/TinyMqtt/0.9.18/TinyMqtt-0.9.18.tar.gz"
+    ]
+   }
+  }
+ ]
+}

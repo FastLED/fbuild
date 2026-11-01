@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dgeras",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dgeras/library/LEDtest/0.0.0+sha.25872697f694/LEDtest-0.0.0+sha.25872697f694.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LEDtest-0.0.0+sha.25872697f694.tar.gz",
+    "size_bytes": 1134,
+    "sha256": "08dc9c57c81c166eeba89d028ad4a5063a665093eaa904160fde1678d2f81a0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dgeras/library/LEDtest/0.0.0%2Bsha.25872697f694/LEDtest-0.0.0%2Bsha.25872697f694.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dgeras/library/LEDtest/0.0.0%2Bsha.25872697f694/LEDtest-0.0.0%2Bsha.25872697f694.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-papaco",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-papaco/library/AX_12W/0.0.0+sha.342f5327a1e0/AX_12W-0.0.0+sha.342f5327a1e0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AX_12W-0.0.0+sha.342f5327a1e0.tar.gz",
+    "size_bytes": 2901,
+    "sha256": "325c1e20298a78c362c4e4089b343382c9f2bdd1b02ac8cd9e47d704e748b64b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-papaco/library/AX_12W/0.0.0%2Bsha.342f5327a1e0/AX_12W-0.0.0%2Bsha.342f5327a1e0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-papaco/library/AX_12W/0.0.0%2Bsha.342f5327a1e0/AX_12W-0.0.0%2Bsha.342f5327a1e0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bowenfeng",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bowenfeng/library/BLE_HID/0.0.0+sha.24365c168c4e/BLE_HID-0.0.0+sha.24365c168c4e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE_HID-0.0.0+sha.24365c168c4e.tar.gz",
+    "size_bytes": 12675,
+    "sha256": "0915388639a5232a16a79eec04a8342bc2a85ac9286bb6bb981f14d8b8da9320",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bowenfeng/library/BLE_HID/0.0.0%2Bsha.24365c168c4e/BLE_HID-0.0.0%2Bsha.24365c168c4e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bowenfeng/library/BLE_HID/0.0.0%2Bsha.24365c168c4e/BLE_HID-0.0.0%2Bsha.24365c168c4e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

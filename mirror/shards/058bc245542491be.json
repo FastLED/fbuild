@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yasir-shahzad",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yasir-shahzad/library/ADS122U04%20ADC%20Arduino%20Library/1.0.4/ADS122U04ADCArduinoLibrary-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS122U04ADCArduinoLibrary-1.0.4.tar.gz",
+    "size_bytes": 14788,
+    "sha256": "648b57ecaad3add8a53c5a446a5ea47377e9f47eb656d9d38f3d0a8ec26d4f14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yasir-shahzad/library/ADS122U04%2520ADC%2520Arduino%2520Library/1.0.4/ADS122U04ADCArduinoLibrary-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/yasir-shahzad/library/ADS122U04%20ADC%20Arduino%20Library/1.0.4/ADS122U04ADCArduinoLibrary-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yasir-shahzad/library/AM4096/1.0.0/AM4096-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AM4096-1.0.0.tar.gz",
+    "size_bytes": 7420,
+    "sha256": "9cd740b374ecaf6dac9b18167c6b66f3a0be4099d6436b67154913a26baa4990",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yasir-shahzad/library/AM4096/1.0.0/AM4096-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yasir-shahzad/library/AM4096/1.0.0/AM4096-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yasir-shahzad/library/CS5530/0.8.0/CS5530-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CS5530-0.8.0.tar.gz",
+    "size_bytes": 9045,
+    "sha256": "33070e448990de70423876df676a2b9162813e85248511baf6111663dfc0b03f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yasir-shahzad/library/CS5530/0.8.0/CS5530-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yasir-shahzad/library/CS5530/0.8.0/CS5530-0.8.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/4project-co-il",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "4project-co-il/library/EventBasedFramework/0.3.0/EventBasedFramework-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EventBasedFramework-0.3.0.tar.gz",
+    "size_bytes": 56246,
+    "sha256": "e04d278dc3439eafefd56a34a1ac1fab737db8a8bafba171e6a5172efc6e096c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4project-co-il/library/EventBasedFramework/0.3.0/EventBasedFramework-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/4project-co-il/library/EventBasedFramework/0.3.0/EventBasedFramework-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4project-co-il/library/EventBasedFramework/0.3.1/EventBasedFramework-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EventBasedFramework-0.3.1.tar.gz",
+    "size_bytes": 57097,
+    "sha256": "788a19b98f1ae6ed38596c36f6bda3d4a425c18e1e561109038c56b7f47de270",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4project-co-il/library/EventBasedFramework/0.3.1/EventBasedFramework-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/4project-co-il/library/EventBasedFramework/0.3.1/EventBasedFramework-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4project-co-il/library/EventBasedFramework/0.3.2/EventBasedFramework-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EventBasedFramework-0.3.2.tar.gz",
+    "size_bytes": 56803,
+    "sha256": "a624a901d335cf570e90ee7287e48ea6413ac3bddad6cabcb2f7ff86b0538391",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4project-co-il/library/EventBasedFramework/0.3.2/EventBasedFramework-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/4project-co-il/library/EventBasedFramework/0.3.2/EventBasedFramework-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4project-co-il/library/PlugAndPlay/0.1.0/PlugAndPlay-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlugAndPlay-0.1.0.tar.gz",
+    "size_bytes": 20843,
+    "sha256": "0a75408e4a12cebf134e29673a1e46709b74ae9d0e32f7d0b16467dbe0347bfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4project-co-il/library/PlugAndPlay/0.1.0/PlugAndPlay-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/4project-co-il/library/PlugAndPlay/0.1.0/PlugAndPlay-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4project-co-il/library/PlugAndPlay/0.1.1/PlugAndPlay-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlugAndPlay-0.1.1.tar.gz",
+    "size_bytes": 21617,
+    "sha256": "f8c9a3c3e9cb02ab2948312076fe4b2106bf897b0dd18a2c2daa145e1c9b7784",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4project-co-il/library/PlugAndPlay/0.1.1/PlugAndPlay-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/4project-co-il/library/PlugAndPlay/0.1.1/PlugAndPlay-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4project-co-il/library/PlugAndPlay/0.1.3/PlugAndPlay-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlugAndPlay-0.1.3.tar.gz",
+    "size_bytes": 27190,
+    "sha256": "7435f223b6f15dd08e6211f685564b4d268c2094f862b8e0dd686df596547258",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4project-co-il/library/PlugAndPlay/0.1.3/PlugAndPlay-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/4project-co-il/library/PlugAndPlay/0.1.3/PlugAndPlay-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "4project-co-il/library/PlugAndPlay/0.1.4/PlugAndPlay-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PlugAndPlay-0.1.4.tar.gz",
+    "size_bytes": 27096,
+    "sha256": "4256de27c05a6ff65aa267d3a5bf2bd74a725dff955a78c39330bf5f5b968317",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/4project-co-il/library/PlugAndPlay/0.1.4/PlugAndPlay-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/4project-co-il/library/PlugAndPlay/0.1.4/PlugAndPlay-0.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

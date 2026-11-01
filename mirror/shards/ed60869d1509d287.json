@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-j-rocket-boy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-j-rocket-boy/library/BME280/0.0.0+sha.c5f2c8022931/BME280-0.0.0+sha.c5f2c8022931.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280-0.0.0+sha.c5f2c8022931.tar.gz",
+    "size_bytes": 5091,
+    "sha256": "1a2452fa21c91ecabaf7ffcb58807579c7318b87b33a4c60cc58194bfde05cc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-j-rocket-boy/library/BME280/0.0.0%2Bsha.c5f2c8022931/BME280-0.0.0%2Bsha.c5f2c8022931.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-j-rocket-boy/library/BME280/0.0.0%2Bsha.c5f2c8022931/BME280-0.0.0%2Bsha.c5f2c8022931.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-j-rocket-boy/library/GPS_INT/0.0.0+sha.9d9e62cebda8/GPS_INT-0.0.0+sha.9d9e62cebda8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GPS_INT-0.0.0+sha.9d9e62cebda8.tar.gz",
+    "size_bytes": 3717,
+    "sha256": "230b4749569599e126fb257ea1cee9d9c7d53ced5f6795cac1cb0de9df76940a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-j-rocket-boy/library/GPS_INT/0.0.0%2Bsha.9d9e62cebda8/GPS_INT-0.0.0%2Bsha.9d9e62cebda8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-j-rocket-boy/library/GPS_INT/0.0.0%2Bsha.9d9e62cebda8/GPS_INT-0.0.0%2Bsha.9d9e62cebda8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-j-rocket-boy/library/ServoMotor/0.0.0+sha.b46b05ed2f27/ServoMotor-0.0.0+sha.b46b05ed2f27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoMotor-0.0.0+sha.b46b05ed2f27.tar.gz",
+    "size_bytes": 1509,
+    "sha256": "6eddbec5de9b99a454c06cf964ffce84354a0ec03622a3b750e77dfd032cab82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-j-rocket-boy/library/ServoMotor/0.0.0%2Bsha.b46b05ed2f27/ServoMotor-0.0.0%2Bsha.b46b05ed2f27.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-j-rocket-boy/library/ServoMotor/0.0.0%2Bsha.b46b05ed2f27/ServoMotor-0.0.0%2Bsha.b46b05ed2f27.tar.gz"
+    ]
+   }
+  }
+ ]
+}

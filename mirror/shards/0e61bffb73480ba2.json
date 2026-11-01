@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nkhorman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nkhorman/library/Adafruit_RTCLib/0.0.0+sha.2c4e81ecda67/Adafruit_RTCLib-0.0.0+sha.2c4e81ecda67.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_RTCLib-0.0.0+sha.2c4e81ecda67.tar.gz",
+    "size_bytes": 3649,
+    "sha256": "39721892378a70ffefd367ccd726e98188be177e160d0a23a17d5befe29f3fd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nkhorman/library/Adafruit_RTCLib/0.0.0%2Bsha.2c4e81ecda67/Adafruit_RTCLib-0.0.0%2Bsha.2c4e81ecda67.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nkhorman/library/Adafruit_RTCLib/0.0.0%2Bsha.2c4e81ecda67/Adafruit_RTCLib-0.0.0%2Bsha.2c4e81ecda67.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-nkhorman/library/CardReader/0.0.0+sha.b468573740b5/CardReader-0.0.0+sha.b468573740b5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CardReader-0.0.0+sha.b468573740b5.tar.gz",
+    "size_bytes": 1916,
+    "sha256": "a6a8090d089a719f72ce2137a5d817f7fd80aff16a30ba2acabf9afa15a2067a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nkhorman/library/CardReader/0.0.0%2Bsha.b468573740b5/CardReader-0.0.0%2Bsha.b468573740b5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nkhorman/library/CardReader/0.0.0%2Bsha.b468573740b5/CardReader-0.0.0%2Bsha.b468573740b5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/csu3333",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "csu3333/library/TFTPClient/1.0.3/TFTPClient-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFTPClient-1.0.3.tar.gz",
+    "size_bytes": 17430,
+    "sha256": "1f8b81a5b037d89e4402bcd9b20ac78ac65c41da980d2443f67e12f22c678659",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/csu3333/library/TFTPClient/1.0.3/TFTPClient-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/csu3333/library/TFTPClient/1.0.3/TFTPClient-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "csu3333/library/TFTPClient/1.0.4/TFTPClient-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFTPClient-1.0.4.tar.gz",
+    "size_bytes": 17425,
+    "sha256": "d39233f41ebefa7ada671948aca589031dd9b84a2f98a32bf807f8150355bc0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/csu3333/library/TFTPClient/1.0.4/TFTPClient-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/csu3333/library/TFTPClient/1.0.4/TFTPClient-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/allwize",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "allwize/library/AllWize/1.1.6/AllWize-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AllWize-1.1.6.tar.gz",
+    "size_bytes": 936270,
+    "sha256": "eb58c4e84b7ef2e30e23cfabb8e1d6c5a4ae7371a69c1765eb4af617d5c80560",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/allwize/library/AllWize/1.1.6/AllWize-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/allwize/library/AllWize/1.1.6/AllWize-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "allwize/library/MBUSPayload/1.0.1/MBUSPayload-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MBUSPayload-1.0.1.tar.gz",
+    "size_bytes": 13307,
+    "sha256": "263304a0fa010b13a25b744c10e10640b6aed2dbbfb5616375d814eea2231ecb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/allwize/library/MBUSPayload/1.0.1/MBUSPayload-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/allwize/library/MBUSPayload/1.0.1/MBUSPayload-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

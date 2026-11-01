@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mumanchu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mumanchu/library/AS7331UVSensor/1.0.0/AS7331UVSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS7331UVSensor-1.0.0.tar.gz",
+    "size_bytes": 16926,
+    "sha256": "8b0501990ace36bd28b47f92034f8cd500f540b701dfa7fcea7b4d9f896543fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mumanchu/library/AS7331UVSensor/1.0.0/AS7331UVSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mumanchu/library/AS7331UVSensor/1.0.0/AS7331UVSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mumanchu/library/AS7331UVSensor/1.0.1/AS7331UVSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS7331UVSensor-1.0.1.tar.gz",
+    "size_bytes": 17133,
+    "sha256": "fe5cf6baa214a0e59fa820f06c574b5451cab0d05f81044cb62b437c88b19290",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mumanchu/library/AS7331UVSensor/1.0.1/AS7331UVSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mumanchu/library/AS7331UVSensor/1.0.1/AS7331UVSensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mumanchu/library/AnalogKeypad5/1.0.0/AnalogKeypad5-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogKeypad5-1.0.0.tar.gz",
+    "size_bytes": 5515,
+    "sha256": "ac2930017fcb06d73721db2d3b9bc25cf6ff2af26f9c105058c0268996c5340e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mumanchu/library/AnalogKeypad5/1.0.0/AnalogKeypad5-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mumanchu/library/AnalogKeypad5/1.0.0/AnalogKeypad5-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mumanchu/library/LTR390UVSensor/1.0.0/LTR390UVSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTR390UVSensor-1.0.0.tar.gz",
+    "size_bytes": 7879,
+    "sha256": "accbc8083f03b41efd0e5ef180103a4f5c8f38914efa9c913cd4c8aa3cc48951",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mumanchu/library/LTR390UVSensor/1.0.0/LTR390UVSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mumanchu/library/LTR390UVSensor/1.0.0/LTR390UVSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mumanchu/library/MultiTimerSAMD/1.0.0/MultiTimerSAMD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiTimerSAMD-1.0.0.tar.gz",
+    "size_bytes": 26564,
+    "sha256": "497c05f31983a66de6dd7110fd668f1f8b6dddff3cd838a5907dea359c31a0ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mumanchu/library/MultiTimerSAMD/1.0.0/MultiTimerSAMD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mumanchu/library/MultiTimerSAMD/1.0.0/MultiTimerSAMD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mumanchu/library/MultiTimerSAMD/1.0.1/MultiTimerSAMD-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiTimerSAMD-1.0.1.tar.gz",
+    "size_bytes": 26845,
+    "sha256": "d560e0cbed11bc940733346e85cad94fe1c9f3b3a16e99c22702f5ecab3b45e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mumanchu/library/MultiTimerSAMD/1.0.1/MultiTimerSAMD-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mumanchu/library/MultiTimerSAMD/1.0.1/MultiTimerSAMD-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mumanchu/library/OptimizedGPIO/1.0.0/OptimizedGPIO-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OptimizedGPIO-1.0.0.tar.gz",
+    "size_bytes": 12923,
+    "sha256": "926b3005e7a2de0e2598418dbf324bd2f1d6d01b2110543836989875a4e46859",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mumanchu/library/OptimizedGPIO/1.0.0/OptimizedGPIO-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mumanchu/library/OptimizedGPIO/1.0.0/OptimizedGPIO-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mumanchu/library/QMC5883PMagnetometer/0.0.1/QMC5883PMagnetometer-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QMC5883PMagnetometer-0.0.1.tar.gz",
+    "size_bytes": 17358,
+    "sha256": "f2af6d33ba8f05cff57d134e241d30a887ac4026156a1a35adeb4aed9983e8c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mumanchu/library/QMC5883PMagnetometer/0.0.1/QMC5883PMagnetometer-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mumanchu/library/QMC5883PMagnetometer/0.0.1/QMC5883PMagnetometer-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mumanchu/library/QMC5883PMagnetometer/0.0.2/QMC5883PMagnetometer-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QMC5883PMagnetometer-0.0.2.tar.gz",
+    "size_bytes": 17387,
+    "sha256": "f12651ab52c01b78d5633666fea0ec17f9049368c114c0bf8817025386ef5f14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mumanchu/library/QMC5883PMagnetometer/0.0.2/QMC5883PMagnetometer-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mumanchu/library/QMC5883PMagnetometer/0.0.2/QMC5883PMagnetometer-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mumanchu/library/SerialRGBLed/1.0.0/SerialRGBLed-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialRGBLed-1.0.0.tar.gz",
+    "size_bytes": 10022,
+    "sha256": "0a50cb795cd9838cdb03bf8dc5e71fac148aa97340f1a8f9f145b7f9dcaa620a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mumanchu/library/SerialRGBLed/1.0.0/SerialRGBLed-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mumanchu/library/SerialRGBLed/1.0.0/SerialRGBLed-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mumanchu/library/TMC22xxDriver/1.0.0/TMC22xxDriver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC22xxDriver-1.0.0.tar.gz",
+    "size_bytes": 31029,
+    "sha256": "a345eb209a6ea0b6c3e770668add2c0884e5aca7e56a94b5ce9869beffbe7439",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mumanchu/library/TMC22xxDriver/1.0.0/TMC22xxDriver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mumanchu/library/TMC22xxDriver/1.0.0/TMC22xxDriver-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mumanchu/library/TMC22xxDriver/1.0.1/TMC22xxDriver-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC22xxDriver-1.0.1.tar.gz",
+    "size_bytes": 30989,
+    "sha256": "df22c8d49a381261a8dbefeafcf937f41588430292c7c0ef005dc8e29e7d6c84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mumanchu/library/TMC22xxDriver/1.0.1/TMC22xxDriver-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mumanchu/library/TMC22xxDriver/1.0.1/TMC22xxDriver-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mumanchu/library/TMC22xxDriver/1.0.2/TMC22xxDriver-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC22xxDriver-1.0.2.tar.gz",
+    "size_bytes": 30759,
+    "sha256": "96b0e13b3684cdf83af0264a77b052dfc8cbaf71ad9a0f45c3d1b2f9ba402c73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mumanchu/library/TMC22xxDriver/1.0.2/TMC22xxDriver-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mumanchu/library/TMC22xxDriver/1.0.2/TMC22xxDriver-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mumanchu/library/W25QxxFlash/1.0.1/W25QxxFlash-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "W25QxxFlash-1.0.1.tar.gz",
+    "size_bytes": 7468,
+    "sha256": "58379629579d9f56a76b50d1ce1e76e937de0142489590d44b691458fda09044",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mumanchu/library/W25QxxFlash/1.0.1/W25QxxFlash-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mumanchu/library/W25QxxFlash/1.0.1/W25QxxFlash-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

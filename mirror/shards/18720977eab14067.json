@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/llelundberg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "llelundberg/library/EasyWebServer/1.0/EasyWebServer-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyWebServer-1.0.tar.gz",
+    "size_bytes": 722,
+    "sha256": "7568f56326dbe2980cdf2d264f9b6df180e079076f0433263113984ffcc8cd0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/llelundberg/library/EasyWebServer/1.0/EasyWebServer-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/llelundberg/library/EasyWebServer/1.0/EasyWebServer-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

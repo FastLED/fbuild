@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/beniseman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "beniseman/library/HX71708/0.1.0/HX71708-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HX71708-0.1.0.tar.gz",
+    "size_bytes": 5923,
+    "sha256": "315bbcdd4d0655b3d08dd73a2a883383704f3ef9db2c10658ae3f773a3528de2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beniseman/library/HX71708/0.1.0/HX71708-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beniseman/library/HX71708/0.1.0/HX71708-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "beniseman/library/lineScale/0.1.0/lineScale-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lineScale-0.1.0.tar.gz",
+    "size_bytes": 16828,
+    "sha256": "5fec4a97df069041c1a7e0e8cf671d481212d55d0ce8730fb8134736a102a1ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/beniseman/library/lineScale/0.1.0/lineScale-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/beniseman/library/lineScale/0.1.0/lineScale-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

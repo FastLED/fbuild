@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/p33a",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "p33a/library/Pico4Drive/1.0.1/Pico4Drive-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pico4Drive-1.0.1.tar.gz",
+    "size_bytes": 6483,
+    "sha256": "93eb915778d49cf02118d13909f6610912f4e4cf04852c1a67150c98139615b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/p33a/library/Pico4Drive/1.0.1/Pico4Drive-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/p33a/library/Pico4Drive/1.0.1/Pico4Drive-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

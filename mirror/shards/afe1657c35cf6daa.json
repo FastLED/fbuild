@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-scsims",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-scsims/library/X_NUCLEO_IDW01M1_AP/0.0.0+sha.a1276b7d3b2d/X_NUCLEO_IDW01M1_AP-0.0.0+sha.a1276b7d3b2d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "X_NUCLEO_IDW01M1_AP-0.0.0+sha.a1276b7d3b2d.tar.gz",
+    "size_bytes": 52995,
+    "sha256": "4bfd41464c72979ed3164cb690fb4391c00545bb98de2fd868a4973855d0fbc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-scsims/library/X_NUCLEO_IDW01M1_AP/0.0.0%2Bsha.a1276b7d3b2d/X_NUCLEO_IDW01M1_AP-0.0.0%2Bsha.a1276b7d3b2d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-scsims/library/X_NUCLEO_IDW01M1_AP/0.0.0%2Bsha.a1276b7d3b2d/X_NUCLEO_IDW01M1_AP-0.0.0%2Bsha.a1276b7d3b2d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

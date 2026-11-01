@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/androbi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "androbi/library/MqttLogger/0.2.3/MqttLogger-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MqttLogger-0.2.3.tar.gz",
+    "size_bytes": 5090,
+    "sha256": "393be491c42324632a0382eedc49d23f2bf75d9b9152fd65e7197febdf665b35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/androbi/library/MqttLogger/0.2.3/MqttLogger-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/androbi/library/MqttLogger/0.2.3/MqttLogger-0.2.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

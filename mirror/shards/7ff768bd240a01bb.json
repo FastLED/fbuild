@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dmt-services",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dmt-services/library/GeoMagnetism/1.1.0/GeoMagnetism-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeoMagnetism-1.1.0.tar.gz",
+    "size_bytes": 37157,
+    "sha256": "575b77921bc13a3dbf82786fec6d9042c050b2d3cc7c96dd19502a98467b4d83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmt-services/library/GeoMagnetism/1.1.0/GeoMagnetism-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dmt-services/library/GeoMagnetism/1.1.0/GeoMagnetism-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

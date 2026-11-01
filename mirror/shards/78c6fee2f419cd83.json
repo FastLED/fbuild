@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sequentmicrosystems",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sequentmicrosystems/library/SM_16DIGIN/1.0.0/SM_16DIGIN-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SM_16DIGIN-1.0.0.tar.gz",
+    "size_bytes": 4624,
+    "sha256": "9690bfa6ddd0d1e510986ca3b978de823e0d9eb1f3c1dea1e78a080392ffa4b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sequentmicrosystems/library/SM_16DIGIN/1.0.0/SM_16DIGIN-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sequentmicrosystems/library/SM_16DIGIN/1.0.0/SM_16DIGIN-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sequentmicrosystems/library/SM_16RELAYS/1.0.0/SM_16RELAYS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SM_16RELAYS-1.0.0.tar.gz",
+    "size_bytes": 5039,
+    "sha256": "b30f6780899edb6d10c8acf3d64c5f29282e0ef51592d3af70704e374d0d8804",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sequentmicrosystems/library/SM_16RELAYS/1.0.0/SM_16RELAYS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sequentmicrosystems/library/SM_16RELAYS/1.0.0/SM_16RELAYS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sequentmicrosystems/library/SM_16UNIVIN/1.0.1/SM_16UNIVIN-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SM_16UNIVIN-1.0.1.tar.gz",
+    "size_bytes": 6847,
+    "sha256": "f7261c8a55bf428af6726c6add93b85ebd381e8c012d2d93260961919cf4e6bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sequentmicrosystems/library/SM_16UNIVIN/1.0.1/SM_16UNIVIN-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sequentmicrosystems/library/SM_16UNIVIN/1.0.1/SM_16UNIVIN-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sequentmicrosystems/library/SM_4REL4IN/1.0.1/SM_4REL4IN-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SM_4REL4IN-1.0.1.tar.gz",
+    "size_bytes": 5795,
+    "sha256": "87478c2a14d0866eb24330fa23cdca907337bc384d3df1e95b0dd1640f7c693a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sequentmicrosystems/library/SM_4REL4IN/1.0.1/SM_4REL4IN-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sequentmicrosystems/library/SM_4REL4IN/1.0.1/SM_4REL4IN-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sequentmicrosystems/library/SM_8CRT/1.0.0/SM_8CRT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SM_8CRT-1.0.0.tar.gz",
+    "size_bytes": 6128,
+    "sha256": "727cbc304a0f2521a7ebdf691019258e3ed47dd560c73561ec4cd3b588f247b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sequentmicrosystems/library/SM_8CRT/1.0.0/SM_8CRT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sequentmicrosystems/library/SM_8CRT/1.0.0/SM_8CRT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sequentmicrosystems/library/SM_8MOS/1.0.1/SM_8MOS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SM_8MOS-1.0.1.tar.gz",
+    "size_bytes": 5245,
+    "sha256": "499019c295c9339152748388c1b358fbef9a0b5b539eadc575579e6a4033bb1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sequentmicrosystems/library/SM_8MOS/1.0.1/SM_8MOS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sequentmicrosystems/library/SM_8MOS/1.0.1/SM_8MOS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sequentmicrosystems/library/SM_BAS/1.0.0/SM_BAS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SM_BAS-1.0.0.tar.gz",
+    "size_bytes": 6235,
+    "sha256": "bfcb573f2ff61e52ccae615a922f956aca7b227f4147b1d506df037b4ae9c76a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sequentmicrosystems/library/SM_BAS/1.0.0/SM_BAS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sequentmicrosystems/library/SM_BAS/1.0.0/SM_BAS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sequentmicrosystems/library/SM_ESP32Pi/1.0.0/SM_ESP32Pi-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SM_ESP32Pi-1.0.0.tar.gz",
+    "size_bytes": 9287,
+    "sha256": "d07f1e5d070c09d5fee74844a9ab63793bf1e4f4593f7bc9e150fab5ccd2b6e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sequentmicrosystems/library/SM_ESP32Pi/1.0.0/SM_ESP32Pi-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sequentmicrosystems/library/SM_ESP32Pi/1.0.0/SM_ESP32Pi-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sequentmicrosystems/library/SM_LCDAdapter/1.0.2/SM_LCDAdapter-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SM_LCDAdapter-1.0.2.tar.gz",
+    "size_bytes": 7496,
+    "sha256": "4108d4ae7320ef6cc926e56fa5acdb4639e57bd203dc00a2df7a4924f95fa99c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sequentmicrosystems/library/SM_LCDAdapter/1.0.2/SM_LCDAdapter-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sequentmicrosystems/library/SM_LCDAdapter/1.0.2/SM_LCDAdapter-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sequentmicrosystems/library/SM_RTD/1.0.0/SM_RTD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SM_RTD-1.0.0.tar.gz",
+    "size_bytes": 4679,
+    "sha256": "4768ac572fc064129c6040aaa5af7508f216dfb8034e3cde2e785560d00f53ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sequentmicrosystems/library/SM_RTD/1.0.0/SM_RTD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sequentmicrosystems/library/SM_RTD/1.0.0/SM_RTD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sequentmicrosystems/library/SM_TC/1.0.0/SM_TC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SM_TC-1.0.0.tar.gz",
+    "size_bytes": 5206,
+    "sha256": "f39fd5967629703f2466b9ade90f1a46f97b05f807dc3527064b590a8400d4fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sequentmicrosystems/library/SM_TC/1.0.0/SM_TC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sequentmicrosystems/library/SM_TC/1.0.0/SM_TC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sequentmicrosystems/library/Sequent%20Home%20Automation%20HAT/1.0.2/SequentHomeAutomationHAT-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SequentHomeAutomationHAT-1.0.2.tar.gz",
+    "size_bytes": 6738,
+    "sha256": "fc80abec43ee73b6ae2e336d89cf20388b329a0a1b395c494230ef91bfa5c104",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sequentmicrosystems/library/Sequent%2520Home%2520Automation%2520HAT/1.0.2/SequentHomeAutomationHAT-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sequentmicrosystems/library/Sequent%20Home%20Automation%20HAT/1.0.2/SequentHomeAutomationHAT-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

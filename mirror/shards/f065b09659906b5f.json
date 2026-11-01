@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mcuw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mcuw/library/MCUW_LoRa_boards/0.1.12/MCUW_LoRa_boards-0.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCUW_LoRa_boards-0.1.12.tar.gz",
+    "size_bytes": 24052,
+    "sha256": "830e8f28e034cd2f52493573b5aba10421e37b8f6fd4c015119c3753fbe8fb6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcuw/library/MCUW_LoRa_boards/0.1.12/MCUW_LoRa_boards-0.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/mcuw/library/MCUW_LoRa_boards/0.1.12/MCUW_LoRa_boards-0.1.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcuw/library/MCUW_LoRa_boards/0.1.16/MCUW_LoRa_boards-0.1.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCUW_LoRa_boards-0.1.16.tar.gz",
+    "size_bytes": 24888,
+    "sha256": "2a201f65ece43e1f33dfa6f43d2f7133e445ce48301de83389e8aae498e63835",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcuw/library/MCUW_LoRa_boards/0.1.16/MCUW_LoRa_boards-0.1.16.tar.gz",
+     "https://dl.registry.platformio.org/download/mcuw/library/MCUW_LoRa_boards/0.1.16/MCUW_LoRa_boards-0.1.16.tar.gz"
+    ]
+   }
+  }
+ ]
+}

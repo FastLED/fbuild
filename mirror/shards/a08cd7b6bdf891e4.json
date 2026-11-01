@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/biomurph",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "biomurph/library/GrayCode/1.1.0/GrayCode-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GrayCode-1.1.0.tar.gz",
+    "size_bytes": 5079,
+    "sha256": "b939ed24d6a840cf1addfc02316b3b3250b183b2a76dfdc966f07f09d831d709",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/biomurph/library/GrayCode/1.1.0/GrayCode-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/biomurph/library/GrayCode/1.1.0/GrayCode-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

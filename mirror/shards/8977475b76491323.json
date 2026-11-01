@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/babisboras",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "babisboras/library/QCellMotorDriver/1.1.0/QCellMotorDriver-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QCellMotorDriver-1.1.0.tar.gz",
+    "size_bytes": 10890,
+    "sha256": "9fad9dbd3586ccdd2e2d8503c96120729e239cfb714d69a2e9c315d04f74e73e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/babisboras/library/QCellMotorDriver/1.1.0/QCellMotorDriver-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/babisboras/library/QCellMotorDriver/1.1.0/QCellMotorDriver-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

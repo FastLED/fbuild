@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pablomarquez76",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pablomarquez76/library/ESP8266SAM_ES/1.1.0/ESP8266SAM_ES-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266SAM_ES-1.1.0.tar.gz",
+    "size_bytes": 46097,
+    "sha256": "ca7bac9fb3fa60920bd32ad860c131530dbf17823509cde9716a7d5ec801fa10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pablomarquez76/library/ESP8266SAM_ES/1.1.0/ESP8266SAM_ES-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pablomarquez76/library/ESP8266SAM_ES/1.1.0/ESP8266SAM_ES-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pablomarquez76/library/ESP8266SAM_ES/1.1.1/ESP8266SAM_ES-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266SAM_ES-1.1.1.tar.gz",
+    "size_bytes": 46102,
+    "sha256": "da25dae3849de18be1bd41cebf855b6e5d518cb060a5af7f3f85a777464b8874",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pablomarquez76/library/ESP8266SAM_ES/1.1.1/ESP8266SAM_ES-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pablomarquez76/library/ESP8266SAM_ES/1.1.1/ESP8266SAM_ES-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pablomarquez76/library/ESP8266SAM_ES/1.1.2/ESP8266SAM_ES-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266SAM_ES-1.1.2.tar.gz",
+    "size_bytes": 45856,
+    "sha256": "27636b8bfe45d7a56692994aaba6a7d3351ad2a215d7bceb8bc5f758ab635402",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pablomarquez76/library/ESP8266SAM_ES/1.1.2/ESP8266SAM_ES-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pablomarquez76/library/ESP8266SAM_ES/1.1.2/ESP8266SAM_ES-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pablomarquez76/library/ESP8266SAM_ES/1.1.3/ESP8266SAM_ES-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266SAM_ES-1.1.3.tar.gz",
+    "size_bytes": 45849,
+    "sha256": "88a26f40813939dec36a678af015b80b358c906cf87f36120fc32225b6da1b15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pablomarquez76/library/ESP8266SAM_ES/1.1.3/ESP8266SAM_ES-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pablomarquez76/library/ESP8266SAM_ES/1.1.3/ESP8266SAM_ES-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pablomarquez76/library/PS4_Controller_Host/1.1.1/PS4_Controller_Host-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS4_Controller_Host-1.1.1.tar.gz",
+    "size_bytes": 31711,
+    "sha256": "54c56bd7968b91cf7625707b4113f759cf09e8218d573480b0278835aed68ff7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pablomarquez76/library/PS4_Controller_Host/1.1.1/PS4_Controller_Host-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pablomarquez76/library/PS4_Controller_Host/1.1.1/PS4_Controller_Host-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

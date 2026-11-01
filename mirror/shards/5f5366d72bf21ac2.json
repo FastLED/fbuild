@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nitko12",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nitko12/library/InkplateLibrary/1.0.0/InkplateLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "InkplateLibrary-1.0.0.tar.gz",
+    "size_bytes": 21902636,
+    "sha256": "358deb5e8c04d27f1feea1196de1e450614049cf3134c97d739973331f507e10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitko12/library/InkplateLibrary/1.0.0/InkplateLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitko12/library/InkplateLibrary/1.0.0/InkplateLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/till%40uhde.com",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "till@uhde.com/library/Periph/1.2.1/Periph-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Periph-1.2.1.tar.gz",
+    "size_bytes": 317429,
+    "sha256": "f68c68a30ded89cbb892f5655f601d00a756d77c158d8ce834c6b56294549a88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/till%40uhde.com/library/Periph/1.2.1/Periph-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/till%40uhde.com/library/Periph/1.2.1/Periph-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,620 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pololu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pololu/library/A4990MotorShield/2.0.0/A4990MotorShield-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "A4990MotorShield-2.0.0.tar.gz",
+    "size_bytes": 4961,
+    "sha256": "d27f8c6e0d3cff748a5d8c87a9db0f0a1b1cce807c33ac1798db0e678af83b93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/A4990MotorShield/2.0.0/A4990MotorShield-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/A4990MotorShield/2.0.0/A4990MotorShield-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/ACS37800/1.0.0/ACS37800-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACS37800-1.0.0.tar.gz",
+    "size_bytes": 8737,
+    "sha256": "f634ba594d92810d6e5d4b9d8b21f211ff929c124024c357fd40979a081f504f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/ACS37800/1.0.0/ACS37800-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/ACS37800/1.0.0/ACS37800-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/AMIS30543/1.1.0/AMIS30543-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMIS30543-1.1.0.tar.gz",
+    "size_bytes": 14925,
+    "sha256": "e2198a72cf6c6b5e81ef561b69156b3f0d365beedb2cfafda9b26778b9023bb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/AMIS30543/1.1.0/AMIS30543-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/AMIS30543/1.1.0/AMIS30543-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/APA102/3.0.0/APA102-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APA102-3.0.0.tar.gz",
+    "size_bytes": 20802,
+    "sha256": "5f8d1af25f4fc518864e81750cab691ae213e3e7ec642d51130d27a73fde1199",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/APA102/3.0.0/APA102-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/APA102/3.0.0/APA102-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/AStar32U4/1.1.1/AStar32U4-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AStar32U4-1.1.1.tar.gz",
+    "size_bytes": 42557,
+    "sha256": "03b010a3655c0ed4a49a78d25db45590903b1f501a17fd2aa2278e881be01b74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/AStar32U4/1.1.1/AStar32U4-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/AStar32U4/1.1.1/AStar32U4-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/Balboa32U4/1.1.2/Balboa32U4-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Balboa32U4-1.1.2.tar.gz",
+    "size_bytes": 60000,
+    "sha256": "d5a8343916b2ddf4382828d142aa7a79f8e1e47c7afdc132ef8b82747ca340ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/Balboa32U4/1.1.2/Balboa32U4-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/Balboa32U4/1.1.2/Balboa32U4-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/DRV8434S/1.0.1/DRV8434S-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DRV8434S-1.0.1.tar.gz",
+    "size_bytes": 11489,
+    "sha256": "99810d927504dc7273bc389e6e8911bbefb423b52792c35e211a1d3fe1e41744",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/DRV8434S/1.0.1/DRV8434S-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/DRV8434S/1.0.1/DRV8434S-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/DRV8835MotorShield/2.1.0/DRV8835MotorShield-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DRV8835MotorShield-2.1.0.tar.gz",
+    "size_bytes": 5523,
+    "sha256": "ad1444fff1738b79d983de30d0fc4f9325e4aaea98a1fd7f57aef34a68134996",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/DRV8835MotorShield/2.1.0/DRV8835MotorShield-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/DRV8835MotorShield/2.1.0/DRV8835MotorShield-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/DualG2HighPowerMotorShield/2.0.0/DualG2HighPowerMotorShield-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DualG2HighPowerMotorShield-2.0.0.tar.gz",
+    "size_bytes": 6478,
+    "sha256": "a2e734352da716540dfaf38e92beb76905b5ae19c2d84690aacf082ab552106f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/DualG2HighPowerMotorShield/2.0.0/DualG2HighPowerMotorShield-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/DualG2HighPowerMotorShield/2.0.0/DualG2HighPowerMotorShield-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/DualMAX14870MotorShield/2.0.0/DualMAX14870MotorShield-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DualMAX14870MotorShield-2.0.0.tar.gz",
+    "size_bytes": 5053,
+    "sha256": "c624d37e17852efd30e795ddbc755577c3241c70edc83f7254bbd0e9efd120e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/DualMAX14870MotorShield/2.0.0/DualMAX14870MotorShield-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/DualMAX14870MotorShield/2.0.0/DualMAX14870MotorShield-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/DualMC33926MotorShield/4.0.0/DualMC33926MotorShield-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DualMC33926MotorShield-4.0.0.tar.gz",
+    "size_bytes": 4727,
+    "sha256": "c81dc66156d537c89d9b913d9dc9bab490c5a7240b113b474738bd4cfbd03020",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/DualMC33926MotorShield/4.0.0/DualMC33926MotorShield-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/DualMC33926MotorShield/4.0.0/DualMC33926MotorShield-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/DualTB9051FTGMotorShield/2.0.0/DualTB9051FTGMotorShield-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DualTB9051FTGMotorShield-2.0.0.tar.gz",
+    "size_bytes": 5430,
+    "sha256": "831153d66ee17f55c9bbc1173d04ace079608738b1daf44f9361fce427f7e38c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/DualTB9051FTGMotorShield/2.0.0/DualTB9051FTGMotorShield-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/DualTB9051FTGMotorShield/2.0.0/DualTB9051FTGMotorShield-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/DualVNH5019MotorShield/3.0.0/DualVNH5019MotorShield-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DualVNH5019MotorShield-3.0.0.tar.gz",
+    "size_bytes": 5819,
+    "sha256": "18586361b78267893fa16c2b196f12ab16d5f94622a93ff41eafcdabecf41c29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/DualVNH5019MotorShield/3.0.0/DualVNH5019MotorShield-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/DualVNH5019MotorShield/3.0.0/DualVNH5019MotorShield-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/FastGPIO/2.2.0/FastGPIO-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastGPIO-2.2.0.tar.gz",
+    "size_bytes": 10475,
+    "sha256": "fb6ee19b7522ac4458eafeb5d0c42996996bde1f2c5e303c8433e70136fd54d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/FastGPIO/2.2.0/FastGPIO-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/FastGPIO/2.2.0/FastGPIO-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/HighPowerStepperDriver/1.1.2/HighPowerStepperDriver-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HighPowerStepperDriver-1.1.2.tar.gz",
+    "size_bytes": 10052,
+    "sha256": "d48ea56b0441aaa3de429a2fd7ac7053361fc20170591346ade559aecf6bcff7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/HighPowerStepperDriver/1.1.2/HighPowerStepperDriver-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/HighPowerStepperDriver/1.1.2/HighPowerStepperDriver-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/JrkG2/1.1.0/JrkG2-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JrkG2-1.1.0.tar.gz",
+    "size_bytes": 17719,
+    "sha256": "9bde9b6062de8d87c6b4c9680794aac39fed88d416148fcceafaa7291a0cc19f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/JrkG2/1.1.0/JrkG2-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/JrkG2/1.1.0/JrkG2-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/L3G/3.0.0/L3G-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L3G-3.0.0.tar.gz",
+    "size_bytes": 8156,
+    "sha256": "7bdba962fdddb0a97b96af7e88212c10904ca70e3e4e9277723eafc8a0031151",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/L3G/3.0.0/L3G-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/L3G/3.0.0/L3G-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/LIS3MDL/2.0.0/LIS3MDL-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIS3MDL-2.0.0.tar.gz",
+    "size_bytes": 8164,
+    "sha256": "0c6f8eac16bd4694a577af12af89af2bed43685e7d03ce4fa666c15f2b047678",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/LIS3MDL/2.0.0/LIS3MDL-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/LIS3MDL/2.0.0/LIS3MDL-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/LPS/3.1.0/LPS-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LPS-3.1.0.tar.gz",
+    "size_bytes": 8699,
+    "sha256": "346b4ec6fc965edd13e0984379280e885fdd55a1abdce3976e8771d937f5f6f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/LPS/3.1.0/LPS-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/LPS/3.1.0/LPS-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/LSM303/3.0.1/LSM303-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM303-3.0.1.tar.gz",
+    "size_bytes": 13814,
+    "sha256": "b16016a7b7360b6907ce9216f0a57ec6dbdcbbce5b24d815853fad5cd6fdcf69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/LSM303/3.0.1/LSM303-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/LSM303/3.0.1/LSM303-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/LSM6/2.0.1/LSM6-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM6-2.0.1.tar.gz",
+    "size_bytes": 9743,
+    "sha256": "f667d52b6e3faf128078562c091167827f27300c4bf3dcd37c52023f78425bdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/LSM6/2.0.1/LSM6-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/LSM6/2.0.1/LSM6-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/MP6602/1.0.0/MP6602-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MP6602-1.0.0.tar.gz",
+    "size_bytes": 10988,
+    "sha256": "1f5c1e8a428aee7dd7779d782bdfbfaaa1a857930500c77f77326ef2e2a99179",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/MP6602/1.0.0/MP6602-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/MP6602/1.0.0/MP6602-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/Motoron/1.4.0/Motoron-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motoron-1.4.0.tar.gz",
+    "size_bytes": 35448,
+    "sha256": "191a9a4ae3c37e38f5ac3350aedc7c078150065617162ef4a0ce85c88316137a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/Motoron/1.4.0/Motoron-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/Motoron/1.4.0/Motoron-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/Motoron/1.5.0/Motoron-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motoron-1.5.0.tar.gz",
+    "size_bytes": 35789,
+    "sha256": "f7a7982dc7644f4571faf06684e9bd96dfa264cedb273667a0958b6daa68f76b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/Motoron/1.5.0/Motoron-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/Motoron/1.5.0/Motoron-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/OPT3101/1.0.1/OPT3101-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OPT3101-1.0.1.tar.gz",
+    "size_bytes": 9797,
+    "sha256": "1ec7c2b07ca0428eb3f3cfc0223794674eb7e4dd0cbc13daf1ac2edc33dcdbbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/OPT3101/1.0.1/OPT3101-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/OPT3101/1.0.1/OPT3101-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/Pololu3piPlus32U4/1.1.3/Pololu3piPlus32U4-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pololu3piPlus32U4-1.1.3.tar.gz",
+    "size_bytes": 45362,
+    "sha256": "c5e200879c87b8ec6bd6342024a6a6fcdf3c8bf3ac4dc42055958566ef98fb76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/Pololu3piPlus32U4/1.1.3/Pololu3piPlus32U4-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/Pololu3piPlus32U4/1.1.3/Pololu3piPlus32U4-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/PololuBuzzer/1.2.0/PololuBuzzer-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PololuBuzzer-1.2.0.tar.gz",
+    "size_bytes": 15144,
+    "sha256": "bec06559e58fc9f8d93107b57d9f006af842ebde7658ad976d3ec4a0f88656b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/PololuBuzzer/1.2.0/PololuBuzzer-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/PololuBuzzer/1.2.0/PololuBuzzer-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/PololuHD44780/2.0.0/PololuHD44780-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PololuHD44780-2.0.0.tar.gz",
+    "size_bytes": 11291,
+    "sha256": "f415285447be53644d4468347946685ca0682ff6500bcb65a5a2bb4f4c36fc3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/PololuHD44780/2.0.0/PololuHD44780-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/PololuHD44780/2.0.0/PololuHD44780-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/PololuLedStrip/4.3.1/PololuLedStrip-4.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PololuLedStrip-4.3.1.tar.gz",
+    "size_bytes": 19515,
+    "sha256": "d49d357c7f83818bb0655470414c72994c6b46da09cc781815ef018bb5b993cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/PololuLedStrip/4.3.1/PololuLedStrip-4.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/PololuLedStrip/4.3.1/PololuLedStrip-4.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/PololuMaestro/1.0.0/PololuMaestro-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PololuMaestro-1.0.0.tar.gz",
+    "size_bytes": 9627,
+    "sha256": "25bc258118244ba4b550876ae1775073c2b4ba0e69e6ed7e267a431f9543db47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/PololuMaestro/1.0.0/PololuMaestro-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/PololuMaestro/1.0.0/PololuMaestro-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/PololuMenu/2.0.0/PololuMenu-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PololuMenu-2.0.0.tar.gz",
+    "size_bytes": 6221,
+    "sha256": "65f340464e6ed710210867082f17fb09ae592401fb6676c3b065d18b14798266",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/PololuMenu/2.0.0/PololuMenu-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/PololuMenu/2.0.0/PololuMenu-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/PololuOLED/2.0.0/PololuOLED-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PololuOLED-2.0.0.tar.gz",
+    "size_bytes": 22055,
+    "sha256": "cafbfd1c7da9a4673904c936c21e1d3fb49ac2ef39746e1e13d37f709e18a852",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/PololuOLED/2.0.0/PololuOLED-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/PololuOLED/2.0.0/PololuOLED-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/PololuQik/2.1.0/PololuQik-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PololuQik-2.1.0.tar.gz",
+    "size_bytes": 8129,
+    "sha256": "a7562601f1bbf50ac903119d01eaa8c79e993829057a48bda1180def70988b93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/PololuQik/2.1.0/PololuQik-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/PololuQik/2.1.0/PololuQik-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/PololuRPiSlave/2.0.0/PololuRPiSlave-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PololuRPiSlave-2.0.0.tar.gz",
+    "size_bytes": 9952,
+    "sha256": "e43f71e27ffdd38f7ccc378efc20730a947add75568cec825b3d8126c1c7ebb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/PololuRPiSlave/2.0.0/PololuRPiSlave-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/PololuRPiSlave/2.0.0/PololuRPiSlave-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/Pushbutton/2.0.0/Pushbutton-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pushbutton-2.0.0.tar.gz",
+    "size_bytes": 7314,
+    "sha256": "ec23fca6608cefed8851e6265a88aef15b7123671b7bf329b1b486989ef983a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/Pushbutton/2.0.0/Pushbutton-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/Pushbutton/2.0.0/Pushbutton-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/QTRSensors/4.0.0/QTRSensors-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QTRSensors-4.0.0.tar.gz",
+    "size_bytes": 17806,
+    "sha256": "4191b61f6ce2535c2ac975ab6eed36d32a7334cc99381573dea027d12f570b5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/QTRSensors/4.0.0/QTRSensors-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/QTRSensors/4.0.0/QTRSensors-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/Romi32U4/1.0.3/Romi32U4-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Romi32U4-1.0.3.tar.gz",
+    "size_bytes": 52142,
+    "sha256": "fd891b89209073dcfa743f03a6cdbf3fc7d6472e7cc5648003c4335e88009537",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/Romi32U4/1.0.3/Romi32U4-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/Romi32U4/1.0.3/Romi32U4-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/Tic/2.2.0/Tic-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tic-2.2.0.tar.gz",
+    "size_bytes": 19653,
+    "sha256": "a53cd66b362173ef9573850f830bcd7c16b8c0869351db30edf9490d047ea29d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/Tic/2.2.0/Tic-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/Tic/2.2.0/Tic-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/USBPause/2.0.0/USBPause-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBPause-2.0.0.tar.gz",
+    "size_bytes": 3762,
+    "sha256": "1810dfe91c64a0e0ad33ccad6e337b7ceaa148a8027905c2f140b543a55ff646",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/USBPause/2.0.0/USBPause-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/USBPause/2.0.0/USBPause-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/VL53L0X/1.3.1/VL53L0X-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL53L0X-1.3.1.tar.gz",
+    "size_bytes": 15238,
+    "sha256": "bc257cf9939c76d98f6032ab637fe3278094081efb971ad57d30b96633e2af32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/VL53L0X/1.3.1/VL53L0X-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/VL53L0X/1.3.1/VL53L0X-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/VL53L1X/1.3.1/VL53L1X-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL53L1X-1.3.1.tar.gz",
+    "size_bytes": 28812,
+    "sha256": "1d2e8181efd66b4aa069adda84476dbf6fa7a19b846515d7ff25cd91ac6a48c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/VL53L1X/1.3.1/VL53L1X-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/VL53L1X/1.3.1/VL53L1X-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/VL53L4CD/1.0.0/VL53L4CD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL53L4CD-1.0.0.tar.gz",
+    "size_bytes": 12696,
+    "sha256": "a90290fa600e2f6f997d3b572a94a367daf2a0eb2827ab1091906a49250c2a55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/VL53L4CD/1.0.0/VL53L4CD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/VL53L4CD/1.0.0/VL53L4CD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/VL6180X/1.4.0/VL6180X-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL6180X-1.4.0.tar.gz",
+    "size_bytes": 10939,
+    "sha256": "9057625e9a50113240960bd8be80652aab36e5c78bc4e4697ccf5d7899c632f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/VL6180X/1.4.0/VL6180X-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/VL6180X/1.4.0/VL6180X-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/XYZrobotServo/1.1.0/XYZrobotServo-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XYZrobotServo-1.1.0.tar.gz",
+    "size_bytes": 17948,
+    "sha256": "227ff392ae84773a2806765b9a576268032cb85a98f816899c39533751a6e220",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/XYZrobotServo/1.1.0/XYZrobotServo-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/XYZrobotServo/1.1.0/XYZrobotServo-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/Zumo32U4/2.0.0/Zumo32U4-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Zumo32U4-2.0.0.tar.gz",
+    "size_bytes": 80673,
+    "sha256": "8ba0bab9bd0cf13b0d4d21ed127138380f0a1def2b75defbd0647cc8cba93695",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/Zumo32U4/2.0.0/Zumo32U4-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/Zumo32U4/2.0.0/Zumo32U4-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/Zumo32U4/2.0.1/Zumo32U4-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Zumo32U4-2.0.1.tar.gz",
+    "size_bytes": 81500,
+    "sha256": "145d06e65a3f5931b41011bcc13c30388c08c4c3b0643e259a0d7e32fdd631e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/Zumo32U4/2.0.1/Zumo32U4-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/Zumo32U4/2.0.1/Zumo32U4-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pololu/library/ZumoShield/2.1.0/ZumoShield-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZumoShield-2.1.0.tar.gz",
+    "size_bytes": 62342,
+    "sha256": "77bcd27b6b70aca99b4cb9abafc0713d07caeef91ec51baf08967d8fe0c656ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pololu/library/ZumoShield/2.1.0/ZumoShield-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pololu/library/ZumoShield/2.1.0/ZumoShield-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

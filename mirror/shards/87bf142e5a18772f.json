@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fmaniglio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fmaniglio/library/Easy%20APDS9960_ColorSensor/1.0.1/EasyAPDS9960_ColorSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyAPDS9960_ColorSensor-1.0.1.tar.gz",
+    "size_bytes": 17252,
+    "sha256": "93b38b19c9ce667713ed2c0c59ded7a7da3fdfb5f2dd09094fd8326fe747daed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmaniglio/library/Easy%2520APDS9960_ColorSensor/1.0.1/EasyAPDS9960_ColorSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fmaniglio/library/Easy%20APDS9960_ColorSensor/1.0.1/EasyAPDS9960_ColorSensor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmaniglio/library/Easy%20APDS9960_ColorSensor/1.1.0/EasyAPDS9960_ColorSensor-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyAPDS9960_ColorSensor-1.1.0.tar.gz",
+    "size_bytes": 18526,
+    "sha256": "1ea74b18f56cd609de753586a9a42f1042b8e39884e92ad75b1f38c9ebb28b61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmaniglio/library/Easy%2520APDS9960_ColorSensor/1.1.0/EasyAPDS9960_ColorSensor-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fmaniglio/library/Easy%20APDS9960_ColorSensor/1.1.0/EasyAPDS9960_ColorSensor-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmaniglio/library/Easy%20APDS9960_ColorSensor/2.0.0/EasyAPDS9960_ColorSensor-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyAPDS9960_ColorSensor-2.0.0.tar.gz",
+    "size_bytes": 23062,
+    "sha256": "5e976de7edcbfcfd3de13eab7fc4dbb8a12cb58f4cf39d3b026293f0f2f3661f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmaniglio/library/Easy%2520APDS9960_ColorSensor/2.0.0/EasyAPDS9960_ColorSensor-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fmaniglio/library/Easy%20APDS9960_ColorSensor/2.0.0/EasyAPDS9960_ColorSensor-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmaniglio/library/Easy%20APDS9960_ColorSensor/2.0.1/EasyAPDS9960_ColorSensor-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyAPDS9960_ColorSensor-2.0.1.tar.gz",
+    "size_bytes": 23286,
+    "sha256": "c6f9512e6ce46d3c9add5cfa112ba110054b13f46686c8014ea91e31a3aa4d01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmaniglio/library/Easy%2520APDS9960_ColorSensor/2.0.1/EasyAPDS9960_ColorSensor-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fmaniglio/library/Easy%20APDS9960_ColorSensor/2.0.1/EasyAPDS9960_ColorSensor-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fmaniglio/library/Easy%20APDS9960_ColorSensor/3.0.0/EasyAPDS9960_ColorSensor-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyAPDS9960_ColorSensor-3.0.0.tar.gz",
+    "size_bytes": 23718,
+    "sha256": "c4caa5b5255ae1f51b0be6a157de883bab237f956e5f02f5dfd3a43712f22b07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fmaniglio/library/Easy%2520APDS9960_ColorSensor/3.0.0/EasyAPDS9960_ColorSensor-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fmaniglio/library/Easy%20APDS9960_ColorSensor/3.0.0/EasyAPDS9960_ColorSensor-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

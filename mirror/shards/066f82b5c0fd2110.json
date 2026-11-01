@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/misternegative21",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "misternegative21/library/QuectelEC200U/1.3.0/QuectelEC200U_CN-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuectelEC200U_CN-1.3.0.tar.gz",
+    "size_bytes": 11713,
+    "sha256": "6752a74d4118800bda48ba94f0276bec140ce559af8cf1a0fb3764b2ecb1bde2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/misternegative21/library/QuectelEC200U/1.3.0/QuectelEC200U_CN-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/misternegative21/library/QuectelEC200U/1.3.0/QuectelEC200U_CN-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "misternegative21/library/QuectelEC200U/1.5.1/QuectelEC200U-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuectelEC200U-1.5.1.tar.gz",
+    "size_bytes": 15478,
+    "sha256": "6d38735a7298a29cb2ce4b5fca6d81b023fe8fb6f007d93d2f6759ed7a596bc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/misternegative21/library/QuectelEC200U/1.5.1/QuectelEC200U-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/misternegative21/library/QuectelEC200U/1.5.1/QuectelEC200U-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "misternegative21/library/QuectelEC200U/1.8.0/QuectelEC200U-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuectelEC200U-1.8.0.tar.gz",
+    "size_bytes": 29705,
+    "sha256": "12d32fc8771809218165a18c12d33646a40eac7fb0234461c8a5a4973de92686",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/misternegative21/library/QuectelEC200U/1.8.0/QuectelEC200U-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/misternegative21/library/QuectelEC200U/1.8.0/QuectelEC200U-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "misternegative21/library/QuectelEC200U/1.9.0/QuectelEC200U-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuectelEC200U-1.9.0.tar.gz",
+    "size_bytes": 70528,
+    "sha256": "20ebe42716019955c6d31a4aa9eb8601c8bf249e08b8fffe969ecad2dfb2aa06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/misternegative21/library/QuectelEC200U/1.9.0/QuectelEC200U-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/misternegative21/library/QuectelEC200U/1.9.0/QuectelEC200U-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "misternegative21/library/QuectelEC200U/2.5.0/QuectelEC200U-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuectelEC200U-2.5.0.tar.gz",
+    "size_bytes": 96360,
+    "sha256": "8ddc5d79c60e68cbe666109f4e44e720773d5ca427f9fa96eb32ff90ed9fc0f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/misternegative21/library/QuectelEC200U/2.5.0/QuectelEC200U-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/misternegative21/library/QuectelEC200U/2.5.0/QuectelEC200U-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "misternegative21/library/QuectelEC200U/2.6.0/QuectelEC200U-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuectelEC200U-2.6.0.tar.gz",
+    "size_bytes": 97080,
+    "sha256": "49cf664262346c193e6c672ff2f43d3f690d1e60097583e862d99bc5fa3a764c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/misternegative21/library/QuectelEC200U/2.6.0/QuectelEC200U-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/misternegative21/library/QuectelEC200U/2.6.0/QuectelEC200U-2.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "misternegative21/library/QuectelEC200U/2.7.0/QuectelEC200U-2.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuectelEC200U-2.7.0.tar.gz",
+    "size_bytes": 95002,
+    "sha256": "600a2085bb822fd43171e991c594029d2bbd426b21964a27bb503b58be729f3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/misternegative21/library/QuectelEC200U/2.7.0/QuectelEC200U-2.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/misternegative21/library/QuectelEC200U/2.7.0/QuectelEC200U-2.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "misternegative21/library/QuectelEC200U/3.5.0/QuectelEC200U-3.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuectelEC200U-3.5.0.tar.gz",
+    "size_bytes": 98066,
+    "sha256": "68c757dad00586ba02ae8e940eadf442425f0e2f33579fba176aa7471d6a698f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/misternegative21/library/QuectelEC200U/3.5.0/QuectelEC200U-3.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/misternegative21/library/QuectelEC200U/3.5.0/QuectelEC200U-3.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "misternegative21/library/QuectelEC200U/4.0.0/QuectelEC200U-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuectelEC200U-4.0.0.tar.gz",
+    "size_bytes": 127181,
+    "sha256": "2dbe20b7b3f26ccc4bc04cae2c5bd1acf87c6e28cf403b47719fd5531b049400",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/misternegative21/library/QuectelEC200U/4.0.0/QuectelEC200U-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/misternegative21/library/QuectelEC200U/4.0.0/QuectelEC200U-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "misternegative21/library/QuectelEC200U/4.0.1/QuectelEC200U-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuectelEC200U-4.0.1.tar.gz",
+    "size_bytes": 127411,
+    "sha256": "a59734dfee945ee9b65dee6cf17709814e9e159e69de14d150c5837ce9d88da1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/misternegative21/library/QuectelEC200U/4.0.1/QuectelEC200U-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/misternegative21/library/QuectelEC200U/4.0.1/QuectelEC200U-4.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

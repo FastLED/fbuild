@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/droscy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "droscy/library/esp_mbedtls_esp8266/2.22300.2/esp_mbedtls_esp8266-2.22300.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_mbedtls_esp8266-2.22300.2.tar.gz",
+    "size_bytes": 829745,
+    "sha256": "c0a3b9f71d20dca01576f2e2a7b306e8bc8870dac8bf79c50bee931e2e2d0aeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/droscy/library/esp_mbedtls_esp8266/2.22300.2/esp_mbedtls_esp8266-2.22300.2.tar.gz",
+     "https://dl.registry.platformio.org/download/droscy/library/esp_mbedtls_esp8266/2.22300.2/esp_mbedtls_esp8266-2.22300.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "droscy/library/esp_wireguard/0.3.2/esp_wireguard-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wireguard-0.3.2.tar.gz",
+    "size_bytes": 44345,
+    "sha256": "6760957f4fdb28569c869a0e2a5e79794b22293cd51c82742748d7c1c39c4eff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/droscy/library/esp_wireguard/0.3.2/esp_wireguard-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/droscy/library/esp_wireguard/0.3.2/esp_wireguard-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "droscy/library/esp_wireguard/0.4.2/esp_wireguard-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wireguard-0.4.2.tar.gz",
+    "size_bytes": 40143,
+    "sha256": "40df785a157145b6eb3503f8689e2c62a7a13b993ba30c63795089e551575bbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/droscy/library/esp_wireguard/0.4.2/esp_wireguard-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/droscy/library/esp_wireguard/0.4.2/esp_wireguard-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "droscy/library/esp_wireguard/0.4.3/esp_wireguard-0.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wireguard-0.4.3.tar.gz",
+    "size_bytes": 40289,
+    "sha256": "7ea2796e7e47d738cec917f889020cfcacf736ac1b30a868fb65754c88420e7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/droscy/library/esp_wireguard/0.4.3/esp_wireguard-0.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/droscy/library/esp_wireguard/0.4.3/esp_wireguard-0.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "droscy/library/esp_wireguard/0.4.4/esp_wireguard-0.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wireguard-0.4.4.tar.gz",
+    "size_bytes": 40362,
+    "sha256": "882e1a2da9817657e3816a3c4eadffc4bf0359a60a1b7f13e07867be383d66af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/droscy/library/esp_wireguard/0.4.4/esp_wireguard-0.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/droscy/library/esp_wireguard/0.4.4/esp_wireguard-0.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "droscy/library/esp_wireguard/0.4.5/esp_wireguard-0.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wireguard-0.4.5.tar.gz",
+    "size_bytes": 40416,
+    "sha256": "0873cab2c412d82cb603ed1a614bb4f42d3e777efaa10ca627584ff82ff9c16e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/droscy/library/esp_wireguard/0.4.5/esp_wireguard-0.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/droscy/library/esp_wireguard/0.4.5/esp_wireguard-0.4.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

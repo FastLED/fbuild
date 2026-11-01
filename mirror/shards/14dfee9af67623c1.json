@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/karleffinger",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "karleffinger/library/GL55xxSensor/1.1.0/GL55xxSensor-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GL55xxSensor-1.1.0.tar.gz",
+    "size_bytes": 3409,
+    "sha256": "ce957033d31bd269e60d7dec4ea3c756d971622f50e44212ce8badeb7eec6e9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/karleffinger/library/GL55xxSensor/1.1.0/GL55xxSensor-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/karleffinger/library/GL55xxSensor/1.1.0/GL55xxSensor-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/reactduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "reactduino/library/Reactduino/0.1.0/Reactduino-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Reactduino-0.1.0.tar.gz",
+    "size_bytes": 4704,
+    "sha256": "62ba24ec6d298def0da258ff674670e2bcef2b3bd5708c835a16ee395449ebcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reactduino/library/Reactduino/0.1.0/Reactduino-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/reactduino/library/Reactduino/0.1.0/Reactduino-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

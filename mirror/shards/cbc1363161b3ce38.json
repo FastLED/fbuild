@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bluerobotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bluerobotics/library/BlueRobotics%20Arduino_I2C_ESC%20Library/1.0.0/BlueRoboticsArduino_I2C_ESCLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlueRoboticsArduino_I2C_ESCLibrary-1.0.0.tar.gz",
+    "size_bytes": 4533,
+    "sha256": "f546c1df7ca97e2008d47efaf3fb8a4925c40e49fef4af3ee8885af55b551861",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bluerobotics/library/BlueRobotics%2520Arduino_I2C_ESC%2520Library/1.0.0/BlueRoboticsArduino_I2C_ESCLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bluerobotics/library/BlueRobotics%20Arduino_I2C_ESC%20Library/1.0.0/BlueRoboticsArduino_I2C_ESCLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bluerobotics/library/BlueRobotics%20Keller%20LD%20Library/1.2.0/BlueRoboticsKellerLDLibrary-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlueRoboticsKellerLDLibrary-1.2.0.tar.gz",
+    "size_bytes": 4086,
+    "sha256": "1278496a52de2784609cf7179ddbf3672294fd50d5cbda1e092db6377e28c36d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bluerobotics/library/BlueRobotics%2520Keller%2520LD%2520Library/1.2.0/BlueRoboticsKellerLDLibrary-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bluerobotics/library/BlueRobotics%20Keller%20LD%20Library/1.2.0/BlueRoboticsKellerLDLibrary-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bluerobotics/library/BlueRobotics%20MS5837%20Library/1.1.1/BlueRoboticsMS5837Library-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlueRoboticsMS5837Library-1.1.1.tar.gz",
+    "size_bytes": 4833,
+    "sha256": "b16c3cbe76fced4683f7866af32cef08a9c3f850fffe04392c35aa2d0dd3ca1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bluerobotics/library/BlueRobotics%2520MS5837%2520Library/1.1.1/BlueRoboticsMS5837Library-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bluerobotics/library/BlueRobotics%20MS5837%20Library/1.1.1/BlueRoboticsMS5837Library-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bluerobotics/library/BlueRobotics%20TSYS01%20Library/1.0.2/BlueRoboticsTSYS01Library-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlueRoboticsTSYS01Library-1.0.2.tar.gz",
+    "size_bytes": 3732,
+    "sha256": "a260990562289e04759484031f328fdbd516b78752acdcc2e1a20a1a75c68839",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bluerobotics/library/BlueRobotics%2520TSYS01%2520Library/1.0.2/BlueRoboticsTSYS01Library-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bluerobotics/library/BlueRobotics%20TSYS01%20Library/1.0.2/BlueRoboticsTSYS01Library-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bluerobotics/library/TMP119/1.0.0/TMP119-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMP119-1.0.0.tar.gz",
+    "size_bytes": 5421,
+    "sha256": "b23fd8e2579665210b32efc95f72923b335f309a3d407aa5f6d44dfb144ee1eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bluerobotics/library/TMP119/1.0.0/TMP119-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bluerobotics/library/TMP119/1.0.0/TMP119-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bluerobotics/library/ping-arduino/0.1.2/ping-arduino-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ping-arduino-0.1.2.tar.gz",
+    "size_bytes": 17326,
+    "sha256": "57d567f56b9618bdd0c72044b74ba170e34a6b374b2d9232fd22d8bcc8cd2e50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bluerobotics/library/ping-arduino/0.1.2/ping-arduino-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bluerobotics/library/ping-arduino/0.1.2/ping-arduino-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

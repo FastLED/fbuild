@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aki237",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aki237/library/Adafruit_ESP32_SH1106/1.0.2/Adafruit_ESP32_SH1106-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_ESP32_SH1106-1.0.2.tar.gz",
+    "size_bytes": 10919,
+    "sha256": "def047673eb07dfeea09825f6f3131027be4223b864ca24eb688081f1f27cfc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aki237/library/Adafruit_ESP32_SH1106/1.0.2/Adafruit_ESP32_SH1106-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/aki237/library/Adafruit_ESP32_SH1106/1.0.2/Adafruit_ESP32_SH1106-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

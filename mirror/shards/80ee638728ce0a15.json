@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xovobobo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xovobobo/library/slcan-adapter/1.0.0/slcan-adapter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slcan-adapter-1.0.0.tar.gz",
+    "size_bytes": 5590,
+    "sha256": "af6cd9bc6f68a6c1151eedbcbeae9ba7d2460eb26a26844cd79bae7a2f419bbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xovobobo/library/slcan-adapter/1.0.0/slcan-adapter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xovobobo/library/slcan-adapter/1.0.0/slcan-adapter-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

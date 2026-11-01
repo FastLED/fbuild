@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/owochel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "owochel/library/MistMaker/1.1.0/MistMaker-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MistMaker-1.1.0.tar.gz",
+    "size_bytes": 17581,
+    "sha256": "a275cf6be7200bbfcfe19ee45b67af1fb54a7e9d7f2fad487097eb51652ebbf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/owochel/library/MistMaker/1.1.0/MistMaker-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/owochel/library/MistMaker/1.1.0/MistMaker-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "owochel/library/MistMaker/2.0.0/MistMaker-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MistMaker-2.0.0.tar.gz",
+    "size_bytes": 27579,
+    "sha256": "4a7889bb57235ed7302bf18d6ce592447de3476d40da2aa0b7b42e005f23737a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/owochel/library/MistMaker/2.0.0/MistMaker-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/owochel/library/MistMaker/2.0.0/MistMaker-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "owochel/library/MistMaker/2.2.0/MistMaker-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MistMaker-2.2.0.tar.gz",
+    "size_bytes": 22111,
+    "sha256": "cf4be331e08bcc17ee1ba51ff2a07996966c813b92c759e6009b2af5a646b8b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/owochel/library/MistMaker/2.2.0/MistMaker-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/owochel/library/MistMaker/2.2.0/MistMaker-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "owochel/library/MistMaker/2.4.0/MistMaker-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MistMaker-2.4.0.tar.gz",
+    "size_bytes": 30573,
+    "sha256": "15fb5b50d01e1a09ca0f98d9196db3d4b2981abd9ab5c9d06e3ff8e4cca51520",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/owochel/library/MistMaker/2.4.0/MistMaker-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/owochel/library/MistMaker/2.4.0/MistMaker-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "owochel/library/MistMaker/2.5.0/MistMaker-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MistMaker-2.5.0.tar.gz",
+    "size_bytes": 38031,
+    "sha256": "7e169c0b050cd1be556745745b8ac4c9930c8cb1a19e2d963b653981a1734fa1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/owochel/library/MistMaker/2.5.0/MistMaker-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/owochel/library/MistMaker/2.5.0/MistMaker-2.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "owochel/library/MistMaker/2.6.0/MistMaker-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MistMaker-2.6.0.tar.gz",
+    "size_bytes": 39727,
+    "sha256": "a8fb5966abe33d1bfb5dc5b533212c39bcb34b18d947f3a6cf4323d84d5a7816",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/owochel/library/MistMaker/2.6.0/MistMaker-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/owochel/library/MistMaker/2.6.0/MistMaker-2.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-co657-sjc80",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-co657-sjc80/library/lib_dht22/0.0.0+sha.e52d76ef24b3/lib_dht22-0.0.0+sha.e52d76ef24b3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lib_dht22-0.0.0+sha.e52d76ef24b3.tar.gz",
+    "size_bytes": 2717,
+    "sha256": "9d130a56697db2d728a04ed14002f28729a3e2cb31d37a6b9b8607ae2322c7a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-co657-sjc80/library/lib_dht22/0.0.0%2Bsha.e52d76ef24b3/lib_dht22-0.0.0%2Bsha.e52d76ef24b3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-co657-sjc80/library/lib_dht22/0.0.0%2Bsha.e52d76ef24b3/lib_dht22-0.0.0%2Bsha.e52d76ef24b3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

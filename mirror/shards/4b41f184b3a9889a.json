@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/janoshruesseltier",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "janoshruesseltier/library/LevelLogger/1.0.0/LevelLogger-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LevelLogger-1.0.0.tar.gz",
+    "size_bytes": 12644,
+    "sha256": "301d6c868326a4918f33939793a9517accd1af823d25309083acf5b65d93845e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janoshruesseltier/library/LevelLogger/1.0.0/LevelLogger-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/janoshruesseltier/library/LevelLogger/1.0.0/LevelLogger-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

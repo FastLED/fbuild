@@ -1,0 +1,373 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nitrofmtl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nitrofmtl/library/ACI_10K_AN-temp-sensor/1.0/ACI_10K_AN-temp-sensor-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACI_10K_AN-temp-sensor-1.0.tar.gz",
+    "size_bytes": 2310,
+    "sha256": "7c690173985a1fee062acf08171953311155fc73a5f9a44d35a8f7ead99832d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/ACI_10K_AN-temp-sensor/1.0/ACI_10K_AN-temp-sensor-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/ACI_10K_AN-temp-sensor/1.0/ACI_10K_AN-temp-sensor-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/ADC_SEQR/3.0.0/ADC_SEQR-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADC_SEQR-3.0.0.tar.gz",
+    "size_bytes": 6323,
+    "sha256": "37b2e492499d268457d4ba534ac67ea532b49491e17c426da3e9116b58063d0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/ADC_SEQR/3.0.0/ADC_SEQR-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/ADC_SEQR/3.0.0/ADC_SEQR-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/ArduinoModbus-DUE-DMA/0.9.0/ArduinoModbus-DUE-DMA-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoModbus-DUE-DMA-0.9.0.tar.gz",
+    "size_bytes": 46561,
+    "sha256": "655c56371c11074fd69815ea7a37e4277b6cf0fbd8687bf9430f6a76ca62b14e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/ArduinoModbus-DUE-DMA/0.9.0/ArduinoModbus-DUE-DMA-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/ArduinoModbus-DUE-DMA/0.9.0/ArduinoModbus-DUE-DMA-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/BACnet-Arduino/0.3.0/BACnet-Arduino-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BACnet-Arduino-0.3.0.tar.gz",
+    "size_bytes": 911642,
+    "sha256": "caee7339beb5cb64238c511f8d3b77191c196c9597b5cbde4ef3cc29375fe60b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/BACnet-Arduino/0.3.0/BACnet-Arduino-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/BACnet-Arduino/0.3.0/BACnet-Arduino-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/BACnet-Arduino/0.4.0/BACnet-Arduino-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BACnet-Arduino-0.4.0.tar.gz",
+    "size_bytes": 947402,
+    "sha256": "9c0b22ad8df468f7ed55657f315070d1336db0be7a722d59a3da495057162704",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/BACnet-Arduino/0.4.0/BACnet-Arduino-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/BACnet-Arduino/0.4.0/BACnet-Arduino-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/BACnet-Arduino/0.5.0/BACnet-Arduino-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BACnet-Arduino-0.5.0.tar.gz",
+    "size_bytes": 954267,
+    "sha256": "b71a27f1e265328c7df011fe54d7422290d9f3e0aec330ae47a13d63adb266e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/BACnet-Arduino/0.5.0/BACnet-Arduino-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/BACnet-Arduino/0.5.0/BACnet-Arduino-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/BACnet-Arduino/0.6.0/BACnet-Arduino-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BACnet-Arduino-0.6.0.tar.gz",
+    "size_bytes": 955677,
+    "sha256": "921e9e73f4107bd1cd995f4fe7797b65746e35ea336c29237c4f8dd6abeaa472",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/BACnet-Arduino/0.6.0/BACnet-Arduino-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/BACnet-Arduino/0.6.0/BACnet-Arduino-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/CurrentSwitch/2.0/CurrentSwitch-2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CurrentSwitch-2.0.tar.gz",
+    "size_bytes": 4099,
+    "sha256": "e1b57e170931cac59594f30393272b67984e37ee9c77bca5670a2a4f457c8266",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/CurrentSwitch/2.0/CurrentSwitch-2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/CurrentSwitch/2.0/CurrentSwitch-2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/DUE-ModbusDMA/0.9.2/DUE-ModbusDMA-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DUE-ModbusDMA-0.9.2.tar.gz",
+    "size_bytes": 46665,
+    "sha256": "cb33d798a8b88d4590c5f583c8c854ac9b7b4cb6958b2683d2aea95144dc9927",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/DUE-ModbusDMA/0.9.2/DUE-ModbusDMA-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/DUE-ModbusDMA/0.9.2/DUE-ModbusDMA-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/DUERS485DMA/0.9.4/DUERS485DMA-0.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DUERS485DMA-0.9.4.tar.gz",
+    "size_bytes": 10112,
+    "sha256": "47c9895e4dfeedc40b5207cfa73497d62d40fb14afebe0a68ac13707c633be1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/DUERS485DMA/0.9.4/DUERS485DMA-0.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/DUERS485DMA/0.9.4/DUERS485DMA-0.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/DUERS485DMA/0.9.6/DUERS485DMA-0.9.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DUERS485DMA-0.9.6.tar.gz",
+    "size_bytes": 10087,
+    "sha256": "40007845769b4511d1dee19868deb1e56a1ee2510058bd7d9e2d61244382ed04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/DUERS485DMA/0.9.6/DUERS485DMA-0.9.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/DUERS485DMA/0.9.6/DUERS485DMA-0.9.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/DUERS485DMA/0.9.8/DUERS485DMA-0.9.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DUERS485DMA-0.9.8.tar.gz",
+    "size_bytes": 12423,
+    "sha256": "0e70e6c7711c9f55c9bf23f8763a81c6fe0f62239c42facb02e6def83409ba4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/DUERS485DMA/0.9.8/DUERS485DMA-0.9.8.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/DUERS485DMA/0.9.8/DUERS485DMA-0.9.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/DUE_ADC_Oversampler/1.0.2/DUE_ADC_Oversampler-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DUE_ADC_Oversampler-1.0.2.tar.gz",
+    "size_bytes": 18695,
+    "sha256": "680ec0d03f864b21c4ac97b5dd89dfff9b4d562e41146677d0a7931363668848",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/DUE_ADC_Oversampler/1.0.2/DUE_ADC_Oversampler-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/DUE_ADC_Oversampler/1.0.2/DUE_ADC_Oversampler-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/DUE_schmitt/2.1/DUE_schmitt-2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DUE_schmitt-2.1.tar.gz",
+    "size_bytes": 4043,
+    "sha256": "3df5f81f2c239199ca847c913cf2cc86fe5b1bc2b1d84a2cbc5704a5276be6b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/DUE_schmitt/2.1/DUE_schmitt-2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/DUE_schmitt/2.1/DUE_schmitt-2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/MicroTuple/1.1/MicroTuple-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroTuple-1.1.tar.gz",
+    "size_bytes": 14143,
+    "sha256": "7e5924f601a5c0eda874fc22489aa8ed56b642af26b5aceab20469191b7f314a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/MicroTuple/1.1/MicroTuple-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/MicroTuple/1.1/MicroTuple-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/RTD10K-temp-sensor/3.0.0/RTD10K-temp-sensor-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTD10K-temp-sensor-3.0.0.tar.gz",
+    "size_bytes": 68795,
+    "sha256": "4c0fab848ab7a20a2164b8683ff00d7d292daa998690c4d39929258a2d2625f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/RTD10K-temp-sensor/3.0.0/RTD10K-temp-sensor-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/RTD10K-temp-sensor/3.0.0/RTD10K-temp-sensor-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/STM32Modbus/0.8.1/STM32Modbus-0.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32Modbus-0.8.1.tar.gz",
+    "size_bytes": 48559,
+    "sha256": "fc2784a99ead47c5461b5c563e5e2b54d791a2092ef676ddd4735eef7dd87d08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/STM32Modbus/0.8.1/STM32Modbus-0.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/STM32Modbus/0.8.1/STM32Modbus-0.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/STM32RS485DMA/0.10.0/STM32RS485DMA-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32RS485DMA-0.10.0.tar.gz",
+    "size_bytes": 20623,
+    "sha256": "a31098df22a64884f29c96616176a50d13ae7ff076c0502d2eb74d0ed9341b05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/STM32RS485DMA/0.10.0/STM32RS485DMA-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/STM32RS485DMA/0.10.0/STM32RS485DMA-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/STM32RS485DMA/0.5.0/STM32RS485DMA-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32RS485DMA-0.5.0.tar.gz",
+    "size_bytes": 13656,
+    "sha256": "b54e80a07b3aa0bb720cf2dc8914751c4998df8a80ced96533d9e63c1a548c5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/STM32RS485DMA/0.5.0/STM32RS485DMA-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/STM32RS485DMA/0.5.0/STM32RS485DMA-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/STM32RS485DMA/0.5.1/STM32RS485DMA-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32RS485DMA-0.5.1.tar.gz",
+    "size_bytes": 13901,
+    "sha256": "5ea41d4b861a74b4da116b1cbe710937ed9f28678eb1ba5a6bf59cf602695165",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/STM32RS485DMA/0.5.1/STM32RS485DMA-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/STM32RS485DMA/0.5.1/STM32RS485DMA-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/STM32RS485DMA/0.6.1/STM32RS485DMA-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32RS485DMA-0.6.1.tar.gz",
+    "size_bytes": 14724,
+    "sha256": "bf61eae53b49bffbc0a5e30d028e6d2bea76a7e3ba7faa37a5494af8ef8840c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/STM32RS485DMA/0.6.1/STM32RS485DMA-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/STM32RS485DMA/0.6.1/STM32RS485DMA-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/STM32RS485DMA/0.6.2/STM32RS485DMA-0.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32RS485DMA-0.6.2.tar.gz",
+    "size_bytes": 14871,
+    "sha256": "2b19fb0d210f43bb793318bb5d31654d55af4c68b844f4ccd0149855f75e552a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/STM32RS485DMA/0.6.2/STM32RS485DMA-0.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/STM32RS485DMA/0.6.2/STM32RS485DMA-0.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/STM32RS485DMA/0.7.0/STM32RS485DMA-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32RS485DMA-0.7.0.tar.gz",
+    "size_bytes": 16714,
+    "sha256": "2b064b73eb67d3af592f1ed8ea9557af067bfff3f5c15744e74bf7f12a020f71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/STM32RS485DMA/0.7.0/STM32RS485DMA-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/STM32RS485DMA/0.7.0/STM32RS485DMA-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/STM32RS485DMA/0.9.0/STM32RS485DMA-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32RS485DMA-0.9.0.tar.gz",
+    "size_bytes": 18783,
+    "sha256": "cae93352f0410629ee7686c79ddcf19c9f6d7053cd6e3938d6706ee81f53a14b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/STM32RS485DMA/0.9.0/STM32RS485DMA-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/STM32RS485DMA/0.9.0/STM32RS485DMA-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/STM32RS485DMA/0.9.1/STM32RS485DMA-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32RS485DMA-0.9.1.tar.gz",
+    "size_bytes": 20649,
+    "sha256": "8c64d08c2cad1835b2609499a07a37e98418b6ee0bb04ee8f42c6325a6e8abb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/STM32RS485DMA/0.9.1/STM32RS485DMA-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/STM32RS485DMA/0.9.1/STM32RS485DMA-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/TimeOut/5.1.0/TimeOut-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimeOut-5.1.0.tar.gz",
+    "size_bytes": 18592,
+    "sha256": "ec4d4273d45e8bb28fa43cbbe71e7da02207607e543055333af92428997773c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/TimeOut/5.1.0/TimeOut-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/TimeOut/5.1.0/TimeOut-5.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/WeeklyAlarm/5.1.0/WeeklyAlarm-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WeeklyAlarm-5.1.0.tar.gz",
+    "size_bytes": 10035,
+    "sha256": "c13459cc5e704d943b6f5ef347d1b0a3a3f8909ecfac512556120469b066a025",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/WeeklyAlarm/5.1.0/WeeklyAlarm-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/WeeklyAlarm/5.1.0/WeeklyAlarm-5.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nitrofmtl/library/WeeklyAlarm/5.2.0/WeeklyAlarm-5.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WeeklyAlarm-5.2.0.tar.gz",
+    "size_bytes": 11156,
+    "sha256": "c5d3a7c7c2d60e4cfd7d685f6e11f5780b3b44bf8cce0726878b1008ad7c6782",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nitrofmtl/library/WeeklyAlarm/5.2.0/WeeklyAlarm-5.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nitrofmtl/library/WeeklyAlarm/5.2.0/WeeklyAlarm-5.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

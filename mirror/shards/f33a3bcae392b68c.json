@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/inkaros",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "inkaros/library/ataraxis-micro-controller/1.1.0-rc.1/ataraxis-micro-controller-1.1.0-rc.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ataraxis-micro-controller-1.1.0-rc.1.tar.gz",
+    "size_bytes": 61746,
+    "sha256": "15cea705e349b9cdb056c6f51be21b05769072d2740427aa4bd070c7d7bd1274",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inkaros/library/ataraxis-micro-controller/1.1.0-rc.1/ataraxis-micro-controller-1.1.0-rc.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inkaros/library/ataraxis-micro-controller/1.1.0-rc.1/ataraxis-micro-controller-1.1.0-rc.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inkaros/library/ataraxis-micro-controller/2.0.0/ataraxis-micro-controller-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ataraxis-micro-controller-2.0.0.tar.gz",
+    "size_bytes": 46249,
+    "sha256": "d115e89011418cdcf264bd7d9dd0457c5b64e5480a057493e71f1a2e0bac41dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inkaros/library/ataraxis-micro-controller/2.0.0/ataraxis-micro-controller-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inkaros/library/ataraxis-micro-controller/2.0.0/ataraxis-micro-controller-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inkaros/library/ataraxis-micro-controller/3.0.0/ataraxis-micro-controller-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ataraxis-micro-controller-3.0.0.tar.gz",
+    "size_bytes": 41134,
+    "sha256": "1acb6eeda268f999a304d97f22a64efcf71d073b88353c6c04e572e28f2d8f42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inkaros/library/ataraxis-micro-controller/3.0.0/ataraxis-micro-controller-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inkaros/library/ataraxis-micro-controller/3.0.0/ataraxis-micro-controller-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inkaros/library/ataraxis-micro-controller/3.0.1/ataraxis-micro-controller-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ataraxis-micro-controller-3.0.1.tar.gz",
+    "size_bytes": 41374,
+    "sha256": "3ec771d2ee37028e15be6654f64447ef4e95c01633bdea8a57cc4f8ab13ab60e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inkaros/library/ataraxis-micro-controller/3.0.1/ataraxis-micro-controller-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inkaros/library/ataraxis-micro-controller/3.0.1/ataraxis-micro-controller-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inkaros/library/ataraxis-micro-controller/4.0.0/ataraxis-micro-controller-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ataraxis-micro-controller-4.0.0.tar.gz",
+    "size_bytes": 45098,
+    "sha256": "852e64cf200da141084ad0e61b9d279ac3728b1953e54e7fc82a5a2affa00f01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inkaros/library/ataraxis-micro-controller/4.0.0/ataraxis-micro-controller-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inkaros/library/ataraxis-micro-controller/4.0.0/ataraxis-micro-controller-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inkaros/library/ataraxis-micro-controller/4.0.1/ataraxis-micro-controller-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ataraxis-micro-controller-4.0.1.tar.gz",
+    "size_bytes": 48110,
+    "sha256": "64cc0ef34a002bd9758e62397a76a2fac04df7f9e63c15363ad3eb55ad73f75e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inkaros/library/ataraxis-micro-controller/4.0.1/ataraxis-micro-controller-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inkaros/library/ataraxis-micro-controller/4.0.1/ataraxis-micro-controller-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inkaros/library/ataraxis-micro-controller/4.0.2/ataraxis-micro-controller-4.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ataraxis-micro-controller-4.0.2.tar.gz",
+    "size_bytes": 48493,
+    "sha256": "dca2871e036b31e847c3e739b04d179d566044653b89961014237d310dd16f74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inkaros/library/ataraxis-micro-controller/4.0.2/ataraxis-micro-controller-4.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/inkaros/library/ataraxis-micro-controller/4.0.2/ataraxis-micro-controller-4.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inkaros/library/ataraxis-micro-controller/4.0.3/ataraxis-micro-controller-4.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ataraxis-micro-controller-4.0.3.tar.gz",
+    "size_bytes": 49176,
+    "sha256": "f857ceb499e71efe352c11b8b837eb6bcd2b603dca24861f377a94fc872bf042",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inkaros/library/ataraxis-micro-controller/4.0.3/ataraxis-micro-controller-4.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/inkaros/library/ataraxis-micro-controller/4.0.3/ataraxis-micro-controller-4.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inkaros/library/ataraxis-transport-layer-mc/2.0.0/ataraxis-transport-layer-mc-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ataraxis-transport-layer-mc-2.0.0.tar.gz",
+    "size_bytes": 34643,
+    "sha256": "54e40f8acf328db9446d78468f30a6dd081798e28e1d68a75ec3b9e20fbf8967",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inkaros/library/ataraxis-transport-layer-mc/2.0.0/ataraxis-transport-layer-mc-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inkaros/library/ataraxis-transport-layer-mc/2.0.0/ataraxis-transport-layer-mc-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inkaros/library/ataraxis-transport-layer-mc/3.0.0/ataraxis-transport-layer-mc-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ataraxis-transport-layer-mc-3.0.0.tar.gz",
+    "size_bytes": 23971,
+    "sha256": "97dbf65ed6e5c04e32dd1a9ab85294010b11129aded01ed6a4cb19fd82fcd265",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inkaros/library/ataraxis-transport-layer-mc/3.0.0/ataraxis-transport-layer-mc-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inkaros/library/ataraxis-transport-layer-mc/3.0.0/ataraxis-transport-layer-mc-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inkaros/library/ataraxis-transport-layer-mc/3.0.1/ataraxis-transport-layer-mc-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ataraxis-transport-layer-mc-3.0.1.tar.gz",
+    "size_bytes": 24424,
+    "sha256": "e94d7e51f70fa0a6cc4e8c8cbb00d82f390568ae22bf325596ffb3f1f14d9d1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inkaros/library/ataraxis-transport-layer-mc/3.0.1/ataraxis-transport-layer-mc-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inkaros/library/ataraxis-transport-layer-mc/3.0.1/ataraxis-transport-layer-mc-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inkaros/library/ataraxis-transport-layer-mc/4.0.0/ataraxis-transport-layer-mc-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ataraxis-transport-layer-mc-4.0.0.tar.gz",
+    "size_bytes": 27712,
+    "sha256": "d74483f51e258349ae0c742eec0754a1066f3ad365509407bb142e4db292611b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inkaros/library/ataraxis-transport-layer-mc/4.0.0/ataraxis-transport-layer-mc-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/inkaros/library/ataraxis-transport-layer-mc/4.0.0/ataraxis-transport-layer-mc-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inkaros/library/ataraxis-transport-layer-mc/4.0.1/ataraxis-transport-layer-mc-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ataraxis-transport-layer-mc-4.0.1.tar.gz",
+    "size_bytes": 27903,
+    "sha256": "8b610c617f55700dcd931f7e6f70fe0de7bf36105b3374c95b4119135f991dbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inkaros/library/ataraxis-transport-layer-mc/4.0.1/ataraxis-transport-layer-mc-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/inkaros/library/ataraxis-transport-layer-mc/4.0.1/ataraxis-transport-layer-mc-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "inkaros/library/ataraxis-transport-layer-mc/4.0.2/ataraxis-transport-layer-mc-4.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ataraxis-transport-layer-mc-4.0.2.tar.gz",
+    "size_bytes": 27845,
+    "sha256": "0154d76a00c2f13450b6cdb96aa98246eec298cef0a838a98c18b1c82923bea0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/inkaros/library/ataraxis-transport-layer-mc/4.0.2/ataraxis-transport-layer-mc-4.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/inkaros/library/ataraxis-transport-layer-mc/4.0.2/ataraxis-transport-layer-mc-4.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

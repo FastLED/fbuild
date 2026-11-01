@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jwbruce",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jwbruce/library/TTU_CSC1300/0.0.0+sha.7bb32dea705b/TTU_CSC1300-0.0.0+sha.7bb32dea705b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTU_CSC1300-0.0.0+sha.7bb32dea705b.tar.gz",
+    "size_bytes": 7634,
+    "sha256": "85191735fdafa49afe7030799325f83a710d134a0daa9325dc0548bbca4f5dfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jwbruce/library/TTU_CSC1300/0.0.0%2Bsha.7bb32dea705b/TTU_CSC1300-0.0.0%2Bsha.7bb32dea705b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jwbruce/library/TTU_CSC1300/0.0.0%2Bsha.7bb32dea705b/TTU_CSC1300-0.0.0%2Bsha.7bb32dea705b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

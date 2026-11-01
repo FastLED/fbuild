@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/janlo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "janlo/library/ArduinoSimpleLogging/0.2.2/ArduinoSimpleLogging-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoSimpleLogging-0.2.2.tar.gz",
+    "size_bytes": 4189,
+    "sha256": "9840798c45cbd023a9d0553df6c94cdd3d07fc91912a513cfd3bf7806daba4a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janlo/library/ArduinoSimpleLogging/0.2.2/ArduinoSimpleLogging-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/janlo/library/ArduinoSimpleLogging/0.2.2/ArduinoSimpleLogging-0.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

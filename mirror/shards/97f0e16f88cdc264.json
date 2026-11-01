@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/brandon2255p",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "brandon2255p/library/ESPRelayElectrodragon/1.0.2/ESPRelayElectrodragon-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPRelayElectrodragon-1.0.2.tar.gz",
+    "size_bytes": 1030,
+    "sha256": "a5c639353f34de48225b2b99f031b5b85db0fb07e34c2a16c9d2f8780b43a2f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brandon2255p/library/ESPRelayElectrodragon/1.0.2/ESPRelayElectrodragon-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/brandon2255p/library/ESPRelayElectrodragon/1.0.2/ESPRelayElectrodragon-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "brandon2255p/library/TelegramBotApi/3.5.0/TelegramBotApi-3.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TelegramBotApi-3.5.0.tar.gz",
+    "size_bytes": 21607,
+    "sha256": "4f1ee9ab9203f4b85840c85cd0db3bdfbc10a63bb0a666fccb4e833dbca96e1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brandon2255p/library/TelegramBotApi/3.5.0/TelegramBotApi-3.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/brandon2255p/library/TelegramBotApi/3.5.0/TelegramBotApi-3.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

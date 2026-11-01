@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/isobit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "isobit/library/ArduinoNATS/1.1.2/ArduinoNATS-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoNATS-1.1.2.tar.gz",
+    "size_bytes": 5796,
+    "sha256": "8ece15bf4827b05f85e4cd93efdce500d524bbbeabfc9f0136d4c46171b38753",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/isobit/library/ArduinoNATS/1.1.2/ArduinoNATS-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/isobit/library/ArduinoNATS/1.1.2/ArduinoNATS-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

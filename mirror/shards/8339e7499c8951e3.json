@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/opensourcemedicalrobots",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "opensourcemedicalrobots/library/Endo-Continuum-Robot/1.0.0/Endo-Continuum-Robot-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Endo-Continuum-Robot-1.0.0.tar.gz",
+    "size_bytes": 15745,
+    "sha256": "78d3f733a13268ab3cf512da761bf8033581ed5bc875aabbcef663165f50b1a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/opensourcemedicalrobots/library/Endo-Continuum-Robot/1.0.0/Endo-Continuum-Robot-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/opensourcemedicalrobots/library/Endo-Continuum-Robot/1.0.0/Endo-Continuum-Robot-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

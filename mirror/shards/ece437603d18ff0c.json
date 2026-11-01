@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andriyadi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andriyadi/library/AzureIoTHubMQTTClient/0.2.3/AzureIoTHubMQTTClient-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureIoTHubMQTTClient-0.2.3.tar.gz",
+    "size_bytes": 29039,
+    "sha256": "32757bdc9390724e9d7351af3aafa548c72461581123ad09bb1b0bca25a16120",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andriyadi/library/AzureIoTHubMQTTClient/0.2.3/AzureIoTHubMQTTClient-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/andriyadi/library/AzureIoTHubMQTTClient/0.2.3/AzureIoTHubMQTTClient-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andriyadi/library/AzureIoTLiteClient/0.2.0/AzureIoTLiteClient-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AzureIoTLiteClient-0.2.0.tar.gz",
+    "size_bytes": 35661,
+    "sha256": "8343e7036f77a8976bbee6315197ab62e39d4115a274189fbb3014d6e67ed3a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andriyadi/library/AzureIoTLiteClient/0.2.0/AzureIoTLiteClient-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andriyadi/library/AzureIoTLiteClient/0.2.0/AzureIoTLiteClient-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "andriyadi/library/ESPectro/0.7.5/ESPectro-0.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPectro-0.7.5.tar.gz",
+    "size_bytes": 32731,
+    "sha256": "47bec75da25519c95fccf6e924e62e1078dccd714c7056f39a92f9fc61f040c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andriyadi/library/ESPectro/0.7.5/ESPectro-0.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/andriyadi/library/ESPectro/0.7.5/ESPectro-0.7.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

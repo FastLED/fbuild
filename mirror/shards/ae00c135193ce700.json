@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/e-mole",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "e-mole/library/MoleGraphManual/4.4.1/MoleGraphManual-4.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MoleGraphManual-4.4.1.tar.gz",
+    "size_bytes": 23673,
+    "sha256": "d8deca302d9ca133f7192ffeda38a204096cf2fe7cfca59d5d61af5d61a1f681",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/e-mole/library/MoleGraphManual/4.4.1/MoleGraphManual-4.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/e-mole/library/MoleGraphManual/4.4.1/MoleGraphManual-4.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

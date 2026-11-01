@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-thuvt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-thuvt/library/MMA7361L/0.0.0+sha.bbada9282388/MMA7361L-0.0.0+sha.bbada9282388.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA7361L-0.0.0+sha.bbada9282388.tar.gz",
+    "size_bytes": 1315,
+    "sha256": "0386e26566e0c2073e449eeaf6115d84b012002f742a1884c46f79390ca1ab71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-thuvt/library/MMA7361L/0.0.0%2Bsha.bbada9282388/MMA7361L-0.0.0%2Bsha.bbada9282388.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-thuvt/library/MMA7361L/0.0.0%2Bsha.bbada9282388/MMA7361L-0.0.0%2Bsha.bbada9282388.tar.gz"
+    ]
+   }
+  }
+ ]
+}

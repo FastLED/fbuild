@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mcu-electronics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mcu-electronics/library/RTC_DS1307_Library/1.1.1/RTC_DS1307_Library-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTC_DS1307_Library-1.1.1.tar.gz",
+    "size_bytes": 27753,
+    "sha256": "20ec1d51c4a9c5acdfc2624f1c6d3a6a8fcef52cf38eeb3fe2ad2e743af8179b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcu-electronics/library/RTC_DS1307_Library/1.1.1/RTC_DS1307_Library-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcu-electronics/library/RTC_DS1307_Library/1.1.1/RTC_DS1307_Library-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/goji2100",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "goji2100/library/ESP32softPWM/0.0.1/ESP32softPWM-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32softPWM-0.0.1.tar.gz",
+    "size_bytes": 2232,
+    "sha256": "02ef56ebe65534165980d16993ed07a230206994c27c694cbe48009e65a3853f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/goji2100/library/ESP32softPWM/0.0.1/ESP32softPWM-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/goji2100/library/ESP32softPWM/0.0.1/ESP32softPWM-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

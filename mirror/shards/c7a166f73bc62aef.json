@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/segilmez06",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "segilmez06/library/DistanceSensor/1.0.1/DistanceSensor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DistanceSensor-1.0.1.tar.gz",
+    "size_bytes": 9493,
+    "sha256": "87d37b402a735d8b8b3912898517aa9680536b4c974eaa329e036deb65cfc264",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/segilmez06/library/DistanceSensor/1.0.1/DistanceSensor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/segilmez06/library/DistanceSensor/1.0.1/DistanceSensor-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

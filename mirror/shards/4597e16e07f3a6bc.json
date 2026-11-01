@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hamas888",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hamas888/library/ChronoLog/1.0.0/ChronoLog-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChronoLog-1.0.0.tar.gz",
+    "size_bytes": 34556149,
+    "sha256": "4428f97dccf3e9c2f12f63320a9ac5e689aba6b951821bbbf0a31d6bd0663353",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hamas888/library/ChronoLog/1.0.0/ChronoLog-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hamas888/library/ChronoLog/1.0.0/ChronoLog-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hamas888/library/ChronoLog/1.0.1/ChronoLog-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChronoLog-1.0.1.tar.gz",
+    "size_bytes": 34556237,
+    "sha256": "a18cd524833626533ec50363d1860a1e1c4f1395a8b4dc566519a4e8b487592f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hamas888/library/ChronoLog/1.0.1/ChronoLog-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hamas888/library/ChronoLog/1.0.1/ChronoLog-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hamas888/library/ChronoLog/1.1.0/ChronoLog-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChronoLog-1.1.0.tar.gz",
+    "size_bytes": 34562770,
+    "sha256": "d90ccf7e92de45d10c77564e168243731cd587c1cbc8a1484e5745aa8b4b9dbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hamas888/library/ChronoLog/1.1.0/ChronoLog-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hamas888/library/ChronoLog/1.1.0/ChronoLog-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hamas888/library/ChronoLog/1.1.1/ChronoLog-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChronoLog-1.1.1.tar.gz",
+    "size_bytes": 34562854,
+    "sha256": "a03c78cff404f6e48f5e36c14b96a483e4640d23e4634c3e4c391eea08e145c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hamas888/library/ChronoLog/1.1.1/ChronoLog-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hamas888/library/ChronoLog/1.1.1/ChronoLog-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hamas888/library/ChronoLog/1.1.3/ChronoLog-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChronoLog-1.1.3.tar.gz",
+    "size_bytes": 34563613,
+    "sha256": "904890c103e6aad639cadd81122e76cf2b3ace51469e9248596f4317046fcdb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hamas888/library/ChronoLog/1.1.3/ChronoLog-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hamas888/library/ChronoLog/1.1.3/ChronoLog-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hamas888/library/ChronoLog/1.1.4/ChronoLog-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChronoLog-1.1.4.tar.gz",
+    "size_bytes": 34574283,
+    "sha256": "2aa963e1d5080ad2883e057f4217eaeef9691c3d0ba01e55223c203620919ad8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hamas888/library/ChronoLog/1.1.4/ChronoLog-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/hamas888/library/ChronoLog/1.1.4/ChronoLog-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hamas888/library/ChronoLog/1.1.5/ChronoLog-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChronoLog-1.1.5.tar.gz",
+    "size_bytes": 23810,
+    "sha256": "057811e979fa06d475360c110930cff0d15da0227f9365a8d1261e8f7e963718",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hamas888/library/ChronoLog/1.1.5/ChronoLog-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/hamas888/library/ChronoLog/1.1.5/ChronoLog-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hamas888/library/ChronoLog/1.2.0/ChronoLog-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChronoLog-1.2.0.tar.gz",
+    "size_bytes": 22522,
+    "sha256": "06fdb5d4f9d38fcbac73a453489c83f9a7073ead415fe504edd64942e24e4413",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hamas888/library/ChronoLog/1.2.0/ChronoLog-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hamas888/library/ChronoLog/1.2.0/ChronoLog-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/turbyho",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "turbyho/library/DABDUINO/1.0.2/DABDUINO-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DABDUINO-1.0.2.tar.gz",
+    "size_bytes": 10068,
+    "sha256": "4111dd173e5235738d0509d7b3dbdb192f017b8886fae03922ef67eb8837b463",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/turbyho/library/DABDUINO/1.0.2/DABDUINO-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/turbyho/library/DABDUINO/1.0.2/DABDUINO-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "turbyho/library/DABDUINO/1.0.3/DABDUINO-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DABDUINO-1.0.3.tar.gz",
+    "size_bytes": 11797,
+    "sha256": "17a2bc36e244e9adf25b15ee829002efea0e12c0851f4d74105bf9fb2d1b1344",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/turbyho/library/DABDUINO/1.0.3/DABDUINO-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/turbyho/library/DABDUINO/1.0.3/DABDUINO-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

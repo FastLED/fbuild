@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/programmable-air",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "programmable-air/library/programmable_air/1.1.4/programmable_air-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "programmable_air-1.1.4.tar.gz",
+    "size_bytes": 11507,
+    "sha256": "513e2198425390c515d75caf51a57eb9df1f817562b4c5728df0f6d1322f757f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/programmable-air/library/programmable_air/1.1.4/programmable_air-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/programmable-air/library/programmable_air/1.1.4/programmable_air-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

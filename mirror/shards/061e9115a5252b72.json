@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alexmihai1804",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alexmihai1804/library/ATC_MiThermometer-Arduino/0.5.7/ATC_MiThermometer-Arduino-0.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATC_MiThermometer-Arduino-0.5.7.tar.gz",
+    "size_bytes": 21208,
+    "sha256": "15fe34da495c27f0acd2843965651e5230f587597d9088d3e005804884459322",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexmihai1804/library/ATC_MiThermometer-Arduino/0.5.7/ATC_MiThermometer-Arduino-0.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/alexmihai1804/library/ATC_MiThermometer-Arduino/0.5.7/ATC_MiThermometer-Arduino-0.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alexmihai1804/library/Yeelight/1.2.0/Yeelight-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Yeelight-1.2.0.tar.gz",
+    "size_bytes": 33010,
+    "sha256": "b9f402cd0465d5f1b56038e923fa0e13df7eaa4861f274283812262728fd748c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexmihai1804/library/Yeelight/1.2.0/Yeelight-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alexmihai1804/library/Yeelight/1.2.0/Yeelight-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

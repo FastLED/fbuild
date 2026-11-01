@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-guitwo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-guitwo/library/BusEnums/0.0.0+sha.4e322ce31f59/BusEnums-0.0.0+sha.4e322ce31f59.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BusEnums-0.0.0+sha.4e322ce31f59.tar.gz",
+    "size_bytes": 890,
+    "sha256": "a213ebe25d29d9cc56c2f424d5636b81353b0edebdc03ff35f8d036c92e44b2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-guitwo/library/BusEnums/0.0.0%2Bsha.4e322ce31f59/BusEnums-0.0.0%2Bsha.4e322ce31f59.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-guitwo/library/BusEnums/0.0.0%2Bsha.4e322ce31f59/BusEnums-0.0.0%2Bsha.4e322ce31f59.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-guitwo/library/KS0108_PCF8574/0.0.0+sha.eeaa5069be9c/KS0108_PCF8574-0.0.0+sha.eeaa5069be9c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KS0108_PCF8574-0.0.0+sha.eeaa5069be9c.tar.gz",
+    "size_bytes": 22335,
+    "sha256": "9a03ee09d826b9c4afdd1be3df8c7487b2f94457b4c66a81c113002ea22b29de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-guitwo/library/KS0108_PCF8574/0.0.0%2Bsha.eeaa5069be9c/KS0108_PCF8574-0.0.0%2Bsha.eeaa5069be9c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-guitwo/library/KS0108_PCF8574/0.0.0%2Bsha.eeaa5069be9c/KS0108_PCF8574-0.0.0%2Bsha.eeaa5069be9c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

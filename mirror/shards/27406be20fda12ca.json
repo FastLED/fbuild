@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/apogeospace",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "apogeospace/library/APSNode/0.1.2/APSNode-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APSNode-0.1.2.tar.gz",
+    "size_bytes": 27454,
+    "sha256": "43c3d6b4a42f6051190ba7104d5d1842c6c58faec0536c42a49c3de28d1d2978",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/apogeospace/library/APSNode/0.1.2/APSNode-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/apogeospace/library/APSNode/0.1.2/APSNode-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

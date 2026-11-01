@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alby312",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alby312/library/AdvancedPID/1.0.0/AdvancedPID-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AdvancedPID-1.0.0.tar.gz",
+    "size_bytes": 8942,
+    "sha256": "8b97b543ca916d0166df16d2cd004912b77f241a8dd3f797eb9d18aa18cb8eaf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alby312/library/AdvancedPID/1.0.0/AdvancedPID-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alby312/library/AdvancedPID/1.0.0/AdvancedPID-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alby312/library/OpenLogManager/1.0.0/OpenLogManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenLogManager-1.0.0.tar.gz",
+    "size_bytes": 4038,
+    "sha256": "cc35e92e209b305143305449ddf7b5dcbabed631716225bb08c83ac685de984e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alby312/library/OpenLogManager/1.0.0/OpenLogManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alby312/library/OpenLogManager/1.0.0/OpenLogManager-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

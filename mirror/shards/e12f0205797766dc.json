@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/italia",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "italia/library/CIE-PN532/1.0.0/CIE-PN532-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CIE-PN532-1.0.0.tar.gz",
+    "size_bytes": 23027,
+    "sha256": "343f19691aa2943cfbb7454177a36a6c2bc5c80af9544905c4dfbf13a34e21cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/italia/library/CIE-PN532/1.0.0/CIE-PN532-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/italia/library/CIE-PN532/1.0.0/CIE-PN532-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nbulatovi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nbulatovi/library/Quecduino/0.0.1/Quecduino-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Quecduino-0.0.1.tar.gz",
+    "size_bytes": 4713,
+    "sha256": "07b1515526b19de1ef1307529f79f03511e5ff65c8a96c0f30d4d5f24cfd83b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nbulatovi/library/Quecduino/0.0.1/Quecduino-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nbulatovi/library/Quecduino/0.0.1/Quecduino-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nbulatovi/library/Quecduino/1.0.0/Quecduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Quecduino-1.0.0.tar.gz",
+    "size_bytes": 8888,
+    "sha256": "49c145f2adf3aed03da2d9bca2a2f17bc5956c791c10f5b1d1ccf59d9f7c9cab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nbulatovi/library/Quecduino/1.0.0/Quecduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nbulatovi/library/Quecduino/1.0.0/Quecduino-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nbulatovi/library/Quecduino/1.0.1/Quecduino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Quecduino-1.0.1.tar.gz",
+    "size_bytes": 9085,
+    "sha256": "07bed78d427623b8d5e14d43897b945651a1c285e8dc27a80b287e84be7913e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nbulatovi/library/Quecduino/1.0.1/Quecduino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nbulatovi/library/Quecduino/1.0.1/Quecduino-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nbulatovi/library/Quecduino/1.0.2/Quecduino-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Quecduino-1.0.2.tar.gz",
+    "size_bytes": 9195,
+    "sha256": "9211b43ef1f05ee73dcf5a19702346e330bf0f20f0005e8e21bd363cc48722a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nbulatovi/library/Quecduino/1.0.2/Quecduino-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nbulatovi/library/Quecduino/1.0.2/Quecduino-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

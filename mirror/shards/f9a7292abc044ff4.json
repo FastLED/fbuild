@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sindormirnet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sindormirnet/library/ArduinoFacil/1.0.2/ArduinoFacil-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoFacil-1.0.2.tar.gz",
+    "size_bytes": 17303,
+    "sha256": "3136662315f114a232df3bb0b947688fd77ed25423734be0f1c179a9265f72bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sindormirnet/library/ArduinoFacil/1.0.2/ArduinoFacil-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sindormirnet/library/ArduinoFacil/1.0.2/ArduinoFacil-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sindormirnet/library/Sindormir%20SevenSegments/1.1.1/SindormirSevenSegments-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SindormirSevenSegments-1.1.1.tar.gz",
+    "size_bytes": 15822,
+    "sha256": "2b34a804b72d70114c91893fe174733d3025230a1afa07e4d0bf3fa20b71a755",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sindormirnet/library/Sindormir%2520SevenSegments/1.1.1/SindormirSevenSegments-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sindormirnet/library/Sindormir%20SevenSegments/1.1.1/SindormirSevenSegments-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

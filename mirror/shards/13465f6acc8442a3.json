@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/joaolopesf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "joaolopesf/library/ESP32MotorControl/0.1.0/ESP32MotorControl-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32MotorControl-0.1.0.tar.gz",
+    "size_bytes": 3585,
+    "sha256": "cface7eabab33f20dec003930c8b703554daff9e762e12ab913736e1bed86597",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joaolopesf/library/ESP32MotorControl/0.1.0/ESP32MotorControl-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joaolopesf/library/ESP32MotorControl/0.1.0/ESP32MotorControl-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joaolopesf/library/RemoteDebug/3.0.5/RemoteDebug-3.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteDebug-3.0.5.tar.gz",
+    "size_bytes": 58340,
+    "sha256": "6dad05870a79882ea401ca61985b99f229b9fadfe59abbe0cdef0478ab3a1379",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joaolopesf/library/RemoteDebug/3.0.5/RemoteDebug-3.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/joaolopesf/library/RemoteDebug/3.0.5/RemoteDebug-3.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joaolopesf/library/RemoteDebugger/0.9.4/RemoteDebugger-0.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteDebugger-0.9.4.tar.gz",
+    "size_bytes": 42407,
+    "sha256": "a01132350acc4c8b439d989d0e04704ba3069b1c82e26d6cdc58eb1e2a1807bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joaolopesf/library/RemoteDebugger/0.9.4/RemoteDebugger-0.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/joaolopesf/library/RemoteDebugger/0.9.4/RemoteDebugger-0.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joaolopesf/library/SerialDebug/0.9.82/SerialDebug-0.9.82.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialDebug-0.9.82.tar.gz",
+    "size_bytes": 55559,
+    "sha256": "df12290e7e704b33908ecdaccf8b8ed0b11ad9be36ca8c7ad64abe80e47dc6eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joaolopesf/library/SerialDebug/0.9.82/SerialDebug-0.9.82.tar.gz",
+     "https://dl.registry.platformio.org/download/joaolopesf/library/SerialDebug/0.9.82/SerialDebug-0.9.82.tar.gz"
+    ]
+   }
+  }
+ ]
+}

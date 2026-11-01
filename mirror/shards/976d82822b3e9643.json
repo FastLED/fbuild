@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dmdengineeringllc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dmdengineeringllc/library/DMD_AllocTrace/1.0.0/DMD_AllocTrace-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMD_AllocTrace-1.0.0.tar.gz",
+    "size_bytes": 38138,
+    "sha256": "0809b0e6464fbc8b4d5482b479828a4c8d0b86082d5b2e46a48edf891ae84fab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dmdengineeringllc/library/DMD_AllocTrace/1.0.0/DMD_AllocTrace-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dmdengineeringllc/library/DMD_AllocTrace/1.0.0/DMD_AllocTrace-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

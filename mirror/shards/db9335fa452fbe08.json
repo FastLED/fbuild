@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gutierrezps",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gutierrezps/library/ESP32%20I2C%20Slave/0.3.0/ESP32I2CSlave-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32I2CSlave-0.3.0.tar.gz",
+    "size_bytes": 21443,
+    "sha256": "347e1d4b1a623339bb6aa2590aea9f393536416e86eadd8a8e6ac1ec92c659f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gutierrezps/library/ESP32%2520I2C%2520Slave/0.3.0/ESP32I2CSlave-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gutierrezps/library/ESP32%20I2C%20Slave/0.3.0/ESP32I2CSlave-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gutierrezps/library/Gwiot%207941E/1.0.0/Gwiot7941E-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gwiot7941E-1.0.0.tar.gz",
+    "size_bytes": 16435,
+    "sha256": "dce49e9e1e505270a25375e680c713e54b5a087b6f53c814bf839d758f408b2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gutierrezps/library/Gwiot%25207941E/1.0.0/Gwiot7941E-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gutierrezps/library/Gwiot%207941E/1.0.0/Gwiot7941E-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

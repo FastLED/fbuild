@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cabbi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cabbi/library/EmButton/2.0.0/EmButton-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmButton-2.0.0.tar.gz",
+    "size_bytes": 6568,
+    "sha256": "8e205c85a781f897e1259244ffe2724de7dfc966a593cae2823b161e4fcd8d1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cabbi/library/EmButton/2.0.0/EmButton-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cabbi/library/EmButton/2.0.0/EmButton-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cabbi/library/EmCore/2.0.0/EmCore-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmCore-2.0.0.tar.gz",
+    "size_bytes": 19511,
+    "sha256": "fcc3e27760b41eb34c20ba132b28907f8fa421ff3790ca5b4bea0783cddcd5d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cabbi/library/EmCore/2.0.0/EmCore-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cabbi/library/EmCore/2.0.0/EmCore-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cabbi/library/EmLed/2.0.0/EmLed-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmLed-2.0.0.tar.gz",
+    "size_bytes": 3873,
+    "sha256": "be487a636a9acdad845cef7058a69d00678f5e72a703fba27b93e765764ab57a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cabbi/library/EmLed/2.0.0/EmLed-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cabbi/library/EmLed/2.0.0/EmLed-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cabbi/library/EmNextion/2.0.0/EmNextion-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmNextion-2.0.0.tar.gz",
+    "size_bytes": 132609,
+    "sha256": "850aaa5a9f1fe5b53039393cccb4e3d5ee57f330a4b28f0318e05c3f7ab55077",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cabbi/library/EmNextion/2.0.0/EmNextion-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cabbi/library/EmNextion/2.0.0/EmNextion-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cabbi/library/EmPersistentState/2.0.0/EmPersistentState-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmPersistentState-2.0.0.tar.gz",
+    "size_bytes": 9024,
+    "sha256": "2260ba39d7cf0e72b36a11402bff6b0b8be21bc4e2156f5e7238ffb9a2d7c561",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cabbi/library/EmPersistentState/2.0.0/EmPersistentState-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cabbi/library/EmPersistentState/2.0.0/EmPersistentState-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

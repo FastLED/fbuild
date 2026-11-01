@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dimuthurangana",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dimuthurangana/library/DimuthuRobotLib/1.0.0/DimuthuRobotLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DimuthuRobotLib-1.0.0.tar.gz",
+    "size_bytes": 13704,
+    "sha256": "f4381e9774ebe653301d25f21c10896253da24ab8877cadf5b8a77b7eda61f1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dimuthurangana/library/DimuthuRobotLib/1.0.0/DimuthuRobotLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dimuthurangana/library/DimuthuRobotLib/1.0.0/DimuthuRobotLib-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

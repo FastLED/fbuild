@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vvkkumar06",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vvkkumar06/library/BeehiveMonitor/1.0.0/BeehiveMonitor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeehiveMonitor-1.0.0.tar.gz",
+    "size_bytes": 6320,
+    "sha256": "e668f741449bd5d6fec583107d1a9a448b82b3f00e4869c9aff0a8642e37296f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vvkkumar06/library/BeehiveMonitor/1.0.0/BeehiveMonitor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vvkkumar06/library/BeehiveMonitor/1.0.0/BeehiveMonitor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vvkkumar06/library/BeehiveMonitor/1.0.1/BeehiveMonitor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeehiveMonitor-1.0.1.tar.gz",
+    "size_bytes": 4918,
+    "sha256": "0f408df769b6ed34db741b0f702c727c54945f476a8a74795fc1bbe68083254d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vvkkumar06/library/BeehiveMonitor/1.0.1/BeehiveMonitor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vvkkumar06/library/BeehiveMonitor/1.0.1/BeehiveMonitor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vvkkumar06/library/BeehiveMonitor/1.0.2/BeehiveMonitor-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeehiveMonitor-1.0.2.tar.gz",
+    "size_bytes": 4312,
+    "sha256": "ac2841c748faa1c76e2945edd65b3d9e82bfb8dde05c2331c789d887d98c2852",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vvkkumar06/library/BeehiveMonitor/1.0.2/BeehiveMonitor-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vvkkumar06/library/BeehiveMonitor/1.0.2/BeehiveMonitor-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vvkkumar06/library/BeehiveMonitor/1.0.3/BeehiveMonitor-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeehiveMonitor-1.0.3.tar.gz",
+    "size_bytes": 5409,
+    "sha256": "2342039d902267df142e53df7c4ee0f3ba69c2bdbba37ad05f9ece649c1683a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vvkkumar06/library/BeehiveMonitor/1.0.3/BeehiveMonitor-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vvkkumar06/library/BeehiveMonitor/1.0.3/BeehiveMonitor-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vvkkumar06/library/BeehiveMonitor/1.0.4/BeehiveMonitor-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeehiveMonitor-1.0.4.tar.gz",
+    "size_bytes": 5361,
+    "sha256": "201d3e59ee82e25959b92bbd1b66da0c4d59590033a3b134391ae8c0ae4e7366",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vvkkumar06/library/BeehiveMonitor/1.0.4/BeehiveMonitor-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/vvkkumar06/library/BeehiveMonitor/1.0.4/BeehiveMonitor-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vvkkumar06/library/BeehiveMonitor/1.0.5/BeehiveMonitor-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeehiveMonitor-1.0.5.tar.gz",
+    "size_bytes": 5353,
+    "sha256": "6d3c86006c1616f38464dd5a7919eef8afbf2b970e182674de2456b461d91963",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vvkkumar06/library/BeehiveMonitor/1.0.5/BeehiveMonitor-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/vvkkumar06/library/BeehiveMonitor/1.0.5/BeehiveMonitor-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-diogo966",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-diogo966/library/LIS3DH/0.0.0+sha.0175958d825d/LIS3DH-0.0.0+sha.0175958d825d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIS3DH-0.0.0+sha.0175958d825d.tar.gz",
+    "size_bytes": 3997,
+    "sha256": "272472ee33853ed178c2213bfb0f208e4e7fadf71f82d4e6e50792fdbed1cb2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-diogo966/library/LIS3DH/0.0.0%2Bsha.0175958d825d/LIS3DH-0.0.0%2Bsha.0175958d825d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-diogo966/library/LIS3DH/0.0.0%2Bsha.0175958d825d/LIS3DH-0.0.0%2Bsha.0175958d825d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

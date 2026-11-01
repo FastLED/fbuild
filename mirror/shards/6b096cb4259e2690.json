@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-abarth500",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-abarth500/library/WoL/0.0.0+sha.fda7d5bb49b4/WoL-0.0.0+sha.fda7d5bb49b4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WoL-0.0.0+sha.fda7d5bb49b4.tar.gz",
+    "size_bytes": 1308,
+    "sha256": "04beb183d10003dff057cb91312ae5416b6b19159412f34a08845b6094ffdc17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-abarth500/library/WoL/0.0.0%2Bsha.fda7d5bb49b4/WoL-0.0.0%2Bsha.fda7d5bb49b4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-abarth500/library/WoL/0.0.0%2Bsha.fda7d5bb49b4/WoL-0.0.0%2Bsha.fda7d5bb49b4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bluewingtitan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bluewingtitan/library/microrender/1.1.0/microrender-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "microrender-1.1.0.tar.gz",
+    "size_bytes": 6774,
+    "sha256": "93083c318fce358b770b4aa35a47fb22c171d91124343f1272a4643bb4b935f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bluewingtitan/library/microrender/1.1.0/microrender-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bluewingtitan/library/microrender/1.1.0/microrender-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

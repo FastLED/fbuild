@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/regimantas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "regimantas/library/ChaCha32/1.0.2/ChaCha32-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChaCha32-1.0.2.tar.gz",
+    "size_bytes": 3566,
+    "sha256": "ea609b9472f43bc157abb11be4a2778851334886dff0ff8b5ce45590272f8a2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/regimantas/library/ChaCha32/1.0.2/ChaCha32-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/regimantas/library/ChaCha32/1.0.2/ChaCha32-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "regimantas/library/EasyInterval/1.0.0/EasyInterval-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyInterval-1.0.0.tar.gz",
+    "size_bytes": 4513,
+    "sha256": "03a236b4e44c94bc73a91107e0b7cadde3dd0af43b1eb30982cd7629bc9d0e4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/regimantas/library/EasyInterval/1.0.0/EasyInterval-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/regimantas/library/EasyInterval/1.0.0/EasyInterval-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "regimantas/library/Oversampling/0.9.5/Oversampling-0.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Oversampling-0.9.5.tar.gz",
+    "size_bytes": 1414,
+    "sha256": "48595252b80975945f391d411863a703a1ac5b916234805ca983b2a607215143",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/regimantas/library/Oversampling/0.9.5/Oversampling-0.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/regimantas/library/Oversampling/0.9.5/Oversampling-0.9.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "regimantas/library/PY32LowPower/1.0.3/PY32LowPower-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PY32LowPower-1.0.3.tar.gz",
+    "size_bytes": 3755,
+    "sha256": "d4b1923cc4e6f8a659b59210548d763b1bc533c7068fd6343d57a04e8c5fa93c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/regimantas/library/PY32LowPower/1.0.3/PY32LowPower-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/regimantas/library/PY32LowPower/1.0.3/PY32LowPower-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

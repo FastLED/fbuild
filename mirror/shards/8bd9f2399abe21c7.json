@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hollosi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hollosi/library/CronTab/0.0.3/CronTab-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CronTab-0.0.3.tar.gz",
+    "size_bytes": 39457,
+    "sha256": "93be751cf99465bdedef5d55f59953de13f20362f67d55ad38a62826802918f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hollosi/library/CronTab/0.0.3/CronTab-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hollosi/library/CronTab/0.0.3/CronTab-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

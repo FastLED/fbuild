@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/enbiso",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "enbiso/library/ESP-RESTClient/0.0.0-alpha+sha.0a9a9fbf7c/ESP-RESTClient-0.0.0-alphasha.0a9a9fbf7c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-RESTClient-0.0.0-alphasha.0a9a9fbf7c.tar.gz",
+    "size_bytes": 3037,
+    "sha256": "92742e16f393cd62cc93eeec384101d93750e9a31676e46b2392a739a1aeb5aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enbiso/library/ESP-RESTClient/0.0.0-alpha%2Bsha.0a9a9fbf7c/ESP-RESTClient-0.0.0-alphasha.0a9a9fbf7c.tar.gz",
+     "https://dl.registry.platformio.org/download/enbiso/library/ESP-RESTClient/0.0.0-alpha%2Bsha.0a9a9fbf7c/ESP-RESTClient-0.0.0-alphasha.0a9a9fbf7c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

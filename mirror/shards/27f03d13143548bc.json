@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kosik84",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kosik84/library/PCF8591/0.0.0+sha.7e567e0adc6d/PCF8591-0.0.0+sha.7e567e0adc6d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8591-0.0.0+sha.7e567e0adc6d.tar.gz",
+    "size_bytes": 933,
+    "sha256": "9c5ab7ed70a210684b27915b389a998c041cb15fb871efd33de426b022d99bfa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kosik84/library/PCF8591/0.0.0%2Bsha.7e567e0adc6d/PCF8591-0.0.0%2Bsha.7e567e0adc6d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kosik84/library/PCF8591/0.0.0%2Bsha.7e567e0adc6d/PCF8591-0.0.0%2Bsha.7e567e0adc6d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/coderunner",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "coderunner/library/IonConnect/1.0.0/IonConnect-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IonConnect-1.0.0.tar.gz",
+    "size_bytes": 120473,
+    "sha256": "52b4455275f39f1e5fba8c439208ee305eeb16fd3b053905e36d94f6d91d5a7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/coderunner/library/IonConnect/1.0.0/IonConnect-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/coderunner/library/IonConnect/1.0.0/IonConnect-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "coderunner/library/IonConnect/1.0.1/IonConnect-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IonConnect-1.0.1.tar.gz",
+    "size_bytes": 74668,
+    "sha256": "7cba1edbaaa57daf9bc1da8b0075d3105e7f802c220eeef0378d8093759ce015",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/coderunner/library/IonConnect/1.0.1/IonConnect-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/coderunner/library/IonConnect/1.0.1/IonConnect-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "coderunner/library/IonConnect/1.0.2/IonConnect-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IonConnect-1.0.2.tar.gz",
+    "size_bytes": 75767,
+    "sha256": "2ab9e0c361bfb24cc746e3e11107e12858dbde00b458387770273feae53f348f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/coderunner/library/IonConnect/1.0.2/IonConnect-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/coderunner/library/IonConnect/1.0.2/IonConnect-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "coderunner/library/IonConnect/1.0.3/IonConnect-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IonConnect-1.0.3.tar.gz",
+    "size_bytes": 74810,
+    "sha256": "965a80c3d647e23cb27e83765c9f47424d639d55f83f14d4a07333e01261cd99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/coderunner/library/IonConnect/1.0.3/IonConnect-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/coderunner/library/IonConnect/1.0.3/IonConnect-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

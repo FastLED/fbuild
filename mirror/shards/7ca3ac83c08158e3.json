@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sofapirate",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sofapirate/library/AsciiMassage/1.7/AsciiMassage-1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsciiMassage-1.7.tar.gz",
+    "size_bytes": 39027,
+    "sha256": "9a7ce7278e2b99667936ee5a674d0907cfbb5b80097bb320617f5e868a0b39a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sofapirate/library/AsciiMassage/1.7/AsciiMassage-1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/sofapirate/library/AsciiMassage/1.7/AsciiMassage-1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sofapirate/library/Plaquette/0.8.0/Plaquette-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plaquette-0.8.0.tar.gz",
+    "size_bytes": 105493,
+    "sha256": "40a8abc0f17905783cc6718f9f976108dd6fd11e5c7a81a50a35c06babd9fed2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sofapirate/library/Plaquette/0.8.0/Plaquette-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sofapirate/library/Plaquette/0.8.0/Plaquette-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sofapirate/library/Plaquette/0.8.1/Plaquette-0.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plaquette-0.8.1.tar.gz",
+    "size_bytes": 107949,
+    "sha256": "5eeaaf83a6748620f0d5dc60b237108a0292e22e5228d97db6965516c47ed613",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sofapirate/library/Plaquette/0.8.1/Plaquette-0.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sofapirate/library/Plaquette/0.8.1/Plaquette-0.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sofapirate/library/Plaquette/0.8.2/Plaquette-0.8.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plaquette-0.8.2.tar.gz",
+    "size_bytes": 114533,
+    "sha256": "d25eedf93bbc97ff30c7af7219cf8b6b9c54cd04675c2a0f1e7f8f7e9cadd3b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sofapirate/library/Plaquette/0.8.2/Plaquette-0.8.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sofapirate/library/Plaquette/0.8.2/Plaquette-0.8.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sofapirate/library/Plaquette/0.8.3/Plaquette-0.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plaquette-0.8.3.tar.gz",
+    "size_bytes": 116701,
+    "sha256": "27309acd8dd466a8d210b44baec2b4249e4287af1e80a97fe7863644155c6a5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sofapirate/library/Plaquette/0.8.3/Plaquette-0.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sofapirate/library/Plaquette/0.8.3/Plaquette-0.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sofapirate/library/Plaquette/0.9.0/Plaquette-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plaquette-0.9.0.tar.gz",
+    "size_bytes": 131649,
+    "sha256": "5bc02b918a8d1a0e9d14f5d37ad1ff050b6988c2bec235f5c0d05db1ad54684c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sofapirate/library/Plaquette/0.9.0/Plaquette-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sofapirate/library/Plaquette/0.9.0/Plaquette-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sofapirate/library/Plaquette/0.9.1/Plaquette-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plaquette-0.9.1.tar.gz",
+    "size_bytes": 132105,
+    "sha256": "188f01b959692b6453d44af66dde52ec80e4ddaf8b30c8192f87440419e50915",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sofapirate/library/Plaquette/0.9.1/Plaquette-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sofapirate/library/Plaquette/0.9.1/Plaquette-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sofapirate/library/Plaquette/0.9.3/Plaquette-0.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plaquette-0.9.3.tar.gz",
+    "size_bytes": 134598,
+    "sha256": "e8c00568cb47b6fc0a2a0030f2c0866e1b2d3845edac9718d0e9a23df32fafe4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sofapirate/library/Plaquette/0.9.3/Plaquette-0.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sofapirate/library/Plaquette/0.9.3/Plaquette-0.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sofapirate/library/Plaquette/0.9.4/Plaquette-0.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Plaquette-0.9.4.tar.gz",
+    "size_bytes": 186746,
+    "sha256": "e0d54028329a8b7bb99d6116d54512a09413934d98b8e59ff8dbaaf2fec2fb37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sofapirate/library/Plaquette/0.9.4/Plaquette-0.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sofapirate/library/Plaquette/0.9.4/Plaquette-0.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sofapirate/library/PqLEDStrip/1.0.3/PqLEDStrip-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PqLEDStrip-1.0.3.tar.gz",
+    "size_bytes": 23766,
+    "sha256": "d3f09aa0f440049f487edeaa160c6fbf72aef1d99600cf0c1a611427fcc1602d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sofapirate/library/PqLEDStrip/1.0.3/PqLEDStrip-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sofapirate/library/PqLEDStrip/1.0.3/PqLEDStrip-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sofapirate/library/PqLEDStrip/1.0.4/PqLEDStrip-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PqLEDStrip-1.0.4.tar.gz",
+    "size_bytes": 22688,
+    "sha256": "4956a743f3b20d6883c5605a9ec0042ba5d188c387fabb8687e574117f809ecd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sofapirate/library/PqLEDStrip/1.0.4/PqLEDStrip-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sofapirate/library/PqLEDStrip/1.0.4/PqLEDStrip-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sofapirate/library/PqOSC/0.1.0/PqOSC-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PqOSC-0.1.0.tar.gz",
+    "size_bytes": 18905,
+    "sha256": "3a84ecf288cdd831249daf13b0d69b29c7143449aab4dfd3857329b9cbbf860e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sofapirate/library/PqOSC/0.1.0/PqOSC-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sofapirate/library/PqOSC/0.1.0/PqOSC-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sofapirate/library/SlipMassage/1.0/SlipMassage-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SlipMassage-1.0.tar.gz",
+    "size_bytes": 8205,
+    "sha256": "f92b1d52b1bb8a7ce104701d93a20ccf571961196eb34d0454751187f3e0c7e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sofapirate/library/SlipMassage/1.0/SlipMassage-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sofapirate/library/SlipMassage/1.0/SlipMassage-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

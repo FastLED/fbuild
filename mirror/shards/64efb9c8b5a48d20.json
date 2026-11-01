@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/houslast3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "houslast3/library/SysUILib/1.0.0/SysUILib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SysUILib-1.0.0.tar.gz",
+    "size_bytes": 19005,
+    "sha256": "1cc9a12f7656854525b850e02c15981c35e8b45f289f1ad66b862ec59fdad6a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/houslast3/library/SysUILib/1.0.0/SysUILib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/houslast3/library/SysUILib/1.0.0/SysUILib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "houslast3/library/SysUILib/1.0.2/SysUILib-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SysUILib-1.0.2.tar.gz",
+    "size_bytes": 19008,
+    "sha256": "45435c15bb334c1e6f6b1a0f652e3e9c960936f67f6658eb2f48ed8a2176edea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/houslast3/library/SysUILib/1.0.2/SysUILib-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/houslast3/library/SysUILib/1.0.2/SysUILib-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

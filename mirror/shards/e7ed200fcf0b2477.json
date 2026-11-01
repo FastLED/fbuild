@@ -1,0 +1,386 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robusto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robusto/library/robusto/1.3.1/robusto-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-1.3.1.tar.gz",
+    "size_bytes": 865045,
+    "sha256": "9bf414a5b17b361ef696df6a2aaf6690b3e42119562385b034932d05ddec630f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/1.3.1/robusto-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/1.3.1/robusto-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.0/robusto-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.0.tar.gz",
+    "size_bytes": 865047,
+    "sha256": "338140384651e6fb28539cb66de976bd246229ad2d660e4959b76cc1cfd2904d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.0/robusto-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.0/robusto-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.1/robusto-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.1.tar.gz",
+    "size_bytes": 1428466,
+    "sha256": "3aacecbfd351fdc96980281c9df2e4b0c66d76d324441dd9b547c44b27153db4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.1/robusto-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.1/robusto-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.10/robusto-2.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.10.tar.gz",
+    "size_bytes": 303025,
+    "sha256": "2839f9c8fc2211d00ab59d83d9b157c377716525afc716826c3f92736454b524",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.10/robusto-2.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.10/robusto-2.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.11/robusto-2.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.11.tar.gz",
+    "size_bytes": 303415,
+    "sha256": "f43b8fdb71eb026e505152235429691de53b1e1d8a8c2fd861da12d43aca75c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.11/robusto-2.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.11/robusto-2.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.12/robusto-2.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.12.tar.gz",
+    "size_bytes": 303668,
+    "sha256": "7a798d7f12beca3e711d80a9a4d1af0181c6d14a5aadfd0d716452fa35c0b5e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.12/robusto-2.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.12/robusto-2.1.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.13/robusto-2.1.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.13.tar.gz",
+    "size_bytes": 303753,
+    "sha256": "0c825fb83e275c9964e2bc177dcad4e8cfa92ef308f8487420fa6ca664b118b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.13/robusto-2.1.13.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.13/robusto-2.1.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.14/robusto-2.1.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.14.tar.gz",
+    "size_bytes": 303824,
+    "sha256": "225b7b055f43d5e53aace5ba4fd8c429d8ef9fbbb85c3090507eb4d41b674cee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.14/robusto-2.1.14.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.14/robusto-2.1.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.15/robusto-2.1.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.15.tar.gz",
+    "size_bytes": 303799,
+    "sha256": "7a484094ee993d73e959a0f5b70fb7d2ddecd80bf6e35803136c0847eb02ab74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.15/robusto-2.1.15.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.15/robusto-2.1.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.16/robusto-2.1.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.16.tar.gz",
+    "size_bytes": 303793,
+    "sha256": "48e69b17c00f2c3ee2554539ebf3408bbe91389a9e9ae214d381c370a99b7a97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.16/robusto-2.1.16.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.16/robusto-2.1.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.17/robusto-2.1.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.17.tar.gz",
+    "size_bytes": 870168,
+    "sha256": "4976cdd174ebe2fe9894bce98ae96b0ce35525e20016407a8d74912ea7f42e74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.17/robusto-2.1.17.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.17/robusto-2.1.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.18/robusto-2.1.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.18.tar.gz",
+    "size_bytes": 871133,
+    "sha256": "cf4512e1d2a6c04ecb6f33603de8af9f04f390a794f3165b05315fb1e6688a6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.18/robusto-2.1.18.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.18/robusto-2.1.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.19/robusto-2.1.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.19.tar.gz",
+    "size_bytes": 303703,
+    "sha256": "e3495e928d66d52e6c94acda984c57b3c2f64868ab0c4978e9b2a1852c877a01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.19/robusto-2.1.19.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.19/robusto-2.1.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.2/robusto-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.2.tar.gz",
+    "size_bytes": 864820,
+    "sha256": "849da239256bbfb12ee21b7e52046ae57f6d93a3e4e162b6b45262794f445b1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.2/robusto-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.2/robusto-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.20/robusto-2.1.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.20.tar.gz",
+    "size_bytes": 303725,
+    "sha256": "79f069bccc5e7286d3e6a75c35db6c9a6e50f2547b458bfc4a53adf7c17101db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.20/robusto-2.1.20.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.20/robusto-2.1.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.3/robusto-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.3.tar.gz",
+    "size_bytes": 301666,
+    "sha256": "bdab5f3de11ec93b29d3d99085ec765cb0366e5b1004baf969f6311622061ecd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.3/robusto-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.3/robusto-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.4/robusto-2.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.4.tar.gz",
+    "size_bytes": 301983,
+    "sha256": "a07d83584b17e18c320025901e60237aa9cdb823afd6a40f4dea67f2e5a240b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.4/robusto-2.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.4/robusto-2.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.5/robusto-2.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.5.tar.gz",
+    "size_bytes": 302112,
+    "sha256": "364aa80de3dd195e4242383e55b2a6c9485fae7fc98bc440d00f18d96cb57ad7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.5/robusto-2.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.5/robusto-2.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.6/robusto-2.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.6.tar.gz",
+    "size_bytes": 302278,
+    "sha256": "8153cdd4dcd03f4304497b589b349aa1b7a66cf3dd52fa8f184bed597bb2f06a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.6/robusto-2.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.6/robusto-2.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.7/robusto-2.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.7.tar.gz",
+    "size_bytes": 302283,
+    "sha256": "379be46cbdaa3fe43955d933c53d00f6cd7e2efd671cb306e11c806b39442008",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.7/robusto-2.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.7/robusto-2.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.8/robusto-2.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.8.tar.gz",
+    "size_bytes": 302241,
+    "sha256": "0dc70f682e6ff92124aaad48c22f61c8db241d6ccfb6f09ba61ebb72d21445ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.8/robusto-2.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.8/robusto-2.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.1.9/robusto-2.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.1.9.tar.gz",
+    "size_bytes": 302447,
+    "sha256": "0b94a60af5d8ac8bcba21f745226fa9b6749e4f60327dee8011ce924b106a1c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.1.9/robusto-2.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.1.9/robusto-2.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/2.2.0/robusto-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-2.2.0.tar.gz",
+    "size_bytes": 305738,
+    "sha256": "dac162b66fd27fbb421393b2e502df61ea750e353168cc80e602e43c0ea3af0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/2.2.0/robusto-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/2.2.0/robusto-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/3.0.0/robusto-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-3.0.0.tar.gz",
+    "size_bytes": 306588,
+    "sha256": "b4cd4497e0dac31e56bbde2a4232254ea5b4aa100c5cede39190a14c014ae36e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/3.0.0/robusto-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/3.0.0/robusto-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/3.0.1/robusto-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-3.0.1.tar.gz",
+    "size_bytes": 307273,
+    "sha256": "ebe5e459081355029a9bdb6b02521636ec56b12586d7f2fff69fde642ca64c4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/3.0.1/robusto-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/3.0.1/robusto-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/3.3.1/robusto-3.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-3.3.1.tar.gz",
+    "size_bytes": 460148,
+    "sha256": "3fc4361ea481201df8df9baca4b22d242ee71db2d1fcfc09158762bedbf54a0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/3.3.1/robusto-3.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/3.3.1/robusto-3.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/3.3.2/robusto-3.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-3.3.2.tar.gz",
+    "size_bytes": 463426,
+    "sha256": "cb1aca584ae8be678e085325d3ffe6ed7d1330d58ab3dd81e6067fc2b469fa6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/3.3.2/robusto-3.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/3.3.2/robusto-3.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/3.3.4/robusto-3.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-3.3.4.tar.gz",
+    "size_bytes": 469389,
+    "sha256": "a3412cb5d71e62a338bc4ade2c77083ac8ae6327ca247fd216bf8adcb4d0cd0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/3.3.4/robusto-3.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/3.3.4/robusto-3.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robusto/library/robusto/4.0.0/robusto-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "robusto-4.0.0.tar.gz",
+    "size_bytes": 1247047,
+    "sha256": "c21f81b7beb9eaa2c85ffd3c9cf4bf3446458a46d30dfa4e9737890a591753d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robusto/library/robusto/4.0.0/robusto-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robusto/library/robusto/4.0.0/robusto-4.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

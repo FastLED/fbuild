@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/martinsos",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "martinsos/library/HCSR04/2.0.0/HCSR04-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HCSR04-2.0.0.tar.gz",
+    "size_bytes": 14997,
+    "sha256": "d1f8a50da83e8c97622e35b97f74cf2c0e86b3ed1ab86c4b09cfbca05478f0ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinsos/library/HCSR04/2.0.0/HCSR04-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/martinsos/library/HCSR04/2.0.0/HCSR04-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

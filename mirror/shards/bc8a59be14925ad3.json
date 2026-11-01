@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sudojosh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sudojosh/library/BLEBeaconParser/1.0.0/BLEBeaconParser-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLEBeaconParser-1.0.0.tar.gz",
+    "size_bytes": 22821,
+    "sha256": "74963096f3b3c9cd4af7e891d05828d69cfd84498b60542eec4a472b076d44c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sudojosh/library/BLEBeaconParser/1.0.0/BLEBeaconParser-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sudojosh/library/BLEBeaconParser/1.0.0/BLEBeaconParser-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sudojosh/library/BLEBeaconParser/1.0.1/BLEBeaconParser-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLEBeaconParser-1.0.1.tar.gz",
+    "size_bytes": 22688,
+    "sha256": "f96a7c876409b14ecd05345a2fef7bc3f4a0ae6363dbb648cc6bfc85eef19ff4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sudojosh/library/BLEBeaconParser/1.0.1/BLEBeaconParser-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sudojosh/library/BLEBeaconParser/1.0.1/BLEBeaconParser-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

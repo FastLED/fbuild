@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-br549",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-br549/library/RFM69/0.0.0+sha.db6e4ce9dc02/RFM69-0.0.0+sha.db6e4ce9dc02.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RFM69-0.0.0+sha.db6e4ce9dc02.tar.gz",
+    "size_bytes": 15111,
+    "sha256": "b8975e3bfea9971d9ee9fe031a5b280e2b66c1cf08992032647360285b46b4ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-br549/library/RFM69/0.0.0%2Bsha.db6e4ce9dc02/RFM69-0.0.0%2Bsha.db6e4ce9dc02.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-br549/library/RFM69/0.0.0%2Bsha.db6e4ce9dc02/RFM69-0.0.0%2Bsha.db6e4ce9dc02.tar.gz"
+    ]
+   }
+  }
+ ]
+}

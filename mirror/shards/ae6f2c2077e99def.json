@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rileyc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rileyc/library/FmtLib/11.2.0/FmtLib-11.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FmtLib-11.2.0.tar.gz",
+    "size_bytes": 145754,
+    "sha256": "94e9317d94ed787283d76de402d6a28de35a102ee44e85483a439154637da412",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rileyc/library/FmtLib/11.2.0/FmtLib-11.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rileyc/library/FmtLib/11.2.0/FmtLib-11.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rileyc/library/FmtLib/11.2.2/FmtLib-11.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FmtLib-11.2.2.tar.gz",
+    "size_bytes": 145455,
+    "sha256": "22a21d0753426b4e592cee8b3b3896dab9fc0b8e6133279f298cc740042267f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rileyc/library/FmtLib/11.2.2/FmtLib-11.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rileyc/library/FmtLib/11.2.2/FmtLib-11.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rileyc/library/FmtLib/12.1.0/FmtLib-12.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FmtLib-12.1.0.tar.gz",
+    "size_bytes": 146597,
+    "sha256": "31bd8f783a5f24bb32011561528f5cb0410ce07b62a4310d2c1f062728f08dac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rileyc/library/FmtLib/12.1.0/FmtLib-12.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rileyc/library/FmtLib/12.1.0/FmtLib-12.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rileyc/library/FormatLog/0.5.2/FormatLog-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FormatLog-0.5.2.tar.gz",
+    "size_bytes": 9732,
+    "sha256": "f88f4ce590182d0dfa7b77f81fd278a5fb07ecadb43c77891edbab3f5dc702dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rileyc/library/FormatLog/0.5.2/FormatLog-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rileyc/library/FormatLog/0.5.2/FormatLog-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rileyc/library/FormatLog/0.6.0/FormatLog-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FormatLog-0.6.0.tar.gz",
+    "size_bytes": 15949,
+    "sha256": "d3f6e4d2ec9d7996d595aff682d124ec38e96d1680124dd4059a2fc0fb83a55d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rileyc/library/FormatLog/0.6.0/FormatLog-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rileyc/library/FormatLog/0.6.0/FormatLog-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rileyc/library/FormatLog/0.6.1/FormatLog-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FormatLog-0.6.1.tar.gz",
+    "size_bytes": 20743,
+    "sha256": "12ef2c6af8765640e90d06c4944e0d32eac52fe4dcaa5603bd6328a23285a736",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rileyc/library/FormatLog/0.6.1/FormatLog-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rileyc/library/FormatLog/0.6.1/FormatLog-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rileyc/library/FormatLog/0.6.2/FormatLog-0.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FormatLog-0.6.2.tar.gz",
+    "size_bytes": 21117,
+    "sha256": "9979db76378a7bee179582a0d7b22b26e1451399620d1e566f5527ff6017f17d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rileyc/library/FormatLog/0.6.2/FormatLog-0.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rileyc/library/FormatLog/0.6.2/FormatLog-0.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rileyc/library/FormatLog/0.7.0/FormatLog-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FormatLog-0.7.0.tar.gz",
+    "size_bytes": 21090,
+    "sha256": "25ddf22ddd514f78a71b1fd9c48d39593a398b62d70b44deb742da33627403ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rileyc/library/FormatLog/0.7.0/FormatLog-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rileyc/library/FormatLog/0.7.0/FormatLog-0.7.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

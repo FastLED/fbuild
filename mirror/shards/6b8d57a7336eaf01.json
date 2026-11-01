@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jcw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jcw/library/EtherCard/1.1.0/EtherCard-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EtherCard-1.1.0.tar.gz",
+    "size_bytes": 66857,
+    "sha256": "ca7cb8b2577d0ddf5d098c377bd491f2e11a381130e71410cb3cfef397c86edb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcw/library/EtherCard/1.1.0/EtherCard-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jcw/library/EtherCard/1.1.0/EtherCard-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jcw/library/JeeH/7.0.2/JeeH-7.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JeeH-7.0.2.tar.gz",
+    "size_bytes": 71374,
+    "sha256": "1d0eec532b2378717780d4e90c485ade56f7cbe81a63b49172bd768c530c06a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcw/library/JeeH/7.0.2/JeeH-7.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jcw/library/JeeH/7.0.2/JeeH-7.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jcw/library/JeeH/7.0.3/JeeH-7.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JeeH-7.0.3.tar.gz",
+    "size_bytes": 72119,
+    "sha256": "594f99f98aef92669ad36d9191d93977109cce9eb6652ea1d0ce47182293c38c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcw/library/JeeH/7.0.3/JeeH-7.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jcw/library/JeeH/7.0.3/JeeH-7.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jcw/library/JeeH/7.0.4/JeeH-7.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JeeH-7.0.4.tar.gz",
+    "size_bytes": 75366,
+    "sha256": "b37484bf00a91d3b03418f65365eb1dafb069086af5aff479d3f7aa42a6deaaf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcw/library/JeeH/7.0.4/JeeH-7.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/jcw/library/JeeH/7.0.4/JeeH-7.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jcw/library/JeeH/7.0.5/JeeH-7.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JeeH-7.0.5.tar.gz",
+    "size_bytes": 86487,
+    "sha256": "07d147105476908a8fb3ba68cc0f199cdc2f995cc60954df54607c3a72d0fef4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcw/library/JeeH/7.0.5/JeeH-7.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/jcw/library/JeeH/7.0.5/JeeH-7.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jcw/library/JeeH/7.0.6/JeeH-7.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JeeH-7.0.6.tar.gz",
+    "size_bytes": 88616,
+    "sha256": "5987e1ee2ad52d7551bd5eceeb4be44855612643196d11e98d3e5c8ae56da7f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcw/library/JeeH/7.0.6/JeeH-7.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/jcw/library/JeeH/7.0.6/JeeH-7.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jcw/library/JeeH/7.0.9/JeeH-7.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JeeH-7.0.9.tar.gz",
+    "size_bytes": 95315,
+    "sha256": "408da4e97f4c742a7f6afe8973c7fd6ec460310e867d4f25aa852206de15b66a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcw/library/JeeH/7.0.9/JeeH-7.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/jcw/library/JeeH/7.0.9/JeeH-7.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jcw/library/JeeH/7.1.0/JeeH-7.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JeeH-7.1.0.tar.gz",
+    "size_bytes": 98769,
+    "sha256": "9ea3f04563fdf6f53c62f620e5c18c39f18a64bcf3ebac8490a989b74b6e313c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jcw/library/JeeH/7.1.0/JeeH-7.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jcw/library/JeeH/7.1.0/JeeH-7.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/krishnakumar4a4",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "krishnakumar4a4/library/esp8266-twitter/0.3/esp8266-twitter-0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp8266-twitter-0.3.tar.gz",
+    "size_bytes": 25848,
+    "sha256": "c398cc6f5c6986c61c184f2c3b003f59ed457539c351112e3cecb60f153f8093",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/krishnakumar4a4/library/esp8266-twitter/0.3/esp8266-twitter-0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/krishnakumar4a4/library/esp8266-twitter/0.3/esp8266-twitter-0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-remco",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-remco/library/MD5/0.0.0+sha.56e31f50f1e0/MD5-0.0.0+sha.56e31f50f1e0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD5-0.0.0+sha.56e31f50f1e0.tar.gz",
+    "size_bytes": 4797,
+    "sha256": "014b4ca59147d788f9015ea193d36843b254634ff7c0693a34c2713c02f3db3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-remco/library/MD5/0.0.0%2Bsha.56e31f50f1e0/MD5-0.0.0%2Bsha.56e31f50f1e0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-remco/library/MD5/0.0.0%2Bsha.56e31f50f1e0/MD5-0.0.0%2Bsha.56e31f50f1e0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-remco/library/SHA256/0.0.0+sha.c0ed1bf37651/SHA256-0.0.0+sha.c0ed1bf37651.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SHA256-0.0.0+sha.c0ed1bf37651.tar.gz",
+    "size_bytes": 4043,
+    "sha256": "2beecabbac16601a83c4a4834306e7f681f9dc80abeada73d49b7dea92845af5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-remco/library/SHA256/0.0.0%2Bsha.c0ed1bf37651/SHA256-0.0.0%2Bsha.c0ed1bf37651.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-remco/library/SHA256/0.0.0%2Bsha.c0ed1bf37651/SHA256-0.0.0%2Bsha.c0ed1bf37651.tar.gz"
+    ]
+   }
+  }
+ ]
+}

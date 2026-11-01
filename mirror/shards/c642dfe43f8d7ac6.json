@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sdesign2018",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sdesign2018/library/sd-driver-master/0.0.0+sha.f72b3e7f1ec8/sd-driver-master-0.0.0+sha.f72b3e7f1ec8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "sd-driver-master-0.0.0+sha.f72b3e7f1ec8.tar.gz",
+    "size_bytes": 25081,
+    "sha256": "a6fd7b6324daba0dc96c160d7030ac8c0555046e44b9903696b08b8e3b0f6b5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sdesign2018/library/sd-driver-master/0.0.0%2Bsha.f72b3e7f1ec8/sd-driver-master-0.0.0%2Bsha.f72b3e7f1ec8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sdesign2018/library/sd-driver-master/0.0.0%2Bsha.f72b3e7f1ec8/sd-driver-master-0.0.0%2Bsha.f72b3e7f1ec8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gsieben",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gsieben/library/GeoGab%20RuntimeMeter/1.0.4/GeoGabRuntimeMeter-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeoGabRuntimeMeter-1.0.4.tar.gz",
+    "size_bytes": 27697,
+    "sha256": "a8d6e9a27c59eb9ddb1d154ec128cb0e79b46d64b0f6ac0ae97389e35a06230a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gsieben/library/GeoGab%2520RuntimeMeter/1.0.4/GeoGabRuntimeMeter-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gsieben/library/GeoGab%20RuntimeMeter/1.0.4/GeoGabRuntimeMeter-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gsieben/library/GeoGab-Integrator/1.0.3/GeoGab-Integrator-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeoGab-Integrator-1.0.3.tar.gz",
+    "size_bytes": 13666,
+    "sha256": "99e7b464b4d5100bc0d08cc1a27493912082d26578261cfc8ed8478520150af6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gsieben/library/GeoGab-Integrator/1.0.3/GeoGab-Integrator-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gsieben/library/GeoGab-Integrator/1.0.3/GeoGab-Integrator-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gsieben/library/GeoGab-RuntimeMeter/1.0.8/GeoGab-RuntimeMeter-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeoGab-RuntimeMeter-1.0.8.tar.gz",
+    "size_bytes": 32733,
+    "sha256": "745b706a660cea38abac0d3f27c8f0f91ad6ee4b769157e24fe7241946bff793",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gsieben/library/GeoGab-RuntimeMeter/1.0.8/GeoGab-RuntimeMeter-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/gsieben/library/GeoGab-RuntimeMeter/1.0.8/GeoGab-RuntimeMeter-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gsieben/library/GeoGab-TimeEvent/1.0.4/GeoGab-TimeEvent-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GeoGab-TimeEvent-1.0.4.tar.gz",
+    "size_bytes": 13854,
+    "sha256": "6e14083fb00da2bd7dbf25117a2b4095032bb0c4492c43fc5d7e4f7eb3938845",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gsieben/library/GeoGab-TimeEvent/1.0.4/GeoGab-TimeEvent-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gsieben/library/GeoGab-TimeEvent/1.0.4/GeoGab-TimeEvent-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gsieben/library/LD2420GeoGab/1.0.0/LD2420GeoGab-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LD2420GeoGab-1.0.0.tar.gz",
+    "size_bytes": 7145221,
+    "sha256": "9946920134ae68f80058f8d91ef631f2e10467598c1d2bdd4a8f1de6334272e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gsieben/library/LD2420GeoGab/1.0.0/LD2420GeoGab-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gsieben/library/LD2420GeoGab/1.0.0/LD2420GeoGab-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

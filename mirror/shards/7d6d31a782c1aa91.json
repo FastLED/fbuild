@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-macht",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-macht/library/DigitalFilter/0.0.0+sha.4e7d58236762/DigitalFilter-0.0.0+sha.4e7d58236762.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalFilter-0.0.0+sha.4e7d58236762.tar.gz",
+    "size_bytes": 2798,
+    "sha256": "1dfa9ac8cebc4cf203185d8a2a62002b16adc2b035df84d62a037f80f2846233",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macht/library/DigitalFilter/0.0.0%2Bsha.4e7d58236762/DigitalFilter-0.0.0%2Bsha.4e7d58236762.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macht/library/DigitalFilter/0.0.0%2Bsha.4e7d58236762/DigitalFilter-0.0.0%2Bsha.4e7d58236762.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-macht/library/NTCThermistor/0.0.0+sha.e9f38dc974f8/NTCThermistor-0.0.0+sha.e9f38dc974f8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTCThermistor-0.0.0+sha.e9f38dc974f8.tar.gz",
+    "size_bytes": 1278,
+    "sha256": "3d2983ea9a9d219594c23e5dbeb0bc8d7d66e8ea661d511d52aaa6ff5f7cda07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macht/library/NTCThermistor/0.0.0%2Bsha.e9f38dc974f8/NTCThermistor-0.0.0%2Bsha.e9f38dc974f8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macht/library/NTCThermistor/0.0.0%2Bsha.e9f38dc974f8/NTCThermistor-0.0.0%2Bsha.e9f38dc974f8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-macht/library/SerialMIDI/0.0.0+sha.02884627dcfa/SerialMIDI-0.0.0+sha.02884627dcfa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialMIDI-0.0.0+sha.02884627dcfa.tar.gz",
+    "size_bytes": 1125,
+    "sha256": "6f779810b000b56d501f4bb29021fa75ec7e146a4f4f272bb0562104b471d4f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macht/library/SerialMIDI/0.0.0%2Bsha.02884627dcfa/SerialMIDI-0.0.0%2Bsha.02884627dcfa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macht/library/SerialMIDI/0.0.0%2Bsha.02884627dcfa/SerialMIDI-0.0.0%2Bsha.02884627dcfa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-macht/library/Sinwave/0.0.0+sha.e934e95962bd/Sinwave-0.0.0+sha.e934e95962bd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sinwave-0.0.0+sha.e934e95962bd.tar.gz",
+    "size_bytes": 1078,
+    "sha256": "76676539f6c9eb805ac7e08996e5eb69660d3e6ccaf5fd95e9569ab8ee9c14d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macht/library/Sinwave/0.0.0%2Bsha.e934e95962bd/Sinwave-0.0.0%2Bsha.e934e95962bd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macht/library/Sinwave/0.0.0%2Bsha.e934e95962bd/Sinwave-0.0.0%2Bsha.e934e95962bd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-macht/library/Thermistor/0.0.0+sha.d4198719a504/Thermistor-0.0.0+sha.d4198719a504.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Thermistor-0.0.0+sha.d4198719a504.tar.gz",
+    "size_bytes": 1053,
+    "sha256": "ef9cc9bb391c8768eb2f7020f26bd9377c55e221cba63601ec477a6eda366c27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macht/library/Thermistor/0.0.0%2Bsha.d4198719a504/Thermistor-0.0.0%2Bsha.d4198719a504.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macht/library/Thermistor/0.0.0%2Bsha.d4198719a504/Thermistor-0.0.0%2Bsha.d4198719a504.tar.gz"
+    ]
+   }
+  }
+ ]
+}

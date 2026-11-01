@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bremme",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bremme/library/SevenSegmentTM1637/1.1.0/SevenSegmentTM1637-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSegmentTM1637-1.1.0.tar.gz",
+    "size_bytes": 28570,
+    "sha256": "6bec10eab80b91fe7c2dee80705157b71f85ac91fd0e0c389d13664f8f6ed45d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bremme/library/SevenSegmentTM1637/1.1.0/SevenSegmentTM1637-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bremme/library/SevenSegmentTM1637/1.1.0/SevenSegmentTM1637-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

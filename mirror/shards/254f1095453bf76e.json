@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rvasquez6089",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rvasquez6089/library/PCA9685Lib/0.0.0+sha.ec40a85eba51/PCA9685Lib-0.0.0+sha.ec40a85eba51.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9685Lib-0.0.0+sha.ec40a85eba51.tar.gz",
+    "size_bytes": 3331,
+    "sha256": "bb8d0c803e949d3011b46d408572fd7ffd3970c559eb35762333aaaed5da7c93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rvasquez6089/library/PCA9685Lib/0.0.0%2Bsha.ec40a85eba51/PCA9685Lib-0.0.0%2Bsha.ec40a85eba51.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rvasquez6089/library/PCA9685Lib/0.0.0%2Bsha.ec40a85eba51/PCA9685Lib-0.0.0%2Bsha.ec40a85eba51.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rvasquez6089/library/PGA112_Driver/0.0.0+sha.53fe25582ae0/PGA112_Driver-0.0.0+sha.53fe25582ae0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PGA112_Driver-0.0.0+sha.53fe25582ae0.tar.gz",
+    "size_bytes": 1787,
+    "sha256": "9389ac33c66d6bb377297b14ac5aab3d90e2b4794bdc51a70937236331a3b657",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rvasquez6089/library/PGA112_Driver/0.0.0%2Bsha.53fe25582ae0/PGA112_Driver-0.0.0%2Bsha.53fe25582ae0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rvasquez6089/library/PGA112_Driver/0.0.0%2Bsha.53fe25582ae0/PGA112_Driver-0.0.0%2Bsha.53fe25582ae0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

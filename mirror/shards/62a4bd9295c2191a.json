@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ignacy110",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ignacy110/library/MC14489/1.0.0/MC14489-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MC14489-1.0.0.tar.gz",
+    "size_bytes": 14876,
+    "sha256": "a2dbd97a56ce8842e2ebd60cafb2635768db9fe82dbeb5a40255639e37117780",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ignacy110/library/MC14489/1.0.0/MC14489-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ignacy110/library/MC14489/1.0.0/MC14489-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ignacy110/library/PCF8573/1.0.1/PCF8573-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8573-1.0.1.tar.gz",
+    "size_bytes": 15349,
+    "sha256": "f3a7a6ff6f59beef004247bad9c187a28c138d064326af6e81b79dd2a5b6cc17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ignacy110/library/PCF8573/1.0.1/PCF8573-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ignacy110/library/PCF8573/1.0.1/PCF8573-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ignacy110/library/PCF8573/1.0.2/PCF8573-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8573-1.0.2.tar.gz",
+    "size_bytes": 15540,
+    "sha256": "25752833fbd8b20af7f0e4b339e3754a6876069e8c7ff26320698c82d8c81fd7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ignacy110/library/PCF8573/1.0.2/PCF8573-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ignacy110/library/PCF8573/1.0.2/PCF8573-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

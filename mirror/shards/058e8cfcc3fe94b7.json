@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/betrisey",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "betrisey/library/Dsmr/0.10/Dsmr-0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dsmr-0.10.tar.gz",
+    "size_bytes": 24980,
+    "sha256": "5e42a130adeb33bbfdf66b4246d74ed7a182717dbbad5b672579a5374f2ab1cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/betrisey/library/Dsmr/0.10/Dsmr-0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/betrisey/library/Dsmr/0.10/Dsmr-0.10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

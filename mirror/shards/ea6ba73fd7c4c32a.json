@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yapbreak",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yapbreak/library/libbutton/1.1.2-2/libbutton-1.1.2-2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libbutton-1.1.2-2.tar.gz",
+    "size_bytes": 2790,
+    "sha256": "d0503a6eff16dba73b396f4aa04186e874ff96ee27768a6d5d7d74cd6e39432d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yapbreak/library/libbutton/1.1.2-2/libbutton-1.1.2-2.tar.gz",
+     "https://dl.registry.platformio.org/download/yapbreak/library/libbutton/1.1.2-2/libbutton-1.1.2-2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yapbreak/library/libfsm/1.0.3-2/libfsm-1.0.3-2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libfsm-1.0.3-2.tar.gz",
+    "size_bytes": 1997,
+    "sha256": "c899cac6e1d466c451aa5cb5764d2f8ce4aa9b0b22b7a5ab76c29df45e593fb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yapbreak/library/libfsm/1.0.3-2/libfsm-1.0.3-2.tar.gz",
+     "https://dl.registry.platformio.org/download/yapbreak/library/libfsm/1.0.3-2/libfsm-1.0.3-2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yapbreak/library/libled/1.1.6-2/libled-1.1.6-2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libled-1.1.6-2.tar.gz",
+    "size_bytes": 3560,
+    "sha256": "480c09115a1ecd940a6f2c2c08eaad02526690a5121dd06e200e637e559cb1e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yapbreak/library/libled/1.1.6-2/libled-1.1.6-2.tar.gz",
+     "https://dl.registry.platformio.org/download/yapbreak/library/libled/1.1.6-2/libled-1.1.6-2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "yapbreak/library/libtimer/1.1.9-2/libtimer-1.1.9-2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libtimer-1.1.9-2.tar.gz",
+    "size_bytes": 4427,
+    "sha256": "42f654ba08908ec9fece8bdeb36b299677f32b5f2a2016018d452eebd8cfa60e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yapbreak/library/libtimer/1.1.9-2/libtimer-1.1.9-2.tar.gz",
+     "https://dl.registry.platformio.org/download/yapbreak/library/libtimer/1.1.9-2/libtimer-1.1.9-2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

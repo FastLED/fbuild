@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gobilda-official",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gobilda-official/library/goBILDA%20Pinpoint/1.0.0/goBILDAPinpoint-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "goBILDAPinpoint-1.0.0.tar.gz",
+    "size_bytes": 8529,
+    "sha256": "df2b61cbe29de10682029d3cb4ee54a7e72ae662eb6590267f1a68aa31f18e32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gobilda-official/library/goBILDA%2520Pinpoint/1.0.0/goBILDAPinpoint-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gobilda-official/library/goBILDA%20Pinpoint/1.0.0/goBILDAPinpoint-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gobilda-official/library/goBILDA%20Prism/1.0.0/goBILDAPrism-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "goBILDAPrism-1.0.0.tar.gz",
+    "size_bytes": 13746,
+    "sha256": "9b0740e34c3e61d9c54c566c5df4bfda86c4e3604ef0b3a1b5e20dea2ec09fb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gobilda-official/library/goBILDA%2520Prism/1.0.0/goBILDAPrism-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gobilda-official/library/goBILDA%20Prism/1.0.0/goBILDAPrism-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

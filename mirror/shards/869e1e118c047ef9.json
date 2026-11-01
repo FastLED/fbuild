@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lawmate",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lawmate/library/Lorro%20BQ25703A/0.1/LorroBQ25703A-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LorroBQ25703A-0.1.tar.gz",
+    "size_bytes": 10207,
+    "sha256": "92aa32f4ad7318d328bd15ed355d37f77128700e278f7315bb839eacb16f4661",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lawmate/library/Lorro%2520BQ25703A/0.1/LorroBQ25703A-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lawmate/library/Lorro%20BQ25703A/0.1/LorroBQ25703A-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lawmate/library/Lorro%20BQ4050/0.2/LorroBQ4050-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LorroBQ4050-0.2.tar.gz",
+    "size_bytes": 10325,
+    "sha256": "987e1cd2c1d3830399d15f0037b8ac9e2480379ad9a3bb13cb7956f0878282ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lawmate/library/Lorro%2520BQ4050/0.2/LorroBQ4050-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lawmate/library/Lorro%20BQ4050/0.2/LorroBQ4050-0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

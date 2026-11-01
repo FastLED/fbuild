@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/climateguard",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "climateguard/library/ClimateGuard%20CG%20Anem/1.0.3/ClimateGuardCGAnem-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClimateGuardCGAnem-1.0.3.tar.gz",
+    "size_bytes": 17738,
+    "sha256": "a51343db017f6d90de5c40dcca7248ef37568cdb39e86ee73c596335323e8f20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/climateguard/library/ClimateGuard%2520CG%2520Anem/1.0.3/ClimateGuardCGAnem-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/climateguard/library/ClimateGuard%20CG%20Anem/1.0.3/ClimateGuardCGAnem-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "climateguard/library/ClimateGuard%20RadSens/1.1.3/ClimateGuardRadSens-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ClimateGuardRadSens-1.1.3.tar.gz",
+    "size_bytes": 23018,
+    "sha256": "8aa64509bf0a11fafc209232215bf49ec923f0922a902b322a79a0dbf8ab5132",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/climateguard/library/ClimateGuard%2520RadSens/1.1.3/ClimateGuardRadSens-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/climateguard/library/ClimateGuard%20RadSens/1.1.3/ClimateGuardRadSens-1.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/llcesselx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "llcesselx/library/LCD595-ISU/1.0.2/LCD595-ISU-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD595-ISU-1.0.2.tar.gz",
+    "size_bytes": 9258,
+    "sha256": "eb7080e3ee090e79476e8fefdde1dfb1f4ab584a1342a2083e201404e3661e87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/llcesselx/library/LCD595-ISU/1.0.2/LCD595-ISU-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/llcesselx/library/LCD595-ISU/1.0.2/LCD595-ISU-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-team-9",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-team-9/library/LineScan/0.0.0+sha.ea0660f7d724/LineScan-0.0.0+sha.ea0660f7d724.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LineScan-0.0.0+sha.ea0660f7d724.tar.gz",
+    "size_bytes": 2785,
+    "sha256": "2513f1154d76a21a2a1f688e885ba7506720bd4c88b0697ba1711be7bf0e02fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team-9/library/LineScan/0.0.0%2Bsha.ea0660f7d724/LineScan-0.0.0%2Bsha.ea0660f7d724.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team-9/library/LineScan/0.0.0%2Bsha.ea0660f7d724/LineScan-0.0.0%2Bsha.ea0660f7d724.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-team-9/library/Motor/0.0.0+sha.573cd4808d91/Motor-0.0.0+sha.573cd4808d91.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor-0.0.0+sha.573cd4808d91.tar.gz",
+    "size_bytes": 2412,
+    "sha256": "56cb468c0737750204239d391472a0ba4f8d3dd163f71eeecf9ebe9367922db7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-team-9/library/Motor/0.0.0%2Bsha.573cd4808d91/Motor-0.0.0%2Bsha.573cd4808d91.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-team-9/library/Motor/0.0.0%2Bsha.573cd4808d91/Motor-0.0.0%2Bsha.573cd4808d91.tar.gz"
+    ]
+   }
+  }
+ ]
+}

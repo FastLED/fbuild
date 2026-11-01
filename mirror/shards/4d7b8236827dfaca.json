@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/intoyuniot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "intoyuniot/library/LedControl/1.0.0/LedControl-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedControl-1.0.0.tar.gz",
+    "size_bytes": 4250,
+    "sha256": "3e5aca7e1d9a0a044cc468474d93bf48e0a936b0901cbe88022047f5de7e8f0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/intoyuniot/library/LedControl/1.0.0/LedControl-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/intoyuniot/library/LedControl/1.0.0/LedControl-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

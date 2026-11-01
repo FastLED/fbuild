@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fire1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fire1/library/CmdSerial/1.1.2/CmdSerial-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CmdSerial-1.1.2.tar.gz",
+    "size_bytes": 13034,
+    "sha256": "2793c9da27ae7fc6d486998522f14696170549818c675eccb8dcf842d38769ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fire1/library/CmdSerial/1.1.2/CmdSerial-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fire1/library/CmdSerial/1.1.2/CmdSerial-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fire1/library/CmdSerial/1.2.2/CmdSerial-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CmdSerial-1.2.2.tar.gz",
+    "size_bytes": 13725,
+    "sha256": "4e001e8b88bbcba02a7dd4da295e0406ad1a96af813fe49e63bb2c83cdfc88ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fire1/library/CmdSerial/1.2.2/CmdSerial-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/fire1/library/CmdSerial/1.2.2/CmdSerial-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fire1/library/PulseCom/1.0.0/PulseCom-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseCom-1.0.0.tar.gz",
+    "size_bytes": 69047,
+    "sha256": "265cd5fcc3202f683cc98d5d169d895c79f8f18eb3e9f4b042fb5c081863ef07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fire1/library/PulseCom/1.0.0/PulseCom-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fire1/library/PulseCom/1.0.0/PulseCom-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

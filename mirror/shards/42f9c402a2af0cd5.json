@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ardaganbao",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ardaganbao/library/ArdaTask/1.0.2/ArdaTask-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArdaTask-1.0.2.tar.gz",
+    "size_bytes": 2292,
+    "sha256": "30b145b3acdc070e3aca2422d9ffcd7f11629e2cdbf1641ba2fca63188bb2bca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardaganbao/library/ArdaTask/1.0.2/ArdaTask-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ardaganbao/library/ArdaTask/1.0.2/ArdaTask-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

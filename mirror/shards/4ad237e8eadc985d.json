@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fermino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fermino/library/gelf-debug/1.0.1/gelf-debug-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gelf-debug-1.0.1.tar.gz",
+    "size_bytes": 2535,
+    "sha256": "844aa7b8d1cbe57137a774581e87ee85f2c8d9e2a311566d46fdce632347d8d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fermino/library/gelf-debug/1.0.1/gelf-debug-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fermino/library/gelf-debug/1.0.1/gelf-debug-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fermino/library/gelf/1.2.0/gelf-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gelf-1.2.0.tar.gz",
+    "size_bytes": 3879,
+    "sha256": "22cc161a49f4de337bea34dd6e38c326f692247946740791111aa50dfaf64d1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fermino/library/gelf/1.2.0/gelf-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fermino/library/gelf/1.2.0/gelf-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

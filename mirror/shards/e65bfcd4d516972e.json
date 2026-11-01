@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sqmsmu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sqmsmu/library/PMIC_BQ25896/0.1/PMIC_BQ25896-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PMIC_BQ25896-0.1.tar.gz",
+    "size_bytes": 9857,
+    "sha256": "bc04d5548884bcc3d8962f17a7aa6a6e810b91a58903c3d229c85ab44e95dee9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sqmsmu/library/PMIC_BQ25896/0.1/PMIC_BQ25896-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sqmsmu/library/PMIC_BQ25896/0.1/PMIC_BQ25896-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thehiddenguy13",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thehiddenguy13/library/UsefullCommands/1.0.0/UsefullCommands-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UsefullCommands-1.0.0.tar.gz",
+    "size_bytes": 1338,
+    "sha256": "28908a007fff5298b98e06b741100f9a0b6b45088ff83976dd6cce9b6d3edf30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thehiddenguy13/library/UsefullCommands/1.0.0/UsefullCommands-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thehiddenguy13/library/UsefullCommands/1.0.0/UsefullCommands-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

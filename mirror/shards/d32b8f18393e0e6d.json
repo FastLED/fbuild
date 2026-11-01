@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gabrielrivas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gabrielrivas/library/MessageQueue/0.0.0+sha.5e151e3834db/MessageQueue-0.0.0+sha.5e151e3834db.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MessageQueue-0.0.0+sha.5e151e3834db.tar.gz",
+    "size_bytes": 2211,
+    "sha256": "ec6f6bbaec8daba360c1f453c380f20d5db3668b9294f5b44de439cbc63561a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gabrielrivas/library/MessageQueue/0.0.0%2Bsha.5e151e3834db/MessageQueue-0.0.0%2Bsha.5e151e3834db.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gabrielrivas/library/MessageQueue/0.0.0%2Bsha.5e151e3834db/MessageQueue-0.0.0%2Bsha.5e151e3834db.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gabrielrivas/library/ModbusSlaveRTU/0.0.0+sha.0143a57e0c8e/ModbusSlaveRTU-0.0.0+sha.0143a57e0c8e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ModbusSlaveRTU-0.0.0+sha.0143a57e0c8e.tar.gz",
+    "size_bytes": 4895,
+    "sha256": "57a3c8eebf87743c31baad1f0fba764ec4f2d5a1fda840a9cf3518f6abc173d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gabrielrivas/library/ModbusSlaveRTU/0.0.0%2Bsha.0143a57e0c8e/ModbusSlaveRTU-0.0.0%2Bsha.0143a57e0c8e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gabrielrivas/library/ModbusSlaveRTU/0.0.0%2Bsha.0143a57e0c8e/ModbusSlaveRTU-0.0.0%2Bsha.0143a57e0c8e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gabrielrivas/library/SerialPortHandler/0.0.0+sha.aa72cb66762f/SerialPortHandler-0.0.0+sha.aa72cb66762f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialPortHandler-0.0.0+sha.aa72cb66762f.tar.gz",
+    "size_bytes": 1828,
+    "sha256": "2264fd81d34a402050eeb3eadfd72d42d463c339332744f4f691e2eab279859f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gabrielrivas/library/SerialPortHandler/0.0.0%2Bsha.aa72cb66762f/SerialPortHandler-0.0.0%2Bsha.aa72cb66762f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gabrielrivas/library/SerialPortHandler/0.0.0%2Bsha.aa72cb66762f/SerialPortHandler-0.0.0%2Bsha.aa72cb66762f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

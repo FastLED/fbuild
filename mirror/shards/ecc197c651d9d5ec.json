@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ubidefeo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ubidefeo/library/Future%20Tailors%27%20Debouncer/2.0.0/FutureTailorsDebouncer-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FutureTailorsDebouncer-2.0.0.tar.gz",
+    "size_bytes": 6077,
+    "sha256": "4613ddef3881ef46efa2736505220667b87346c123da173210329aba8fcd384d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ubidefeo/library/Future%2520Tailors%2527%2520Debouncer/2.0.0/FutureTailorsDebouncer-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ubidefeo/library/Future%20Tailors%27%20Debouncer/2.0.0/FutureTailorsDebouncer-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

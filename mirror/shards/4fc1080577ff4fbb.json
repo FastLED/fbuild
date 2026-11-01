@@ -1,0 +1,204 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ajk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ajk/library/DebounceIn/0.0.0+sha.31ae5cfb44a4/DebounceIn-0.0.0+sha.31ae5cfb44a4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebounceIn-0.0.0+sha.31ae5cfb44a4.tar.gz",
+    "size_bytes": 2404,
+    "sha256": "31b13a4f0ba52ed7731f54495ce870482c7cc19b33a982ec08634a8fcab49976",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajk/library/DebounceIn/0.0.0%2Bsha.31ae5cfb44a4/DebounceIn-0.0.0%2Bsha.31ae5cfb44a4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajk/library/DebounceIn/0.0.0%2Bsha.31ae5cfb44a4/DebounceIn-0.0.0%2Bsha.31ae5cfb44a4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ajk/library/FPointer/0.0.0+sha.56e309e76c19/FPointer-0.0.0+sha.56e309e76c19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FPointer-0.0.0+sha.56e309e76c19.tar.gz",
+    "size_bytes": 4286,
+    "sha256": "9c775888272d857645e3bb99402fba0144e89b18e7d790438b7b6ea168fa353a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajk/library/FPointer/0.0.0%2Bsha.56e309e76c19/FPointer-0.0.0%2Bsha.56e309e76c19.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajk/library/FPointer/0.0.0%2Bsha.56e309e76c19/FPointer-0.0.0%2Bsha.56e309e76c19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ajk/library/LLDP/0.0.0+sha.a3d41f923207/LLDP-0.0.0+sha.a3d41f923207.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LLDP-0.0.0+sha.a3d41f923207.tar.gz",
+    "size_bytes": 3995,
+    "sha256": "f84a949428c4a7ee81bb1416aebe95b68ac549545ce986abf54e57bd65bdee67",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajk/library/LLDP/0.0.0%2Bsha.a3d41f923207/LLDP-0.0.0%2Bsha.a3d41f923207.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajk/library/LLDP/0.0.0%2Bsha.a3d41f923207/LLDP-0.0.0%2Bsha.a3d41f923207.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ajk/library/MAX3100/0.0.0+sha.2a49171453d5/MAX3100-0.0.0+sha.2a49171453d5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX3100-0.0.0+sha.2a49171453d5.tar.gz",
+    "size_bytes": 9021,
+    "sha256": "b5d82352c45323456143ce36e918e6489a5b3691ecc4b70813a2457c9ce490d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajk/library/MAX3100/0.0.0%2Bsha.2a49171453d5/MAX3100-0.0.0%2Bsha.2a49171453d5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajk/library/MAX3100/0.0.0%2Bsha.2a49171453d5/MAX3100-0.0.0%2Bsha.2a49171453d5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ajk/library/MODADF4360/0.0.0+sha.e4d7ec6aeceb/MODADF4360-0.0.0+sha.e4d7ec6aeceb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MODADF4360-0.0.0+sha.e4d7ec6aeceb.tar.gz",
+    "size_bytes": 2765,
+    "sha256": "830cfa1e0224151da372579e8b58d98191be103d770b7af74f80c6be13cdd105",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajk/library/MODADF4360/0.0.0%2Bsha.e4d7ec6aeceb/MODADF4360-0.0.0%2Bsha.e4d7ec6aeceb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajk/library/MODADF4360/0.0.0%2Bsha.e4d7ec6aeceb/MODADF4360-0.0.0%2Bsha.e4d7ec6aeceb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ajk/library/MODDMA/0.0.0+sha.97a16bf2ff43/MODDMA-0.0.0+sha.97a16bf2ff43.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MODDMA-0.0.0+sha.97a16bf2ff43.tar.gz",
+    "size_bytes": 18477,
+    "sha256": "5f65b410c184b5776e7c3c832fc86f579c3b49cf118dcca3a309a663c9a1d33f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajk/library/MODDMA/0.0.0%2Bsha.97a16bf2ff43/MODDMA-0.0.0%2Bsha.97a16bf2ff43.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajk/library/MODDMA/0.0.0%2Bsha.97a16bf2ff43/MODDMA-0.0.0%2Bsha.97a16bf2ff43.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ajk/library/MODGPS/0.0.0+sha.64771e31464e/MODGPS-0.0.0+sha.64771e31464e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MODGPS-0.0.0+sha.64771e31464e.tar.gz",
+    "size_bytes": 14364,
+    "sha256": "c7638dcff8648047e2b0f517cc3e4d3907468a60b8a713f8ec43cef4643ce10f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajk/library/MODGPS/0.0.0%2Bsha.64771e31464e/MODGPS-0.0.0%2Bsha.64771e31464e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajk/library/MODGPS/0.0.0%2Bsha.64771e31464e/MODGPS-0.0.0%2Bsha.64771e31464e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ajk/library/MODMAX7456/0.0.0+sha.d7cd54ad4c3d/MODMAX7456-0.0.0+sha.d7cd54ad4c3d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MODMAX7456-0.0.0+sha.d7cd54ad4c3d.tar.gz",
+    "size_bytes": 10313,
+    "sha256": "29058c314484856fb018f81e0de5ab88da1dbe064566c161f74644ac4b411de3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajk/library/MODMAX7456/0.0.0%2Bsha.d7cd54ad4c3d/MODMAX7456-0.0.0%2Bsha.d7cd54ad4c3d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajk/library/MODMAX7456/0.0.0%2Bsha.d7cd54ad4c3d/MODMAX7456-0.0.0%2Bsha.d7cd54ad4c3d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ajk/library/MODSERIAL/0.0.0+sha.ae0408ebdd68/MODSERIAL-0.0.0+sha.ae0408ebdd68.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MODSERIAL-0.0.0+sha.ae0408ebdd68.tar.gz",
+    "size_bytes": 20175,
+    "sha256": "25f82181fb787c813411dc76ac3f0839493f95bb06bcc67289b94c55fc0882b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajk/library/MODSERIAL/0.0.0%2Bsha.ae0408ebdd68/MODSERIAL-0.0.0%2Bsha.ae0408ebdd68.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajk/library/MODSERIAL/0.0.0%2Bsha.ae0408ebdd68/MODSERIAL-0.0.0%2Bsha.ae0408ebdd68.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ajk/library/PinDetect/0.0.0+sha.cb3afc45028b/PinDetect-0.0.0+sha.cb3afc45028b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PinDetect-0.0.0+sha.cb3afc45028b.tar.gz",
+    "size_bytes": 5409,
+    "sha256": "b3dc2b071b5cacd312c88603d1273c5544e997982052b1f7706851a1de3de91a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajk/library/PinDetect/0.0.0%2Bsha.cb3afc45028b/PinDetect-0.0.0%2Bsha.cb3afc45028b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajk/library/PinDetect/0.0.0%2Bsha.cb3afc45028b/PinDetect-0.0.0%2Bsha.cb3afc45028b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ajk/library/SimpleIOMacros/0.0.0+sha.cb1f38aaae0a/SimpleIOMacros-0.0.0+sha.cb1f38aaae0a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleIOMacros-0.0.0+sha.cb1f38aaae0a.tar.gz",
+    "size_bytes": 4223,
+    "sha256": "5937387ee073de3a1874f31b2f176c2ff59454d363214836530594a93d87a31c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajk/library/SimpleIOMacros/0.0.0%2Bsha.cb1f38aaae0a/SimpleIOMacros-0.0.0%2Bsha.cb1f38aaae0a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajk/library/SimpleIOMacros/0.0.0%2Bsha.cb1f38aaae0a/SimpleIOMacros-0.0.0%2Bsha.cb1f38aaae0a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ajk/library/SimpleRCservos/0.0.0+sha.1232505e7206/SimpleRCservos-0.0.0+sha.1232505e7206.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleRCservos-0.0.0+sha.1232505e7206.tar.gz",
+    "size_bytes": 6980,
+    "sha256": "d857a4075029a32b2ef08ff8ac4261ca65fea14485717a67b1d00d60fe1c89ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajk/library/SimpleRCservos/0.0.0%2Bsha.1232505e7206/SimpleRCservos-0.0.0%2Bsha.1232505e7206.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajk/library/SimpleRCservos/0.0.0%2Bsha.1232505e7206/SimpleRCservos-0.0.0%2Bsha.1232505e7206.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ajk/library/SimpleScheduler/0.0.0+sha.49652acb6806/SimpleScheduler-0.0.0+sha.49652acb6806.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleScheduler-0.0.0+sha.49652acb6806.tar.gz",
+    "size_bytes": 6477,
+    "sha256": "f33706944b375959e579e04d095dd293456773a522625d383881209f1082ab6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajk/library/SimpleScheduler/0.0.0%2Bsha.49652acb6806/SimpleScheduler-0.0.0%2Bsha.49652acb6806.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajk/library/SimpleScheduler/0.0.0%2Bsha.49652acb6806/SimpleScheduler-0.0.0%2Bsha.49652acb6806.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ajk/library/SimpleSteppers/0.0.0+sha.7b7940df7865/SimpleSteppers-0.0.0+sha.7b7940df7865.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleSteppers-0.0.0+sha.7b7940df7865.tar.gz",
+    "size_bytes": 13772,
+    "sha256": "546d172ba5cbc68a97863e58c5bd25c15df685c73bd268d6339610ae487607e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajk/library/SimpleSteppers/0.0.0%2Bsha.7b7940df7865/SimpleSteppers-0.0.0%2Bsha.7b7940df7865.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajk/library/SimpleSteppers/0.0.0%2Bsha.7b7940df7865/SimpleSteppers-0.0.0%2Bsha.7b7940df7865.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-ajk/library/Ton/0.0.0+sha.123a1b30970a/Ton-0.0.0+sha.123a1b30970a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ton-0.0.0+sha.123a1b30970a.tar.gz",
+    "size_bytes": 3602,
+    "sha256": "582d1c32589b853c8b579a583cc3708a470633300d1805b7beb4ca739fd8705c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ajk/library/Ton/0.0.0%2Bsha.123a1b30970a/Ton-0.0.0%2Bsha.123a1b30970a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ajk/library/Ton/0.0.0%2Bsha.123a1b30970a/Ton-0.0.0%2Bsha.123a1b30970a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

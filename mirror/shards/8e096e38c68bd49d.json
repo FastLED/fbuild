@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lectrobox",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lectrobox/library/LectroboxKeypadShield/1.3.0/LectroboxKeypadShield-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LectroboxKeypadShield-1.3.0.tar.gz",
+    "size_bytes": 3905,
+    "sha256": "7342f5928b0e498b81c0dde4abab21410b279361cedc4f56969c15852ff4656d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lectrobox/library/LectroboxKeypadShield/1.3.0/LectroboxKeypadShield-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lectrobox/library/LectroboxKeypadShield/1.3.0/LectroboxKeypadShield-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lectrobox/library/LectroboxPCJoyShield/1.2.0/LectroboxPCJoyShield-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LectroboxPCJoyShield-1.2.0.tar.gz",
+    "size_bytes": 3873,
+    "sha256": "c03304183277302548a79bbbc45ddbebab02b709b650461c7ff9a5e1da577794",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lectrobox/library/LectroboxPCJoyShield/1.2.0/LectroboxPCJoyShield-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lectrobox/library/LectroboxPCJoyShield/1.2.0/LectroboxPCJoyShield-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

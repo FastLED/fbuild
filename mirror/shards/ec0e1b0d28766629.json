@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-frc-hackathon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-frc-hackathon/library/CMPS03/0.0.0+sha.7bfdf8ff9c5e/CMPS03-0.0.0+sha.7bfdf8ff9c5e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CMPS03-0.0.0+sha.7bfdf8ff9c5e.tar.gz",
+    "size_bytes": 2383,
+    "sha256": "7b0c24da410c1a1d630a15e14edd3acd28e5da2635530b4fad7ea5b0ed2bc8a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frc-hackathon/library/CMPS03/0.0.0%2Bsha.7bfdf8ff9c5e/CMPS03-0.0.0%2Bsha.7bfdf8ff9c5e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frc-hackathon/library/CMPS03/0.0.0%2Bsha.7bfdf8ff9c5e/CMPS03-0.0.0%2Bsha.7bfdf8ff9c5e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frc-hackathon/library/CNY70/0.0.0+sha.18466f4e1a2c/CNY70-0.0.0+sha.18466f4e1a2c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CNY70-0.0.0+sha.18466f4e1a2c.tar.gz",
+    "size_bytes": 2094,
+    "sha256": "a8f4312f8096beac63b7579ddb0840deadf43ed5d8e5520c903007a57303dd99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frc-hackathon/library/CNY70/0.0.0%2Bsha.18466f4e1a2c/CNY70-0.0.0%2Bsha.18466f4e1a2c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frc-hackathon/library/CNY70/0.0.0%2Bsha.18466f4e1a2c/CNY70-0.0.0%2Bsha.18466f4e1a2c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frc-hackathon/library/GP2A/0.0.0+sha.36744d1b3127/GP2A-0.0.0+sha.36744d1b3127.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GP2A-0.0.0+sha.36744d1b3127.tar.gz",
+    "size_bytes": 2784,
+    "sha256": "126c96e090815510061dbf1cebf423277403673f0c62f7155883df408525df26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frc-hackathon/library/GP2A/0.0.0%2Bsha.36744d1b3127/GP2A-0.0.0%2Bsha.36744d1b3127.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frc-hackathon/library/GP2A/0.0.0%2Bsha.36744d1b3127/GP2A-0.0.0%2Bsha.36744d1b3127.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frc-hackathon/library/Pixy/0.0.0+sha.b7c012987c5d/Pixy-0.0.0+sha.b7c012987c5d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pixy-0.0.0+sha.b7c012987c5d.tar.gz",
+    "size_bytes": 6133,
+    "sha256": "cef0f5244aaa13f6dc7077967e9b1895050e5d88b81ab61cf81ad37facc07139",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frc-hackathon/library/Pixy/0.0.0%2Bsha.b7c012987c5d/Pixy-0.0.0%2Bsha.b7c012987c5d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frc-hackathon/library/Pixy/0.0.0%2Bsha.b7c012987c5d/Pixy-0.0.0%2Bsha.b7c012987c5d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frc-hackathon/library/RC_Servo/0.0.0+sha.014d36c33b73/RC_Servo-0.0.0+sha.014d36c33b73.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RC_Servo-0.0.0+sha.014d36c33b73.tar.gz",
+    "size_bytes": 2532,
+    "sha256": "a90b0e40b156930587e7c0a06b160f38e41ad1156cd65c98e6cbb25d4e075001",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frc-hackathon/library/RC_Servo/0.0.0%2Bsha.014d36c33b73/RC_Servo-0.0.0%2Bsha.014d36c33b73.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frc-hackathon/library/RC_Servo/0.0.0%2Bsha.014d36c33b73/RC_Servo-0.0.0%2Bsha.014d36c33b73.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-frc-hackathon/library/VMA306/0.0.0+sha.158dfeb5c24d/VMA306-0.0.0+sha.158dfeb5c24d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VMA306-0.0.0+sha.158dfeb5c24d.tar.gz",
+    "size_bytes": 3133,
+    "sha256": "381041bf00ad7ab7755b0c9960355fc2d892c8107f6c26a5ed4336d9bb8bebb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-frc-hackathon/library/VMA306/0.0.0%2Bsha.158dfeb5c24d/VMA306-0.0.0%2Bsha.158dfeb5c24d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-frc-hackathon/library/VMA306/0.0.0%2Bsha.158dfeb5c24d/VMA306-0.0.0%2Bsha.158dfeb5c24d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

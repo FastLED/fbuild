@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/openbci",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "openbci/library/OpenBCI_32bit_Library/3.1.5/OpenBCI_32bit_Library-3.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenBCI_32bit_Library-3.1.5.tar.gz",
+    "size_bytes": 55557,
+    "sha256": "639c4cb773f37f248752887956d3bfa14c25d2cb9b86a2fe9ac6ba8600c1a30f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openbci/library/OpenBCI_32bit_Library/3.1.5/OpenBCI_32bit_Library-3.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/openbci/library/OpenBCI_32bit_Library/3.1.5/OpenBCI_32bit_Library-3.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openbci/library/OpenBCI_32bit_SD/2.0.0/OpenBCI_32bit_SD-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenBCI_32bit_SD-2.0.0.tar.gz",
+    "size_bytes": 44581,
+    "sha256": "e5198d47e6ebeff05f4b57d97ca320a211b5238303ae1851ede1c90e27d901a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openbci/library/OpenBCI_32bit_SD/2.0.0/OpenBCI_32bit_SD-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/openbci/library/OpenBCI_32bit_SD/2.0.0/OpenBCI_32bit_SD-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openbci/library/OpenBCI_Ganglion_Library/3.0.2/OpenBCI_Ganglion_Library-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenBCI_Ganglion_Library-3.0.2.tar.gz",
+    "size_bytes": 22085,
+    "sha256": "f6e54e46e643cbcd1bab3cced90ba8ef6a3a1fbac970fccd7688d7385a772352",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openbci/library/OpenBCI_Ganglion_Library/3.0.2/OpenBCI_Ganglion_Library-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/openbci/library/OpenBCI_Ganglion_Library/3.0.2/OpenBCI_Ganglion_Library-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openbci/library/OpenBCI_Radios/2.0.4/OpenBCI_Radios-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenBCI_Radios-2.0.4.tar.gz",
+    "size_bytes": 34215,
+    "sha256": "5f792e31674e5a633811a1b0ba5f52e0dfb8c9ae7de5187d36d060fbc2dce402",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openbci/library/OpenBCI_Radios/2.0.4/OpenBCI_Radios-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/openbci/library/OpenBCI_Radios/2.0.4/OpenBCI_Radios-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openbci/library/OpenBCI_Wifi/2.0.4/OpenBCI_Wifi-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenBCI_Wifi-2.0.4.tar.gz",
+    "size_bytes": 86407,
+    "sha256": "43f65d46ae8ffd606b4e37b595aa0e1c3bbcb75111c6150992dbd979774266b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openbci/library/OpenBCI_Wifi/2.0.4/OpenBCI_Wifi-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/openbci/library/OpenBCI_Wifi/2.0.4/OpenBCI_Wifi-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openbci/library/OpenBCI_Wifi_Master/1.0.1/OpenBCI_Wifi_Master-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenBCI_Wifi_Master-1.0.1.tar.gz",
+    "size_bytes": 5821,
+    "sha256": "8a3b74608f2175a6d94874af1fe8f5fff9a66e9e0d3a41bb2064403eece5ccea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openbci/library/OpenBCI_Wifi_Master/1.0.1/OpenBCI_Wifi_Master-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/openbci/library/OpenBCI_Wifi_Master/1.0.1/OpenBCI_Wifi_Master-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

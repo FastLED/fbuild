@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vassilydev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vassilydev/library/TSBridge/1.1.0/TSBridge-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSBridge-1.1.0.tar.gz",
+    "size_bytes": 4451,
+    "sha256": "b8aa9353b60f1ac5d746b90e3a9d8098e04ace3bcf77e45e92c68354d658a98b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vassilydev/library/TSBridge/1.1.0/TSBridge-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vassilydev/library/TSBridge/1.1.0/TSBridge-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vassilydev/library/TSController/1.1.0/TSController-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSController-1.1.0.tar.gz",
+    "size_bytes": 3439,
+    "sha256": "8d421d860b6ccd2175df70a458707d2f2124dea019a6e3e0027b074d6e68f447",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vassilydev/library/TSController/1.1.0/TSController-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vassilydev/library/TSController/1.1.0/TSController-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

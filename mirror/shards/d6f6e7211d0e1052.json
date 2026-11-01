@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-williampeers",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-williampeers/library/Wi-fi/0.0.0+sha.69f99583ac66/Wi-fi-0.0.0+sha.69f99583ac66.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Wi-fi-0.0.0+sha.69f99583ac66.tar.gz",
+    "size_bytes": 2775,
+    "sha256": "06f5762dfe35304c3aaa84f41ef0a8f26bed6cbd669bc608352a81477c2e393f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-williampeers/library/Wi-fi/0.0.0%2Bsha.69f99583ac66/Wi-fi-0.0.0%2Bsha.69f99583ac66.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-williampeers/library/Wi-fi/0.0.0%2Bsha.69f99583ac66/Wi-fi-0.0.0%2Bsha.69f99583ac66.tar.gz"
+    ]
+   }
+  }
+ ]
+}

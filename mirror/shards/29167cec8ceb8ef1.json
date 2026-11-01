@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-taylorgy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-taylorgy/library/cJSON_lib/0.0.0+sha.c809010834e2/cJSON_lib-0.0.0+sha.c809010834e2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cJSON_lib-0.0.0+sha.c809010834e2.tar.gz",
+    "size_bytes": 8875,
+    "sha256": "65585e581c9eee95e5b1fbbca3f5e1bf5d606db4e4d297a80be2630de7af29c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-taylorgy/library/cJSON_lib/0.0.0%2Bsha.c809010834e2/cJSON_lib-0.0.0%2Bsha.c809010834e2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-taylorgy/library/cJSON_lib/0.0.0%2Bsha.c809010834e2/cJSON_lib-0.0.0%2Bsha.c809010834e2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-taylorgy/library/driver_mbed_TH02/0.0.0+sha.89151affda00/driver_mbed_TH02-0.0.0+sha.89151affda00.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "driver_mbed_TH02-0.0.0+sha.89151affda00.tar.gz",
+    "size_bytes": 2891,
+    "sha256": "3fe825c3a43445fa52a47a7de87cab666e63acfbf321afb876a721d0bab41772",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-taylorgy/library/driver_mbed_TH02/0.0.0%2Bsha.89151affda00/driver_mbed_TH02-0.0.0%2Bsha.89151affda00.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-taylorgy/library/driver_mbed_TH02/0.0.0%2Bsha.89151affda00/driver_mbed_TH02-0.0.0%2Bsha.89151affda00.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-taylorgy/library/wifi_example/0.0.0+sha.cbe8a0553d45/wifi_example-0.0.0+sha.cbe8a0553d45.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wifi_example-0.0.0+sha.cbe8a0553d45.tar.gz",
+    "size_bytes": 2421,
+    "sha256": "8df2cdf23c0b71abe27ca46a2742b4a907df38d646b4761b80feb06f254b5de0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-taylorgy/library/wifi_example/0.0.0%2Bsha.cbe8a0553d45/wifi_example-0.0.0%2Bsha.cbe8a0553d45.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-taylorgy/library/wifi_example/0.0.0%2Bsha.cbe8a0553d45/wifi_example-0.0.0%2Bsha.cbe8a0553d45.tar.gz"
+    ]
+   }
+  }
+ ]
+}

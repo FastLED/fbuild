@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alexiii",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alexiii/library/EEvar/0.2.3/EEvar-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEvar-0.2.3.tar.gz",
+    "size_bytes": 5438,
+    "sha256": "dd47c9059742c6ea1a9b724799d10d130d3746968f9bc371f0d7d17f727943dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexiii/library/EEvar/0.2.3/EEvar-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/alexiii/library/EEvar/0.2.3/EEvar-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alexiii/library/incbin/0.1.2/incbin-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "incbin-0.1.2.tar.gz",
+    "size_bytes": 9136,
+    "sha256": "eed94f19125304d3b7cc2adf8fd16495bfd2d5b49904adf0e54764010b5ccd02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alexiii/library/incbin/0.1.2/incbin-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alexiii/library/incbin/0.1.2/incbin-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

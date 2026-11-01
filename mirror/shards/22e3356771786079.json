@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/playfulkittykat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "playfulkittykat/library/slippy/0.1.0/slippy-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "slippy-0.1.0.tar.gz",
+    "size_bytes": 16993,
+    "sha256": "9ca8bc2cd7d9e5406a0d3a4e1b2a234888a289e9276be2caf2e32b364038974d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/playfulkittykat/library/slippy/0.1.0/slippy-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/playfulkittykat/library/slippy/0.1.0/slippy-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "playfulkittykat/library/u6502/0.1.0/u6502-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "u6502-0.1.0.tar.gz",
+    "size_bytes": 48065,
+    "sha256": "027d7077d4746b99e3abd7da923e1d0291a1947ff6ba6bfa25ac58d832c3a0bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/playfulkittykat/library/u6502/0.1.0/u6502-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/playfulkittykat/library/u6502/0.1.0/u6502-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

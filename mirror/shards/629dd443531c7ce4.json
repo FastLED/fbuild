@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gertk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gertk/library/vga640x400g/0.0.0+sha.ca7defdc9e44/vga640x400g-0.0.0+sha.ca7defdc9e44.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vga640x400g-0.0.0+sha.ca7defdc9e44.tar.gz",
+    "size_bytes": 21287,
+    "sha256": "79e29faf38189a38429a33d5068f6a067a435c1f67d56c49508b192d9b342300",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gertk/library/vga640x400g/0.0.0%2Bsha.ca7defdc9e44/vga640x400g-0.0.0%2Bsha.ca7defdc9e44.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gertk/library/vga640x400g/0.0.0%2Bsha.ca7defdc9e44/vga640x400g-0.0.0%2Bsha.ca7defdc9e44.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gertk/library/vga640x480g/0.0.0+sha.821e34a87609/vga640x480g-0.0.0+sha.821e34a87609.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vga640x480g-0.0.0+sha.821e34a87609.tar.gz",
+    "size_bytes": 22256,
+    "sha256": "adabd5ee43e2052c0b661454cc818745bec75dbcffca82bad076129d87a03096",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gertk/library/vga640x480g/0.0.0%2Bsha.821e34a87609/vga640x480g-0.0.0%2Bsha.821e34a87609.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gertk/library/vga640x480g/0.0.0%2Bsha.821e34a87609/vga640x480g-0.0.0%2Bsha.821e34a87609.tar.gz"
+    ]
+   }
+  }
+ ]
+}

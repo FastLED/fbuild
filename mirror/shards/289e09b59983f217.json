@@ -1,0 +1,282 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sitronlabs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sitronlabs/library/SitronLabs_OPT3001_Arduino_Library/0.1.1/SitronLabs_OPT3001_Arduino_Library-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SitronLabs_OPT3001_Arduino_Library-0.1.1.tar.gz",
+    "size_bytes": 3204,
+    "sha256": "5d7cbdff4946fe42199bda306db2cab702ae1d989515c25fa0c8cb2cdaef007c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/SitronLabs_OPT3001_Arduino_Library/0.1.1/SitronLabs_OPT3001_Arduino_Library-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/SitronLabs_OPT3001_Arduino_Library/0.1.1/SitronLabs_OPT3001_Arduino_Library-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/SitronLabs_TCA9548A_Arduino_Library/0.1.1/SitronLabs_TCA9548A_Arduino_Library-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SitronLabs_TCA9548A_Arduino_Library-0.1.1.tar.gz",
+    "size_bytes": 2082,
+    "sha256": "2579a6216f315acd3e40a02e28fb9ec9551fb17df506ae7413969bf8146d4dc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/SitronLabs_TCA9548A_Arduino_Library/0.1.1/SitronLabs_TCA9548A_Arduino_Library-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/SitronLabs_TCA9548A_Arduino_Library/0.1.1/SitronLabs_TCA9548A_Arduino_Library-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_DACXX11_Arduino_Library/0.2.0/Sitron_Labs_DACXX11_Arduino_Library-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_DACXX11_Arduino_Library-0.2.0.tar.gz",
+    "size_bytes": 7323,
+    "sha256": "fc8807a3e78062f8fb9d4d18137a7f51e41618f2f5011134a05308dd19624465",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_DACXX11_Arduino_Library/0.2.0/Sitron_Labs_DACXX11_Arduino_Library-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_DACXX11_Arduino_Library/0.2.0/Sitron_Labs_DACXX11_Arduino_Library-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_EEPROM_Arduino_Library/0.5.0/Sitron_Labs_EEPROM_Arduino_Library-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_EEPROM_Arduino_Library-0.5.0.tar.gz",
+    "size_bytes": 8273,
+    "sha256": "a4625ed5d39a530d7cea4cbebb34125556a56577a2a933ebec42091805d64c7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_EEPROM_Arduino_Library/0.5.0/Sitron_Labs_EEPROM_Arduino_Library-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_EEPROM_Arduino_Library/0.5.0/Sitron_Labs_EEPROM_Arduino_Library-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_FSUSB43_Arduino_Library/0.1.0/Sitron_Labs_FSUSB43_Arduino_Library-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_FSUSB43_Arduino_Library-0.1.0.tar.gz",
+    "size_bytes": 5225,
+    "sha256": "b4a0f2ff20af616986de2c40cf874f81c8ffe898cf472a4b3b45816024932a6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_FSUSB43_Arduino_Library/0.1.0/Sitron_Labs_FSUSB43_Arduino_Library-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_FSUSB43_Arduino_Library/0.1.0/Sitron_Labs_FSUSB43_Arduino_Library-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_FSUSB43_Arduino_Library/0.1.1/Sitron_Labs_FSUSB43_Arduino_Library-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_FSUSB43_Arduino_Library-0.1.1.tar.gz",
+    "size_bytes": 5230,
+    "sha256": "906be4dc56f3acabf36c1dde535d76763e1f056adfe812ce96c8880e69867bf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_FSUSB43_Arduino_Library/0.1.1/Sitron_Labs_FSUSB43_Arduino_Library-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_FSUSB43_Arduino_Library/0.1.1/Sitron_Labs_FSUSB43_Arduino_Library-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_FUSB302_Arduino_Library/0.5.0/Sitron_Labs_FUSB302_Arduino_Library-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_FUSB302_Arduino_Library-0.5.0.tar.gz",
+    "size_bytes": 15315,
+    "sha256": "d16c6593079d8f5aea7e25b87ba8dc597f4c06526c69ce3bc0d177f4a22060dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_FUSB302_Arduino_Library/0.5.0/Sitron_Labs_FUSB302_Arduino_Library-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_FUSB302_Arduino_Library/0.5.0/Sitron_Labs_FUSB302_Arduino_Library-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_INA219_Arduino_Library/0.1.0/Sitron_Labs_INA219_Arduino_Library-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_INA219_Arduino_Library-0.1.0.tar.gz",
+    "size_bytes": 14217,
+    "sha256": "83579424165d0eef61edc73a6ac2cb84e5530d91191ee110612ac94a145dd28e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_INA219_Arduino_Library/0.1.0/Sitron_Labs_INA219_Arduino_Library-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_INA219_Arduino_Library/0.1.0/Sitron_Labs_INA219_Arduino_Library-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_LIS2DH12_Arduino_Library/0.2.0/Sitron_Labs_LIS2DH12_Arduino_Library-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_LIS2DH12_Arduino_Library-0.2.0.tar.gz",
+    "size_bytes": 14453,
+    "sha256": "988a8e00ac7d879335f872c48b951851c7edf85f4dc860528ad9b7b96acaed88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_LIS2DH12_Arduino_Library/0.2.0/Sitron_Labs_LIS2DH12_Arduino_Library-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_LIS2DH12_Arduino_Library/0.2.0/Sitron_Labs_LIS2DH12_Arduino_Library-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_MAX31855_Arduino_Library/0.3.0/Sitron_Labs_MAX31855_Arduino_Library-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_MAX31855_Arduino_Library-0.3.0.tar.gz",
+    "size_bytes": 5230,
+    "sha256": "792a6050b962590e98c304a3989037f24587cebc42219043ee5f19df54736c94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_MAX31855_Arduino_Library/0.3.0/Sitron_Labs_MAX31855_Arduino_Library-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_MAX31855_Arduino_Library/0.3.0/Sitron_Labs_MAX31855_Arduino_Library-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_OPT3001_Arduino_Library/0.2.0/Sitron_Labs_OPT3001_Arduino_Library-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_OPT3001_Arduino_Library-0.2.0.tar.gz",
+    "size_bytes": 7113,
+    "sha256": "ab2bd0b6a736260f86350c5ba4ef2aaa67e234ce015a84aca56a2653edf76c9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_OPT3001_Arduino_Library/0.2.0/Sitron_Labs_OPT3001_Arduino_Library-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_OPT3001_Arduino_Library/0.2.0/Sitron_Labs_OPT3001_Arduino_Library-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_PAT9130EW_Arduino_Library/0.1.0/Sitron_Labs_PAT9130EW_Arduino_Library-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_PAT9130EW_Arduino_Library-0.1.0.tar.gz",
+    "size_bytes": 9423,
+    "sha256": "a5f459e245842d078fd7d44c829020bb7e360603e4f1b8af9d79b2a2c5396f64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_PAT9130EW_Arduino_Library/0.1.0/Sitron_Labs_PAT9130EW_Arduino_Library-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_PAT9130EW_Arduino_Library/0.1.0/Sitron_Labs_PAT9130EW_Arduino_Library-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_PAT9130EW_Arduino_Library/0.1.1/Sitron_Labs_PAT9130EW_Arduino_Library-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_PAT9130EW_Arduino_Library-0.1.1.tar.gz",
+    "size_bytes": 9488,
+    "sha256": "5f10c3ba5dcd9fd6ffab2ba0fe7859eff43dfe586e5ea0a51b2da006091e6740",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_PAT9130EW_Arduino_Library/0.1.1/Sitron_Labs_PAT9130EW_Arduino_Library-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_PAT9130EW_Arduino_Library/0.1.1/Sitron_Labs_PAT9130EW_Arduino_Library-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_PI3USB9281C_Arduino_Library/0.4.0/Sitron_Labs_PI3USB9281C_Arduino_Library-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_PI3USB9281C_Arduino_Library-0.4.0.tar.gz",
+    "size_bytes": 7795,
+    "sha256": "5e01e9ffaa3000ad743a6b26cdd07b703165455bff1e950836cf6b1d4424dffa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_PI3USB9281C_Arduino_Library/0.4.0/Sitron_Labs_PI3USB9281C_Arduino_Library-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_PI3USB9281C_Arduino_Library/0.4.0/Sitron_Labs_PI3USB9281C_Arduino_Library-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_RX480E_Arduino_Library/0.1.0/Sitron_Labs_RX480E_Arduino_Library-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_RX480E_Arduino_Library-0.1.0.tar.gz",
+    "size_bytes": 12407,
+    "sha256": "353af738a86a4d938953f095e7d635cb9247339ee202a2000ebc41169757ce5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_RX480E_Arduino_Library/0.1.0/Sitron_Labs_RX480E_Arduino_Library-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_RX480E_Arduino_Library/0.1.0/Sitron_Labs_RX480E_Arduino_Library-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_SH1106_Arduino_Library/0.1.0/Sitron_Labs_SH1106_Arduino_Library-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_SH1106_Arduino_Library-0.1.0.tar.gz",
+    "size_bytes": 5899,
+    "sha256": "f2ef06cef58cdb7684dc8a1fc28437c57245ed3f5b11cdb06510a2db0b2d733a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_SH1106_Arduino_Library/0.1.0/Sitron_Labs_SH1106_Arduino_Library-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_SH1106_Arduino_Library/0.1.0/Sitron_Labs_SH1106_Arduino_Library-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_SSD1306_Arduino_Library/0.2.0/Sitron_Labs_SSD1306_Arduino_Library-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_SSD1306_Arduino_Library-0.2.0.tar.gz",
+    "size_bytes": 7846,
+    "sha256": "36c5026ed9de794c6c3c9bc137991d82b583a8842a752fbb43153401e7a66d3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_SSD1306_Arduino_Library/0.2.0/Sitron_Labs_SSD1306_Arduino_Library-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_SSD1306_Arduino_Library/0.2.0/Sitron_Labs_SSD1306_Arduino_Library-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_ST75256_Arduino_Library/0.1.1/Sitron_Labs_ST75256_Arduino_Library-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_ST75256_Arduino_Library-0.1.1.tar.gz",
+    "size_bytes": 10174,
+    "sha256": "9c9a7f97e4643b220264c89fc1bc630ed14afbad4de155c282bdf7e674dfd9d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_ST75256_Arduino_Library/0.1.1/Sitron_Labs_ST75256_Arduino_Library-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_ST75256_Arduino_Library/0.1.1/Sitron_Labs_ST75256_Arduino_Library-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_TIC_Arduino_Library/0.3.0/Sitron_Labs_TIC_Arduino_Library-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_TIC_Arduino_Library-0.3.0.tar.gz",
+    "size_bytes": 7362,
+    "sha256": "afafd8397afca4b781c97f625a45937fb7558f062dfaf648b85fb1132a2121b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_TIC_Arduino_Library/0.3.0/Sitron_Labs_TIC_Arduino_Library-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_TIC_Arduino_Library/0.3.0/Sitron_Labs_TIC_Arduino_Library-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_WK2132_Arduino_Library/0.3.0/Sitron_Labs_WK2132_Arduino_Library-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_WK2132_Arduino_Library-0.3.0.tar.gz",
+    "size_bytes": 8012,
+    "sha256": "24edae661e3d864dcdb0b1803beab7c8ced29a84d366f72b68f6c3db4fca51f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_WK2132_Arduino_Library/0.3.0/Sitron_Labs_WK2132_Arduino_Library-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_WK2132_Arduino_Library/0.3.0/Sitron_Labs_WK2132_Arduino_Library-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sitronlabs/library/Sitron_Labs_WK2132_Arduino_Library/0.3.1/Sitron_Labs_WK2132_Arduino_Library-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sitron_Labs_WK2132_Arduino_Library-0.3.1.tar.gz",
+    "size_bytes": 7975,
+    "sha256": "b9ac986ed368c475e6a953572c0754116259bc3e39b00e7315f2484f4045223e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sitronlabs/library/Sitron_Labs_WK2132_Arduino_Library/0.3.1/Sitron_Labs_WK2132_Arduino_Library-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sitronlabs/library/Sitron_Labs_WK2132_Arduino_Library/0.3.1/Sitron_Labs_WK2132_Arduino_Library-0.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

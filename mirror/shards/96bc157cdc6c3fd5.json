@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/creahard",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "creahard/library/Bme280/1.0.0/Bme280-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bme280-1.0.0.tar.gz",
+    "size_bytes": 4895,
+    "sha256": "f4d7c60f9e379fd2f35aa7855d147aac4aff4dcdad85cda908e50fb12539fabd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/creahard/library/Bme280/1.0.0/Bme280-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/creahard/library/Bme280/1.0.0/Bme280-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

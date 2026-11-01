@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-abougouffa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-abougouffa/library/USBHostGamepad/0.0.0+sha.b12dbbe77a8a/USBHostGamepad-0.0.0+sha.b12dbbe77a8a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBHostGamepad-0.0.0+sha.b12dbbe77a8a.tar.gz",
+    "size_bytes": 2843,
+    "sha256": "650fb6a90e3229f269c9c3eb0358c3e76cb159d1e781eff30e4121dcbfdce2a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-abougouffa/library/USBHostGamepad/0.0.0%2Bsha.b12dbbe77a8a/USBHostGamepad-0.0.0%2Bsha.b12dbbe77a8a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-abougouffa/library/USBHostGamepad/0.0.0%2Bsha.b12dbbe77a8a/USBHostGamepad-0.0.0%2Bsha.b12dbbe77a8a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

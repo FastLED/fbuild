@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gordoste",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gordoste/library/LedControl/1.2.0/LedControl-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedControl-1.2.0.tar.gz",
+    "size_bytes": 8062,
+    "sha256": "1566d83b8816df1a8b7d362ed3ec64799211f7808c0c25c6cfda3e916b3f91d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gordoste/library/LedControl/1.2.0/LedControl-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gordoste/library/LedControl/1.2.0/LedControl-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

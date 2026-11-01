@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chanatip112",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chanatip112/library/HanumanMini/1.0.0/HanumanMini-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HanumanMini-1.0.0.tar.gz",
+    "size_bytes": 1941,
+    "sha256": "3b8c594c2a401b434597169f59f7f0ce1ff978cc36f6ed6a76081283fa00ce05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chanatip112/library/HanumanMini/1.0.0/HanumanMini-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chanatip112/library/HanumanMini/1.0.0/HanumanMini-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chanatip112/library/HanumanMini/1.0.2/HanumanMini-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HanumanMini-1.0.2.tar.gz",
+    "size_bytes": 3184,
+    "sha256": "744c28d556f854fd898b2daacd5b0f27092e60b901f96ff4bff4a82ebba90ce6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chanatip112/library/HanumanMini/1.0.2/HanumanMini-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/chanatip112/library/HanumanMini/1.0.2/HanumanMini-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chanatip112/library/HanumanMini/1.0.3/HanumanMini-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HanumanMini-1.0.3.tar.gz",
+    "size_bytes": 4984,
+    "sha256": "f2f4d8b76b4a7c03546be88da4ba96968da3980d1c2d45bc95190f4792d8cd13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chanatip112/library/HanumanMini/1.0.3/HanumanMini-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/chanatip112/library/HanumanMini/1.0.3/HanumanMini-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chanatip112/library/HanumanMini/1.0.4/HanumanMini-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HanumanMini-1.0.4.tar.gz",
+    "size_bytes": 5071,
+    "sha256": "a9c5d626494867bf2767c1b839e2c036e981d66a45217468f625917271a0526a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chanatip112/library/HanumanMini/1.0.4/HanumanMini-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/chanatip112/library/HanumanMini/1.0.4/HanumanMini-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chanatip112/library/HanumanMini/1.0.5/HanumanMini-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HanumanMini-1.0.5.tar.gz",
+    "size_bytes": 5105,
+    "sha256": "34d07e2177ecbb08481b6a91a029b20bcdcef62532e3b7cfb7109a87742f7c47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chanatip112/library/HanumanMini/1.0.5/HanumanMini-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/chanatip112/library/HanumanMini/1.0.5/HanumanMini-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

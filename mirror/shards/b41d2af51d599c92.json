@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ardunia",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ardunia/library/ARDUniaButton/0.2.1/ARDUniaButton-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ARDUniaButton-0.2.1.tar.gz",
+    "size_bytes": 6912,
+    "sha256": "ebcc41b57f2ccd380578093759c97a398dfd0dbba037e063b454bfaf86b2ae1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardunia/library/ARDUniaButton/0.2.1/ARDUniaButton-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ardunia/library/ARDUniaButton/0.2.1/ARDUniaButton-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardunia/library/PersianDate/1.1.0/PersianDate-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PersianDate-1.1.0.tar.gz",
+    "size_bytes": 4278,
+    "sha256": "69f80c96154723f3c9e18c38c491cc729268b30de338ebcb3131dfa7e87b42c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardunia/library/PersianDate/1.1.0/PersianDate-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardunia/library/PersianDate/1.1.0/PersianDate-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardunia/library/PersianDate/2.1.1/PersianDate-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PersianDate-2.1.1.tar.gz",
+    "size_bytes": 9073,
+    "sha256": "5166c6eb0836b896dfd36ab94ad285ae905d78263edee9ce51d80366d79ca893",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardunia/library/PersianDate/2.1.1/PersianDate-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ardunia/library/PersianDate/2.1.1/PersianDate-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardunia/library/PersianDate/2.1.2/PersianDate-2.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PersianDate-2.1.2.tar.gz",
+    "size_bytes": 12197,
+    "sha256": "24733dc9ee505038f4a2995b8265a4c186fe907e2dd5a39d88afe0d8c11a638d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardunia/library/PersianDate/2.1.2/PersianDate-2.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ardunia/library/PersianDate/2.1.2/PersianDate-2.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardunia/library/TTP223Row/1.0.4/TTP223Row-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTP223Row-1.0.4.tar.gz",
+    "size_bytes": 8253,
+    "sha256": "e17f07f268dd725845c3a6f4bcde181e5c7c65a1aa9c47143708b56cc13b37e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardunia/library/TTP223Row/1.0.4/TTP223Row-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ardunia/library/TTP223Row/1.0.4/TTP223Row-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardunia/library/TTP223Row/1.1.0/TTP223Row-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTP223Row-1.1.0.tar.gz",
+    "size_bytes": 10487,
+    "sha256": "1b6f04d39bb37df8de852d2d28f53881a4cdbfe3970f360ab2569831a9f7ba89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardunia/library/TTP223Row/1.1.0/TTP223Row-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardunia/library/TTP223Row/1.1.0/TTP223Row-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/highasg936",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "highasg936/library/hw262/2.0.4/hw262-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hw262-2.0.4.tar.gz",
+    "size_bytes": 9935,
+    "sha256": "fe85e53e062c6ff41b0f4f9e4ae38cf03523c72f022b901325073af64bf59b92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/highasg936/library/hw262/2.0.4/hw262-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/highasg936/library/hw262/2.0.4/hw262-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "highasg936/library/mc74hc595a/1.0.1/mc74hc595a-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mc74hc595a-1.0.1.tar.gz",
+    "size_bytes": 2302,
+    "sha256": "13b81907dfa8b9b2d87111e98b69e3abddb2aa6515cdae9286bf04ea7960b445",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/highasg936/library/mc74hc595a/1.0.1/mc74hc595a-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/highasg936/library/mc74hc595a/1.0.1/mc74hc595a-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

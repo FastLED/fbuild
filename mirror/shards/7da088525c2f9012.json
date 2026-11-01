@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jetfishteam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jetfishteam/library/MS5803/0.0.0+sha.ff505486c804/MS5803-0.0.0+sha.ff505486c804.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MS5803-0.0.0+sha.ff505486c804.tar.gz",
+    "size_bytes": 3117,
+    "sha256": "e58f84dfdf52997e5c1a2bb6c2fb328b67bfa7b7afc4e589a18bea472d5b5491",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jetfishteam/library/MS5803/0.0.0%2Bsha.ff505486c804/MS5803-0.0.0%2Bsha.ff505486c804.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jetfishteam/library/MS5803/0.0.0%2Bsha.ff505486c804/MS5803-0.0.0%2Bsha.ff505486c804.tar.gz"
+    ]
+   }
+  }
+ ]
+}

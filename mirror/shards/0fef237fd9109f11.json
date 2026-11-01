@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sfekilou",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sfekilou/library/M5%20Stack%204Relay%20Library/1.0.0/M5Stack4RelayLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Stack4RelayLibrary-1.0.0.tar.gz",
+    "size_bytes": 3242,
+    "sha256": "28bc117419d9d01929673ca0f5e1b3071639ef82d14b9bc07cd003e54e2196e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sfekilou/library/M5%2520Stack%25204Relay%2520Library/1.0.0/M5Stack4RelayLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sfekilou/library/M5%20Stack%204Relay%20Library/1.0.0/M5Stack4RelayLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

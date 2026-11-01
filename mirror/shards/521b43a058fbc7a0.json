@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iondbproject",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iondbproject/library/IonDB/2.2.0/IonDB-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IonDB-2.2.0.tar.gz",
+    "size_bytes": 96388,
+    "sha256": "54f53034bd68cd80bd5781ad048eb5952d17f245fd73de3eb4fd15ecadca170e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iondbproject/library/IonDB/2.2.0/IonDB-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iondbproject/library/IonDB/2.2.0/IonDB-2.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

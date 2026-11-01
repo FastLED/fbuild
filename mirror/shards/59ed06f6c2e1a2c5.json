@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/quadrifoglioverde",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "quadrifoglioverde/library/DL_PAC_NK76/1.0.1/DL_PAC_NK76-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DL_PAC_NK76-1.0.1.tar.gz",
+    "size_bytes": 14774,
+    "sha256": "dc1b809eae490e54fb83917b54e0b8276b62c1d0559610a1761c8e85065d0b29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/quadrifoglioverde/library/DL_PAC_NK76/1.0.1/DL_PAC_NK76-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/quadrifoglioverde/library/DL_PAC_NK76/1.0.1/DL_PAC_NK76-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/neorob85",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "neorob85/library/ESPOTADASH/1.0.0/ESPOTADASH-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPOTADASH-1.0.0.tar.gz",
+    "size_bytes": 6379,
+    "sha256": "6bb7dab0140de1071f8687e3ada9cd22fbcc428b3fed03a2dda07cbf114f2e8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neorob85/library/ESPOTADASH/1.0.0/ESPOTADASH-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neorob85/library/ESPOTADASH/1.0.0/ESPOTADASH-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neorob85/library/ESPOTADASH/1.1.0/ESPOTADASH-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPOTADASH-1.1.0.tar.gz",
+    "size_bytes": 7287,
+    "sha256": "557810022e40662babd331b29d87df6719c36331202b01a53319d837c6de55a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neorob85/library/ESPOTADASH/1.1.0/ESPOTADASH-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neorob85/library/ESPOTADASH/1.1.0/ESPOTADASH-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neorob85/library/ESPOTADASH/1.2.0/ESPOTADASH-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPOTADASH-1.2.0.tar.gz",
+    "size_bytes": 8844,
+    "sha256": "5f8db8b5f82001bfe3146bd576e343307c30f0c17f79410690ed21121f3e4a45",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neorob85/library/ESPOTADASH/1.2.0/ESPOTADASH-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neorob85/library/ESPOTADASH/1.2.0/ESPOTADASH-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neorob85/library/HAmqttSTR/1.0.0/HAmqttSTR-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HAmqttSTR-1.0.0.tar.gz",
+    "size_bytes": 19517,
+    "sha256": "7ed11d6998f23ed3fffd4c0279e4a7f4ed86798560885f4ee6efffa0fa8678bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neorob85/library/HAmqttSTR/1.0.0/HAmqttSTR-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neorob85/library/HAmqttSTR/1.0.0/HAmqttSTR-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neorob85/library/HAmqttSTR/1.1.1/HAmqttSTR-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HAmqttSTR-1.1.1.tar.gz",
+    "size_bytes": 20557,
+    "sha256": "de29b2c070493b7fd34f1933f5d4292d1f2e619acf987a5772e5a957524233c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neorob85/library/HAmqttSTR/1.1.1/HAmqttSTR-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/neorob85/library/HAmqttSTR/1.1.1/HAmqttSTR-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neorob85/library/Kamstrup/1.0.0/Kamstrup-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Kamstrup-1.0.0.tar.gz",
+    "size_bytes": 5927,
+    "sha256": "5d3111eb30c3c6044798b4b7fd56c211982f3f0dbd02accf0630ef471c73b34f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neorob85/library/Kamstrup/1.0.0/Kamstrup-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neorob85/library/Kamstrup/1.0.0/Kamstrup-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neorob85/library/NTC/1.0.0/NTC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTC-1.0.0.tar.gz",
+    "size_bytes": 9214,
+    "sha256": "e807caf7cdff5e916d9b071938b0b3c7793ece870fe32fa86c02a437b4746470",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neorob85/library/NTC/1.0.0/NTC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neorob85/library/NTC/1.0.0/NTC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neorob85/library/NTC/1.1.0/NTC-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTC-1.1.0.tar.gz",
+    "size_bytes": 12302,
+    "sha256": "717dffbb645359b672f5c4b3e434f0208dc35143375abd6ed0f9fb40cf370f08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neorob85/library/NTC/1.1.0/NTC-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neorob85/library/NTC/1.1.0/NTC-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "neorob85/library/PrefsManager/1.0.0/PrefsManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PrefsManager-1.0.0.tar.gz",
+    "size_bytes": 9321,
+    "sha256": "d385f9a48eb9f1d626cc7252b7f857ed4dd2ef7c185a3dba097bebc5ff5f6f43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neorob85/library/PrefsManager/1.0.0/PrefsManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neorob85/library/PrefsManager/1.0.0/PrefsManager-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

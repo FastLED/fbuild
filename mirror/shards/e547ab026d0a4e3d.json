@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iktas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iktas/library/NDEF_MFRC522v2/1.0.1/NDEF_MFRC522v2-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NDEF_MFRC522v2-1.0.1.tar.gz",
+    "size_bytes": 18601,
+    "sha256": "ea8bc98b34f7b866119c4f4c3a6254f6c2aaf02386b1e68cd315c722ad96ba7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iktas/library/NDEF_MFRC522v2/1.0.1/NDEF_MFRC522v2-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iktas/library/NDEF_MFRC522v2/1.0.1/NDEF_MFRC522v2-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

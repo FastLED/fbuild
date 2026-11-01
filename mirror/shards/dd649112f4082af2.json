@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pangsk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pangsk/library/RF12B/0.0.0+sha.12d8175359f2/RF12B-0.0.0+sha.12d8175359f2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF12B-0.0.0+sha.12d8175359f2.tar.gz",
+    "size_bytes": 4057,
+    "sha256": "c573b5e37ab7c10fa6b2cd69bf7ee96b00269ea7f71aaaf072a50d6cc34fa00a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pangsk/library/RF12B/0.0.0%2Bsha.12d8175359f2/RF12B-0.0.0%2Bsha.12d8175359f2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pangsk/library/RF12B/0.0.0%2Bsha.12d8175359f2/RF12B-0.0.0%2Bsha.12d8175359f2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

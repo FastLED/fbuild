@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/allexok",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "allexok/library/TinyDecisionTreeClassifier/2.0.0/TinyDecisionTreeClassifier-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyDecisionTreeClassifier-2.0.0.tar.gz",
+    "size_bytes": 590555,
+    "sha256": "5dc8dbb6fb8dca85934662ddc71109e68b64c82687563e727c28f319dae4499e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/allexok/library/TinyDecisionTreeClassifier/2.0.0/TinyDecisionTreeClassifier-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/allexok/library/TinyDecisionTreeClassifier/2.0.0/TinyDecisionTreeClassifier-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

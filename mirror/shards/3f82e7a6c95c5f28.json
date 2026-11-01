@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/unexpectedmaker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "unexpectedmaker/library/Neo7Segment/1.1.3/Neo7Segment-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Neo7Segment-1.1.3.tar.gz",
+    "size_bytes": 9810,
+    "sha256": "8e16e490c08a7ec8e624bb9d6bdd2f057c67442e362dbc9bd6f377abe1d9e7ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unexpectedmaker/library/Neo7Segment/1.1.3/Neo7Segment-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/unexpectedmaker/library/Neo7Segment/1.1.3/Neo7Segment-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unexpectedmaker/library/UM%20RGB%20Touch%20Mini/1.0/UMRGBTouchMini-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UMRGBTouchMini-1.0.tar.gz",
+    "size_bytes": 19660,
+    "sha256": "d0a225ddecd7d1b9cd0a83af144b6607060ee6ba43d515d9ce0525b1c0176e36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unexpectedmaker/library/UM%2520RGB%2520Touch%2520Mini/1.0/UMRGBTouchMini-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unexpectedmaker/library/UM%20RGB%20Touch%20Mini/1.0/UMRGBTouchMini-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unexpectedmaker/library/UM%20SeriesD%20Helper/1.0.0/UMSeriesDHelper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UMSeriesDHelper-1.0.0.tar.gz",
+    "size_bytes": 5716,
+    "sha256": "ece0928f93053d85ed579b78bbe2e3a1d9d8d6d57def6fd03bc6d8ad916253c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unexpectedmaker/library/UM%2520SeriesD%2520Helper/1.0.0/UMSeriesDHelper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unexpectedmaker/library/UM%20SeriesD%20Helper/1.0.0/UMSeriesDHelper-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unexpectedmaker/library/UM%20SeriesD%20Helper/2.0.0/UMSeriesDHelper-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UMSeriesDHelper-2.0.0.tar.gz",
+    "size_bytes": 6948,
+    "sha256": "a4c0da3c8d4d1e0cbba552168174a9a921e7bc918bb4ea653e0e2985b1ac35c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unexpectedmaker/library/UM%2520SeriesD%2520Helper/2.0.0/UMSeriesDHelper-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unexpectedmaker/library/UM%20SeriesD%20Helper/2.0.0/UMSeriesDHelper-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unexpectedmaker/library/UMS3%20Helper/1.1.2/UMS3Helper-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UMS3Helper-1.1.2.tar.gz",
+    "size_bytes": 4286,
+    "sha256": "f438a94f76ddd1831c8f4eda6040a0dcd0460e04cdbc3e1ae162a4e0451b1268",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unexpectedmaker/library/UMS3%2520Helper/1.1.2/UMS3Helper-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/unexpectedmaker/library/UMS3%20Helper/1.1.2/UMS3Helper-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unexpectedmaker/library/UMS3%20Helper/2.0.0/UMS3Helper-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UMS3Helper-2.0.0.tar.gz",
+    "size_bytes": 5288,
+    "sha256": "0615fd5947b9c5817c68dff4f88b75f78ac7aa3ea9c5fa476be91f90b9a0fdbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unexpectedmaker/library/UMS3%2520Helper/2.0.0/UMS3Helper-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/unexpectedmaker/library/UMS3%20Helper/2.0.0/UMS3Helper-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

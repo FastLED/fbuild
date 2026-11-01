@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-swabey89",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-swabey89/library/BME280/0.0.0+sha.34bca8bf2146/BME280-0.0.0+sha.34bca8bf2146.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280-0.0.0+sha.34bca8bf2146.tar.gz",
+    "size_bytes": 3716,
+    "sha256": "16e0c711d69910b345a0408cb9daaccb47ee08d3132f72fa2ebdd7eaafd2af71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-swabey89/library/BME280/0.0.0%2Bsha.34bca8bf2146/BME280-0.0.0%2Bsha.34bca8bf2146.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-swabey89/library/BME280/0.0.0%2Bsha.34bca8bf2146/BME280-0.0.0%2Bsha.34bca8bf2146.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-swabey89/library/BMP280/0.0.0+sha.eef68cb8c174/BMP280-0.0.0+sha.eef68cb8c174.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP280-0.0.0+sha.eef68cb8c174.tar.gz",
+    "size_bytes": 2852,
+    "sha256": "770699762e5a0245e30b86af210b9a041fcef73f39dcc3dcf370ed8915b2922e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-swabey89/library/BMP280/0.0.0%2Bsha.eef68cb8c174/BMP280-0.0.0%2Bsha.eef68cb8c174.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-swabey89/library/BMP280/0.0.0%2Bsha.eef68cb8c174/BMP280-0.0.0%2Bsha.eef68cb8c174.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-swabey89/library/BMP2802/0.0.0+sha.68909f7f98bc/BMP2802-0.0.0+sha.68909f7f98bc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP2802-0.0.0+sha.68909f7f98bc.tar.gz",
+    "size_bytes": 2847,
+    "sha256": "50003af1a1f470eb1144d94425f0eeda7da18f0bdf16c23adfe8ffee38a3a96d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-swabey89/library/BMP2802/0.0.0%2Bsha.68909f7f98bc/BMP2802-0.0.0%2Bsha.68909f7f98bc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-swabey89/library/BMP2802/0.0.0%2Bsha.68909f7f98bc/BMP2802-0.0.0%2Bsha.68909f7f98bc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-swabey89/library/SDBlockDevice/0.0.0+sha.3fd460dac21f/SDBlockDevice-0.0.0+sha.3fd460dac21f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDBlockDevice-0.0.0+sha.3fd460dac21f.tar.gz",
+    "size_bytes": 13608,
+    "sha256": "ca8490e9eb154d454acea6ebf2f05b12dc973725a64877bfff71d208b4f135da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-swabey89/library/SDBlockDevice/0.0.0%2Bsha.3fd460dac21f/SDBlockDevice-0.0.0%2Bsha.3fd460dac21f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-swabey89/library/SDBlockDevice/0.0.0%2Bsha.3fd460dac21f/SDBlockDevice-0.0.0%2Bsha.3fd460dac21f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-swabey89/library/SDBlockDevice2/0.0.0+sha.19febeae2548/SDBlockDevice2-0.0.0+sha.19febeae2548.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDBlockDevice2-0.0.0+sha.19febeae2548.tar.gz",
+    "size_bytes": 13573,
+    "sha256": "58bd73c37db5cd848574a5ae8fb046fbe3944d92790852c3d9123240bb1680e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-swabey89/library/SDBlockDevice2/0.0.0%2Bsha.19febeae2548/SDBlockDevice2-0.0.0%2Bsha.19febeae2548.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-swabey89/library/SDBlockDevice2/0.0.0%2Bsha.19febeae2548/SDBlockDevice2-0.0.0%2Bsha.19febeae2548.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-swabey89/library/SDCard/0.0.0+sha.c9ac3fc764b9/SDCard-0.0.0+sha.c9ac3fc764b9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDCard-0.0.0+sha.c9ac3fc764b9.tar.gz",
+    "size_bytes": 3082,
+    "sha256": "1cf5bca9d97637a7a53cebf601e789b8f2471f3036a4fc0b778d8502a05fa499",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-swabey89/library/SDCard/0.0.0%2Bsha.c9ac3fc764b9/SDCard-0.0.0%2Bsha.c9ac3fc764b9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-swabey89/library/SDCard/0.0.0%2Bsha.c9ac3fc764b9/SDCard-0.0.0%2Bsha.c9ac3fc764b9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-swabey89/library/SDCard2/0.0.0+sha.1b17fef4fd93/SDCard2-0.0.0+sha.1b17fef4fd93.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDCard2-0.0.0+sha.1b17fef4fd93.tar.gz",
+    "size_bytes": 2130,
+    "sha256": "8afa9ec439c21ba6be4e92b204fca11719ffc285b1076eda3cb0d25196f0a32d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-swabey89/library/SDCard2/0.0.0%2Bsha.1b17fef4fd93/SDCard2-0.0.0%2Bsha.1b17fef4fd93.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-swabey89/library/SDCard2/0.0.0%2Bsha.1b17fef4fd93/SDCard2-0.0.0%2Bsha.1b17fef4fd93.tar.gz"
+    ]
+   }
+  }
+ ]
+}

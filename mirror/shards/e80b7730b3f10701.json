@@ -1,0 +1,282 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/codename666",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "codename666/library/Buffer/1.0.1/Buffer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Buffer-1.0.1.tar.gz",
+    "size_bytes": 6369,
+    "sha256": "00ecf142be0a3239385e1cf01c45456da9b0f2ce183b118ba933c07fc09532df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/Buffer/1.0.1/Buffer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/Buffer/1.0.1/Buffer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/CRC%20Forge/1.0.0/CRCForge-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRCForge-1.0.0.tar.gz",
+    "size_bytes": 27258,
+    "sha256": "9c5e47c3b6ad78727184213e96a024460586552f05e78fc22594149a8a0fe7c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/CRC%2520Forge/1.0.0/CRCForge-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/CRC%20Forge/1.0.0/CRCForge-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/CRC%20Forge/1.1.0/CRCForge-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRCForge-1.1.0.tar.gz",
+    "size_bytes": 31498,
+    "sha256": "6fb5437d65405efae7196cf161cdb6bdf7d5d2437b74809ca606af178b2659eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/CRC%2520Forge/1.1.0/CRCForge-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/CRC%20Forge/1.1.0/CRCForge-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/CRC%20Forge/1.1.1/CRCForge-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CRCForge-1.1.1.tar.gz",
+    "size_bytes": 31808,
+    "sha256": "c5924b2dc2aa6cb2d3bc64356cef4f4531046cdc4cde9e54b4778e8a078b9fe4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/CRC%2520Forge/1.1.1/CRCForge-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/CRC%20Forge/1.1.1/CRCForge-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/DebugIf/1.3.1/DebugIf-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DebugIf-1.3.1.tar.gz",
+    "size_bytes": 6691,
+    "sha256": "3bf499fa3ff7fc2f37f9ff6997acd393348b5945500183255a2834c5dc16a3c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/DebugIf/1.3.1/DebugIf-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/DebugIf/1.3.1/DebugIf-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/Dio/1.1.3/Dio-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dio-1.1.3.tar.gz",
+    "size_bytes": 6756,
+    "sha256": "1a3e2e148f6d9a1dff25de50167c3b570dcb898ff99dee2e711583b1c2098f8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/Dio/1.1.3/Dio-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/Dio/1.1.3/Dio-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/EdgeDio/1.1.3/EdgeDio-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EdgeDio-1.1.3.tar.gz",
+    "size_bytes": 1187,
+    "sha256": "81d4acce50d7a2c90419ad81abffe34778a990b498193a3c2dacf0280ccfd036",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/EdgeDio/1.1.3/EdgeDio-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/EdgeDio/1.1.3/EdgeDio-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/Events/2.3.3/Events-2.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Events-2.3.3.tar.gz",
+    "size_bytes": 8168,
+    "sha256": "39b0ec191276ec0430d700d21b8911a946ee7008e25e8541ced89764b31f3b24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/Events/2.3.3/Events-2.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/Events/2.3.3/Events-2.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/KymoCore/6.2.3/KymoCore-6.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KymoCore-6.2.3.tar.gz",
+    "size_bytes": 495419,
+    "sha256": "da7815b14e2069a92b283192e747939e4f05d379680b61c69baabbe937999235",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/KymoCore/6.2.3/KymoCore-6.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/KymoCore/6.2.3/KymoCore-6.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/KymoCore/6.3.0/KymoCore-6.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KymoCore-6.3.0.tar.gz",
+    "size_bytes": 553293,
+    "sha256": "6108c765ab1fb96287a8c48ef9066f12e11cf5f5e20fb727e74dbc2f3f0db521",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/KymoCore/6.3.0/KymoCore-6.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/KymoCore/6.3.0/KymoCore-6.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/KymoCore/6.3.1/KymoCore-6.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KymoCore-6.3.1.tar.gz",
+    "size_bytes": 553464,
+    "sha256": "f6c376879c6e65bcc63bf6ac560b1f46f77592358550178e2263e19543309516",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/KymoCore/6.3.1/KymoCore-6.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/KymoCore/6.3.1/KymoCore-6.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/KymoCore/6.3.2/KymoCore-6.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KymoCore-6.3.2.tar.gz",
+    "size_bytes": 556361,
+    "sha256": "75418effa181daacda2c4bbd3d8e42c6b18eee803a3505ac78ccadc3bc562499",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/KymoCore/6.3.2/KymoCore-6.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/KymoCore/6.3.2/KymoCore-6.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/KymoCore/6.4.0/KymoCore-6.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KymoCore-6.4.0.tar.gz",
+    "size_bytes": 558515,
+    "sha256": "4684b16cdd3d47fdb5de6c0df680be0ae68592640c8f54b1a66abc8ff42b7c6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/KymoCore/6.4.0/KymoCore-6.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/KymoCore/6.4.0/KymoCore-6.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/KymoCore/7.1.0/KymoCore-7.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KymoCore-7.1.0.tar.gz",
+    "size_bytes": 636540,
+    "sha256": "d0c9ea9681a67ea4b667222a694a7a60e93d657738bb39ed1859e4ecc57f2d9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/KymoCore/7.1.0/KymoCore-7.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/KymoCore/7.1.0/KymoCore-7.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/MemoryManager/1.0.0/MemoryManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MemoryManager-1.0.0.tar.gz",
+    "size_bytes": 24084,
+    "sha256": "6d0b009ca45c6624bbce5c1f0a95743eb9283d1c1e9f4fdfecaa1aa31045d943",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/MemoryManager/1.0.0/MemoryManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/MemoryManager/1.0.0/MemoryManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/OTA/1.0.0/OTA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OTA-1.0.0.tar.gz",
+    "size_bytes": 5269,
+    "sha256": "06a8ec0f016012b33a4a0f39fbe9a0b59e084410f87ee12ccc85d0ec289f8fca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/OTA/1.0.0/OTA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/OTA/1.0.0/OTA-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/PulsDio/1.0.3/PulsDio-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulsDio-1.0.3.tar.gz",
+    "size_bytes": 1323,
+    "sha256": "f6a2f2857cda46bfe5c39c34c9082d7b4359ffdba0e06c9d5da74521bd51b5c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/PulsDio/1.0.3/PulsDio-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/PulsDio/1.0.3/PulsDio-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/SignalAnalysis/1.0.4/SignalAnalysis-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SignalAnalysis-1.0.4.tar.gz",
+    "size_bytes": 4833,
+    "sha256": "116f62e3540ee492f05448570a5427fd3cbcee6e9327cf75269bb888c83dcd79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/SignalAnalysis/1.0.4/SignalAnalysis-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/SignalAnalysis/1.0.4/SignalAnalysis-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/StreamCom/2.2.0/StreamCom-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamCom-2.2.0.tar.gz",
+    "size_bytes": 11403,
+    "sha256": "cf48e9c7bd6f995239f16301808a2ce65b9ef9100c6d4a81a4706fc88bdd6f73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/StreamCom/2.2.0/StreamCom-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/StreamCom/2.2.0/StreamCom-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/StreamCom/2.3.0/StreamCom-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamCom-2.3.0.tar.gz",
+    "size_bytes": 17079,
+    "sha256": "7277e3ef07ee54cdb8f7194a329e022b3ecd7ab94be1c4bd9fd1af589fb3cac0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/StreamCom/2.3.0/StreamCom-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/StreamCom/2.3.0/StreamCom-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "codename666/library/SwTimer/1.0.1/SwTimer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SwTimer-1.0.1.tar.gz",
+    "size_bytes": 3534,
+    "sha256": "57856c817f5699c7d6f57abd8bdd61bb8a0d04a3856f202568f5583d228af390",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/codename666/library/SwTimer/1.0.1/SwTimer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/codename666/library/SwTimer/1.0.1/SwTimer-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

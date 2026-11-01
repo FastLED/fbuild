@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mustafakemalgilor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mustafakemalgilor/library/tdslite/0.8.0/tdslite-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tdslite-0.8.0.tar.gz",
+    "size_bytes": 91168,
+    "sha256": "06d828d7e971fb78a85ee5ac370fa8a699c075daadcf97149f1599848e6966ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mustafakemalgilor/library/tdslite/0.8.0/tdslite-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mustafakemalgilor/library/tdslite/0.8.0/tdslite-0.8.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

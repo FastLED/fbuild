@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/esslangamer20",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "esslangamer20/library/SimpleWiFiManager/1.0.0/SimpleWiFiManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleWiFiManager-1.0.0.tar.gz",
+    "size_bytes": 2689,
+    "sha256": "2f0d20dd7368e668faa81a30778c6208cfddbb05458c90c7aa9a9ae43e48a50c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esslangamer20/library/SimpleWiFiManager/1.0.0/SimpleWiFiManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/esslangamer20/library/SimpleWiFiManager/1.0.0/SimpleWiFiManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esslangamer20/library/SimpleWiFiManager/1.0.2.1/SimpleWiFiManager-1.0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleWiFiManager-1.0.2.1.tar.gz",
+    "size_bytes": 3321,
+    "sha256": "bad1d292bbd45dce2cfa1ba9064c864c29dbb803da7fdb62284d058139e47fd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esslangamer20/library/SimpleWiFiManager/1.0.2.1/SimpleWiFiManager-1.0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/esslangamer20/library/SimpleWiFiManager/1.0.2.1/SimpleWiFiManager-1.0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "esslangamer20/library/SimpleWiFiManager/1.0.2/SimpleWiFiManager-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleWiFiManager-1.0.2.tar.gz",
+    "size_bytes": 3621,
+    "sha256": "330f957858f08f541ae538ccffe33fb3fc4f11e8a9ef57d93545adeb6f23aaf6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/esslangamer20/library/SimpleWiFiManager/1.0.2/SimpleWiFiManager-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/esslangamer20/library/SimpleWiFiManager/1.0.2/SimpleWiFiManager-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

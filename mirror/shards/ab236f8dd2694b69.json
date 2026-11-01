@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-danielashercohen",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-danielashercohen/library/SeeedGrayOLED/0.0.0+sha.05a64dcb7603/SeeedGrayOLED-0.0.0+sha.05a64dcb7603.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedGrayOLED-0.0.0+sha.05a64dcb7603.tar.gz",
+    "size_bytes": 4865,
+    "sha256": "740bcfa2467a037f69b7121a4b6fd9cf706b9d3912efcbb7a7aa8f2e2ea33b34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-danielashercohen/library/SeeedGrayOLED/0.0.0%2Bsha.05a64dcb7603/SeeedGrayOLED-0.0.0%2Bsha.05a64dcb7603.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-danielashercohen/library/SeeedGrayOLED/0.0.0%2Bsha.05a64dcb7603/SeeedGrayOLED-0.0.0%2Bsha.05a64dcb7603.tar.gz"
+    ]
+   }
+  }
+ ]
+}

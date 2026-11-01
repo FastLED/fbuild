@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pallob-gain",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pallob-gain/library/Packet_Device/1.0.10/Packet_Device-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Packet_Device-1.0.10.tar.gz",
+    "size_bytes": 25989,
+    "sha256": "ea7093e781f0552221cbd1d9f12e681e3ad68e0045711930a12fd065c60e3129",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pallob-gain/library/Packet_Device/1.0.10/Packet_Device-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/pallob-gain/library/Packet_Device/1.0.10/Packet_Device-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pallob-gain/library/Packet_Device/1.0.11/Packet_Device-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Packet_Device-1.0.11.tar.gz",
+    "size_bytes": 26216,
+    "sha256": "cec2adeb266de38a372da3b1b14d8d42f7339961b3b7646e83b5ccfead9cf1fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pallob-gain/library/Packet_Device/1.0.11/Packet_Device-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/pallob-gain/library/Packet_Device/1.0.11/Packet_Device-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pallob-gain/library/Packet_Device/1.0.12/Packet_Device-1.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Packet_Device-1.0.12.tar.gz",
+    "size_bytes": 26930,
+    "sha256": "d64cb3d4f41f2b87cba601b199c0a2757b1abefb1ffaa14c36bf60524c5bfe54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pallob-gain/library/Packet_Device/1.0.12/Packet_Device-1.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/pallob-gain/library/Packet_Device/1.0.12/Packet_Device-1.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pallob-gain/library/Packet_Device/1.0.13/Packet_Device-1.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Packet_Device-1.0.13.tar.gz",
+    "size_bytes": 36465,
+    "sha256": "33fbaa9a92fe1b83a11e5a277f6f0540b07e32afad0290acfea635492dc710c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pallob-gain/library/Packet_Device/1.0.13/Packet_Device-1.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/pallob-gain/library/Packet_Device/1.0.13/Packet_Device-1.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pallob-gain/library/Packet_Device/1.0.8/Packet_Device-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Packet_Device-1.0.8.tar.gz",
+    "size_bytes": 25870,
+    "sha256": "5c9e25fb41a05e571395ca09fa50660fec0ee8245e3f8b6949f7339068da51b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pallob-gain/library/Packet_Device/1.0.8/Packet_Device-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/pallob-gain/library/Packet_Device/1.0.8/Packet_Device-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pallob-gain/library/Packet_Device/1.0.9/Packet_Device-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Packet_Device-1.0.9.tar.gz",
+    "size_bytes": 26092,
+    "sha256": "b6cec0ae2051fb323724c8d843279dd5ce9a31446353a0ad090a1c0cb228abc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pallob-gain/library/Packet_Device/1.0.9/Packet_Device-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/pallob-gain/library/Packet_Device/1.0.9/Packet_Device-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

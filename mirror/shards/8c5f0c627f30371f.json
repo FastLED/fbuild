@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-borkog",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-borkog/library/CircularArrayQueue/0.0.0+sha.d742b58ce82d/CircularArrayQueue-0.0.0+sha.d742b58ce82d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CircularArrayQueue-0.0.0+sha.d742b58ce82d.tar.gz",
+    "size_bytes": 1405,
+    "sha256": "8253891401151786fef667ea3ba5e3712f751f3f9143e6dabc2d689cd2da60c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-borkog/library/CircularArrayQueue/0.0.0%2Bsha.d742b58ce82d/CircularArrayQueue-0.0.0%2Bsha.d742b58ce82d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-borkog/library/CircularArrayQueue/0.0.0%2Bsha.d742b58ce82d/CircularArrayQueue-0.0.0%2Bsha.d742b58ce82d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-training",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-training/library/MorseGenerator2/0.0.0+sha.bad1b4ca49df/MorseGenerator2-0.0.0+sha.bad1b4ca49df.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MorseGenerator2-0.0.0+sha.bad1b4ca49df.tar.gz",
+    "size_bytes": 1648,
+    "sha256": "5b5f2e1c40f6d34469df3415ef026faa1f5e63d83a84e80e6bf85ca88b5c8e49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-training/library/MorseGenerator2/0.0.0%2Bsha.bad1b4ca49df/MorseGenerator2-0.0.0%2Bsha.bad1b4ca49df.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-training/library/MorseGenerator2/0.0.0%2Bsha.bad1b4ca49df/MorseGenerator2-0.0.0%2Bsha.bad1b4ca49df.tar.gz"
+    ]
+   }
+  }
+ ]
+}

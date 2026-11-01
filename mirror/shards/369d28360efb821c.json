@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/raghulrajg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "raghulrajg/library/OTAUpdateManager/1.0.2/OTAUpdateManager-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OTAUpdateManager-1.0.2.tar.gz",
+    "size_bytes": 22826,
+    "sha256": "189052be6aeb97298d8d70aae6c3030b40cc363ea55320db962ef17ac6440eb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/raghulrajg/library/OTAUpdateManager/1.0.2/OTAUpdateManager-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/raghulrajg/library/OTAUpdateManager/1.0.2/OTAUpdateManager-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

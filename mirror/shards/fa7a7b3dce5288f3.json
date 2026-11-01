@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mcxiaoke",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mcxiaoke/library/ESPDateTime/0.2.1/ESPDateTime-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPDateTime-0.2.1.tar.gz",
+    "size_bytes": 1312350,
+    "sha256": "d83d3178cf28e0fd7a14d8af2d8dd7e8bbd251cefb183864747f7efa4b07c8ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcxiaoke/library/ESPDateTime/0.2.1/ESPDateTime-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcxiaoke/library/ESPDateTime/0.2.1/ESPDateTime-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcxiaoke/library/ESPDateTime/1.0.4/ESPDateTime-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPDateTime-1.0.4.tar.gz",
+    "size_bytes": 1318654,
+    "sha256": "8c974e9f0193dcd88a2508f5172f79e068545ab42988464ef498e91398779cca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcxiaoke/library/ESPDateTime/1.0.4/ESPDateTime-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mcxiaoke/library/ESPDateTime/1.0.4/ESPDateTime-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

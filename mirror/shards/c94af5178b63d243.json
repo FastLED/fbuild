@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yesbotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yesbotics/library/DualSenseController/2.0.1/DualSenseController-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DualSenseController-2.0.1.tar.gz",
+    "size_bytes": 9418,
+    "sha256": "4f1d851ab94a1cbb813c011a0a12a36ab8c92f22740ae571e633eee3e8c67b14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yesbotics/library/DualSenseController/2.0.1/DualSenseController-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/yesbotics/library/DualSenseController/2.0.1/DualSenseController-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

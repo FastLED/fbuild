@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stargate01",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stargate01/library/Adafruit_ST7735_Mini/0.0.0-broken/Adafruit_ST7735_Mini-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_ST7735_Mini-0.1.4.tar.gz",
+    "size_bytes": 643,
+    "sha256": "f2504b0160a4b0ded38b676ca91569720e60827674df4203026e9070b908e158",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stargate01/library/Adafruit_ST7735_Mini/0.0.0-broken/Adafruit_ST7735_Mini-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/stargate01/library/Adafruit_ST7735_Mini/0.0.0-broken/Adafruit_ST7735_Mini-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stargate01/library/ArduinoPSX/1.0.1/ArduinoPSX-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoPSX-1.0.1.tar.gz",
+    "size_bytes": 16237,
+    "sha256": "3fcbe15b48396bcc8582528b4cb9899cffb9b3b99d5a90c7400dc7881e5d8eea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stargate01/library/ArduinoPSX/1.0.1/ArduinoPSX-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stargate01/library/ArduinoPSX/1.0.1/ArduinoPSX-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stargate01/library/JLink_RTT/0.0.0-broken/JLink_RTT-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JLink_RTT-0.2.2.tar.gz",
+    "size_bytes": 611,
+    "sha256": "fdd7fd539dc116588f6f6b29eb0f9a664ac6cef92651ff913d8578c2d56e0f2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stargate01/library/JLink_RTT/0.0.0-broken/JLink_RTT-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stargate01/library/JLink_RTT/0.0.0-broken/JLink_RTT-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stargate01/library/kionix-kx123-driver/0.0.0-broken/kionix-kx123-driver-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "kionix-kx123-driver-0.1.2.tar.gz",
+    "size_bytes": 702,
+    "sha256": "9b41ded7e762b7ed16fbcdd3d90ebd774fcbb1e20183f80e6789b0e8a7718d4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stargate01/library/kionix-kx123-driver/0.0.0-broken/kionix-kx123-driver-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stargate01/library/kionix-kx123-driver/0.0.0-broken/kionix-kx123-driver-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stargate01/library/ykhmac/0.0.0-broken/ykhmac-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ykhmac-0.0.1.tar.gz",
+    "size_bytes": 621,
+    "sha256": "762e26a651d015ca85edfe7fa66911b14fa3e5d1746f11e2be87ed9bf745d256",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stargate01/library/ykhmac/0.0.0-broken/ykhmac-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stargate01/library/ykhmac/0.0.0-broken/ykhmac-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

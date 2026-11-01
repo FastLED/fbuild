@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jf1452",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jf1452/library/DCMotorDrive/0.0.0+sha.b9aafce708b5/DCMotorDrive-0.0.0+sha.b9aafce708b5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCMotorDrive-0.0.0+sha.b9aafce708b5.tar.gz",
+    "size_bytes": 2282,
+    "sha256": "193ce694e98081d2fd04ed9ed33d8270abc852b4d36c40a7ed525b0d89f7ded0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jf1452/library/DCMotorDrive/0.0.0%2Bsha.b9aafce708b5/DCMotorDrive-0.0.0%2Bsha.b9aafce708b5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jf1452/library/DCMotorDrive/0.0.0%2Bsha.b9aafce708b5/DCMotorDrive-0.0.0%2Bsha.b9aafce708b5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jf1452/library/MotorController/0.0.0+sha.2c9ebe06b127/MotorController-0.0.0+sha.2c9ebe06b127.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorController-0.0.0+sha.2c9ebe06b127.tar.gz",
+    "size_bytes": 2415,
+    "sha256": "d24be0ab907b089df6e713af06f2df1879b5bad749e481bed38bb3567bb8c60d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jf1452/library/MotorController/0.0.0%2Bsha.2c9ebe06b127/MotorController-0.0.0%2Bsha.2c9ebe06b127.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jf1452/library/MotorController/0.0.0%2Bsha.2c9ebe06b127/MotorController-0.0.0%2Bsha.2c9ebe06b127.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jf1452/library/SevenSegmentDisplay/0.0.0+sha.cb7339a2e196/SevenSegmentDisplay-0.0.0+sha.cb7339a2e196.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SevenSegmentDisplay-0.0.0+sha.cb7339a2e196.tar.gz",
+    "size_bytes": 4276,
+    "sha256": "3caf6f70d36a44371bc8417f21ba98afdbaea5b1cdcfb7a8507d8c587469d7aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jf1452/library/SevenSegmentDisplay/0.0.0%2Bsha.cb7339a2e196/SevenSegmentDisplay-0.0.0%2Bsha.cb7339a2e196.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jf1452/library/SevenSegmentDisplay/0.0.0%2Bsha.cb7339a2e196/SevenSegmentDisplay-0.0.0%2Bsha.cb7339a2e196.tar.gz"
+    ]
+   }
+  }
+ ]
+}

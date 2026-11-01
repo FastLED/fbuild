@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-skool-arm-hungary",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-skool-arm-hungary/library/Skool_wkshp_lib2015/0.0.0+sha.68d1a8c4970b/Skool_wkshp_lib2015-0.0.0+sha.68d1a8c4970b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Skool_wkshp_lib2015-0.0.0+sha.68d1a8c4970b.tar.gz",
+    "size_bytes": 6730,
+    "sha256": "810e5bcf0d3be555efe62696776d2e44285702d09d75e80a8f0715a05995160c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-skool-arm-hungary/library/Skool_wkshp_lib2015/0.0.0%2Bsha.68d1a8c4970b/Skool_wkshp_lib2015-0.0.0%2Bsha.68d1a8c4970b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-skool-arm-hungary/library/Skool_wkshp_lib2015/0.0.0%2Bsha.68d1a8c4970b/Skool_wkshp_lib2015-0.0.0%2Bsha.68d1a8c4970b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

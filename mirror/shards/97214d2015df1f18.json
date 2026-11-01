@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cesanta",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cesanta/library/v7/0.0.0+sha.2bce515c5f0b/v7-0.0.0+sha.2bce515c5f0b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "v7-0.0.0+sha.2bce515c5f0b.tar.gz",
+    "size_bytes": 227323,
+    "sha256": "ea1c2bd1c78c11b02377271786dd018ae54b87be88145551dc6ae8781fdf61de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cesanta/library/v7/0.0.0%2Bsha.2bce515c5f0b/v7-0.0.0%2Bsha.2bce515c5f0b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cesanta/library/v7/0.0.0%2Bsha.2bce515c5f0b/v7-0.0.0%2Bsha.2bce515c5f0b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

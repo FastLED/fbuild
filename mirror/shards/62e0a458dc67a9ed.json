@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-migool",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-migool/library/MaxSonar/0.0.0+sha.de1c628c1495/MaxSonar-0.0.0+sha.de1c628c1495.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MaxSonar-0.0.0+sha.de1c628c1495.tar.gz",
+    "size_bytes": 995,
+    "sha256": "d210edc7c1a68e3353ce93a87cfb35177180e41c2b619db7f2bcc8d79102b425",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-migool/library/MaxSonar/0.0.0%2Bsha.de1c628c1495/MaxSonar-0.0.0%2Bsha.de1c628c1495.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-migool/library/MaxSonar/0.0.0%2Bsha.de1c628c1495/MaxSonar-0.0.0%2Bsha.de1c628c1495.tar.gz"
+    ]
+   }
+  }
+ ]
+}

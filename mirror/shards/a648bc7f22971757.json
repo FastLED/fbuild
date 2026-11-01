@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aeljandro2",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aeljandro2/library/esp32-psram-stl/2.0.0/esp32-psram-stl-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-psram-stl-2.0.0.tar.gz",
+    "size_bytes": 17265,
+    "sha256": "c9bcd3e6a177ddf2535fc8b0194d372e35cb6d64421a19f4b9d8bd31ffd92635",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aeljandro2/library/esp32-psram-stl/2.0.0/esp32-psram-stl-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aeljandro2/library/esp32-psram-stl/2.0.0/esp32-psram-stl-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

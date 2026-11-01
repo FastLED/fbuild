@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-atommota",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-atommota/library/LIS331HH_lib/0.0.0+sha.3a46d098c175/LIS331HH_lib-0.0.0+sha.3a46d098c175.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIS331HH_lib-0.0.0+sha.3a46d098c175.tar.gz",
+    "size_bytes": 3065,
+    "sha256": "7db300d689a1cd5d30dff9940763325abefbe02479caf9be862f98d536717b0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-atommota/library/LIS331HH_lib/0.0.0%2Bsha.3a46d098c175/LIS331HH_lib-0.0.0%2Bsha.3a46d098c175.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-atommota/library/LIS331HH_lib/0.0.0%2Bsha.3a46d098c175/LIS331HH_lib-0.0.0%2Bsha.3a46d098c175.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-atommota/library/LIS331_lib/0.0.0+sha.dcd11c84305e/LIS331_lib-0.0.0+sha.dcd11c84305e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIS331_lib-0.0.0+sha.dcd11c84305e.tar.gz",
+    "size_bytes": 3204,
+    "sha256": "6c1be44bcc5f45ec229ab39d6378cf79ddc4bfc22ea604a25b19919dcaa5904b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-atommota/library/LIS331_lib/0.0.0%2Bsha.dcd11c84305e/LIS331_lib-0.0.0%2Bsha.dcd11c84305e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-atommota/library/LIS331_lib/0.0.0%2Bsha.dcd11c84305e/LIS331_lib-0.0.0%2Bsha.dcd11c84305e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

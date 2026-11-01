@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ai-techsystems",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ai-techsystems/library/Arduino_deepC/0.121/Arduino_deepC-0.121.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino_deepC-0.121.tar.gz",
+    "size_bytes": 849107,
+    "sha256": "c31ad3ff28fc48ee2131c49abf63157f01ec426b0ba5cee750f9a404319d3b82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ai-techsystems/library/Arduino_deepC/0.121/Arduino_deepC-0.121.tar.gz",
+     "https://dl.registry.platformio.org/download/ai-techsystems/library/Arduino_deepC/0.121/Arduino_deepC-0.121.tar.gz"
+    ]
+   }
+  }
+ ]
+}

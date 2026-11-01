@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mytechwaifu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mytechwaifu/library/MTW%20TinyLoopScheduler/0.1.1/MTWTinyLoopScheduler-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTWTinyLoopScheduler-0.1.1.tar.gz",
+    "size_bytes": 50216,
+    "sha256": "e0b1faf0c342d31bf0618613351a3376e521a7c302001eeaf72f86fc151bee4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mytechwaifu/library/MTW%2520TinyLoopScheduler/0.1.1/MTWTinyLoopScheduler-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mytechwaifu/library/MTW%20TinyLoopScheduler/0.1.1/MTWTinyLoopScheduler-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mytechwaifu/library/MTW%20TinyLoopScheduler/0.1.2/MTWTinyLoopScheduler-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTWTinyLoopScheduler-0.1.2.tar.gz",
+    "size_bytes": 51230,
+    "sha256": "86e8b81568edbefbf2e2b02e24f2d0097a7312e0fad22163f41c5346cc771edc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mytechwaifu/library/MTW%2520TinyLoopScheduler/0.1.2/MTWTinyLoopScheduler-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mytechwaifu/library/MTW%20TinyLoopScheduler/0.1.2/MTWTinyLoopScheduler-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mytechwaifu/library/MTW%20TinyLoopScheduler/0.1.3/MTWTinyLoopScheduler-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTWTinyLoopScheduler-0.1.3.tar.gz",
+    "size_bytes": 52488,
+    "sha256": "dd4a4aacb61d8ccfeb9f8641378ee75bccafe56ae142a8c13972d0f7d49468e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mytechwaifu/library/MTW%2520TinyLoopScheduler/0.1.3/MTWTinyLoopScheduler-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mytechwaifu/library/MTW%20TinyLoopScheduler/0.1.3/MTWTinyLoopScheduler-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mytechwaifu/library/MTW%20TinyLoopScheduler/0.1.4/MTWTinyLoopScheduler-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTWTinyLoopScheduler-0.1.4.tar.gz",
+    "size_bytes": 67963,
+    "sha256": "20759daafc7149669b478d131a668574227d200083c39334b546f764fa6831a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mytechwaifu/library/MTW%2520TinyLoopScheduler/0.1.4/MTWTinyLoopScheduler-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mytechwaifu/library/MTW%20TinyLoopScheduler/0.1.4/MTWTinyLoopScheduler-0.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

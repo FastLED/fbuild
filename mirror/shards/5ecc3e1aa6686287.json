@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-c128",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-c128/library/hctl2032_encoder/0.0.0+sha.d99e7d8ed0be/hctl2032_encoder-0.0.0+sha.d99e7d8ed0be.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hctl2032_encoder-0.0.0+sha.d99e7d8ed0be.tar.gz",
+    "size_bytes": 1942,
+    "sha256": "d550e95a006d77414d9b00dcf01fdd2e9697f9e90c8a0c8f08524eab3a9e5945",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-c128/library/hctl2032_encoder/0.0.0%2Bsha.d99e7d8ed0be/hctl2032_encoder-0.0.0%2Bsha.d99e7d8ed0be.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-c128/library/hctl2032_encoder/0.0.0%2Bsha.d99e7d8ed0be/hctl2032_encoder-0.0.0%2Bsha.d99e7d8ed0be.tar.gz"
+    ]
+   }
+  }
+ ]
+}

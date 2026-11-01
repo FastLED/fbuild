@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-zchen311",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-zchen311/library/Shiftbrite/0.0.0+sha.8322a6c71e18/Shiftbrite-0.0.0+sha.8322a6c71e18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Shiftbrite-0.0.0+sha.8322a6c71e18.tar.gz",
+    "size_bytes": 946,
+    "sha256": "da3a20f0539bd77b7bfe12db7c917dfac87e45bb6c49d4e96696aeb618b8af93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-zchen311/library/Shiftbrite/0.0.0%2Bsha.8322a6c71e18/Shiftbrite-0.0.0%2Bsha.8322a6c71e18.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-zchen311/library/Shiftbrite/0.0.0%2Bsha.8322a6c71e18/Shiftbrite-0.0.0%2Bsha.8322a6c71e18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-zchen311/library/Speaker/0.0.0+sha.41292907c9cb/Speaker-0.0.0+sha.41292907c9cb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Speaker-0.0.0+sha.41292907c9cb.tar.gz",
+    "size_bytes": 1010,
+    "sha256": "4a276e7ece1d86dd2168983ac7673b9da971b070bbc0a20634f4f80d5fd7b842",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-zchen311/library/Speaker/0.0.0%2Bsha.41292907c9cb/Speaker-0.0.0%2Bsha.41292907c9cb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-zchen311/library/Speaker/0.0.0%2Bsha.41292907c9cb/Speaker-0.0.0%2Bsha.41292907c9cb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-zchen311/library/TMP36/0.0.0+sha.ab3d7d0c34ce/TMP36-0.0.0+sha.ab3d7d0c34ce.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMP36-0.0.0+sha.ab3d7d0c34ce.tar.gz",
+    "size_bytes": 996,
+    "sha256": "94394e8b8f20ea16c11cf04769d3de6d49ef9eef4aab5dbce41070a6f3c35481",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-zchen311/library/TMP36/0.0.0%2Bsha.ab3d7d0c34ce/TMP36-0.0.0%2Bsha.ab3d7d0c34ce.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-zchen311/library/TMP36/0.0.0%2Bsha.ab3d7d0c34ce/TMP36-0.0.0%2Bsha.ab3d7d0c34ce.tar.gz"
+    ]
+   }
+  }
+ ]
+}

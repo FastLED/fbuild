@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-csr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-csr/library/CsrLocation/0.0.0+sha.88db82cf3f0f/CsrLocation-0.0.0+sha.88db82cf3f0f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CsrLocation-0.0.0+sha.88db82cf3f0f.tar.gz",
+    "size_bytes": 12179,
+    "sha256": "3aa8736307195a5cd1847355b543864c15a19ff6092a21a9b765588cce6a90c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-csr/library/CsrLocation/0.0.0%2Bsha.88db82cf3f0f/CsrLocation-0.0.0%2Bsha.88db82cf3f0f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-csr/library/CsrLocation/0.0.0%2Bsha.88db82cf3f0f/CsrLocation-0.0.0%2Bsha.88db82cf3f0f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

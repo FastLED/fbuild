@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-igrokhotkov",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-igrokhotkov/library/hmac_md5/0.0.0+sha.83f3dcfa5c8f/hmac_md5-0.0.0+sha.83f3dcfa5c8f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hmac_md5-0.0.0+sha.83f3dcfa5c8f.tar.gz",
+    "size_bytes": 16829,
+    "sha256": "e297649376b272d6373c731d00eee282112f0137bd25b17862b5f219ada2ed60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-igrokhotkov/library/hmac_md5/0.0.0%2Bsha.83f3dcfa5c8f/hmac_md5-0.0.0%2Bsha.83f3dcfa5c8f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-igrokhotkov/library/hmac_md5/0.0.0%2Bsha.83f3dcfa5c8f/hmac_md5-0.0.0%2Bsha.83f3dcfa5c8f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

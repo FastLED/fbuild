@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bdlow",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bdlow/library/IO22_IO_Board/1.0.2/IO22_IO_Board-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IO22_IO_Board-1.0.2.tar.gz",
+    "size_bytes": 13238,
+    "sha256": "49b33e744a87c32905a1c983e36062da7275acfcdedf4c23aa1dbe911ce7f954",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bdlow/library/IO22_IO_Board/1.0.2/IO22_IO_Board-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bdlow/library/IO22_IO_Board/1.0.2/IO22_IO_Board-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

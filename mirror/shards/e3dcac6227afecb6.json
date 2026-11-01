@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iftahulyusro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iftahulyusro/library/MPU6050_VibrationRMS/1.0.0/MPU6050_VibrationRMS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050_VibrationRMS-1.0.0.tar.gz",
+    "size_bytes": 3516,
+    "sha256": "661fd20358f1d4629ebc180be549c42ecae98ff489157585bf7dde9305328e6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iftahulyusro/library/MPU6050_VibrationRMS/1.0.0/MPU6050_VibrationRMS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iftahulyusro/library/MPU6050_VibrationRMS/1.0.0/MPU6050_VibrationRMS-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

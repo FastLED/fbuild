@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ofroni",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ofroni/library/PocketMage_V3_sr/1.0.0/PocketMage_V3_sr-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PocketMage_V3_sr-1.0.0.tar.gz",
+    "size_bytes": 159084,
+    "sha256": "491e91d0b9a535e005a6cc49649841839add8dd053c613f912810a8b897bb7fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ofroni/library/PocketMage_V3_sr/1.0.0/PocketMage_V3_sr-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ofroni/library/PocketMage_V3_sr/1.0.0/PocketMage_V3_sr-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ofroni/library/PocketMage_V3_sr/1.0.1/PocketMage_V3_sr-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PocketMage_V3_sr-1.0.1.tar.gz",
+    "size_bytes": 158659,
+    "sha256": "c7510dd6525168d7bccf57fa5b4e073fac5ed15273709215ce20667982a9ccbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ofroni/library/PocketMage_V3_sr/1.0.1/PocketMage_V3_sr-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ofroni/library/PocketMage_V3_sr/1.0.1/PocketMage_V3_sr-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ofroni/library/Test%20Library/1.0.0/TestLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TestLibrary-1.0.0.tar.gz",
+    "size_bytes": 1980,
+    "sha256": "7fcb3f15fddfe9060e07e4420b7899fca8301f62f49ef6e7fd36212c8c5a7a21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ofroni/library/Test%2520Library/1.0.0/TestLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ofroni/library/Test%20Library/1.0.0/TestLibrary-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ofroni/library/Test%20Library/1.0.1/TestLibrary-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TestLibrary-1.0.1.tar.gz",
+    "size_bytes": 1895,
+    "sha256": "0d546b0a28c1678eb6dfcf1270fae5c980fd35cf391bada5c1be3b95147450a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ofroni/library/Test%2520Library/1.0.1/TestLibrary-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ofroni/library/Test%20Library/1.0.1/TestLibrary-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ofroni/library/Test%20Library/1.0.2/TestLibrary-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TestLibrary-1.0.2.tar.gz",
+    "size_bytes": 1919,
+    "sha256": "99fc8032b055f6b23b6cc5fdb1aba0d09146276438aea98feab9146406116a3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ofroni/library/Test%2520Library/1.0.2/TestLibrary-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ofroni/library/Test%20Library/1.0.2/TestLibrary-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ofroni/library/Test%20Library/1.0.3/TestLibrary-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TestLibrary-1.0.3.tar.gz",
+    "size_bytes": 1919,
+    "sha256": "04c9eaa98246227b6cee5e11705907663883a0b848818bba69b61a57591ba6c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ofroni/library/Test%2520Library/1.0.3/TestLibrary-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ofroni/library/Test%20Library/1.0.3/TestLibrary-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}
