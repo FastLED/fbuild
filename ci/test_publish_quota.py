@@ -149,6 +149,19 @@ class TestCli(unittest.TestCase):
                 1,
             )
 
+    def test_one_wheel_flag_accepts_a_shell_glob_of_wheels(self):
+        # release-auto.yml runs `--wheel dist/wheels/*.whl`; the shell expands
+        # that to several paths after a single flag.
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            path = self.write_json(root, project(2))
+            wheels = []
+            for index in range(3):
+                wheel = root / f"fbuild-2.6.0-{index}.whl"
+                wheel.write_bytes(b"x" * 10)
+                wheels.append(str(wheel))
+            self.assertEqual(publish.main(["--pypi-json", str(path), "--wheel", *wheels]), 0)
+
 
 if __name__ == "__main__":
     unittest.main()
