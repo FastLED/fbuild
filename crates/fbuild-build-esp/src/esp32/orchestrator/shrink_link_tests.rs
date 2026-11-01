@@ -16,6 +16,7 @@ async fn inapplicable_modes_never_probe_and_never_touch_link_flags() {
         Path::new("/nonexistent/xtensa-esp32-elf-gcc"),
         None,
         "toolchain-xtensa-esp32",
+        true,
         &mut flags,
         &mut log,
     )
@@ -36,6 +37,7 @@ async fn missing_toolchain_builds_unshrunk_and_says_so_in_the_build_log() {
         Path::new("/nonexistent/xtensa-esp32-elf-gcc"),
         None,
         "toolchain-xtensa-esp32",
+        true,
         &mut flags,
         &mut log,
     )
@@ -49,4 +51,53 @@ async fn missing_toolchain_builds_unshrunk_and_says_so_in_the_build_log() {
     assert_eq!(lines.len(), 1, "expected exactly one warning: {lines:?}");
     assert!(lines[0].contains("found no nano.specs"));
     assert!(lines[0].contains("toolchain-xtensa-esp32"));
+}
+
+/// RISC-V targets are excluded by measurement, not by taste: on ESP32-C6 the
+/// nano link grew `firmware.bin` by 9,520 B (FastLED/fbuild#1459).
+#[tokio::test]
+async fn riscv_targets_refuse_printf_and_say_why() {
+    let mut flags = Vec::new();
+    let mut log = BuildLog::new();
+    let record = resolve_shrink(
+        ShrinkMode::Printf,
+        Path::new("/nonexistent/riscv32-esp-elf-gcc"),
+        None,
+        "toolchain-riscv32-esp",
+        false,
+        &mut flags,
+        &mut log,
+    )
+    .await;
+    assert_eq!(record.mode, ShrinkMode::Printf);
+    assert_eq!(record.resolved, ShrinkMode::Off);
+    assert!(record.applied.is_empty());
+    assert!(flags.is_empty(), "no nano flag on RISC-V");
+    let lines = log.into_lines();
+    assert_eq!(lines.len(), 1, "exactly one warning: {lines:?}");
+    assert!(lines[0].starts_with("WARNING: shrink: --shrink=printf is Xtensa-only"));
+    assert!(lines[0].contains("toolchain-riscv32-esp"));
+    assert!(lines[0].contains("grows the image"));
+}
+
+/// The gate must not fire for `auto`: a default build stays silent on RISC-V.
+#[tokio::test]
+async fn riscv_auto_stays_silent() {
+    let mut flags = Vec::new();
+    let mut log = BuildLog::new();
+    let record = resolve_shrink(
+        ShrinkMode::Auto,
+        Path::new("/nonexistent/riscv32-esp-elf-gcc"),
+        None,
+        "toolchain-riscv32-esp",
+        false,
+        &mut flags,
+        &mut log,
+    )
+    .await;
+    assert_eq!(record.resolved, ShrinkMode::Off);
+    assert!(
+        log.is_empty(),
+        "auto must not warn about an unrequested mode"
+    );
 }

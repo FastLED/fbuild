@@ -8,8 +8,11 @@
 //! misleads: a user who asks for `--shrink=safe` cannot tell the request was
 //! dropped, so the flag looks like it works.
 //!
-//! ESP32 `--shrink=printf` (newlib-nano, FastLED/fbuild#1459) reports the
-//! applied reducer through [`applied_notice`] instead of the unsupported line.
+//! ESP32 `--shrink=printf` (newlib-nano, FastLED/fbuild#1459) is reported by
+//! the ESP32 orchestrator itself (`shrink_link::resolve_shrink`), because
+//! whether it really links is an MCU-architecture question (Xtensa shrinks,
+//! RISC-V grows the image) that this CLI cannot answer from `platformio.ini`.
+//! Here it only counts as supported, so the "no shrinker" line is suppressed.
 //!
 //! This module converts that silence into one line per build, and only for an
 //! *explicit* request this build cannot honour:
@@ -107,22 +110,6 @@ pub fn is_supported(mode: ShrinkMode, platform: Option<Platform>) -> bool {
     mode == ShrinkMode::Printf && platform == Some(Platform::Espressif32)
 }
 
-/// The line that reports an applied reducer, or `None` when nothing applies.
-///
-/// Printed before the build so the terminal decision and the link flags always
-/// describe the same reducer.
-#[must_use]
-pub fn applied_notice(mode: ShrinkMode, platform: Option<Platform>) -> Option<String> {
-    if !is_supported(mode, platform) {
-        return None;
-    }
-    Some(
-        "shrink: --shrink=printf links newlib-nano (-specs=nano.specs) instead of \
-         newlib's full _vfprintf_r/_svfprintf_r; float formatting kept via _printf_float"
-            .to_string(),
-    )
-}
-
 /// Best-effort platform lookup from the project's `platformio.ini`.
 ///
 /// Any failure — unreadable ini, unknown environment, no `platform = ` line —
@@ -146,10 +133,11 @@ fn platform_for(project_dir: &str, environment: Option<&str>) -> Option<Platform
 pub fn report_build_shrink(project_dir: &str, environment: Option<&str>, mode: ShrinkMode) {
     let platform = platform_for(project_dir, environment);
     let available = platform.map_or(&[][..], registry_for);
-    if let Some(line) = applied_notice(mode, platform) {
-        crate::output::diagnostic(line);
-        return;
-    }
+    // The applied-reducer line is NOT printed here: whether the reducer really
+    // links depends on the MCU architecture (Xtensa shrinks, RISC-V grows), and
+    // only the ESP32 orchestrator can resolve that. It reports the applied
+    // line from `shrink_link::resolve_shrink`; this CLI-side notice is limited
+    // to "no shrinker exists for this platform".
     if let Some(line) = unsupported_notice(mode, platform, available) {
         // `output::warn` is a `tracing::warn!`, which only appears when a
         // `RUST_LOG` filter raises the level — a warning nobody sees would
@@ -187,7 +175,7 @@ mod tests {
     }
 
     #[test]
-    fn esp32_printf_is_reported_as_applied_not_unsupported() {
+    fn esp32_printf_is_not_reported_as_unsupported() {
         assert!(is_supported(
             ShrinkMode::Printf,
             Some(Platform::Espressif32)
@@ -196,10 +184,6 @@ mod tests {
             unsupported_notice(ShrinkMode::Printf, Some(Platform::Espressif32), &[]),
             None
         );
-        let line = applied_notice(ShrinkMode::Printf, Some(Platform::Espressif32))
-            .expect("the applied reducer must be reported");
-        assert!(line.contains("nano.specs"), "{line}");
-        assert!(line.contains("_printf_float"), "{line}");
     }
 
     #[test]
@@ -211,7 +195,6 @@ mod tests {
         ] {
             assert!(!is_supported(ShrinkMode::Printf, Some(platform)));
             assert!(unsupported_notice(ShrinkMode::Printf, Some(platform), &[]).is_some());
-            assert_eq!(applied_notice(ShrinkMode::Printf, Some(platform)), None);
         }
         assert!(unsupported_notice(ShrinkMode::Printf, None, &[]).is_some());
     }

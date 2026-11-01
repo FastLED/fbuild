@@ -918,6 +918,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &toolchain.get_gcc_path(),
             params.caller_path.as_deref(),
             &toolchain_info.name,
+            mcu_config.is_xtensa(),
             &mut overlay_link_flags,
             &mut build_log,
         )
