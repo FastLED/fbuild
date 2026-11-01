@@ -27,6 +27,9 @@ use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::sync::{Mutex, OnceLock};
 
+/// Type-erased validation closure for [`PackageBase::staged_install`].
+type BoxedValidate<'a> = Box<dyn FnOnce(&Path) -> fbuild_core::Result<()> + Send + 'a>;
+
 use async_trait::async_trait;
 use fbuild_core::install_status::{self, InstallPhase, InstallRole};
 
@@ -372,7 +375,7 @@ impl PackageBase {
 
     fn staged_install_dyn<'a>(
         &'a self,
-        validate: Box<dyn FnOnce(&Path) -> fbuild_core::Result<()> + Send + 'a>,
+        validate: BoxedValidate<'a>,
     ) -> std::pin::Pin<
         Box<dyn std::future::Future<Output = fbuild_core::Result<PathBuf>> + Send + 'a>,
     > {
@@ -382,7 +385,7 @@ impl PackageBase {
     #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
     async fn staged_install_impl(
         &self,
-        validate: Box<dyn FnOnce(&Path) -> fbuild_core::Result<()> + Send + '_>,
+        validate: BoxedValidate<'_>,
     ) -> fbuild_core::Result<PathBuf> {
         let install_path = self.install_path();
 
