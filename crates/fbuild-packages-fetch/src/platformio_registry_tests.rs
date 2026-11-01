@@ -146,6 +146,35 @@ async fn unreachable_index_or_tampered_shard_is_unavailable() {
     ));
 }
 
+/// An index published before #1829 has no names shards: owner-less specs
+/// must report it as outdated, not claim the package does not exist.
+#[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+async fn pre_registry_index_is_reported_unavailable_for_owner_less_specs() {
+    let docs: Vec<_> = documents(&[board("acme", "1.2.3")])
+        .into_iter()
+        .map(|(path, body)| {
+            if path != "manifest.json" {
+                return (path, body);
+            }
+            let mut index: serde_json::Value = serde_json::from_slice(&body).unwrap();
+            let tools = index["tools"].as_object_mut().unwrap();
+            tools.retain(|key, _| !key.starts_with("@names-"));
+            (path, serde_json::to_vec(&index).unwrap())
+        })
+        .collect();
+    let (url, _) = serve(docs).await;
+    let client = RegistryClient::new(url, reqwest::Client::new());
+    assert!(matches!(
+        resolve(&client, "custom-board@1.2.3", "linux_x86_64").await,
+        Err(RegistryError::IndexUnavailable(_))
+    ));
+    assert!(
+        resolve(&client, "acme/custom-board@1.2.3", "linux_x86_64")
+            .await
+            .is_ok()
+    );
+}
+
 #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
 async fn cached_payload_allows_offline_checks_and_warm_resolution() {
     let (client, hits) = client_for(&[board("acme", "1.2.3")]).await;
