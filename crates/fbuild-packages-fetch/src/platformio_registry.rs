@@ -10,7 +10,6 @@
 
 use std::sync::Arc;
 
-use fbuild_core::path::NormalizedPath;
 use fbuild_core::platformio_package::{
     PackageKind, RegistryFile, RegistryMetadata, RegistrySpec, RegistryVersion, ResolutionError,
     ResolvedPayload, registry_package_path, resolve_registry,
@@ -40,12 +39,6 @@ pub enum RegistryError {
     Storage(#[from] std::io::Error),
     #[error("invalid payload URL: {0}")]
     InvalidPayloadUrl(String),
-    #[error("SHA-256 mismatch for {url}: expected {expected}, got {actual}")]
-    ChecksumMismatch {
-        url: String,
-        expected: String,
-        actual: String,
-    },
     #[error("fbuild's registry index is unavailable: {0}")]
     IndexUnavailable(String),
     #[error(
@@ -260,60 +253,6 @@ impl RegistryClient {
         Ok(Some(payload))
     }
 
-    /// Download a selected registry archive into a digest-keyed cache and
-    /// verify it before returning a path. Existing entries are rechecked too.
-    pub async fn download_verified(
-        &self,
-        payload: &ResolvedPayload,
-        cache_root: &Path,
-    ) -> Result<NormalizedPath, RegistryError> {
-        let url = reqwest::Url::parse(&payload.url)
-            .map_err(|_| RegistryError::InvalidPayloadUrl(payload.url.clone()))?;
-        let filename = url
-            .path_segments()
-            .and_then(|mut segments| segments.next_back())
-            .filter(|name| !name.is_empty() && *name != "." && *name != "..")
-            .ok_or_else(|| RegistryError::InvalidPayloadUrl(payload.url.clone()))?;
-        let directory = cache_root.join(payload.cache_identity());
-        fbuild_core::fs::create_dir_all(&directory).await?;
-        let destination = directory.join(filename);
-        let mut replace_corrupt = false;
-        if destination.is_file() {
-            let bytes = fbuild_core::fs::read(&destination).await?;
-            if verify_bytes(payload, &bytes).is_ok() {
-                return Ok(NormalizedPath::new(destination));
-            }
-            replace_corrupt = true;
-        }
-        let bytes = self
-            .client
-            .get(url)
-            .send()
-            .await?
-            .error_for_status()?
-            .bytes()
-            .await?;
-        verify_bytes(payload, &bytes)?;
-        let mut temporary = tempfile::NamedTempFile::new_in(&directory)?;
-        use std::io::Write;
-        temporary.write_all(&bytes)?;
-        if replace_corrupt {
-            temporary
-                .persist(&destination)
-                .map_err(|error| RegistryError::Storage(error.error))?;
-            return Ok(NormalizedPath::new(destination));
-        }
-        match temporary.persist_noclobber(&destination) {
-            Ok(_) => Ok(NormalizedPath::new(destination)),
-            Err(error) if error.error.kind() == std::io::ErrorKind::AlreadyExists => {
-                let cached = fbuild_core::fs::read(&destination).await?;
-                verify_bytes(payload, &cached)?;
-                Ok(NormalizedPath::new(destination))
-            }
-            Err(error) => Err(RegistryError::Storage(error.error)),
-        }
-    }
-
     async fn find_owner(&self, name: &str, kind: PackageKind) -> Result<String, RegistryError> {
         let owners = self.owners(kind, name).await?;
         match owners.as_slice() {
@@ -384,19 +323,6 @@ fn metadata_from_shard(
         }
     }
     Ok(metadata)
-}
-
-fn verify_bytes(payload: &ResolvedPayload, bytes: &[u8]) -> Result<(), RegistryError> {
-    let actual = format!("{:x}", Sha256::digest(bytes));
-    if actual == payload.sha256.to_ascii_lowercase() {
-        Ok(())
-    } else {
-        Err(RegistryError::ChecksumMismatch {
-            url: payload.url.clone(),
-            expected: payload.sha256.clone(),
-            actual,
-        })
-    }
 }
 
 #[cfg(test)]
