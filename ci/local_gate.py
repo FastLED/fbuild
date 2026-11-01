@@ -268,6 +268,7 @@ def main() -> None:
             "ci.test_publish_quota",
             "ci.test_setup_action",
             "ci.test_test_cache_status",
+            "ci.test_gen_mirror_manifest",
         ],
         cwd=ROOT,
         check=True,

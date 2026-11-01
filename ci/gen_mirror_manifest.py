@@ -22,8 +22,13 @@ resolves package versions from them instead of PlatformIO's registry API.
 The ``system`` values come from the mirror's own state database
 (``_state/manifest.db`` in the bucket, or ``--state-db``).
 
-Re-runs are incremental: an object already in a shard with the same size is
-not downloaded again.
+Re-runs are incremental: an object already recorded with the same size -- and,
+once the local hash record exists, the same ETag -- is not downloaded again, so
+a same-size replacement is still re-hashed (#1825). The record defaults to
+``site/.mirror-hashes.tsv`` (one ``size\tetag\tsha256\tkey`` line per object,
+git-ignored); it lives beside the published tree, never inside it. Without a
+record (a fresh clone) the committed shards are compared by size only, which
+avoids re-downloading the whole mirror.
 
     uv run --no-project --with boto3 python ci/gen_mirror_manifest.py
     uv run --no-project --with boto3 python ci/gen_mirror_manifest.py --check
@@ -47,7 +52,9 @@ import sys
 import tempfile
 import threading
 import urllib.request
+from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from dataclasses import dataclass
 from pathlib import Path
 from urllib.parse import quote
 
@@ -62,6 +69,27 @@ TOOL = "fbuild-download-mirror"
 USER_AGENT = "fbuild-mirror-manifest/2"
 STATE_DB_KEY = "_state/manifest.db"
 NAMES_KEY = "@names-"  # '@' is escaped in owner keys, so no owner collides
+STATE_NAME = ".mirror-hashes.tsv"  # per-key size/ETag/sha256, local only (#1825)
+DEFAULT_VERSION = "1"
+
+
+@dataclass(frozen=True)
+class ListedObject:
+    """One bucket object exactly as the listing reported it."""
+
+    size: int
+    etag: str | None
+
+
+@dataclass(frozen=True)
+class RecordedObject:
+    """What an earlier run (or a committed shard) knows about one object.
+
+    ``etag`` is ``None`` for shards, which carry only size and SHA-256."""
+
+    size: int
+    etag: str | None
+    sha256: str
 
 
 def vendor_url(key: str) -> str:
@@ -114,12 +142,20 @@ def s3_client(credentials: Path | None):
     )
 
 
-def list_bucket(s3) -> dict[str, int]:
-    objects: dict[str, int] = {}
+def etag_value(raw: object) -> str | None:
+    """Normalize a listing ETag: S3 quotes it, multipart appends ``-<n>``."""
+    if not isinstance(raw, str):
+        return None
+    return raw.strip('"') or None
+
+
+def list_bucket(s3) -> dict[str, ListedObject]:
+    """``key -> (size, etag)`` for every registry object in the bucket."""
+    objects: dict[str, ListedObject] = {}
     for page in s3.get_paginator("list_objects_v2").paginate(Bucket=BUCKET_NAME):
         for obj in page.get("Contents", []):
             if is_registry_key(obj["Key"]):
-                objects[obj["Key"]] = obj["Size"]
+                objects[obj["Key"]] = ListedObject(obj["Size"], etag_value(obj.get("ETag")))
     return objects
 
 
@@ -147,16 +183,54 @@ def load_systems(s3, state_db: Path | None) -> dict[str, list[str]]:
     return systems
 
 
-def load_existing(out_dir: Path) -> dict[str, tuple[int, str]]:
-    """``key -> (size, sha256)`` from the shards already on disk."""
-    known: dict[str, tuple[int, str]] = {}
+def load_existing(out_dir: Path) -> dict[str, RecordedObject]:
+    """``key -> recorded`` from the shards already on disk (no ETags there)."""
+    known: dict[str, RecordedObject] = {}
     for shard in (out_dir / "shards").glob("*.json"):
         for component in json.loads(shard.read_text()).get("components", []):
             asset = component.get("asset")
             if asset is None or shard.name.startswith("names-"):
                 continue
-            known[component["id"]] = (asset["size_bytes"], asset["sha256"])
+            known[component["id"]] = RecordedObject(asset["size_bytes"], None, asset["sha256"])
     return known
+
+
+def existing_version(out_dir: Path) -> str:
+    """Version the shards on disk carry, so ``--version`` can keep it (#1825)."""
+    versions: Counter[str] = Counter()
+    for shard in (out_dir / "shards").glob("*.json"):
+        if shard.name.startswith("names-"):
+            continue
+        version = json.loads(shard.read_text()).get("version")
+        if isinstance(version, str) and version:
+            versions[version] += 1
+    return versions.most_common(1)[0][0] if versions else DEFAULT_VERSION
+
+
+def default_state_path(out_dir: Path) -> Path:
+    """Hash/ETag record for the next run; beside, never inside, the site."""
+    return out_dir.parent / STATE_NAME
+
+
+def load_state(path: Path | None) -> dict[str, RecordedObject]:
+    """Objects a previous run recorded (``size\tetag\tsha256\tkey`` lines).
+
+    Three-column lines from the old checkpoint format are still read; they
+    carry no ETag, so they compare by size exactly as before."""
+    if not path or not path.exists():
+        return {}
+    done: dict[str, RecordedObject] = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        fields = line.split("\t")
+        if len(fields) == 3:
+            size, sha, key = fields
+            etag = None
+        else:
+            size, etag, sha, key = fields[0], fields[1] or None, fields[2], fields[3]
+        done[key] = RecordedObject(int(size), etag, sha)
+    return done
 
 
 def hash_object(key: str, size: int) -> str:
@@ -172,40 +246,70 @@ def hash_object(key: str, size: int) -> str:
     return digest.hexdigest()
 
 
-def load_checkpoint(path: Path | None) -> dict[str, tuple[int, str]]:
-    """Hashes recorded by an interrupted run (``size\tsha256\tkey`` lines)."""
-    if not path or not path.exists():
-        return {}
-    done = {}
-    for line in path.read_text(encoding="utf-8").splitlines():
-        size, sha, key = line.split("\t", 2)
-        done[key] = (int(size), sha)
-    return done
+def is_stale(listed: ListedObject, recorded: RecordedObject | None) -> bool:
+    """Must this object be hashed again?
+
+    A size change is decisive. When both sides know an ETag, an identical
+    size with a different ETag is a replaced object that must be re-hashed
+    (#1825); the shards carry no ETag, so a mirror recorded before this rule
+    compares by size only and is not downloaded again in full."""
+    if recorded is None or recorded.size != listed.size:
+        return True
+    if recorded.etag is None or listed.etag is None:
+        return False
+    return recorded.etag != listed.etag
+
+
+def stale_keys(objects: dict[str, ListedObject], known: dict[str, RecordedObject]) -> list[str]:
+    return sorted(key for key, listed in objects.items() if is_stale(listed, known.get(key)))
 
 
 def hash_missing(
-    objects: dict[str, int],
-    known: dict[str, tuple[int, str]],
+    objects: dict[str, ListedObject],
+    known: dict[str, RecordedObject],
     workers: int,
-    checkpoint: Path | None,
-) -> dict[str, tuple[int, str]]:
-    known = {**known, **load_checkpoint(checkpoint)}
-    log = checkpoint.open("a", encoding="utf-8") if checkpoint else None
-    todo = {k: s for k, s in objects.items() if known.get(k, (None,))[0] != s}
-    total = sum(todo.values())
+    state: Path | None,
+) -> dict[str, RecordedObject]:
+    """Download and hash every object that is new, resized or replaced."""
+    known = {**known, **load_state(state)}
+    todo = {k: listed for k, listed in objects.items() if is_stale(listed, known.get(k))}
+    total = sum(listed.size for listed in todo.values())
     print(f"{len(todo)} of {len(objects)} objects need hashing ({total / 1e9:.1f} GB)", file=sys.stderr)
     result = {k: v for k, v in known.items() if k in objects and k not in todo}
+    log = state.open("a", encoding="utf-8") if state else None
+    try:
+        failures = _hash_all(todo, result, workers, log, total)
+    finally:
+        if log:
+            log.close()
+    if failures:
+        print(f"{len(failures)} objects failed to hash:", file=sys.stderr)
+        for line in failures[:50]:
+            print("  " + line, file=sys.stderr)
+    return result
+
+
+def _hash_all(
+    todo: dict[str, ListedObject],
+    result: dict[str, RecordedObject],
+    workers: int,
+    log,
+    total: int,
+) -> list[str]:
+    """Fill ``result`` from the pool; returns one line per failed object."""
     done_bytes = 0
     lock = threading.Lock()
     failures: list[str] = []
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        futures = {pool.submit(hash_object, k, s): (k, s) for k, s in todo.items()}
+        futures = {pool.submit(hash_object, k, listed.size): (k, listed) for k, listed in todo.items()}
         for n, future in enumerate(as_completed(futures), 1):
-            key, size = futures[future]
+            key, listed = futures[future]
+            size, etag = listed.size, listed.etag
             try:
-                result[key] = (size, future.result())
+                sha256 = future.result()
+                result[key] = RecordedObject(size, etag, sha256)
                 if log:
-                    log.write(f"{size}\t{result[key][1]}\t{key}\n")
+                    log.write(f"{size}\t{etag or ''}\t{sha256}\t{key}\n")
                     log.flush()
             except Exception as exc:  # report and keep going
                 failures.append(f"{key}: {exc}")
@@ -213,11 +317,7 @@ def hash_missing(
                 done_bytes += size
             if n % 500 == 0 or n == len(futures):
                 print(f"  {n}/{len(futures)} ({done_bytes / 1e9:.1f}/{total / 1e9:.1f} GB)", file=sys.stderr)
-    if failures:
-        print(f"{len(failures)} objects failed to hash:", file=sys.stderr)
-        for line in failures[:50]:
-            print("  " + line, file=sys.stderr)
-    return result
+    return failures
 
 
 def render(doc: dict) -> str:
@@ -322,26 +422,35 @@ def main() -> int:
     parser.add_argument("--out-dir", type=Path, default=OUT_DIR)
     parser.add_argument("--credentials", type=Path, help="JSON file with access_key/secret_key")
     parser.add_argument("--state-db", type=Path, help=f"local copy of the bucket's {STATE_DB_KEY}")
-    parser.add_argument("--version", help="shard version (default: keep the existing one)")
+    parser.add_argument(
+        "--version",
+        help=f"shard version (default: the version the shards on disk carry, else {DEFAULT_VERSION})",
+    )
     parser.add_argument("--workers", type=int, default=32)
-    parser.add_argument("--checkpoint", type=Path, help="append hashes here as they finish; reused on rerun")
+    parser.add_argument(
+        "--checkpoint",
+        type=Path,
+        help=f"record hashes/ETags here as they finish and reuse them on rerun (default: {STATE_NAME})",
+    )
     parser.add_argument("--check", action="store_true", help="fail if the documents are out of date")
     args = parser.parse_args()
 
     s3 = s3_client(args.credentials)
     objects = list_bucket(s3)
-    known = load_existing(args.out_dir)
+    state = args.checkpoint or default_state_path(args.out_dir)
+    known = {**load_existing(args.out_dir), **load_state(state)}
     if args.check:
-        stale = sorted(k for k, s in objects.items() if known.get(k, (None,))[0] != s)
+        stale = stale_keys(objects, known)
         gone = sorted(set(known) - set(objects))
         if stale or gone:
             print(f"{len(stale)} unhashed/changed and {len(gone)} removed objects; rerun", file=sys.stderr)
             return 1
         return 0
 
-    hashed = hash_missing(objects, known, args.workers, args.checkpoint)
+    recorded = hash_missing(objects, known, args.workers, state)
+    hashed = {key: (seen.size, seen.sha256) for key, seen in recorded.items()}
     missing = set(objects) - set(hashed)
-    version = args.version or "1"
+    version = args.version or existing_version(args.out_dir)
     docs = build_documents(hashed, load_systems(s3, args.state_db), version)
     shards_dir = args.out_dir / "shards"
     shards_dir.mkdir(parents=True, exist_ok=True)
