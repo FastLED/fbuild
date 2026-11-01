@@ -20,18 +20,20 @@ pub mod submodules;
 
 mod ape_perms;
 mod install_lock;
+mod touch;
 
 pub use cache::Cache;
 pub use disk_cache::DiskCache;
 
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 use std::path::{Path, PathBuf};
-use std::sync::{Mutex, OnceLock};
+
+#[cfg(test)]
+use touch::clear_package_touch_cache_for_tests;
+use touch::{mark_package_touch_needed, package_touch_key};
 
 use async_trait::async_trait;
 use fbuild_core::install_status::{self, InstallPhase, InstallRole};
-
-static PACKAGE_TOUCHES: OnceLock<Mutex<HashSet<String>>> = OnceLock::new();
 
 /// Recursively compute the total size of a directory in bytes.
 ///
@@ -519,34 +521,6 @@ impl PackageBase {
             .lookup(self.cache_subdir.into(), &self.cache_key, &self.version)
             .ok()??;
         u64::try_from(entry.installed_bytes?).ok()
-    }
-}
-
-fn package_touch_key(
-    kind: disk_cache::Kind,
-    cache_key: &str,
-    version: &str,
-    install_path: &Path,
-) -> String {
-    format!(
-        "{}|{}|{}|{}",
-        kind.as_str(),
-        cache_key,
-        version,
-        install_path.display()
-    )
-}
-
-fn mark_package_touch_needed(key: String) -> bool {
-    let touched = PACKAGE_TOUCHES.get_or_init(|| Mutex::new(HashSet::new()));
-    let mut touched = touched.lock().unwrap_or_else(|e| e.into_inner());
-    touched.insert(key)
-}
-
-#[cfg(test)]
-fn clear_package_touch_cache_for_tests() {
-    if let Some(touched) = PACKAGE_TOUCHES.get() {
-        touched.lock().unwrap_or_else(|e| e.into_inner()).clear();
     }
 }
 
