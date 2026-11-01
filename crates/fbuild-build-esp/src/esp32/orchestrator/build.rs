@@ -913,23 +913,15 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // probed first: a toolchain without a nano variant builds unshrunk
         // rather than failing the link on a missing spec file.
         let mut overlay_link_flags = ctx.overlay_link_flags.clone();
-        if crate::esp32::printf_thin::applies(params.shrink, Platform::Espressif32) {
-            let available = crate::esp32::printf_thin::probe_nano_specs(
-                &toolchain.get_gcc_path(),
-                params.caller_path.as_deref(),
-            )
-            .await
-            .unwrap_or(false);
-            if available {
-                overlay_link_flags.extend(crate::esp32::printf_thin::link_flags());
-            } else {
-                tracing::warn!(
-                    "shrink: --shrink=printf found no nano.specs in {}; building unshrunk",
-                    toolchain_info.name
-                );
-            }
-        }
-
+        let shrink_record = super::shrink_link::resolve_shrink(
+            params.shrink,
+            &toolchain.get_gcc_path(),
+            params.caller_path.as_deref(),
+            &toolchain_info.name,
+            &mut overlay_link_flags,
+            &mut build_log,
+        )
+        .await;
         let link_result = {
             let _g = perf.phase("link-convert-size");
             crate::linker::Linker::link_all(
@@ -938,7 +930,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &all_archives,
                 build_dir,
                 &crate::linker::LinkExtraArgs {
-                    flags: overlay_link_flags,
+                    flags: overlay_link_flags.clone(),
                     libs: ctx.overlay_link_libs.clone(),
                     bloat_analysis: false,
                 },
@@ -948,6 +940,19 @@ impl BuildOrchestrator for Esp32Orchestrator {
         };
 
         footprint.sample("link-convert");
+
+        // FastLED's size/symbol tooling reads build_info (FastLED/fbuild#1459).
+        super::shrink_link::emit_build_info(
+            &params.project_dir,
+            &params.env_name,
+            &ctx.board.board,
+            &linker,
+            &compiler,
+            &link_result,
+            &overlay_link_flags,
+            &ctx.overlay_link_libs,
+            &shrink_record,
+        );
 
         // 15. Size reporting + result assembly
         let fingerprint_started = Instant::now();
