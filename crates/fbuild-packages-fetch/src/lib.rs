@@ -360,11 +360,30 @@ impl PackageBase {
     /// 3. Extract to staging dir (.tmp suffix)
     /// 4. Validate (caller provides validation fn)
     /// 5. Rename staging to final path (atomic commit)
-    #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
+    ///
+    /// Thin generic shim: the body lives behind a boxed `dyn Future` so it is
+    /// compiled once instead of once per caller's validation closure.
     pub async fn staged_install<F>(&self, validate: F) -> fbuild_core::Result<PathBuf>
     where
         F: FnOnce(&Path) -> fbuild_core::Result<()> + Send,
     {
+        self.staged_install_dyn(Box::new(validate)).await
+    }
+
+    fn staged_install_dyn<'a>(
+        &'a self,
+        validate: Box<dyn FnOnce(&Path) -> fbuild_core::Result<()> + Send + 'a>,
+    ) -> std::pin::Pin<
+        Box<dyn std::future::Future<Output = fbuild_core::Result<PathBuf>> + Send + 'a>,
+    > {
+        Box::pin(self.staged_install_impl(validate))
+    }
+
+    #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
+    async fn staged_install_impl(
+        &self,
+        validate: Box<dyn FnOnce(&Path) -> fbuild_core::Result<()> + Send + '_>,
+    ) -> fbuild_core::Result<PathBuf> {
         let install_path = self.install_path();
 
         if install_path.exists() {
