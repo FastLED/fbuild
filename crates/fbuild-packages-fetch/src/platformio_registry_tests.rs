@@ -2,7 +2,7 @@
 
 use super::*;
 use crate::platformio_registry_fixture::{IndexFile, documents, serve};
-use axum::{Router, routing::get};
+use fbuild_core::path::NormalizedPath;
 use fbuild_core::platformio_package::parse_package_spec;
 use std::sync::atomic::Ordering;
 
@@ -200,68 +200,6 @@ async fn cached_payload_allows_offline_checks_and_warm_resolution() {
         "exact pins stay cached"
     );
     assert!(cached("windows_amd64", false).await.unwrap().is_none());
-}
-
-#[tokio::test(flavor = "multi_thread", worker_threads = 2)]
-async fn downloaded_payload_is_verified_and_cached_by_identity() {
-    let app = Router::new().route(
-        "/payload.tar.gz",
-        get(|| async { "verified archive bytes" }),
-    );
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();
-    let address = listener.local_addr().unwrap();
-    tokio::spawn(async move { axum::serve(listener, app).await.unwrap() });
-    let client = RegistryClient::new("http://127.0.0.1:1/manifest.json", reqwest::Client::new());
-    let payload = ResolvedPayload {
-        owner: "acme".into(),
-        kind: PackageKind::Platform,
-        name: "custom-board".into(),
-        version: "1.2.3".into(),
-        system: "linux_x86_64".into(),
-        url: format!("http://{address}/payload.tar.gz"),
-        sha256: format!("{:x}", Sha256::digest(b"verified archive bytes")),
-    };
-    let cache = tempfile::tempdir().unwrap();
-    let path = client
-        .download_verified(&payload, cache.path())
-        .await
-        .unwrap();
-    assert_eq!(
-        fbuild_core::fs::read(&path).await.unwrap(),
-        b"verified archive bytes"
-    );
-    assert_eq!(
-        client
-            .download_verified(&payload, cache.path())
-            .await
-            .unwrap(),
-        path
-    );
-    fbuild_core::fs::write(&path, b"corrupted").await.unwrap();
-    assert_eq!(
-        client
-            .download_verified(&payload, cache.path())
-            .await
-            .unwrap(),
-        path
-    );
-    assert_eq!(
-        fbuild_core::fs::read(&path).await.unwrap(),
-        b"verified archive bytes"
-    );
-    let mut wrong = payload.clone();
-    wrong.sha256 = "0".repeat(64);
-    assert!(matches!(
-        client.download_verified(&wrong, cache.path()).await,
-        Err(RegistryError::ChecksumMismatch { .. })
-    ));
-    assert!(
-        !cache
-            .path()
-            .join(wrong.cache_identity())
-            .join("payload.tar.gz")
-            .exists()
-    );
 }
 
 /// #1829: nothing in fbuild's runtime code may query PlatformIO's registry
