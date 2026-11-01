@@ -260,6 +260,41 @@ jobs:
             -p fbuild-cli \
             -p fbuild-daemon
 
+      # soldr's managed compile cache keeps the executable but drops an
+      # apple-darwin `.dSYM` -- on a cache HIT (only the binary is restored)
+      # and on a MISS (rustc runs dsymutil inside the cache's staging dir and
+      # the bundle is never copied back). Running `dsymutil` on the binary
+      # afterwards does not help: its debug map points at those vanished
+      # staging objects, so the bundle comes out without line tables.
+      # Reproduced locally 2026-11-01 (soldr 0.9.46): cached build -> no
+      # .dSYM; `soldr --no-cache` rebuild of just the leaf crates -> 2.2 MB
+      # of DWARF. So, like zccache's "Repair missing Linux debug sidecars"
+      # step, keep the cached build for the dependency graph and relink only
+      # the two shipped packages without the wrapper when a sidecar is
+      # missing. MSVC PDBs come from the linker and are unaffected.
+      - name: Repair missing debug sidecars
+        if: ${{ !contains(inputs.target, 'pc-windows-msvc') }}
+        timeout-minutes: ${{ inputs.cargo_profile == 'dist' && 60 || 30 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TARGET="${{ inputs.target }}"
+          TARGET_DIR="target/$TARGET/$CARGO_PROFILE_NAME"
+          case "$TARGET" in
+            *apple-darwin) ext=dSYM ;;
+            *)             ext=dwp ;;
+          esac
+          if [ -e "$TARGET_DIR/fbuild.$ext" ] && [ -e "$TARGET_DIR/fbuild-daemon.$ext" ]; then
+            echo "Debug sidecars were produced by the cached build"
+            exit 0
+          fi
+          echo "Debug sidecars (.$ext) missing; relinking fbuild-cli/fbuild-daemon without the compile cache"
+          soldr cargo clean --profile "$CARGO_PROFILE_NAME" --target "$TARGET" -p fbuild-cli -p fbuild-daemon
+          soldr --no-cache build --profile "$CARGO_PROFILE_NAME" --target "$TARGET" \
+            -p fbuild-cli \
+            -p fbuild-daemon
+          ls -la "$TARGET_DIR/fbuild.$ext" "$TARGET_DIR/fbuild-daemon.$ext"
+
       # PyO3 extension — built for ALL targets, including cross-compiled,
       # through the same blessed path as the binaries.
       #
@@ -402,6 +437,13 @@ jobs:
           for entry in "${require[@]}"; do
             if [ -e "$TARGET_DIR/$entry" ]; then
               cp -RL "$TARGET_DIR/$entry" staging-debug/
+              if [[ "$entry" == *.dSYM ]] \
+                 && ! find "staging-debug/$entry/Contents/Resources/DWARF" -type f -size +1M | grep -q .; then
+                # A dSYM made from a binary whose debug-map objects are gone
+                # holds only a ~100 KB stub with no line tables.
+                echo "::error::$entry has no real DWARF payload" >&2
+                missing+=("$entry")
+              fi
             else
               missing+=("$entry")
             fi

@@ -256,7 +256,7 @@ jobs:
             # Same carve-out as zccache's release matrix: lld-link's PDB on
             # the aarch64 MSVC cross lane is not yet proven, so a missing
             # sidecar warns instead of blocking the release.
-            require_debug_sidecars: false
+            require_debug_sidecars: "false"
 
     uses: ./.github/workflows/template_native_build.yml
     permissions:
@@ -271,9 +271,11 @@ jobs:
       macos_cross: ${{ matrix.macos_cross }}
       mac_cross_linux: ${{ matrix.mac_cross_linux == true }}
       ref: ${{ needs.prepare.outputs.release_ref }}
-      # Release-only profile: [profile.release] + thin LTO (see Cargo.toml).
+      # Release-only profile: [profile.release] + fat LTO (see Cargo.toml).
       cargo_profile: dist
-      require_debug_sidecars: ${{ matrix.require_debug_sidecars != false }}
+      # zccache idiom: an unset matrix key must mean "required". `!= false`
+      # does not work -- expressions coerce null and false both to 0.
+      require_debug_sidecars: ${{ (matrix.require_debug_sidecars || 'true') == 'true' }}
 
   full-ci:
     name: Full validation on release commit
