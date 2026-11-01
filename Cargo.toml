@@ -233,6 +233,39 @@ debug = "line-tables-only"
 opt-level = 3
 debug = false
 
+# Release builds keep only `file:line` debug info -- enough for a panic
+# backtrace or a profiler to attribute a sample to source -- and split it
+# into a per-binary sidecar so the shipped binary stays slim (ported from
+# zccache's Cargo.toml):
+#   - Linux:        `<binary>.dwp`   (DWARF package, packed by rustc/thorin)
+#   - macOS:        `<binary>.dSYM/` (dsymutil bundle; on the Linux -> mac
+#                   cross lane the release job runs llvm-dsymutil itself)
+#   - Windows MSVC: `<binary>.pdb`   (always emitted by the MSVC linker)
+# The release workflow stages each sidecar ("Stage debug sidecars" in
+# .github/workflows/template_native_build.yml) and attaches them to the
+# GitHub release as `fbuild-<version>-<target>-debug.*`; wheels and the
+# per-target archives ship stripped binaries only (ci/wheel_check.py).
+# Override with `CARGO_PROFILE_RELEASE_DEBUG=none` for a no-line-info build.
+[profile.release]
+debug = "line-tables-only"
+split-debuginfo = "packed"
+
+# Distribution profile, used ONLY by the release lanes in
+# .github/workflows/release-auto.yml (template input `cargo_profile: dist`).
+# Plain `--release` (CI, `pip install`, local) stays on the fast profile above.
+#
+# Fat LTO + one codegen unit, measured on the stripped Linux fbuild-daemon:
+#   default release      54.2 MB  (gzip -9 20.8 MB)
+#   lto = "thin"         55.5 MB  (gzip -9 21.5 MB)  -- no win, so not used
+#   lto = "fat", cgu = 1 34.1 MB  (gzip -9 13.6 MB)  -- -37% / -35%
+# The cost is link-time: ~13 min for the daemon alone on a workstation. That
+# is why this is a separate profile: only the release lanes pay it, and their
+# build-step timeout is raised for `dist` in template_native_build.yml.
+[profile.dist]
+inherits = "release"
+lto = "fat"
+codegen-units = 1
+
 [workspace.lints.clippy]
 cognitive_complexity = "warn"
 too_many_lines = "warn"

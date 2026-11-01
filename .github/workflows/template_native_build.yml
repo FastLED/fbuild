@@ -36,6 +36,16 @@ on:
         type: string
         default: ""
         description: "Git ref to build (branch, tag, or SHA)"
+      cargo_profile:
+        required: false
+        type: string
+        default: "release"
+        description: "Cargo profile (release for CI; dist = release + fat LTO + codegen-units=1, used by release-auto)"
+      require_debug_sidecars:
+        required: false
+        type: boolean
+        default: false
+        description: "Fail when a split debug sidecar (.dwp/.dSYM/.pdb) is missing"
 
 env:
   CARGO_TERM_COLOR: always
@@ -64,14 +74,17 @@ jobs:
   build:
     name: Build (${{ inputs.target }})
     runs-on: ${{ inputs.runner }}
-    timeout-minutes: 90
+    # The `dist` profile (fat LTO + codegen-units=1, release-auto only) spends
+    # far longer in the final link, so its budgets are wider; plain `release`
+    # CI builds keep the original 90/45 minute limits.
+    timeout-minutes: ${{ inputs.cargo_profile == 'dist' && 200 || 90 }}
     env:
-      # Native Windows release builds can be quiet for longer than soldr's
-      # default 30 minute cargo diagnostic watchdog while rustc/link.exe are
-      # still active. Match the release-binary step's 45 minute timeout so
-      # GitHub Actions owns the outer deadline instead of soldr killing the
-      # build early.
-      SOLDR_CARGO_WAIT_TIMEOUT_SECS: "2700"
+      # Release builds can be quiet for longer than soldr's default 30 minute
+      # cargo diagnostic watchdog while rustc/the linker are still active
+      # (a fat-LTO link is one long silent step). Match the release-binary
+      # step's timeout so GitHub Actions owns the outer deadline instead of
+      # soldr killing the build early.
+      SOLDR_CARGO_WAIT_TIMEOUT_SECS: ${{ inputs.cargo_profile == 'dist' && '6000' || '2700' }}
       # Six cold release lanes run concurrently on two-core hosted runners.
       # Bound rustc and soldr concurrency so cross-target codegen stays within
       # the runner memory limit instead of being killed by the host.
@@ -88,6 +101,8 @@ jobs:
       # soldr >= 0.9.5 consumes its multipart v2 assets, including Apple SDKs
       # whose legacy direct-LFS URLs are no longer anonymously downloadable.
       SOLDR_TOOLCHAIN_ORIGIN: https://zackees.github.io/soldr-toolchain
+      # Cargo writes a named profile's output under target/<triple>/<profile>.
+      CARGO_PROFILE_NAME: ${{ inputs.cargo_profile }}
 
     steps:
       - uses: actions/checkout@v6
@@ -189,13 +204,41 @@ jobs:
       #
       # SOLDR_TOOLCHAIN_ORIGIN is job-scoped above so this step and both
       # build steps resolve the exact same catalogue.
+      # `split-debuginfo = "packed"` makes rustc run `dsymutil` itself after
+      # linking an apple-darwin binary. Ubuntu runners ship llvm-dsymutil only
+      # under a versioned name, so expose it as `dsymutil` before the build
+      # (mirrors zccache's build-target action).
+      - name: Install LLVM dSYM tools
+        if: contains(inputs.target, 'apple-darwin') && runner.os == 'Linux'
+        timeout-minutes: 5
+        shell: bash
+        run: |
+          set -euo pipefail
+          if command -v dsymutil >/dev/null 2>&1; then
+            dsymutil --version
+            exit 0
+          fi
+          find_dsymutil() {
+            command -v llvm-dsymutil 2>/dev/null && return 0
+            find -L /usr/bin -maxdepth 1 -type f -executable -name 'llvm-dsymutil*' -print | sort -V | tail -n 1 | grep .
+          }
+          if ! llvm_dsymutil="$(find_dsymutil)"; then
+            sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 update
+            sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 install --no-install-recommends -y llvm
+            llvm_dsymutil="$(find_dsymutil)"
+          fi
+          test -x "$llvm_dsymutil"
+          sudo ln -sf "$llvm_dsymutil" /usr/local/bin/dsymutil
+          dsymutil --version
+
       - name: Prepare target toolchain
         timeout-minutes: 15
         shell: bash
         run: soldr prepare --target ${{ inputs.target }}
 
       - name: Build release binaries
-        timeout-minutes: 45
+        # 100 min for `dist` (fat LTO); see the job-level timeout comment.
+        timeout-minutes: ${{ inputs.cargo_profile == 'dist' && 100 || 45 }}
         shell: bash
         run: |
           # One invocation for every target, native and cross alike.
@@ -210,7 +253,7 @@ jobs:
           # case-sensitive filesystem would satisfy MSVC's import
           # libraries. soldr owns the xwin cache now; none of that is ours
           # to carry. See agents/docs/cross-compilation.md.
-          soldr build --release --target ${{ inputs.target }} \
+          soldr build --profile "$CARGO_PROFILE_NAME" --target ${{ inputs.target }} \
             -p fbuild-cli \
             -p fbuild-daemon
 
@@ -234,7 +277,7 @@ jobs:
       # PYO3_NO_PYTHON=1 + the abi3-py310 feature let pyo3-build-config skip
       # the host-interpreter lookup on cross builds.
       - name: Build Python extension
-        timeout-minutes: 30
+        timeout-minutes: ${{ inputs.cargo_profile == 'dist' && 60 || 30 }}
         shell: bash
         run: |
           PYTHON_TARGET_DIR="target/python-extension"
@@ -247,7 +290,7 @@ jobs:
             PYO3_TARGET="${ARCH}-unknown-linux-gnu"
             soldr prepare --target "$PYO3_TARGET"
           fi
-          PYO3_NO_PYTHON=1 soldr build --release \
+          PYO3_NO_PYTHON=1 soldr build --profile "$CARGO_PROFILE_NAME" \
             --target-dir "${PYTHON_TARGET_DIR}" \
             --target "$PYO3_TARGET" -p fbuild-python \
             --features extension-module
@@ -257,33 +300,33 @@ jobs:
         run: |
           PYTHON_TARGET_DIR="target/python-extension"
           mkdir -p staging
-          cp target/${{ inputs.target }}/release/fbuild${{ inputs.binary_ext }} staging/
-          cp target/${{ inputs.target }}/release/fbuild-daemon${{ inputs.binary_ext }} staging/
+          cp target/${{ inputs.target }}/${CARGO_PROFILE_NAME}/fbuild${{ inputs.binary_ext }} staging/
+          cp target/${{ inputs.target }}/${CARGO_PROFILE_NAME}/fbuild-daemon${{ inputs.binary_ext }} staging/
 
           # Stage Python extension — location depends on how it was built
           if [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
             for ext_src in \
-              "${PYTHON_TARGET_DIR}/${{ inputs.target }}/release/_native.dll" \
-              "${PYTHON_TARGET_DIR}/release/_native.dll"; do
+              "${PYTHON_TARGET_DIR}/${{ inputs.target }}/${CARGO_PROFILE_NAME}/_native.dll" \
+              "${PYTHON_TARGET_DIR}/${CARGO_PROFILE_NAME}/_native.dll"; do
               [ -f "$ext_src" ] && cp "$ext_src" staging/_native.pyd && break
             done
           elif [ "${{ inputs.mac_cross_linux }}" = "true" ]; then
             # Linux → mac cross: dylib lands under the apple-darwin
             # target dir (no manylinux floor, unlike the Linux PyO3 lane).
-            ext_src="${PYTHON_TARGET_DIR}/${{ inputs.target }}/release/lib_native.dylib"
+            ext_src="${PYTHON_TARGET_DIR}/${{ inputs.target }}/${CARGO_PROFILE_NAME}/lib_native.dylib"
             [ -f "$ext_src" ] && cp "$ext_src" staging/_native.abi3.so
           elif [ "${{ runner.os }}" = "Linux" ]; then
             TARGET="${{ inputs.target }}"
             ARCH="${TARGET%%-*}"
-            ext_src="${PYTHON_TARGET_DIR}/${ARCH}-unknown-linux-gnu.2.17/release/lib_native.so"
-            [ -f "$ext_src" ] || ext_src="${PYTHON_TARGET_DIR}/${ARCH}-unknown-linux-gnu/release/lib_native.so"
+            ext_src="${PYTHON_TARGET_DIR}/${ARCH}-unknown-linux-gnu.2.17/${CARGO_PROFILE_NAME}/lib_native.so"
+            [ -f "$ext_src" ] || ext_src="${PYTHON_TARGET_DIR}/${ARCH}-unknown-linux-gnu/${CARGO_PROFILE_NAME}/lib_native.so"
             [ -f "$ext_src" ] && cp "$ext_src" staging/_native.abi3.so
           elif [ "${{ runner.os }}" = "macOS" ]; then
-            ext_src="${PYTHON_TARGET_DIR}/${{ inputs.target }}/release/lib_native.dylib"
+            ext_src="${PYTHON_TARGET_DIR}/${{ inputs.target }}/${CARGO_PROFILE_NAME}/lib_native.dylib"
             [ -f "$ext_src" ] && cp "$ext_src" staging/_native.abi3.so
           else
             for ext in so dylib; do
-              src="${PYTHON_TARGET_DIR}/release/lib_native.$ext"
+              src="${PYTHON_TARGET_DIR}/${CARGO_PROFILE_NAME}/lib_native.$ext"
               [ -f "$src" ] && cp "$src" staging/_native.abi3.so && break
             done
           fi
@@ -295,24 +338,79 @@ jobs:
             [ -f staging/_native.abi3.so ] || { echo "ERROR: _native.abi3.so missing"; exit 1; }
           fi
 
-          # Strip binaries (reduces size significantly)
-          if [ "${{ inputs.linux_cross }}" = "true" ]; then
-            llvm-strip staging/fbuild || true
-            llvm-strip staging/fbuild-daemon || true
-            llvm-strip staging/_native.abi3.so 2>/dev/null || true
-          elif [ "${{ inputs.mac_cross_linux }}" = "true" ]; then
-            # Linux host `strip` is binutils — it would silently corrupt
-            # a Mach-O. Skip stripping; ~30 MB is acceptable for release
-            # artifacts. A future iteration can wire `llvm-strip` from
-            # ziglang's bundled tools.
-            true
-          elif [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
-            true
-          elif command -v strip &> /dev/null; then
-            strip staging/fbuild${{ inputs.binary_ext }} || true
-            strip staging/fbuild-daemon${{ inputs.binary_ext }} || true
-            strip staging/_native.abi3.so 2>/dev/null || true
-            strip staging/_native.pyd 2>/dev/null || true
+          # Strip DWARF from every shipped native binary. Debug info lives in
+          # the split sidecars staged below, so stripping loses nothing.
+          # --strip-debug (not a full strip) keeps the symbol table so a
+          # backtrace still names functions without the sidecar.
+          #
+          # The strip tool must understand the target's object format: host
+          # binutils `strip` cannot read aarch64 ELF and corrupts Mach-O, so
+          # the cross lanes use llvm-strip (this is what finally strips the
+          # macOS binaries, which used to ship unstripped). Fail loudly when
+          # no suitable tool exists instead of shipping debug info.
+          if [[ "${{ inputs.target }}" == *-pc-windows-msvc ]]; then
+            # MSVC PE images carry no DWARF; debug info is already in .pdb.
+            exit 0
+          fi
+          resolve_llvm_strip() {
+            command -v llvm-strip 2>/dev/null && return 0
+            ls /usr/bin/llvm-strip-* 2>/dev/null | sort -V | tail -n 1 | grep .
+          }
+          STRIP_FLAG="--strip-debug"
+          if [ "${{ inputs.linux_cross }}" = "true" ] || [ "${{ inputs.mac_cross_linux }}" = "true" ]; then
+            STRIP="$(resolve_llvm_strip)" || {
+              echo "::error::No llvm-strip for ${{ inputs.target }}; refusing to ship unstripped binaries"
+              exit 1
+            }
+          else
+            STRIP="$(command -v strip)" || { echo "::error::No strip on PATH"; exit 1; }
+            # Apple's cctools strip spells "debug symbols only" as -S.
+            [ "${{ runner.os }}" = "macOS" ] && STRIP_FLAG="-S"
+          fi
+          echo "Using strip: $STRIP $STRIP_FLAG"
+          for bin in staging/fbuild staging/fbuild-daemon staging/_native.abi3.so; do
+            "$STRIP" "$STRIP_FLAG" "$bin" || {
+              echo "::error::$STRIP $STRIP_FLAG failed on $bin"
+              exit 1
+            }
+          done
+
+      # Collect the split-debuginfo sidecars (Cargo.toml [profile.release]
+      # `split-debuginfo = "packed"`) into staging-debug/. They are uploaded
+      # as the separate `debug-<target>` artifact and attached to the GitHub
+      # release -- never into staging/, which becomes the wheel.
+      #   Linux:        <bin>.dwp
+      #   macOS:        <bin>.dSYM/  (rustc runs dsymutil at link time)
+      #   Windows MSVC: <crate>.pdb  (hyphens become underscores)
+      - name: Stage debug sidecars
+        shell: bash
+        run: |
+          set -euo pipefail
+          TARGET="${{ inputs.target }}"
+          TARGET_DIR="target/$TARGET/$CARGO_PROFILE_NAME"
+          rm -rf staging-debug
+          mkdir -p staging-debug
+          case "$TARGET" in
+            *pc-windows-msvc) require=("fbuild.pdb" "fbuild_daemon.pdb") ;;
+            *apple-darwin)    require=("fbuild.dSYM" "fbuild-daemon.dSYM") ;;
+            *)                require=("fbuild.dwp" "fbuild-daemon.dwp") ;;
+          esac
+          missing=()
+          for entry in "${require[@]}"; do
+            if [ -e "$TARGET_DIR/$entry" ]; then
+              cp -RL "$TARGET_DIR/$entry" staging-debug/
+            else
+              missing+=("$entry")
+            fi
+          done
+          echo "Staged debug sidecars:"
+          ls -la staging-debug
+          if [ ${#missing[@]} -gt 0 ]; then
+            if [ "${{ inputs.require_debug_sidecars }}" = "true" ]; then
+              echo "::error::Missing debug sidecars for $TARGET: ${missing[*]}" >&2
+              exit 1
+            fi
+            echo "::warning::Missing debug sidecars for $TARGET: ${missing[*]}" >&2
           fi
 
       - name: Generate checksums
@@ -334,3 +432,11 @@ jobs:
           name: binaries-${{ inputs.target }}
           path: staging/
           if-no-files-found: error
+
+      - name: Upload debug sidecars
+        if: inputs.cargo_profile == 'dist'
+        uses: actions/upload-artifact@v7
+        with:
+          name: debug-${{ inputs.target }}
+          path: staging-debug/
+          if-no-files-found: warn
