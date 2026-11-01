@@ -27,7 +27,7 @@ impl Drop for LocalAllocation {
 struct PrivateDirectorySecurity {
     // Keeps the current-user SID pointer live through every owner comparison.
     _token_user: Vec<usize>,
-    sid: windows_sys::Win32::Foundation::PSID,
+    sid: windows_sys::Win32::Security::PSID,
     descriptor: LocalAllocation,
     acl: *mut windows_sys::Win32::Security::ACL,
 }
@@ -37,7 +37,7 @@ fn current_token_user() -> std::io::Result<Vec<usize>> {
     use windows_sys::Win32::Security::{GetTokenInformation, TOKEN_QUERY, TokenUser};
     use windows_sys::Win32::System::Threading::{GetCurrentProcess, OpenProcessToken};
 
-    let mut token = 0;
+    let mut token = std::ptr::null_mut();
     // SAFETY: current-process pseudo-handle is valid and `token` is writable.
     if unsafe { OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &mut token) } == 0 {
         return Err(std::io::Error::last_os_error());
@@ -209,7 +209,7 @@ fn open_private_directory(path: &Path, writable_dacl: bool) -> std::io::Result<N
             std::ptr::null(),
             OPEN_EXISTING,
             FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT,
-            0,
+            std::ptr::null_mut(),
         )
     };
     if handle == INVALID_HANDLE_VALUE {

@@ -285,7 +285,7 @@ impl PortDevices {
             // Status=Unknown devnodes — every PJRC/Teensy composite serial
             // port — are enumerated too. We re-derive real presence below
             // via `CM_Get_DevNode_Status`. FastLED/fbuild#962.
-            hdi: unsafe { SetupDiGetClassDevsW(guid, ptr::null(), 0, 0) },
+            hdi: unsafe { SetupDiGetClassDevsW(guid, ptr::null(), ptr::null_mut(), 0) },
             dev_idx: 0,
         }
     }
@@ -557,7 +557,7 @@ pub(super) fn location_paths_from_info(hdi: HDEVINFO, info: &SP_DEVINFO_DATA) ->
 fn get_registry_com_ports() -> HashSet<String> {
     let mut ports_list = HashSet::new();
     let reg_key = as_utf16("HARDWARE\\DEVICEMAP\\SERIALCOMM");
-    let mut ports_key: HKEY = 0;
+    let mut ports_key: HKEY = ptr::null_mut();
     let open_res = unsafe {
         RegOpenKeyExW(
             HKEY_LOCAL_MACHINE,

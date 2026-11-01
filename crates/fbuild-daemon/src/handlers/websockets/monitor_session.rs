@@ -36,7 +36,7 @@ async fn handle_monitor_session_ws(
         "timestamp": now_unix(),
     })
     .to_string();
-    if socket.send(Message::Text(welcome)).await.is_err() {
+    if socket.send(Message::Text(welcome.into())).await.is_err() {
         return;
     }
 
@@ -54,14 +54,14 @@ async fn handle_monitor_session_ws(
                             Some("ping") => {
                                 let pong = serde_json::json!({"type": "pong", "timestamp": now_unix()})
                                     .to_string();
-                                let _ = socket.send(Message::Text(pong)).await;
+                                let _ = socket.send(Message::Text(pong.into())).await;
                             }
                             Some("write") => {
                                 // Acknowledge write (actual serial routing is done via
                                 // /ws/serial-monitor which has full attach/detach protocol)
                                 let ack = serde_json::json!({"type": "ack", "timestamp": now_unix()})
                                     .to_string();
-                                let _ = socket.send(Message::Text(ack)).await;
+                                let _ = socket.send(Message::Text(ack.into())).await;
                             }
                             _ => {}
                         }
@@ -72,7 +72,7 @@ async fn handle_monitor_session_ws(
                             "detail": "Could not parse message",
                         })
                         .to_string();
-                        let _ = socket.send(Message::Text(err)).await;
+                        let _ = socket.send(Message::Text(err.into())).await;
                     }
                 }
                 Some(Ok(Message::Close(_))) | None => break,

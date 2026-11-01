@@ -209,7 +209,7 @@ async fn at17_reader_task_panic_wakes_pending_calls() {
                 let ws = tokio_tungstenite::accept_async(stream).await.unwrap();
                 let (mut sink, _source) = ws.split();
                 let attached = serde_json::json!({"type":"attached","success":true,"message":"ok","writer_pre_acquired":true});
-                sink.send(tungstenite::Message::Text(attached.to_string()))
+                sink.send(tungstenite::Message::Text(attached.to_string().into()))
                     .await
                     .unwrap();
                 tokio::time::sleep(Duration::from_millis(100)).await;
@@ -270,7 +270,7 @@ async fn at18_malformed_frames_are_ignored() {
                 let ws = tokio_tungstenite::accept_async(stream).await.unwrap();
                 let (mut sink, mut source) = ws.split();
                 let ack = serde_json::json!({"type":"attached","success":true,"message":"ok","writer_pre_acquired":true});
-                sink.send(tungstenite::Message::Text(ack.to_string()))
+                sink.send(tungstenite::Message::Text(ack.to_string().into()))
                     .await
                     .unwrap();
                 sink.send(tungstenite::Message::Text("not json".into()))
@@ -292,7 +292,7 @@ async fn at18_malformed_frames_are_ignored() {
                         )
                         .unwrap();
                         let reply = serde_json::json!({"type":"write_ack","success":true,"bytes_written":decoded.len(),"message":null});
-                        sink.send(tungstenite::Message::Text(reply.to_string()))
+                        sink.send(tungstenite::Message::Text(reply.to_string().into()))
                             .await
                             .unwrap();
                     }

@@ -52,7 +52,7 @@ async fn serial_ws_replies_follow_request_order() {
         "type": "attach", "client_id": "fifo-order-test", "port": port,
         "baud_rate": 115200, "open_if_needed": true, "pre_acquire_writer": true
     });
-    ws.send(ClientMessage::Text(attach.to_string()))
+    ws.send(ClientMessage::Text(attach.to_string().into()))
         .await
         .unwrap();
     let attached = tokio::time::timeout(Duration::from_secs(5), ws.next())
@@ -75,7 +75,7 @@ async fn serial_ws_replies_follow_request_order() {
             "type": "write",
             "data": base64::engine::general_purpose::STANDARD.encode(payload)
         });
-        ws.send(ClientMessage::Text(write.to_string()))
+        ws.send(ClientMessage::Text(write.to_string().into()))
             .await
             .unwrap();
         expected.push(("write_ack", len));
@@ -96,7 +96,7 @@ async fn serial_ws_replies_follow_request_order() {
         "type": "write",
         "data": base64::engine::general_purpose::STANDARD.encode(b"end")
     });
-    ws.send(ClientMessage::Text(last_write.to_string()))
+    ws.send(ClientMessage::Text(last_write.to_string().into()))
         .await
         .unwrap();
     expected.push(("write_ack", 3));
@@ -233,7 +233,7 @@ async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_
         "type": "attach", "client_id": "preempt-test", "port": port,
         "baud_rate": 115200, "open_if_needed": true, "pre_acquire_writer": true
     });
-    ws.send(ClientMessage::Text(attach.to_string()))
+    ws.send(ClientMessage::Text(attach.to_string().into()))
         .await
         .unwrap();
     let attached = tokio::time::timeout(Duration::from_secs(5), ws.next())
@@ -262,7 +262,9 @@ async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_
     // buffer requests must still complete, not block detach or later writes.
     tokio::time::sleep(Duration::from_millis(50)).await;
     ws.send(ClientMessage::Text(
-        serde_json::json!({"type": "get_in_waiting"}).to_string(),
+        serde_json::json!({"type": "get_in_waiting"})
+            .to_string()
+            .into(),
     ))
     .await
     .unwrap();
@@ -327,7 +329,7 @@ async fn serial_ws_preemption_reconnects_after_deploy_impl(renumber: bool, fail_
     let write = serde_json::json!({
         "type": "write", "data": base64::engine::general_purpose::STANDARD.encode(b"after")
     });
-    ws.send(ClientMessage::Text(write.to_string()))
+    ws.send(ClientMessage::Text(write.to_string().into()))
         .await
         .unwrap();
     let ack = tokio::time::timeout(Duration::from_secs(5), ws.next())

@@ -73,7 +73,7 @@ async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
             });
             sink.lock()
                 .await
-                .send(tungstenite::Message::Text(ack.to_string()))
+                .send(tungstenite::Message::Text(ack.to_string().into()))
                 .await
                 .unwrap();
             if knobs.attach_reject_message.is_some() {
@@ -89,7 +89,7 @@ async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
                     });
                     let mut sink = sink.lock().await;
                     let _ = sink
-                        .send(tungstenite::Message::Text(disconnected.to_string()))
+                        .send(tungstenite::Message::Text(disconnected.to_string().into()))
                         .await;
                     let _ = sink.send(tungstenite::Message::Close(None)).await;
                 });
@@ -111,7 +111,7 @@ async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
                         if bulk_sink
                             .lock()
                             .await
-                            .send(tungstenite::Message::Text(frame.to_string()))
+                            .send(tungstenite::Message::Text(frame.to_string().into()))
                             .await
                             .is_err()
                         {
@@ -150,14 +150,14 @@ async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
                     });
                     let mut sink = sink.lock().await;
                     if sink
-                        .send(tungstenite::Message::Text(preempted.to_string()))
+                        .send(tungstenite::Message::Text(preempted.to_string().into()))
                         .await
                         .is_err()
                     {
                         return;
                     }
                     if sink
-                        .send(tungstenite::Message::Text(reconnected.to_string()))
+                        .send(tungstenite::Message::Text(reconnected.to_string().into()))
                         .await
                         .is_err()
                     {
@@ -171,7 +171,7 @@ async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
                     if sink
                         .lock()
                         .await
-                        .send(tungstenite::Message::Text(err.to_string()))
+                        .send(tungstenite::Message::Text(err.to_string().into()))
                         .await
                         .is_err()
                     {
@@ -187,7 +187,7 @@ async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
                     if sink
                         .lock()
                         .await
-                        .send(tungstenite::Message::Text(ack.to_string()))
+                        .send(tungstenite::Message::Text(ack.to_string().into()))
                         .await
                         .is_err()
                     {
@@ -206,7 +206,7 @@ async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
                 if sink
                     .lock()
                     .await
-                    .send(tungstenite::Message::Text(ack.to_string()))
+                    .send(tungstenite::Message::Text(ack.to_string().into()))
                     .await
                     .is_err()
                 {
@@ -229,7 +229,7 @@ async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
                     if sink
                         .lock()
                         .await
-                        .send(tungstenite::Message::Text(line))
+                        .send(tungstenite::Message::Text(line.into()))
                         .await
                         .is_err()
                     {
@@ -243,7 +243,7 @@ async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
                         let _ = sink
                             .lock()
                             .await
-                            .send(tungstenite::Message::Text(line))
+                            .send(tungstenite::Message::Text(line.into()))
                             .await;
                     });
                 }
@@ -253,7 +253,7 @@ async fn fake_daemon(listener: TcpListener, knobs: DaemonKnobs) {
                 if sink
                     .lock()
                     .await
-                    .send(tungstenite::Message::Text(reply.to_string()))
+                    .send(tungstenite::Message::Text(reply.to_string().into()))
                     .await
                     .is_err()
                 {
@@ -690,17 +690,17 @@ async fn at9_preempted_write_fails_fast_without_auto_reconnect() {
                 let ws = tokio_tungstenite::accept_async(stream).await.unwrap();
                 let (mut sink, _source) = ws.split();
                 let ack = serde_json::json!({"type":"attached","success":true,"message":"ok","writer_pre_acquired":true});
-                sink.send(tungstenite::Message::Text(ack.to_string()))
+                sink.send(tungstenite::Message::Text(ack.to_string().into()))
                     .await
                     .unwrap();
                 let preempted =
                     serde_json::json!({"type":"preempted","reason":"deploy","preempted_by":"x"});
-                sink.send(tungstenite::Message::Text(preempted.to_string()))
+                sink.send(tungstenite::Message::Text(preempted.to_string().into()))
                     .await
                     .unwrap();
                 tokio::time::sleep(Duration::from_millis(150)).await;
                 let reconnected = serde_json::json!({"type":"reconnected","message":"ready"});
-                sink.send(tungstenite::Message::Text(reconnected.to_string()))
+                sink.send(tungstenite::Message::Text(reconnected.to_string().into()))
                     .await
                     .unwrap();
                 std::future::pending::<()>().await;
@@ -742,7 +742,7 @@ async fn at9_auto_reconnect_keeps_reader_waiting_but_rejects_write() {
                     serde_json::json!({"type":"attached","success":true,"message":"ok","writer_pre_acquired":true}),
                     serde_json::json!({"type":"preempted","reason":"deploy","preempted_by":"x"}),
                 ] {
-                    sink.send(tungstenite::Message::Text(frame.to_string()))
+                    sink.send(tungstenite::Message::Text(frame.to_string().into()))
                         .await
                         .unwrap();
                 }
@@ -751,7 +751,7 @@ async fn at9_auto_reconnect_keeps_reader_waiting_but_rejects_write() {
                     serde_json::json!({"type":"reconnected","message":"ok"}),
                     serde_json::json!({"type":"data","lines":["after-reconnect"],"current_index":0}),
                 ] {
-                    sink.send(tungstenite::Message::Text(frame.to_string()))
+                    sink.send(tungstenite::Message::Text(frame.to_string().into()))
                         .await
                         .unwrap();
                 }
@@ -802,25 +802,25 @@ async fn at9_late_ack_after_preemption_cannot_complete_a_new_write() {
                 let (mut sink, mut source) = ws.split();
                 source.next().await.unwrap().unwrap(); // attach
                 let attached = serde_json::json!({"type":"attached","success":true,"message":"ok","writer_pre_acquired":true});
-                sink.send(tungstenite::Message::Text(attached.to_string()))
+                sink.send(tungstenite::Message::Text(attached.to_string().into()))
                     .await
                     .unwrap();
 
                 source.next().await.unwrap().unwrap(); // first write
                 let preempted = serde_json::json!({"type":"preempted","reason":"deploy","preempted_by":"x"});
-                sink.send(tungstenite::Message::Text(preempted.to_string()))
+                sink.send(tungstenite::Message::Text(preempted.to_string().into()))
                     .await
                     .unwrap();
                 let reconnected = serde_json::json!({"type":"reconnected","message":"ok"});
                 tokio::time::sleep(Duration::from_millis(20)).await;
-                sink.send(tungstenite::Message::Text(reconnected.to_string()))
+                sink.send(tungstenite::Message::Text(reconnected.to_string().into()))
                     .await
                     .unwrap();
 
                 source.next().await.unwrap().unwrap(); // second write
                 for bytes_written in [1, 7] {
                     let ack = serde_json::json!({"type":"write_ack","success":true,"bytes_written":bytes_written,"message":null});
-                    sink.send(tungstenite::Message::Text(ack.to_string()))
+                    sink.send(tungstenite::Message::Text(ack.to_string().into()))
                         .await
                         .unwrap();
                 }
@@ -869,13 +869,13 @@ async fn at10_port_disconnected_wakes_everyone() {
                 let ws = tokio_tungstenite::accept_async(stream).await.unwrap();
                 let (mut sink, _source) = ws.split();
                 let ack = serde_json::json!({"type":"attached","success":true,"message":"ok","writer_pre_acquired":true});
-                sink.send(tungstenite::Message::Text(ack.to_string()))
+                sink.send(tungstenite::Message::Text(ack.to_string().into()))
                     .await
                     .unwrap();
                 tokio::time::sleep(Duration::from_millis(100)).await;
                 let disconnected =
                     serde_json::json!({"type":"port_disconnected","port":"COM1","reason":"unplugged","message":"gone"});
-                sink.send(tungstenite::Message::Text(disconnected.to_string()))
+                sink.send(tungstenite::Message::Text(disconnected.to_string().into()))
                     .await
                     .unwrap();
                 std::future::pending::<()>().await;

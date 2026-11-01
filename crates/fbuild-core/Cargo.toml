@@ -65,7 +65,7 @@ libc = { workspace = true }
 # and the WinUsb BOOTSEL reset (FastLED/fbuild#962, #1152, #1313).
 # Threading/Shell/WindowsAndMessaging serve `platform::process`'s
 # elevated self-relaunch (UAC "runas") used by USB PnP recovery.
-windows-sys = { version = "0.52", features = [
+windows-sys = { version = "0.61", features = [
     "Win32_Devices_DeviceAndDriverInstallation",
     "Win32_Devices_Properties",
     "Win32_Devices_Usb",
