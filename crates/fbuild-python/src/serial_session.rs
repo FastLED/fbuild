@@ -445,7 +445,7 @@ impl SerialSession {
             .expect("fbuild-python: ClientMessage::Attach serialization is infallible");
         match tokio::time::timeout_at(
             deadline,
-            write.send(tungstenite::Message::Text(attach_json)),
+            write.send(tungstenite::Message::Text(attach_json.into())),
         )
         .await
         {
@@ -687,8 +687,11 @@ impl SerialSession {
             drop(_request_gate);
             match sink.as_mut() {
                 Some(s) => {
-                    tokio::time::timeout_at(deadline, s.send(tungstenite::Message::Text(text)))
-                        .await
+                    tokio::time::timeout_at(
+                        deadline,
+                        s.send(tungstenite::Message::Text(text.into())),
+                    )
+                    .await
                 }
                 None => return Err(SessionError::Closed),
             }
@@ -814,7 +817,8 @@ impl SerialSession {
         }
         if let Some(s) = sink.as_mut() {
             if !matches!(
-                tokio::time::timeout_at(deadline, s.send(tungstenite::Message::Text(msg))).await,
+                tokio::time::timeout_at(deadline, s.send(tungstenite::Message::Text(msg.into())))
+                    .await,
                 Ok(Ok(()))
             ) {
                 // A cancelled WebSocket send may have left a partial frame.
@@ -864,7 +868,7 @@ impl SerialSession {
                 let detach = serde_json::to_string(&ClientMessage::Detach)
                     .expect("fbuild-python: ClientMessage::Detach serialization is infallible");
                 let _ = tokio::time::timeout(Duration::from_millis(200), async {
-                    let _ = s.send(tungstenite::Message::Text(detach)).await;
+                    let _ = s.send(tungstenite::Message::Text(detach.into())).await;
                     s.send(tungstenite::Message::Close(None)).await
                 })
                 .await;

@@ -107,8 +107,8 @@ thiserror = "2"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 clap = { version = "4", features = ["derive"] }
-axum = { version = "0.7", features = ["ws"] }
-tower-http = { version = "0.5", features = ["cors", "trace"] }
+axum = { version = "0.8", features = ["ws"] }
+tower-http = { version = "0.6", features = ["cors", "trace"] }
 hyper = { version = "1", features = ["full"] }
 reqwest = { version = "0.12", default-features = false, features = ["json", "blocking", "stream", "rustls-tls"] }
 semver = "1"
@@ -138,7 +138,7 @@ futures = "0.3"
 fs2 = "0.4"
 same-file = "1"
 libc = "0.2"
-tokio-tungstenite = "0.24"
+tokio-tungstenite = "0.29"
 async-trait = "0.1"
 dashmap = "6"
 blake3 = "1"

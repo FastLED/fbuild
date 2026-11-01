@@ -521,7 +521,7 @@ mod tests {
             ))
             .route("/ws/serial-monitor", get(websockets::ws_serial_monitor))
             .route(
-                "/ws/monitor/:session_id",
+                "/ws/monitor/{session_id}",
                 get(websockets::ws_monitor_session),
             )
             .route("/ws/status", get(websockets::ws_status))

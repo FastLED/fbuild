@@ -75,7 +75,7 @@ async fn spawn_test_server(blobs: Vec<(String, Vec<u8>)>) -> (u16, tokio::task::
     let blobs_for_handler = Arc::clone(&blobs);
 
     let app = Router::new().route(
-        "/:name",
+        "/{name}",
         get(
             move |axum::extract::Path(name): axum::extract::Path<String>| {
                 let blobs = Arc::clone(&blobs_for_handler);
