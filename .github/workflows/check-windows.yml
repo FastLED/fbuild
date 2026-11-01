@@ -140,7 +140,7 @@ jobs:
           "@ | Set-Content -LiteralPath (Join-Path $probe "platformio.ini") -Encoding utf8
 
           $coldJson = & soldr cargo run -p fbuild-cli --bin fbuild -- install "$probe" -e esp32-idf4 --json
-          if ($LASTEXITCODE -ne 0) { throw "Cold legacy ESP32 install failed ($LASTEXITCODE)" }
+          if ($LASTEXITCODE -ne 0) { $coldJson | Write-Output; throw "Cold legacy ESP32 install failed ($LASTEXITCODE)" }
           $coldJson | Write-Output
           $cold = ($coldJson -join "`n") | ConvertFrom-Json
           $coldTools = @($cold.environments.packages | Where-Object name -eq "tool-esptoolpy")
@@ -157,7 +157,7 @@ jobs:
           }
 
           $warmJson = & soldr cargo run -p fbuild-cli --bin fbuild -- install "$probe" -e esp32-idf4 --check --json
-          if ($LASTEXITCODE -ne 0) { throw "Warm legacy ESP32 check failed ($LASTEXITCODE)" }
+          if ($LASTEXITCODE -ne 0) { $warmJson | Write-Output; throw "Warm legacy ESP32 check failed ($LASTEXITCODE)" }
           $warmJson | Write-Output
           $warm = ($warmJson -join "`n") | ConvertFrom-Json
           $warmTools = @($warm.environments.packages | Where-Object name -eq "tool-esptoolpy")
@@ -188,7 +188,7 @@ jobs:
           "@ | Set-Content -LiteralPath (Join-Path $probe "platformio.ini") -Encoding utf8
 
           $coldJson = & soldr cargo run -p fbuild-cli --bin fbuild -- install "$probe" -e esp32c6-idf5 --json
-          if ($LASTEXITCODE -ne 0) { throw "Cold ESP32-C6 install failed ($LASTEXITCODE)" }
+          if ($LASTEXITCODE -ne 0) { $coldJson | Write-Output; throw "Cold ESP32-C6 install failed ($LASTEXITCODE)" }
           $coldJson | Write-Output
           $cold = ($coldJson -join "`n") | ConvertFrom-Json
           $coldTools = @($cold.environments.packages | Where-Object name -eq "tool-esptoolpy")
@@ -206,7 +206,7 @@ jobs:
           }
 
           $warmJson = & soldr cargo run -p fbuild-cli --bin fbuild -- install "$probe" -e esp32c6-idf5 --check --json
-          if ($LASTEXITCODE -ne 0) { throw "Warm ESP32-C6 check failed ($LASTEXITCODE)" }
+          if ($LASTEXITCODE -ne 0) { $warmJson | Write-Output; throw "Warm ESP32-C6 check failed ($LASTEXITCODE)" }
           $warmJson | Write-Output
           $warm = ($warmJson -join "`n") | ConvertFrom-Json
           $warmTools = @($warm.environments.packages | Where-Object name -eq "tool-esptoolpy")
