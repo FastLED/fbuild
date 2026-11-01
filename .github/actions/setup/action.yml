@@ -140,7 +140,14 @@ runs:
           fbuild-install-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-py${{ inputs.python-version }}-${{ steps.resolve-paths.outputs.pip-spec }}-
 
     - name: Install fbuild
-      if: steps.fbuild-install-cache.outputs.cache-hit != 'true'
+      # A pinned version fully determines the install-cache key, so an exact
+      # hit can be trusted. `fbuild-version: latest` resolves to the bare
+      # `fbuild` spec, whose key is version-INDEPENDENT: trusting that hit
+      # skips this step and pins every job to whichever release first
+      # populated the cache (fbuild#1843, after #1842 fixed only the
+      # prefix-restore path). Always install in that case; `--upgrade`
+      # replaces the restored tree with the current release.
+      if: ${{ steps.fbuild-install-cache.outputs.cache-hit != 'true' || steps.resolve-paths.outputs.pip-spec == 'fbuild' }}
       shell: bash
       run: |
         set -euo pipefail
@@ -229,9 +236,14 @@ runs:
       with:
         path: ${{ steps.resolve-paths.outputs.cache-dir }}
         key: fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.fbuild-hash }}-${{ inputs.cache-key-extra }}
+        # Partial hits stay INSIDE one fbuild content hash. Never fall back to
+        # `...-<os>-<arch>-` alone: that restores the previous release's
+        # packages/toolchains, the job then fetches its own, and the union is
+        # saved under the new hash key — every upgrade roughly doubles the
+        # entry until the repository cache budget is blown (fbuild#1843).
+        # A cold first run after an upgrade is the intended trade.
         restore-keys: |
           fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.fbuild-hash }}-
-          fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-
 
     - name: Restore fbuild cache (no save)
       if: ${{ inputs.cache == 'true' && inputs.cache-mode != 'split' && inputs.save != 'true' }}
@@ -240,9 +252,14 @@ runs:
       with:
         path: ${{ steps.resolve-paths.outputs.cache-dir }}
         key: fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.fbuild-hash }}-${{ inputs.cache-key-extra }}
+        # Partial hits stay INSIDE one fbuild content hash. Never fall back to
+        # `...-<os>-<arch>-` alone: that restores the previous release's
+        # packages/toolchains, the job then fetches its own, and the union is
+        # saved under the new hash key — every upgrade roughly doubles the
+        # entry until the repository cache budget is blown (fbuild#1843).
+        # A cold first run after an upgrade is the intended trade.
         restore-keys: |
           fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.fbuild-hash }}-
-          fbuild-${{ inputs.cache-version }}-${{ runner.os }}-${{ runner.arch }}-
 
     # ── Split mode (FastLED/fbuild#1433) ───────────────────────────────────
     # Packages (toolchains, platforms, frameworks, libraries) are shared per
