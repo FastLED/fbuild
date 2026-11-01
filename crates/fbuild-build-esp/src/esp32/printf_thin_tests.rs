@@ -29,10 +29,12 @@ fn link_flags_select_newlib_nano_and_keep_float_formatting() {
 
 #[test]
 fn probe_output_is_only_accepted_as_an_absolute_specs_path() {
-    assert_eq!(
-        nano_specs_from_probe("/toolchain/xtensa-esp-elf/lib/esp32s3/nano.specs\n"),
-        Some("/toolchain/xtensa-esp-elf/lib/esp32s3/nano.specs")
-    );
+    // Absolute is host-specific: GCC prints a drive-letter path on Windows.
+    #[cfg(windows)]
+    const SPECS: &str = r"C:\toolchain\xtensa-esp-elf\lib\esp32s3\nano.specs";
+    #[cfg(not(windows))]
+    const SPECS: &str = "/toolchain/xtensa-esp-elf/lib/esp32s3/nano.specs";
+    assert_eq!(nano_specs_from_probe(&format!("{SPECS}\n")), Some(SPECS));
     // GCC echoes the query unchanged when the file is missing.
     assert_eq!(nano_specs_from_probe("nano.specs\n"), None);
     assert_eq!(nano_specs_from_probe(""), None);
