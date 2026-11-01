@@ -145,9 +145,12 @@ runs:
       run: |
         set -euo pipefail
         # --target installs into a single isolated dir we can cache cleanly.
+        # --upgrade is required: a restore-keys prefix hit drops an older
+        # release into the target dir, and without it pip keeps those files
+        # ("Target directory ... already exists") and the old binary runs.
         # No --upgrade pip — that step alone took ~1s before and has zero
         # functional impact on installing one wheel with no deps.
-        python -m pip install --target "${{ steps.resolve-paths.outputs.install-dir }}" '${{ steps.resolve-paths.outputs.pip-spec }}'
+        python -m pip install --upgrade --target "${{ steps.resolve-paths.outputs.install-dir }}" '${{ steps.resolve-paths.outputs.pip-spec }}'
 
     - name: Activate fbuild from install dir
       shell: bash
