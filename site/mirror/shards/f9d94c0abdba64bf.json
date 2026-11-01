@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mkalkbrenner",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mkalkbrenner/library/PPUC/0.2.2/PPUC-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PPUC-0.2.2.tar.gz",
+    "size_bytes": 39615,
+    "sha256": "57292cb956e349ba487389c3dc3878940f4acc4178dc3e77c146633518c72cbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mkalkbrenner/library/PPUC/0.2.2/PPUC-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mkalkbrenner/library/PPUC/0.2.2/PPUC-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mkalkbrenner/library/WS2812Serial/0.1.0/WS2812Serial-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS2812Serial-0.1.0.tar.gz",
+    "size_bytes": 7903,
+    "sha256": "0c80fff63b32428d0c4ac9109cf004b642b19d857f0c5c31c06b8929e18762eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mkalkbrenner/library/WS2812Serial/0.1.0/WS2812Serial-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mkalkbrenner/library/WS2812Serial/0.1.0/WS2812Serial-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mkalkbrenner/library/WavePWM/0.1.0/WavePWM-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WavePWM-0.1.0.tar.gz",
+    "size_bytes": 2454,
+    "sha256": "67bc1e6653f5fb01adfd5fdd2d21a8ba48ffe338907ec072e38e9f1350d3df39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mkalkbrenner/library/WavePWM/0.1.0/WavePWM-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mkalkbrenner/library/WavePWM/0.1.0/WavePWM-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

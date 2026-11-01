@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/2grey",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "2grey/library/s3km1110/1.0.0/s3km1110-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "s3km1110-1.0.0.tar.gz",
+    "size_bytes": 10104,
+    "sha256": "061e0316847e6ff2435e790825341c1d5f2733653f8ca1b42a3d0ae982cc5292",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/2grey/library/s3km1110/1.0.0/s3km1110-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/2grey/library/s3km1110/1.0.0/s3km1110-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "2grey/library/s3km1110/1.0.1/s3km1110-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "s3km1110-1.0.1.tar.gz",
+    "size_bytes": 10137,
+    "sha256": "032b29a0670c4ab6b910f0b4102d1237c9004bc7ef81073b11e5b64498ebd3d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/2grey/library/s3km1110/1.0.1/s3km1110-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/2grey/library/s3km1110/1.0.1/s3km1110-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "2grey/library/s3km1110/1.0.2/s3km1110-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "s3km1110-1.0.2.tar.gz",
+    "size_bytes": 8909,
+    "sha256": "a84cb0afc1c67ae0f7716329f8d643a7e1806d36069bb7a659a2cbaf3311767a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/2grey/library/s3km1110/1.0.2/s3km1110-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/2grey/library/s3km1110/1.0.2/s3km1110-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

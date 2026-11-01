@@ -1,0 +1,4026 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/m5stack",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "m5stack/library/ATOM-PRINTER/0.0.1/ATOM-PRINTER-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATOM-PRINTER-0.0.1.tar.gz",
+    "size_bytes": 23107,
+    "sha256": "c9ab60d0507269a4a826842c6f4ebc11ff45866bf78c7933e1eeced72383562c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/ATOM-PRINTER/0.0.1/ATOM-PRINTER-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/ATOM-PRINTER/0.0.1/ATOM-PRINTER-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/ATOM_DTU_CAT1/0.0.1/ATOM_DTU_CAT1-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATOM_DTU_CAT1-0.0.1.tar.gz",
+    "size_bytes": 3639,
+    "sha256": "a81cf89d99bf4679fdffa4f2fc497108928932cb664b599edbdcb7e539509d85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/ATOM_DTU_CAT1/0.0.1/ATOM_DTU_CAT1-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/ATOM_DTU_CAT1/0.0.1/ATOM_DTU_CAT1-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/ATOM_DTU_LoRaWAN/0.0.2/ATOM_DTU_LoRaWAN-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATOM_DTU_LoRaWAN-0.0.2.tar.gz",
+    "size_bytes": 4331,
+    "sha256": "2cc2c812a2c0b1cb78a6d9e176a2652f4072755e1119d638180bdd14f33f01a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/ATOM_DTU_LoRaWAN/0.0.2/ATOM_DTU_LoRaWAN-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/ATOM_DTU_LoRaWAN/0.0.2/ATOM_DTU_LoRaWAN-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/ATOM_DTU_NB/0.0.2/ATOM_DTU_NB-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ATOM_DTU_NB-0.0.2.tar.gz",
+    "size_bytes": 4126,
+    "sha256": "84974b03300fbba3b3ce013e4e1840f3e74a5c661a1cdb01dba258ab77c232b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/ATOM_DTU_NB/0.0.2/ATOM_DTU_NB-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/ATOM_DTU_NB/0.0.2/ATOM_DTU_NB-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/DEMO-BOARD/0.0.3/DEMO-BOARD-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DEMO-BOARD-0.0.3.tar.gz",
+    "size_bytes": 850589,
+    "sha256": "1f6aacab6a00d3e7b6e1bb8449d76795d28d4071a600f4dc6b3f82da3b7968ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/DEMO-BOARD/0.0.3/DEMO-BOARD-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/DEMO-BOARD/0.0.3/DEMO-BOARD-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5-ADS1100/0.0.1/M5-ADS1100-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5-ADS1100-0.0.1.tar.gz",
+    "size_bytes": 5210,
+    "sha256": "b276b17c217e365248bb821f74a89867ead4a0de642404dbc51d8a2adfff5627",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5-ADS1100/0.0.1/M5-ADS1100-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5-ADS1100/0.0.1/M5-ADS1100-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5-ADS1115/1.0.0/M5-ADS1115-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5-ADS1115-1.0.0.tar.gz",
+    "size_bytes": 7953,
+    "sha256": "a295d485cebc5d02fdb6e7d7149487e48599dbcf37e67a58e12703895cbe578a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5-ADS1115/1.0.0/M5-ADS1115-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5-ADS1115/1.0.0/M5-ADS1115-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5-DLight/0.0.5/M5-DLight-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5-DLight-0.0.5.tar.gz",
+    "size_bytes": 3934,
+    "sha256": "ff43747663515ab3ca76bc691897ebcc603d7abd05700ffa7eaeb5e552132fac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5-DLight/0.0.5/M5-DLight-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5-DLight/0.0.5/M5-DLight-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5-Ethernet/4.0.0/M5-Ethernet-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5-Ethernet-4.0.0.tar.gz",
+    "size_bytes": 39669,
+    "sha256": "6616cccaa987ced7c6437da7fc79db4e576bbb3c3a71ba1bdeb92f611d1a0e4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5-Ethernet/4.0.0/M5-Ethernet-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5-Ethernet/4.0.0/M5-Ethernet-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5-FPC1020A/1.0.0/M5-FPC1020A-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5-FPC1020A-1.0.0.tar.gz",
+    "size_bytes": 7363,
+    "sha256": "d00d0a4511b640ffa6cf56c007f6bac439624f5d820694470014397ac516ea7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5-FPC1020A/1.0.0/M5-FPC1020A-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5-FPC1020A/1.0.0/M5-FPC1020A-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5-LoRa-E220-JP/1.0.1/M5-LoRa-E220-JP-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5-LoRa-E220-JP-1.0.1.tar.gz",
+    "size_bytes": 9346,
+    "sha256": "e0ce2354f559bca48ce14b25a3e6bce2650aa4aa2cc7aecd33792a4fcaa0a4ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5-LoRa-E220-JP/1.0.1/M5-LoRa-E220-JP-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5-LoRa-E220-JP/1.0.1/M5-LoRa-E220-JP-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5-LoRaWAN-RAK/1.0.0/M5-LoRaWAN-RAK-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5-LoRaWAN-RAK-1.0.0.tar.gz",
+    "size_bytes": 39710,
+    "sha256": "3493514c6c15feab001957438db21659b0dc07f03d57af64592865d915a778e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5-LoRaWAN-RAK/1.0.0/M5-LoRaWAN-RAK-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5-LoRaWAN-RAK/1.0.0/M5-LoRaWAN-RAK-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5-LoRaWAN/0.0.2/M5-LoRaWAN-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5-LoRaWAN-0.0.2.tar.gz",
+    "size_bytes": 10694,
+    "sha256": "d3f8288d756aff3ee0a8db36bb06cf1f646f9a2b3eb8e5de2b7a74911b06bc4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5-LoRaWAN/0.0.2/M5-LoRaWAN-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5-LoRaWAN/0.0.2/M5-LoRaWAN-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5-RoverC/0.0.1/M5-RoverC-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5-RoverC-0.0.1.tar.gz",
+    "size_bytes": 7253,
+    "sha256": "f8aebae500ac2c65c5acaca75f60868707c0e3cdac3e2f85527661bc84862bca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5-RoverC/0.0.1/M5-RoverC-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5-RoverC/0.0.1/M5-RoverC-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5-STHS34PF80/0.0.1/M5-STHS34PF80-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5-STHS34PF80-0.0.1.tar.gz",
+    "size_bytes": 24250,
+    "sha256": "16b0473717d00a127a56e59a7931cd2255efc3f5414346b3162044fab404a5e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5-STHS34PF80/0.0.1/M5-STHS34PF80-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5-STHS34PF80/0.0.1/M5-STHS34PF80-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5-SX127x/1.0.0/M5-SX127x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5-SX127x-1.0.0.tar.gz",
+    "size_bytes": 14411,
+    "sha256": "7f7901629cd30ff0073faa0d7d545014d244e2a81382e63ebe2be30982de02ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5-SX127x/1.0.0/M5-SX127x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5-SX127x/1.0.0/M5-SX127x-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Atom/0.1.3/M5Atom-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Atom-0.1.3.tar.gz",
+    "size_bytes": 2658154,
+    "sha256": "7877c79e250fb942980fc85cb3a36caedaa8cd39477ac18056faf8f2967f004b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Atom/0.1.3/M5Atom-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Atom/0.1.3/M5Atom-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5AtomS3/0.0.3/M5AtomS3-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5AtomS3-0.0.3.tar.gz",
+    "size_bytes": 1056829,
+    "sha256": "751afababaf708f877c926d95d83d445d64c464eb02d5d3425ae5b4fd3cb3012",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5AtomS3/0.0.3/M5AtomS3-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5AtomS3/0.0.3/M5AtomS3-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5AtomS3/1.0.2/M5AtomS3-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5AtomS3-1.0.2.tar.gz",
+    "size_bytes": 103085,
+    "sha256": "addd4d4c3e2f3d3eb5a4e54177b6cde44a5166cb7dcec0904d603bb008ff3b01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5AtomS3/1.0.2/M5AtomS3-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5AtomS3/1.0.2/M5AtomS3-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Atomic-EchoBase/1.0.1/M5Atomic-EchoBase-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Atomic-EchoBase-1.0.1.tar.gz",
+    "size_bytes": 11867,
+    "sha256": "ea971298f14fc1b39319be3e12cbe1d5f25ee7f226a02e95895b77746e7c1504",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Atomic-EchoBase/1.0.1/M5Atomic-EchoBase-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Atomic-EchoBase/1.0.1/M5Atomic-EchoBase-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Atomic-EchoBase/1.0.2/M5Atomic-EchoBase-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Atomic-EchoBase-1.0.2.tar.gz",
+    "size_bytes": 14486,
+    "sha256": "ffa168a50a6a4d41d668a8cb384ff7b6ba5a246810780037974edbf7b8a84248",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Atomic-EchoBase/1.0.2/M5Atomic-EchoBase-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Atomic-EchoBase/1.0.2/M5Atomic-EchoBase-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Atomic-Motion/1.0.1/M5Atomic-Motion-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Atomic-Motion-1.0.1.tar.gz",
+    "size_bytes": 9474,
+    "sha256": "7d545a408359836e5acbd0ab78010f0ac71889afdf3ded3d724ab520c43acedc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Atomic-Motion/1.0.1/M5Atomic-Motion-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Atomic-Motion/1.0.1/M5Atomic-Motion-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Bala/0.0.1/M5Bala-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Bala-0.0.1.tar.gz",
+    "size_bytes": 10434,
+    "sha256": "6d9b3bb2f9ea7eb018d9e6814e83d1f167060713ece2cf57e94039ca7dbdda24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Bala/0.0.1/M5Bala-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Bala/0.0.1/M5Bala-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5BurnerNVS/0.0.1/M5BurnerNVS-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5BurnerNVS-0.0.1.tar.gz",
+    "size_bytes": 6167,
+    "sha256": "5e16627dcb2f986fb772c96256854d4f5307b48faef3257b3924ca3f4aea3b36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5BurnerNVS/0.0.1/M5BurnerNVS-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5BurnerNVS/0.0.1/M5BurnerNVS-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Capsule/1.0.1/M5Capsule-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Capsule-1.0.1.tar.gz",
+    "size_bytes": 3462,
+    "sha256": "211abe2dabba1af1fa9fdb6d0f9e7512516cb53d690441fb6f044f715af4d21f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Capsule/1.0.1/M5Capsule-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Capsule/1.0.1/M5Capsule-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Cardputer/1.0.3/M5Cardputer-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Cardputer-1.0.3.tar.gz",
+    "size_bytes": 10136,
+    "sha256": "3042798409eb8eafb7dadc3c073f52e5c9e6527a06325f6dc196ee1004a48d8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Cardputer/1.0.3/M5Cardputer-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Cardputer/1.0.3/M5Cardputer-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Cardputer/1.1.0/M5Cardputer-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Cardputer-1.1.0.tar.gz",
+    "size_bytes": 24443,
+    "sha256": "cd44fe678114b71d193fff53c177effda2748979f29520133cb9a56c73073375",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Cardputer/1.1.0/M5Cardputer-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Cardputer/1.1.0/M5Cardputer-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Cardputer/1.1.1/M5Cardputer-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Cardputer-1.1.1.tar.gz",
+    "size_bytes": 24599,
+    "sha256": "beda1f26d9336b58b14118697b855cac586f81c886db12a572baf48b14adcfc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Cardputer/1.1.1/M5Cardputer-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Cardputer/1.1.1/M5Cardputer-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Chain/1.0.0/M5Chain-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Chain-1.0.0.tar.gz",
+    "size_bytes": 25327,
+    "sha256": "0351f40d731456b9f61bca8d6338b40c4112bd820e05643fde886db6e0a5bb34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Chain/1.0.0/M5Chain-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Chain/1.0.0/M5Chain-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Chain/1.0.10/M5Chain-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Chain-1.0.10.tar.gz",
+    "size_bytes": 96310,
+    "sha256": "8d93c0e2db05b3b8270cfeb68219ecdbc9668a3c2d996856101d2befcfb87212",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Chain/1.0.10/M5Chain-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Chain/1.0.10/M5Chain-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Chain/1.0.11/M5Chain-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Chain-1.0.11.tar.gz",
+    "size_bytes": 99399,
+    "sha256": "8aab78e8806337cf7573c8c7304db1554459b732542acf3a8584b2864a6edbef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Chain/1.0.11/M5Chain-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Chain/1.0.11/M5Chain-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Chain/1.0.2/M5Chain-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Chain-1.0.2.tar.gz",
+    "size_bytes": 32092,
+    "sha256": "d2b201b73d476cf6a9a1fb4ad26ce2c9bbf484332a9e3eb090ff1b20657aa7c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Chain/1.0.2/M5Chain-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Chain/1.0.2/M5Chain-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Chain/1.0.3/M5Chain-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Chain-1.0.3.tar.gz",
+    "size_bytes": 32107,
+    "sha256": "d53b96f31115c222dccf86aba9f5a74ab143248706954817626d87cae85beef4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Chain/1.0.3/M5Chain-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Chain/1.0.3/M5Chain-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Chain/1.0.4/M5Chain-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Chain-1.0.4.tar.gz",
+    "size_bytes": 36622,
+    "sha256": "885faa4656d2571f035b54add2c9ada426dbe93303681daa28411bef46d62a3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Chain/1.0.4/M5Chain-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Chain/1.0.4/M5Chain-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Chain/1.0.5/M5Chain-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Chain-1.0.5.tar.gz",
+    "size_bytes": 42626,
+    "sha256": "b3ebe33e9176ffb99b673c4f308918a92021e93f21063405f0d394526f68367b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Chain/1.0.5/M5Chain-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Chain/1.0.5/M5Chain-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Chain/1.0.6/M5Chain-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Chain-1.0.6.tar.gz",
+    "size_bytes": 49005,
+    "sha256": "0fc3713a193080ab174fabc09d6dc3bc547d79c7cb81eb7d704ac7650859209d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Chain/1.0.6/M5Chain-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Chain/1.0.6/M5Chain-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Chain/1.0.7/M5Chain-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Chain-1.0.7.tar.gz",
+    "size_bytes": 68681,
+    "sha256": "84563e75f67ef4e379c9e9ad28530945e02d2092c99a226b7939675d26312b0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Chain/1.0.7/M5Chain-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Chain/1.0.7/M5Chain-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Chain/1.0.8/M5Chain-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Chain-1.0.8.tar.gz",
+    "size_bytes": 75103,
+    "sha256": "83b4592cb0174c4eada99890a89a169f0d7e1faddfb3fda55129be5d1ecf4de1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Chain/1.0.8/M5Chain-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Chain/1.0.8/M5Chain-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Core-Ink/1.0.0/M5Core-Ink-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Core-Ink-1.0.0.tar.gz",
+    "size_bytes": 57487,
+    "sha256": "bf8f180493fc225b750df9291f5058b7157d837e9eec02817fe8a1a745508e0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Core-Ink/1.0.0/M5Core-Ink-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Core-Ink/1.0.0/M5Core-Ink-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Core2/0.1.9/M5Core2-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Core2-0.1.9.tar.gz",
+    "size_bytes": 3954033,
+    "sha256": "0c2c751b01dde700a0354a5ebb1e3b9bf3b147527b14640e82a0c0d251c08484",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Core2/0.1.9/M5Core2-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Core2/0.1.9/M5Core2-0.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Core2/0.2.0/M5Core2-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Core2-0.2.0.tar.gz",
+    "size_bytes": 3832278,
+    "sha256": "61d09fe93161b27b109402eb81290416a59072770a175bb69b614f83e7b32242",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Core2/0.2.0/M5Core2-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Core2/0.2.0/M5Core2-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5CoreS3/1.0.0/M5CoreS3-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5CoreS3-1.0.0.tar.gz",
+    "size_bytes": 340267,
+    "sha256": "8dd86ee7bc4587090c75cabbda0e2710f0bb67827b9e8f38c1515b734d36eb86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5CoreS3/1.0.0/M5CoreS3-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5CoreS3/1.0.0/M5CoreS3-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5CoreS3/1.0.1/M5CoreS3-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5CoreS3-1.0.1.tar.gz",
+    "size_bytes": 349049,
+    "sha256": "a7651528c7f97e220e039efaff48cfebb18efedec2becbfdca44db2cfae78017",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5CoreS3/1.0.1/M5CoreS3-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5CoreS3/1.0.1/M5CoreS3-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Dial/1.0.2/M5Dial-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Dial-1.0.2.tar.gz",
+    "size_bytes": 33483,
+    "sha256": "038412ff7ab33e5486135e5b62b4cdc7a6d03c41ef1c0d84139992299872a60a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Dial/1.0.2/M5Dial-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Dial/1.0.2/M5Dial-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Dial/1.0.3/M5Dial-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Dial-1.0.3.tar.gz",
+    "size_bytes": 33496,
+    "sha256": "cd44a11cc1fee4bc07b218db563bbb3bf96af2c07c3ab9c62af4830229a5e09a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Dial/1.0.3/M5Dial-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Dial/1.0.3/M5Dial-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5DinMeter/1.0.0/M5DinMeter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5DinMeter-1.0.0.tar.gz",
+    "size_bytes": 8599,
+    "sha256": "ad415d101eec9683c665a52a928e759f6e52e25d6e35439feabbfced7f1d192c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5DinMeter/1.0.0/M5DinMeter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5DinMeter/1.0.0/M5DinMeter-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5EPD/0.1.5/M5EPD-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5EPD-0.1.5.tar.gz",
+    "size_bytes": 3379872,
+    "sha256": "567396eaf4aa00f32c22349fd6119218ddf9368c3d869892b9106c526013a990",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5EPD/0.1.5/M5EPD-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5EPD/0.1.5/M5EPD-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Echo-Pyramid/1.0.0/M5Echo-Pyramid-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Echo-Pyramid-1.0.0.tar.gz",
+    "size_bytes": 26862,
+    "sha256": "2c86429dd6c446bb8fa2486d21e2607e997ceefdc6ed93826c5e4f23faa42792",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Echo-Pyramid/1.0.0/M5Echo-Pyramid-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Echo-Pyramid/1.0.0/M5Echo-Pyramid-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Faces/0.1.0/M5Faces-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Faces-0.1.0.tar.gz",
+    "size_bytes": 112467,
+    "sha256": "e94ee494d06d1942be5ca21d05fef6878f50976ab8f4b126d5003af692580744",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Faces/0.1.0/M5Faces-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Faces/0.1.0/M5Faces-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Family/0.1.3/M5Family-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Family-0.1.3.tar.gz",
+    "size_bytes": 6368,
+    "sha256": "8b29288839e7ef12ff060947d83b5a7020ea8af11c415e5e11828263210b3076",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Family/0.1.3/M5Family-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Family/0.1.3/M5Family-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5GFX/0.1.17/M5GFX-0.1.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5GFX-0.1.17.tar.gz",
+    "size_bytes": 46089862,
+    "sha256": "7b3c381193a862ce30ed2b34b8da9f22afbd33526567106c3f2d3208522d379c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5GFX/0.1.17/M5GFX-0.1.17.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5GFX/0.1.17/M5GFX-0.1.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5GFX/0.2.27/M5GFX-0.2.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5GFX-0.2.27.tar.gz",
+    "size_bytes": 46262935,
+    "sha256": "a4c2e0bf5a19c54c73568e1399ce1d4c1f49c32c59f36e77189cf05ffc91b8fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5GFX/0.2.27/M5GFX-0.2.27.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5GFX/0.2.27/M5GFX-0.2.27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5GFX/0.2.28/M5GFX-0.2.28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5GFX-0.2.28.tar.gz",
+    "size_bytes": 46270363,
+    "sha256": "79777d6c02619e02986cd7e5d3ed69c7a78d65b58cd277087f7b4f5e5eb1df56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5GFX/0.2.28/M5GFX-0.2.28.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5GFX/0.2.28/M5GFX-0.2.28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5GFX/0.2.29/M5GFX-0.2.29.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5GFX-0.2.29.tar.gz",
+    "size_bytes": 46277210,
+    "sha256": "515c8ad8dc1550fc08672f16b6e7b45cad4042ad64973bd2967b456bad971594",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5GFX/0.2.29/M5GFX-0.2.29.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5GFX/0.2.29/M5GFX-0.2.29.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5GFX/0.2.30/M5GFX-0.2.30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5GFX-0.2.30.tar.gz",
+    "size_bytes": 46288303,
+    "sha256": "b594014f057298bed1c912e89983a0cc95d7cd46fbaaf5adf6531f2001f282f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5GFX/0.2.30/M5GFX-0.2.30.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5GFX/0.2.30/M5GFX-0.2.30.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5GFX/0.2.31/M5GFX-0.2.31.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5GFX-0.2.31.tar.gz",
+    "size_bytes": 46292144,
+    "sha256": "38f6e8d21c45a3a63064ab01d5d7f98678c3c2edabdae1160bca30418757b9d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5GFX/0.2.31/M5GFX-0.2.31.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5GFX/0.2.31/M5GFX-0.2.31.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5GFX/0.2.32/M5GFX-0.2.32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5GFX-0.2.32.tar.gz",
+    "size_bytes": 46293137,
+    "sha256": "286617ce85bbf34f748c79fcd7859d67cb1627b22693a947ff6473be2c253efc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5GFX/0.2.32/M5GFX-0.2.32.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5GFX/0.2.32/M5GFX-0.2.32.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5GFX/0.2.33/M5GFX-0.2.33.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5GFX-0.2.33.tar.gz",
+    "size_bytes": 46294480,
+    "sha256": "2f5a11d62e52fd5e0424c64b3722f918a1100564dca67864c3f7e42a0b71a8e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5GFX/0.2.33/M5GFX-0.2.33.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5GFX/0.2.33/M5GFX-0.2.33.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5GFX/0.2.34/M5GFX-0.2.34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5GFX-0.2.34.tar.gz",
+    "size_bytes": 46295992,
+    "sha256": "611647aec67eb7edcdd2045b27c9db038743c224d05903f993ced1ffe1883f4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5GFX/0.2.34/M5GFX-0.2.34.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5GFX/0.2.34/M5GFX-0.2.34.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5GFX/0.2.35/M5GFX-0.2.35.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5GFX-0.2.35.tar.gz",
+    "size_bytes": 46339915,
+    "sha256": "e73fef22e795109ec5286c5d7c9632e268c8997c38fe89e8c8f26a182de856d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5GFX/0.2.35/M5GFX-0.2.35.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5GFX/0.2.35/M5GFX-0.2.35.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5HAL/0.0.2/M5HAL-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5HAL-0.0.2.tar.gz",
+    "size_bytes": 16629,
+    "sha256": "bcf7e3eb23dcb84ffa95356872a015f8d605b0befc40bc9a13cfa64e975ddc1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5HAL/0.0.2/M5HAL-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5HAL/0.0.2/M5HAL-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5HAL/0.0.3/M5HAL-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5HAL-0.0.3.tar.gz",
+    "size_bytes": 16834,
+    "sha256": "840b50f9d6f18c0123e7cd13eb4b90a5c42a08523d547796a730ae978a2ea941",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5HAL/0.0.3/M5HAL-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5HAL/0.0.3/M5HAL-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5HAL/0.0.4/M5HAL-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5HAL-0.0.4.tar.gz",
+    "size_bytes": 16936,
+    "sha256": "64c83b48e8974106e61b771496bda1d6938f475c366cef03c449e8cadaa6a03e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5HAL/0.0.4/M5HAL-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5HAL/0.0.4/M5HAL-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5HAL/0.1.1/M5HAL-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5HAL-0.1.1.tar.gz",
+    "size_bytes": 18934,
+    "sha256": "f449191c27b5fd440f16bddb5e0abb244dd1be7927dac7ca8687d301b36371f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5HAL/0.1.1/M5HAL-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5HAL/0.1.1/M5HAL-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5HAL/0.1.2/M5HAL-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5HAL-0.1.2.tar.gz",
+    "size_bytes": 18930,
+    "sha256": "56172cedb6241a77615f363c3b5a9b2c8d216a0fdb432535e23bd17086464e34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5HAL/0.1.2/M5HAL-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5HAL/0.1.2/M5HAL-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5HAL/0.1.3/M5HAL-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5HAL-0.1.3.tar.gz",
+    "size_bytes": 19953,
+    "sha256": "6f35ce77a7a78e0f2a37349ce4f9aa9ef6e4bd26dec55cd6efed1db23359e08e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5HAL/0.1.3/M5HAL-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5HAL/0.1.3/M5HAL-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5HAL/0.1.4/M5HAL-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5HAL-0.1.4.tar.gz",
+    "size_bytes": 21280,
+    "sha256": "36905c9a2db59fdf5ded89112864bf6ec4f6469e0dc6a0b759ee152a612ebe57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5HAL/0.1.4/M5HAL-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5HAL/0.1.4/M5HAL-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Hat-18650C/0.0.1/M5Hat-18650C-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Hat-18650C-0.0.1.tar.gz",
+    "size_bytes": 10704,
+    "sha256": "8d3289be98246b66dd1c51deb5aa99c451e8b3c4531c961f3192ffec0e12f196",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Hat-18650C/0.0.1/M5Hat-18650C-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Hat-18650C/0.0.1/M5Hat-18650C-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Hat-8Servos/0.0.2/M5Hat-8Servos-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Hat-8Servos-0.0.2.tar.gz",
+    "size_bytes": 3905,
+    "sha256": "3f51bc063aad1837cae67fbe1d5c9e4cca25279ed00e9afad85b1a15bc21055e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Hat-8Servos/0.0.2/M5Hat-8Servos-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Hat-8Servos/0.0.2/M5Hat-8Servos-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Hat-JoyC/0.0.1/M5Hat-JoyC-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Hat-JoyC-0.0.1.tar.gz",
+    "size_bytes": 5305,
+    "sha256": "3fb0fdc84fad8c7f99bcbd7ff5a0496c8d609ffbf5b5b536b115b39b91f39b11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Hat-JoyC/0.0.1/M5Hat-JoyC-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Hat-JoyC/0.0.1/M5Hat-JoyC-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Hat-Mini-JoyC/0.0.1/M5Hat-Mini-JoyC-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Hat-Mini-JoyC-0.0.1.tar.gz",
+    "size_bytes": 9284,
+    "sha256": "8a6fc34914a685faec73931c8293b370351c844962dca5bbf31011dbb91f59ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Hat-Mini-JoyC/0.0.1/M5Hat-Mini-JoyC-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Hat-Mini-JoyC/0.0.1/M5Hat-Mini-JoyC-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5IOE1/1.0.1/M5IOE1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5IOE1-1.0.1.tar.gz",
+    "size_bytes": 38720,
+    "sha256": "7d9d6445d3bbed3842b2172a4b88ba0bf3c419d29cfe1a2c3f3843b7f06f293a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5IOE1/1.0.1/M5IOE1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5IOE1/1.0.1/M5IOE1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5IOE1/1.0.2/M5IOE1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5IOE1-1.0.2.tar.gz",
+    "size_bytes": 39290,
+    "sha256": "2e231c1345da91aaef9d7edcc6b174207ec9f742628662760f8ff3fd6537d16a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5IOE1/1.0.2/M5IOE1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5IOE1/1.0.2/M5IOE1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5IOE1/1.0.3/M5IOE1-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5IOE1-1.0.3.tar.gz",
+    "size_bytes": 41519,
+    "sha256": "dc7a545e047a701dbe75cb668a73026d4e8ee1e582f7c258b80efb6384d677df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5IOE1/1.0.3/M5IOE1-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5IOE1/1.0.3/M5IOE1-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5IOE1/1.0.4/M5IOE1-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5IOE1-1.0.4.tar.gz",
+    "size_bytes": 42953,
+    "sha256": "9fb7fc20df09ac5d669eb91be3d2fecb7dfd9f431574f3d2ed6f493dcce01d6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5IOE1/1.0.4/M5IOE1-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5IOE1/1.0.4/M5IOE1-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5IOE1/1.0.5/M5IOE1-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5IOE1-1.0.5.tar.gz",
+    "size_bytes": 42990,
+    "sha256": "8b3f3e29377a1917ea5362872e08aa1f0168e1ec4a44d627eed7cd16923a72dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5IOE1/1.0.5/M5IOE1-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5IOE1/1.0.5/M5IOE1-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5IOE1/1.0.6/M5IOE1-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5IOE1-1.0.6.tar.gz",
+    "size_bytes": 43574,
+    "sha256": "7f9c8cb479e0c50fd38273cf738f0838e7b47c817e1d030309a3bd1e7934b1dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5IOE1/1.0.6/M5IOE1-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5IOE1/1.0.6/M5IOE1-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5IOE1/1.0.8/M5IOE1-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5IOE1-1.0.8.tar.gz",
+    "size_bytes": 51380,
+    "sha256": "c1b8297f1782146fceced8e66b7180bbe9ab95f021e52eee79f6f4090893ae9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5IOE1/1.0.8/M5IOE1-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5IOE1/1.0.8/M5IOE1-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5IOE1/1.0.9/M5IOE1-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5IOE1-1.0.9.tar.gz",
+    "size_bytes": 55315,
+    "sha256": "1d563db5d6232127488921cc2c97867018c191883980a2e3da920b9cc2c67013",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5IOE1/1.0.9/M5IOE1-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5IOE1/1.0.9/M5IOE1-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Module-4EncoderMotor/1.0.1/M5Module-4EncoderMotor-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Module-4EncoderMotor-1.0.1.tar.gz",
+    "size_bytes": 9141,
+    "sha256": "20eed6698526efd224024f3f7fe0d084e2a8d7fb6718190e4d5f847347928a3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Module-4EncoderMotor/1.0.1/M5Module-4EncoderMotor-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Module-4EncoderMotor/1.0.1/M5Module-4EncoderMotor-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Module-GNSS/1.0.1/M5Module-GNSS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Module-GNSS-1.0.1.tar.gz",
+    "size_bytes": 187399,
+    "sha256": "9f819dd8c5211f3d4d57f13f332d909de9b0fe21a93f2896f51d1dcce16d9576",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Module-GNSS/1.0.1/M5Module-GNSS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Module-GNSS/1.0.1/M5Module-GNSS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Module-GNSS/1.0.2/M5Module-GNSS-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Module-GNSS-1.0.2.tar.gz",
+    "size_bytes": 187414,
+    "sha256": "c7583fae41e0edf1e9d732209cc700836388a521b3feed5e08b476f0d6acbb06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Module-GNSS/1.0.2/M5Module-GNSS-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Module-GNSS/1.0.2/M5Module-GNSS-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Module-GNSS/1.0.3/M5Module-GNSS-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Module-GNSS-1.0.3.tar.gz",
+    "size_bytes": 188616,
+    "sha256": "0ad4537c031da08bfbd3cfdaad56eb0d42cb67a40534636ed4db6b364ea97ad2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Module-GNSS/1.0.3/M5Module-GNSS-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Module-GNSS/1.0.3/M5Module-GNSS-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Module-LAN-13.2/1.0.0/M5Module-LAN-13.2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Module-LAN-13.2-1.0.0.tar.gz",
+    "size_bytes": 8314,
+    "sha256": "3bd3ebd1188a15f5344fbe935eaa24a5133df42d48b9edc49240089044e4aa88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Module-LAN-13.2/1.0.0/M5Module-LAN-13.2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Module-LAN-13.2/1.0.0/M5Module-LAN-13.2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Module-LLM/1.7.0/M5Module-LLM-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Module-LLM-1.7.0.tar.gz",
+    "size_bytes": 21816,
+    "sha256": "0de5424a5dc7c4ccff2ace956a39a6073ab9b61e5724954bcd1fd423e5e62de0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Module-LLM/1.7.0/M5Module-LLM-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Module-LLM/1.7.0/M5Module-LLM-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Module-QRCode/1.0.1/M5Module-QRCode-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Module-QRCode-1.0.1.tar.gz",
+    "size_bytes": 12192,
+    "sha256": "5f913b09f4c097cd90f3b7aff77ee77715ce50b0614d9af75cf3da23f3cae30e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Module-QRCode/1.0.1/M5Module-QRCode-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Module-QRCode/1.0.1/M5Module-QRCode-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5ModulePPS/1.0.0/M5ModulePPS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5ModulePPS-1.0.0.tar.gz",
+    "size_bytes": 7076,
+    "sha256": "c38727ad8b8899aed8063a2499fbc731d39bc4cca821a18a045653123d2cf853",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5ModulePPS/1.0.0/M5ModulePPS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5ModulePPS/1.0.0/M5ModulePPS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5NanoC6/1.0.0/M5NanoC6-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5NanoC6-1.0.0.tar.gz",
+    "size_bytes": 5061,
+    "sha256": "69ca7002efe921d8f8a5f9219a352a050a4bf55738023d2e97efafabab172a6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5NanoC6/1.0.0/M5NanoC6-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5NanoC6/1.0.0/M5NanoC6-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5PM1/1.0.2/M5PM1-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5PM1-1.0.2.tar.gz",
+    "size_bytes": 51528,
+    "sha256": "cc635f5cbee9ed4aa9021837e3e455bfb1a6958fbd35b00c45cf27c507e4bd22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5PM1/1.0.2/M5PM1-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5PM1/1.0.2/M5PM1-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5PM1/1.0.3/M5PM1-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5PM1-1.0.3.tar.gz",
+    "size_bytes": 51302,
+    "sha256": "2c4f0ad25479ff398d04b8c16f1a680de87f7f90d8a6f48e8345917d4e5de496",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5PM1/1.0.3/M5PM1-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5PM1/1.0.3/M5PM1-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5PM1/1.0.4/M5PM1-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5PM1-1.0.4.tar.gz",
+    "size_bytes": 53187,
+    "sha256": "cc2ed7fff2fc12c63acd2e2ca07dc67fecd49e68b8410cb78b016f7b34a9c52a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5PM1/1.0.4/M5PM1-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5PM1/1.0.4/M5PM1-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5PM1/1.0.5/M5PM1-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5PM1-1.0.5.tar.gz",
+    "size_bytes": 62265,
+    "sha256": "8c3dae78cde316d100e1e5c70eff5dcbddb3b9c04bc084804276f3d3ed007448",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5PM1/1.0.5/M5PM1-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5PM1/1.0.5/M5PM1-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5PM1/1.0.6/M5PM1-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5PM1-1.0.6.tar.gz",
+    "size_bytes": 62206,
+    "sha256": "04c41dcee2b9e6e63adf172a6504d76decfcb84a931616ce36a206e3afccc44c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5PM1/1.0.6/M5PM1-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5PM1/1.0.6/M5PM1-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5PM1/1.0.7/M5PM1-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5PM1-1.0.7.tar.gz",
+    "size_bytes": 61786,
+    "sha256": "c0c3e808f1e397b13fe7e9f6347b29e265f6e5e9ff8e9d0521caa8b7bfd79b92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5PM1/1.0.7/M5PM1-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5PM1/1.0.7/M5PM1-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Stack/0.3.9/M5Stack-0.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Stack-0.3.9.tar.gz",
+    "size_bytes": 2776808,
+    "sha256": "09ef715ee73c683039a7da138a4f05c2832124e5d821e0898728d9c8d0016f84",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Stack/0.3.9/M5Stack-0.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Stack/0.3.9/M5Stack-0.3.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Stack/0.4.6/M5Stack-0.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Stack-0.4.6.tar.gz",
+    "size_bytes": 3822687,
+    "sha256": "73f06690cae9f9531ea7866e4441594c07177a4a75045096ebd57b8a629edf47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Stack/0.4.6/M5Stack-0.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Stack/0.4.6/M5Stack-0.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5StackChan/1.0.0/M5StackChan-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5StackChan-1.0.0.tar.gz",
+    "size_bytes": 54166,
+    "sha256": "5623af3afd125339d66ec9742d3bd9dc084b20110725bf955895568081b05090",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5StackChan/1.0.0/M5StackChan-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5StackChan/1.0.0/M5StackChan-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5StackChan/1.1.0/StackChan-BSP-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StackChan-BSP-1.1.0.tar.gz",
+    "size_bytes": 45442,
+    "sha256": "e2a3335dfa7a012ef0f7a1035d0950878e963ca363e7946a74f46a6eb629aac5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5StackChan/1.1.0/StackChan-BSP-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5StackChan/1.1.0/StackChan-BSP-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5StackChan/1.1.1/M5StackChan-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5StackChan-1.1.1.tar.gz",
+    "size_bytes": 49266,
+    "sha256": "2b72f33f762ab435e2207ce88c93f554e85decf479abde68846be27fc28efab2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5StackChan/1.1.1/M5StackChan-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5StackChan/1.1.1/M5StackChan-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5StamPLC/1.1.0/M5StamPLC-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5StamPLC-1.1.0.tar.gz",
+    "size_bytes": 68258,
+    "sha256": "8349d1e314c7ee27ed4eb5cf33fb6b2da2f3c5c27392c66060064539b86c165d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5StamPLC/1.1.0/M5StamPLC-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5StamPLC/1.1.0/M5StamPLC-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5StamPLC/1.2.0/M5StamPLC-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5StamPLC-1.2.0.tar.gz",
+    "size_bytes": 69224,
+    "sha256": "84b8d684aa086f029bfdba4a672ae10ef87882348a5f08036a43def08ed245f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5StamPLC/1.2.0/M5StamPLC-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5StamPLC/1.2.0/M5StamPLC-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5StamPLC/1.2.1/M5StamPLC-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5StamPLC-1.2.1.tar.gz",
+    "size_bytes": 78153,
+    "sha256": "a50dd534375a15073a5ad1bd49d1460d974f35903070c2102480a018cc15ff3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5StamPLC/1.2.1/M5StamPLC-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5StamPLC/1.2.1/M5StamPLC-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Stamp_UWB/0.1.0/M5Stamp_UWB-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Stamp_UWB-0.1.0.tar.gz",
+    "size_bytes": 196210,
+    "sha256": "89000f5f7790264b699a8d45fb31ab2be31ddf839e91f7adc4a1ff718aedb639",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Stamp_UWB/0.1.0/M5Stamp_UWB-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Stamp_UWB/0.1.0/M5Stamp_UWB-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Station/0.0.1/M5Station-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Station-0.0.1.tar.gz",
+    "size_bytes": 783924,
+    "sha256": "3dbd23ab1b0b97a1dcd6618982604b25480232cc59064e1ad9ab933ba96f7f2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Station/0.0.1/M5Station-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Station/0.0.1/M5Station-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5StickC/0.2.5/M5StickC-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5StickC-0.2.5.tar.gz",
+    "size_bytes": 1083227,
+    "sha256": "85eaa62cf355b6dc153bddec4d3aec36c5cf77d71406490f8cad066d08a27e65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5StickC/0.2.5/M5StickC-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5StickC/0.2.5/M5StickC-0.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5StickCPlus/0.0.2/M5StickCPlus-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5StickCPlus-0.0.2.tar.gz",
+    "size_bytes": 884591,
+    "sha256": "325bd64ff173a26f4bc256c3c24f54f631dfbd6c2071ba114ee57ce7510da980",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5StickCPlus/0.0.2/M5StickCPlus-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5StickCPlus/0.0.2/M5StickCPlus-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5StickCPlus/0.0.8/M5StickCPlus-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5StickCPlus-0.0.8.tar.gz",
+    "size_bytes": 946174,
+    "sha256": "e940297bd86c38b4d27e3cc467a81ab7fd082bf7a54925a9bc34ad0096dc9077",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5StickCPlus/0.0.8/M5StickCPlus-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5StickCPlus/0.0.8/M5StickCPlus-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5StickCPlus/0.1.1/M5StickCPlus-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5StickCPlus-0.1.1.tar.gz",
+    "size_bytes": 965331,
+    "sha256": "46406f34e609d97a6017f803c04a364b40571cff7627c216385e5eb8dfdd9c94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5StickCPlus/0.1.1/M5StickCPlus-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5StickCPlus/0.1.1/M5StickCPlus-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5StickCPlus2/1.0.2/M5StickCPlus2-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5StickCPlus2-1.0.2.tar.gz",
+    "size_bytes": 18494,
+    "sha256": "8c4207839579f58d3c165673e5036816773ad88fb87b780a197c97fbf346e011",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5StickCPlus2/1.0.2/M5StickCPlus2-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5StickCPlus2/1.0.2/M5StickCPlus2-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5SwitchC6-ESP-NOW/1.0.0/M5SwitchC6-ESP-NOW-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5SwitchC6-ESP-NOW-1.0.0.tar.gz",
+    "size_bytes": 38886,
+    "sha256": "6d05a7c186e8cca59a78744858ecae254d89c746ea1883a654f9877fb15748cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5SwitchC6-ESP-NOW/1.0.0/M5SwitchC6-ESP-NOW-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5SwitchC6-ESP-NOW/1.0.0/M5SwitchC6-ESP-NOW-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UNIT_8Encoder/0.0.1/M5UNIT_8Encoder-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UNIT_8Encoder-0.0.1.tar.gz",
+    "size_bytes": 7264,
+    "sha256": "27ebeb89213aa8b6800c6cdb1b69dc415fc8d40a2731db6e03f6f25e8a87e838",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UNIT_8Encoder/0.0.1/M5UNIT_8Encoder-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UNIT_8Encoder/0.0.1/M5UNIT_8Encoder-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.0.7/M5Unified-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.0.7.tar.gz",
+    "size_bytes": 404167,
+    "sha256": "02b0310bea0b793ecbd6142de9fb1c4b8c2297f746faaf237a724c1625022f29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.0.7/M5Unified-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.0.7/M5Unified-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.1.10/M5Unified-0.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.1.10.tar.gz",
+    "size_bytes": 456704,
+    "sha256": "830e4cd5af906f494d80341e048e5037155c217ffd2667f71948beeb5c389036",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.1.10/M5Unified-0.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.1.10/M5Unified-0.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.1.11/M5Unified-0.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.1.11.tar.gz",
+    "size_bytes": 457242,
+    "sha256": "45a6532c5d68587b9bbaf1a82ec1b97943ac4b79636d5dc364404d2c45ce6cc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.1.11/M5Unified-0.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.1.11/M5Unified-0.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.1.12/M5Unified-0.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.1.12.tar.gz",
+    "size_bytes": 458710,
+    "sha256": "6a91d648fb58250968f1c29356fdefdb800f56aed6511de395f298085f172318",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.1.12/M5Unified-0.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.1.12/M5Unified-0.1.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.1.14/M5Unified-0.1.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.1.14.tar.gz",
+    "size_bytes": 460917,
+    "sha256": "f9b398cc30e47adad45f9c8c4fdbc6d09a9998ba3c09e8f35fd321f3a8163219",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.1.14/M5Unified-0.1.14.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.1.14/M5Unified-0.1.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.1.16/M5Unified-0.1.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.1.16.tar.gz",
+    "size_bytes": 461929,
+    "sha256": "9d28f42082e8dfec642b6d65bad106abe6161aa08644db3aa17f88dd60f68f38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.1.16/M5Unified-0.1.16.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.1.16/M5Unified-0.1.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.1.17/M5Unified-0.1.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.1.17.tar.gz",
+    "size_bytes": 466180,
+    "sha256": "268c36f62d728e957316c80d998f8eb1d488310c32d6ae39e2873c5fab5b6199",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.1.17/M5Unified-0.1.17.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.1.17/M5Unified-0.1.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.1.4/M5Unified-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.1.4.tar.gz",
+    "size_bytes": 420029,
+    "sha256": "82436cb62bf45741f0cb38ca52a1064bde94fb3b132f8f15bd9ea83c025abb62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.1.4/M5Unified-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.1.4/M5Unified-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.1.6/M5Unified-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.1.6.tar.gz",
+    "size_bytes": 420965,
+    "sha256": "86832da7542d62a5c2f52ee49a20e5b2a583ee71b1ea9a97cb782802c382453f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.1.6/M5Unified-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.1.6/M5Unified-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.1.7/M5Unified-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.1.7.tar.gz",
+    "size_bytes": 448363,
+    "sha256": "41707d1969c8a848ea54fea8db120cacf4f71116d18aab950cd33cc9e956a63a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.1.7/M5Unified-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.1.7/M5Unified-0.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.10/M5Unified-0.2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.10.tar.gz",
+    "size_bytes": 494387,
+    "sha256": "779c32d93e5285beb6b616c653ffcd21eba457912d30eb5bacce48510e3514ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.10/M5Unified-0.2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.10/M5Unified-0.2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.11/M5Unified-0.2.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.11.tar.gz",
+    "size_bytes": 500959,
+    "sha256": "db468f034a60cb6b0a36a53e8d7e367dee2b7a089bbf79933848502b503735c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.11/M5Unified-0.2.11.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.11/M5Unified-0.2.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.12/M5Unified-0.2.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.12.tar.gz",
+    "size_bytes": 504325,
+    "sha256": "880dcc1031c845be2f925ebb9594e6ffc59a8e1561cf48bc8c089a4736831b9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.12/M5Unified-0.2.12.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.12/M5Unified-0.2.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.13/M5Unified-0.2.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.13.tar.gz",
+    "size_bytes": 504339,
+    "sha256": "a09210ab5f8f5743d7c6eb370f50c98fb46d732d9a47251ffccea83b17dabdca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.13/M5Unified-0.2.13.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.13/M5Unified-0.2.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.14/M5Unified-0.2.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.14.tar.gz",
+    "size_bytes": 506076,
+    "sha256": "785d7ec299fa5788e2e932edf4849f94d2907ce0c4b448f949e3e040c2a1011c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.14/M5Unified-0.2.14.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.14/M5Unified-0.2.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.15/M5Unified-0.2.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.15.tar.gz",
+    "size_bytes": 509663,
+    "sha256": "eade942cbfe5b415e49e18373bdbb5864ee46644f950062e7d57eb7528cda26a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.15/M5Unified-0.2.15.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.15/M5Unified-0.2.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.16/M5Unified-0.2.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.16.tar.gz",
+    "size_bytes": 513212,
+    "sha256": "8959793a20c8f90efa0fcbece2e54aecfc08366886fffebfaf51a488d61abb9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.16/M5Unified-0.2.16.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.16/M5Unified-0.2.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.17/M5Unified-0.2.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.17.tar.gz",
+    "size_bytes": 513261,
+    "sha256": "8bd74b80b30556ece1822351a7e587cd8e5f3a6ccc2ab729335d1d5cf4112af3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.17/M5Unified-0.2.17.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.17/M5Unified-0.2.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.18/M5Unified-0.2.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.18.tar.gz",
+    "size_bytes": 514931,
+    "sha256": "f900c5e0253a90f2039bdb29a8e5c20f8ee925f6ba2f94283472b43781a9f527",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.18/M5Unified-0.2.18.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.18/M5Unified-0.2.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.19/M5Unified-0.2.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.19.tar.gz",
+    "size_bytes": 518619,
+    "sha256": "e73ce72cd0792217f45b11f48726de7b0a05f2d58f440be266b9eade810afc18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.19/M5Unified-0.2.19.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.19/M5Unified-0.2.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.2/M5Unified-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.2.tar.gz",
+    "size_bytes": 472497,
+    "sha256": "193e31cb28a6a64da9ae2a00ca1b0fed53ca1c87db57d2b6d4597eba3804bb40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.2/M5Unified-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.2/M5Unified-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.20/M5Unified-0.2.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.20.tar.gz",
+    "size_bytes": 541550,
+    "sha256": "98fa383f2679264266d89906b4ab88a4ffe4886041fb8489996d6a3ac9ce47e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.20/M5Unified-0.2.20.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.20/M5Unified-0.2.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.21/M5Unified-0.2.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.21.tar.gz",
+    "size_bytes": 551314,
+    "sha256": "3b63d04356598ca1da9bf7dc5537c5106a197b4990a6ceaee64a9a8ed1a9a3ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.21/M5Unified-0.2.21.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.21/M5Unified-0.2.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.22/M5Unified-0.2.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.22.tar.gz",
+    "size_bytes": 588550,
+    "sha256": "fd122e346ce74aec6532bc72ced9bdb58d70b994bdf6e1bba9f532a8a55128fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.22/M5Unified-0.2.22.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.22/M5Unified-0.2.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.23/M5Unified-0.2.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.23.tar.gz",
+    "size_bytes": 597204,
+    "sha256": "5c8447703f36a7d40636ff907108b7b24c58f2c2df3e54649eb38fe95420773f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.23/M5Unified-0.2.23.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.23/M5Unified-0.2.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.24/M5Unified-0.2.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.24.tar.gz",
+    "size_bytes": 596936,
+    "sha256": "55093ebb58b13a80a81be47b5fef73baa367b964392fb2611ed3577bdd7bbe85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.24/M5Unified-0.2.24.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.24/M5Unified-0.2.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.25/M5Unified-0.2.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.25.tar.gz",
+    "size_bytes": 597900,
+    "sha256": "0331e73ff40a823942cc1ab3e8ffb1ed20233b90f53f10187dd0ec6b39ae5d36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.25/M5Unified-0.2.25.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.25/M5Unified-0.2.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.26/M5Unified-0.2.26.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.26.tar.gz",
+    "size_bytes": 599698,
+    "sha256": "29b339dd31c99c9db06c057459d1dcfcde82f038acfd1df827b9b44d6c8fecd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.26/M5Unified-0.2.26.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.26/M5Unified-0.2.26.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.27/M5Unified-0.2.27.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.27.tar.gz",
+    "size_bytes": 599917,
+    "sha256": "1a786b0c26ddab08322c23489c3e2f4c0b7f9c3a4e7ecd9bcbadbd0f8f2da832",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.27/M5Unified-0.2.27.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.27/M5Unified-0.2.27.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.28/M5Unified-0.2.28.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.28.tar.gz",
+    "size_bytes": 601971,
+    "sha256": "177b44b9be69fbb1c6dc11ec4974990b3c1d9cad00f5b1e5810bb016eb0ab0c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.28/M5Unified-0.2.28.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.28/M5Unified-0.2.28.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.5/M5Unified-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.5.tar.gz",
+    "size_bytes": 484031,
+    "sha256": "295530884099bc3ac9483a15b03923c192582b25a6c250c42d795e9a916e50e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.5/M5Unified-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.5/M5Unified-0.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.7/M5Unified-0.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.7.tar.gz",
+    "size_bytes": 485644,
+    "sha256": "2dde2eb1c0074f7c2d2613c1e880621fa5722e76e107adca455382313107acba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.7/M5Unified-0.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.7/M5Unified-0.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.8/M5Unified-0.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.8.tar.gz",
+    "size_bytes": 491331,
+    "sha256": "69d6cae0a0ea163b34837e72f1b41b73022b94a80e130a7816b2d83c0e619b4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.8/M5Unified-0.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.8/M5Unified-0.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unified/0.2.9/M5Unified-0.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unified-0.2.9.tar.gz",
+    "size_bytes": 494273,
+    "sha256": "25561ebc2dc914df36076a524bb42674992bcc80ee5537ba418c8fbb26de4baa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unified/0.2.9/M5Unified-0.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unified/0.2.9/M5Unified-0.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-ACSSR/0.0.3/M5Unit-ACSSR-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-ACSSR-0.0.3.tar.gz",
+    "size_bytes": 6183,
+    "sha256": "e47bd67920aa551e98aaf80efe4b98f724584d5406c8179051a330f3cf2cdc23",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-ACSSR/0.0.3/M5Unit-ACSSR-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-ACSSR/0.0.3/M5Unit-ACSSR-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-ANADIG/0.3.0/M5Unit-ANADIG-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-ANADIG-0.3.0.tar.gz",
+    "size_bytes": 61365,
+    "sha256": "54a0eed55e561d96ac5e82d2ff3f754972a525e77b81f4bd223254a79efe2aed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-ANADIG/0.3.0/M5Unit-ANADIG-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-ANADIG/0.3.0/M5Unit-ANADIG-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-ANADIG/0.4.0/M5Unit-ANADIG-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-ANADIG-0.4.0.tar.gz",
+    "size_bytes": 77430,
+    "sha256": "c988d5d6ee3ef233aa820ba949d20121f17e9d5459feacd33257df353e5e60bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-ANADIG/0.4.0/M5Unit-ANADIG-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-ANADIG/0.4.0/M5Unit-ANADIG-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-ANADIG/0.4.1/M5Unit-ANADIG-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-ANADIG-0.4.1.tar.gz",
+    "size_bytes": 78817,
+    "sha256": "1444f257e5a9c48587ef185a6991a8bd93ef8580a81ad3db20a5c544de71cc6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-ANADIG/0.4.1/M5Unit-ANADIG-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-ANADIG/0.4.1/M5Unit-ANADIG-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-BLDC/1.0.0/M5Unit-BLDC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-BLDC-1.0.0.tar.gz",
+    "size_bytes": 5307,
+    "sha256": "005f10a08e9974cf5b1f42fe0ecc365847184ecee26f9c6fdcff4eb917983404",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-BLDC/1.0.0/M5Unit-BLDC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-BLDC/1.0.0/M5Unit-BLDC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-CAN/1.0.0/M5Unit-CAN-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-CAN-1.0.0.tar.gz",
+    "size_bytes": 7001,
+    "sha256": "11f717bedafcaf8d84f21029ca2fa29516cc3b6cc14699aec41f4673ea4155f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-CAN/1.0.0/M5Unit-CAN-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-CAN/1.0.0/M5Unit-CAN-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-COLOR/0.1.1/M5Unit-COLOR-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-COLOR-0.1.1.tar.gz",
+    "size_bytes": 59294,
+    "sha256": "01ad8aa2b3676c80b10d679e1bcddf7f9ab0c7b383b06f812c59e304649e1d36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-COLOR/0.1.1/M5Unit-COLOR-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-COLOR/0.1.1/M5Unit-COLOR-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-COLOR/0.2.0/M5Unit-COLOR-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-COLOR-0.2.0.tar.gz",
+    "size_bytes": 74756,
+    "sha256": "83207c7a18eb6e8d32eda8c77d09c0646eedf03027e7163b612e9469d8111c17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-COLOR/0.2.0/M5Unit-COLOR-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-COLOR/0.2.0/M5Unit-COLOR-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-CRYPTO/0.2.0/M5Unit-CRYPTO-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-CRYPTO-0.2.0.tar.gz",
+    "size_bytes": 89853,
+    "sha256": "b9d208782f5772b9380a26d76bdc3250a4a31bbc2c9740b4a0dd73f676e59e0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-CRYPTO/0.2.0/M5Unit-CRYPTO-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-CRYPTO/0.2.0/M5Unit-CRYPTO-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-CRYPTO/0.3.0/M5Unit-CRYPTO-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-CRYPTO-0.3.0.tar.gz",
+    "size_bytes": 110162,
+    "sha256": "f4fc694ce279ac0eb8d9fedd5201fc49643e00ed4401930ca4b72ec50f14807b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-CRYPTO/0.3.0/M5Unit-CRYPTO-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-CRYPTO/0.3.0/M5Unit-CRYPTO-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-DDS/0.1.0/M5Unit-DDS-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-DDS-0.1.0.tar.gz",
+    "size_bytes": 119008,
+    "sha256": "a4f72b12f6cd8e36057839a44fd62cb5cd49b89d8ee66baf4ea0d87e973be5f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-DDS/0.1.0/M5Unit-DDS-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-DDS/0.1.0/M5Unit-DDS-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-DDS/0.1.1/M5Unit-DDS-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-DDS-0.1.1.tar.gz",
+    "size_bytes": 120676,
+    "sha256": "de9deb436f7b9ce7939da63eb7d6ba72a0ed2360ac08e8e1c7eb78e9d2c87b4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-DDS/0.1.1/M5Unit-DDS-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-DDS/0.1.1/M5Unit-DDS-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-DDS/0.2.0/M5Unit-DDS-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-DDS-0.2.0.tar.gz",
+    "size_bytes": 129947,
+    "sha256": "95b2ffb2b5c6bd524d06f79e46131e283c0bd11858718724a2bc5bc2a1a48c27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-DDS/0.2.0/M5Unit-DDS-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-DDS/0.2.0/M5Unit-DDS-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-DISTANCE/0.2.1/M5Unit-DISTANCE-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-DISTANCE-0.2.1.tar.gz",
+    "size_bytes": 51941,
+    "sha256": "3166f12fc88864a9bf4d638ade61f69b194d797e3c200d2f1a981516fa088e48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-DISTANCE/0.2.1/M5Unit-DISTANCE-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-DISTANCE/0.2.1/M5Unit-DISTANCE-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-DISTANCE/0.3.0/M5Unit-DISTANCE-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-DISTANCE-0.3.0.tar.gz",
+    "size_bytes": 63978,
+    "sha256": "2c3ea680f93e157d3dc3168cff7229fda4f91c43251f31e487fa7cdecefaae49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-DISTANCE/0.3.0/M5Unit-DISTANCE-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-DISTANCE/0.3.0/M5Unit-DISTANCE-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-DigiClock/0.0.1/M5Unit-DigiClock-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-DigiClock-0.0.1.tar.gz",
+    "size_bytes": 6631,
+    "sha256": "e4fc63ead4d6c3ec0f9937452e2dc6a0183ed52878db288be8c699e31592f5ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-DigiClock/0.0.1/M5Unit-DigiClock-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-DigiClock/0.0.1/M5Unit-DigiClock-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-ENV/1.3.1/M5Unit-ENV-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-ENV-1.3.1.tar.gz",
+    "size_bytes": 132345,
+    "sha256": "7a2c5d48f257eb2eb2f65e44b1d60669677601a80c5693c7fbc472b820f1c94f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-ENV/1.3.1/M5Unit-ENV-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-ENV/1.3.1/M5Unit-ENV-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-ENV/1.3.2/M5Unit-ENV-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-ENV-1.3.2.tar.gz",
+    "size_bytes": 135503,
+    "sha256": "66e469918b2ecbaffc207d013d3e8c2dc0ba8112eac4d2745e52ae1986e6d8c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-ENV/1.3.2/M5Unit-ENV-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-ENV/1.3.2/M5Unit-ENV-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-ENV/1.4.0/M5Unit-ENV-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-ENV-1.4.0.tar.gz",
+    "size_bytes": 149130,
+    "sha256": "a2b01f8c168789fac0d0f3ec41913e9c3d8caacf274b7ab7da3a850cf1657b8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-ENV/1.4.0/M5Unit-ENV-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-ENV/1.4.0/M5Unit-ENV-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-ENV/1.5.0/M5Unit-ENV-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-ENV-1.5.0.tar.gz",
+    "size_bytes": 166166,
+    "sha256": "405f929ff0455fb518cfe273c4ae3092ea1368bfd6f22451e94e3ebc65fd0654",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-ENV/1.5.0/M5Unit-ENV-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-ENV/1.5.0/M5Unit-ENV-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-ENV/1.6.0/M5Unit-ENV-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-ENV-1.6.0.tar.gz",
+    "size_bytes": 185262,
+    "sha256": "b210015e4af07b9eea44f6880f90fc7b60c9c6971ea9e1e5d713aa27efaf909f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-ENV/1.6.0/M5Unit-ENV-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-ENV/1.6.0/M5Unit-ENV-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-ENV/1.7.0/M5Unit-ENV-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-ENV-1.7.0.tar.gz",
+    "size_bytes": 186704,
+    "sha256": "53dfdd61b56b4ebfacdc378c916f5863b6073ec34b7453c93862a09465693d9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-ENV/1.7.0/M5Unit-ENV-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-ENV/1.7.0/M5Unit-ENV-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-ENV/1.7.1/M5Unit-ENV-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-ENV-1.7.1.tar.gz",
+    "size_bytes": 186856,
+    "sha256": "4d43dc98a683ca790f13249f28f16ac0e985d68b7e118f870e4cb3f2dff5e3fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-ENV/1.7.1/M5Unit-ENV-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-ENV/1.7.1/M5Unit-ENV-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-ENV/1.7.2/M5Unit-ENV-1.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-ENV-1.7.2.tar.gz",
+    "size_bytes": 189751,
+    "sha256": "1c5268471d154b5a1264e38c2bbe090d75dadaba743d4be9c26e6fd2da8ac6dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-ENV/1.7.2/M5Unit-ENV-1.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-ENV/1.7.2/M5Unit-ENV-1.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-ENV/1.7.3/M5Unit-ENV-1.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-ENV-1.7.3.tar.gz",
+    "size_bytes": 189833,
+    "sha256": "b97fb6801af76d3cb3a2eca49f7a8824d9ec8c4737cbf4a54dd6172f80401a18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-ENV/1.7.3/M5Unit-ENV-1.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-ENV/1.7.3/M5Unit-ENV-1.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-EXTIO/0.1.1/M5Unit-EXTIO-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-EXTIO-0.1.1.tar.gz",
+    "size_bytes": 55499,
+    "sha256": "75340a1f80b1f0d584fd8657194ae14b029a120a718fbce153d763c02c833643",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-EXTIO/0.1.1/M5Unit-EXTIO-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-EXTIO/0.1.1/M5Unit-EXTIO-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-EXTIO/0.2.0/M5Unit-EXTIO-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-EXTIO-0.2.0.tar.gz",
+    "size_bytes": 67321,
+    "sha256": "6f0eee30a0d11bc60db21be9937480f462571aabfbf367fab0c3a3c94869ee66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-EXTIO/0.2.0/M5Unit-EXTIO-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-EXTIO/0.2.0/M5Unit-EXTIO-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-EXTIO2/1.0.3/M5Unit-EXTIO2-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-EXTIO2-1.0.3.tar.gz",
+    "size_bytes": 7437,
+    "sha256": "86ff0446067d86ff765abdb24ed5a26c27b6bda0f2b1f74f96d527d8dbaf5ebe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-EXTIO2/1.0.3/M5Unit-EXTIO2-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-EXTIO2/1.0.3/M5Unit-EXTIO2-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-Encoder/0.0.2/M5Unit-Encoder-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-Encoder-0.0.2.tar.gz",
+    "size_bytes": 3266,
+    "sha256": "8b0f487fe9060945f783e73f7f28a70ac9c36e358871a133d8166f35b85e15a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-Encoder/0.0.2/M5Unit-Encoder-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-Encoder/0.0.2/M5Unit-Encoder-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-FINGER/0.0.1/M5Unit-FINGER-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-FINGER-0.0.1.tar.gz",
+    "size_bytes": 102511,
+    "sha256": "7a600e3a839d4ae8b4258f8f948c2c9184330d519a624d6cebc5b644c7537f29",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-FINGER/0.0.1/M5Unit-FINGER-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-FINGER/0.0.1/M5Unit-FINGER-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-FINGER/0.0.2/M5Unit-FINGER-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-FINGER-0.0.2.tar.gz",
+    "size_bytes": 106011,
+    "sha256": "344984a04f7e2d23cc92c5d18765488ef470447b73b8a31945e6b0e7ac862ef5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-FINGER/0.0.2/M5Unit-FINGER-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-FINGER/0.0.2/M5Unit-FINGER-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-FINGER/0.1.0/M5Unit-FINGER-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-FINGER-0.1.0.tar.gz",
+    "size_bytes": 108123,
+    "sha256": "f3b574aecadf7fa0f15eba71149fb184dee4c7db051c2af645b1459cb2055cf9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-FINGER/0.1.0/M5Unit-FINGER-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-FINGER/0.1.0/M5Unit-FINGER-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-FINGER/0.2.0/M5Unit-FINGER-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-FINGER-0.2.0.tar.gz",
+    "size_bytes": 117464,
+    "sha256": "963801465eada9ddb16b8e3163198bb6d023fe6089bb28f140549f8f03c75bee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-FINGER/0.2.0/M5Unit-FINGER-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-FINGER/0.2.0/M5Unit-FINGER-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-FINGER/0.2.1/M5Unit-FINGER-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-FINGER-0.2.1.tar.gz",
+    "size_bytes": 128067,
+    "sha256": "e4348244bf2ad2c8efaa3403c8a35dbd53ee92e37962903672b7349234779ad4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-FINGER/0.2.1/M5Unit-FINGER-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-FINGER/0.2.1/M5Unit-FINGER-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-FLASHLIGHT/0.0.1/M5Unit-FLASHLIGHT-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-FLASHLIGHT-0.0.1.tar.gz",
+    "size_bytes": 55729,
+    "sha256": "f22928319ca822d411e68dd29f45f7722bef1b34424db00e3841f7ffe14507fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-FLASHLIGHT/0.0.1/M5Unit-FLASHLIGHT-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-FLASHLIGHT/0.0.1/M5Unit-FLASHLIGHT-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-FLASHLIGHT/0.0.2/M5Unit-FLASHLIGHT-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-FLASHLIGHT-0.0.2.tar.gz",
+    "size_bytes": 56809,
+    "sha256": "193b1d38a46a1fa37f8bc2034e3203e1dae1fb5c5d1537f9a1f9b4831b45d06e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-FLASHLIGHT/0.0.2/M5Unit-FLASHLIGHT-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-FLASHLIGHT/0.0.2/M5Unit-FLASHLIGHT-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-Fingerprint2/1.2.0/M5Unit-Fingerprint2-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-Fingerprint2-1.2.0.tar.gz",
+    "size_bytes": 74534,
+    "sha256": "86d86ee9a185ce2029636ddf204aca681c5c426f52903a3d392cc8c69ed525af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-Fingerprint2/1.2.0/M5Unit-Fingerprint2-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-Fingerprint2/1.2.0/M5Unit-Fingerprint2-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-Fingerprint2/1.3.0/M5Unit-Fingerprint2-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-Fingerprint2-1.3.0.tar.gz",
+    "size_bytes": 74534,
+    "sha256": "d0b0e3cc6463748d47ae7392c29794f43fa97cb43d9ab094ac3b6182c22cbb50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-Fingerprint2/1.3.0/M5Unit-Fingerprint2-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-Fingerprint2/1.3.0/M5Unit-Fingerprint2-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-GESTURE/0.2.0/M5Unit-GESTURE-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-GESTURE-0.2.0.tar.gz",
+    "size_bytes": 61587,
+    "sha256": "d3c2930eba69e6af31d57708411b9a1f4dbb6d0cbaeaeb7986e970646ba557c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-GESTURE/0.2.0/M5Unit-GESTURE-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-GESTURE/0.2.0/M5Unit-GESTURE-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-GESTURE/0.3.0/M5Unit-GESTURE-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-GESTURE-0.3.0.tar.gz",
+    "size_bytes": 72688,
+    "sha256": "e4f4ae069b4bdee74afd48e82c0835e66c0a928198b6ccf33ff5a4247797efd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-GESTURE/0.3.0/M5Unit-GESTURE-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-GESTURE/0.3.0/M5Unit-GESTURE-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-HEART/0.2.1/M5Unit-HEART-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-HEART-0.2.1.tar.gz",
+    "size_bytes": 77600,
+    "sha256": "07f2a2cad418dda422040fca9744b90dbf50ba7d0fad5cea998906a0a67a8c90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-HEART/0.2.1/M5Unit-HEART-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-HEART/0.2.1/M5Unit-HEART-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-HEART/0.3.0/M5Unit-HEART-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-HEART-0.3.0.tar.gz",
+    "size_bytes": 88633,
+    "sha256": "adc3b11c2f507229de9c2417c102f1f239fce0892707e4f386c95b39caa8f5ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-HEART/0.3.0/M5Unit-HEART-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-HEART/0.3.0/M5Unit-HEART-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-HUB/0.3.0/M5Unit-HUB-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-HUB-0.3.0.tar.gz",
+    "size_bytes": 55787,
+    "sha256": "03f02172de098e88836c79f4c68b4f702bf255724940378326fdc3ffffc150ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-HUB/0.3.0/M5Unit-HUB-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-HUB/0.3.0/M5Unit-HUB-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-HUB/0.3.1/M5Unit-HUB-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-HUB-0.3.1.tar.gz",
+    "size_bytes": 56730,
+    "sha256": "0d38ce2b9b0dc5661f09d32331e0fde7752fd962bf3086f7f84c9c1b5018ba5a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-HUB/0.3.1/M5Unit-HUB-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-HUB/0.3.1/M5Unit-HUB-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-HUB/0.4.0/M5Unit-HUB-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-HUB-0.4.0.tar.gz",
+    "size_bytes": 64969,
+    "sha256": "0bc0c201d30580b1a891bec7042de6f6b7b04927f44a851a77c024bfae7dfb86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-HUB/0.4.0/M5Unit-HUB-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-HUB/0.4.0/M5Unit-HUB-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-IMU-Pro-Mini/1.0.2/M5Unit-IMU-Pro-Mini-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-IMU-Pro-Mini-1.0.2.tar.gz",
+    "size_bytes": 185032,
+    "sha256": "9bde9a9bba93b56a23e21f3b6ceb359fa2a006707969259aec4b1f9c029b02a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-IMU-Pro-Mini/1.0.2/M5Unit-IMU-Pro-Mini-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-IMU-Pro-Mini/1.0.2/M5Unit-IMU-Pro-Mini-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-IMU/0.0.1/M5Unit-IMU-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-IMU-0.0.1.tar.gz",
+    "size_bytes": 2581172,
+    "sha256": "4841683b7f39c65e18c8fa2243b6c217bed42ee9fea842dbb9d647b4d624dc52",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-IMU/0.0.1/M5Unit-IMU-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-IMU/0.0.1/M5Unit-IMU-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-IMU/0.0.2/M5Unit-IMU-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-IMU-0.0.2.tar.gz",
+    "size_bytes": 310152,
+    "sha256": "e28dedc09c3fd0101d813249b24fd82a78106b95740ad6ea07771df78d8f5b9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-IMU/0.0.2/M5Unit-IMU-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-IMU/0.0.2/M5Unit-IMU-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-INFRARED/0.1.1/M5Unit-INFRARED-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-INFRARED-0.1.1.tar.gz",
+    "size_bytes": 62224,
+    "sha256": "7d2867040708f65c522572ea0257aacf3bdccec76cc5c11f7d33a81d1860d6e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-INFRARED/0.1.1/M5Unit-INFRARED-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-INFRARED/0.1.1/M5Unit-INFRARED-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-INFRARED/0.2.0/M5Unit-INFRARED-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-INFRARED-0.2.0.tar.gz",
+    "size_bytes": 102562,
+    "sha256": "c68f3c3949e02421c99c1a4d062a3b294be2d90be01f9655006df0bcaca311c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-INFRARED/0.2.0/M5Unit-INFRARED-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-INFRARED/0.2.0/M5Unit-INFRARED-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-INFRARED/0.3.0/M5Unit-INFRARED-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-INFRARED-0.3.0.tar.gz",
+    "size_bytes": 120397,
+    "sha256": "474887352fd84f69fb83d7053eebe8a0965026b9b5ef72385692eeeec561b27f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-INFRARED/0.3.0/M5Unit-INFRARED-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-INFRARED/0.3.0/M5Unit-INFRARED-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-INFRARED/0.3.1/M5Unit-INFRARED-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-INFRARED-0.3.1.tar.gz",
+    "size_bytes": 120889,
+    "sha256": "0fcba6439dc31e25e5a37c17d3c4dca9b095d617217b908393fbc8fb272ef8d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-INFRARED/0.3.1/M5Unit-INFRARED-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-INFRARED/0.3.1/M5Unit-INFRARED-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-KEYBOARD/0.0.1/M5Unit-KEYBOARD-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-KEYBOARD-0.0.1.tar.gz",
+    "size_bytes": 82243,
+    "sha256": "9731d3f0baa565cd2446040d908a0f7d3be246717f42043790a7ccde41ed04b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-KEYBOARD/0.0.1/M5Unit-KEYBOARD-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-KEYBOARD/0.0.1/M5Unit-KEYBOARD-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-KEYBOARD/0.1.0/M5Unit-KEYBOARD-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-KEYBOARD-0.1.0.tar.gz",
+    "size_bytes": 124645,
+    "sha256": "5b7b3b0a65c05fc199ce0f350a8a28fed291e78ec34152b896aac7038c815383",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-KEYBOARD/0.1.0/M5Unit-KEYBOARD-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-KEYBOARD/0.1.0/M5Unit-KEYBOARD-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-KMeter/0.1.1/M5Unit-KMeter-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-KMeter-0.1.1.tar.gz",
+    "size_bytes": 9146,
+    "sha256": "c76ea6747afac65564909b4d64968e4d52ef24c32518d4420fdd9afb877c004a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-KMeter/0.1.1/M5Unit-KMeter-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-KMeter/0.1.1/M5Unit-KMeter-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-KMeterISO/1.0.1/M5Unit-KMeterISO-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-KMeterISO-1.0.1.tar.gz",
+    "size_bytes": 6673,
+    "sha256": "336e778d2325c9f284aa74cf94ae3c600b1e170adead4a8b038ac28d2bc5b012",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-KMeterISO/1.0.1/M5Unit-KMeterISO-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-KMeterISO/1.0.1/M5Unit-KMeterISO-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-KMeterISO/1.0.2/M5Unit-KMeterISO-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-KMeterISO-1.0.2.tar.gz",
+    "size_bytes": 6673,
+    "sha256": "d2747db0e4fb1be91db11acbbe899ec066015b6097c9110e0fa9e22f971d15f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-KMeterISO/1.0.2/M5Unit-KMeterISO-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-KMeterISO/1.0.2/M5Unit-KMeterISO-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-LIGHT/0.0.1/M5Unit-LIGHT-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-LIGHT-0.0.1.tar.gz",
+    "size_bytes": 63093,
+    "sha256": "5ee6770dd06292b6fa2d5ac12053b7f55f90611878aaae3cfef92af6ceb81f83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-LIGHT/0.0.1/M5Unit-LIGHT-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-LIGHT/0.0.1/M5Unit-LIGHT-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-LIGHT/0.0.2/M5Unit-LIGHT-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-LIGHT-0.0.2.tar.gz",
+    "size_bytes": 64006,
+    "sha256": "e9646949854a8b4442d5a0ca1b567f2a1a6af9851df8f4274e3d3da6c8c2bce7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-LIGHT/0.0.2/M5Unit-LIGHT-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-LIGHT/0.0.2/M5Unit-LIGHT-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-METER/0.3.0/M5Unit-METER-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-METER-0.3.0.tar.gz",
+    "size_bytes": 86067,
+    "sha256": "b48de312ae68a08b7e7f9a94b04f95558b9eecee6cb6ea2524d9d27c297707c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-METER/0.3.0/M5Unit-METER-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-METER/0.3.0/M5Unit-METER-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-METER/0.4.0/M5Unit-METER-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-METER-0.4.0.tar.gz",
+    "size_bytes": 94147,
+    "sha256": "65c070611e4bf2933bbafb6952979074112eb0b8f859ab8c181e45acedb9448d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-METER/0.4.0/M5Unit-METER-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-METER/0.4.0/M5Unit-METER-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-METER/0.4.1/M5Unit-METER-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-METER-0.4.1.tar.gz",
+    "size_bytes": 94403,
+    "sha256": "b5edfb3bed39664af3b6933f7d80e58f84f04d02b2a90b4d988313765b5005a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-METER/0.4.1/M5Unit-METER-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-METER/0.4.1/M5Unit-METER-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-MQTT/0.0.1/M5Unit-MQTT-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-MQTT-0.0.1.tar.gz",
+    "size_bytes": 3852,
+    "sha256": "310de7c8dbabd42b9efc135b0e46df043c0f4aab0a4538cf1b48218a7c58076f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-MQTT/0.0.1/M5Unit-MQTT-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-MQTT/0.0.1/M5Unit-MQTT-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-NFC/0.0.1/M5Unit-NFC-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-NFC-0.0.1.tar.gz",
+    "size_bytes": 249412,
+    "sha256": "0035f0cd7ccbe436aae1184bd1a58970962c7eb16ef5b22837265f0c89e611c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-NFC/0.0.1/M5Unit-NFC-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-NFC/0.0.1/M5Unit-NFC-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-NFC/0.0.2/M5Unit-NFC-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-NFC-0.0.2.tar.gz",
+    "size_bytes": 249533,
+    "sha256": "e8db4c1c390883c21e531be3487797910649efd8204f62ad98c2d51340029809",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-NFC/0.0.2/M5Unit-NFC-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-NFC/0.0.2/M5Unit-NFC-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-NFC/0.0.3/M5Unit-NFC-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-NFC-0.0.3.tar.gz",
+    "size_bytes": 251104,
+    "sha256": "c664fba9b1e091cd8291657f327ccb4bb39910bb3b53f3d6bf1a564b26b018ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-NFC/0.0.3/M5Unit-NFC-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-NFC/0.0.3/M5Unit-NFC-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-NFC/0.1.0/M5Unit-NFC-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-NFC-0.1.0.tar.gz",
+    "size_bytes": 282507,
+    "sha256": "11760d2fdbdb0c353d1c42b96e5ae3f777f95bf918048b0eea32949543f470bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-NFC/0.1.0/M5Unit-NFC-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-NFC/0.1.0/M5Unit-NFC-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-NFC/0.1.1/M5Unit-NFC-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-NFC-0.1.1.tar.gz",
+    "size_bytes": 294373,
+    "sha256": "36b2e85d2b19e5d14a7b52b4cd64537a91ebe10c8973a226c57845b2e41f10f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-NFC/0.1.1/M5Unit-NFC-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-NFC/0.1.1/M5Unit-NFC-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-NFC/0.1.2/M5Unit-NFC-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-NFC-0.1.2.tar.gz",
+    "size_bytes": 302598,
+    "sha256": "bab2cf0781753acfbaa7066cef6625ec1ae2187bbf69a1307cfec56cfdd376ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-NFC/0.1.2/M5Unit-NFC-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-NFC/0.1.2/M5Unit-NFC-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-PbHub/1.0.0/M5Unit-PbHub-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-PbHub-1.0.0.tar.gz",
+    "size_bytes": 3120,
+    "sha256": "4350ed14eac0e1fa1e5816699a560e517424347699231e2f521307df0e0f8e61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-PbHub/1.0.0/M5Unit-PbHub-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-PbHub/1.0.0/M5Unit-PbHub-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-PoESP32/0.0.1/M5Unit-PoESP32-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-PoESP32-0.0.1.tar.gz",
+    "size_bytes": 5967,
+    "sha256": "b8167bc7519247e9e4b6faac71e3d6caed8e83bf41e4312eb43e38239c867acf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-PoESP32/0.0.1/M5Unit-PoESP32-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-PoESP32/0.0.1/M5Unit-PoESP32-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-PoESP32/0.0.2/M5Unit-PoESP32-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-PoESP32-0.0.2.tar.gz",
+    "size_bytes": 8051,
+    "sha256": "0c3f48ad2f42f25f4e791b871cd9f16e142a2686f464261dab7dc94af9901956",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-PoESP32/0.0.2/M5Unit-PoESP32-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-PoESP32/0.0.2/M5Unit-PoESP32-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RELAY/0.0.2/M5Unit-RELAY-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RELAY-0.0.2.tar.gz",
+    "size_bytes": 9134,
+    "sha256": "938ade0d87df396971efd9ac9c62b2725c92bb9f064c86d91c70ca39f69577f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RELAY/0.0.2/M5Unit-RELAY-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RELAY/0.0.2/M5Unit-RELAY-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RF433/0.0.1/M5Unit-RF433-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RF433-0.0.1.tar.gz",
+    "size_bytes": 50118,
+    "sha256": "60ed7b08ee6a8d8e62250f4f9fc4c3f543756c4fda5645e80ba727e030c00c80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RF433/0.0.1/M5Unit-RF433-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RF433/0.0.1/M5Unit-RF433-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RF433/0.1.0/M5Unit-RF433-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RF433-0.1.0.tar.gz",
+    "size_bytes": 58606,
+    "sha256": "a20b0dabbe89efeb6a25dda6d683fb395f6f22eb9e0cd1dea50a244fb5414357",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RF433/0.1.0/M5Unit-RF433-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RF433/0.1.0/M5Unit-RF433-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RF433/0.2.0/M5Unit-RF433-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RF433-0.2.0.tar.gz",
+    "size_bytes": 68958,
+    "sha256": "3c255811451f63cef8b6fab47740bf2ed60186cea855efae0f8565200d226520",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RF433/0.2.0/M5Unit-RF433-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RF433/0.2.0/M5Unit-RF433-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RF433/0.2.1/M5Unit-RF433-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RF433-0.2.1.tar.gz",
+    "size_bytes": 69097,
+    "sha256": "64ef57284cb138340acc57e8a56faeb0f10b87eb9e148d7ebaf7c6fd9674ef05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RF433/0.2.1/M5Unit-RF433-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RF433/0.2.1/M5Unit-RF433-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RFID/0.0.1/M5Unit-RFID-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RFID-0.0.1.tar.gz",
+    "size_bytes": 73685,
+    "sha256": "6b570f211b0c34a16eafe792ff8d06b2c58560f8d8ad58af51b66d32c85a0b74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RFID/0.0.1/M5Unit-RFID-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RFID/0.0.1/M5Unit-RFID-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RFID/0.1.0/M5Unit-RFID-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RFID-0.1.0.tar.gz",
+    "size_bytes": 98634,
+    "sha256": "ecfbcd44c7a9a903468ad32c6280dc3068b7e485d319603e46d1387b95b4c2d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RFID/0.1.0/M5Unit-RFID-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RFID/0.1.0/M5Unit-RFID-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RFID/0.2.0/M5Unit-RFID-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RFID-0.2.0.tar.gz",
+    "size_bytes": 225550,
+    "sha256": "fe6bf41af2514d4f06d202083590abab5f01ab66640516ddbef276879d03969c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RFID/0.2.0/M5Unit-RFID-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RFID/0.2.0/M5Unit-RFID-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RFID/0.2.1/M5Unit-RFID-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RFID-0.2.1.tar.gz",
+    "size_bytes": 229713,
+    "sha256": "7fddeb8c83f3648d4e46fcae9e0346cb5909aa7b04fc7b92e2e858cdfadfe6fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RFID/0.2.1/M5Unit-RFID-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RFID/0.2.1/M5Unit-RFID-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RGB/0.0.1/M5Unit-RGB-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RGB-0.0.1.tar.gz",
+    "size_bytes": 69255,
+    "sha256": "d177daf41cd7bcd9aff4db43059724b622c1d701c609f2ad93d762682282646e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RGB/0.0.1/M5Unit-RGB-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RGB/0.0.1/M5Unit-RGB-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RGB/0.0.2/M5Unit-RGB-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RGB-0.0.2.tar.gz",
+    "size_bytes": 74743,
+    "sha256": "cd66c59e001a20b12382d30fa6a912baeffe832ff2230e1bf34d9c0a27f6adce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RGB/0.0.2/M5Unit-RGB-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RGB/0.0.2/M5Unit-RGB-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RGB/0.1.0/M5Unit-RGB-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RGB-0.1.0.tar.gz",
+    "size_bytes": 89497,
+    "sha256": "8b9dcda7d890634022b55f3a8c2da300febe6a88e2d33aeb23e2d1dc0752c5f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RGB/0.1.0/M5Unit-RGB-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RGB/0.1.0/M5Unit-RGB-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RS485/0.0.1/M5Unit-RS485-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RS485-0.0.1.tar.gz",
+    "size_bytes": 52181,
+    "sha256": "efd82d2da7696ee853adfb3fadd0bb7ba361ac8a5b0ca139f76f71b6995697b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RS485/0.0.1/M5Unit-RS485-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RS485/0.0.1/M5Unit-RS485-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RS485/0.1.0/M5Unit-RS485-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RS485-0.1.0.tar.gz",
+    "size_bytes": 59941,
+    "sha256": "9236704359010e7612a46c0336a70b9a236c414edf7ea2cd18a2c8315736d15e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RS485/0.1.0/M5Unit-RS485-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RS485/0.1.0/M5Unit-RS485-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RS485/0.2.0/M5Unit-RS485-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RS485-0.2.0.tar.gz",
+    "size_bytes": 90004,
+    "sha256": "914f5274a4cb9eb1d06a16cfded20a2dc6f32e3cd815951295aa4cd0b8354286",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RS485/0.2.0/M5Unit-RS485-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RS485/0.2.0/M5Unit-RS485-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RTC/0.1.0/M5Unit-RTC-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RTC-0.1.0.tar.gz",
+    "size_bytes": 67484,
+    "sha256": "18c4908871e9548508613ad4613373a019f8c36dba477d4964c7df202eedaffc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RTC/0.1.0/M5Unit-RTC-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RTC/0.1.0/M5Unit-RTC-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-RTC/0.2.0/M5Unit-RTC-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-RTC-0.2.0.tar.gz",
+    "size_bytes": 121282,
+    "sha256": "78ddd0d8af0cbe470bff492301781bb86e88a6124653067ab2c21357697fa75f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-RTC/0.2.0/M5Unit-RTC-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-RTC/0.2.0/M5Unit-RTC-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-Sonic/0.0.2/M5Unit-Sonic-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-Sonic-0.0.2.tar.gz",
+    "size_bytes": 4795,
+    "sha256": "df1d04f7101092f9685d14a4917cf26e39713920a8343843200a04ba7610ba9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-Sonic/0.0.2/M5Unit-Sonic-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-Sonic/0.0.2/M5Unit-Sonic-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-THERMO/0.3.1/M5Unit-THERMO-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-THERMO-0.3.1.tar.gz",
+    "size_bytes": 92304,
+    "sha256": "2575092983299475bc2dd8a55803b869d3b4fe8845d1859af1f7a2a926998aab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-THERMO/0.3.1/M5Unit-THERMO-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-THERMO/0.3.1/M5Unit-THERMO-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-THERMO/0.4.0/M5Unit-THERMO-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-THERMO-0.4.0.tar.gz",
+    "size_bytes": 111504,
+    "sha256": "b0a64488faf374e1ac89a2c25eccd8a09365b5d517e045b435e422e1e109b58c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-THERMO/0.4.0/M5Unit-THERMO-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-THERMO/0.4.0/M5Unit-THERMO-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-TOF/0.2.0/M5Unit-TOF-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-TOF-0.2.0.tar.gz",
+    "size_bytes": 68010,
+    "sha256": "762a7bab93cb19b1759520ab9b67489ccb73517e791f16cf2ce8915886eadb49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-TOF/0.2.0/M5Unit-TOF-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-TOF/0.2.0/M5Unit-TOF-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-TOF/0.2.1/M5Unit-TOF-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-TOF-0.2.1.tar.gz",
+    "size_bytes": 71032,
+    "sha256": "2f8962c1ada7cb4efb832d64a5fcb18bca327bbf50d96ad7815ba6751a8827f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-TOF/0.2.1/M5Unit-TOF-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-TOF/0.2.1/M5Unit-TOF-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-TOF/0.3.0/M5Unit-TOF-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-TOF-0.3.0.tar.gz",
+    "size_bytes": 84589,
+    "sha256": "ed07773a7145a448308b49843d6a417d239ac961eb8f7da0ffda81fb1c27ac24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-TOF/0.3.0/M5Unit-TOF-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-TOF/0.3.0/M5Unit-TOF-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-TUBE/0.0.1/M5Unit-TUBE-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-TUBE-0.0.1.tar.gz",
+    "size_bytes": 47280,
+    "sha256": "aa571d69fe4858a020ea9b22c1f43a363d44a4bc9e7dadd11b52d62bbafe3033",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-TUBE/0.0.1/M5Unit-TUBE-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-TUBE/0.0.1/M5Unit-TUBE-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-Thermal2/0.0.1/M5Unit-Thermal2-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-Thermal2-0.0.1.tar.gz",
+    "size_bytes": 23138,
+    "sha256": "7f433f19eb8ba4ea4a9bea9785a7eed1db23500f705c2f80944b9ebc75ad098f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-Thermal2/0.0.1/M5Unit-Thermal2-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-Thermal2/0.0.1/M5Unit-Thermal2-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-ToF4M/1.0.0/M5Unit-ToF4M-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-ToF4M-1.0.0.tar.gz",
+    "size_bytes": 5914,
+    "sha256": "5c8e77baad73e68fee13aeb540e578063a2bab8a2e1ce5102583ffe507f2a601",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-ToF4M/1.0.0/M5Unit-ToF4M-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-ToF4M/1.0.0/M5Unit-ToF4M-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-UHF-RFID/0.0.3/M5Unit-UHF-RFID-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-UHF-RFID-0.0.3.tar.gz",
+    "size_bytes": 7099,
+    "sha256": "7787b0d72ffabcb13b3218f333d1e982a5d65fea85ebe725c40df328f21729ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-UHF-RFID/0.0.3/M5Unit-UHF-RFID-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-UHF-RFID/0.0.3/M5Unit-UHF-RFID-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-UHF-RFID/0.0.4/M5Unit-UHF-RFID-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-UHF-RFID-0.0.4.tar.gz",
+    "size_bytes": 7138,
+    "sha256": "5608158dec535e20c875300b12986bad055fc847104e03ab27fe9f9ddd541b57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-UHF-RFID/0.0.4/M5Unit-UHF-RFID-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-UHF-RFID/0.0.4/M5Unit-UHF-RFID-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-WEIGHT/0.1.1/M5Unit-WEIGHT-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-WEIGHT-0.1.1.tar.gz",
+    "size_bytes": 55767,
+    "sha256": "ed999c01fe2ff0e16ede88820e5fa62fea8e9d62f03e66da3f5aa01b453167da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-WEIGHT/0.1.1/M5Unit-WEIGHT-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-WEIGHT/0.1.1/M5Unit-WEIGHT-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit-WEIGHT/0.2.0/M5Unit-WEIGHT-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit-WEIGHT-0.2.0.tar.gz",
+    "size_bytes": 65811,
+    "sha256": "f34e93e617777f7ca5a13b5a7cac1ba4ade6d04418e5a840f1c97233ed7119a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit-WEIGHT/0.2.0/M5Unit-WEIGHT-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit-WEIGHT/0.2.0/M5Unit-WEIGHT-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Unit8Servos2/1.0.1/M5Unit8Servos2-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Unit8Servos2-1.0.1.tar.gz",
+    "size_bytes": 12392,
+    "sha256": "6d8b332b0ab84a5829b50b1f26e9d3ebef048c21a0f15a0c4305d0a9dc69c456",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Unit8Servos2/1.0.1/M5Unit8Servos2-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Unit8Servos2/1.0.1/M5Unit8Servos2-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitASR/0.0.1/M5UnitASR-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitASR-0.0.1.tar.gz",
+    "size_bytes": 9093,
+    "sha256": "23892ad11cc1674aa8a9bfaf0fd6116a0bcaefdd824a7646f626e10de760bfb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitASR/0.0.1/M5UnitASR-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitASR/0.0.1/M5UnitASR-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitAudioPlayer/0.0.1/M5UnitAudioPlayer-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitAudioPlayer-0.0.1.tar.gz",
+    "size_bytes": 11039,
+    "sha256": "16b7495aecab4fee8dc9705fa86acefed362267a89fa7369a26367de4c62dd0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitAudioPlayer/0.0.1/M5UnitAudioPlayer-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitAudioPlayer/0.0.1/M5UnitAudioPlayer-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitQRCode/1.0.1/M5UnitQRCode-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitQRCode-1.0.1.tar.gz",
+    "size_bytes": 118348,
+    "sha256": "5d167e3409823a0dd7b255509dc77a5ce62f383183e29baafe418894b965ecf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitQRCode/1.0.1/M5UnitQRCode-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitQRCode/1.0.1/M5UnitQRCode-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitStep16/1.0.1/M5UnitStep16-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitStep16-1.0.1.tar.gz",
+    "size_bytes": 17545,
+    "sha256": "5b696028c8cc63cf68bfbac64752ebe647f83a6a832156ea66f1fa3d9c3028cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitStep16/1.0.1/M5UnitStep16-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitStep16/1.0.1/M5UnitStep16-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitSynth/1.0.1/M5UnitSynth-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitSynth-1.0.1.tar.gz",
+    "size_bytes": 4464,
+    "sha256": "4247ff58b80207eaad87ae3d54941b83ab5cd0e19071ab98ed7e38b358529090",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitSynth/1.0.1/M5UnitSynth-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitSynth/1.0.1/M5UnitSynth-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.2.0/M5UnitUnified-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.2.0.tar.gz",
+    "size_bytes": 96769,
+    "sha256": "5fa25e6213833c750810e910323c4ca50ddf3ad88a9203387a03a3ade51469c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.2.0/M5UnitUnified-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.2.0/M5UnitUnified-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.3.0/M5UnitUnified-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.3.0.tar.gz",
+    "size_bytes": 98073,
+    "sha256": "604a7a499bb0d72c86e8f7dd33199a2a475e757cf5e39c1a2b62d5dddb2246a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.3.0/M5UnitUnified-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.3.0/M5UnitUnified-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.3.1/M5UnitUnified-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.3.1.tar.gz",
+    "size_bytes": 98441,
+    "sha256": "739ebc4cc8afbc3fef8ac91cdff09b239075e46894461bd8dd79f0a8cb686f11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.3.1/M5UnitUnified-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.3.1/M5UnitUnified-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.3.2/M5UnitUnified-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.3.2.tar.gz",
+    "size_bytes": 98565,
+    "sha256": "e09bca3d5114f2349311dd4b6c4cd5bf3170eb2431cb825a33e68d44c7cd0527",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.3.2/M5UnitUnified-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.3.2/M5UnitUnified-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.4.0/M5UnitUnified-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.4.0.tar.gz",
+    "size_bytes": 100561,
+    "sha256": "291c9432723381c4bb154641ef0f5e144043e8ea0c5843fc558aad6cad0b2aef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.4.0/M5UnitUnified-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.4.0/M5UnitUnified-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.4.1/M5UnitUnified-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.4.1.tar.gz",
+    "size_bytes": 100578,
+    "sha256": "2763796695b180a631c88e4ff59d2d0915c6a9eed4e4fe6cccf7ae726f6096c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.4.1/M5UnitUnified-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.4.1/M5UnitUnified-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.4.2/M5UnitUnified-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.4.2.tar.gz",
+    "size_bytes": 100558,
+    "sha256": "2d0a901105733489620386cd19e55b4f9e9d643d67999510655c4c1f83eceda1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.4.2/M5UnitUnified-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.4.2/M5UnitUnified-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.4.3/M5UnitUnified-0.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.4.3.tar.gz",
+    "size_bytes": 101560,
+    "sha256": "44aaf81910639fff13464d88c97e6c59b64109c358e17261a8dd0dd3d9c68578",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.4.3/M5UnitUnified-0.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.4.3/M5UnitUnified-0.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.4.4/M5UnitUnified-0.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.4.4.tar.gz",
+    "size_bytes": 101581,
+    "sha256": "496cf898c0ee685bc573d2078b9ad32b10c74de9798f27e23cdaaf0689310ca0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.4.4/M5UnitUnified-0.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.4.4/M5UnitUnified-0.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.4.5/M5UnitUnified-0.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.4.5.tar.gz",
+    "size_bytes": 84008,
+    "sha256": "68da2250ca3e76cb1149dddf9450fb1dbc96f2d438357c589817a8a7446e8bcf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.4.5/M5UnitUnified-0.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.4.5/M5UnitUnified-0.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.4.6/M5UnitUnified-0.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.4.6.tar.gz",
+    "size_bytes": 84141,
+    "sha256": "b23fc907427ee70f7b1c70ceaa064dfde52ccba37794aca08c013da4f0df47ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.4.6/M5UnitUnified-0.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.4.6/M5UnitUnified-0.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.4.7/M5UnitUnified-0.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.4.7.tar.gz",
+    "size_bytes": 89914,
+    "sha256": "069474d6fc9fe95d90b50155be32a3ac43920c161f1175a1c88b2afe78109cd7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.4.7/M5UnitUnified-0.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.4.7/M5UnitUnified-0.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.4.8/M5UnitUnified-0.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.4.8.tar.gz",
+    "size_bytes": 90457,
+    "sha256": "4891a263185688887e8a3c437df40002b9c9c8fdc177aa16e5efd959833ed224",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.4.8/M5UnitUnified-0.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.4.8/M5UnitUnified-0.4.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.5.0/M5UnitUnified-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.5.0.tar.gz",
+    "size_bytes": 100529,
+    "sha256": "c5a2b4305299982e6caaaf3bddf6c3fbe26fd88c614b262e816339f2afaa8cc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.5.0/M5UnitUnified-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.5.0/M5UnitUnified-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.5.1/M5UnitUnified-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.5.1.tar.gz",
+    "size_bytes": 100572,
+    "sha256": "edc13aa4f47352a8488570d11dcebd9bf026e951452dc94b4aa3480c6a4d47a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.5.1/M5UnitUnified-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.5.1/M5UnitUnified-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.5.4/M5UnitUnified-0.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.5.4.tar.gz",
+    "size_bytes": 101325,
+    "sha256": "4bf6ff417fca639e1c55c6e193036de3ea3c901a0838478b1fb678da688b5a24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.5.4/M5UnitUnified-0.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.5.4/M5UnitUnified-0.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.5.5/M5UnitUnified-0.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.5.5.tar.gz",
+    "size_bytes": 102471,
+    "sha256": "c0722598bebc9871e586b261dcd7f997055c0d48aedddeac3982b63eca0eacd4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.5.5/M5UnitUnified-0.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.5.5/M5UnitUnified-0.5.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.5.7/M5UnitUnified-0.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.5.7.tar.gz",
+    "size_bytes": 104333,
+    "sha256": "2f0a0c22e3649dff20d03d5ad1dbf6024d8d6e22a4483c63bb1891c004d5782c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.5.7/M5UnitUnified-0.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.5.7/M5UnitUnified-0.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.5.8/M5UnitUnified-0.5.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.5.8.tar.gz",
+    "size_bytes": 105241,
+    "sha256": "f08554bcec6ea2e34b1f597e89e996ae93cbf735662b250139dc8934b63ea151",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.5.8/M5UnitUnified-0.5.8.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.5.8/M5UnitUnified-0.5.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.6.0/M5UnitUnified-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.6.0.tar.gz",
+    "size_bytes": 112822,
+    "sha256": "c96c2bdf3fcb340562f2ddc7e9af6568a6ad859dfefd6d88b6dad033df2eec0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.6.0/M5UnitUnified-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.6.0/M5UnitUnified-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.6.1/M5UnitUnified-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.6.1.tar.gz",
+    "size_bytes": 120732,
+    "sha256": "b588c630d3e8d14e9a5b9a501e3f314ab88c4c77d1880cb940bbcbf4458e02e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.6.1/M5UnitUnified-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.6.1/M5UnitUnified-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.6.3/M5UnitUnified-0.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.6.3.tar.gz",
+    "size_bytes": 123556,
+    "sha256": "ee0db3b06581fe79078225c9b18927db52fc83fbb2b40a5da11449fa10615258",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.6.3/M5UnitUnified-0.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.6.3/M5UnitUnified-0.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitUnified/0.6.4/M5UnitUnified-0.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitUnified-0.6.4.tar.gz",
+    "size_bytes": 127134,
+    "sha256": "821abf2cbe612ffc582836ea65be007896d31dd5b5d27f290ae8f335018acfe8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitUnified/0.6.4/M5UnitUnified-0.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitUnified/0.6.4/M5UnitUnified-0.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5UnitWeightI2C/1.0.0/M5UnitWeightI2C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5UnitWeightI2C-1.0.0.tar.gz",
+    "size_bytes": 6739,
+    "sha256": "42732f70d83f1e423dec8bbe9c66aaaa5609025335199454ca09e5d45a100fb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5UnitWeightI2C/1.0.0/M5UnitWeightI2C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5UnitWeightI2C/1.0.0/M5UnitWeightI2C-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Utility/0.0.10/M5Utility-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Utility-0.0.10.tar.gz",
+    "size_bytes": 136409,
+    "sha256": "13cdb16a110028d1aa1b0ade85855ef0f224e06ea57ec0d011f17c2ad10c3219",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Utility/0.0.10/M5Utility-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Utility/0.0.10/M5Utility-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Utility/0.0.12/M5Utility-0.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Utility-0.0.12.tar.gz",
+    "size_bytes": 140695,
+    "sha256": "29097357ac9d7478cad43147298ae2eb8d80c220d9617ce34322819e79c8cb56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Utility/0.0.12/M5Utility-0.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Utility/0.0.12/M5Utility-0.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Utility/0.0.13/M5Utility-0.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Utility-0.0.13.tar.gz",
+    "size_bytes": 140796,
+    "sha256": "d9df081faf1ca5ff0d2146df9a7c2f5ed94deb1f18c018e4e1d36866fe05b7de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Utility/0.0.13/M5Utility-0.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Utility/0.0.13/M5Utility-0.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Utility/0.0.6/M5Utility-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Utility-0.0.6.tar.gz",
+    "size_bytes": 101962,
+    "sha256": "9762f102681469c09cf7967c7bb2e12af9bd619e29d9439a73b3691ef51ed30c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Utility/0.0.6/M5Utility-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Utility/0.0.6/M5Utility-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Utility/0.0.7/M5Utility-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Utility-0.0.7.tar.gz",
+    "size_bytes": 105556,
+    "sha256": "7d824d05fd41c6a5fd9b7ab2d19e5047a00b154dfe7f497f70a2b86bb59ee928",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Utility/0.0.7/M5Utility-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Utility/0.0.7/M5Utility-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Utility/0.0.8/M5Utility-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Utility-0.0.8.tar.gz",
+    "size_bytes": 106037,
+    "sha256": "209277d84d4cdab3408b273bd2e1564dadb12dcad691635f3a614c80f5c4c5ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Utility/0.0.8/M5Utility-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Utility/0.0.8/M5Utility-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Utility/0.0.9/M5Utility-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Utility-0.0.9.tar.gz",
+    "size_bytes": 118028,
+    "sha256": "44d8940b1d73afa799fb9007ec4a102f3849660e22f4c471328eb15fb7cfc655",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Utility/0.0.9/M5Utility-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Utility/0.0.9/M5Utility-0.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Utility/0.1.0/M5Utility-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Utility-0.1.0.tar.gz",
+    "size_bytes": 141968,
+    "sha256": "68b5796bfa542949a7d905f8df62c260143d9d7bacdd165bf31d943438dd08a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Utility/0.1.0/M5Utility-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Utility/0.1.0/M5Utility-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Utility/0.1.1/M5Utility-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Utility-0.1.1.tar.gz",
+    "size_bytes": 142098,
+    "sha256": "d7fc090da0720fedc61b9888d3f1b474d2d9e127205fc752396a7dab268048ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Utility/0.1.1/M5Utility-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Utility/0.1.1/M5Utility-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Utility/0.2.0/M5Utility-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Utility-0.2.0.tar.gz",
+    "size_bytes": 148527,
+    "sha256": "c893c262ed9cb7b17226d2b992656dfae56c0a27fc42e2d7727866b7ef9bf2c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Utility/0.2.0/M5Utility-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Utility/0.2.0/M5Utility-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Utility/0.3.0/M5Utility-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Utility-0.3.0.tar.gz",
+    "size_bytes": 155420,
+    "sha256": "b08d00f4ce4aea5413c9cb44a6d6553b07368b2e35a8f812526533572be234c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Utility/0.3.0/M5Utility-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Utility/0.3.0/M5Utility-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5Utility/0.3.1/M5Utility-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5Utility-0.3.1.tar.gz",
+    "size_bytes": 156472,
+    "sha256": "9744844b4732a8e66db1c0c6a326c5a5243c34b63adbd22f4776406507f7790c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5Utility/0.3.1/M5Utility-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5Utility/0.3.1/M5Utility-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5_ADS1100/0.0.1/M5_ADS1100-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5_ADS1100-0.0.1.tar.gz",
+    "size_bytes": 4378,
+    "sha256": "1f51668aa72a67c9bee52dd458ced15d6ba90edca759e1c25bdf289bb9e5a49a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5_ADS1100/0.0.1/M5_ADS1100-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5_ADS1100/0.0.1/M5_ADS1100-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5_BH1750FVI/0.0.2/M5_BH1750FVI-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5_BH1750FVI-0.0.2.tar.gz",
+    "size_bytes": 2707,
+    "sha256": "9e352ef5dc862faac7c6d38d8b134a85645ac2b6ef75e6596ce818ec39b94955",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5_BH1750FVI/0.0.2/M5_BH1750FVI-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5_BH1750FVI/0.0.2/M5_BH1750FVI-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5_BMM150/0.0.2/M5_BMM150-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5_BMM150-0.0.2.tar.gz",
+    "size_bytes": 21749,
+    "sha256": "bc336a9cb3789ef31c6e5372b47a450bb105e0a9d121106d42b8a3530a9bd233",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5_BMM150/0.0.2/M5_BMM150-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5_BMM150/0.0.2/M5_BMM150-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5_IP5209/0.0.1/M5_IP5209-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5_IP5209-0.0.1.tar.gz",
+    "size_bytes": 2809,
+    "sha256": "b5b79353ff8dce10bf1e9b3bbf339e26429d495aa9a73dfb26031b748ea5da31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5_IP5209/0.0.1/M5_IP5209-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5_IP5209/0.0.1/M5_IP5209-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5_JoyC/0.0.1/M5_JoyC-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5_JoyC-0.0.1.tar.gz",
+    "size_bytes": 2835,
+    "sha256": "64c219e4a32ab9f52744943e0a8946794b35bdfc73e8950a8962b1177bd99617",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5_JoyC/0.0.1/M5_JoyC-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5_JoyC/0.0.1/M5_JoyC-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/M5_RoverC/0.0.1/M5_RoverC-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5_RoverC-0.0.1.tar.gz",
+    "size_bytes": 2556,
+    "sha256": "cb4c6c10c8391bff202ddc424138ec34b9f41538d3d0946da0cdc2fdb6f2a76a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/M5_RoverC/0.0.1/M5_RoverC-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/M5_RoverC/0.0.1/M5_RoverC-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/MODULE_2RELAY/0.0.1/MODULE_2RELAY-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MODULE_2RELAY-0.0.1.tar.gz",
+    "size_bytes": 5532,
+    "sha256": "8f697896b428b13f9fe3421eafd30f0ec9eef67fea8062f16ae413465a10cd27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/MODULE_2RELAY/0.0.1/MODULE_2RELAY-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/MODULE_2RELAY/0.0.1/MODULE_2RELAY-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/MODULE_4IN8OUT/0.0.1/MODULE_4IN8OUT-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MODULE_4IN8OUT-0.0.1.tar.gz",
+    "size_bytes": 6490,
+    "sha256": "46288d4918c7a876880ffa7eb71f2308368bff174b15da8bd08fe0193fa11db8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/MODULE_4IN8OUT/0.0.1/MODULE_4IN8OUT-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/MODULE_4IN8OUT/0.0.1/MODULE_4IN8OUT-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/MODULE_4RELAY/0.0.3/MODULE_4RELAY-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MODULE_4RELAY-0.0.3.tar.gz",
+    "size_bytes": 5218,
+    "sha256": "e0566d4908d7840366aa645ca8d232c4fd10a31f85c23c91c8fcbaee1a6733e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/MODULE_4RELAY/0.0.3/MODULE_4RELAY-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/MODULE_4RELAY/0.0.3/MODULE_4RELAY-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/Module-Audio/0.0.1/Module-Audio-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Module-Audio-0.0.1.tar.gz",
+    "size_bytes": 16138,
+    "sha256": "15715dac4872641afc7325c76d469372bbe7ed6ec28dd3635ca12e2487f21f55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/Module-Audio/0.0.1/Module-Audio-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/Module-Audio/0.0.1/Module-Audio-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/Module-Audio/0.0.2/Module-Audio-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Module-Audio-0.0.2.tar.gz",
+    "size_bytes": 20250,
+    "sha256": "556b4c08d9142a92ba5595de5402231c655f24747904000294557dbdd1e59f65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/Module-Audio/0.0.2/Module-Audio-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/Module-Audio/0.0.2/Module-Audio-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/Module_GRBL_13.2/0.0.3/Module_GRBL_13.2-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Module_GRBL_13.2-0.0.3.tar.gz",
+    "size_bytes": 4361,
+    "sha256": "bdae16b11e2cd8cc1cc594a24b4785d70b49e6d091edc03df61a1522e002fc32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/Module_GRBL_13.2/0.0.3/Module_GRBL_13.2-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/Module_GRBL_13.2/0.0.3/Module_GRBL_13.2-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/Module_Stepmotor/0.0.2/Module_Stepmotor-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Module_Stepmotor-0.0.2.tar.gz",
+    "size_bytes": 3980,
+    "sha256": "8891ca7ade49ba78497afacda5dde56bd4e4306fe82222e11e3d413ea81194bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/Module_Stepmotor/0.0.2/Module_Stepmotor-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/Module_Stepmotor/0.0.2/Module_Stepmotor-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/PoE_CAM/0.0.1/PoE_CAM-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PoE_CAM-0.0.1.tar.gz",
+    "size_bytes": 53201,
+    "sha256": "cd6e09e9378c0dce9ea31a8b6da06537a75d5f8714ef1e94fb5423c61e9e1de9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/PoE_CAM/0.0.1/PoE_CAM-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/PoE_CAM/0.0.1/PoE_CAM-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/STAMP-PICO/0.0.2/STAMP-PICO-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STAMP-PICO-0.0.2.tar.gz",
+    "size_bytes": 309040,
+    "sha256": "467cfb5ee4b34050be96cf8f7dfc29ac274840ed54face28789416aeada04384",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/STAMP-PICO/0.0.2/STAMP-PICO-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/STAMP-PICO/0.0.2/STAMP-PICO-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/Timer-CAM/1.0.1/Timer-CAM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Timer-CAM-1.0.1.tar.gz",
+    "size_bytes": 34235,
+    "sha256": "975d1b593eda9822ac33b60bcf6f9e92c0da8d52fe91365a22fcdea08c899ad2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/Timer-CAM/1.0.1/Timer-CAM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/Timer-CAM/1.0.1/Timer-CAM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/UNIT_GLASS/0.0.1/UNIT_GLASS-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UNIT_GLASS-0.0.1.tar.gz",
+    "size_bytes": 7769,
+    "sha256": "7474e2965c1d9a152adf6b8c3eeacdb103e019f1c32814122c77e0aa32589476",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/UNIT_GLASS/0.0.1/UNIT_GLASS-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/UNIT_GLASS/0.0.1/UNIT_GLASS-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/UNIT_MINISCALE/0.0.1/UNIT_MINISCALE-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UNIT_MINISCALE-0.0.1.tar.gz",
+    "size_bytes": 125965,
+    "sha256": "60c120be30a2999af7613fd68b70f2cfd7a4b8db9e270cc205e397bca4b668e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/UNIT_MINISCALE/0.0.1/UNIT_MINISCALE-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/UNIT_MINISCALE/0.0.1/UNIT_MINISCALE-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/UNIT_MQTT/0.0.1/UNIT_MQTT-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UNIT_MQTT-0.0.1.tar.gz",
+    "size_bytes": 3167,
+    "sha256": "afe0439c31397ce4f5b517d5c23a03c508f8f8b9231a47c68a1d17a133c548ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/UNIT_MQTT/0.0.1/UNIT_MQTT-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/UNIT_MQTT/0.0.1/UNIT_MQTT-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "m5stack/library/Unit%20MQ/1.0.0/UnitMQ-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UnitMQ-1.0.0.tar.gz",
+    "size_bytes": 11708,
+    "sha256": "838f4378c8ccf4b6aaf52b60ea67e632354686ada7f21e3c26b29a435c68f8e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/m5stack/library/Unit%2520MQ/1.0.0/UnitMQ-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/m5stack/library/Unit%20MQ/1.0.0/UnitMQ-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

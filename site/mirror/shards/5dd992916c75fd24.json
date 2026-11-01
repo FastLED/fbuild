@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-faridzaher",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-faridzaher/library/SonicD/0.0.0+sha.d6c6c41910b6/SonicD-0.0.0+sha.d6c6c41910b6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SonicD-0.0.0+sha.d6c6c41910b6.tar.gz",
+    "size_bytes": 1040,
+    "sha256": "671b78617f8b791874b472e4a7ed0c631fa8170038c1ed911c7c28cf1516543f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-faridzaher/library/SonicD/0.0.0%2Bsha.d6c6c41910b6/SonicD-0.0.0%2Bsha.d6c6c41910b6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-faridzaher/library/SonicD/0.0.0%2Bsha.d6c6c41910b6/SonicD-0.0.0%2Bsha.d6c6c41910b6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-patthoyts",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-patthoyts/library/DisplayI2C/0.0.0+sha.48b781bee6dc/DisplayI2C-0.0.0+sha.48b781bee6dc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplayI2C-0.0.0+sha.48b781bee6dc.tar.gz",
+    "size_bytes": 1893,
+    "sha256": "6fac54734bc444675391b812d53a39bd33227aa9315449b9b4247fcede5f1fcb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-patthoyts/library/DisplayI2C/0.0.0%2Bsha.48b781bee6dc/DisplayI2C-0.0.0%2Bsha.48b781bee6dc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-patthoyts/library/DisplayI2C/0.0.0%2Bsha.48b781bee6dc/DisplayI2C-0.0.0%2Bsha.48b781bee6dc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

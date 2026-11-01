@@ -1,0 +1,243 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/izimir-t",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "izimir-t/library/DataEEPROM/1.0.0/DataEEPROM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DataEEPROM-1.0.0.tar.gz",
+    "size_bytes": 1451,
+    "sha256": "7b3c30d73f5b197e6ac756b52ee8b055fa7cf852f78b714e366dd43462b520bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/DataEEPROM/1.0.0/DataEEPROM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/DataEEPROM/1.0.0/DataEEPROM-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/DataEEPROM/1.0.1/DataEEPROM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DataEEPROM-1.0.1.tar.gz",
+    "size_bytes": 1991,
+    "sha256": "72d9353c4398d5942f693ca9b4041672bcc63d6a2b66631f018849090eb4b239",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/DataEEPROM/1.0.1/DataEEPROM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/DataEEPROM/1.0.1/DataEEPROM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/IZI_Debounce/1.0.2/IZI_Debounce-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IZI_Debounce-1.0.2.tar.gz",
+    "size_bytes": 6159,
+    "sha256": "05ddb12b65b0c1e855a66fbc2303207ab195bf64c1f08fc3ac48d492c0994e6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/IZI_Debounce/1.0.2/IZI_Debounce-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/IZI_Debounce/1.0.2/IZI_Debounce-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/IZI_Fader/1.0.0/IZI_Fader-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IZI_Fader-1.0.0.tar.gz",
+    "size_bytes": 4065,
+    "sha256": "02f6106e03423e797acba1b738362a495097437f62be9d34f710bc970e1f66a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/IZI_Fader/1.0.0/IZI_Fader-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/IZI_Fader/1.0.0/IZI_Fader-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/IZI_Pin/1.0.1/IZI_Pin-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IZI_Pin-1.0.1.tar.gz",
+    "size_bytes": 4033,
+    "sha256": "acdf430599b86220a1dabd56c83a000e01aabde0bb9fb45a2eb53449a9c3185f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/IZI_Pin/1.0.1/IZI_Pin-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/IZI_Pin/1.0.1/IZI_Pin-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/MyCollectorEngine/1.0.4/MyCollectorEngine-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyCollectorEngine-1.0.4.tar.gz",
+    "size_bytes": 3627,
+    "sha256": "d7aae561ec750a6ba5ac357ad983590e28dfa27e195bf07e750483336b087765",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/MyCollectorEngine/1.0.4/MyCollectorEngine-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/MyCollectorEngine/1.0.4/MyCollectorEngine-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/MyLightController/1.0.2/MyLightController-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyLightController-1.0.2.tar.gz",
+    "size_bytes": 1386,
+    "sha256": "b974bc3629261d66362c07279cffd8a09b92ca598f5dd6321dc792fb105d628d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/MyLightController/1.0.2/MyLightController-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/MyLightController/1.0.2/MyLightController-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/MyPin/1.0.6/MyPin-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyPin-1.0.6.tar.gz",
+    "size_bytes": 3005,
+    "sha256": "795c7bc694121a8aa628febe35e441af07b250b111b44cf10e509a86b017b360",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/MyPin/1.0.6/MyPin-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/MyPin/1.0.6/MyPin-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/MyPin/1.0.7/MyPin-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyPin-1.0.7.tar.gz",
+    "size_bytes": 2966,
+    "sha256": "27a8c537a0bb4fb9bf69e54c5b43c7ef25b90e4df1a7d1cdd9742afa0d0b1adf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/MyPin/1.0.7/MyPin-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/MyPin/1.0.7/MyPin-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/MyPin/1.0.8/MyPin-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyPin-1.0.8.tar.gz",
+    "size_bytes": 2984,
+    "sha256": "2e6cb57ffd5a52b05196992409b9383a4d3cb54cb12e293cf57c0ccefb6c2f82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/MyPin/1.0.8/MyPin-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/MyPin/1.0.8/MyPin-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/MyPin/1.0.9/MyPin-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyPin-1.0.9.tar.gz",
+    "size_bytes": 2971,
+    "sha256": "faed8c6c53657f653c80a7de384ff963478186a618bfad7183775852d9ed1983",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/MyPin/1.0.9/MyPin-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/MyPin/1.0.9/MyPin-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/MyStepper/1.0.0/MyStepper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyStepper-1.0.0.tar.gz",
+    "size_bytes": 10018,
+    "sha256": "84c9b2ff3a4be130c3064c2a3b79285f520bb2bd9bdcc4012eeba1a92f05dda8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/MyStepper/1.0.0/MyStepper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/MyStepper/1.0.0/MyStepper-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/MyStepper/1.1.10/MyStepper-1.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyStepper-1.1.10.tar.gz",
+    "size_bytes": 13780,
+    "sha256": "dfdb6bff2d24e9adf42447ed7e74a22d1734f8990f71f0a649539e48acdc4d6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/MyStepper/1.1.10/MyStepper-1.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/MyStepper/1.1.10/MyStepper-1.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/MyStepper/1.1.11/MyStepper-1.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyStepper-1.1.11.tar.gz",
+    "size_bytes": 13313,
+    "sha256": "52ace8ab9c33862ca170bce518bce782ce7956e9a9d284455bdd3c0f83f18c3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/MyStepper/1.1.11/MyStepper-1.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/MyStepper/1.1.11/MyStepper-1.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/MyStepper/1.1.13/MyStepper-1.1.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyStepper-1.1.13.tar.gz",
+    "size_bytes": 7603,
+    "sha256": "2806799b3884ce17e1af3cf9a189ee3e2d006a3b7f5e86b42fd8501edfdc0e6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/MyStepper/1.1.13/MyStepper-1.1.13.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/MyStepper/1.1.13/MyStepper-1.1.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/MyStepper/1.1.7/MyStepper-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyStepper-1.1.7.tar.gz",
+    "size_bytes": 13317,
+    "sha256": "dcdde4bf83195da6cbf7e56ebdc04df4d35eaeedfe11ec4c9641f30e9182e205",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/MyStepper/1.1.7/MyStepper-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/MyStepper/1.1.7/MyStepper-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/MyStepper/1.1.8/MyStepper-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyStepper-1.1.8.tar.gz",
+    "size_bytes": 13432,
+    "sha256": "2a909e2c583469e1b82ce40c7303e2155631d576a0c2f4a1c8dcf322d44bb35e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/MyStepper/1.1.8/MyStepper-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/MyStepper/1.1.8/MyStepper-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "izimir-t/library/MyStepper/1.1.9/MyStepper-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyStepper-1.1.9.tar.gz",
+    "size_bytes": 13555,
+    "sha256": "5fa31269636e483a909bac37314f51ac8a172a253633d8b6e28269666b0e80da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/izimir-t/library/MyStepper/1.1.9/MyStepper-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/izimir-t/library/MyStepper/1.1.9/MyStepper-1.1.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

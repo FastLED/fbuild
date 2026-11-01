@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/psikoblock",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "psikoblock/library/DMXFader/1.0/DMXFader-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DMXFader-1.0.tar.gz",
+    "size_bytes": 6428,
+    "sha256": "cff39fbb29b1356199aa458f4c850b983c7d32ebe391a65a035d7b5d35d737d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/psikoblock/library/DMXFader/1.0/DMXFader-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/psikoblock/library/DMXFader/1.0/DMXFader-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

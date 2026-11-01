@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/seeimadeit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "seeimadeit/library/AES128ESP32%20Library/1.0.0/AES128ESP32Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AES128ESP32Library-1.0.0.tar.gz",
+    "size_bytes": 14495,
+    "sha256": "31843260ced41f89973b51aaed08a574d4685b4cddff9264758dfe597b057ce3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/seeimadeit/library/AES128ESP32%2520Library/1.0.0/AES128ESP32Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/seeimadeit/library/AES128ESP32%20Library/1.0.0/AES128ESP32Library-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jvasquez05",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jvasquez05/library/Anemometer/1.0.0/Anemometer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Anemometer-1.0.0.tar.gz",
+    "size_bytes": 2116,
+    "sha256": "120cc7ba9d3922e79da271706994795f0f30a8d7d8a162acd9698cc46a76d84f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jvasquez05/library/Anemometer/1.0.0/Anemometer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jvasquez05/library/Anemometer/1.0.0/Anemometer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jvasquez05/library/BME280_PROAGRO/1.0.0/BME280_PROAGRO-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME280_PROAGRO-1.0.0.tar.gz",
+    "size_bytes": 3210,
+    "sha256": "959e7189a62d16bd07716ea39a185445d500b8579405b7bcecf0b7161d8e07b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jvasquez05/library/BME280_PROAGRO/1.0.0/BME280_PROAGRO-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jvasquez05/library/BME280_PROAGRO/1.0.0/BME280_PROAGRO-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jvasquez05/library/PluviometerSensor/1.0.0/PluviometerSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PluviometerSensor-1.0.0.tar.gz",
+    "size_bytes": 2101,
+    "sha256": "c1781019d78658e114ca5577e8f274995862b458b0ca98e3c82101be05080204",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jvasquez05/library/PluviometerSensor/1.0.0/PluviometerSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jvasquez05/library/PluviometerSensor/1.0.0/PluviometerSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jvasquez05/library/SoilHumSensor/1.0.0/SoilHumSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoilHumSensor-1.0.0.tar.gz",
+    "size_bytes": 2405,
+    "sha256": "130be2dfde397a8680355b8c285172b803fd4509e730a0d44da87fa701fc84cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jvasquez05/library/SoilHumSensor/1.0.0/SoilHumSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jvasquez05/library/SoilHumSensor/1.0.0/SoilHumSensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jvasquez05/library/SolarRadiationSensor/1.0.0/SolarRadiationSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SolarRadiationSensor-1.0.0.tar.gz",
+    "size_bytes": 1058,
+    "sha256": "77535bdddb24fa29a69b47f050a15010a445e3d8e37708425ae341a3e0ebb42f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jvasquez05/library/SolarRadiationSensor/1.0.0/SolarRadiationSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jvasquez05/library/SolarRadiationSensor/1.0.0/SolarRadiationSensor-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

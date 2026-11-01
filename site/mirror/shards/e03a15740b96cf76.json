@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-whitworth-en173-resources",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-whitworth-en173-resources/library/DS1820/0.0.0+sha.00ec4f27d7f5/DS1820-0.0.0+sha.00ec4f27d7f5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1820-0.0.0+sha.00ec4f27d7f5.tar.gz",
+    "size_bytes": 7386,
+    "sha256": "d7275bc81777db23f1ae9f24a0d6493711cea154ca5f024a6c46b39b66f853de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-whitworth-en173-resources/library/DS1820/0.0.0%2Bsha.00ec4f27d7f5/DS1820-0.0.0%2Bsha.00ec4f27d7f5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-whitworth-en173-resources/library/DS1820/0.0.0%2Bsha.00ec4f27d7f5/DS1820-0.0.0%2Bsha.00ec4f27d7f5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-whitworth-en173-resources/library/ExtendedTimer/0.0.0+sha.c5e08765149f/ExtendedTimer-0.0.0+sha.c5e08765149f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExtendedTimer-0.0.0+sha.c5e08765149f.tar.gz",
+    "size_bytes": 1617,
+    "sha256": "aa8caffc6261afa558faba77ba9e51ac788b85d49c8ae2df3c281a3c1e906ff0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-whitworth-en173-resources/library/ExtendedTimer/0.0.0%2Bsha.c5e08765149f/ExtendedTimer-0.0.0%2Bsha.c5e08765149f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-whitworth-en173-resources/library/ExtendedTimer/0.0.0%2Bsha.c5e08765149f/ExtendedTimer-0.0.0%2Bsha.c5e08765149f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

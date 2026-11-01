@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-onsemi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-onsemi/library/Adafruit_ST7735/0.0.0+sha.196b625fe857/Adafruit_ST7735-0.0.0+sha.196b625fe857.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_ST7735-0.0.0+sha.196b625fe857.tar.gz",
+    "size_bytes": 7338,
+    "sha256": "8a548a1cacdf95861b3902487afe8aa565f9677790ee2551f0708d1583ddcc26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-onsemi/library/Adafruit_ST7735/0.0.0%2Bsha.196b625fe857/Adafruit_ST7735-0.0.0%2Bsha.196b625fe857.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-onsemi/library/Adafruit_ST7735/0.0.0%2Bsha.196b625fe857/Adafruit_ST7735-0.0.0%2Bsha.196b625fe857.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-onsemi/library/RemoteIR/0.0.0+sha.268cc2ab63bd/RemoteIR-0.0.0+sha.268cc2ab63bd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteIR-0.0.0+sha.268cc2ab63bd.tar.gz",
+    "size_bytes": 4017,
+    "sha256": "06e9d66d281e43f0d3df34b4972baa084315ed4c7990bf0f971e56dd335272f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-onsemi/library/RemoteIR/0.0.0%2Bsha.268cc2ab63bd/RemoteIR-0.0.0%2Bsha.268cc2ab63bd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-onsemi/library/RemoteIR/0.0.0%2Bsha.268cc2ab63bd/RemoteIR-0.0.0%2Bsha.268cc2ab63bd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

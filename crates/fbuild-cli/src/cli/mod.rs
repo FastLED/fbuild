@@ -15,6 +15,10 @@ pub mod boards;
 pub mod bringup;
 pub mod build;
 pub mod build_progress;
+pub mod buildfs;
+mod buildfs_esp8266;
+mod buildfs_geometry;
+mod buildfs_rp2040;
 pub mod cache;
 pub mod clang_tools;
 pub mod clangd_config;
@@ -25,6 +29,7 @@ pub mod debug;
 pub mod deploy;
 pub mod device;
 pub mod dispatch;
+pub mod doctor;
 pub mod graph_cmd;
 pub mod ide;
 pub mod ide_debug;
@@ -41,10 +46,13 @@ pub mod purge;
 pub mod reset;
 pub mod serial_probe;
 pub mod show;
+mod shrink_notice;
 pub mod symbols_cmd;
 pub mod sync_cmd;
 pub mod udev;
 pub mod udev_install;
+pub mod uploadfs;
+pub mod uploadfs_rp2040;
 // #1148 supplies the helper foundation; #1147 is deliberately its first
 // production consumer once RP2040 deployment can emit a typed request.
 #[allow(

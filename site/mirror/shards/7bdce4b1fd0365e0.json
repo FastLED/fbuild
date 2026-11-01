@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sirdrako",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sirdrako/library/Utilify/1.0.1/Utilify-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Utilify-1.0.1.tar.gz",
+    "size_bytes": 7861,
+    "sha256": "68e3cf4f08e7886740af646a8d1b81fee23d1d2690e4a7732fd532c69b87ab27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sirdrako/library/Utilify/1.0.1/Utilify-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sirdrako/library/Utilify/1.0.1/Utilify-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sirdrako/library/Utilify/1.0.10/Utilify-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Utilify-1.0.10.tar.gz",
+    "size_bytes": 8843,
+    "sha256": "9da2a6c9e2525a7276ff5d1f13f0ed3e3994e380a600a10dc83efc7aaebc79bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sirdrako/library/Utilify/1.0.10/Utilify-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/sirdrako/library/Utilify/1.0.10/Utilify-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sirdrako/library/UtilifyAnalogInput/1.0.1/UtilifyAnalogInput-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UtilifyAnalogInput-1.0.1.tar.gz",
+    "size_bytes": 7202,
+    "sha256": "2066db1ba6d7cfebeae622456620394e7384044d2a9e0cfe07dd9dedad0f0421",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sirdrako/library/UtilifyAnalogInput/1.0.1/UtilifyAnalogInput-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sirdrako/library/UtilifyAnalogInput/1.0.1/UtilifyAnalogInput-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sirdrako/library/UtilifyAnalogInput/1.0.10/UtilifyAnalogInput-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UtilifyAnalogInput-1.0.10.tar.gz",
+    "size_bytes": 7300,
+    "sha256": "5a6e912684883a0c3e52da3fd1e18042787ea23dbba86336f545a056b709f5be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sirdrako/library/UtilifyAnalogInput/1.0.10/UtilifyAnalogInput-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/sirdrako/library/UtilifyAnalogInput/1.0.10/UtilifyAnalogInput-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sirdrako/library/UtilifyCommandInterpreter/1.0.11/UtilifyCommandInterpreter-1.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UtilifyCommandInterpreter-1.0.11.tar.gz",
+    "size_bytes": 9284,
+    "sha256": "c4b8c534a94ef3026a49b4ed118626c1604dc3d35c3e25ed40f15040444e409a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sirdrako/library/UtilifyCommandInterpreter/1.0.11/UtilifyCommandInterpreter-1.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/sirdrako/library/UtilifyCommandInterpreter/1.0.11/UtilifyCommandInterpreter-1.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sirdrako/library/UtilifyCommandInterpreter/1.0.6/UtilifyCommandInterpreter-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UtilifyCommandInterpreter-1.0.6.tar.gz",
+    "size_bytes": 10815,
+    "sha256": "cd0bff75300f086312da7499026de50239fd3e83293061bdcf6d4610e4706b3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sirdrako/library/UtilifyCommandInterpreter/1.0.6/UtilifyCommandInterpreter-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/sirdrako/library/UtilifyCommandInterpreter/1.0.6/UtilifyCommandInterpreter-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sirdrako/library/UtilifyDigitalInput/1.0.10/UtilifyDigitalInput-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UtilifyDigitalInput-1.0.10.tar.gz",
+    "size_bytes": 6754,
+    "sha256": "bdf14463a07b5eefa4aa13ebfe32aa361d76421002e2ba27a17d1bb6ae7d8c8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sirdrako/library/UtilifyDigitalInput/1.0.10/UtilifyDigitalInput-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/sirdrako/library/UtilifyDigitalInput/1.0.10/UtilifyDigitalInput-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sirdrako/library/UtilifyDigitalInput/1.0.4/UtilifyDigitalInput-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UtilifyDigitalInput-1.0.4.tar.gz",
+    "size_bytes": 5739,
+    "sha256": "47b19aa06bb02ef65e7c7b75fa11d9330d562e3f2c4e0d90fac6b2ff05259246",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sirdrako/library/UtilifyDigitalInput/1.0.4/UtilifyDigitalInput-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sirdrako/library/UtilifyDigitalInput/1.0.4/UtilifyDigitalInput-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sirdrako/library/UtilifyEEPROM/1.0.1/UtilifyEEPROM-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UtilifyEEPROM-1.0.1.tar.gz",
+    "size_bytes": 6653,
+    "sha256": "92a5e1934fbdb900d6f8f6b8be01264998ee58ac9902b3820953ea955aed1b34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sirdrako/library/UtilifyEEPROM/1.0.1/UtilifyEEPROM-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sirdrako/library/UtilifyEEPROM/1.0.1/UtilifyEEPROM-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sirdrako/library/UtilifyEEPROM/1.0.10/UtilifyEEPROM-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UtilifyEEPROM-1.0.10.tar.gz",
+    "size_bytes": 6333,
+    "sha256": "1d00d98255e4a48c48828fca42c2c0050c53c4aab8a0ad6debbc736ca759b9ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sirdrako/library/UtilifyEEPROM/1.0.10/UtilifyEEPROM-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/sirdrako/library/UtilifyEEPROM/1.0.10/UtilifyEEPROM-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sirdrako/library/UtilifyLogger/1.0.10/UtilifyLogger-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UtilifyLogger-1.0.10.tar.gz",
+    "size_bytes": 4648,
+    "sha256": "78020b79ec60606370cbd208e16fa0079104e625c0ebb768fecb196425fa41df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sirdrako/library/UtilifyLogger/1.0.10/UtilifyLogger-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/sirdrako/library/UtilifyLogger/1.0.10/UtilifyLogger-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sirdrako/library/UtilifyLogger/1.0.2/UtilifyLogger-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UtilifyLogger-1.0.2.tar.gz",
+    "size_bytes": 5192,
+    "sha256": "b9dd958b48c03aa8fad8530aa9b33a7731e12ef5da6c57d9b15291b028a7f2ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sirdrako/library/UtilifyLogger/1.0.2/UtilifyLogger-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sirdrako/library/UtilifyLogger/1.0.2/UtilifyLogger-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

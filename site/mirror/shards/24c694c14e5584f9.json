@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jeremytubongbanua",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jeremytubongbanua/library/at_client/0.2.4/at_client-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "at_client-0.2.4.tar.gz",
+    "size_bytes": 38290,
+    "sha256": "74a6e63fc50994d7a43ec9cf19ac9c5211c70dc980229ce1b0287e9af77c7466",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremytubongbanua/library/at_client/0.2.4/at_client-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremytubongbanua/library/at_client/0.2.4/at_client-0.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremytubongbanua/library/at_client/0.2.7/at_client-0.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "at_client-0.2.7.tar.gz",
+    "size_bytes": 39854,
+    "sha256": "cc350818693e9c2b984596ed0c3abca7c500b1352b577c027ede68f733f183af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremytubongbanua/library/at_client/0.2.7/at_client-0.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremytubongbanua/library/at_client/0.2.7/at_client-0.2.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

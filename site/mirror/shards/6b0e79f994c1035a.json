@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/erltechnologies",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "erltechnologies/library/ERLtechRobotcontrol/1.0.2/ERLtechRobotcontrol-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ERLtechRobotcontrol-1.0.2.tar.gz",
+    "size_bytes": 3284,
+    "sha256": "64e1d37907cdb1fe4f96a1167217dfe15e1dfcf8aa591181bf765f0e737d4d2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erltechnologies/library/ERLtechRobotcontrol/1.0.2/ERLtechRobotcontrol-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/erltechnologies/library/ERLtechRobotcontrol/1.0.2/ERLtechRobotcontrol-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

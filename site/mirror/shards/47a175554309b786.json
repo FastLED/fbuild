@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mfiore",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mfiore/library/MQTT/0.0.0+sha.66fba174d875/MQTT-0.0.0+sha.66fba174d875.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTT-0.0.0+sha.66fba174d875.tar.gz",
+    "size_bytes": 3700,
+    "sha256": "a89302713c97738435c9f4aa620e438a7c63f4db7e1e512eb1149ed91739adc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mfiore/library/MQTT/0.0.0%2Bsha.66fba174d875/MQTT-0.0.0%2Bsha.66fba174d875.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mfiore/library/MQTT/0.0.0%2Bsha.66fba174d875/MQTT-0.0.0%2Bsha.66fba174d875.tar.gz"
+    ]
+   }
+  }
+ ]
+}

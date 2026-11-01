@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/carbonara-individuals",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "carbonara-individuals/library/Carbonara_DRV8874/0.1.0/Carbonara_DRV8874-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Carbonara_DRV8874-0.1.0.tar.gz",
+    "size_bytes": 3912,
+    "sha256": "fb20de55d7618c6c017a0052ae60cd842e8ed0e1bf5d6c815fc1b579f903c823",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/carbonara-individuals/library/Carbonara_DRV8874/0.1.0/Carbonara_DRV8874-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/carbonara-individuals/library/Carbonara_DRV8874/0.1.0/Carbonara_DRV8874-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "carbonara-individuals/library/Carbonara_DRV8874/0.2.0/Carbonara_DRV8874-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Carbonara_DRV8874-0.2.0.tar.gz",
+    "size_bytes": 4038,
+    "sha256": "78a892766135ec7ffdeddfe9d176f51e16fd0822cfc3027c6a7c13c68046a494",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/carbonara-individuals/library/Carbonara_DRV8874/0.2.0/Carbonara_DRV8874-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/carbonara-individuals/library/Carbonara_DRV8874/0.2.0/Carbonara_DRV8874-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "carbonara-individuals/library/Carbonara_DRV8874/0.2.2/Carbonara_DRV8874-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Carbonara_DRV8874-0.2.2.tar.gz",
+    "size_bytes": 4147,
+    "sha256": "cda0f0f5fd9cfc57a5b46c41279ed1b0d8c32daaaabff335c6d3cec1da7223ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/carbonara-individuals/library/Carbonara_DRV8874/0.2.2/Carbonara_DRV8874-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/carbonara-individuals/library/Carbonara_DRV8874/0.2.2/Carbonara_DRV8874-0.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

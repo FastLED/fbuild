@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-elefantul-umilit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-elefantul-umilit/library/Buzzer/0.0.0+sha.b530d1a3290f/Buzzer-0.0.0+sha.b530d1a3290f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Buzzer-0.0.0+sha.b530d1a3290f.tar.gz",
+    "size_bytes": 2700,
+    "sha256": "d1643bfcd7cdbdca4012ea692f5cb0c49a770a9bd0cff36a1fd1f9d1a47eca37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-elefantul-umilit/library/Buzzer/0.0.0%2Bsha.b530d1a3290f/Buzzer-0.0.0%2Bsha.b530d1a3290f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-elefantul-umilit/library/Buzzer/0.0.0%2Bsha.b530d1a3290f/Buzzer-0.0.0%2Bsha.b530d1a3290f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-elefantul-umilit/library/Sabertooth/0.0.0+sha.013fa8604413/Sabertooth-0.0.0+sha.013fa8604413.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sabertooth-0.0.0+sha.013fa8604413.tar.gz",
+    "size_bytes": 3793,
+    "sha256": "8ffaef3e58c957d9a18877db42216acc5d7cda83a5e323f4e57a60c8dda99132",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-elefantul-umilit/library/Sabertooth/0.0.0%2Bsha.013fa8604413/Sabertooth-0.0.0%2Bsha.013fa8604413.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-elefantul-umilit/library/Sabertooth/0.0.0%2Bsha.013fa8604413/Sabertooth-0.0.0%2Bsha.013fa8604413.tar.gz"
+    ]
+   }
+  }
+ ]
+}

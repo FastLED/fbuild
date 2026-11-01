@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pprasad7",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pprasad7/library/PS2/0.0.0+sha.62b62530a82f/PS2-0.0.0+sha.62b62530a82f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS2-0.0.0+sha.62b62530a82f.tar.gz",
+    "size_bytes": 4755,
+    "sha256": "b0a3c7d5a0adf0db2d05757ad2e5e4bcc981b0a83f9ebb5bc3290ee330dd1910",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pprasad7/library/PS2/0.0.0%2Bsha.62b62530a82f/PS2-0.0.0%2Bsha.62b62530a82f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pprasad7/library/PS2/0.0.0%2Bsha.62b62530a82f/PS2-0.0.0%2Bsha.62b62530a82f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pprasad7/library/TFT_4DGL/0.0.0+sha.6741e7724181/TFT_4DGL-0.0.0+sha.6741e7724181.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_4DGL-0.0.0+sha.6741e7724181.tar.gz",
+    "size_bytes": 7228,
+    "sha256": "e174ee0744625aab0066699ecc9b7e65b72be206cc5851f5aa7defc8d53dc18b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pprasad7/library/TFT_4DGL/0.0.0%2Bsha.6741e7724181/TFT_4DGL-0.0.0%2Bsha.6741e7724181.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pprasad7/library/TFT_4DGL/0.0.0%2Bsha.6741e7724181/TFT_4DGL-0.0.0%2Bsha.6741e7724181.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pprasad7/library/beep/0.0.0+sha.080ef5594cce/beep-0.0.0+sha.080ef5594cce.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "beep-0.0.0+sha.080ef5594cce.tar.gz",
+    "size_bytes": 1535,
+    "sha256": "4ced31f05c535ae54e4d91b07de81fbcfb05131fb6a8480d48db1b2da820315d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pprasad7/library/beep/0.0.0%2Bsha.080ef5594cce/beep-0.0.0%2Bsha.080ef5594cce.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pprasad7/library/beep/0.0.0%2Bsha.080ef5594cce/beep-0.0.0%2Bsha.080ef5594cce.tar.gz"
+    ]
+   }
+  }
+ ]
+}

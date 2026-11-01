@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ht",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ht/library/TSL1401/0.0.0+sha.71198cb26156/TSL1401-0.0.0+sha.71198cb26156.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSL1401-0.0.0+sha.71198cb26156.tar.gz",
+    "size_bytes": 1386,
+    "sha256": "696e7ae1cf8615924dd3ec6f3b25ab4ea9d1e3f7f7d2ac829a4230fcafcf9e33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ht/library/TSL1401/0.0.0%2Bsha.71198cb26156/TSL1401-0.0.0%2Bsha.71198cb26156.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ht/library/TSL1401/0.0.0%2Bsha.71198cb26156/TSL1401-0.0.0%2Bsha.71198cb26156.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lewapek",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lewapek/library/Nova%20Fitness%20Sds%20dust%20sensors%20library/1.5.1/NovaFitnessSdsdustsensorslibrary-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NovaFitnessSdsdustsensorslibrary-1.5.1.tar.gz",
+    "size_bytes": 9236,
+    "sha256": "9d7a0e9bb57818b58dbdf8ff70d55034322541302ad66963073fc3ed803cdbce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lewapek/library/Nova%2520Fitness%2520Sds%2520dust%2520sensors%2520library/1.5.1/NovaFitnessSdsdustsensorslibrary-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/lewapek/library/Nova%20Fitness%20Sds%20dust%20sensors%20library/1.5.1/NovaFitnessSdsdustsensorslibrary-1.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

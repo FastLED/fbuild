@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/loebi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "loebi/library/M5StackSAM/0.0.2/M5StackSAM-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5StackSAM-0.0.2.tar.gz",
+    "size_bytes": 15999,
+    "sha256": "bcb7c36e5abfd05489b7462f3dfefdc53a165ef7ea9fc0ca6eab1d7039fe59bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/loebi/library/M5StackSAM/0.0.2/M5StackSAM-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/loebi/library/M5StackSAM/0.0.2/M5StackSAM-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "loebi/library/USB-Host-Shield-20/1.6.0/USB-Host-Shield-20-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USB-Host-Shield-20-1.6.0.tar.gz",
+    "size_bytes": 1063891,
+    "sha256": "825048e7721d81400ccfe2f865cb143794c98ab1120c411c6ce95c4e16ba4bd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/loebi/library/USB-Host-Shield-20/1.6.0/USB-Host-Shield-20-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/loebi/library/USB-Host-Shield-20/1.6.0/USB-Host-Shield-20-1.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

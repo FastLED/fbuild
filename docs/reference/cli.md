@@ -90,8 +90,12 @@ Common options include `--port`, `--clean`, `--monitor`, `--timeout`,
 `--skip-build`, `--baud`, `--to device|emu|emulator`, `--emulator`, and
 `--output-dir`.
 
-`--transport picotool|uf2` selects the RP2040/RP2350 deploy transport
-(FastLED/fbuild#1162). Before either transport runs, fbuild tries the normal
+`--transport picotool|uf2|swd` selects the RP2040/RP2350 deploy transport
+(FastLED/fbuild#1162, #1423). `swd` skips the target's USB stack entirely and
+flashes the build's ELF through a CMSIS-DAP probe with probe-rs, so it is the
+only transport that reaches a board whose firmware wedged before USB bring-up;
+`--port` is unused there, and a missing probe fails with probe-rs's own
+`No probes were found` diagnostics instead of falling back to a USB transport. Before either transport runs, fbuild tries the normal
 1200-bps CDC touch. If no BOOTSEL endpoint appears and the selected runtime
 port supplied an exact VID, PID, and USB serial, fbuild asks the Pico SDK
 application reset interface to enter BOOTSEL, then reacquires it. Windows uses
@@ -107,6 +111,149 @@ then a bounded `picotool info` probe and `picotool load -x`) and falls back to
 BOOTSEL mass-storage. `uf2` preserves the mass-storage-first order with
 picotool as the fallback. The picotool load timeout defaults to 60s and is
 configurable with `FBUILD_RP2040_PICOTOOL_TIMEOUT_SECS`.
+
+### `fbuild buildfs`
+
+Build a flash filesystem image (LittleFS or SPIFFS) from the project's `data/`
+directory — the fbuild equivalent of PlatformIO's `buildfs` target
+(FastLED/fbuild#1358).
+
+```bash
+fbuild buildfs
+fbuild buildfs -e esp32s3
+fbuild buildfs --check-only
+fbuild buildfs --partitions partitions_custom.csv --output fs.bin
+```
+
+Inputs are the files under `data/` (or `data_dir` from `platformio.ini`).
+fbuild blob pointers (`.fetch`, and the legacy JSON `.lnk`) are resolved and
+packed under their projected name; the pointer itself never ships. Plain-text
+`.lnk` files are FastLED's on-device asset links, so they ship as ordinary
+data. A pointer that fails to parse is an error rather than a file the device
+would receive instead of its content.
+
+The filesystem partition's offset and size come from the board's partition CSV
+(`board_build.partitions`, else the framework's `default.csv`; override with
+`--partitions`). The image is sized to that region, and an oversized `data/`
+fails here — before any image tool runs — instead of failing to mount on the
+device:
+
+```
+data/ does not fit the 'spiffs' filesystem partition: needs ~1581056 bytes,
+partition holds 1441792 (over by 139264 bytes). ...
+```
+
+The format defaults to the partition's subtype; `--filesystem littlefs|spiffs`
+overrides it and warns when the two disagree, since the firmware mounts what
+the partition table declares. `mklittlefs`/`mkspiffs` are resolved from the
+PlatformIO package directory, then `PATH`; `--tool <path>` pins one.
+
+The image lands in the environment's build directory (`<build>/<filesystem>.bin`)
+and `--check-only` reports the size plan without running the tool.
+
+#### RP2040 (arduino-pico)
+
+An RP2040 project has no partition CSV: arduino-pico's own `boards.txt`
+declares the filesystem bounds per `flash` menu option. `fbuild buildfs` reads
+them through the same loader the build uses, so the image region and the
+firmware's `FS_START`/`FS_END` defines cannot disagree:
+
+```ini
+[env:rpipico]
+platform = raspberrypi
+board = rpipico
+board_build.filesystem_size = 0.5m
+```
+
+```bash
+fbuild buildfs -e rpipico      # -> .pio-equivalent build dir/littlefs.bin, 512 KB
+```
+
+arduino-pico ships one filesystem driver, so `--filesystem=spiffs` is refused
+rather than silently building littlefs. A board whose selected flash menu
+reserves no filesystem (`fs_start == fs_end`, the 2 MB Pico default) fails with
+the byte sizes and the `board_build.filesystem_size` knob to set; without a
+volume there is nowhere for `data/` to mount. `fbuild uploadfs` writes the image
+as UF2 blocks into the board's mounted ROM BOOTSEL volume at the absolute
+`build.fs_start` address — the same address the firmware's `FS_START` mounts.
+
+#### ESP8266 (arduino-esp8266)
+
+An ESP8266 module has no partition table either. Its flash layout comes from the
+`eesz` "Flash Size" menu option in arduino-esp8266's `boards.txt`, which names a
+linker script; `fbuild buildfs` reads that script and takes the region *and* the
+filesystem geometry from it. Those are the same symbols the firmware links
+against (`_FS_start`, `_FS_end`, `_FS_block`, `_FS_page`), so the image cannot
+be sized or formatted differently from the volume the device mounts:
+
+```ini
+[env:nodemcuv2]
+platform = espressif8266
+board = nodemcuv2
+board_build.eesz = 4M2M      ; FS:2MB -> eagle.flash.4m2m.ld
+```
+
+```bash
+fbuild buildfs -e nodemcuv2  # -> 2072576-byte littlefs image at 0x40400000
+```
+
+The block/page size is the script's own (`_FS_block`/`_FS_page`, 8192/256 for a
+4 MB layout), never the ESP32 builder's 4096/256 — an image formatted with the
+wrong geometry would not mount. LittleFS is the default (SPIFFS is deprecated
+upstream); `--filesystem spiffs` builds a SPIFFS image instead. A script that
+declares no `_FS_start`/`_FS_end` (or omits `_FS_block`/`_FS_page`) is an error
+naming `board_build.eesz`, rather than a guessed region. `--filesystem` and the
+`board_build.flash_ld` override behave as elsewhere. `fbuild uploadfs` writes
+this image too: the device offset is the script's `_FS_start` minus the
+`0x40200000` flash mapping (0x200000 for a 4M2M `nodemcuv2`).
+
+### `fbuild uploadfs`
+
+Flash that image to the filesystem partition — the fbuild equivalent of
+PlatformIO's `uploadfs` target (FastLED/fbuild#1358).
+
+```bash
+fbuild uploadfs
+fbuild uploadfs -e esp32s3 --port /dev/ttyACM0
+fbuild uploadfs --image build/littlefs.bin --no-build --verify
+fbuild uploadfs --verify --json
+```
+
+The offset comes from the same layout `buildfs` sizes the image with — a
+partition CSV on ESP32, the `_FS_start`/`_FS_end` pair the firmware links
+against elsewhere — so the image is written exactly where the firmware mounts
+it; there is no offset flag to get wrong. A missing image is built first (PlatformIO's `uploadfs`
+implies `buildfs`) unless `--no-build` asks for the existing file as-is, and an
+image larger than the partition is refused before the flasher runs.
+
+The flash goes through the same `esptool` deployer `fbuild deploy` uses, with
+the board's own flash mode/frequency/size and the esptool the build resolved. A
+running daemon is asked to preempt the port first, so a monitor session does not
+turn the flash into a "port busy" failure. With no `--port`, the only detected
+serial port is used; several ports is an error naming them, never a guess.
+
+`--verify` reads the region back with `esptool verify-flash` after writing, so
+success means the device holds exactly this image rather than only that esptool
+exited zero.
+
+ESP8266 goes over the same esptool serial transport, with `--chip esp8266`; an
+ESP8266 build does not provision an esptool fbuild can drive (its platform pins
+the v4 source package), so that upload uses `FBUILD_ESPTOOL_PATH` when set, else
+the managed v5 esptool, else an `esptool` on `PATH`.
+
+RP2040 is a different transport again: the region cannot be written over a serial
+port, so put the board in BOOTSEL mode (hold BOOTSEL while plugging it in) and
+run `fbuild uploadfs -e rpipico`. fbuild encodes the image as UF2 blocks whose
+first block addresses `build.fs_start` and writes them to the single mounted
+`RPI-RP2` volume as `NEW.UF2`; the ROM programs QSPI, then ejects the volume,
+which is the write's confirmation. There is no `--port` (BOOTSEL is mass storage,
+not a serial port) and no `--verify`: a region can only be read back over
+PICOBOOT, so `--verify` is refused instead of reported as unverified. Two mounted
+Pico volumes are an error naming both, never a guess.
+
+Environments without a flashable filesystem are a clear error: AVR has only
+EEPROM, and Teensy 4.x's `LittleFS_Program` is runtime-only, wiped by every
+re-upload.
 
 ### `fbuild monitor`
 
@@ -140,7 +287,7 @@ known limitations.
 | `fbuild device lease <port>` | Acquire a device lease. |
 | `fbuild device release <port>` | Release a device lease. |
 | `fbuild device take <port> --reason <text>` | Preempt the current holder. |
-| `fbuild daemon status` | Show daemon status. |
+| `fbuild daemon status` | Show daemon status, including the daemon's resident memory and peak (`Memory:` line; omitted on hosts that cannot report it — FastLED/fbuild#1785). |
 | `fbuild daemon stop` | Stop the daemon gracefully. |
 | `fbuild daemon restart` | Restart the daemon. |
 | `fbuild daemon list` | List running daemon instances. |

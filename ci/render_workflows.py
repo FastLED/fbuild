@@ -168,6 +168,7 @@ def render_board_jobs(board: dict, families: dict) -> str:
         "jobs:\n"
         "  build:\n"
         "    uses: ./.github/workflows/template_build.yml\n"
+        "    secrets: inherit\n"
         "    with:\n"
         f"      workflow-name: {json.dumps(board['workflow_name'])}\n"
         f"      test-dir: {json.dumps(board['test_dir'])}\n"
@@ -215,13 +216,17 @@ def render_fbuild_bin_job(needs: str, condition: str, ref: str) -> str:
         "      CARGO_TERM_COLOR: always\n"
         "      RUSTFLAGS: \"-D warnings\"\n"
         "      SOLDR_TARGET_BLOCK_FREE_GB: \"2\"\n"
+        "      SOLDR_S3_CACHE_ACCESS_KEY: ${{ secrets.SOLDR_S3_CACHE_ACCESS_KEY }}\n"
+        "      SOLDR_S3_CACHE_SECRET_KEY: ${{ secrets.SOLDR_S3_CACHE_SECRET_KEY }}\n"
         "    steps:\n"
         "      - uses: actions/checkout@v6\n"
         "        with:\n"
         f"          ref: {ref}\n"
         "          persist-credentials: false\n"
-        "      - uses: zackees/setup-soldr@b782f606a2f3beadc35b9e3bf5b4565e005f52ed # v0.9.86\n"
+        "      - uses: zackees/setup-soldr@9337570234850b50322e696037127fa3cf8ac703 # setup-soldr#629 S3 remote cache\n"
         "        with:\n"
+        "          s3-bucket: forge-ci-cache\n"
+        "          s3-endpoint: sfo3.digitaloceanspaces.com\n"
         "          cache-preset: foundation\n"
         "          prebuild-deps-flags: \"\"\n"
         "          prebuild-deps: none\n"
@@ -295,6 +300,7 @@ def render_pr_boards() -> str:
         "      matrix:\n"
         "        include: ${{ fromJSON(needs.board_plan.outputs.matrix) }}\n"
         "    uses: ./.github/workflows/template_build.yml\n"
+        "    secrets: inherit\n"
         "    with:\n"
         "      workflow-name: ${{ matrix.workflow_name }}\n"
         "      test-dir: ${{ matrix.test_dir }}\n"
@@ -567,6 +573,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         + gate
         + "    needs: verify\n"
         + "    uses: ./.github/workflows/check-windows.yml\n"
+        + "    secrets: inherit\n"
         + "    with:\n"
         + f"      ref: {verified_ref}\n"
         + "  macos:\n"
@@ -635,6 +642,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
         + ("    if: github.event_name != 'pull_request' || (!contains(github.event.pull_request.labels.*.name, 'ci-test') && !contains(github.event.pull_request.labels.*.name, 'ci-full'))\n" if minimal else gate)
         + ("" if minimal else "    needs: verify\n")
         + "    uses: ./.github/workflows/check-ubuntu.yml\n"
+        + "    secrets: inherit\n"
         + "    with:\n"
         + ("      ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}\n" if minimal else f"      ref: {verified_ref}\n")
         + host
@@ -651,6 +659,7 @@ def render_ci(boards: list[dict], tier: str, families: dict) -> str:
            + "        include:\n"
            + entries
            + "    uses: ./.github/workflows/template_build.yml\n"
+           + "    secrets: inherit\n"
            + "    with:\n"
            + "      workflow-name: ${{ matrix.workflow_name }}\n"
            + "      test-dir: ${{ matrix.test_dir }}\n"

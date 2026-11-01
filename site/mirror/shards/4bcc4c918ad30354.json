@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jlusprivat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jlusprivat/library/SimpleHOTP/1.0.1/SimpleHOTP-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleHOTP-1.0.1.tar.gz",
+    "size_bytes": 9015,
+    "sha256": "60221a1495f596766d70771bbf0f3076c6445c5812c9f299039d89805d05ceb2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jlusprivat/library/SimpleHOTP/1.0.1/SimpleHOTP-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jlusprivat/library/SimpleHOTP/1.0.1/SimpleHOTP-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

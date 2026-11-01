@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/teacher-heiko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "teacher-heiko/library/MPU6050Classroom/1.0.0/MPU6050Classroom-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050Classroom-1.0.0.tar.gz",
+    "size_bytes": 79176,
+    "sha256": "3d00a102e795a0c85366e2fa981efebdbdcf173a75bb41a32e8fb9dfd9302a05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teacher-heiko/library/MPU6050Classroom/1.0.0/MPU6050Classroom-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/teacher-heiko/library/MPU6050Classroom/1.0.0/MPU6050Classroom-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

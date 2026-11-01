@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iotontech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iotontech/library/IOTON-API/0.0.5/IOTON-API-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOTON-API-0.0.5.tar.gz",
+    "size_bytes": 37893,
+    "sha256": "a2d59f16987ff889d0135503d82371db10eda7f66ff0b71c1bb3808bc473fa78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iotontech/library/IOTON-API/0.0.5/IOTON-API-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/iotontech/library/IOTON-API/0.0.5/IOTON-API-0.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

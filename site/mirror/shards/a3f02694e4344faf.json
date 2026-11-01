@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bitbucket-jezhill",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bitbucket-jezhill/library/Keyhole/1.11.0/Keyhole-1.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Keyhole-1.11.0.tar.gz",
+    "size_bytes": 22554,
+    "sha256": "cefa70e5d281bde2de125c9ec8e09738c17c29d5835aba708b1c61a5fc368925",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-jezhill/library/Keyhole/1.11.0/Keyhole-1.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-jezhill/library/Keyhole/1.11.0/Keyhole-1.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-jezhill/library/Keyhole/1.12.0/Keyhole-1.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Keyhole-1.12.0.tar.gz",
+    "size_bytes": 22662,
+    "sha256": "e07ae99eddb9e5d1a5f4fb9cb55391d2e322cedd375c663f85a5bafb746f1dc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-jezhill/library/Keyhole/1.12.0/Keyhole-1.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-jezhill/library/Keyhole/1.12.0/Keyhole-1.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-jezhill/library/Keyhole/1.13.0/Keyhole-1.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Keyhole-1.13.0.tar.gz",
+    "size_bytes": 24472,
+    "sha256": "532721449910db50db8a41e56cfa6525c49ea56d425c093fccaca0bdc0bb630d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-jezhill/library/Keyhole/1.13.0/Keyhole-1.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-jezhill/library/Keyhole/1.13.0/Keyhole-1.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-jezhill/library/Keyhole/1.14.0/Keyhole-1.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Keyhole-1.14.0.tar.gz",
+    "size_bytes": 27401,
+    "sha256": "fe670d71db50fc73f9d2ddaa9530aea7f3689305b4cba401783d40538708775d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-jezhill/library/Keyhole/1.14.0/Keyhole-1.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-jezhill/library/Keyhole/1.14.0/Keyhole-1.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-jezhill/library/Keyhole/1.15.0/Keyhole-1.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Keyhole-1.15.0.tar.gz",
+    "size_bytes": 28033,
+    "sha256": "fa104f7e919dac11fb0d9da3e7aff8391c41c38364129c7ea286465cad92e005",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-jezhill/library/Keyhole/1.15.0/Keyhole-1.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-jezhill/library/Keyhole/1.15.0/Keyhole-1.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-jezhill/library/Keyhole/1.16.0/Keyhole-1.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Keyhole-1.16.0.tar.gz",
+    "size_bytes": 28167,
+    "sha256": "ebee28c11c682b1509a8142be8c13b9a7d1a5ae5ee773e31d611f6fa46ab25bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-jezhill/library/Keyhole/1.16.0/Keyhole-1.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-jezhill/library/Keyhole/1.16.0/Keyhole-1.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-jezhill/library/Keyhole/1.17.0/Keyhole-1.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Keyhole-1.17.0.tar.gz",
+    "size_bytes": 28360,
+    "sha256": "a9c0113da74a6b3c56a4b7479e36911174b05bd153b12fe24e58d4190bb52b51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-jezhill/library/Keyhole/1.17.0/Keyhole-1.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-jezhill/library/Keyhole/1.17.0/Keyhole-1.17.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-jezhill/library/SignalAcquisition/1.3.0/SignalAcquisition-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SignalAcquisition-1.3.0.tar.gz",
+    "size_bytes": 11540,
+    "sha256": "b028129cbfd8311e8c50b59d4a6ea744b0f0a70b28ea31e2ec5b2f0891007752",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-jezhill/library/SignalAcquisition/1.3.0/SignalAcquisition-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-jezhill/library/SignalAcquisition/1.3.0/SignalAcquisition-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-jezhill/library/SignalAcquisition/1.4.0/SignalAcquisition-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SignalAcquisition-1.4.0.tar.gz",
+    "size_bytes": 12082,
+    "sha256": "d06a937739b726d82e83e48f1316943bb241cafa3fc17c576290cff1308f7957",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-jezhill/library/SignalAcquisition/1.4.0/SignalAcquisition-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-jezhill/library/SignalAcquisition/1.4.0/SignalAcquisition-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-jezhill/library/SyncGenie/1.8.0/SyncGenie-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyncGenie-1.8.0.tar.gz",
+    "size_bytes": 140029,
+    "sha256": "2ec6f1b3c3b7f1f833303b941131bac6d8d7d34f306c1c13bf45257bda719a34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-jezhill/library/SyncGenie/1.8.0/SyncGenie-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-jezhill/library/SyncGenie/1.8.0/SyncGenie-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitbucket-jezhill/library/SyncGenie/1.8.1/SyncGenie-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SyncGenie-1.8.1.tar.gz",
+    "size_bytes": 457998,
+    "sha256": "42d02c0393ab2e35a9d7ce9b9c3d12343f064b3cc9b0a07c302468577b87e6be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-jezhill/library/SyncGenie/1.8.1/SyncGenie-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-jezhill/library/SyncGenie/1.8.1/SyncGenie-1.8.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

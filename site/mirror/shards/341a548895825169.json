@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robocore",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robocore/library/RoboCore%20-%20BRIICK%20Encoder/1.0.0/RoboCore-BRIICKEncoder-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboCore-BRIICKEncoder-1.0.0.tar.gz",
+    "size_bytes": 7757,
+    "sha256": "4ebe666805fccf4047d2686279f92bcb7112179261a820abba8a9643a9b20e6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robocore/library/RoboCore%2520-%2520BRIICK%2520Encoder/1.0.0/RoboCore-BRIICKEncoder-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robocore/library/RoboCore%20-%20BRIICK%20Encoder/1.0.0/RoboCore-BRIICKEncoder-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robocore/library/RoboCore%20-%20BRIICK%20Keypad/1.0.0/RoboCore-BRIICKKeypad-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboCore-BRIICKKeypad-1.0.0.tar.gz",
+    "size_bytes": 7204,
+    "sha256": "f947c751ccf4bb9d0f779d88de1acd724124d423bfc6095203aee60414e1c0fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robocore/library/RoboCore%2520-%2520BRIICK%2520Keypad/1.0.0/RoboCore-BRIICKKeypad-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robocore/library/RoboCore%20-%20BRIICK%20Keypad/1.0.0/RoboCore-BRIICKKeypad-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robocore/library/RoboCore%20-%20BRIICK%20TRIAC/1.0.0/RoboCore-BRIICKTRIAC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboCore-BRIICKTRIAC-1.0.0.tar.gz",
+    "size_bytes": 6010,
+    "sha256": "a669e75b0f6126e78c63bc584f166e2376af608b2629c3cf5654fa0f32339a12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robocore/library/RoboCore%2520-%2520BRIICK%2520TRIAC/1.0.0/RoboCore-BRIICKTRIAC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robocore/library/RoboCore%20-%20BRIICK%20TRIAC/1.0.0/RoboCore-BRIICKTRIAC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robocore/library/RoboCore%20-%20MMA8452Q/1.0.1/RoboCore-MMA8452Q-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboCore-MMA8452Q-1.0.1.tar.gz",
+    "size_bytes": 7756,
+    "sha256": "be5ce5fe6ed03f03d76e37c82f8b22c49d28420af87a2e245f79b98e42b04b3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robocore/library/RoboCore%2520-%2520MMA8452Q/1.0.1/RoboCore-MMA8452Q-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robocore/library/RoboCore%20-%20MMA8452Q/1.0.1/RoboCore-MMA8452Q-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robocore/library/RoboCore%20-%20Rocky/1.0.1/RoboCore-Rocky-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboCore-Rocky-1.0.1.tar.gz",
+    "size_bytes": 10035,
+    "sha256": "37081040b8c227c2878a2d645046aa4007b84f7ce6aa0b5e0c44d17a9c5dc68b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robocore/library/RoboCore%2520-%2520Rocky/1.0.1/RoboCore-Rocky-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robocore/library/RoboCore%20-%20Rocky/1.0.1/RoboCore-Rocky-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robocore/library/RoboCore%20-%20SMW_SX1262M0/1.0.1/RoboCore-SMW_SX1262M0-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboCore-SMW_SX1262M0-1.0.1.tar.gz",
+    "size_bytes": 17843,
+    "sha256": "b8a80efa9c0eab699599e37462786f9f8c14c53a6f067b2fe7fd51e142b23800",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robocore/library/RoboCore%2520-%2520SMW_SX1262M0/1.0.1/RoboCore-SMW_SX1262M0-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robocore/library/RoboCore%20-%20SMW_SX1262M0/1.0.1/RoboCore-SMW_SX1262M0-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robocore/library/RoboCore%20-%20SMW_SX1276M0/1.1.0/RoboCore-SMW_SX1276M0-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboCore-SMW_SX1276M0-1.1.0.tar.gz",
+    "size_bytes": 19617,
+    "sha256": "1c1643bc5389a98c8bca8aabe300371aa6be22eb66a2417c395fa2336cbe500c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robocore/library/RoboCore%2520-%2520SMW_SX1276M0/1.1.0/RoboCore-SMW_SX1276M0-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robocore/library/RoboCore%20-%20SMW_SX1276M0/1.1.0/RoboCore-SMW_SX1276M0-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robocore/library/RoboCore%20-%20Serial%20Relay/1.0.0/RoboCore-SerialRelay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboCore-SerialRelay-1.0.0.tar.gz",
+    "size_bytes": 3977,
+    "sha256": "72e3a41d7185d98b5df44eb2fedea9830a5a83cfd1cacc040d2dfeefda1cdc5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robocore/library/RoboCore%2520-%2520Serial%2520Relay/1.0.0/RoboCore-SerialRelay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robocore/library/RoboCore%20-%20Serial%20Relay/1.0.0/RoboCore-SerialRelay-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robocore/library/RoboCore%20-%20TCA9534/1.0.0/RoboCore-TCA9534-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboCore-TCA9534-1.0.0.tar.gz",
+    "size_bytes": 7086,
+    "sha256": "ff109c6b9515ca8f7ec2707e2d35539fdc2015219c20c5f77d6308774b11d1c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robocore/library/RoboCore%2520-%2520TCA9534/1.0.0/RoboCore-TCA9534-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robocore/library/RoboCore%20-%20TCA9534/1.0.0/RoboCore-TCA9534-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robocore/library/RoboCore%20-%20Vespa/1.3.0/RoboCore-Vespa-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboCore-Vespa-1.3.0.tar.gz",
+    "size_bytes": 12958,
+    "sha256": "8546454b28f0868c59e499c3c7644136b95f634d588488552604e166377ed90e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robocore/library/RoboCore%2520-%2520Vespa/1.3.0/RoboCore-Vespa-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/robocore/library/RoboCore%20-%20Vespa/1.3.0/RoboCore-Vespa-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

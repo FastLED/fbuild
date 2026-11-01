@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nodeppoficial",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nodeppoficial/library/nodepp/1.2.0/nodepp-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nodepp-1.2.0.tar.gz",
+    "size_bytes": 50622,
+    "sha256": "57cfd1528ee92a63d158c5f83bd43e24c70e5878269561fbc1b5c2cf22c793c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nodeppoficial/library/nodepp/1.2.0/nodepp-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nodeppoficial/library/nodepp/1.2.0/nodepp-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nodeppoficial/library/nodepp/1.3.0/nodepp-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nodepp-1.3.0.tar.gz",
+    "size_bytes": 55202,
+    "sha256": "6a233bcebedbd508afcbae32e59baac0b07831149384c40317a3370162e47c4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nodeppoficial/library/nodepp/1.3.0/nodepp-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nodeppoficial/library/nodepp/1.3.0/nodepp-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nodeppoficial/library/nodepp/1.4.0/nodepp-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nodepp-1.4.0.tar.gz",
+    "size_bytes": 63811,
+    "sha256": "1f6a659e99af5dde678a5e14ee019054e619e25b8084b572de5e84fed70d94ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nodeppoficial/library/nodepp/1.4.0/nodepp-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nodeppoficial/library/nodepp/1.4.0/nodepp-1.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

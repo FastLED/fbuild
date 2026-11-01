@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ironpan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ironpan/library/456/0.0.0+sha.a9a6afb5c4e4/456-0.0.0+sha.a9a6afb5c4e4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "456-0.0.0+sha.a9a6afb5c4e4.tar.gz",
+    "size_bytes": 8359,
+    "sha256": "7ce8586e0c1650885bf473a138dff37f5ab8b1e9cc19d7dd8808c1a007f9efee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ironpan/library/456/0.0.0%2Bsha.a9a6afb5c4e4/456-0.0.0%2Bsha.a9a6afb5c4e4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ironpan/library/456/0.0.0%2Bsha.a9a6afb5c4e4/456-0.0.0%2Bsha.a9a6afb5c4e4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

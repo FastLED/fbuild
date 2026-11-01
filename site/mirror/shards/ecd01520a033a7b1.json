@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kineis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kineis/library/KIM%20Arduino%20Library/0.0.1/KIMArduinoLibrary-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KIMArduinoLibrary-0.0.1.tar.gz",
+    "size_bytes": 34780,
+    "sha256": "2f36ba4e804b3ba652a2276eceeb98a903b6e36adf7ad5639d9f79490deed210",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kineis/library/KIM%2520Arduino%2520Library/0.0.1/KIMArduinoLibrary-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kineis/library/KIM%20Arduino%20Library/0.0.1/KIMArduinoLibrary-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kineis/library/KIM/3.0.4/KIM-3.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KIM-3.0.4.tar.gz",
+    "size_bytes": 39438,
+    "sha256": "e2573993cb4fb4a13ebf386bd7e7944b3378ecf5dd16e87032d36d543bf7a87d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kineis/library/KIM/3.0.4/KIM-3.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/kineis/library/KIM/3.0.4/KIM-3.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

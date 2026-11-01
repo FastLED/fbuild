@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/daxbot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "daxbot/library/NovaGSM/5.0.1/NovaGSM-5.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NovaGSM-5.0.1.tar.gz",
+    "size_bytes": 14894,
+    "sha256": "c741dea49bea0e22d3f8e2c03193cd612045d6e543f2817de41df7dd3d35c32f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/daxbot/library/NovaGSM/5.0.1/NovaGSM-5.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/daxbot/library/NovaGSM/5.0.1/NovaGSM-5.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

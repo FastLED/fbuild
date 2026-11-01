@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-maclobdell",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-maclobdell/library/Adafruit_LEDBackpack/0.0.0+sha.b4ce71619694/Adafruit_LEDBackpack-0.0.0+sha.b4ce71619694.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_LEDBackpack-0.0.0+sha.b4ce71619694.tar.gz",
+    "size_bytes": 8040,
+    "sha256": "b5f5a03df285d1d18a846eb8b08c3615120282eb1eced5f7f672ea576a3f8cf7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maclobdell/library/Adafruit_LEDBackpack/0.0.0%2Bsha.b4ce71619694/Adafruit_LEDBackpack-0.0.0%2Bsha.b4ce71619694.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maclobdell/library/Adafruit_LEDBackpack/0.0.0%2Bsha.b4ce71619694/Adafruit_LEDBackpack-0.0.0%2Bsha.b4ce71619694.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maclobdell/library/FXOS8700CQ/0.0.0+sha.7bdb0d5e5287/FXOS8700CQ-0.0.0+sha.7bdb0d5e5287.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FXOS8700CQ-0.0.0+sha.7bdb0d5e5287.tar.gz",
+    "size_bytes": 4900,
+    "sha256": "b9540ba93112a75b6b082b2376e3225a52db166aaead992e60280ebaef331fc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maclobdell/library/FXOS8700CQ/0.0.0%2Bsha.7bdb0d5e5287/FXOS8700CQ-0.0.0%2Bsha.7bdb0d5e5287.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maclobdell/library/FXOS8700CQ/0.0.0%2Bsha.7bdb0d5e5287/FXOS8700CQ-0.0.0%2Bsha.7bdb0d5e5287.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maclobdell/library/MMA8451Q_ext/0.0.0+sha.018aea85c0db/MMA8451Q_ext-0.0.0+sha.018aea85c0db.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8451Q_ext-0.0.0+sha.018aea85c0db.tar.gz",
+    "size_bytes": 4685,
+    "sha256": "2ca0d05757537979cf985987b17ee959ace3578c1ecea23a0c39da7eb380825f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maclobdell/library/MMA8451Q_ext/0.0.0%2Bsha.018aea85c0db/MMA8451Q_ext-0.0.0%2Bsha.018aea85c0db.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maclobdell/library/MMA8451Q_ext/0.0.0%2Bsha.018aea85c0db/MMA8451Q_ext-0.0.0%2Bsha.018aea85c0db.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maclobdell/library/example-blinky-lpc55s69/0.0.0+sha.03c15e688f62/example-blinky-lpc55s69-0.0.0+sha.03c15e688f62.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "example-blinky-lpc55s69-0.0.0+sha.03c15e688f62.tar.gz",
+    "size_bytes": 4972,
+    "sha256": "9c5d498beef3a88647faad719289cfe9869f8f468d525480310ef3d0bb57685b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maclobdell/library/example-blinky-lpc55s69/0.0.0%2Bsha.03c15e688f62/example-blinky-lpc55s69-0.0.0%2Bsha.03c15e688f62.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maclobdell/library/example-blinky-lpc55s69/0.0.0%2Bsha.03c15e688f62/example-blinky-lpc55s69-0.0.0%2Bsha.03c15e688f62.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maclobdell/library/example-filesystem-lpc55/0.0.0+sha.ad2237362248/example-filesystem-lpc55-0.0.0+sha.ad2237362248.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "example-filesystem-lpc55-0.0.0+sha.ad2237362248.tar.gz",
+    "size_bytes": 11694,
+    "sha256": "0093d30bfcc7f1f24839684e6cb8c404bb978f85b47ea1eaae5d5a6cba0dc717",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maclobdell/library/example-filesystem-lpc55/0.0.0%2Bsha.ad2237362248/example-filesystem-lpc55-0.0.0%2Bsha.ad2237362248.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maclobdell/library/example-filesystem-lpc55/0.0.0%2Bsha.ad2237362248/example-filesystem-lpc55-0.0.0%2Bsha.ad2237362248.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-maclobdell/library/example-wifi-lpc55s69/0.0.0+sha.2f4d849e36e5/example-wifi-lpc55s69-0.0.0+sha.2f4d849e36e5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "example-wifi-lpc55s69-0.0.0+sha.2f4d849e36e5.tar.gz",
+    "size_bytes": 7897,
+    "sha256": "883ffa1417cef8d30e0a5f0ae54920b7b33ee1820b7c6803347a8317e502a264",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maclobdell/library/example-wifi-lpc55s69/0.0.0%2Bsha.2f4d849e36e5/example-wifi-lpc55s69-0.0.0%2Bsha.2f4d849e36e5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maclobdell/library/example-wifi-lpc55s69/0.0.0%2Bsha.2f4d849e36e5/example-wifi-lpc55s69-0.0.0%2Bsha.2f4d849e36e5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

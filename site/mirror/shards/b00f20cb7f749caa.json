@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-clark233",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-clark233/library/ID12RFID/0.0.0+sha.1c0da1e2ae2d/ID12RFID-0.0.0+sha.1c0da1e2ae2d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ID12RFID-0.0.0+sha.1c0da1e2ae2d.tar.gz",
+    "size_bytes": 2082,
+    "sha256": "aee43ad882990891dd22a07d6cb4cfdcc51368c6cc3d27f8b18e657d2e38af37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-clark233/library/ID12RFID/0.0.0%2Bsha.1c0da1e2ae2d/ID12RFID-0.0.0%2Bsha.1c0da1e2ae2d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-clark233/library/ID12RFID/0.0.0%2Bsha.1c0da1e2ae2d/ID12RFID-0.0.0%2Bsha.1c0da1e2ae2d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

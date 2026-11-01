@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jonasmf",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jonasmf/library/ADXL345_I2C/0.0.0+sha.b1e3d3177fce/ADXL345_I2C-0.0.0+sha.b1e3d3177fce.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL345_I2C-0.0.0+sha.b1e3d3177fce.tar.gz",
+    "size_bytes": 6942,
+    "sha256": "b6870e92da1eb6c359e1a6598fca49f0b93070393051054f32ac058a52e2d8ba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jonasmf/library/ADXL345_I2C/0.0.0%2Bsha.b1e3d3177fce/ADXL345_I2C-0.0.0%2Bsha.b1e3d3177fce.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jonasmf/library/ADXL345_I2C/0.0.0%2Bsha.b1e3d3177fce/ADXL345_I2C-0.0.0%2Bsha.b1e3d3177fce.tar.gz"
+    ]
+   }
+  }
+ ]
+}

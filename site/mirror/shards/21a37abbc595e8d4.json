@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/citromoseper",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "citromoseper/library/MIDIplayer/1.0.1/MIDIplayer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MIDIplayer-1.0.1.tar.gz",
+    "size_bytes": 8239,
+    "sha256": "1ce26039e4fe0352b2c75563d5f6564615ecfa8c8fbd79bf7c1f3473251a2db3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/citromoseper/library/MIDIplayer/1.0.1/MIDIplayer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/citromoseper/library/MIDIplayer/1.0.1/MIDIplayer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "citromoseper/library/XYdraw/1.0.0/XYdraw-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XYdraw-1.0.0.tar.gz",
+    "size_bytes": 23421,
+    "sha256": "d55b0c4e6194df590bb77b8b767057f6a876823182375fc4e633857898a58ec5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/citromoseper/library/XYdraw/1.0.0/XYdraw-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/citromoseper/library/XYdraw/1.0.0/XYdraw-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "citromoseper/library/XYdraw/1.1.0/XYdraw-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XYdraw-1.1.0.tar.gz",
+    "size_bytes": 24226,
+    "sha256": "c22e705efb869552444fd495a10222024a87af00839a41f37433a035441750f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/citromoseper/library/XYdraw/1.1.0/XYdraw-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/citromoseper/library/XYdraw/1.1.0/XYdraw-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "citromoseper/library/XYdraw/1.2.0/XYdraw-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XYdraw-1.2.0.tar.gz",
+    "size_bytes": 27641,
+    "sha256": "01dd803a00e8a07cb046088537a66dd765cc08503bdbb9003ceeaf047487102a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/citromoseper/library/XYdraw/1.2.0/XYdraw-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/citromoseper/library/XYdraw/1.2.0/XYdraw-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "citromoseper/library/XYdraw/1.3.0/XYdraw-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XYdraw-1.3.0.tar.gz",
+    "size_bytes": 36820,
+    "sha256": "ce7df4085419e5812fcdf0138f7ec9d72f81f2c2ade0828826a661064aa61b11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/citromoseper/library/XYdraw/1.3.0/XYdraw-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/citromoseper/library/XYdraw/1.3.0/XYdraw-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

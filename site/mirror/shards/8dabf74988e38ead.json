@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/0neblock",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "0neblock/library/SNMP_Agent/2.1.0/SNMP_Agent-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SNMP_Agent-2.1.0.tar.gz",
+    "size_bytes": 29182,
+    "sha256": "97e642734b54b3a5728cbbdb7cb96651b1fd05c797a716b6e7c1903d3974d682",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/0neblock/library/SNMP_Agent/2.1.0/SNMP_Agent-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/0neblock/library/SNMP_Agent/2.1.0/SNMP_Agent-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

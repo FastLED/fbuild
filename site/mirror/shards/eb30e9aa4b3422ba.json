@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-helmut64",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-helmut64/library/HELIOS_Si7021/0.0.0+sha.5ea2d9a2ef8c/HELIOS_Si7021-0.0.0+sha.5ea2d9a2ef8c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HELIOS_Si7021-0.0.0+sha.5ea2d9a2ef8c.tar.gz",
+    "size_bytes": 2409,
+    "sha256": "22223b2ef620a0d33b37649d9ae1e5878fa1c4b271c6ab2b01df1512bb4e636b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-helmut64/library/HELIOS_Si7021/0.0.0%2Bsha.5ea2d9a2ef8c/HELIOS_Si7021-0.0.0%2Bsha.5ea2d9a2ef8c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-helmut64/library/HELIOS_Si7021/0.0.0%2Bsha.5ea2d9a2ef8c/HELIOS_Si7021-0.0.0%2Bsha.5ea2d9a2ef8c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-helmut64/library/OLED_SSD1306/0.0.0+sha.99a409809366/OLED_SSD1306-0.0.0+sha.99a409809366.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OLED_SSD1306-0.0.0+sha.99a409809366.tar.gz",
+    "size_bytes": 33316,
+    "sha256": "9570ab10f1b8ec79df46cfdc6727821407a0a2c608dc7d946d9b3274249d893d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-helmut64/library/OLED_SSD1306/0.0.0%2Bsha.99a409809366/OLED_SSD1306-0.0.0%2Bsha.99a409809366.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-helmut64/library/OLED_SSD1306/0.0.0%2Bsha.99a409809366/OLED_SSD1306-0.0.0%2Bsha.99a409809366.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-helmut64/library/USBDeviceHT/0.0.0+sha.961423d1da74/USBDeviceHT-0.0.0+sha.961423d1da74.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBDeviceHT-0.0.0+sha.961423d1da74.tar.gz",
+    "size_bytes": 249577,
+    "sha256": "77e0dd8c2a8cd38432a556cd18f143acacfe6fe6f0ca02462534ff7cc4f46de1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-helmut64/library/USBDeviceHT/0.0.0%2Bsha.961423d1da74/USBDeviceHT-0.0.0%2Bsha.961423d1da74.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-helmut64/library/USBDeviceHT/0.0.0%2Bsha.961423d1da74/USBDeviceHT-0.0.0%2Bsha.961423d1da74.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/trylaarsdam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "trylaarsdam/library/Portenta-FlashStorage/1.0.1/Portenta-FlashStorage-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Portenta-FlashStorage-1.0.1.tar.gz",
+    "size_bytes": 4367,
+    "sha256": "ccc87b8b13334fe4ad488228bb87340cac038780ea51a9e1ea4ee2ceb58429ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/trylaarsdam/library/Portenta-FlashStorage/1.0.1/Portenta-FlashStorage-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/trylaarsdam/library/Portenta-FlashStorage/1.0.1/Portenta-FlashStorage-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "trylaarsdam/library/Portenta-I2S/1.1.0/Portenta-I2S-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Portenta-I2S-1.1.0.tar.gz",
+    "size_bytes": 513143,
+    "sha256": "55986bcf761f3349af8643d3a3c143df4ec0b7bf1e81387b3b947555f98de10d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/trylaarsdam/library/Portenta-I2S/1.1.0/Portenta-I2S-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/trylaarsdam/library/Portenta-I2S/1.1.0/Portenta-I2S-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "trylaarsdam/library/PowerInBand/1.1.0/PowerInBand-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PowerInBand-1.1.0.tar.gz",
+    "size_bytes": 21518,
+    "sha256": "b0e62ec1c3953a6038921fcbd991c435cf064b26b0ef36e6d82696ef75c33bf6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/trylaarsdam/library/PowerInBand/1.1.0/PowerInBand-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/trylaarsdam/library/PowerInBand/1.1.0/PowerInBand-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "trylaarsdam/library/STM32L4xx%20Watchdog/1.0.1/STM32L4xxWatchdog-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32L4xxWatchdog-1.0.1.tar.gz",
+    "size_bytes": 4410,
+    "sha256": "24ecb07e4ae5a03dd0d0569115ad38ca56ea5c82c5e424f0b27aeb21b04742fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/trylaarsdam/library/STM32L4xx%2520Watchdog/1.0.1/STM32L4xxWatchdog-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/trylaarsdam/library/STM32L4xx%20Watchdog/1.0.1/STM32L4xxWatchdog-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "trylaarsdam/library/Tensorflow%20Lite%20for%20Microcontrollers%20%28WCL%29/1.1.1/TensorflowLiteforMicrocontrollersWCL-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TensorflowLiteforMicrocontrollersWCL-1.1.1.tar.gz",
+    "size_bytes": 684185,
+    "sha256": "bdbdc44ef9a8a59ebe2278fd57c6ba8600ae362335d0f04c51603d4b5f419055",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/trylaarsdam/library/Tensorflow%2520Lite%2520for%2520Microcontrollers%2520%2528WCL%2529/1.1.1/TensorflowLiteforMicrocontrollersWCL-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/trylaarsdam/library/Tensorflow%20Lite%20for%20Microcontrollers%20%28WCL%29/1.1.1/TensorflowLiteforMicrocontrollersWCL-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

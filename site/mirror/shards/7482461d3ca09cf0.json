@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/houstonash",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "houstonash/library/CF-MH201-Card-Reader/0.0.6/CF-MH201-Card-Reader-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CF-MH201-Card-Reader-0.0.6.tar.gz",
+    "size_bytes": 3927,
+    "sha256": "5dfc44bef2b504c0af9dd32d7abfbe52c77ff7073285b806b9775cd31dd51470",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/houstonash/library/CF-MH201-Card-Reader/0.0.6/CF-MH201-Card-Reader-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/houstonash/library/CF-MH201-Card-Reader/0.0.6/CF-MH201-Card-Reader-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "houstonash/library/LT-3XS664/0.3.0/LT-3XS664-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LT-3XS664-0.3.0.tar.gz",
+    "size_bytes": 3767,
+    "sha256": "4eb1ef470c09392742ebeb350c8e471ad5b133f73bc3c20cfd35fb7b8b2a8baa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/houstonash/library/LT-3XS664/0.3.0/LT-3XS664-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/houstonash/library/LT-3XS664/0.3.0/LT-3XS664-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "houstonash/library/NTPAsyncClient/0.1.1/NTPAsyncClient-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NTPAsyncClient-0.1.1.tar.gz",
+    "size_bytes": 5541,
+    "sha256": "b5252c3dde4ae12d40f7fc7317a43d630a30f3b9e8ce1db1ce2e9455b51aefac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/houstonash/library/NTPAsyncClient/0.1.1/NTPAsyncClient-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/houstonash/library/NTPAsyncClient/0.1.1/NTPAsyncClient-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "houstonash/library/Packet/1.2.0/Packet-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Packet-1.2.0.tar.gz",
+    "size_bytes": 7219,
+    "sha256": "0924ece369bfffa4bd3c4f655d88d4b8a8a225fe64e28244de79c241d71faeea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/houstonash/library/Packet/1.2.0/Packet-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/houstonash/library/Packet/1.2.0/Packet-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "houstonash/library/Packet/1.2.1/Packet-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Packet-1.2.1.tar.gz",
+    "size_bytes": 7230,
+    "sha256": "dcd8fb5ac37b71f1143d599edaae3303beb19312cefab3e5ed5256d138d938f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/houstonash/library/Packet/1.2.1/Packet-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/houstonash/library/Packet/1.2.1/Packet-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

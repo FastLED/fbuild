@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/acrobotic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "acrobotic/library/ACROBOTIC%20SSD1306/1.0.2/ACROBOTICSSD1306-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACROBOTICSSD1306-1.0.2.tar.gz",
+    "size_bytes": 8496,
+    "sha256": "7bf81e43ddd8faaadefaec9f31aa64b81559ca11ed2cdb3629feb44445e60f35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acrobotic/library/ACROBOTIC%2520SSD1306/1.0.2/ACROBOTICSSD1306-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/acrobotic/library/ACROBOTIC%20SSD1306/1.0.2/ACROBOTICSSD1306-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

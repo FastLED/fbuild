@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mgoblin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mgoblin/library/STC15%20hardware/0.10.0/STC15hardware-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STC15hardware-0.10.0.tar.gz",
+    "size_bytes": 1477590,
+    "sha256": "1b3db5bab1ae46464b4607be0b1265ea18a44e14f3050005ebf6e7b18be4d99f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mgoblin/library/STC15%2520hardware/0.10.0/STC15hardware-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mgoblin/library/STC15%20hardware/0.10.0/STC15hardware-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mgoblin/library/STC15%20hardware/0.10.1/STC15hardware-0.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STC15hardware-0.10.1.tar.gz",
+    "size_bytes": 1548954,
+    "sha256": "7791c8340bdc9abe43f4fbb745b65d92bc35bc9f5cbc1468687e93d515635a5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mgoblin/library/STC15%2520hardware/0.10.1/STC15hardware-0.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mgoblin/library/STC15%20hardware/0.10.1/STC15hardware-0.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mgoblin/library/STC15%20hardware/0.13.0/STC15hardware-0.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STC15hardware-0.13.0.tar.gz",
+    "size_bytes": 2530296,
+    "sha256": "323cf4af5b7ca7c1ea3c77140247caab0b9dd698b1c5d6da98e9826ec12ba067",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mgoblin/library/STC15%2520hardware/0.13.0/STC15hardware-0.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mgoblin/library/STC15%20hardware/0.13.0/STC15hardware-0.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mgoblin/library/STC15%20hardware/0.15.0/STC15hardware-0.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STC15hardware-0.15.0.tar.gz",
+    "size_bytes": 2789343,
+    "sha256": "33a1d7e9addce8e41c8b8ada29f6f9ad1d15b14f449779467cf07bcd7fd43ce4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mgoblin/library/STC15%2520hardware/0.15.0/STC15hardware-0.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mgoblin/library/STC15%20hardware/0.15.0/STC15hardware-0.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mgoblin/library/STC15%20hardware/0.16.0/STC15hardware-0.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STC15hardware-0.16.0.tar.gz",
+    "size_bytes": 7329879,
+    "sha256": "fa2b124493ea41e9cefe7aef629ba65ea7e45d8c210da3a867d6f6740290d702",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mgoblin/library/STC15%2520hardware/0.16.0/STC15hardware-0.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mgoblin/library/STC15%20hardware/0.16.0/STC15hardware-0.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mgoblin/library/STC15%20hardware/0.18.0/STC15hardware-0.18.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STC15hardware-0.18.0.tar.gz",
+    "size_bytes": 7050657,
+    "sha256": "4d1ba053951f07d6ff69b7d6a4cc9f150717ffa4052b1384579dd823288683da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mgoblin/library/STC15%2520hardware/0.18.0/STC15hardware-0.18.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mgoblin/library/STC15%20hardware/0.18.0/STC15hardware-0.18.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mgoblin/library/SplashScreen/1.0.0/SplashScreen-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SplashScreen-1.0.0.tar.gz",
+    "size_bytes": 7413,
+    "sha256": "0dc0834ea4c70235efc6efee175d16d36b65e18ea9d6aaecb8d21e8b002b6a35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mgoblin/library/SplashScreen/1.0.0/SplashScreen-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mgoblin/library/SplashScreen/1.0.0/SplashScreen-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/junwha0511",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "junwha0511/library/LiquidCrystal_I2C_Hangul/2.0.0/LiquidCrystal_I2C_Hangul-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidCrystal_I2C_Hangul-2.0.0.tar.gz",
+    "size_bytes": 7247,
+    "sha256": "ebe74b1fc2d137fb18f8571c30f2b2673eb656497db670e8548ffe820c95b9a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/junwha0511/library/LiquidCrystal_I2C_Hangul/2.0.0/LiquidCrystal_I2C_Hangul-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/junwha0511/library/LiquidCrystal_I2C_Hangul/2.0.0/LiquidCrystal_I2C_Hangul-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/montoyamoraga",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "montoyamoraga/library/SiguesAhi/0.0.1/SiguesAhi-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SiguesAhi-0.0.1.tar.gz",
+    "size_bytes": 7411,
+    "sha256": "f2cc68dfd31fdf6710b2a13e2382908e323365f9586340af8c6f14b7266accc2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/montoyamoraga/library/SiguesAhi/0.0.1/SiguesAhi-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/montoyamoraga/library/SiguesAhi/0.0.1/SiguesAhi-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "montoyamoraga/library/SiguesAhi/0.1.0/SiguesAhi-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SiguesAhi-0.1.0.tar.gz",
+    "size_bytes": 35831,
+    "sha256": "dc20f4bfae4bbc2bd9987abb838f3f62ed31c3346a4701ea56ba8490939401ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/montoyamoraga/library/SiguesAhi/0.1.0/SiguesAhi-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/montoyamoraga/library/SiguesAhi/0.1.0/SiguesAhi-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

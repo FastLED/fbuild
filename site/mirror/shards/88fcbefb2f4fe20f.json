@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/brandeismakerlab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "brandeismakerlab/library/ElectronicsEducation/1.1.3/ElectronicsEducation-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElectronicsEducation-1.1.3.tar.gz",
+    "size_bytes": 21465,
+    "sha256": "6e25bb88dac57b8c2ee238399ac5caf5fd6ee5edda97b0072a03f1c7dfd37e37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brandeismakerlab/library/ElectronicsEducation/1.1.3/ElectronicsEducation-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/brandeismakerlab/library/ElectronicsEducation/1.1.3/ElectronicsEducation-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "brandeismakerlab/library/ZumoAutomation/1.0.3/ZumoAutomation-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZumoAutomation-1.0.3.tar.gz",
+    "size_bytes": 50570,
+    "sha256": "d7d3e95c70db82b522263117a88461b4007e2a75e7963f7271fbc1bc8c7d552a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brandeismakerlab/library/ZumoAutomation/1.0.3/ZumoAutomation-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/brandeismakerlab/library/ZumoAutomation/1.0.3/ZumoAutomation-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

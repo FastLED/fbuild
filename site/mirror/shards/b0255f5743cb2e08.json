@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ajlennon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ajlennon/library/SimpleTimerUD/0.0.2/SimpleTimerUD-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleTimerUD-0.0.2.tar.gz",
+    "size_bytes": 3345,
+    "sha256": "4e50cf7054c086343f5d03df772e7bab29d078d55adffc5c586be18c53d9bcc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ajlennon/library/SimpleTimerUD/0.0.2/SimpleTimerUD-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ajlennon/library/SimpleTimerUD/0.0.2/SimpleTimerUD-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ajlennon/library/mqtt-sn/0.11.7/mqtt-sn-0.11.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mqtt-sn-0.11.7.tar.gz",
+    "size_bytes": 278294,
+    "sha256": "5a0e660859938ccc0e34b075bd049a8980b38cfa7f67d49a20e9e36b386fd3dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ajlennon/library/mqtt-sn/0.11.7/mqtt-sn-0.11.7.tar.gz",
+     "https://dl.registry.platformio.org/download/ajlennon/library/mqtt-sn/0.11.7/mqtt-sn-0.11.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

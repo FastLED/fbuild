@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cansatkit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cansatkit/library/CanSat%20Kit%20Library/1.3.1/CanSatKitLibrary-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CanSatKitLibrary-1.3.1.tar.gz",
+    "size_bytes": 16957,
+    "sha256": "3915b41f5f3eefadcd9877ce2a801870d10dd82fa92202ca0409f0571fea2021",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cansatkit/library/CanSat%2520Kit%2520Library/1.3.1/CanSatKitLibrary-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cansatkit/library/CanSat%20Kit%20Library/1.3.1/CanSatKitLibrary-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,659 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/benas09",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "benas09/library/FujitsuAC/1.0.10/FujitsuAC-1.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.0.10.tar.gz",
+    "size_bytes": 493871,
+    "sha256": "71164a2724088646859db8ecc550144407b70106eef389fefaccbc7f975a57ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.0.10/FujitsuAC-1.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.0.10/FujitsuAC-1.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.0.12/FujitsuAC-1.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.0.12.tar.gz",
+    "size_bytes": 495638,
+    "sha256": "963be000c98c028da2e28b06f8087c241ec99d9a41fe70d69cbe40a19ca0affc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.0.12/FujitsuAC-1.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.0.12/FujitsuAC-1.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.0.14/FujitsuAC-1.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.0.14.tar.gz",
+    "size_bytes": 496137,
+    "sha256": "0af0228aa60a177d9dde5dafa0aabf50182764a671c7179d95ec032d60b1d0f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.0.14/FujitsuAC-1.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.0.14/FujitsuAC-1.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.0.15/FujitsuAC-1.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.0.15.tar.gz",
+    "size_bytes": 496154,
+    "sha256": "8b00b4650e532ac2b362463f7121708ba3fc757007221ab8712c91a24fe3be60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.0.15/FujitsuAC-1.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.0.15/FujitsuAC-1.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.0.16/FujitsuAC-1.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.0.16.tar.gz",
+    "size_bytes": 496160,
+    "sha256": "abcd8645469b723735d0e0cd38efbab62424d547aea991793ca1f1ed84ac4f20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.0.16/FujitsuAC-1.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.0.16/FujitsuAC-1.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.0.17/FujitsuAC-1.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.0.17.tar.gz",
+    "size_bytes": 496253,
+    "sha256": "6ad25a8dc85862a3a7e3581f1e9bd341ad604d2f44711fdd6612e4aeb62986cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.0.17/FujitsuAC-1.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.0.17/FujitsuAC-1.0.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.0.18/FujitsuAC-1.0.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.0.18.tar.gz",
+    "size_bytes": 496695,
+    "sha256": "cf2cf402c3933785c18f8f66e308a71c7c7b2f63921a13fa4be4189eaff73394",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.0.18/FujitsuAC-1.0.18.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.0.18/FujitsuAC-1.0.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.0.20/FujitsuAC-1.0.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.0.20.tar.gz",
+    "size_bytes": 497065,
+    "sha256": "2e845d3bc9d5c4f3533871a5c0b2570fc58c5b5d8c9534b2ef589d66192e3da0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.0.20/FujitsuAC-1.0.20.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.0.20/FujitsuAC-1.0.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.0.21/FujitsuAC-1.0.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.0.21.tar.gz",
+    "size_bytes": 497292,
+    "sha256": "5ea689dd557299fd9aa2bf130784300f343c80ae5e279f9e9a3572b57c87ca31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.0.21/FujitsuAC-1.0.21.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.0.21/FujitsuAC-1.0.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.0.6/FujitsuAC-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.0.6.tar.gz",
+    "size_bytes": 493417,
+    "sha256": "8d41caeb6bbc8da976242652403e5562ef71a838654cba2a71c088e80526b8e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.0.6/FujitsuAC-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.0.6/FujitsuAC-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.0.7/FujitsuAC-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.0.7.tar.gz",
+    "size_bytes": 493418,
+    "sha256": "abe50ecdb26a9f7049edde4b881b3aa325d35550de539872cd2ae1eed298d4cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.0.7/FujitsuAC-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.0.7/FujitsuAC-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.0.8/FujitsuAC-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.0.8.tar.gz",
+    "size_bytes": 493601,
+    "sha256": "3ffb9c4859ad6ad167f02ae3b9e4838b49dc88a443f001755519308d5e627746",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.0.8/FujitsuAC-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.0.8/FujitsuAC-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.1.0/FujitsuAC-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.1.0.tar.gz",
+    "size_bytes": 498312,
+    "sha256": "e26e0e7bc5483dbcfd845477d61481be754a36978897b0dab13e974bf86c1745",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.1.0/FujitsuAC-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.1.0/FujitsuAC-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.1.10/FujitsuAC-1.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.1.10.tar.gz",
+    "size_bytes": 2197754,
+    "sha256": "5b7dc9d3bdf6416f8d27358a594e4f286a8783ee177ffcb222ae63adff5460e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.1.10/FujitsuAC-1.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.1.10/FujitsuAC-1.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.1.11/FujitsuAC-1.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.1.11.tar.gz",
+    "size_bytes": 2198034,
+    "sha256": "c3b6b8d9759258e81448fb12ac018611f70228970b3966c09c91c6690044fdc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.1.11/FujitsuAC-1.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.1.11/FujitsuAC-1.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.1.3/FujitsuAC-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.1.3.tar.gz",
+    "size_bytes": 499041,
+    "sha256": "f5854d782ce07caecd74b2fe861fbd46f9a3959c79ffb1f6232b8f84607001f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.1.3/FujitsuAC-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.1.3/FujitsuAC-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.1.4/FujitsuAC-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.1.4.tar.gz",
+    "size_bytes": 499215,
+    "sha256": "f6b0975f15856ec92eb41a9878950b927083109d4b97dcf332cdb5aa2f7d7f47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.1.4/FujitsuAC-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.1.4/FujitsuAC-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.1.5/FujitsuAC-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.1.5.tar.gz",
+    "size_bytes": 499121,
+    "sha256": "b60082c608a3b170147657c76a8bec2764f45955fed649ce6b95820541dc0d40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.1.5/FujitsuAC-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.1.5/FujitsuAC-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.1.7/FujitsuAC-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.1.7.tar.gz",
+    "size_bytes": 502616,
+    "sha256": "c872bbdb793d6cd72e0280659e7424d2d17baa12875311c41e6c4014ed159980",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.1.7/FujitsuAC-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.1.7/FujitsuAC-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.1.8/FujitsuAC-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.1.8.tar.gz",
+    "size_bytes": 502609,
+    "sha256": "14e9066236346dbc47491d1b06622d001658c76f800f8293d619de8b215f578d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.1.8/FujitsuAC-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.1.8/FujitsuAC-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.1.9/FujitsuAC-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.1.9.tar.gz",
+    "size_bytes": 2197490,
+    "sha256": "cd22327c698864541f5a90e7bb14d7df74dd528c47218aec486e03e9ac3c1e0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.1.9/FujitsuAC-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.1.9/FujitsuAC-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.2.0/FujitsuAC-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.2.0.tar.gz",
+    "size_bytes": 2198914,
+    "sha256": "b54bdf2a81a493a64bb860d6160512857afd89281691126328fe5bfa85662a80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.2.0/FujitsuAC-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.2.0/FujitsuAC-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.2.1/FujitsuAC-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.2.1.tar.gz",
+    "size_bytes": 2198920,
+    "sha256": "e1f9ff27e96242b41afafb0a1e2b754b784e274ee773130f3c2c24692ca0bf0b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.2.1/FujitsuAC-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.2.1/FujitsuAC-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.2.2/FujitsuAC-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.2.2.tar.gz",
+    "size_bytes": 2198923,
+    "sha256": "1dd0caaaf9150b5e4f2d217101985084356b52207dceeb886c5209f63a909624",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.2.2/FujitsuAC-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.2.2/FujitsuAC-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.2.3/FujitsuAC-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.2.3.tar.gz",
+    "size_bytes": 2198950,
+    "sha256": "75eb54573b7e976f09095dd2bc6514cb5793a23bb47ded63426b8940878a9525",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.2.3/FujitsuAC-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.2.3/FujitsuAC-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.2.4/FujitsuAC-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.2.4.tar.gz",
+    "size_bytes": 2200094,
+    "sha256": "be8ef426f851aa79fcb4db1a01be5e44726512cd65727565b4dd1ab01cb1cff0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.2.4/FujitsuAC-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.2.4/FujitsuAC-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.2.5/FujitsuAC-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.2.5.tar.gz",
+    "size_bytes": 2200096,
+    "sha256": "a62b0144dc05dfb969ca41c0c21951680d27d99f4eacec8d5b0473063de10b24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.2.5/FujitsuAC-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.2.5/FujitsuAC-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.3.11/FujitsuAC-1.3.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.3.11.tar.gz",
+    "size_bytes": 2204191,
+    "sha256": "b58530941e30d614e3a137e61a77826c4d296e82e13c4dc8f9b4541672a4b3e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.3.11/FujitsuAC-1.3.11.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.3.11/FujitsuAC-1.3.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.3.12/FujitsuAC-1.3.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.3.12.tar.gz",
+    "size_bytes": 2204178,
+    "sha256": "0097c756aa2d3607864c99048b9e393a5235fdc2e658e80f8bf8cda2037af111",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.3.12/FujitsuAC-1.3.12.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.3.12/FujitsuAC-1.3.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.3.13/FujitsuAC-1.3.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.3.13.tar.gz",
+    "size_bytes": 2204632,
+    "sha256": "a0da5c36a4218af81b53c748a957698e010cfca20f6e6015155943b02763624b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.3.13/FujitsuAC-1.3.13.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.3.13/FujitsuAC-1.3.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.3.14/FujitsuAC-1.3.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.3.14.tar.gz",
+    "size_bytes": 2205141,
+    "sha256": "916d5ea92832ef93b47c903fbf7d0ad3ac169224d66979ec3d0976f2d7f36935",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.3.14/FujitsuAC-1.3.14.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.3.14/FujitsuAC-1.3.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.3.16/FujitsuAC-1.3.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.3.16.tar.gz",
+    "size_bytes": 2205337,
+    "sha256": "1076f16067505489b591230c7713b1b8d18caf7d3068132156bca74b35b6c529",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.3.16/FujitsuAC-1.3.16.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.3.16/FujitsuAC-1.3.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.3.17/FujitsuAC-1.3.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.3.17.tar.gz",
+    "size_bytes": 2205422,
+    "sha256": "d332d2d7713a50cf1176ac7687ed1f95be6896a2bdfaf6b4a84d14f8d3dbb7a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.3.17/FujitsuAC-1.3.17.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.3.17/FujitsuAC-1.3.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.3.18/FujitsuAC-1.3.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.3.18.tar.gz",
+    "size_bytes": 2205478,
+    "sha256": "b884c17f041788824a765934f28db1b8a91ae32ed7b07cb47f3bc3dab92abff4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.3.18/FujitsuAC-1.3.18.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.3.18/FujitsuAC-1.3.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.3.19/FujitsuAC-1.3.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.3.19.tar.gz",
+    "size_bytes": 2205502,
+    "sha256": "f5a6cb60f18bd1f242c27924b7bde556f6c96321e32563dbf0aa949a1bb2bfda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.3.19/FujitsuAC-1.3.19.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.3.19/FujitsuAC-1.3.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.3.2/FujitsuAC-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.3.2.tar.gz",
+    "size_bytes": 2202333,
+    "sha256": "a15ef37888e7a9050da767e4835a448b8bb26d1ab707fbeb846b2c6ed0c5f78d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.3.2/FujitsuAC-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.3.2/FujitsuAC-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.3.3/FujitsuAC-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.3.3.tar.gz",
+    "size_bytes": 2202361,
+    "sha256": "eed6f7206cc6f3f65920ad44f5cb0c922a9f5d6c9f057b7e874c888ba353161c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.3.3/FujitsuAC-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.3.3/FujitsuAC-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.3.4/FujitsuAC-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.3.4.tar.gz",
+    "size_bytes": 2202594,
+    "sha256": "e26b565cb20c86d8b3353ea3d8df084377408f56a79a971b2181dd17a8379485",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.3.4/FujitsuAC-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.3.4/FujitsuAC-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.3.6/FujitsuAC-1.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.3.6.tar.gz",
+    "size_bytes": 2202600,
+    "sha256": "adacc2cdb01f015b7148a372e475498df4711c462743672192afaf91c1300dd7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.3.6/FujitsuAC-1.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.3.6/FujitsuAC-1.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.3.7/FujitsuAC-1.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.3.7.tar.gz",
+    "size_bytes": 2203040,
+    "sha256": "1b07a761ad04e578cf5d8e386448b41bdc7423b8fdefb33c03bac00052dc7af1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.3.7/FujitsuAC-1.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.3.7/FujitsuAC-1.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.3.8/FujitsuAC-1.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.3.8.tar.gz",
+    "size_bytes": 2203658,
+    "sha256": "f3642f49026fe707f765d7de1bfc956606109b19a9fd6be25cd510131942d9d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.3.8/FujitsuAC-1.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.3.8/FujitsuAC-1.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.4.0/FujitsuAC-1.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.4.0.tar.gz",
+    "size_bytes": 2206087,
+    "sha256": "ef6fae7509e4996cf9caca18ffb23fa0412dbba5d99334b1a1e0ac2dfc250c6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.4.0/FujitsuAC-1.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.4.0/FujitsuAC-1.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.4.1/FujitsuAC-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.4.1.tar.gz",
+    "size_bytes": 2206414,
+    "sha256": "8466cf0777e04d4ce8ddd9f3aa13a756e78a6c524e38f312bba6616d4c6cf63f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.4.1/FujitsuAC-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.4.1/FujitsuAC-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.4.10/FujitsuAC-1.4.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.4.10.tar.gz",
+    "size_bytes": 2210323,
+    "sha256": "18f646fddb0fb9bc621978c4b3c97e64100c220a11c767faa892a5fcebb65cd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.4.10/FujitsuAC-1.4.10.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.4.10/FujitsuAC-1.4.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.4.2/FujitsuAC-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.4.2.tar.gz",
+    "size_bytes": 2206679,
+    "sha256": "46854de80aa31ec73452f3a49c33f6d4893e3668334457921b5169a1ae59335c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.4.2/FujitsuAC-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.4.2/FujitsuAC-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.4.3/FujitsuAC-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.4.3.tar.gz",
+    "size_bytes": 2206715,
+    "sha256": "3ce978c4222256d92d992f85f77a121bb7fd0d042e28afae5ddebbea029fafea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.4.3/FujitsuAC-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.4.3/FujitsuAC-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.4.4/FujitsuAC-1.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.4.4.tar.gz",
+    "size_bytes": 2207146,
+    "sha256": "eeccea927ff73d3096129a3cad586d363fe858a18561f5cdb7f202ed01ba1157",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.4.4/FujitsuAC-1.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.4.4/FujitsuAC-1.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.4.6/FujitsuAC-1.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.4.6.tar.gz",
+    "size_bytes": 2208866,
+    "sha256": "b9992008a21842e5ae1b4790732972d2bdcfe80d22ed2618ab931314c2c73afd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.4.6/FujitsuAC-1.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.4.6/FujitsuAC-1.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.4.7/FujitsuAC-1.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.4.7.tar.gz",
+    "size_bytes": 2209649,
+    "sha256": "e46600c54d30cb534859fe8f2a5f1923b48b98e08d4e4f39db1be201b8578ff5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.4.7/FujitsuAC-1.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.4.7/FujitsuAC-1.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "benas09/library/FujitsuAC/1.4.8/FujitsuAC-1.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FujitsuAC-1.4.8.tar.gz",
+    "size_bytes": 2210077,
+    "sha256": "4dd51064690d5e0cd4e9800708a038c81fbabe00c3fc2dc5a7109b9145739928",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/benas09/library/FujitsuAC/1.4.8/FujitsuAC-1.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/benas09/library/FujitsuAC/1.4.8/FujitsuAC-1.4.8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

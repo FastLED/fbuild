@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-neilt6",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-neilt6/library/AES/0.0.0+sha.09347d4bc827/AES-0.0.0+sha.09347d4bc827.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AES-0.0.0+sha.09347d4bc827.tar.gz",
+    "size_bytes": 5965,
+    "sha256": "edfaffac580572d1a969977744e13f6ad939345d3e8c7d5882104e43ad472014",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-neilt6/library/AES/0.0.0%2Bsha.09347d4bc827/AES-0.0.0%2Bsha.09347d4bc827.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-neilt6/library/AES/0.0.0%2Bsha.09347d4bc827/AES-0.0.0%2Bsha.09347d4bc827.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-neilt6/library/ISL1208/0.0.0+sha.c0635401a37f/ISL1208-0.0.0+sha.c0635401a37f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ISL1208-0.0.0+sha.c0635401a37f.tar.gz",
+    "size_bytes": 6166,
+    "sha256": "4dab212a7d4f3a88fb40c86bba761b8e25cb96964172c370f1fe3023e0d1f912",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-neilt6/library/ISL1208/0.0.0%2Bsha.c0635401a37f/ISL1208-0.0.0%2Bsha.c0635401a37f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-neilt6/library/ISL1208/0.0.0%2Bsha.c0635401a37f/ISL1208-0.0.0%2Bsha.c0635401a37f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-neilt6/library/LM75B/0.0.0+sha.7ac462ba84ac/LM75B-0.0.0+sha.7ac462ba84ac.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM75B-0.0.0+sha.7ac462ba84ac.tar.gz",
+    "size_bytes": 4104,
+    "sha256": "37fe99528f05659e52baad68040747579e4f737c470e0ab7fd2cf810cdde9fd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-neilt6/library/LM75B/0.0.0%2Bsha.7ac462ba84ac/LM75B-0.0.0%2Bsha.7ac462ba84ac.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-neilt6/library/LM75B/0.0.0%2Bsha.7ac462ba84ac/LM75B-0.0.0%2Bsha.7ac462ba84ac.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-neilt6/library/MAX17048/0.0.0+sha.4f695111eb54/MAX17048-0.0.0+sha.4f695111eb54.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX17048-0.0.0+sha.4f695111eb54.tar.gz",
+    "size_bytes": 4959,
+    "sha256": "bcbd792a39694c1623360642487fad248160b8a6336ef038a5c0a1423e6a070e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-neilt6/library/MAX17048/0.0.0%2Bsha.4f695111eb54/MAX17048-0.0.0%2Bsha.4f695111eb54.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-neilt6/library/MAX17048/0.0.0%2Bsha.4f695111eb54/MAX17048-0.0.0%2Bsha.4f695111eb54.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-neilt6/library/MCP4725/0.0.0+sha.42d9d780813b/MCP4725-0.0.0+sha.42d9d780813b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP4725-0.0.0+sha.42d9d780813b.tar.gz",
+    "size_bytes": 3384,
+    "sha256": "e43dd6bc6f30c6243a32499e9a00154242e038cb5a3df9fff52015655355c3a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-neilt6/library/MCP4725/0.0.0%2Bsha.42d9d780813b/MCP4725-0.0.0%2Bsha.42d9d780813b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-neilt6/library/MCP4725/0.0.0%2Bsha.42d9d780813b/MCP4725-0.0.0%2Bsha.42d9d780813b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-neilt6/library/MCP4922/0.0.0+sha.747ec9c5d80e/MCP4922-0.0.0+sha.747ec9c5d80e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP4922-0.0.0+sha.747ec9c5d80e.tar.gz",
+    "size_bytes": 2990,
+    "sha256": "ad984d55be9cedd99d37aa83503e86246e2b095bbc137e66c5ba09cfb2f91e22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-neilt6/library/MCP4922/0.0.0%2Bsha.747ec9c5d80e/MCP4922-0.0.0%2Bsha.747ec9c5d80e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-neilt6/library/MCP4922/0.0.0%2Bsha.747ec9c5d80e/MCP4922-0.0.0%2Bsha.747ec9c5d80e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-neilt6/library/PCA9955/0.0.0+sha.275e5ea3dc5c/PCA9955-0.0.0+sha.275e5ea3dc5c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9955-0.0.0+sha.275e5ea3dc5c.tar.gz",
+    "size_bytes": 7478,
+    "sha256": "cf09692f1accaa1874b441872fb299ebf838bcafabb5a3bf1d7e55ef0c87d4c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-neilt6/library/PCA9955/0.0.0%2Bsha.275e5ea3dc5c/PCA9955-0.0.0%2Bsha.275e5ea3dc5c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-neilt6/library/PCA9955/0.0.0%2Bsha.275e5ea3dc5c/PCA9955-0.0.0%2Bsha.275e5ea3dc5c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

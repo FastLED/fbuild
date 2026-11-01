@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wolfssl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wolfssl/library/Arduino-wolfSSL/5.7.2/Arduino-wolfSSL-5.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduino-wolfSSL-5.7.2.tar.gz",
+    "size_bytes": 9807767,
+    "sha256": "860a2b63adb25a3acb778f20e094449418150558b6f809c6564176b8f3babf3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wolfssl/library/Arduino-wolfSSL/5.7.2/Arduino-wolfSSL-5.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/wolfssl/library/Arduino-wolfSSL/5.7.2/Arduino-wolfSSL-5.7.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wolfssl/library/wolfssl/5.7.2/wolfssl-5.7.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wolfssl-5.7.2.tar.gz",
+    "size_bytes": 10694418,
+    "sha256": "d3c32787e86a891ef688d30fbd55772422e37bcbbe53913c73c055e0f7ba963d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wolfssl/library/wolfssl/5.7.2/wolfssl-5.7.2.tar.gz",
+     "https://dl.registry.platformio.org/download/wolfssl/library/wolfssl/5.7.2/wolfssl-5.7.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

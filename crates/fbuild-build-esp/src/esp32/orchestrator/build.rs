@@ -87,6 +87,23 @@ impl BuildOrchestrator for Esp32Orchestrator {
         // (`platform-espressif32`) and framework (`framework-arduinoespressif32`)
         // packages can honor consumer-pinned URLs (FastLED/fbuild#672).
         let env_config = ctx.config.get_env_config(&params.env_name).ok();
+        // Fail before package resolution when a root the build writes cannot
+        // hold what a cold ESP32 build needs (FastLED/fbuild#1750): a full disk
+        // otherwise surfaces as a raw ENOSPC from whichever subprocess writes
+        // next, with no statement of the path or the shortfall.
+        if super::disk_requirements::should_preflight(params.clean_only, params.clean_all) {
+            let _disk_phase = perf.phase("disk-preflight");
+            super::disk_requirements::preflight_esp32_disk(&params.project_dir)?;
+        }
+        // Measure what this build actually consumes per stage, so the ESP32 disk
+        // requirements can be measured rather than estimated
+        // (FastLED/fbuild#1750 item 1). A no-op unless FBUILD_DISK_FOOTPRINT is
+        // set in the environment the daemon was spawned with.
+        let mut footprint = fbuild_build_engine::disk_footprint::DiskFootprint::new(
+            "esp32",
+            &fbuild_build_engine::disk_preflight::HostFreeSpace,
+            super::disk_requirements::footprint_roots(&params.project_dir),
+        );
         let _resolve_phase = perf.phase("pioarduino-resolve");
         let (toolchain, framework, esptool_bin, platform_info) = resolve_pioarduino_packages(
             &params.project_dir,
@@ -96,6 +113,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
         )
         .await?;
         drop(_resolve_phase);
+        footprint.sample("pioarduino-resolve");
         let toolchain_info = fbuild_packages::Package::get_info(&toolchain);
         ctx.build_log
             .push(super::helpers::esp32_package_stack_summary(
@@ -162,6 +180,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                     crate::eh_frame_policy::EhFramePolicy::Preserve => "preserve",
                 },
                 sdk_defines,
+                shrink_mode: params.shrink.as_str().to_string(),
             },
             &ctx,
         )?;
@@ -324,6 +343,18 @@ impl BuildOrchestrator for Esp32Orchestrator {
             user_flags.extend(framework_macro_prefix_map(&core_dir));
             user_flags.extend(sdk_farm.as_ref().map(SdkIncludeFarm::macro_prefix_map));
         }
+        // FastLED/fbuild#1414: without this the compiler records the absolute
+        // build directory as `DW_AT_comp_dir` and absolute source paths, so two
+        // identical sketches in two directories compile to different objects
+        // and zccache can never serve the second one. Both the framework and
+        // the sketch stage get the same mapping, so a hydrated core object and a
+        // freshly compiled one still compare equal. `-fdebug-prefix-map` exists
+        // back to GCC 4.3, so the legacy ESP32 GCC 5 toolchain is covered too
+        // (unlike `-fmacro-prefix-map` just above).
+        user_flags.extend(fbuild_paths::debug_prefix_map_args(
+            &params.project_dir,
+            &ctx.build_dir,
+        ));
         let mut user_build_flags = ctx.config.get_build_flags(&params.env_name)?;
         user_build_flags.extend(params.extra_build_flags.clone());
         user_flags.extend(user_build_flags.clone());
@@ -774,6 +805,8 @@ impl BuildOrchestrator for Esp32Orchestrator {
         let core_objects = core_result.objects;
         let mut sketch_objects = sketch_result.objects;
 
+        footprint.sample("compile");
+
         // 11.5. Process embedded files (board_build.embed_files + embed_txtfiles)
         //
         // `.lnk` entries are pre-resolved: each `.lnk` is parsed, its blob is
@@ -872,6 +905,23 @@ impl BuildOrchestrator for Esp32Orchestrator {
             &ctx.board,
         ));
 
+        // `--shrink=printf` (FastLED/fbuild#1459): switch the image onto the
+        // newlib-nano copy of libc that ships inside the same toolchain, so
+        // the full `_vfprintf_r`/`_svfprintf_r`/`_dtoa_r` cluster is replaced
+        // by newlib's own thin formatter. Opt-in only; `Auto` resolves to
+        // `Off`, so a default build never takes this path. The spec file is
+        // probed first: a toolchain without a nano variant builds unshrunk
+        // rather than failing the link on a missing spec file.
+        let mut overlay_link_flags = ctx.overlay_link_flags.clone();
+        let shrink_record = super::shrink_link::resolve_shrink(
+            params.shrink,
+            &toolchain.get_gcc_path(),
+            params.caller_path.as_deref(),
+            &toolchain_info.name,
+            &mut overlay_link_flags,
+            &mut build_log,
+        )
+        .await;
         let link_result = {
             let _g = perf.phase("link-convert-size");
             crate::linker::Linker::link_all(
@@ -880,7 +930,7 @@ impl BuildOrchestrator for Esp32Orchestrator {
                 &all_archives,
                 build_dir,
                 &crate::linker::LinkExtraArgs {
-                    flags: ctx.overlay_link_flags.clone(),
+                    flags: overlay_link_flags.clone(),
                     libs: ctx.overlay_link_libs.clone(),
                     bloat_analysis: false,
                 },
@@ -888,6 +938,21 @@ impl BuildOrchestrator for Esp32Orchestrator {
             )
             .await?
         };
+
+        footprint.sample("link-convert");
+
+        // FastLED's size/symbol tooling reads build_info (FastLED/fbuild#1459).
+        super::shrink_link::emit_build_info(
+            &params.project_dir,
+            &params.env_name,
+            &ctx.board.board,
+            &linker,
+            &compiler,
+            &link_result,
+            &overlay_link_flags,
+            &ctx.overlay_link_libs,
+            &shrink_record,
+        );
 
         // 15. Size reporting + result assembly
         let fingerprint_started = Instant::now();

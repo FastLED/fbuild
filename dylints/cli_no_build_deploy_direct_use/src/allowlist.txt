@@ -36,3 +36,25 @@ crates/fbuild-cli/src/cli/install.rs
 # benefit. This may migrate to the daemon if/when reset gains state
 # (lock holding, port multiplexing).
 crates/fbuild-cli/src/cli/reset.rs
+
+# `fbuild uploadfs` writes one filesystem region to the offset the project's
+# partition CSV already declares (`buildfs::plan_image`) — no firmware build,
+# no monitor orchestration, no trusted-hash state. It preempts the daemon's
+# serial lease through `/api/devices/:port/preempt` itself, so the only thing a
+# daemon round-trip would add is a copy of the partition-plan resolution that
+# must stay in the CLI for `buildfs` (FastLED/fbuild#1358).
+crates/fbuild-cli/src/cli/uploadfs.rs
+
+# `uploadfs_tests.rs` constructs the real `Esp32Deployer` to assert the argv a
+# filesystem flash actually runs with — `--chip esp8266` and the offset with the
+# `0x40200000` mapping already removed. The contract under test IS the esptool
+# command line, so faking the deployer would test nothing (FastLED/fbuild#1358).
+crates/fbuild-cli/src/cli/uploadfs_tests.rs
+
+# `uploadfs_rp2040.rs` encodes one filesystem image as UF2 blocks and drops them
+# into the mounted ROM BOOTSEL volume — the RP2040 half of `fbuild uploadfs`
+# (FastLED/fbuild#1358). Like the ESP32/ESP8266 half it is a single-region write
+# with no firmware build and no trusted-hash state, and it preempts the daemon's
+# serial lease only where a port exists; there is no port on BOOTSEL, so a daemon
+# round-trip could not even be addressed.
+crates/fbuild-cli/src/cli/uploadfs_rp2040.rs

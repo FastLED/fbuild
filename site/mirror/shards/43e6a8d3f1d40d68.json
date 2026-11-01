@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wroob-io",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wroob-io/library/WroobImp/2.0.0/WroobImp-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WroobImp-2.0.0.tar.gz",
+    "size_bytes": 4948,
+    "sha256": "8c3087c9da42451e9891bcee0e1e5fa140602c4b45071927e8cc02e71bf9a002",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wroob-io/library/WroobImp/2.0.0/WroobImp-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wroob-io/library/WroobImp/2.0.0/WroobImp-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

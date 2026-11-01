@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-smeshlink",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-smeshlink/library/MxRadioRF2xx/0.0.0+sha.5f1d66c85ae0/MxRadioRF2xx-0.0.0+sha.5f1d66c85ae0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MxRadioRF2xx-0.0.0+sha.5f1d66c85ae0.tar.gz",
+    "size_bytes": 27537,
+    "sha256": "7e83a76d2d9d92bd99af86980df2753af5917d7345ebe6649f3bb058fcca5f47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-smeshlink/library/MxRadioRF2xx/0.0.0%2Bsha.5f1d66c85ae0/MxRadioRF2xx-0.0.0%2Bsha.5f1d66c85ae0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-smeshlink/library/MxRadioRF2xx/0.0.0%2Bsha.5f1d66c85ae0/MxRadioRF2xx-0.0.0%2Bsha.5f1d66c85ae0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-smeshlink/library/Queue/0.0.0+sha.abfd5885f80d/Queue-0.0.0+sha.abfd5885f80d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Queue-0.0.0+sha.abfd5885f80d.tar.gz",
+    "size_bytes": 1212,
+    "sha256": "b0e3221ac70bee6cd36caf5c76989f55698f4a8009a29961c56276047c78ec80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-smeshlink/library/Queue/0.0.0%2Bsha.abfd5885f80d/Queue-0.0.0%2Bsha.abfd5885f80d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-smeshlink/library/Queue/0.0.0%2Bsha.abfd5885f80d/Queue-0.0.0%2Bsha.abfd5885f80d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

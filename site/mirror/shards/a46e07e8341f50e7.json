@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/unclealex72",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "unclealex72/library/IOT%20Framework/2.0.1/IOTFramework-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IOTFramework-2.0.1.tar.gz",
+    "size_bytes": 13949,
+    "sha256": "eb57f4e4ba10c1c8104c8029d1a71906f87e48564ee3f6642ca37b8bc03a7247",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unclealex72/library/IOT%2520Framework/2.0.1/IOTFramework-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unclealex72/library/IOT%20Framework/2.0.1/IOTFramework-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "unclealex72/library/Mqtt/1.0.1/Mqtt-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mqtt-1.0.1.tar.gz",
+    "size_bytes": 3511,
+    "sha256": "c7ea475676f404ef1c75e3ca80b3a70bdfef63807f64d50f4ac049f8e1f19841",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/unclealex72/library/Mqtt/1.0.1/Mqtt-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/unclealex72/library/Mqtt/1.0.1/Mqtt-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

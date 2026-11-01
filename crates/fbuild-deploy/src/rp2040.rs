@@ -75,15 +75,18 @@ const DEFAULT_PICOTOOL_LOAD_TIMEOUT: Duration = Duration::from_secs(60);
 /// load attempt.
 const PICOTOOL_INFO_PROBE_TIMEOUT: Duration = Duration::from_secs(10);
 
-/// Which stock RP2040 transport fbuild attempts first (FastLED/fbuild#1162).
+/// Which RP2040 transport fbuild uses (FastLED/fbuild#1162, #1423).
 /// `Picotool` tries the PICOBOOT vendor interface first and falls back to
 /// BOOTSEL mass-storage; `Uf2` preserves the historical mass-storage-first
-/// order with picotool as the fallback.
+/// order with picotool as the fallback. `Swd` bypasses the target's USB
+/// entirely and flashes through a CMSIS-DAP probe with probe-rs, which is the
+/// only path that reaches a board whose firmware wedged before USB bring-up.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum Rp2040Transport {
     #[default]
     Picotool,
     Uf2,
+    Swd,
 }
 
 /// Parse the `--transport` CLI flag / `DeployRequest.transport` wire value.
@@ -92,6 +95,7 @@ pub fn parse_rp2040_transport(raw: Option<&str>) -> Result<Rp2040Transport> {
     match raw {
         Some("picotool") | None => Ok(Rp2040Transport::Picotool),
         Some("uf2") => Ok(Rp2040Transport::Uf2),
+        Some("swd") => Ok(Rp2040Transport::Swd),
         Some(other) => Err(FbuildError::DeployFailed(format!(
             "unsupported RP2040 deploy transport: {other}"
         ))),
@@ -109,11 +113,60 @@ fn should_attempt_picotool_first(
     preflight: Option<&preflight::PicobootPreflight>,
 ) -> bool {
     match transport {
-        Rp2040Transport::Uf2 => false,
+        Rp2040Transport::Uf2 | Rp2040Transport::Swd => false,
         Rp2040Transport::Picotool => {
             matches!(preflight, None | Some(preflight::PicobootPreflight::Ready))
         }
     }
+}
+
+/// Pure fallback decision (FastLED/fbuild#1423): should a *failed* USB deploy
+/// be retried over SWD?
+///
+/// All three conditions are required:
+/// - the caller did not already select SWD (then there is nothing to fall back
+///   from — the SWD attempt was the only attempt),
+/// - a CMSIS-DAP-class probe is actually attached, because "absent a probe,
+///   behavior is unchanged" (the retry would otherwise just burn the 120 s
+///   probe-rs guard on a guaranteed `No probes were found`),
+/// - the build has an image probe-rs can address (the co-located `.elf` or an
+///   Intel HEX), since SWD cannot place a bare `.bin`/`.uf2`.
+fn should_fall_back_to_swd(
+    transport: Rp2040Transport,
+    probe_attached: bool,
+    swd_artifact_available: bool,
+) -> bool {
+    transport != Rp2040Transport::Swd && probe_attached && swd_artifact_available
+}
+
+/// probe-rs's built-in target name for an RP-series chip family.
+fn probe_rs_chip_for_family(family_id: u32) -> &'static str {
+    if family_id == RP2350_FAMILY_ID {
+        "RP2350"
+    } else {
+        "RP2040"
+    }
+}
+
+/// Pick the image probe-rs can flash over SWD. SWD needs an ELF or Intel HEX
+/// because a bare `.bin`/`.uf2` carries no load address for probe-rs, so the
+/// RP build's co-located ELF is preferred over the UF2 the USB transports use.
+fn swd_artifact_for(firmware_path: &Path) -> Result<PathBuf> {
+    let extension = firmware_path
+        .extension()
+        .and_then(|value| value.to_str())
+        .map(str::to_ascii_lowercase);
+    if extension.as_deref() == Some("hex") && firmware_path.is_file() {
+        return Ok(firmware_path.to_path_buf());
+    }
+    if let Some(elf) = crate::lpc::elf_sibling_of(firmware_path) {
+        return Ok(elf);
+    }
+    Err(FbuildError::DeployFailed(format!(
+        "SWD deploy needs an ELF or Intel HEX image, but {} is {:?} and no sibling .elf exists; SWD cannot flash a bare .bin or .uf2 without an explicit load address",
+        firmware_path.display(),
+        extension.as_deref().unwrap_or("unknown")
+    )))
 }
 
 fn rp_family_name(family_id: u32) -> &'static str {
@@ -338,6 +391,92 @@ pub fn encode_uf2(binary: &[u8]) -> Vec<u8> {
 /// Build UF2 blocks using an explicit Raspberry Pi family identifier.
 pub fn encode_uf2_for_family(binary: &[u8], family_id: u32) -> Vec<u8> {
     encode_uf2_at_address(binary, RP2040_UF2_BASE_ADDRESS, family_id)
+}
+
+/// Build UF2 blocks for a raw flash *region* image — a filesystem image whose
+/// first byte belongs at `base_address` — rather than a bootable firmware image.
+///
+/// RP2040 flash is XIP-mapped at `0x1000_0000` and the ROM BOOTSEL parser
+/// programs QSPI at the address each block names, so arduino-pico's absolute
+/// `build.fs_start` (for example `0x1017f000`) is already the address to encode;
+/// unlike the ESP8266 linker-script addresses no mapping is removed. The ROM also
+/// requires every block target to be 256-byte aligned, so a region that is not is
+/// a hard error instead of a UF2 the ROM would silently reject
+/// (FastLED/fbuild#1358).
+pub fn encode_uf2_for_region(image: &[u8], base_address: u64) -> Result<Vec<u8>> {
+    if image.is_empty() {
+        return Err(FbuildError::DeployFailed(
+            "refusing to build an RP2040 UF2 from an empty region image".to_string(),
+        ));
+    }
+    let address = u32::try_from(base_address).map_err(|_| {
+        FbuildError::DeployFailed(format!(
+            "RP2040 region address 0x{base_address:x} does not fit a 32-bit flash address"
+        ))
+    })?;
+    if !address.is_multiple_of(UF2_PAYLOAD_SIZE as u32) {
+        return Err(FbuildError::DeployFailed(format!(
+            "RP2040 region address 0x{address:x} is not {UF2_PAYLOAD_SIZE}-byte aligned; the ROM \
+             BOOTSEL parser rejects unaligned UF2 blocks"
+        )));
+    }
+    let uf2 = encode_uf2_at_address(image, address, RP2040_FAMILY_ID);
+    validate_uf2(&uf2, RP2040_FAMILY_ID)?;
+    Ok(uf2)
+}
+
+/// Mounted Pico BOOTSEL volumes on this host, deduplicated and sorted.
+pub fn bootsel_volumes() -> Vec<PathBuf> {
+    find_uf2_volumes(&volume_roots())
+}
+
+/// Write already-encoded UF2 blocks into a mounted BOOTSEL volume as `NEW.UF2`.
+///
+/// The transfer contract is `fbuild deploy`'s: one sequential write, flush,
+/// close, and the write counts as accepted only when every byte was reported
+/// written — or the ROM ejected the volume after the final byte. The caller
+/// confirms the flash by waiting for the volume to disappear.
+pub fn write_uf2_to_volume(uf2: &[u8], volume: &Path) -> Result<PathBuf> {
+    if !has_uf2_marker(volume) {
+        return Err(FbuildError::DeployFailed(format!(
+            "{} does not contain INFO_UF2.TXT; hold BOOTSEL while plugging the board in and retry",
+            volume.display()
+        )));
+    }
+    let destination = volume.join("NEW.UF2");
+    let expected = uf2.len() as u64;
+    match write_uf2_slice(&destination, uf2) {
+        Ok(written) if written == expected => Ok(destination),
+        Ok(written) => Err(FbuildError::DeployFailed(format!(
+            "failed to copy RP2040 UF2 to {}: writer reported {written} of {expected} bytes without \
+             an error",
+            destination.display()
+        ))),
+        Err(failure)
+            if failure.bytes_written == expected
+                && is_device_disappearance_error(&failure.error)
+                && wait_for_volume_disappearance(volume, Duration::from_secs(2)).is_ok() =>
+        {
+            tracing::debug!(
+                error = %failure.error,
+                volume = %volume.display(),
+                "RP2040 volume ejected while the host finalized NEW.UF2; treating transfer as accepted"
+            );
+            Ok(destination)
+        }
+        Err(failure) => Err(FbuildError::DeployFailed(format!(
+            "failed to copy RP2040 UF2 to {} ({} of {expected} bytes written): {}",
+            destination.display(),
+            failure.bytes_written,
+            failure.error
+        ))),
+    }
+}
+
+fn write_uf2_slice(destination: &Path, bytes: &[u8]) -> std::result::Result<u64, Uf2WriteFailure> {
+    let output =
+        open_uf2_destination(destination).map_err(|error| Uf2WriteFailure::new(error, 0))?;
+    write_uf2_bytes(output, bytes)
 }
 
 fn encode_uf2_at_address(binary: &[u8], base_address: u32, family_id: u32) -> Vec<u8> {
@@ -1333,6 +1472,640 @@ impl Rp2040Deployer {
         self
     }
 
+    /// Flash over SWD through a CMSIS-DAP probe (FastLED/fbuild#1423).
+    ///
+    /// probe-rs binds to the probe on the board's debug header and drives the
+    /// target's debug port directly, so no USB endpoint has to enumerate on
+    /// the target and `--port` is irrelevant. A missing probe fails with
+    /// probe-rs's own `No probes were found` diagnostics rather than silently
+    /// falling back to a transport that also needs USB.
+    async fn deploy_via_swd(
+        &self,
+        firmware_path: &Path,
+        port: Option<&str>,
+    ) -> Result<DeploymentResult> {
+        let chip = probe_rs_chip_for_family(self.family_id);
+        let artifact = swd_artifact_for(firmware_path)?;
+        let probe_rs_binary = crate::probe_rs::ensure_probe_rs_installed().await?;
+        let download = {
+            let binary = probe_rs_binary.clone();
+            let artifact = artifact.clone();
+            tokio::task::spawn_blocking(move || {
+                crate::probe_rs::run_probe_rs_download(&binary, chip, None, &artifact)
+            })
+            .await
+            .map_err(|error| {
+                FbuildError::DeployFailed(format!("probe-rs SWD download task failed: {error}"))
+            })??
+        };
+        if !download.success() {
+            return Err(FbuildError::DeployFailed(format!(
+                "probe-rs SWD flash of {} exited {}; confirm a CMSIS-DAP probe is wired to the board debug header and the target is powered\nstdout:\n{}\nstderr:\n{}",
+                artifact.display(),
+                download.exit_code,
+                download.stdout.trim(),
+                download.stderr.trim()
+            )));
+        }
+        let reset = {
+            let binary = probe_rs_binary.clone();
+            tokio::task::spawn_blocking(move || {
+                crate::probe_rs::run_probe_rs_reset(&binary, chip, None)
+            })
+            .await
+            .map_err(|error| {
+                FbuildError::DeployFailed(format!("probe-rs SWD reset task failed: {error}"))
+            })??
+        };
+        let mut stdout = download.stdout;
+        stdout.push_str(&reset.stdout);
+        let mut stderr = download.stderr;
+        stderr.push_str(&reset.stderr);
+        let reset_note = if reset.success() {
+            ""
+        } else {
+            " (flash verified; reset did not report success)"
+        };
+        let port_note = if port.is_some() {
+            "; --port ignored, probe-rs selects the CMSIS-DAP probe directly"
+        } else {
+            ""
+        };
+        Ok(DeploymentResult {
+            success: true,
+            message: format!(
+                "firmware flashed via probe-rs SWD (chip={chip}, image={}){reset_note}{port_note}",
+                artifact.display()
+            ),
+            port: None,
+            stdout,
+            stderr,
+            outcome: DeployOutcome::FullFlash,
+        })
+    }
+
+    /// Deploy, self-healing over SWD when a USB transport cannot reach the
+    /// target (FastLED/fbuild#1423).
+    ///
+    /// The USB transports are always tried first: they need no extra hardware.
+    /// When they fail *and* a registry-identified debug probe is attached *and*
+    /// the build has an image SWD can place, the same deploy is retried through
+    /// probe-rs, so a board that wedged before USB bring-up recovers on the next
+    /// deploy instead of stranding until a human walks over. With no probe, the
+    /// USB transport's own error is returned untouched.
+    async fn deploy_with_fallback(
+        &self,
+        project_dir: &Path,
+        env_name: &str,
+        firmware_path: &Path,
+        port: Option<&str>,
+    ) -> Result<DeploymentResult> {
+        if self.transport == Rp2040Transport::Swd {
+            // SWD has no dependency on the target's USB stack (that is the
+            // whole point), so skip the BOOTSEL/runtime profile preparation.
+            return self.deploy_via_swd(firmware_path, port).await;
+        }
+        let usb_error = match self
+            .deploy_via_usb(project_dir, env_name, firmware_path, port)
+            .await
+        {
+            Ok(result) => return Ok(result),
+            Err(error) => error,
+        };
+        let probe_attached = tokio::task::spawn_blocking(crate::probe_rs::debug_probe_attached)
+            .await
+            .unwrap_or(false);
+        let artifact_available = swd_artifact_for(firmware_path).is_ok();
+        if !should_fall_back_to_swd(self.transport, probe_attached, artifact_available) {
+            return Err(usb_error);
+        }
+        tracing::warn!(
+            usb_error = %usb_error,
+            "RP-series USB deploy failed; a CMSIS-DAP probe is attached, retrying over SWD"
+        );
+        match self.deploy_via_swd(firmware_path, port).await {
+            Ok(mut result) => {
+                result.message.push_str(
+                    " (recovered over SWD after the USB transport failed; the target did not enumerate)",
+                );
+                result.stderr.push_str(&format!(
+                    "\nUSB transport error before the SWD fallback:\n{usb_error}"
+                ));
+                Ok(result)
+            }
+            Err(swd_error) => Err(FbuildError::DeployFailed(format!(
+                "RP-series USB deploy failed and the attached CMSIS-DAP probe could not recover the target either\nUSB transport error:\n{usb_error}\nSWD error:\n{swd_error}"
+            ))),
+        }
+    }
+
+    // Body is unchanged from the pre-fallback `Deployer::deploy`; the split into
+    // an inherent method (so the fallback wrapper can call it) is the only
+    // difference, and it is why the two baseline expectations travel here.
+    #[expect(clippy::cognitive_complexity, reason = "baseline, zackees/ci.yml#229")]
+    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
+    async fn deploy_via_usb(
+        &self,
+        project_dir: &Path,
+        _env_name: &str,
+        firmware_path: &Path,
+        port: Option<&str>,
+    ) -> Result<DeploymentResult> {
+        tokio::task::spawn_blocking(ensure_verified_usb_profiles)
+            .await
+            .map_err(|error| {
+                FbuildError::DeployFailed(format!(
+                    "failed to prepare the FastLED/boards USB profile cache: {error}"
+                ))
+            })??;
+        let selector = port.map(str::trim).filter(|value| !value.is_empty());
+        let family_id = self.family_id;
+        let current_ports =
+            tokio::task::spawn_blocking(move || catalogue_pico_cdc_ports(family_id))
+                .await
+                .map_err(|error| {
+                    FbuildError::DeployFailed(format!(
+                        "RP2040 serial snapshot task failed: {error}"
+                    ))
+                })??;
+        let ports_before = preflash_eligible_port_names(&current_ports);
+        let explicit_volume = selector.and_then(explicit_uf2_volume);
+        if selector.is_some_and(|value| value.to_ascii_lowercase().starts_with("uf2="))
+            && explicit_volume.is_none()
+        {
+            return Err(FbuildError::DeployFailed(format!(
+                "explicit RP2040 UF2 volume {selector:?} does not contain INFO_UF2.TXT"
+            )));
+        }
+        let (volume_before_reset, volumes_before) = match explicit_volume {
+            Some(volume) => (Some(volume), BTreeSet::new()),
+            None => {
+                let mounted = find_uf2_volumes(&volume_roots());
+                // Attribution needs a live port to touch. A resolution
+                // failure here falls back to the historical multi-volume
+                // hard error rather than surfacing a selector error that a
+                // single-volume deploy would never have raised.
+                let can_attribute = selector
+                    .map(|value| resolve_requested_runtime_target(value, &current_ports))
+                    .transpose()
+                    .ok()
+                    .flatten()
+                    .is_some();
+                pretouch_volume_policy(mounted, can_attribute)?
+            }
+        };
+        let reset_interfaces = if volume_before_reset.is_none() {
+            let family_id = self.family_id;
+            tokio::task::spawn_blocking(move || catalogue_pico_reset_interfaces(family_id))
+                .await
+                .map_err(|error| {
+                    FbuildError::DeployFailed(format!(
+                        "RP2040 reset-interface snapshot task failed: {error}"
+                    ))
+                })?
+        } else {
+            Vec::new()
+        };
+        let (runtime_target, reset_only_target) = if volume_before_reset.is_none() {
+            match selector
+                .map(|value| resolve_requested_runtime_target(value, &current_ports))
+                .transpose()
+            {
+                Ok(target) => (target, None),
+                Err(cdc_error) => {
+                    let reset_target = selector
+                        .map(|value| {
+                            resolve_reset_only_target(value, &current_ports, &reset_interfaces)
+                        })
+                        .transpose()?
+                        .flatten();
+                    let Some(reset_target) = reset_target else {
+                        return Err(cdc_error);
+                    };
+                    tracing::warn!(
+                        selector,
+                        serial = %reset_target.serial_number,
+                        instance_id = %reset_target.instance_id,
+                        cdc_failure = %cdc_error,
+                        "selected RP-series CDC endpoint is unusable; using its exact healthy application reset interface"
+                    );
+                    (None, Some(reset_target))
+                }
+            }
+        } else {
+            (None, None)
+        };
+        let requested_serial = selector
+            .and_then(serial_selector)
+            .map(str::to_string)
+            .or_else(|| {
+                runtime_target
+                    .as_ref()
+                    .and_then(|target| target.serial_number.clone())
+            })
+            .or_else(|| {
+                reset_only_target
+                    .as_ref()
+                    .map(|target| target.serial_number.clone())
+            });
+        let picotool_target = requested_serial
+            .as_deref()
+            .map(|serial| picotool_target_for_family(serial, self.family_id))
+            .transpose()?;
+        // Capture topology before the 1200-bps touch: once the board resets
+        // into BOOTSEL the runtime CDC devnode this looks up disappears.
+        // A join failure on this purely-diagnostic task must never fail the
+        // deploy, so it degrades to `None` rather than propagating.
+        let topology_port = runtime_target.as_ref().map(|target| target.port.clone());
+        let topology: Option<String> = tokio::task::spawn_blocking(move || {
+            topology_port.and_then(|port| topology::describe_port_topology(&port))
+        })
+        .await
+        .unwrap_or(None);
+        let reset_error = if let Some(target) = &runtime_target {
+            let port = target.port.clone();
+            tokio::task::spawn_blocking(move || touch_1200bps(&port))
+                .await
+                .map_err(|error| {
+                    FbuildError::DeployFailed(format!("RP2040 reset task failed: {error}"))
+                })?
+                .err()
+        } else {
+            None
+        };
+        let (volume, volume_discovery_error) = if let Some(volume) = volume_before_reset {
+            (Some(volume), None)
+        } else {
+            let timeout = self.bootloader_timeout;
+            let stale_volumes = volumes_before.clone();
+            let discovered =
+                tokio::task::spawn_blocking(move || find_uf2_volume_until(timeout, &stale_volumes))
+                    .await
+                    .map_err(|error| {
+                        FbuildError::DeployFailed(format!("RP2040 volume watcher failed: {error}"))
+                    })??;
+            match select_volume_after_reset(discovered, reset_error) {
+                Ok(volume) => (Some(volume), None),
+                // The synthetic FAT never mounted (common behind USB hubs,
+                // FastLED/fbuild#1081). The PICOBOOT vendor interface may
+                // still be reachable, so defer the failure until the managed
+                // picotool fallback has had a chance.
+                Err(error) => (None, Some(error)),
+            }
+        };
+        let application_target = if volume.is_some() {
+            None
+        } else if let Some(target) = reset_only_target.as_ref() {
+            Some(picotool::PicotoolTarget::new(
+                &target.serial_number,
+                &format!("{:04x}", target.vid),
+                &format!("{:04x}", target.pid),
+            ))
+        } else {
+            application_reboot_target(false, runtime_target.as_ref())
+        };
+        let native_reset_target = if fbuild_core::platform::host::is_windows() && volume.is_none() {
+            if let Some(target) = reset_only_target.clone() {
+                Some(target)
+            } else if let Some(target) = runtime_target.as_ref() {
+                reset_interface_for_runtime_target(target, &reset_interfaces)?
+            } else {
+                None
+            }
+        } else {
+            None
+        };
+        let timeout = self.bootloader_timeout;
+        let stale_volumes = volumes_before.clone();
+        let application_recovery = run_application_reboot_recovery(
+            application_target,
+            volume,
+            volume_discovery_error,
+            self.bootloader_timeout,
+            move |target| async move {
+                if let Some(reset_interface) = native_reset_target {
+                    let instance_id = reset_interface.instance_id.clone();
+                    tokio::task::spawn_blocking(move || {
+                        fbuild_serial::ports::reset_usb_interface_to_bootsel(&reset_interface)
+                    })
+                    .await
+                    .map_err(|error| {
+                        FbuildError::DeployFailed(format!(
+                            "native Pico reset-interface task failed: {error}"
+                        ))
+                    })?
+                    .map_err(|error| {
+                        FbuildError::DeployFailed(format!(
+                            "native Pico reset-interface request for {instance_id} failed: {error}"
+                        ))
+                    })?;
+                    return Ok(picotool::PicotoolLoad {
+                        stdout: format!(
+                            "requested BOOTSEL through native Pico reset interface {instance_id}"
+                        ),
+                        stderr: String::new(),
+                    });
+                }
+                picotool::reboot_runtime_to_bootsel(
+                    project_dir,
+                    &target,
+                    PICOTOOL_INFO_PROBE_TIMEOUT,
+                )
+                .await
+            },
+            move || async move {
+                tokio::task::spawn_blocking(move || find_uf2_volume_until(timeout, &stale_volumes))
+                    .await
+                    .map_err(|error| {
+                        FbuildError::DeployFailed(format!(
+                            "RP2040 post-picotool volume watcher failed: {error}"
+                        ))
+                    })?
+            },
+        )
+        .await?;
+        let volume = application_recovery.volume;
+        let volume_discovery_error = application_recovery.volume_discovery_error;
+        let application_reboot_succeeded = application_recovery.application_reboot_succeeded;
+        let firmware = firmware_path.to_path_buf();
+        let family_id = self.family_id;
+        let (artifact, uf2_target) =
+            tokio::task::spawn_blocking(move || prepare_uf2_artifact(&firmware, family_id))
+                .await
+                .map_err(|error| {
+                    FbuildError::DeployFailed(format!(
+                        "RP2040 UF2 preparation task failed: {error}"
+                    ))
+                })??;
+        // A PICOBOOT command without a serial-number selector may choose any
+        // attached RP board. If serial identity is unavailable, retain the
+        // safe BOOTSEL mass-storage path but never issue an unscoped picotool
+        // probe or force-reset command.
+        let transport = if picotool_target.is_none() {
+            if self.transport == Rp2040Transport::Picotool {
+                tracing::warn!(
+                    "RP-series runtime USB serial unavailable; skipping picotool-primary and using BOOTSEL mass-storage only"
+                );
+            }
+            Rp2040Transport::Uf2
+        } else {
+            self.transport
+        };
+        let (
+            transfer_stdout,
+            transfer_stderr,
+            transfer_method,
+            transfer_volume,
+            picotool_confirmed,
+            prior_transport_failure,
+        ) = match transport {
+            Rp2040Transport::Swd => {
+                return Err(FbuildError::DeployFailed(
+                    "internal error: SWD transport reached the BOOTSEL dispatch; it must be handled before USB preparation"
+                        .to_string(),
+                ));
+            }
+            Rp2040Transport::Uf2 => {
+                if let Some(volume) = volume {
+                    let transfer = run_mass_storage_transfer(
+                        volume,
+                        artifact.clone(),
+                        self.bootloader_timeout,
+                        self.uf2_write_timeout,
+                        volumes_before.clone(),
+                    )
+                    .await?;
+                    match transfer {
+                        Ok(transfer) => (
+                            format!("wrote {}", transfer.destination.display()),
+                            String::new(),
+                            "BOOTSEL mass-storage",
+                            Some(transfer.volume),
+                            false,
+                            None,
+                        ),
+                        Err(failure) => {
+                            let context = with_topology(
+                                format!(
+                                    "{} (after {} BOOTSEL transfer attempt(s))",
+                                    failure.error, failure.attempts
+                                ),
+                                topology.as_deref(),
+                            );
+                            let target = picotool_target
+                                .as_ref()
+                                .ok_or_else(picotool_identity_required_error)?;
+                            let loaded = picotool::load_with_managed_picotool(
+                                project_dir,
+                                &artifact,
+                                target,
+                                Some(&context),
+                                self.picotool_timeout,
+                                picotool::PicotoolMode::Fallback,
+                            )
+                            .await?;
+                            (
+                                loaded.stdout,
+                                loaded.stderr,
+                                "managed picotool fallback",
+                                Some(failure.volume),
+                                true,
+                                Some(picotool::PriorTransportFailure::MassStoragePrimary(context)),
+                            )
+                        }
+                    }
+                } else {
+                    let context = with_topology(
+                        volume_discovery_error
+                            .expect("missing volume implies a discovery error")
+                            .to_string(),
+                        topology.as_deref(),
+                    );
+                    let target = picotool_target
+                        .as_ref()
+                        .ok_or_else(picotool_identity_required_error)?;
+                    let loaded = picotool::load_with_managed_picotool(
+                        project_dir,
+                        &artifact,
+                        target,
+                        Some(&context),
+                        self.picotool_timeout,
+                        picotool::PicotoolMode::Fallback,
+                    )
+                    .await?;
+                    (
+                        loaded.stdout,
+                        loaded.stderr,
+                        "managed picotool (BOOTSEL volume never mounted)",
+                        None,
+                        true,
+                        None,
+                    )
+                }
+            }
+            Rp2040Transport::Picotool => {
+                let target = picotool_target
+                    .as_ref()
+                    .ok_or_else(picotool_identity_required_error)?;
+                match attempt_picotool_primary(
+                    project_dir,
+                    &artifact,
+                    target,
+                    self.picotool_timeout,
+                )
+                .await
+                {
+                    Ok(loaded) => (
+                        loaded.stdout,
+                        loaded.stderr,
+                        "PICOBOOT (managed picotool)",
+                        volume.clone(),
+                        true,
+                        None,
+                    ),
+                    Err(picotool_error_text) => match volume {
+                        Some(volume) => {
+                            let transfer = run_mass_storage_transfer(
+                                volume,
+                                artifact.clone(),
+                                self.bootloader_timeout,
+                                self.uf2_write_timeout,
+                                volumes_before.clone(),
+                            )
+                            .await?;
+                            match transfer {
+                                Ok(transfer) => (
+                                    format!("wrote {}", transfer.destination.display()),
+                                    String::new(),
+                                    "BOOTSEL mass-storage (picotool fallback)",
+                                    Some(transfer.volume),
+                                    false,
+                                    Some(picotool::PriorTransportFailure::PicotoolPrimary(
+                                        picotool_error_text,
+                                    )),
+                                ),
+                                Err(failure) => {
+                                    let mass_storage_context = with_topology(
+                                        format!(
+                                            "{} (after {} BOOTSEL transfer attempt(s))",
+                                            failure.error, failure.attempts
+                                        ),
+                                        topology.as_deref(),
+                                    );
+                                    return Err(FbuildError::DeployFailed(
+                                        picotool::format_failure(
+                                            picotool::FailureDirection::PicotoolPrimary,
+                                            &mass_storage_context,
+                                            &picotool_error_text,
+                                            fbuild_core::platform::host::is_windows(),
+                                        ),
+                                    ));
+                                }
+                            }
+                        }
+                        None => {
+                            let mass_storage_context = with_topology(
+                                volume_discovery_error
+                                    .map(|error| error.to_string())
+                                    .unwrap_or_else(|| {
+                                        "RP2040 BOOTSEL volume never mounted".to_string()
+                                    }),
+                                topology.as_deref(),
+                            );
+                            return Err(FbuildError::DeployFailed(picotool::format_failure(
+                                picotool::FailureDirection::PicotoolPrimary,
+                                &mass_storage_context,
+                                &picotool_error_text,
+                                fbuild_core::platform::host::is_windows(),
+                            )));
+                        }
+                    },
+                }
+            }
+        };
+        let transfer_method = if application_reboot_succeeded {
+            format!("{transfer_method} after target-bound application reset-interface reboot")
+        } else {
+            transfer_method.to_string()
+        };
+        if let Some(volume_for_wait) = transfer_volume.clone() {
+            let post_timeout = self.post_deploy_timeout;
+            let eject_result = tokio::task::spawn_blocking(move || {
+                wait_for_volume_disappearance(&volume_for_wait, post_timeout)
+            })
+            .await
+            .map_err(|error| {
+                FbuildError::DeployFailed(format!("RP2040 eject watcher failed: {error}"))
+            })?;
+            if let Err(eject_error) = eject_result {
+                let uf2_diagnostic =
+                    picotool::probe_uf2_rejection_info(project_dir, PICOTOOL_INFO_PROBE_TIMEOUT)
+                        .await
+                        .ok();
+                return Err(FbuildError::DeployFailed(picotool::format_eject_failure(
+                    &eject_error.to_string(),
+                    prior_transport_failure.as_ref(),
+                    uf2_diagnostic.as_deref(),
+                )));
+            }
+        }
+        if uf2_target == Uf2Target::Ram {
+            return Ok(ram_load_result(
+                transfer_volume.as_deref(),
+                &transfer_method,
+                transfer_stdout,
+                transfer_stderr,
+            ));
+        }
+        let recovery_port = runtime_target.as_ref().map(|target| target.port.clone());
+        let recovery_serial = runtime_target
+            .as_ref()
+            .and_then(|target| target.serial_number.clone())
+            .or(requested_serial);
+        let family_id = self.family_id;
+        let post_timeout = self.post_deploy_timeout;
+        let wait_result = tokio::task::spawn_blocking(move || {
+            wait_for_cdc_port(
+                recovery_port.as_deref(),
+                recovery_serial.as_deref(),
+                &ports_before,
+                family_id,
+                post_timeout,
+            )
+        })
+        .await
+        .map_err(|error| {
+            FbuildError::DeployFailed(format!("RP2040 CDC watcher failed: {error}"))
+        })?;
+        // Every mounted-volume path already passed the eject watch above, and
+        // any successful picotool load (primary or fallback) confirms the
+        // ROM accepted the image before the CDC wait started — a typed flag
+        // rather than a transfer-method string match (FastLED/fbuild#1162).
+        let flash_confirmed = transfer_volume.is_some() || picotool_confirmed;
+        let location = describe_transfer_location(transfer_volume.as_deref());
+        let (message, port) =
+            match resolve_post_flash_cdc(flash_confirmed, wait_result, post_timeout)? {
+                PostFlashCdc::Confirmed(port) => (
+                    format!("firmware deployed to RP2040 via {transfer_method} ({location})"),
+                    Some(port),
+                ),
+                PostFlashCdc::Unconfirmed(note) => (
+                    format!(
+                        "firmware deployed to RP2040 via {transfer_method} ({location}); {note}"
+                    ),
+                    None,
+                ),
+            };
+        Ok(DeploymentResult {
+            success: true,
+            message,
+            port,
+            stdout: transfer_stdout,
+            stderr: transfer_stderr,
+            outcome: DeployOutcome::FullFlash,
+        })
+    }
+
     pub fn for_mcu(mcu: &str) -> Result<Self> {
         let mut deployer = Self::default();
         match mcu.to_ascii_lowercase().as_str() {
@@ -1806,501 +2579,15 @@ async fn run_mass_storage_transfer(
 
 #[async_trait::async_trait]
 impl Deployer for Rp2040Deployer {
-    #[expect(clippy::too_many_lines, reason = "baseline, zackees/ci.yml#229")]
     async fn deploy(
         &self,
         project_dir: &Path,
-        _env_name: &str,
+        env_name: &str,
         firmware_path: &Path,
         port: Option<&str>,
     ) -> Result<DeploymentResult> {
-        tokio::task::spawn_blocking(ensure_verified_usb_profiles)
+        self.deploy_with_fallback(project_dir, env_name, firmware_path, port)
             .await
-            .map_err(|error| {
-                FbuildError::DeployFailed(format!(
-                    "failed to prepare the FastLED/boards USB profile cache: {error}"
-                ))
-            })??;
-        let selector = port.map(str::trim).filter(|value| !value.is_empty());
-        let family_id = self.family_id;
-        let current_ports =
-            tokio::task::spawn_blocking(move || catalogue_pico_cdc_ports(family_id))
-                .await
-                .map_err(|error| {
-                    FbuildError::DeployFailed(format!(
-                        "RP2040 serial snapshot task failed: {error}"
-                    ))
-                })??;
-        let ports_before = preflash_eligible_port_names(&current_ports);
-        let explicit_volume = selector.and_then(explicit_uf2_volume);
-        if selector.is_some_and(|value| value.to_ascii_lowercase().starts_with("uf2="))
-            && explicit_volume.is_none()
-        {
-            return Err(FbuildError::DeployFailed(format!(
-                "explicit RP2040 UF2 volume {selector:?} does not contain INFO_UF2.TXT"
-            )));
-        }
-        let (volume_before_reset, volumes_before) = match explicit_volume {
-            Some(volume) => (Some(volume), BTreeSet::new()),
-            None => {
-                let mounted = find_uf2_volumes(&volume_roots());
-                // Attribution needs a live port to touch. A resolution
-                // failure here falls back to the historical multi-volume
-                // hard error rather than surfacing a selector error that a
-                // single-volume deploy would never have raised.
-                let can_attribute = selector
-                    .map(|value| resolve_requested_runtime_target(value, &current_ports))
-                    .transpose()
-                    .ok()
-                    .flatten()
-                    .is_some();
-                pretouch_volume_policy(mounted, can_attribute)?
-            }
-        };
-        let reset_interfaces = if volume_before_reset.is_none() {
-            let family_id = self.family_id;
-            tokio::task::spawn_blocking(move || catalogue_pico_reset_interfaces(family_id))
-                .await
-                .map_err(|error| {
-                    FbuildError::DeployFailed(format!(
-                        "RP2040 reset-interface snapshot task failed: {error}"
-                    ))
-                })?
-        } else {
-            Vec::new()
-        };
-        let (runtime_target, reset_only_target) = if volume_before_reset.is_none() {
-            match selector
-                .map(|value| resolve_requested_runtime_target(value, &current_ports))
-                .transpose()
-            {
-                Ok(target) => (target, None),
-                Err(cdc_error) => {
-                    let reset_target = selector
-                        .map(|value| {
-                            resolve_reset_only_target(value, &current_ports, &reset_interfaces)
-                        })
-                        .transpose()?
-                        .flatten();
-                    let Some(reset_target) = reset_target else {
-                        return Err(cdc_error);
-                    };
-                    tracing::warn!(
-                        selector,
-                        serial = %reset_target.serial_number,
-                        instance_id = %reset_target.instance_id,
-                        cdc_failure = %cdc_error,
-                        "selected RP-series CDC endpoint is unusable; using its exact healthy application reset interface"
-                    );
-                    (None, Some(reset_target))
-                }
-            }
-        } else {
-            (None, None)
-        };
-        let requested_serial = selector
-            .and_then(serial_selector)
-            .map(str::to_string)
-            .or_else(|| {
-                runtime_target
-                    .as_ref()
-                    .and_then(|target| target.serial_number.clone())
-            })
-            .or_else(|| {
-                reset_only_target
-                    .as_ref()
-                    .map(|target| target.serial_number.clone())
-            });
-        let picotool_target = requested_serial
-            .as_deref()
-            .map(|serial| picotool_target_for_family(serial, self.family_id))
-            .transpose()?;
-        // Capture topology before the 1200-bps touch: once the board resets
-        // into BOOTSEL the runtime CDC devnode this looks up disappears.
-        // A join failure on this purely-diagnostic task must never fail the
-        // deploy, so it degrades to `None` rather than propagating.
-        let topology_port = runtime_target.as_ref().map(|target| target.port.clone());
-        let topology: Option<String> = tokio::task::spawn_blocking(move || {
-            topology_port.and_then(|port| topology::describe_port_topology(&port))
-        })
-        .await
-        .unwrap_or(None);
-        let reset_error = if let Some(target) = &runtime_target {
-            let port = target.port.clone();
-            tokio::task::spawn_blocking(move || touch_1200bps(&port))
-                .await
-                .map_err(|error| {
-                    FbuildError::DeployFailed(format!("RP2040 reset task failed: {error}"))
-                })?
-                .err()
-        } else {
-            None
-        };
-        let (volume, volume_discovery_error) = if let Some(volume) = volume_before_reset {
-            (Some(volume), None)
-        } else {
-            let timeout = self.bootloader_timeout;
-            let stale_volumes = volumes_before.clone();
-            let discovered =
-                tokio::task::spawn_blocking(move || find_uf2_volume_until(timeout, &stale_volumes))
-                    .await
-                    .map_err(|error| {
-                        FbuildError::DeployFailed(format!("RP2040 volume watcher failed: {error}"))
-                    })??;
-            match select_volume_after_reset(discovered, reset_error) {
-                Ok(volume) => (Some(volume), None),
-                // The synthetic FAT never mounted (common behind USB hubs,
-                // FastLED/fbuild#1081). The PICOBOOT vendor interface may
-                // still be reachable, so defer the failure until the managed
-                // picotool fallback has had a chance.
-                Err(error) => (None, Some(error)),
-            }
-        };
-        let application_target = if volume.is_some() {
-            None
-        } else if let Some(target) = reset_only_target.as_ref() {
-            Some(picotool::PicotoolTarget::new(
-                &target.serial_number,
-                &format!("{:04x}", target.vid),
-                &format!("{:04x}", target.pid),
-            ))
-        } else {
-            application_reboot_target(false, runtime_target.as_ref())
-        };
-        let native_reset_target = if fbuild_core::platform::host::is_windows() && volume.is_none() {
-            if let Some(target) = reset_only_target.clone() {
-                Some(target)
-            } else if let Some(target) = runtime_target.as_ref() {
-                reset_interface_for_runtime_target(target, &reset_interfaces)?
-            } else {
-                None
-            }
-        } else {
-            None
-        };
-        let timeout = self.bootloader_timeout;
-        let stale_volumes = volumes_before.clone();
-        let application_recovery = run_application_reboot_recovery(
-            application_target,
-            volume,
-            volume_discovery_error,
-            self.bootloader_timeout,
-            move |target| async move {
-                if let Some(reset_interface) = native_reset_target {
-                    let instance_id = reset_interface.instance_id.clone();
-                    tokio::task::spawn_blocking(move || {
-                        fbuild_serial::ports::reset_usb_interface_to_bootsel(&reset_interface)
-                    })
-                    .await
-                    .map_err(|error| {
-                        FbuildError::DeployFailed(format!(
-                            "native Pico reset-interface task failed: {error}"
-                        ))
-                    })?
-                    .map_err(|error| {
-                        FbuildError::DeployFailed(format!(
-                            "native Pico reset-interface request for {instance_id} failed: {error}"
-                        ))
-                    })?;
-                    return Ok(picotool::PicotoolLoad {
-                        stdout: format!(
-                            "requested BOOTSEL through native Pico reset interface {instance_id}"
-                        ),
-                        stderr: String::new(),
-                    });
-                }
-                picotool::reboot_runtime_to_bootsel(
-                    project_dir,
-                    &target,
-                    PICOTOOL_INFO_PROBE_TIMEOUT,
-                )
-                .await
-            },
-            move || async move {
-                tokio::task::spawn_blocking(move || find_uf2_volume_until(timeout, &stale_volumes))
-                    .await
-                    .map_err(|error| {
-                        FbuildError::DeployFailed(format!(
-                            "RP2040 post-picotool volume watcher failed: {error}"
-                        ))
-                    })?
-            },
-        )
-        .await?;
-        let volume = application_recovery.volume;
-        let volume_discovery_error = application_recovery.volume_discovery_error;
-        let application_reboot_succeeded = application_recovery.application_reboot_succeeded;
-        let firmware = firmware_path.to_path_buf();
-        let family_id = self.family_id;
-        let (artifact, uf2_target) =
-            tokio::task::spawn_blocking(move || prepare_uf2_artifact(&firmware, family_id))
-                .await
-                .map_err(|error| {
-                    FbuildError::DeployFailed(format!(
-                        "RP2040 UF2 preparation task failed: {error}"
-                    ))
-                })??;
-        // A PICOBOOT command without a serial-number selector may choose any
-        // attached RP board. If serial identity is unavailable, retain the
-        // safe BOOTSEL mass-storage path but never issue an unscoped picotool
-        // probe or force-reset command.
-        let transport = if picotool_target.is_none() {
-            if self.transport == Rp2040Transport::Picotool {
-                tracing::warn!(
-                    "RP-series runtime USB serial unavailable; skipping picotool-primary and using BOOTSEL mass-storage only"
-                );
-            }
-            Rp2040Transport::Uf2
-        } else {
-            self.transport
-        };
-        let (
-            transfer_stdout,
-            transfer_stderr,
-            transfer_method,
-            transfer_volume,
-            picotool_confirmed,
-            prior_transport_failure,
-        ) = match transport {
-            Rp2040Transport::Uf2 => {
-                if let Some(volume) = volume {
-                    let transfer = run_mass_storage_transfer(
-                        volume,
-                        artifact.clone(),
-                        self.bootloader_timeout,
-                        self.uf2_write_timeout,
-                        volumes_before.clone(),
-                    )
-                    .await?;
-                    match transfer {
-                        Ok(transfer) => (
-                            format!("wrote {}", transfer.destination.display()),
-                            String::new(),
-                            "BOOTSEL mass-storage",
-                            Some(transfer.volume),
-                            false,
-                            None,
-                        ),
-                        Err(failure) => {
-                            let context = with_topology(
-                                format!(
-                                    "{} (after {} BOOTSEL transfer attempt(s))",
-                                    failure.error, failure.attempts
-                                ),
-                                topology.as_deref(),
-                            );
-                            let target = picotool_target
-                                .as_ref()
-                                .ok_or_else(picotool_identity_required_error)?;
-                            let loaded = picotool::load_with_managed_picotool(
-                                project_dir,
-                                &artifact,
-                                target,
-                                Some(&context),
-                                self.picotool_timeout,
-                                picotool::PicotoolMode::Fallback,
-                            )
-                            .await?;
-                            (
-                                loaded.stdout,
-                                loaded.stderr,
-                                "managed picotool fallback",
-                                Some(failure.volume),
-                                true,
-                                Some(picotool::PriorTransportFailure::MassStoragePrimary(context)),
-                            )
-                        }
-                    }
-                } else {
-                    let context = with_topology(
-                        volume_discovery_error
-                            .expect("missing volume implies a discovery error")
-                            .to_string(),
-                        topology.as_deref(),
-                    );
-                    let target = picotool_target
-                        .as_ref()
-                        .ok_or_else(picotool_identity_required_error)?;
-                    let loaded = picotool::load_with_managed_picotool(
-                        project_dir,
-                        &artifact,
-                        target,
-                        Some(&context),
-                        self.picotool_timeout,
-                        picotool::PicotoolMode::Fallback,
-                    )
-                    .await?;
-                    (
-                        loaded.stdout,
-                        loaded.stderr,
-                        "managed picotool (BOOTSEL volume never mounted)",
-                        None,
-                        true,
-                        None,
-                    )
-                }
-            }
-            Rp2040Transport::Picotool => {
-                let target = picotool_target
-                    .as_ref()
-                    .ok_or_else(picotool_identity_required_error)?;
-                match attempt_picotool_primary(
-                    project_dir,
-                    &artifact,
-                    target,
-                    self.picotool_timeout,
-                )
-                .await
-                {
-                    Ok(loaded) => (
-                        loaded.stdout,
-                        loaded.stderr,
-                        "PICOBOOT (managed picotool)",
-                        volume.clone(),
-                        true,
-                        None,
-                    ),
-                    Err(picotool_error_text) => match volume {
-                        Some(volume) => {
-                            let transfer = run_mass_storage_transfer(
-                                volume,
-                                artifact.clone(),
-                                self.bootloader_timeout,
-                                self.uf2_write_timeout,
-                                volumes_before.clone(),
-                            )
-                            .await?;
-                            match transfer {
-                                Ok(transfer) => (
-                                    format!("wrote {}", transfer.destination.display()),
-                                    String::new(),
-                                    "BOOTSEL mass-storage (picotool fallback)",
-                                    Some(transfer.volume),
-                                    false,
-                                    Some(picotool::PriorTransportFailure::PicotoolPrimary(
-                                        picotool_error_text,
-                                    )),
-                                ),
-                                Err(failure) => {
-                                    let mass_storage_context = with_topology(
-                                        format!(
-                                            "{} (after {} BOOTSEL transfer attempt(s))",
-                                            failure.error, failure.attempts
-                                        ),
-                                        topology.as_deref(),
-                                    );
-                                    return Err(FbuildError::DeployFailed(
-                                        picotool::format_failure(
-                                            picotool::FailureDirection::PicotoolPrimary,
-                                            &mass_storage_context,
-                                            &picotool_error_text,
-                                            fbuild_core::platform::host::is_windows(),
-                                        ),
-                                    ));
-                                }
-                            }
-                        }
-                        None => {
-                            let mass_storage_context = with_topology(
-                                volume_discovery_error
-                                    .map(|error| error.to_string())
-                                    .unwrap_or_else(|| {
-                                        "RP2040 BOOTSEL volume never mounted".to_string()
-                                    }),
-                                topology.as_deref(),
-                            );
-                            return Err(FbuildError::DeployFailed(picotool::format_failure(
-                                picotool::FailureDirection::PicotoolPrimary,
-                                &mass_storage_context,
-                                &picotool_error_text,
-                                fbuild_core::platform::host::is_windows(),
-                            )));
-                        }
-                    },
-                }
-            }
-        };
-        let transfer_method = if application_reboot_succeeded {
-            format!("{transfer_method} after target-bound application reset-interface reboot")
-        } else {
-            transfer_method.to_string()
-        };
-        if let Some(volume_for_wait) = transfer_volume.clone() {
-            let post_timeout = self.post_deploy_timeout;
-            let eject_result = tokio::task::spawn_blocking(move || {
-                wait_for_volume_disappearance(&volume_for_wait, post_timeout)
-            })
-            .await
-            .map_err(|error| {
-                FbuildError::DeployFailed(format!("RP2040 eject watcher failed: {error}"))
-            })?;
-            if let Err(eject_error) = eject_result {
-                let uf2_diagnostic =
-                    picotool::probe_uf2_rejection_info(project_dir, PICOTOOL_INFO_PROBE_TIMEOUT)
-                        .await
-                        .ok();
-                return Err(FbuildError::DeployFailed(picotool::format_eject_failure(
-                    &eject_error.to_string(),
-                    prior_transport_failure.as_ref(),
-                    uf2_diagnostic.as_deref(),
-                )));
-            }
-        }
-        if uf2_target == Uf2Target::Ram {
-            return Ok(ram_load_result(
-                transfer_volume.as_deref(),
-                &transfer_method,
-                transfer_stdout,
-                transfer_stderr,
-            ));
-        }
-        let recovery_port = runtime_target.as_ref().map(|target| target.port.clone());
-        let recovery_serial = runtime_target
-            .as_ref()
-            .and_then(|target| target.serial_number.clone())
-            .or(requested_serial);
-        let family_id = self.family_id;
-        let post_timeout = self.post_deploy_timeout;
-        let wait_result = tokio::task::spawn_blocking(move || {
-            wait_for_cdc_port(
-                recovery_port.as_deref(),
-                recovery_serial.as_deref(),
-                &ports_before,
-                family_id,
-                post_timeout,
-            )
-        })
-        .await
-        .map_err(|error| {
-            FbuildError::DeployFailed(format!("RP2040 CDC watcher failed: {error}"))
-        })?;
-        // Every mounted-volume path already passed the eject watch above, and
-        // any successful picotool load (primary or fallback) confirms the
-        // ROM accepted the image before the CDC wait started — a typed flag
-        // rather than a transfer-method string match (FastLED/fbuild#1162).
-        let flash_confirmed = transfer_volume.is_some() || picotool_confirmed;
-        let location = describe_transfer_location(transfer_volume.as_deref());
-        let (message, port) =
-            match resolve_post_flash_cdc(flash_confirmed, wait_result, post_timeout)? {
-                PostFlashCdc::Confirmed(port) => (
-                    format!("firmware deployed to RP2040 via {transfer_method} ({location})"),
-                    Some(port),
-                ),
-                PostFlashCdc::Unconfirmed(note) => (
-                    format!(
-                        "firmware deployed to RP2040 via {transfer_method} ({location}); {note}"
-                    ),
-                    None,
-                ),
-            };
-        Ok(DeploymentResult {
-            success: true,
-            message,
-            port,
-            stdout: transfer_stdout,
-            stderr: transfer_stderr,
-            outcome: DeployOutcome::FullFlash,
-        })
     }
 
     /// The RP2040 deploy path rediscovers its post-flash endpoint through a
@@ -4069,6 +4356,66 @@ mod tests {
     }
 
     #[test]
+    fn parse_transport_maps_swd() {
+        assert_eq!(
+            parse_rp2040_transport(Some("swd")).unwrap(),
+            Rp2040Transport::Swd
+        );
+    }
+
+    #[test]
+    fn a_failed_usb_deploy_falls_back_to_swd_only_with_a_probe_and_a_placeable_image() {
+        // The only combination that retries: USB transport, probe attached,
+        // ELF/HEX available.
+        assert!(should_fall_back_to_swd(
+            Rp2040Transport::Picotool,
+            true,
+            true
+        ));
+        assert!(should_fall_back_to_swd(Rp2040Transport::Uf2, true, true));
+        // No probe -> behavior unchanged, the USB error is the answer.
+        assert!(!should_fall_back_to_swd(
+            Rp2040Transport::Picotool,
+            false,
+            true
+        ));
+        // No placeable image -> SWD would fail on the artifact, not the target.
+        assert!(!should_fall_back_to_swd(Rp2040Transport::Uf2, true, false));
+        // Already asked for SWD: there is nothing to fall back from.
+        assert!(!should_fall_back_to_swd(Rp2040Transport::Swd, true, true));
+    }
+
+    #[test]
+    fn swd_transport_never_attempts_picotool_first() {
+        assert!(!should_attempt_picotool_first(Rp2040Transport::Swd, None));
+    }
+
+    #[test]
+    fn swd_chip_follows_the_board_family() {
+        assert_eq!(probe_rs_chip_for_family(RP2040_FAMILY_ID), "RP2040");
+        assert_eq!(probe_rs_chip_for_family(RP2350_FAMILY_ID), "RP2350");
+    }
+
+    #[test]
+    fn swd_artifact_prefers_the_co_located_elf() {
+        let dir = tempdir().unwrap();
+        let uf2 = dir.path().join("firmware.uf2");
+        let elf = dir.path().join("firmware.elf");
+        fs::write(&uf2, b"uf2").unwrap();
+        fs::write(&elf, b"elf").unwrap();
+        assert_eq!(swd_artifact_for(&uf2).unwrap(), elf);
+    }
+
+    #[test]
+    fn swd_artifact_rejects_an_image_without_a_load_address() {
+        let dir = tempdir().unwrap();
+        let bin = dir.path().join("firmware.bin");
+        fs::write(&bin, b"bin").unwrap();
+        let error = swd_artifact_for(&bin).unwrap_err();
+        assert!(error.to_string().contains("needs an ELF or Intel HEX"));
+    }
+
+    #[test]
     fn parse_transport_maps_uf2() {
         assert_eq!(
             parse_rp2040_transport(Some("uf2")).unwrap(),
@@ -4145,3 +4492,7 @@ mod tests {
         ));
     }
 }
+
+#[cfg(test)]
+#[path = "rp2040_region_tests.rs"]
+mod region_tests;

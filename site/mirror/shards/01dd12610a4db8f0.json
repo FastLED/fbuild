@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fjctp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fjctp/library/SerialComm/0.0.0-alpha+sha.a5bb58cfc6/SerialComm-0.0.0-alphasha.a5bb58cfc6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialComm-0.0.0-alphasha.a5bb58cfc6.tar.gz",
+    "size_bytes": 3771,
+    "sha256": "71c0d1ed0cd7c40b978881a81e02c5b6f55e6e4f3c00dc38f061d210d7b7fbcd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fjctp/library/SerialComm/0.0.0-alpha%2Bsha.a5bb58cfc6/SerialComm-0.0.0-alphasha.a5bb58cfc6.tar.gz",
+     "https://dl.registry.platformio.org/download/fjctp/library/SerialComm/0.0.0-alpha%2Bsha.a5bb58cfc6/SerialComm-0.0.0-alphasha.a5bb58cfc6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

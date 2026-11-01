@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-marcelvandekamp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-marcelvandekamp/library/Ser23K256/0.0.0+sha.d049f6422506/Ser23K256-0.0.0+sha.d049f6422506.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ser23K256-0.0.0+sha.d049f6422506.tar.gz",
+    "size_bytes": 2313,
+    "sha256": "7f476073e3bd84137106b39d95bb46b3c29e7fa7c0e6e23d713c9fe3d317e7cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-marcelvandekamp/library/Ser23K256/0.0.0%2Bsha.d049f6422506/Ser23K256-0.0.0%2Bsha.d049f6422506.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-marcelvandekamp/library/Ser23K256/0.0.0%2Bsha.d049f6422506/Ser23K256-0.0.0%2Bsha.d049f6422506.tar.gz"
+    ]
+   }
+  }
+ ]
+}

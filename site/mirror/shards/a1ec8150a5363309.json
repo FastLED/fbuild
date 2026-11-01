@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/libemgui",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "libemgui/library/ESP8266%20emGUI/1.0.0/ESP8266emGUI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266emGUI-1.0.0.tar.gz",
+    "size_bytes": 343429,
+    "sha256": "39534535d28978b4031a4755f1e594c7941a93c9f395945c27975b651665a0d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/libemgui/library/ESP8266%2520emGUI/1.0.0/ESP8266emGUI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/libemgui/library/ESP8266%20emGUI/1.0.0/ESP8266emGUI-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

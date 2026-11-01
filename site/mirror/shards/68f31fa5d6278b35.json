@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-el16lp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-el16lp/library/N5110/0.0.0+sha.75f561781f6b/N5110-0.0.0+sha.75f561781f6b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "N5110-0.0.0+sha.75f561781f6b.tar.gz",
+    "size_bytes": 11316,
+    "sha256": "dfbf2bdeb8e59532b1a748e10e3ec7625fa5e86db175269b8f25690f8da60e47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-el16lp/library/N5110/0.0.0%2Bsha.75f561781f6b/N5110-0.0.0%2Bsha.75f561781f6b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-el16lp/library/N5110/0.0.0%2Bsha.75f561781f6b/N5110-0.0.0%2Bsha.75f561781f6b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

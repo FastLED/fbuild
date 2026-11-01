@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/polargoose",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "polargoose/library/Crypto-no-arduino/0.4.0/Crypto-no-arduino-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Crypto-no-arduino-0.4.0.tar.gz",
+    "size_bytes": 65603,
+    "sha256": "3ad11a5b8c348061a45209d2d7fb223d86ed951fda21a3aa3c358d851bc363c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/polargoose/library/Crypto-no-arduino/0.4.0/Crypto-no-arduino-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/polargoose/library/Crypto-no-arduino/0.4.0/Crypto-no-arduino-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "polargoose/library/arduino-dsmr-2/1.0/arduino-dsmr-2-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-dsmr-2-1.0.tar.gz",
+    "size_bytes": 15495,
+    "sha256": "b69086dca8fcdf3310a7d9a286cbad2bb9e20a2f369548f18ac447169e5fbe60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/polargoose/library/arduino-dsmr-2/1.0/arduino-dsmr-2-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/polargoose/library/arduino-dsmr-2/1.0/arduino-dsmr-2-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "polargoose/library/arduino-dsmr-2/2.0/arduino-dsmr-2-2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-dsmr-2-2.0.tar.gz",
+    "size_bytes": 15648,
+    "sha256": "4130f7cc192fd8785bf96362066afb5e2829fcdddaa661ea3809058e00a8816f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/polargoose/library/arduino-dsmr-2/2.0/arduino-dsmr-2-2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/polargoose/library/arduino-dsmr-2/2.0/arduino-dsmr-2-2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "polargoose/library/arduino-dsmr-2/3.0/arduino-dsmr-2-3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-dsmr-2-3.0.tar.gz",
+    "size_bytes": 18695,
+    "sha256": "a38a837a3cc9e3f0e94d4bbb3c3b8df00990280e9ffce983c4705ea9bf31378c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/polargoose/library/arduino-dsmr-2/3.0/arduino-dsmr-2-3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/polargoose/library/arduino-dsmr-2/3.0/arduino-dsmr-2-3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "polargoose/library/arduino-dsmr-2/4.0/arduino-dsmr-2-4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-dsmr-2-4.0.tar.gz",
+    "size_bytes": 18773,
+    "sha256": "816007dd9fc30e2009786a4840f7d1772c7d03b2ecb069a0b69637b37a5bd266",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/polargoose/library/arduino-dsmr-2/4.0/arduino-dsmr-2-4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/polargoose/library/arduino-dsmr-2/4.0/arduino-dsmr-2-4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "polargoose/library/arduino-dsmr-2/5.0/arduino-dsmr-2-5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-dsmr-2-5.0.tar.gz",
+    "size_bytes": 19120,
+    "sha256": "54e03ad2732ba2ed05dcbc43538fed32b6345386a1f14e33f90f9b00ec75633a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/polargoose/library/arduino-dsmr-2/5.0/arduino-dsmr-2-5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/polargoose/library/arduino-dsmr-2/5.0/arduino-dsmr-2-5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "polargoose/library/arduino-dsmr-2/6.0/arduino-dsmr-2-6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-dsmr-2-6.0.tar.gz",
+    "size_bytes": 19614,
+    "sha256": "eb1142fcb6d0403b1e1c9f89c771de7bdbff4cec12033ccc95030feff32e0085",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/polargoose/library/arduino-dsmr-2/6.0/arduino-dsmr-2-6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/polargoose/library/arduino-dsmr-2/6.0/arduino-dsmr-2-6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "polargoose/library/arduino-dsmr-2/7.0/arduino-dsmr-2-7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-dsmr-2-7.0.tar.gz",
+    "size_bytes": 19377,
+    "sha256": "dc897eccd2fca4e247177ef9598061609237a15a9fab1382c937416d95fe7733",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/polargoose/library/arduino-dsmr-2/7.0/arduino-dsmr-2-7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/polargoose/library/arduino-dsmr-2/7.0/arduino-dsmr-2-7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "polargoose/library/arduino-dsmr-2/8.0/arduino-dsmr-2-8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-dsmr-2-8.0.tar.gz",
+    "size_bytes": 18333,
+    "sha256": "d267728efed18c999d2b23d0c73fbbe9df0c827f35c267bd66105d7b71e8812a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/polargoose/library/arduino-dsmr-2/8.0/arduino-dsmr-2-8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/polargoose/library/arduino-dsmr-2/8.0/arduino-dsmr-2-8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "polargoose/library/arduino-dsmr-2/9.0/arduino-dsmr-2-9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-dsmr-2-9.0.tar.gz",
+    "size_bytes": 18280,
+    "sha256": "8b175524d4871c19d3a873e560c622e3ee46b8d3a363ec89f400a6045fa4647d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/polargoose/library/arduino-dsmr-2/9.0/arduino-dsmr-2-9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/polargoose/library/arduino-dsmr-2/9.0/arduino-dsmr-2-9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

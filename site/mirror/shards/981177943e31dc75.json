@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/obu-introsat",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "obu-introsat/library/IntroSatLib/0.0.22/IntroSatLib-0.0.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IntroSatLib-0.0.22.tar.gz",
+    "size_bytes": 34494,
+    "sha256": "3e55c9b2b9152a9f1fb645f44a3f344e63ddef896b2e080cc8125c149c243bf2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/obu-introsat/library/IntroSatLib/0.0.22/IntroSatLib-0.0.22.tar.gz",
+     "https://dl.registry.platformio.org/download/obu-introsat/library/IntroSatLib/0.0.22/IntroSatLib-0.0.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "obu-introsat/library/IntroStratLib/0.1.2/IntroStratLib-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IntroStratLib-0.1.2.tar.gz",
+    "size_bytes": 13852,
+    "sha256": "5598d782f402001367c065676d98f82887844581421f747c5c0c2c11f6aad116",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/obu-introsat/library/IntroStratLib/0.1.2/IntroStratLib-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/obu-introsat/library/IntroStratLib/0.1.2/IntroStratLib-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sspectrals",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sspectrals/library/RoboticusDebugger/1.0.0/RoboticusDebugger-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RoboticusDebugger-1.0.0.tar.gz",
+    "size_bytes": 17194,
+    "sha256": "ea3fc4f4e1934498d6f5213758f968073e5fb81b81ffddb43f2a57c5800ceb2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sspectrals/library/RoboticusDebugger/1.0.0/RoboticusDebugger-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sspectrals/library/RoboticusDebugger/1.0.0/RoboticusDebugger-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

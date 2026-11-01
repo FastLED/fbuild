@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/axoulc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "axoulc/library/TAS5720%20Arduino/1.2/TAS5720Arduino-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TAS5720Arduino-1.2.tar.gz",
+    "size_bytes": 5073,
+    "sha256": "d86c4cccd4327a63b4ac82b80eb3013fa0dcb30a7e9ee74edc3e9d114ad6716b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/axoulc/library/TAS5720%2520Arduino/1.2/TAS5720Arduino-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/axoulc/library/TAS5720%20Arduino/1.2/TAS5720Arduino-1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

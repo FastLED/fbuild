@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ykita",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ykita/library/MCP9600/0.0.0+sha.f33e95899738/MCP9600-0.0.0+sha.f33e95899738.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP9600-0.0.0+sha.f33e95899738.tar.gz",
+    "size_bytes": 3574,
+    "sha256": "a9923512348a69b5f5bb7b5cfb862e2cc353af926c3032c0bbf072d0df23357c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ykita/library/MCP9600/0.0.0%2Bsha.f33e95899738/MCP9600-0.0.0%2Bsha.f33e95899738.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ykita/library/MCP9600/0.0.0%2Bsha.f33e95899738/MCP9600-0.0.0%2Bsha.f33e95899738.tar.gz"
+    ]
+   }
+  }
+ ]
+}

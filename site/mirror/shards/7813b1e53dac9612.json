@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/decadenza",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "decadenza/library/ProsecCoAP/0.9.2/ProsecCoAP-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProsecCoAP-0.9.2.tar.gz",
+    "size_bytes": 50175,
+    "sha256": "ae4014ec8e9e877a99f692abe1ed95775dcfc225baa23e36714b64e50806f232",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/decadenza/library/ProsecCoAP/0.9.2/ProsecCoAP-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/decadenza/library/ProsecCoAP/0.9.2/ProsecCoAP-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "decadenza/library/ProsecCoAP/0.9.4/ProsecCoAP-0.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProsecCoAP-0.9.4.tar.gz",
+    "size_bytes": 50285,
+    "sha256": "8b1dc4ff05a5b780354f4383cc88805215233a5adfa6387ad855c862537ac807",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/decadenza/library/ProsecCoAP/0.9.4/ProsecCoAP-0.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/decadenza/library/ProsecCoAP/0.9.4/ProsecCoAP-0.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "decadenza/library/ProsecCoAP/0.9.5/ProsecCoAP-0.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProsecCoAP-0.9.5.tar.gz",
+    "size_bytes": 50044,
+    "sha256": "1a4bfd89b225aa56ef5c5be60f420158113b9e85bd5a898a1a952f76ab2c417c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/decadenza/library/ProsecCoAP/0.9.5/ProsecCoAP-0.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/decadenza/library/ProsecCoAP/0.9.5/ProsecCoAP-0.9.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "decadenza/library/ProsecCoAP/1.0.0/ProsecCoAP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProsecCoAP-1.0.0.tar.gz",
+    "size_bytes": 70570,
+    "sha256": "316f50d6c740d3c74596b057f55ab4b61e510bec2fa8407a53b022e22f76aaa9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/decadenza/library/ProsecCoAP/1.0.0/ProsecCoAP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/decadenza/library/ProsecCoAP/1.0.0/ProsecCoAP-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "decadenza/library/ProsecCoAP/1.0.1/ProsecCoAP-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProsecCoAP-1.0.1.tar.gz",
+    "size_bytes": 71292,
+    "sha256": "2d10f4f9bd8e5d750459c0df9d73683c908600e832e4efc8d3e908314d129f14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/decadenza/library/ProsecCoAP/1.0.1/ProsecCoAP-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/decadenza/library/ProsecCoAP/1.0.1/ProsecCoAP-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "decadenza/library/ProsecCoAP/1.0.2/ProsecCoAP-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProsecCoAP-1.0.2.tar.gz",
+    "size_bytes": 72498,
+    "sha256": "9f149c3c956cadf30855655bd6e957c51fc7454c23e2b26374ff2582b637f43a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/decadenza/library/ProsecCoAP/1.0.2/ProsecCoAP-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/decadenza/library/ProsecCoAP/1.0.2/ProsecCoAP-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "decadenza/library/ProsecCoAP/1.1.0/ProsecCoAP-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProsecCoAP-1.1.0.tar.gz",
+    "size_bytes": 73109,
+    "sha256": "bd86598851e3a7ecfa653ae681f3eddf417caebc4f962b62a468ca8d497da9d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/decadenza/library/ProsecCoAP/1.1.0/ProsecCoAP-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/decadenza/library/ProsecCoAP/1.1.0/ProsecCoAP-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "decadenza/library/ProsecCoAP/3.0.0/ProsecCoAP-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProsecCoAP-3.0.0.tar.gz",
+    "size_bytes": 73860,
+    "sha256": "d1797861db68911a619db21ec9f93e6a63479772b3db74436e3b01b1d31c7e4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/decadenza/library/ProsecCoAP/3.0.0/ProsecCoAP-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/decadenza/library/ProsecCoAP/3.0.0/ProsecCoAP-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "decadenza/library/ProsecCoAP/4.0.0/ProsecCoAP-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProsecCoAP-4.0.0.tar.gz",
+    "size_bytes": 74233,
+    "sha256": "51e821d76a133ea94d74aa19e9f08f8b1044b42cd6532159629f3624528717a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/decadenza/library/ProsecCoAP/4.0.0/ProsecCoAP-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/decadenza/library/ProsecCoAP/4.0.0/ProsecCoAP-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "decadenza/library/ProsecCoAP/5.0.0/ProsecCoAP-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProsecCoAP-5.0.0.tar.gz",
+    "size_bytes": 76039,
+    "sha256": "680e34ff85d8ba10f1bc4eb2ff63746697ca2d0c9adf40d14891ed2649a6915d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/decadenza/library/ProsecCoAP/5.0.0/ProsecCoAP-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/decadenza/library/ProsecCoAP/5.0.0/ProsecCoAP-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "decadenza/library/ProsecCoAP/5.1.0/ProsecCoAP-5.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProsecCoAP-5.1.0.tar.gz",
+    "size_bytes": 77315,
+    "sha256": "a4daaecadda786bda7cdab6ad16120cda6c701a24b6318e4583a64ec31073a6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/decadenza/library/ProsecCoAP/5.1.0/ProsecCoAP-5.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/decadenza/library/ProsecCoAP/5.1.0/ProsecCoAP-5.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

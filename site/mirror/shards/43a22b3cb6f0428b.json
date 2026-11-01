@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bobty",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bobty/library/RdWebServer/0.0.0+sha.46998f2e458f/RdWebServer-0.0.0+sha.46998f2e458f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RdWebServer-0.0.0+sha.46998f2e458f.tar.gz",
+    "size_bytes": 7885,
+    "sha256": "8164d0e462c6a193b1e345d609935411e1066edbad4558948c45ac8660ec9d72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bobty/library/RdWebServer/0.0.0%2Bsha.46998f2e458f/RdWebServer-0.0.0%2Bsha.46998f2e458f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bobty/library/RdWebServer/0.0.0%2Bsha.46998f2e458f/RdWebServer-0.0.0%2Bsha.46998f2e458f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bobty/library/SCARA_Arms/0.0.0+sha.9a3fc5ff8de3/SCARA_Arms-0.0.0+sha.9a3fc5ff8de3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCARA_Arms-0.0.0+sha.9a3fc5ff8de3.tar.gz",
+    "size_bytes": 2413,
+    "sha256": "5019968ebaf3772aa5edc4503b138179ac21878d7f1a9a4eee8676c04f3cdc7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bobty/library/SCARA_Arms/0.0.0%2Bsha.9a3fc5ff8de3/SCARA_Arms-0.0.0%2Bsha.9a3fc5ff8de3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bobty/library/SCARA_Arms/0.0.0%2Bsha.9a3fc5ff8de3/SCARA_Arms-0.0.0%2Bsha.9a3fc5ff8de3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

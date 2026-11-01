@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ke-holtz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ke-holtz/library/HoltzLib/1.0.0/HoltzLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HoltzLib-1.0.0.tar.gz",
+    "size_bytes": 13774,
+    "sha256": "7e8e33a4efc37991517cf4abc95ce0354bbacc3b852ab39244792ed0b973ca6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ke-holtz/library/HoltzLib/1.0.0/HoltzLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ke-holtz/library/HoltzLib/1.0.0/HoltzLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ke-holtz/library/HoltzLib/1.0.3/HoltzLib-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HoltzLib-1.0.3.tar.gz",
+    "size_bytes": 14327,
+    "sha256": "15979a8f3a727a8f285d11c1727b1d7c051f4ebac1cc34d3a109c8d1b75b80c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ke-holtz/library/HoltzLib/1.0.3/HoltzLib-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ke-holtz/library/HoltzLib/1.0.3/HoltzLib-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ke-holtz/library/HoltzLib/1.1.0/HoltzLib-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HoltzLib-1.1.0.tar.gz",
+    "size_bytes": 15507,
+    "sha256": "f9ce1dc32176ed86b4746d6252d2bd2512e4655df4bd4972053ae5d0bdf84fd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ke-holtz/library/HoltzLib/1.1.0/HoltzLib-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ke-holtz/library/HoltzLib/1.1.0/HoltzLib-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ke-holtz/library/HoltzLib/1.1.2/HoltzLib-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HoltzLib-1.1.2.tar.gz",
+    "size_bytes": 16577,
+    "sha256": "c8f9f6f8b08554750d2f884d643c3e67c4cfbe8cff6359c7f38dc9542166e804",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ke-holtz/library/HoltzLib/1.1.2/HoltzLib-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ke-holtz/library/HoltzLib/1.1.2/HoltzLib-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

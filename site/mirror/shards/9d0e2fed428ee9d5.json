@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-afejer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-afejer/library/MCP4812/0.0.0+sha.a68207b74d7d/MCP4812-0.0.0+sha.a68207b74d7d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP4812-0.0.0+sha.a68207b74d7d.tar.gz",
+    "size_bytes": 2240,
+    "sha256": "88ec44f85a2cc9e1a44152135e6fe2ea4e01997d639542bfeb52ea0b7f24a768",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-afejer/library/MCP4812/0.0.0%2Bsha.a68207b74d7d/MCP4812-0.0.0%2Bsha.a68207b74d7d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-afejer/library/MCP4812/0.0.0%2Bsha.a68207b74d7d/MCP4812-0.0.0%2Bsha.a68207b74d7d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-suky",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-suky/library/LCDTFT/0.0.0+sha.1085b6177f6e/LCDTFT-0.0.0+sha.1085b6177f6e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCDTFT-0.0.0+sha.1085b6177f6e.tar.gz",
+    "size_bytes": 5974,
+    "sha256": "3de463200c3a0c67e9b510e016cc50e9ecce47e868c00e2cca852d16793cbf71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suky/library/LCDTFT/0.0.0%2Bsha.1085b6177f6e/LCDTFT-0.0.0%2Bsha.1085b6177f6e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suky/library/LCDTFT/0.0.0%2Bsha.1085b6177f6e/LCDTFT-0.0.0%2Bsha.1085b6177f6e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suky/library/MenusLCD/0.0.0+sha.310ed2337a8f/MenusLCD-0.0.0+sha.310ed2337a8f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MenusLCD-0.0.0+sha.310ed2337a8f.tar.gz",
+    "size_bytes": 5076,
+    "sha256": "abd0abf24aac7ac8d75328150675879c357558e7d01ac0f59d0e8c5b748b9c72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suky/library/MenusLCD/0.0.0%2Bsha.310ed2337a8f/MenusLCD-0.0.0%2Bsha.310ed2337a8f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suky/library/MenusLCD/0.0.0%2Bsha.310ed2337a8f/MenusLCD-0.0.0%2Bsha.310ed2337a8f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suky/library/PCA9538_Expander/0.0.0+sha.d0e0b38e5991/PCA9538_Expander-0.0.0+sha.d0e0b38e5991.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCA9538_Expander-0.0.0+sha.d0e0b38e5991.tar.gz",
+    "size_bytes": 2175,
+    "sha256": "c9cde90284e858f2dde017689190b152302af72d15ddade093f57c915c4c4bcd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suky/library/PCA9538_Expander/0.0.0%2Bsha.d0e0b38e5991/PCA9538_Expander-0.0.0%2Bsha.d0e0b38e5991.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suky/library/PCA9538_Expander/0.0.0%2Bsha.d0e0b38e5991/PCA9538_Expander-0.0.0%2Bsha.d0e0b38e5991.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suky/library/SerialLCD/0.0.0+sha.1094a2af1c40/SerialLCD-0.0.0+sha.1094a2af1c40.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialLCD-0.0.0+sha.1094a2af1c40.tar.gz",
+    "size_bytes": 2509,
+    "sha256": "b148c5b77c12f19c9e06c1ab0e3d2428ecef7d4ab29ac6e0f2077ce6eeb3d1f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suky/library/SerialLCD/0.0.0%2Bsha.1094a2af1c40/SerialLCD-0.0.0%2Bsha.1094a2af1c40.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suky/library/SerialLCD/0.0.0%2Bsha.1094a2af1c40/SerialLCD-0.0.0%2Bsha.1094a2af1c40.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suky/library/TMP175/0.0.0+sha.e177f6671b88/TMP175-0.0.0+sha.e177f6671b88.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMP175-0.0.0+sha.e177f6671b88.tar.gz",
+    "size_bytes": 1961,
+    "sha256": "c0b2d82acbeff2dbadbc91084f10531df62748413d26b50f51adcf93855ec18d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suky/library/TMP175/0.0.0%2Bsha.e177f6671b88/TMP175-0.0.0%2Bsha.e177f6671b88.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suky/library/TMP175/0.0.0%2Bsha.e177f6671b88/TMP175-0.0.0%2Bsha.e177f6671b88.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-suky/library/TouchADS7843/0.0.0+sha.63a925e2a3d2/TouchADS7843-0.0.0+sha.63a925e2a3d2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchADS7843-0.0.0+sha.63a925e2a3d2.tar.gz",
+    "size_bytes": 2446,
+    "sha256": "d76f2c62cafef031638a4e48adf9e346f6d7c8d4e64a70fe0072ca9c63b7966d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-suky/library/TouchADS7843/0.0.0%2Bsha.63a925e2a3d2/TouchADS7843-0.0.0%2Bsha.63a925e2a3d2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-suky/library/TouchADS7843/0.0.0%2Bsha.63a925e2a3d2/TouchADS7843-0.0.0%2Bsha.63a925e2a3d2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

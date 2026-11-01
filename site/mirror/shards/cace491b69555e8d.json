@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/grafana",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "grafana/library/GrafanaLoki/0.2.2/GrafanaLoki-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GrafanaLoki-0.2.2.tar.gz",
+    "size_bytes": 24059,
+    "sha256": "5c65cc3600650d7374b10bfaaea7cebbe4f6133538d63892f02bda565bca140c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/grafana/library/GrafanaLoki/0.2.2/GrafanaLoki-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/grafana/library/GrafanaLoki/0.2.2/GrafanaLoki-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "grafana/library/PromLokiTransport/0.2.2/PromLokiTransport-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PromLokiTransport-0.2.2.tar.gz",
+    "size_bytes": 25538,
+    "sha256": "4d224e5a4ee0cc330d8302905e133207f4d84bcb7d08dfc4132663638c7b91c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/grafana/library/PromLokiTransport/0.2.2/PromLokiTransport-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/grafana/library/PromLokiTransport/0.2.2/PromLokiTransport-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "grafana/library/PrometheusArduino/0.4.0/PrometheusArduino-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PrometheusArduino-0.4.0.tar.gz",
+    "size_bytes": 20472,
+    "sha256": "46cc83f5bf51086d342fe054b09d8678fd2b4c072d032628dd8b5aad704179ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/grafana/library/PrometheusArduino/0.4.0/PrometheusArduino-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/grafana/library/PrometheusArduino/0.4.0/PrometheusArduino-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "grafana/library/SnappyProto/0.1.2/SnappyProto-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SnappyProto-0.1.2.tar.gz",
+    "size_bytes": 53888,
+    "sha256": "11164da3534eeec91a0f97eb084dcee7ee76d9e7cb0bd1a7e78cff39b8004e6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/grafana/library/SnappyProto/0.1.2/SnappyProto-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/grafana/library/SnappyProto/0.1.2/SnappyProto-0.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

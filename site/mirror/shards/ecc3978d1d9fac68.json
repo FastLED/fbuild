@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-wlgrw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-wlgrw/library/HAN%20IoT%20Shield/2.0.0/HANIoTShield-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HANIoTShield-2.0.0.tar.gz",
+    "size_bytes": 25500,
+    "sha256": "e5396f3658ac3d822ef51af3ecf4844e51ff8282e67ad0b2b979e9df718444f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-wlgrw/library/HAN%2520IoT%2520Shield/2.0.0/HANIoTShield-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-wlgrw/library/HAN%20IoT%20Shield/2.0.0/HANIoTShield-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/slocomptech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "slocomptech/library/ByteConvert/0.1.3/ByteConvert-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ByteConvert-0.1.3.tar.gz",
+    "size_bytes": 3387,
+    "sha256": "424b0edfe36dcf9bcf121f1adf99ad1b223a8ecd413f2d43e107cf172ad92c53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/slocomptech/library/ByteConvert/0.1.3/ByteConvert-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/slocomptech/library/ByteConvert/0.1.3/ByteConvert-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "slocomptech/library/QList/0.6.7/QList-0.6.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QList-0.6.7.tar.gz",
+    "size_bytes": 3853,
+    "sha256": "9ba5e3ad9598e85e8ba13ffff06e74023e3d609c97068a33fa63c07fd52992de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/slocomptech/library/QList/0.6.7/QList-0.6.7.tar.gz",
+     "https://dl.registry.platformio.org/download/slocomptech/library/QList/0.6.7/QList-0.6.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

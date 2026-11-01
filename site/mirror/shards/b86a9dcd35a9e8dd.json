@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-decimus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-decimus/library/FRAMLog/0.0.0+sha.4e5cda0920d3/FRAMLog-0.0.0+sha.4e5cda0920d3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FRAMLog-0.0.0+sha.4e5cda0920d3.tar.gz",
+    "size_bytes": 1736,
+    "sha256": "ba29fde7108a879241d32367b5fda9dd141df03afb8cec536a19c699e5069207",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-decimus/library/FRAMLog/0.0.0%2Bsha.4e5cda0920d3/FRAMLog-0.0.0%2Bsha.4e5cda0920d3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-decimus/library/FRAMLog/0.0.0%2Bsha.4e5cda0920d3/FRAMLog-0.0.0%2Bsha.4e5cda0920d3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-decimus/library/FRAMSPI/0.0.0+sha.27d10d94f7d9/FRAMSPI-0.0.0+sha.27d10d94f7d9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FRAMSPI-0.0.0+sha.27d10d94f7d9.tar.gz",
+    "size_bytes": 2025,
+    "sha256": "9fd2aac46336b0b373038f5c3cd3f8eff0c0bca50f816bed4a9de990e888eb99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-decimus/library/FRAMSPI/0.0.0%2Bsha.27d10d94f7d9/FRAMSPI-0.0.0%2Bsha.27d10d94f7d9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-decimus/library/FRAMSPI/0.0.0%2Bsha.27d10d94f7d9/FRAMSPI-0.0.0%2Bsha.27d10d94f7d9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-decimus/library/SerialFlow/0.0.0+sha.ebf658b28c5f/SerialFlow-0.0.0+sha.ebf658b28c5f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialFlow-0.0.0+sha.ebf658b28c5f.tar.gz",
+    "size_bytes": 1996,
+    "sha256": "3f120ba76121daa4b2b31bb53e36db46b0589eaa69063d4ed28ad888c22ecbcd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-decimus/library/SerialFlow/0.0.0%2Bsha.ebf658b28c5f/SerialFlow-0.0.0%2Bsha.ebf658b28c5f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-decimus/library/SerialFlow/0.0.0%2Bsha.ebf658b28c5f/SerialFlow-0.0.0%2Bsha.ebf658b28c5f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

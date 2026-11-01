@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iotec-gmbh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iotec-gmbh/library/M5_RTC_Module/1.0.2/M5_RTC_Module-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M5_RTC_Module-1.0.2.tar.gz",
+    "size_bytes": 7968,
+    "sha256": "c7b1adb3b3fdb74ce26e2e2ca918245880efb10e3ff6430006821fdaba01934f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iotec-gmbh/library/M5_RTC_Module/1.0.2/M5_RTC_Module-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/iotec-gmbh/library/M5_RTC_Module/1.0.2/M5_RTC_Module-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iotec-gmbh/library/iotec_MAX7319/1.0.0/iotec_MAX7319-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iotec_MAX7319-1.0.0.tar.gz",
+    "size_bytes": 3155,
+    "sha256": "1add76fcb671254a4fd9c4729d1a9ce0219bbbc1452e721a1b26385b24912e26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iotec-gmbh/library/iotec_MAX7319/1.0.0/iotec_MAX7319-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iotec-gmbh/library/iotec_MAX7319/1.0.0/iotec_MAX7319-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

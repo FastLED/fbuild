@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/huuphuoc2411",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "huuphuoc2411/library/ESP32Feature28/1.0.0/ESP32Feature28-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32Feature28-1.0.0.tar.gz",
+    "size_bytes": 13730,
+    "sha256": "64380aafcb3ab030781dba86a87758c2df869c1c6e1874b9cefd343bbc0036bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/huuphuoc2411/library/ESP32Feature28/1.0.0/ESP32Feature28-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/huuphuoc2411/library/ESP32Feature28/1.0.0/ESP32Feature28-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "huuphuoc2411/library/EcoWifi/1.0.0/EcoWifi-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EcoWifi-1.0.0.tar.gz",
+    "size_bytes": 11437,
+    "sha256": "06f04103fd5085ec93ea5dc20110152650595332e8ccba2294c2b4a5cdc63b5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/huuphuoc2411/library/EcoWifi/1.0.0/EcoWifi-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/huuphuoc2411/library/EcoWifi/1.0.0/EcoWifi-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "huuphuoc2411/library/VN_LCD/1.0.0/VN_LCD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VN_LCD-1.0.0.tar.gz",
+    "size_bytes": 14456,
+    "sha256": "be50616b87cb1c9921b6e7553ce9f36a7441fcb6f9c15daa19dcd54bd1dc4558",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/huuphuoc2411/library/VN_LCD/1.0.0/VN_LCD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/huuphuoc2411/library/VN_LCD/1.0.0/VN_LCD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "huuphuoc2411/library/VN_VOICE/1.0.0/VN_VOICE-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VN_VOICE-1.0.0.tar.gz",
+    "size_bytes": 156511,
+    "sha256": "df9e75392e180a04fa038c668bc5600bd6496173fd3fb603d4c49ae4aff41e71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/huuphuoc2411/library/VN_VOICE/1.0.0/VN_VOICE-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/huuphuoc2411/library/VN_VOICE/1.0.0/VN_VOICE-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

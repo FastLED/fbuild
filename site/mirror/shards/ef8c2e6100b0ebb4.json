@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rmaalmeida",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rmaalmeida/library/pqdb/0.0.0+sha.3fb450ba1e95/pqdb-0.0.0+sha.3fb450ba1e95.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pqdb-0.0.0+sha.3fb450ba1e95.tar.gz",
+    "size_bytes": 10791,
+    "sha256": "4e69fe24799c45bba7a80d4cacd93526b21a0a621c447047bf8b0a040b434385",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rmaalmeida/library/pqdb/0.0.0%2Bsha.3fb450ba1e95/pqdb-0.0.0%2Bsha.3fb450ba1e95.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rmaalmeida/library/pqdb/0.0.0%2Bsha.3fb450ba1e95/pqdb-0.0.0%2Bsha.3fb450ba1e95.tar.gz"
+    ]
+   }
+  }
+ ]
+}

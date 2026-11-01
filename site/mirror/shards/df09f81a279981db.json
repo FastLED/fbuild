@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gbrush",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gbrush/library/WiiChuk_compat/0.0.0+sha.e84a5ccbac19/WiiChuk_compat-0.0.0+sha.e84a5ccbac19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiiChuk_compat-0.0.0+sha.e84a5ccbac19.tar.gz",
+    "size_bytes": 2871,
+    "sha256": "6e7c8bb747c3c3a8b0db70da32e4ba27262f9434a30c609186f3ac2df18447b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gbrush/library/WiiChuk_compat/0.0.0%2Bsha.e84a5ccbac19/WiiChuk_compat-0.0.0%2Bsha.e84a5ccbac19.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gbrush/library/WiiChuk_compat/0.0.0%2Bsha.e84a5ccbac19/WiiChuk_compat-0.0.0%2Bsha.e84a5ccbac19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gbrush/library/WiiMP/0.0.0+sha.727906cb5051/WiiMP-0.0.0+sha.727906cb5051.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiiMP-0.0.0+sha.727906cb5051.tar.gz",
+    "size_bytes": 2448,
+    "sha256": "89231a59328526028c5a7673e84b6a6df0f2c56bfbc71f29646b6be9b999d12c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gbrush/library/WiiMP/0.0.0%2Bsha.727906cb5051/WiiMP-0.0.0%2Bsha.727906cb5051.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gbrush/library/WiiMP/0.0.0%2Bsha.727906cb5051/WiiMP-0.0.0%2Bsha.727906cb5051.tar.gz"
+    ]
+   }
+  }
+ ]
+}

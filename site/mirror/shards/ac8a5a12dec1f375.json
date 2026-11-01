@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rhourahane",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rhourahane/library/I2CEeprom/0.0.0+sha.b23f5561266c/I2CEeprom-0.0.0+sha.b23f5561266c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2CEeprom-0.0.0+sha.b23f5561266c.tar.gz",
+    "size_bytes": 3344,
+    "sha256": "38d7736d9c58be30b60f87e6d2b0d2f755f460731e89c7fa87ea1f4d499f1fbb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rhourahane/library/I2CEeprom/0.0.0%2Bsha.b23f5561266c/I2CEeprom-0.0.0%2Bsha.b23f5561266c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rhourahane/library/I2CEeprom/0.0.0%2Bsha.b23f5561266c/I2CEeprom-0.0.0%2Bsha.b23f5561266c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rhourahane/library/Improved-mbed-rpc/0.0.0+sha.7511acfaa62d/Improved-mbed-rpc-0.0.0+sha.7511acfaa62d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Improved-mbed-rpc-0.0.0+sha.7511acfaa62d.tar.gz",
+    "size_bytes": 9192,
+    "sha256": "ecdebd8308dd107a7233dcdfbbd0c2a1641b747f03cc0a82e6cefb81ad2bef34",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rhourahane/library/Improved-mbed-rpc/0.0.0%2Bsha.7511acfaa62d/Improved-mbed-rpc-0.0.0%2Bsha.7511acfaa62d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rhourahane/library/Improved-mbed-rpc/0.0.0%2Bsha.7511acfaa62d/Improved-mbed-rpc-0.0.0%2Bsha.7511acfaa62d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rhourahane/library/mpl3115a2/0.0.0+sha.b12a7d396be9/mpl3115a2-0.0.0+sha.b12a7d396be9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mpl3115a2-0.0.0+sha.b12a7d396be9.tar.gz",
+    "size_bytes": 5805,
+    "sha256": "7a3970e9f4cef4aae98c456124e54f2ab5c6a5645fcc6ba31410d5aabf0171be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rhourahane/library/mpl3115a2/0.0.0%2Bsha.b12a7d396be9/mpl3115a2-0.0.0%2Bsha.b12a7d396be9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rhourahane/library/mpl3115a2/0.0.0%2Bsha.b12a7d396be9/mpl3115a2-0.0.0%2Bsha.b12a7d396be9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

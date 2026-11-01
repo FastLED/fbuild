@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stempedia",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stempedia/library/Dabble/1.5.2/Dabble-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dabble-1.5.2.tar.gz",
+    "size_bytes": 55648,
+    "sha256": "105d014bfe1de6bd2156916dbae42f74fe17082d690f38b6e2525e6defaef3f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stempedia/library/Dabble/1.5.2/Dabble-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/stempedia/library/Dabble/1.5.2/Dabble-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stempedia/library/DabbleESP32/1.5.1/DabbleESP32-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DabbleESP32-1.5.1.tar.gz",
+    "size_bytes": 39527,
+    "sha256": "4b73efea81d8d26ef4e1be466b84e8f715e89823f056acd15b8176799a02874a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stempedia/library/DabbleESP32/1.5.1/DabbleESP32-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stempedia/library/DabbleESP32/1.5.1/DabbleESP32-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stempedia/library/DabbleESP32/1.6.1/DabbleESP32-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DabbleESP32-1.6.1.tar.gz",
+    "size_bytes": 39702,
+    "sha256": "a258503404764e509940376137cf972778e0974a6435f7e6ca47f84fd4540f82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stempedia/library/DabbleESP32/1.6.1/DabbleESP32-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/stempedia/library/DabbleESP32/1.6.1/DabbleESP32-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stempedia/library/evive/2.0.3/evive-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "evive-2.0.3.tar.gz",
+    "size_bytes": 243664,
+    "sha256": "476c66039237336c728705502e8d0f08dc1a04d0e5eeecb732ce908b049fef01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stempedia/library/evive/2.0.3/evive-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/stempedia/library/evive/2.0.3/evive-2.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

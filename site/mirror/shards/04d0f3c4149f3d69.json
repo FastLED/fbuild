@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/germsb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "germsb/library/Arduino%20BMP3XX/0.0.1/ArduinoBMP3XX-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoBMP3XX-0.0.1.tar.gz",
+    "size_bytes": 28478,
+    "sha256": "a1f1feb8d229c87dd8d245eae24a5e0d9852a3aab703353858d4dbda959bd9d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/germsb/library/Arduino%2520BMP3XX/0.0.1/ArduinoBMP3XX-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/germsb/library/Arduino%20BMP3XX/0.0.1/ArduinoBMP3XX-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mwinters-stuff",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mwinters-stuff/library/ESP8266DebounceButtons/1.0.0/ESP8266DebounceButtons-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP8266DebounceButtons-1.0.0.tar.gz",
+    "size_bytes": 6373,
+    "sha256": "18506fad7342a641992efb79fabac7082b2fddaf893ce86f974334beae31a5b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mwinters-stuff/library/ESP8266DebounceButtons/1.0.0/ESP8266DebounceButtons-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mwinters-stuff/library/ESP8266DebounceButtons/1.0.0/ESP8266DebounceButtons-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

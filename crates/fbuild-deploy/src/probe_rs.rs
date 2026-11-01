@@ -409,6 +409,52 @@ fn profile_is_nxp_debug_probe(profile: &fbuild_core::usb::profiles::UsbTransport
             .is_some_and(|family| family.starts_with("lpc-link"))
 }
 
+/// Registry-driven predicate: does this USB profile identify a debug probe?
+///
+/// `purpose` and `role` are orthogonal in the registry schema, so either one
+/// is enough. Deliberately platform-agnostic: this answers "is a CMSIS-DAP
+/// style debug probe plugged in", not "is the LPC-Link2 plugged in", so the
+/// RP-series SWD fallback (FastLED/fbuild#1423) can reuse it without carrying
+/// its own VID/PID table.
+pub fn profile_is_debug_probe(profile: &fbuild_core::usb::profiles::UsbTransportProfile) -> bool {
+    use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
+
+    profile.purpose == UsbPurpose::Probe || profile.role == UsbDeviceRole::DebugProbe
+}
+
+/// `(vid, pid)` of every attached USB device the registry classifies as a
+/// debug probe. Enumeration is the existing `serialport` scan, so a probe that
+/// exposes no serial interface at all is invisible here — the caller treats
+/// "not detected" the same as "absent", which is the safe direction: no probe,
+/// no behavior change.
+pub fn attached_debug_probes() -> Vec<(u16, u16)> {
+    let Ok(ports) = serialport::available_ports() else {
+        return Vec::new();
+    };
+    let mut probes = Vec::new();
+    for port in ports {
+        let serialport::SerialPortType::UsbPort(usb) = &port.port_type else {
+            continue;
+        };
+        if fbuild_core::usb::profiles::profiles_for(usb.vid, usb.pid)
+            .iter()
+            .any(profile_is_debug_probe)
+        {
+            probes.push((usb.vid, usb.pid));
+        }
+    }
+    probes.sort_unstable();
+    probes.dedup();
+    probes
+}
+
+/// True when at least one attached USB device is a registry-identified debug
+/// probe. This is the "probe presence is detected, not assumed" gate for the
+/// automatic USB -> SWD deploy fallback (FastLED/fbuild#1423).
+pub fn debug_probe_attached() -> bool {
+    !attached_debug_probes().is_empty()
+}
+
 /// Blocking wrapper around `probe-rs download` returning a structured
 /// stdout/stderr + exit-code triple. Used by the LpcDeployer async
 /// dispatch, which spawns this on `spawn_blocking` so the tokio
@@ -501,6 +547,56 @@ mod tests {
             allow_ambiguous: false,
         };
         assert!(profile_is_nxp_debug_probe(&profile));
+    }
+
+    fn probe_fixture(
+        purpose: fbuild_core::usb::profiles::UsbPurpose,
+        role: fbuild_core::usb::profiles::UsbDeviceRole,
+    ) -> fbuild_core::usb::profiles::UsbTransportProfile {
+        use fbuild_core::usb::profiles::{
+            UsbIdentityMatch, UsbProfileProvenance, UsbTransportProfile,
+        };
+        UsbTransportProfile {
+            identity_match: UsbIdentityMatch {
+                vid: "feed".to_string(),
+                pid: Some("c0de".to_string()),
+                pid_mask: None,
+            },
+            purpose,
+            role,
+            transport: "swd".to_string(),
+            reset: "hardware".to_string(),
+            handoff: "reconnect".to_string(),
+            platform: None,
+            family: None,
+            generation: Some("test".to_string()),
+            interface: Some("hid".to_string()),
+            provenance: UsbProfileProvenance {
+                source_url: "test://fixture".to_string(),
+                source_revision: "a".repeat(40),
+                source_class: "test".to_string(),
+            },
+            priority: 100,
+            allow_ambiguous: false,
+        }
+    }
+
+    #[test]
+    fn any_probe_purpose_or_debug_probe_role_counts_as_a_probe() {
+        use fbuild_core::usb::profiles::{UsbDeviceRole, UsbPurpose};
+
+        assert!(profile_is_debug_probe(&probe_fixture(
+            UsbPurpose::Probe,
+            UsbDeviceRole::UsbUartBridge
+        )));
+        assert!(profile_is_debug_probe(&probe_fixture(
+            UsbPurpose::Compile,
+            UsbDeviceRole::DebugProbe
+        )));
+        assert!(!profile_is_debug_probe(&probe_fixture(
+            UsbPurpose::Runtime,
+            UsbDeviceRole::RuntimeCdc
+        )));
     }
 
     #[test]

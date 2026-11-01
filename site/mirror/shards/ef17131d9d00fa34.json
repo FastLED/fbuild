@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-donalm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-donalm/library/MCP4725/0.0.0+sha.3e6ffce1eea2/MCP4725-0.0.0+sha.3e6ffce1eea2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP4725-0.0.0+sha.3e6ffce1eea2.tar.gz",
+    "size_bytes": 2804,
+    "sha256": "d7b23e2f4bc4588c2087f9437849d73b790c15a6ac03e27fd9e260554be1376d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-donalm/library/MCP4725/0.0.0%2Bsha.3e6ffce1eea2/MCP4725-0.0.0%2Bsha.3e6ffce1eea2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-donalm/library/MCP4725/0.0.0%2Bsha.3e6ffce1eea2/MCP4725-0.0.0%2Bsha.3e6ffce1eea2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-donalm/library/PulseSensor/0.0.0+sha.e80a245c4d0d/PulseSensor-0.0.0+sha.e80a245c4d0d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseSensor-0.0.0+sha.e80a245c4d0d.tar.gz",
+    "size_bytes": 3618,
+    "sha256": "6586eb2e93d69a69e5effcab0f25185809ec141232972836363285355eaff376",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-donalm/library/PulseSensor/0.0.0%2Bsha.e80a245c4d0d/PulseSensor-0.0.0%2Bsha.e80a245c4d0d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-donalm/library/PulseSensor/0.0.0%2Bsha.e80a245c4d0d/PulseSensor-0.0.0%2Bsha.e80a245c4d0d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

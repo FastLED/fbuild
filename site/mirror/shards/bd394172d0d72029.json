@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wh1terabbithu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wh1terabbithu/library/ADS1115-Driver/1.0.2/ADS1115-Driver-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS1115-Driver-1.0.2.tar.gz",
+    "size_bytes": 16850,
+    "sha256": "e0b808052af61a90b332ea1d1ff29ada2b9e250a43c5b938840dd8e969bb77f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wh1terabbithu/library/ADS1115-Driver/1.0.2/ADS1115-Driver-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/wh1terabbithu/library/ADS1115-Driver/1.0.2/ADS1115-Driver-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wh1terabbithu/library/DAC121C08x/1.2.2/DAC121C08x-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DAC121C08x-1.2.2.tar.gz",
+    "size_bytes": 14949,
+    "sha256": "44ff96a651347303d1c42cdc24c0f4bfced7721127bf8d350a4e5f2c1c713aeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wh1terabbithu/library/DAC121C08x/1.2.2/DAC121C08x-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/wh1terabbithu/library/DAC121C08x/1.2.2/DAC121C08x-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wh1terabbithu/library/EEPROMAdapter/1.1.4/EEPROMAdapter-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROMAdapter-1.1.4.tar.gz",
+    "size_bytes": 21289,
+    "sha256": "ede9c27ee3e52522b0428b97fbe6b520a2217ac183a51a7c36c138c093947639",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wh1terabbithu/library/EEPROMAdapter/1.1.4/EEPROMAdapter-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/wh1terabbithu/library/EEPROMAdapter/1.1.4/EEPROMAdapter-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wh1terabbithu/library/I2C/1.0.3/I2C-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C-1.0.3.tar.gz",
+    "size_bytes": 16679,
+    "sha256": "1b624d81441e6e2227b8f6e4db07365f3b60a74240f18dede39877220b710fa9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wh1terabbithu/library/I2C/1.0.3/I2C-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/wh1terabbithu/library/I2C/1.0.3/I2C-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wh1terabbithu/library/LTR-329ALS-01/1.0.0/LTR-329ALS-01-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTR-329ALS-01-1.0.0.tar.gz",
+    "size_bytes": 16622,
+    "sha256": "1807d0a756ed91db44e52101e77d18331b93a3c2f672687378267bccf366a372",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wh1terabbithu/library/LTR-329ALS-01/1.0.0/LTR-329ALS-01-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wh1terabbithu/library/LTR-329ALS-01/1.0.0/LTR-329ALS-01-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wh1terabbithu/library/RX8010SJ/1.0.3/RX8010SJ-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RX8010SJ-1.0.3.tar.gz",
+    "size_bytes": 21255,
+    "sha256": "cff3d39c301c532520cd1ae3ff1670ea4bcbd3fd131b0999b4365766e660e7d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wh1terabbithu/library/RX8010SJ/1.0.3/RX8010SJ-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/wh1terabbithu/library/RX8010SJ/1.0.3/RX8010SJ-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wh1terabbithu/library/SiC45x/1.0.4/SiC45x-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SiC45x-1.0.4.tar.gz",
+    "size_bytes": 15874,
+    "sha256": "08f2c811431c3f4a1f67df155af1607dcbd5a4b043bbb6a91dae033681065bed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wh1terabbithu/library/SiC45x/1.0.4/SiC45x-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/wh1terabbithu/library/SiC45x/1.0.4/SiC45x-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

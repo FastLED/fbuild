@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nothrow",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nothrow/library/TrafficLight/1.0.3/TrafficLight-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TrafficLight-1.0.3.tar.gz",
+    "size_bytes": 3716,
+    "sha256": "a251b0e69dff315adbb60ef715eb875d9e07d3ea2e37c3e851a10b850a868f28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nothrow/library/TrafficLight/1.0.3/TrafficLight-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nothrow/library/TrafficLight/1.0.3/TrafficLight-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

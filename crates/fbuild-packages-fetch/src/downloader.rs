@@ -128,8 +128,14 @@ fn is_transient(err: &reqwest::Error) -> bool {
 #[derive(Debug)]
 enum DownloadAttemptError {
     Request(reqwest::Error),
-    /// A non-2xx answer, with the server's `Retry-After` when it sent one.
-    HttpStatus(reqwest::StatusCode, Option<Duration>),
+    /// A non-2xx answer, with the server's `Retry-After` when it sent one and
+    /// the lowercased host that actually answered.
+    ///
+    /// The host is the *responding* one, not the requested one: reqwest
+    /// follows redirects by default and the PlatformIO registry 302s to a CDN,
+    /// so blaming the requested URL would misattribute a CDN's 403 to the
+    /// registry's User-Agent gate.
+    HttpStatus(reqwest::StatusCode, Option<Duration>, Option<String>),
     Body(reqwest::Error),
     BodyStalled {
         filename: String,
@@ -168,12 +174,45 @@ fn retry_after(headers: &reqwest::header::HeaderMap) -> Option<Duration> {
     Some(Duration::from_secs(secs))
 }
 
+/// Host that gates downloads on the client's `User-Agent`.
+const PLATFORMIO_DOWNLOAD_HOST: &str = "dl.registry.platformio.org";
+
+/// Extra sentence appended to a bare `HTTP 403` from the PlatformIO registry.
+///
+/// The registry answers any request whose UA does not start with
+/// `PlatformIO/` with `403 This download method is not supported` — not with
+/// anything that reads like a UA problem. A bare "HTTP 403 Forbidden" sent a
+/// whole board matrix red with no hint about where to look
+/// (FastLED/fbuild#1783), so name the gate in the message itself.
+/// The host that answered a request, for [`registry_gate_hint`].
+///
+/// `response.url()` is the *final* URL after any redirects, which is the one
+/// whose 403 we are explaining.
+fn responding_host(response: &reqwest::Response) -> Option<String> {
+    response.url().host_str().map(str::to_string)
+}
+
+/// Keyed on the host that answered, compared whole rather than as a substring:
+/// a CDN that merely carries the registry's name is a different server and
+/// must not collect the hint. Case-insensitively, because DNS hostnames are
+/// (RFC 4343) and we would rather not depend on a caller to normalize.
+fn registry_gate_hint(host: Option<&str>, status: reqwest::StatusCode) -> &'static str {
+    let is_registry = host.is_some_and(|host| host.eq_ignore_ascii_case(PLATFORMIO_DOWNLOAD_HOST));
+    if status == reqwest::StatusCode::FORBIDDEN && is_registry {
+        " — the registry gates downloads on User-Agent and rejects anything \
+         not starting with `PlatformIO/`; check fbuild_core::http::registry_user_agent \
+         is still applied to the shared client (FastLED/fbuild#1783)"
+    } else {
+        ""
+    }
+}
+
 impl DownloadAttemptError {
     fn is_retryable(&self) -> bool {
         match self {
             Self::Request(error) | Self::Body(error) => is_transient(error),
             // 5xx, plus the two 4xx answers that mean "try again later".
-            Self::HttpStatus(status, _) => is_retryable_status(*status),
+            Self::HttpStatus(status, ..) => is_retryable_status(*status),
             Self::BodyStalled { .. } => true,
             // A truncated body is the failure this retry loop exists for.
             Self::BodyTruncated { .. } => true,
@@ -186,7 +225,7 @@ impl DownloadAttemptError {
     /// The server's own `Retry-After`, when this failure carried one.
     fn retry_after(&self) -> Option<Duration> {
         match self {
-            Self::HttpStatus(_, after) => *after,
+            Self::HttpStatus(_, after, _) => *after,
             _ => None,
         }
     }
@@ -196,9 +235,12 @@ impl DownloadAttemptError {
             Self::Request(error) => {
                 FbuildError::PackageError(format!("failed to download {}: {}", url, error))
             }
-            Self::HttpStatus(status, _) => {
-                FbuildError::PackageError(format!("download failed for {}: HTTP {}", url, status))
-            }
+            Self::HttpStatus(status, _, host) => FbuildError::PackageError(format!(
+                "download failed for {}: HTTP {}{}",
+                url,
+                status,
+                registry_gate_hint(host.as_deref(), status)
+            )),
             Self::Body(error) => {
                 FbuildError::PackageError(format!("failed to read response body: {}", error))
             }
@@ -207,10 +249,20 @@ impl DownloadAttemptError {
                 CHUNK_READ_TIMEOUT.as_secs(),
                 filename
             )),
-            Self::PartFile { path, error } => FbuildError::PackageError(format!(
-                "failed to write partial download at {}: {}",
-                path, error
-            )),
+            Self::PartFile { path, error } => {
+                // A full volume is not a download failure, and retrying it
+                // writes the same bytes again (FastLED/fbuild#1750 item 4).
+                if let Some(signature) = fbuild_core::disk_full::enospc_signature(&error) {
+                    return fbuild_core::disk_full::disk_full_error(
+                        &format!("downloading to {path}"),
+                        signature,
+                    );
+                }
+                FbuildError::PackageError(format!(
+                    "failed to write partial download at {}: {}",
+                    path, error
+                ))
+            }
             Self::BodyTruncated { got, expected } => FbuildError::PackageError(format!(
                 "download of {} ended early: got {} of {} bytes",
                 url, got, expected
@@ -223,7 +275,7 @@ impl Display for DownloadAttemptError {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Request(error) => write!(f, "request error: {error}"),
-            Self::HttpStatus(status, _) => write!(f, "HTTP {status}"),
+            Self::HttpStatus(status, ..) => write!(f, "HTTP {status}"),
             Self::Body(error) => write!(f, "response body error: {error}"),
             Self::BodyStalled { filename } => write!(
                 f,
@@ -304,6 +356,7 @@ async fn open_attempt_from(
         return Err(DownloadAttemptError::HttpStatus(
             status,
             retry_after(response.headers()),
+            responding_host(&response),
         ));
     }
 
@@ -445,8 +498,8 @@ pub async fn download_file(url: &str, dest_dir: &Path) -> Result<PathBuf> {
 /// attempts (a server's `Retry-After` may lengthen a wait). A non-2xx HTTP
 /// status is a hard failure unless it is 5xx, 429 or 408.
 async fn get_with_retry(url: &str) -> Result<Vec<u8>> {
-    let urls = candidate_urls(url, &configured_mirrors());
-    get_from_candidates(http::client(), &urls, RetryTiming::from_env()).await
+    let candidates = resolve_candidates(url).await;
+    get_from_candidates(http::client(), &candidates, RetryTiming::from_env()).await
 }
 
 async fn get_with_retry_timed(
@@ -506,10 +559,10 @@ async fn download_file_with_progress_using(
     dest_dir: &Path,
     on_progress: &mut (dyn FnMut(&DownloadProgress) + Send),
 ) -> Result<()> {
-    let urls = candidate_urls(url, &configured_mirrors());
+    let candidates = resolve_candidates(url).await;
     download_from_candidates(
         client,
-        &urls,
+        &candidates,
         dest_dir,
         on_progress,
         RetryTiming::from_env(),
@@ -891,13 +944,30 @@ pub async fn verify_checksum_async(path: &Path, expected: &str) -> Result<()> {
     Ok(())
 }
 
+#[path = "downloader_mirror_manifest.rs"]
+mod manifest;
+pub(crate) use manifest::{
+    CACHE_TTL, MirrorManifest, ShardLookup, current as published_manifest, load_with, names_key,
+    owner_key,
+};
+#[cfg(test)]
+#[path = "downloader_mirror_manifest_tests.rs"]
+mod manifest_tests;
 #[cfg(test)]
 #[path = "downloader_mirror_tests.rs"]
 mod mirror_tests;
 #[path = "downloader_mirrors.rs"]
 mod mirrors;
-use mirrors::{candidate_urls, configured_mirrors, download_from_candidates, get_from_candidates};
+use mirrors::{download_from_candidates, get_from_candidates, resolve_candidates};
 
 #[cfg(test)]
 #[path = "downloader_tests.rs"]
 mod tests;
+
+#[cfg(test)]
+#[path = "downloader_disk_tests.rs"]
+mod disk_tests;
+
+#[cfg(test)]
+#[path = "downloader_gate_tests.rs"]
+mod gate_tests;

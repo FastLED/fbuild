@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aminehammou",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aminehammou/library/EncodeurRotatif/2.0.0/EncodeurRotatif-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EncodeurRotatif-2.0.0.tar.gz",
+    "size_bytes": 16902,
+    "sha256": "ccbb961513d983a5fe3c182ee034c78db2f5b66ed4d26bd9ed4e77f714e02733",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aminehammou/library/EncodeurRotatif/2.0.0/EncodeurRotatif-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aminehammou/library/EncodeurRotatif/2.0.0/EncodeurRotatif-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aminehammou/library/PCF8574/1.1.0/PCF8574-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8574-1.1.0.tar.gz",
+    "size_bytes": 19436,
+    "sha256": "8ed4d6e28d3a7b84c59f45359aa9603c33342d4245685782dffe6d38b466a2c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aminehammou/library/PCF8574/1.1.0/PCF8574-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aminehammou/library/PCF8574/1.1.0/PCF8574-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

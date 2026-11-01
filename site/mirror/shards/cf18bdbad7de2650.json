@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vtneil",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vtneil/library/vt-arduino-tools/3.0.1/vt-arduino-tools-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vt-arduino-tools-3.0.1.tar.gz",
+    "size_bytes": 4375,
+    "sha256": "a81e5ecc48ea167bf37e5689014300d8bc9ba2e68d8edaf555fab97575e8f0d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vtneil/library/vt-arduino-tools/3.0.1/vt-arduino-tools-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vtneil/library/vt-arduino-tools/3.0.1/vt-arduino-tools-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vtneil/library/vt-bme280/1.0.2/vt-bme280-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vt-bme280-1.0.2.tar.gz",
+    "size_bytes": 4745,
+    "sha256": "1de5e374f19493a87d7f039bf25e8789fd817f5bcbc996e0c5c90012421b01cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vtneil/library/vt-bme280/1.0.2/vt-bme280-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vtneil/library/vt-bme280/1.0.2/vt-bme280-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vtneil/library/vt-linalg/2.1.1/vt-linalg-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vt-linalg-2.1.1.tar.gz",
+    "size_bytes": 124354,
+    "sha256": "3b649de7ac1f712f53d67ea56471c55a66613c23af5feb30a950b5f992c3408e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vtneil/library/vt-linalg/2.1.1/vt-linalg-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/vtneil/library/vt-linalg/2.1.1/vt-linalg-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vtneil/library/vt-lora-ebyte/2.0.0/vt-lora-ebyte-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vt-lora-ebyte-2.0.0.tar.gz",
+    "size_bytes": 5057,
+    "sha256": "f9118cc6f08013adcdf8054cc91db7b298b033f18ff59490e26da99f8d9a215a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vtneil/library/vt-lora-ebyte/2.0.0/vt-lora-ebyte-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vtneil/library/vt-lora-ebyte/2.0.0/vt-lora-ebyte-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vtneil/library/vt-serializer/1.0.2/vt-serializer-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "vt-serializer-1.0.2.tar.gz",
+    "size_bytes": 3102,
+    "sha256": "58f0e9b22a107889392d409e77d459576977f433995df03b8b96bcb4e070a66b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vtneil/library/vt-serializer/1.0.2/vt-serializer-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vtneil/library/vt-serializer/1.0.2/vt-serializer-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

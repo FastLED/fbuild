@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/budryerson",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "budryerson/library/TFLI2C/0.2.0/TFLI2C-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFLI2C-0.2.0.tar.gz",
+    "size_bytes": 7969,
+    "sha256": "4083cc804be47a4866090699bfbd26f90756a60e970a8f9422ec50b510945bd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/budryerson/library/TFLI2C/0.2.0/TFLI2C-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/budryerson/library/TFLI2C/0.2.0/TFLI2C-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "budryerson/library/TFMPI2C/1.6.0/TFMPI2C-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFMPI2C-1.6.0.tar.gz",
+    "size_bytes": 14016,
+    "sha256": "2fc2d8852ec74f0700adcb934ca385c0d77823b177b1cd90bcc0abafc09d8128",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/budryerson/library/TFMPI2C/1.6.0/TFMPI2C-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/budryerson/library/TFMPI2C/1.6.0/TFMPI2C-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "budryerson/library/TFMPlus/1.5.0/TFMPlus-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFMPlus-1.5.0.tar.gz",
+    "size_bytes": 14088216,
+    "sha256": "829fcbdeb1d70de33c1592c7b9cda4c80853b610eeef9e814f6d97122f800ec5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/budryerson/library/TFMPlus/1.5.0/TFMPlus-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/budryerson/library/TFMPlus/1.5.0/TFMPlus-1.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

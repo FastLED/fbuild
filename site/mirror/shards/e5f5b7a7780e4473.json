@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mkkharel",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mkkharel/library/PulseSensor/0.0.0+sha.9a6ba731d420/PulseSensor-0.0.0+sha.9a6ba731d420.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PulseSensor-0.0.0+sha.9a6ba731d420.tar.gz",
+    "size_bytes": 3672,
+    "sha256": "a241e8fd6d4d259279734c30d56b8aa5110c6913ac15eddbbbbfcba4a69c5f6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mkkharel/library/PulseSensor/0.0.0%2Bsha.9a6ba731d420/PulseSensor-0.0.0%2Bsha.9a6ba731d420.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mkkharel/library/PulseSensor/0.0.0%2Bsha.9a6ba731d420/PulseSensor-0.0.0%2Bsha.9a6ba731d420.tar.gz"
+    ]
+   }
+  }
+ ]
+}

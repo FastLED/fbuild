@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xbergcode",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xbergcode/library/DateTimeFunctions/1.0.0/DateTimeFunctions-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DateTimeFunctions-1.0.0.tar.gz",
+    "size_bytes": 21138,
+    "sha256": "803ce0fba67b13b913bdca600824ac0351bb6f64e5b2ce428a7cc0a22b4bd190",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xbergcode/library/DateTimeFunctions/1.0.0/DateTimeFunctions-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xbergcode/library/DateTimeFunctions/1.0.0/DateTimeFunctions-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xbergcode/library/DigitSeparator/0.1.2/DigitSeparator-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitSeparator-0.1.2.tar.gz",
+    "size_bytes": 5070,
+    "sha256": "dd7d1aa4f34d101519d6646d84407b1e624022de6727f66937404f38c48eb275",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xbergcode/library/DigitSeparator/0.1.2/DigitSeparator-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xbergcode/library/DigitSeparator/0.1.2/DigitSeparator-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xbergcode/library/MillisCounter/1.1.0/MillisCounter-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MillisCounter-1.1.0.tar.gz",
+    "size_bytes": 10364,
+    "sha256": "60b4d8fd84c253a0e19631c9c5265d96e43d57497d0b73a48288a5866f5d14ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xbergcode/library/MillisCounter/1.1.0/MillisCounter-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xbergcode/library/MillisCounter/1.1.0/MillisCounter-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xbergcode/library/Uptime/1.0.0/Uptime-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Uptime-1.0.0.tar.gz",
+    "size_bytes": 8736,
+    "sha256": "6d944d1d085166934ac4c3297b7566bc7ac8bcd7614a9541fd2b9d76d4884608",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xbergcode/library/Uptime/1.0.0/Uptime-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xbergcode/library/Uptime/1.0.0/Uptime-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

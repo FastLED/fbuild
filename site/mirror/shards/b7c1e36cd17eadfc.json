@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stnkl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stnkl/library/ESPEssentials/2.1.5/ESPEssentials-2.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPEssentials-2.1.5.tar.gz",
+    "size_bytes": 15377,
+    "sha256": "8902dd7bdba879403caafea92a572dbc39bb883f7f643b55746fdee58775bfa8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stnkl/library/ESPEssentials/2.1.5/ESPEssentials-2.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/stnkl/library/ESPEssentials/2.1.5/ESPEssentials-2.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stnkl/library/FastLEDHub/2.2.0/FastLEDHub-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLEDHub-2.2.0.tar.gz",
+    "size_bytes": 27790,
+    "sha256": "c1744dae3dfe20650c7dc39a5ba2de6f4dfe6dc7e7e8a3cba5fe6b4ca3ba730b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stnkl/library/FastLEDHub/2.2.0/FastLEDHub-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stnkl/library/FastLEDHub/2.2.0/FastLEDHub-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stnkl/library/FastLEDHub/2.3.0/FastLEDHub-2.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLEDHub-2.3.0.tar.gz",
+    "size_bytes": 31367,
+    "sha256": "8608b30da2b72218e98072e89250349794f39383ca93084fd30d5ece255dcf83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stnkl/library/FastLEDHub/2.3.0/FastLEDHub-2.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stnkl/library/FastLEDHub/2.3.0/FastLEDHub-2.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "stnkl/library/FastLEDHub/2.4.0/FastLEDHub-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastLEDHub-2.4.0.tar.gz",
+    "size_bytes": 33193,
+    "sha256": "a9d348123435a09a76a366327cee8890b3df4ce56f38ad2737df2dc4d1859f74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stnkl/library/FastLEDHub/2.4.0/FastLEDHub-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stnkl/library/FastLEDHub/2.4.0/FastLEDHub-2.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

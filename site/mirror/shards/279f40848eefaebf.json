@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/grodansparadis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "grodansparadis/library/VscpTcpClient/1.1.2/VscpTcpClient-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VscpTcpClient-1.1.2.tar.gz",
+    "size_bytes": 48082,
+    "sha256": "b40dc188b51d5d583197de84b083d0fb9f453f84d98d6a44ae60824d53d5182a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/grodansparadis/library/VscpTcpClient/1.1.2/VscpTcpClient-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/grodansparadis/library/VscpTcpClient/1.1.2/VscpTcpClient-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

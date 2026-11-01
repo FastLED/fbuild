@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/heisenware",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "heisenware/library/VRPC/3.0.0/VRPC-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VRPC-3.0.0.tar.gz",
+    "size_bytes": 50445,
+    "sha256": "9ac7ba3c7e3044f7e04ef3043c091589a8f2b5bc082c32e7f9ae320b97aa083c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heisenware/library/VRPC/3.0.0/VRPC-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/heisenware/library/VRPC/3.0.0/VRPC-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

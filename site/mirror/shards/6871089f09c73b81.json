@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/peterus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "peterus/library/APRS-Decoder-Lib/0.0.6/APRS-Decoder-Lib-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APRS-Decoder-Lib-0.0.6.tar.gz",
+    "size_bytes": 4732,
+    "sha256": "02dad8e845cbf92042624c168f03f60c5230a7a2ac946c1b47f3754df5600402",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peterus/library/APRS-Decoder-Lib/0.0.6/APRS-Decoder-Lib-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/peterus/library/APRS-Decoder-Lib/0.0.6/APRS-Decoder-Lib-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peterus/library/APRS-Decoder-Lib/0.0.7/APRS-Decoder-Lib-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APRS-Decoder-Lib-0.0.7.tar.gz",
+    "size_bytes": 9570,
+    "sha256": "f32f02fea859f3566579fdc6409b590942bd7bf18dd6ce58f57f3fdc0bcea233",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peterus/library/APRS-Decoder-Lib/0.0.7/APRS-Decoder-Lib-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/peterus/library/APRS-Decoder-Lib/0.0.7/APRS-Decoder-Lib-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peterus/library/APRS-IS-Lib/0.0.8/APRS-IS-Lib-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "APRS-IS-Lib-0.0.8.tar.gz",
+    "size_bytes": 4378,
+    "sha256": "d690ff9024e6c35639ee279fda631a035157badb03fbc8bb299cd318389d8aae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peterus/library/APRS-IS-Lib/0.0.8/APRS-IS-Lib-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/peterus/library/APRS-IS-Lib/0.0.8/APRS-IS-Lib-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peterus/library/ESP-Config/0.0.4/ESP-Config-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-Config-0.0.4.tar.gz",
+    "size_bytes": 7558,
+    "sha256": "471b027eaad68813073fc6644eca28edad0682faa4299d25c3bef130d6bca2b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peterus/library/ESP-Config/0.0.4/ESP-Config-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/peterus/library/ESP-Config/0.0.4/ESP-Config-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peterus/library/ESP-FTP-Server-Lib/0.14.1/ESP-FTP-Server-Lib-0.14.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP-FTP-Server-Lib-0.14.1.tar.gz",
+    "size_bytes": 13705,
+    "sha256": "40466dace2864bb12e170b3bc6533d975f30c48d13dd57bde9d51d3c14a32714",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peterus/library/ESP-FTP-Server-Lib/0.14.1/ESP-FTP-Server-Lib-0.14.1.tar.gz",
+     "https://dl.registry.platformio.org/download/peterus/library/ESP-FTP-Server-Lib/0.14.1/ESP-FTP-Server-Lib-0.14.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peterus/library/INA226Lib/1.1.4/INA226Lib-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "INA226Lib-1.1.4.tar.gz",
+    "size_bytes": 17300,
+    "sha256": "3c20bc6c1943635c092ddbaacadb285cee157d85bc36a0657e69501fa2f41c25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peterus/library/INA226Lib/1.1.4/INA226Lib-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/peterus/library/INA226Lib/1.1.4/INA226Lib-1.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peterus/library/LoRa-APRS-Lib/0.0.5/LoRa-APRS-Lib-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRa-APRS-Lib-0.0.5.tar.gz",
+    "size_bytes": 2461,
+    "sha256": "d5528a2e26c894486194e699264e34545a1be341c69d071f620e1b801378e087",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peterus/library/LoRa-APRS-Lib/0.0.5/LoRa-APRS-Lib-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/peterus/library/LoRa-APRS-Lib/0.0.5/LoRa-APRS-Lib-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peterus/library/esp-logger/1.0.0/esp-logger-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp-logger-1.0.0.tar.gz",
+    "size_bytes": 5324,
+    "sha256": "46cec991bc545b544eb138775e32b116f292872b5d52d7660a59d77ede41266c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peterus/library/esp-logger/1.0.0/esp-logger-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/peterus/library/esp-logger/1.0.0/esp-logger-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/53175ddd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "53175ddd/library/MOS%20Electronics%20AY-3-8910%20Library/1.0.0/MOSElectronicsAY-3-8910Library-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MOSElectronicsAY-3-8910Library-1.0.0.tar.gz",
+    "size_bytes": 4158,
+    "sha256": "3aa17ca45f51f92152733f1ecbba500dd454ad56a37f436a159afae699ebe7b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/53175ddd/library/MOS%2520Electronics%2520AY-3-8910%2520Library/1.0.0/MOSElectronicsAY-3-8910Library-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/53175ddd/library/MOS%20Electronics%20AY-3-8910%20Library/1.0.0/MOSElectronicsAY-3-8910Library-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "53175ddd/library/Sound%20Library%20for%20Arduino/0.4.0/SoundLibraryforArduino-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoundLibraryforArduino-0.4.0.tar.gz",
+    "size_bytes": 5560,
+    "sha256": "1c31eafc5fe74d2728ba35020666257062025834a92762a03b36787a68c42538",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/53175ddd/library/Sound%2520Library%2520for%2520Arduino/0.4.0/SoundLibraryforArduino-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/53175ddd/library/Sound%20Library%20for%20Arduino/0.4.0/SoundLibraryforArduino-0.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

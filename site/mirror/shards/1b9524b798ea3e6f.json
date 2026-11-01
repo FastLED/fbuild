@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zaruchevskiy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zaruchevskiy/library/STM32F0_I2C/1.0.0/STM32F0_I2C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STM32F0_I2C-1.0.0.tar.gz",
+    "size_bytes": 1263,
+    "sha256": "7a6fad2042922c5873816eb6aff5dc78a4632b1a51add3c55e97eb91633dacab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zaruchevskiy/library/STM32F0_I2C/1.0.0/STM32F0_I2C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zaruchevskiy/library/STM32F0_I2C/1.0.0/STM32F0_I2C-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

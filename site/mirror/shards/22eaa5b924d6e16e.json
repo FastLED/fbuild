@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ripred",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ripred/library/Bang/1.0.1/Bang-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bang-1.0.1.tar.gz",
+    "size_bytes": 19820,
+    "sha256": "4ecc82738a4403886ce789590bdd2886d46e20a6817b921ccf5fed6f0e489118",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ripred/library/Bang/1.0.1/Bang-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ripred/library/Bang/1.0.1/Bang-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ripred/library/BetterMenu/0.5.1/BetterMenu-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BetterMenu-0.5.1.tar.gz",
+    "size_bytes": 29457,
+    "sha256": "06f9f4455f3530b718699841e8ce71f5af6c8ae1fd0e8e84ff8d9e34be4098b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ripred/library/BetterMenu/0.5.1/BetterMenu-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ripred/library/BetterMenu/0.5.1/BetterMenu-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ripred/library/BetterMenu/0.5.2/BetterMenu-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BetterMenu-0.5.2.tar.gz",
+    "size_bytes": 43584,
+    "sha256": "c6834c899018aeb5550afb518e516003e49fb58b1bb8483b0980cc71d1be9c69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ripred/library/BetterMenu/0.5.2/BetterMenu-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ripred/library/BetterMenu/0.5.2/BetterMenu-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ripred/library/BetterMenu/0.5.5/BetterMenu-0.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BetterMenu-0.5.5.tar.gz",
+    "size_bytes": 47420,
+    "sha256": "bb838e2050561d3e0bbc67eb740f79034d9e0c6790d017f6be956963d3fea990",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ripred/library/BetterMenu/0.5.5/BetterMenu-0.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ripred/library/BetterMenu/0.5.5/BetterMenu-0.5.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ripred/library/ButtonGestures/3.0.0/ButtonGestures-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonGestures-3.0.0.tar.gz",
+    "size_bytes": 11200,
+    "sha256": "5a668296587c5b8ddeedae951014253ed7d6a818c2f8dd128674eeca33120e0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ripred/library/ButtonGestures/3.0.0/ButtonGestures-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ripred/library/ButtonGestures/3.0.0/ButtonGestures-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ripred/library/CPUTemp/1.0.4/CPUTemp-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CPUTemp-1.0.4.tar.gz",
+    "size_bytes": 7407,
+    "sha256": "f2c8d6bbd6c0dfa648a71d4cc234d969b60ed95adfa1c1838f4c5a96d17b9d6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ripred/library/CPUTemp/1.0.4/CPUTemp-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ripred/library/CPUTemp/1.0.4/CPUTemp-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ripred/library/CPUVolt/1.0.3/CPUVolt-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CPUVolt-1.0.3.tar.gz",
+    "size_bytes": 2531,
+    "sha256": "6d04b7b8a6207fec74c29580faa2dc7de24d2664d7536859b23d003a88499d4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ripred/library/CPUVolt/1.0.3/CPUVolt-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ripred/library/CPUVolt/1.0.3/CPUVolt-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ripred/library/CodeSizeProfiler/1.0.2/CodeSizeProfiler-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CodeSizeProfiler-1.0.2.tar.gz",
+    "size_bytes": 4142,
+    "sha256": "25e9bd106290eeb9f4ee204bf005da23c645486ec141f46af4b9fcb4e8d85adc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ripred/library/CodeSizeProfiler/1.0.2/CodeSizeProfiler-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ripred/library/CodeSizeProfiler/1.0.2/CodeSizeProfiler-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ripred/library/CompileTime/1.6.0/CompileTime-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CompileTime-1.6.0.tar.gz",
+    "size_bytes": 5121,
+    "sha256": "48311cedafbf5f84c138ab74fc011f26bac46e421dc76dba5a6c07ec2d39d145",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ripred/library/CompileTime/1.6.0/CompileTime-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ripred/library/CompileTime/1.6.0/CompileTime-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ripred/library/Minimax/1.0.0/Minimax-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Minimax-1.0.0.tar.gz",
+    "size_bytes": 19144,
+    "sha256": "072ae853ae1984f5e0bb89b1159107441f3e6d99c2033ddb741b26769ed9ca31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ripred/library/Minimax/1.0.0/Minimax-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ripred/library/Minimax/1.0.0/Minimax-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ripred/library/MyKeywords/1.0.0/MyKeywords-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyKeywords-1.0.0.tar.gz",
+    "size_bytes": 2336,
+    "sha256": "0d9a511886d21d44547a273e51d499e842b96e1f1dbfe73856f13c74fa6d9304",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ripred/library/MyKeywords/1.0.0/MyKeywords-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ripred/library/MyKeywords/1.0.0/MyKeywords-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ripred/library/SmartPin/1.0.0/SmartPin-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartPin-1.0.0.tar.gz",
+    "size_bytes": 4059,
+    "sha256": "32a51f637b4f085ffff24a7c5f64fd057611fae606a05cc3faf0b99de2674c6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ripred/library/SmartPin/1.0.0/SmartPin-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ripred/library/SmartPin/1.0.0/SmartPin-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ripred/library/TomServo/1.0.1/TomServo-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TomServo-1.0.1.tar.gz",
+    "size_bytes": 4748,
+    "sha256": "22eb30f3e8f36e7dd06b217da74dab328e7386a895974d705512badaa31a9328",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ripred/library/TomServo/1.0.1/TomServo-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ripred/library/TomServo/1.0.1/TomServo-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ripred/library/fANSI/1.1.0/fANSI-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "fANSI-1.1.0.tar.gz",
+    "size_bytes": 9662,
+    "sha256": "444edffb59e35f5df87c0741e60690fe6b159ec4e2777d6b4ccd4ae8a5fad2dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ripred/library/fANSI/1.1.0/fANSI-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ripred/library/fANSI/1.1.0/fANSI-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

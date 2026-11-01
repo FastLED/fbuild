@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sgoudsme",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sgoudsme/library/tinycbor/0.6.2/tinycbor-0.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinycbor-0.6.2.tar.gz",
+    "size_bytes": 61153,
+    "sha256": "c1caece7a4b8c8e8ef20eecf5896f3fb8159ee2d70923e9de5b7209841b0ac30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sgoudsme/library/tinycbor/0.6.2/tinycbor-0.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sgoudsme/library/tinycbor/0.6.2/tinycbor-0.6.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

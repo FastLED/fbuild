@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/luckytotrikurniadi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "luckytotrikurniadi/library/pwm/0.0.0+sha.75de86f370c3/pwm-0.0.0+sha.75de86f370c3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pwm-0.0.0+sha.75de86f370c3.tar.gz",
+    "size_bytes": 831,
+    "sha256": "43867809cd03e647efe677509d0738f4b0115bfe6a2ef869267b2d352bfab232",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/luckytotrikurniadi/library/pwm/0.0.0%2Bsha.75de86f370c3/pwm-0.0.0%2Bsha.75de86f370c3.tar.gz",
+     "https://dl.registry.platformio.org/download/luckytotrikurniadi/library/pwm/0.0.0%2Bsha.75de86f370c3/pwm-0.0.0%2Bsha.75de86f370c3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

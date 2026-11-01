@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ece4180fl16",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ece4180fl16/library/Ble/0.0.0+sha.36eed245dcee/Ble-0.0.0+sha.36eed245dcee.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ble-0.0.0+sha.36eed245dcee.tar.gz",
+    "size_bytes": 992,
+    "sha256": "50d20ac76294399c1cb206b508e72a3918f21f3e5211efc033e9b22535bbcf69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ece4180fl16/library/Ble/0.0.0%2Bsha.36eed245dcee/Ble-0.0.0%2Bsha.36eed245dcee.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ece4180fl16/library/Ble/0.0.0%2Bsha.36eed245dcee/Ble-0.0.0%2Bsha.36eed245dcee.tar.gz"
+    ]
+   }
+  }
+ ]
+}

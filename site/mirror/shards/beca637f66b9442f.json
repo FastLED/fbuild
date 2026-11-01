@@ -1,0 +1,373 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/suraj151",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "suraj151/library/pdi-framework/1.1.10/pdi-framework-1.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.1.10.tar.gz",
+    "size_bytes": 1462655,
+    "sha256": "affa8eadc6c6396bca41928972353181065a76d15700caf080d502e2c673186f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.1.10/pdi-framework-1.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.1.10/pdi-framework-1.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.1.11/pdi-framework-1.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.1.11.tar.gz",
+    "size_bytes": 1460737,
+    "sha256": "915ae4c73b7f20ece5e5ccdfcac82d28296369289ce7698939d5c1be1c3dd813",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.1.11/pdi-framework-1.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.1.11/pdi-framework-1.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.1.12/pdi-framework-1.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.1.12.tar.gz",
+    "size_bytes": 1463279,
+    "sha256": "286999fa8230e11f7abe03067db48a3c1b5671f1005ac6032a40c426b2fce078",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.1.12/pdi-framework-1.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.1.12/pdi-framework-1.1.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.1.13/pdi-framework-1.1.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.1.13.tar.gz",
+    "size_bytes": 1527581,
+    "sha256": "d1af408a75b21fea5158b228c9523802f10f4bf43ac41f1324e73a0f33aae4db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.1.13/pdi-framework-1.1.13.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.1.13/pdi-framework-1.1.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.1.8/pdi-framework-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.1.8.tar.gz",
+    "size_bytes": 1220837,
+    "sha256": "c547931d41a8d43ae806d292ee4c94f254fdef4345f6cd3c366f38b70443a94c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.1.8/pdi-framework-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.1.8/pdi-framework-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.1.9/pdi-framework-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.1.9.tar.gz",
+    "size_bytes": 1470241,
+    "sha256": "fb9a87ce779728fedcdeb4c941ab2fb9050e0a78bfee5342da52689806072598",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.1.9/pdi-framework-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.1.9/pdi-framework-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.2.0/pdi-framework-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.2.0.tar.gz",
+    "size_bytes": 1540579,
+    "sha256": "f991ea03bbcbdb15948bd8aa461afa0d8e29010e7c412888e6263bdc1b180916",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.2.0/pdi-framework-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.2.0/pdi-framework-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.2.1/pdi-framework-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.2.1.tar.gz",
+    "size_bytes": 1540921,
+    "sha256": "2b3c1d6edb22ffeab97d2b7798fb08f4211e904c30b51726c9d401080c109e4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.2.1/pdi-framework-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.2.1/pdi-framework-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.2.2/pdi-framework-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.2.2.tar.gz",
+    "size_bytes": 1542249,
+    "sha256": "1895b7fe195ff10e2811b91a4425a2122f58fa6f52844f9732cb53a54a021aa0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.2.2/pdi-framework-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.2.2/pdi-framework-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.2.3/pdi-framework-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.2.3.tar.gz",
+    "size_bytes": 1567003,
+    "sha256": "18374297c43a6fbd5e830012e85ec27cdba62881ea6fab8125195c5b9624d773",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.2.3/pdi-framework-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.2.3/pdi-framework-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.2.4/pdi-framework-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.2.4.tar.gz",
+    "size_bytes": 1590305,
+    "sha256": "5cf6a72b76bfa5af6b48027df45d43951bcc8529b097e1a4fd8516ed8df77152",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.2.4/pdi-framework-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.2.4/pdi-framework-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.2.5/pdi-framework-1.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.2.5.tar.gz",
+    "size_bytes": 1594542,
+    "sha256": "367e0dd78ac0fba94c71ce587dadaae1eace36f2520d11f2410c48d675d4b770",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.2.5/pdi-framework-1.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.2.5/pdi-framework-1.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.2.6/pdi-framework-1.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.2.6.tar.gz",
+    "size_bytes": 1550955,
+    "sha256": "11c82f1a7fb4aab6066aed182107fb661cb9d031b1c7d1cec83d6a63aff46f73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.2.6/pdi-framework-1.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.2.6/pdi-framework-1.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.2.7/pdi-framework-1.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.2.7.tar.gz",
+    "size_bytes": 1558815,
+    "sha256": "0ed31573b0c1b79227ba1bdfc2818f286dc35956b743984b587c8e0b1e789238",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.2.7/pdi-framework-1.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.2.7/pdi-framework-1.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.2.8/pdi-framework-1.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.2.8.tar.gz",
+    "size_bytes": 1582117,
+    "sha256": "65a84e10c2bdbed2e4c0f84a44eb8eb9c723b7f1923d1785e0a9731fedae7e33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.2.8/pdi-framework-1.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.2.8/pdi-framework-1.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.2.9/pdi-framework-1.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.2.9.tar.gz",
+    "size_bytes": 1587445,
+    "sha256": "7dc7a1e7305f7caf6e5e5bcbc84776c20f1ae997c067f06159f254992aac61f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.2.9/pdi-framework-1.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.2.9/pdi-framework-1.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.3.0/pdi-framework-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.3.0.tar.gz",
+    "size_bytes": 1608454,
+    "sha256": "43bf457c7fb52d46f1b13fb6942fb828409ff4abca56918ed948d22e3f037f62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.3.0/pdi-framework-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.3.0/pdi-framework-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.3.1/pdi-framework-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.3.1.tar.gz",
+    "size_bytes": 1625130,
+    "sha256": "857d21c1a11193b2c286686d2d9dbcb108e03a8bb7c660f78a53b2c6292d6691",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.3.1/pdi-framework-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.3.1/pdi-framework-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.3.10/pdi-framework-1.3.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.3.10.tar.gz",
+    "size_bytes": 934906,
+    "sha256": "bd72ad7db4558c37419f729e32ed059915ca406b80c1369697c060cc47cb6422",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.3.10/pdi-framework-1.3.10.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.3.10/pdi-framework-1.3.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.3.11/pdi-framework-1.3.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.3.11.tar.gz",
+    "size_bytes": 1721723,
+    "sha256": "d5a72933a06b64d5757a373ca6465d23c98ad1450d9e2b1a99db3b892490a2fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.3.11/pdi-framework-1.3.11.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.3.11/pdi-framework-1.3.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.3.2/pdi-framework-1.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.3.2.tar.gz",
+    "size_bytes": 1688537,
+    "sha256": "99badc6d07af09149afc076e334203d6d7ccb824a757de36c88e59fce45cf886",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.3.2/pdi-framework-1.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.3.2/pdi-framework-1.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.3.3/pdi-framework-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.3.3.tar.gz",
+    "size_bytes": 1699549,
+    "sha256": "b342771b357ec23063f6efe4cdd4ad4bd968dd91a552125ceda0418c8a1261de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.3.3/pdi-framework-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.3.3/pdi-framework-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.3.4/pdi-framework-1.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.3.4.tar.gz",
+    "size_bytes": 1702307,
+    "sha256": "aabd6919b28dbc58377c1a6f78a1ee18ffb0aa47cbabf9fd73fbb9cdf60a9335",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.3.4/pdi-framework-1.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.3.4/pdi-framework-1.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.3.5/pdi-framework-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.3.5.tar.gz",
+    "size_bytes": 1729557,
+    "sha256": "6c2902caa71c6145274199fa7393c5060aeabf1615834a006f409c5476bd970b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.3.5/pdi-framework-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.3.5/pdi-framework-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.3.6/pdi-framework-1.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.3.6.tar.gz",
+    "size_bytes": 1735648,
+    "sha256": "9733d235aba0438ed4e66baf8b556da8c30448df44d1f6125165286e87a85a0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.3.6/pdi-framework-1.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.3.6/pdi-framework-1.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.3.7/pdi-framework-1.3.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.3.7.tar.gz",
+    "size_bytes": 954678,
+    "sha256": "83fd8c35c57e8961251da6ccc7bc5d682b24d033a1a756040f44deac572f25e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.3.7/pdi-framework-1.3.7.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.3.7/pdi-framework-1.3.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.3.8/pdi-framework-1.3.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.3.8.tar.gz",
+    "size_bytes": 962133,
+    "sha256": "a4d6352eb26711f0766e6f170d280634ccb638ab06891da5c1c948c4a5d5564a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.3.8/pdi-framework-1.3.8.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.3.8/pdi-framework-1.3.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suraj151/library/pdi-framework/1.3.9/pdi-framework-1.3.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pdi-framework-1.3.9.tar.gz",
+    "size_bytes": 964747,
+    "sha256": "d654bf46b79ffb2ae1c24b3b72d971be4c509482fe5d91ebdff7c7f13e5e6bda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suraj151/library/pdi-framework/1.3.9/pdi-framework-1.3.9.tar.gz",
+     "https://dl.registry.platformio.org/download/suraj151/library/pdi-framework/1.3.9/pdi-framework-1.3.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

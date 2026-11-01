@@ -8,6 +8,7 @@ use std::path::{Path, PathBuf};
 use fbuild_core::BuildProfile;
 
 pub mod daemon_ownership;
+pub mod debug_prefix_map;
 pub mod dev_daemon_namespace;
 pub mod executable_hash;
 pub mod long_paths;
@@ -16,6 +17,7 @@ pub mod running_process;
 #[cfg(test)]
 mod owner_port_tests;
 
+pub use debug_prefix_map::{DEBUG_PREFIX_MAP_ROOT, debug_prefix_map_args};
 /// The project-local and home-local fbuild directory segment: `.fbuild`.
 ///
 /// This is the canonical spelling. Nothing outside `fbuild-paths` /

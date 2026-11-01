@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/smaffer",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "smaffer/library/ESPVGAX/1.0.0/ESPVGAX-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPVGAX-1.0.0.tar.gz",
+    "size_bytes": 109842,
+    "sha256": "0f3b14d914af2959e5348c3ea4a5e8d35338563a4579f3a54fd9fe33072fd2ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smaffer/library/ESPVGAX/1.0.0/ESPVGAX-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/smaffer/library/ESPVGAX/1.0.0/ESPVGAX-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smaffer/library/ESPVGAX2/1.0.0/ESPVGAX2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPVGAX2-1.0.0.tar.gz",
+    "size_bytes": 95644,
+    "sha256": "898de14f4f55dc0dbe8eca7e60e344092ee06b05f410c02d3f61cc398bc7b207",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smaffer/library/ESPVGAX2/1.0.0/ESPVGAX2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/smaffer/library/ESPVGAX2/1.0.0/ESPVGAX2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smaffer/library/VGAX/1.2.0/VGAX-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VGAX-1.2.0.tar.gz",
+    "size_bytes": 38836,
+    "sha256": "88ce472d0863e8cc6f2f6dac174d5ceacb0c1193a927ea1582c1320e297c627e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smaffer/library/VGAX/1.2.0/VGAX-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/smaffer/library/VGAX/1.2.0/VGAX-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "smaffer/library/VGAXUA/1.0.0/VGAXUA-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VGAXUA-1.0.0.tar.gz",
+    "size_bytes": 30046,
+    "sha256": "3735d74fd2a7d01e0111edc4238990de16132286dc783f6412e8545a1660c0fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/smaffer/library/VGAXUA/1.0.0/VGAXUA-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/smaffer/library/VGAXUA/1.0.0/VGAXUA-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tienducle",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tienducle/library/nano-33-iot-ibeacon/1.0.4/nano-33-iot-ibeacon-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nano-33-iot-ibeacon-1.0.4.tar.gz",
+    "size_bytes": 31795,
+    "sha256": "ae0572d221318f4ced77b69e44cb5450c95d0489c2db6ade6b0203497511ed49",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tienducle/library/nano-33-iot-ibeacon/1.0.4/nano-33-iot-ibeacon-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tienducle/library/nano-33-iot-ibeacon/1.0.4/nano-33-iot-ibeacon-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

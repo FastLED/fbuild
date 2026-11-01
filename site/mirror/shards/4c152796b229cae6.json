@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/damellis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "damellis/library/PCM/1.0/PCM-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCM-1.0.tar.gz",
+    "size_bytes": 25672,
+    "sha256": "4e3a231a667cdb8f182d89b1d78b17d8f54a688f7dc04f368131d6d6a44b27ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/damellis/library/PCM/1.0/PCM-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/damellis/library/PCM/1.0/PCM-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

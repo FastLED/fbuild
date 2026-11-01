@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/velleman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "velleman/library/ALLBOT/1.0.0/ALLBOT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ALLBOT-1.0.0.tar.gz",
+    "size_bytes": 9875,
+    "sha256": "f6c6505d3d9cd14f959aa576484013bcd1b7d577d98b60933bb56e9acba26fda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/velleman/library/ALLBOT/1.0.0/ALLBOT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/velleman/library/ALLBOT/1.0.0/ALLBOT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "velleman/library/K1200/1.0.2/K1200-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "K1200-1.0.2.tar.gz",
+    "size_bytes": 8897,
+    "sha256": "2b81475df9ef55d0a4d6dce95918dfbcae49173e07a5432d8303e211454e4efa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/velleman/library/K1200/1.0.2/K1200-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/velleman/library/K1200/1.0.2/K1200-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "velleman/library/Tuyav/1.1.0/Tuyav-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tuyav-1.1.0.tar.gz",
+    "size_bytes": 26002,
+    "sha256": "9d7717582cf66daac52c3b3935feefbe68f8042e4685aedd42c6be32b230357e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/velleman/library/Tuyav/1.1.0/Tuyav-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/velleman/library/Tuyav/1.1.0/Tuyav-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "velleman/library/VMA11/1.0/VMA11-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VMA11-1.0.tar.gz",
+    "size_bytes": 7355,
+    "sha256": "620c7a3b311749e81d2f4814b33aaa25ec98044fdd5275dfdacc9895cf6683a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/velleman/library/VMA11/1.0/VMA11-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/velleman/library/VMA11/1.0/VMA11-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "velleman/library/WPI430-VMA430%20GPS/2.0.0/WPI430-VMA430GPS-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WPI430-VMA430GPS-2.0.0.tar.gz",
+    "size_bytes": 9335,
+    "sha256": "50d9c9b4a31a55884020c30d939b51a453a8183a2bed98fff396dcb077b4a6b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/velleman/library/WPI430-VMA430%2520GPS/2.0.0/WPI430-VMA430GPS-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/velleman/library/WPI430-VMA430%20GPS/2.0.0/WPI430-VMA430GPS-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

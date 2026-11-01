@@ -23,9 +23,11 @@
 //! `impl BuildOrchestrator`; everything else is helper modules.
 
 mod boot_artifacts;
+mod boot_artifacts_cache;
 mod build;
 mod cdc;
 mod compile_phases;
+pub mod disk_requirements;
 mod embed;
 mod embed_stage;
 mod fingerprint;
@@ -35,6 +37,7 @@ mod helpers;
 mod job_pool;
 mod local_libs;
 mod packages;
+mod shrink_link;
 
 pub use packages::resolve_deploy_esptool;
 pub(crate) use packages::{downloadable_lib_deps, provision_esp32};

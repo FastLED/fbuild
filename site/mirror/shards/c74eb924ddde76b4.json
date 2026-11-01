@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-antoniogonzalez",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-antoniogonzalez/library/MCP342x/0.0.0+sha.03911aa07029/MCP342x-0.0.0+sha.03911aa07029.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP342x-0.0.0+sha.03911aa07029.tar.gz",
+    "size_bytes": 4788,
+    "sha256": "5fea9d4469c76fad84d4357f88e973b9e1adc6f0cca4610cb146ffacbcfdf431",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-antoniogonzalez/library/MCP342x/0.0.0%2Bsha.03911aa07029/MCP342x-0.0.0%2Bsha.03911aa07029.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-antoniogonzalez/library/MCP342x/0.0.0%2Bsha.03911aa07029/MCP342x-0.0.0%2Bsha.03911aa07029.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-antoniogonzalez/library/QT1070/0.0.0+sha.ab05fb720e30/QT1070-0.0.0+sha.ab05fb720e30.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QT1070-0.0.0+sha.ab05fb720e30.tar.gz",
+    "size_bytes": 4706,
+    "sha256": "b8848ad986abc5d17f3e313c62c4eeb34f8709c49c83b8ae630077272f21d56c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-antoniogonzalez/library/QT1070/0.0.0%2Bsha.ab05fb720e30/QT1070-0.0.0%2Bsha.ab05fb720e30.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-antoniogonzalez/library/QT1070/0.0.0%2Bsha.ab05fb720e30/QT1070-0.0.0%2Bsha.ab05fb720e30.tar.gz"
+    ]
+   }
+  }
+ ]
+}

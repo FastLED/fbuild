@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-olimexsmart",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-olimexsmart/library/LSM9DS0_mbed/0.0.0+sha.32b177f0030e/LSM9DS0_mbed-0.0.0+sha.32b177f0030e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM9DS0_mbed-0.0.0+sha.32b177f0030e.tar.gz",
+    "size_bytes": 15818,
+    "sha256": "29be1b5224eb6ecd66acdf18df4da28fd36aac9dfe0659a6a89d40f937bb312f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-olimexsmart/library/LSM9DS0_mbed/0.0.0%2Bsha.32b177f0030e/LSM9DS0_mbed-0.0.0%2Bsha.32b177f0030e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-olimexsmart/library/LSM9DS0_mbed/0.0.0%2Bsha.32b177f0030e/LSM9DS0_mbed-0.0.0%2Bsha.32b177f0030e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

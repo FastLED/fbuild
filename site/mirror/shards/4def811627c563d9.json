@@ -1,0 +1,243 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/armmbed",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "armmbed/library/ble-nrf51822/2.8.0/ble-nrf51822-2.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ble-nrf51822-2.8.0.tar.gz",
+    "size_bytes": 85995,
+    "sha256": "aa0ab598a582bf25812111faf7abc85f6104c5097743d48a82fa840730808609",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/ble-nrf51822/2.8.0/ble-nrf51822-2.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/ble-nrf51822/2.8.0/ble-nrf51822-2.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/ble/2.7.0/ble-2.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ble-2.7.0.tar.gz",
+    "size_bytes": 103728,
+    "sha256": "9699d08eed911f27d75fee50088b620912bb48ace60e7ed8f258ed1594c562ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/ble/2.7.0/ble-2.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/ble/2.7.0/ble-2.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/cmsis-core/1.2.0/cmsis-core-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cmsis-core-1.2.0.tar.gz",
+    "size_bytes": 55512,
+    "sha256": "de8686394f28d42265fbaed1eef98f0a2762e1fd4e61a6c3cbc1929f5186e013",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/cmsis-core/1.2.0/cmsis-core-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/cmsis-core/1.2.0/cmsis-core-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/compiler-polyfill/1.3.0/compiler-polyfill-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "compiler-polyfill-1.3.0.tar.gz",
+    "size_bytes": 5438,
+    "sha256": "649e42ce5bfbbb4511b06ba0b9af174c9cb0bbd818bbb137e496fd0709038eea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/compiler-polyfill/1.3.0/compiler-polyfill-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/compiler-polyfill/1.3.0/compiler-polyfill-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/core-util/1.8.0/core-util-1.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "core-util-1.8.0.tar.gz",
+    "size_bytes": 23754,
+    "sha256": "f9e687fe33e6b4098cf7142110af6303391dc6a3c69351a4ccdfe824d2801a50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/core-util/1.8.0/core-util-1.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/core-util/1.8.0/core-util-1.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/dlmalloc/1.1.0/dlmalloc-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dlmalloc-1.1.0.tar.gz",
+    "size_bytes": 63624,
+    "sha256": "4f8233882c4366c6fba6581ca23d1e4d8fa5f64c2e6e95e828d297a95be81155",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/dlmalloc/1.1.0/dlmalloc-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/dlmalloc/1.1.0/dlmalloc-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/greentea-client/1.1.0/greentea-client-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "greentea-client-1.1.0.tar.gz",
+    "size_bytes": 12817,
+    "sha256": "c351fc1e7cf82a7cb74534205d4c0cf2a9f4d59004453768494417d69247a99b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/greentea-client/1.1.0/greentea-client-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/greentea-client/1.1.0/greentea-client-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/mbed-client-c/6.0.0/mbed-client-c-6.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-client-c-6.0.0.tar.gz",
+    "size_bytes": 56509,
+    "sha256": "33aad118b7f8c06935344ac10007b7a6afdd356384eeb663e596e6fab903eb6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/mbed-client-c/6.0.0/mbed-client-c-6.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/mbed-client-c/6.0.0/mbed-client-c-6.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/mbed-client-cli/0.3.0/mbed-client-cli-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-client-cli-0.3.0.tar.gz",
+    "size_bytes": 36456,
+    "sha256": "b07a1f246bc6e8a6206c5dc7c78fe84e09a9730d1ef3170aceb14e4d26655130",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/mbed-client-cli/0.3.0/mbed-client-cli-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/mbed-client-cli/0.3.0/mbed-client-cli-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/mbed-drivers/1.5.0/mbed-drivers-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-drivers-1.5.0.tar.gz",
+    "size_bytes": 94900,
+    "sha256": "ebd73e303ff950965d2b34ffb830a187bc9c3dd7ef8977dc18605122ed647bdf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/mbed-drivers/1.5.0/mbed-drivers-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/mbed-drivers/1.5.0/mbed-drivers-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/mbed-hal/1.3.0/mbed-hal-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-hal-1.3.0.tar.gz",
+    "size_bytes": 18067,
+    "sha256": "b0725ad52afb835d5472ae52e0122fe56c83438cf4ec4310c0f6fb91affc3381",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/mbed-hal/1.3.0/mbed-hal-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/mbed-hal/1.3.0/mbed-hal-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/mbed-trace/1.3.0/mbed-trace-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbed-trace-1.3.0.tar.gz",
+    "size_bytes": 15963,
+    "sha256": "1127d1d549bb41262ccfb708506c84c6fbe6e7bd54d1b7aec4caf892125420d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/mbed-trace/1.3.0/mbed-trace-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/mbed-trace/1.3.0/mbed-trace-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/mbedtls/2.23.0/mbedtls-2.23.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbedtls-2.23.0.tar.gz",
+    "size_bytes": 3289953,
+    "sha256": "c9f00eefd14219e52220285b9133bc82fe152eea3c9ecf09a4bd21801a81461b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/mbedtls/2.23.0/mbedtls-2.23.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/mbedtls/2.23.0/mbedtls-2.23.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/minar-platform/1.1.0/minar-platform-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "minar-platform-1.1.0.tar.gz",
+    "size_bytes": 1556,
+    "sha256": "691c2f257f3dbecdf97618105bb571f315758d3b6e597d7fc4cd7a3d6dcb171c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/minar-platform/1.1.0/minar-platform-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/minar-platform/1.1.0/minar-platform-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/minar/1.3.0/minar-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "minar-1.3.0.tar.gz",
+    "size_bytes": 13337,
+    "sha256": "32c07055375fd66338aa91d275aac5ff8a6e4a5a78a900a9f87d52828ccc06ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/minar/1.3.0/minar-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/minar/1.3.0/minar-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/nrf51-sdk/2.4.0/nrf51-sdk-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf51-sdk-2.4.0.tar.gz",
+    "size_bytes": 300649,
+    "sha256": "2766330a468e602e16ddf314549393f74e0fc686f34864bdc167997587d25a9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/nrf51-sdk/2.4.0/nrf51-sdk-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/nrf51-sdk/2.4.0/nrf51-sdk-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/ualloc/1.3.0/ualloc-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ualloc-1.3.0.tar.gz",
+    "size_bytes": 10523,
+    "sha256": "bed6fab616d09d241a84eb0cf2f50a406a1b0bbac0b25637a4d081592d515d9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/ualloc/1.3.0/ualloc-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/ualloc/1.3.0/ualloc-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "armmbed/library/x-nucleo-idb0xa1/2.2.0/x-nucleo-idb0xa1-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "x-nucleo-idb0xa1-2.2.0.tar.gz",
+    "size_bytes": 114941,
+    "sha256": "8adf913bb82dee641e290c202e5ead0404b0370b642cd5746f23f1f86cfc44da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armmbed/library/x-nucleo-idb0xa1/2.2.0/x-nucleo-idb0xa1-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armmbed/library/x-nucleo-idb0xa1/2.2.0/x-nucleo-idb0xa1-2.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

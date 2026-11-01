@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bitcode-tech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bitcode-tech/library/BC7215AC_Universal_Aircon_Control/4.1.0/BC7215AC_Universal_Aircon_Control-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BC7215AC_Universal_Aircon_Control-4.1.0.tar.gz",
+    "size_bytes": 179406,
+    "sha256": "fd6720f61752c5cecfb67003b460611c02ed2aba996ace99db7b25b1bc3bd7d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitcode-tech/library/BC7215AC_Universal_Aircon_Control/4.1.0/BC7215AC_Universal_Aircon_Control-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitcode-tech/library/BC7215AC_Universal_Aircon_Control/4.1.0/BC7215AC_Universal_Aircon_Control-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitcode-tech/library/BC7215AC_Universal_Aircon_Control/5.4.0/BC7215AC_Universal_Aircon_Control-5.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BC7215AC_Universal_Aircon_Control-5.4.0.tar.gz",
+    "size_bytes": 178925,
+    "sha256": "e1580474e1836900a46adbcb25e703ff9eca516507079e1a141d34d3a3b88e27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitcode-tech/library/BC7215AC_Universal_Aircon_Control/5.4.0/BC7215AC_Universal_Aircon_Control-5.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitcode-tech/library/BC7215AC_Universal_Aircon_Control/5.4.0/BC7215AC_Universal_Aircon_Control-5.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitcode-tech/library/BC7215AC_Universal_Aircon_Control/7.0.2/BC7215AC_Universal_Aircon_Control-7.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BC7215AC_Universal_Aircon_Control-7.0.2.tar.gz",
+    "size_bytes": 194043,
+    "sha256": "b9ac014d15e5bb569f9e53ebb63b8710b0c6c815f0d08591bee8a3dc340e8249",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitcode-tech/library/BC7215AC_Universal_Aircon_Control/7.0.2/BC7215AC_Universal_Aircon_Control-7.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bitcode-tech/library/BC7215AC_Universal_Aircon_Control/7.0.2/BC7215AC_Universal_Aircon_Control-7.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitcode-tech/library/BC7215AC_Universal_Aircon_Control/7.1.0/BC7215AC_Universal_Aircon_Control-7.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BC7215AC_Universal_Aircon_Control-7.1.0.tar.gz",
+    "size_bytes": 217548,
+    "sha256": "3f8ba5e895fd9f873945ac45fee77682bcc78f9c034f317c0477b89845c36bf7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitcode-tech/library/BC7215AC_Universal_Aircon_Control/7.1.0/BC7215AC_Universal_Aircon_Control-7.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitcode-tech/library/BC7215AC_Universal_Aircon_Control/7.1.0/BC7215AC_Universal_Aircon_Control-7.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitcode-tech/library/BC7215AC_Universal_Aircon_Control/7.2.0/BC7215AC_Universal_Aircon_Control-7.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BC7215AC_Universal_Aircon_Control-7.2.0.tar.gz",
+    "size_bytes": 218637,
+    "sha256": "e189b623429140d42ad608f9a076353ad9a36b2e493174230a2d19ffb9b50030",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitcode-tech/library/BC7215AC_Universal_Aircon_Control/7.2.0/BC7215AC_Universal_Aircon_Control-7.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitcode-tech/library/BC7215AC_Universal_Aircon_Control/7.2.0/BC7215AC_Universal_Aircon_Control-7.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitcode-tech/library/IR-infrared%20Remote%20Control%20Decoder-Simulator/1.0.1/IR-infraredRemoteControlDecoder-Simulator-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IR-infraredRemoteControlDecoder-Simulator-1.0.1.tar.gz",
+    "size_bytes": 13076,
+    "sha256": "ef45e8fd85648770c9b0be029b034757895de4a7ae8baa1de179380903f90d2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitcode-tech/library/IR-infrared%2520Remote%2520Control%2520Decoder-Simulator/1.0.1/IR-infraredRemoteControlDecoder-Simulator-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bitcode-tech/library/IR-infrared%20Remote%20Control%20Decoder-Simulator/1.0.1/IR-infraredRemoteControlDecoder-Simulator-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitcode-tech/library/UART_7Seg_Display/3.0.0/UART_7Seg_Display-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UART_7Seg_Display-3.0.0.tar.gz",
+    "size_bytes": 6689,
+    "sha256": "eb22d33afd418e98625e33aab0411a12827063716f999315aef4a6072b0acaab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitcode-tech/library/UART_7Seg_Display/3.0.0/UART_7Seg_Display-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitcode-tech/library/UART_7Seg_Display/3.0.0/UART_7Seg_Display-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bitcode-tech/library/UART_Keyboard/3.0.0/UART_Keyboard-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UART_Keyboard-3.0.0.tar.gz",
+    "size_bytes": 7024,
+    "sha256": "a42db2e5d86547c89b55001f575b832551568dcb8212a8255c686b5e2c954225",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitcode-tech/library/UART_Keyboard/3.0.0/UART_Keyboard-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitcode-tech/library/UART_Keyboard/3.0.0/UART_Keyboard-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/amanecer-digital-sl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "amanecer-digital-sl/library/AMBOT/1.0.2/AMBOT-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMBOT-1.0.2.tar.gz",
+    "size_bytes": 24620,
+    "sha256": "6bd76a3972df1963a7423c636fcf5a4ad4b8d627874e60be99539edf1ab396f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/amanecer-digital-sl/library/AMBOT/1.0.2/AMBOT-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/amanecer-digital-sl/library/AMBOT/1.0.2/AMBOT-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

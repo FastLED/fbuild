@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tawalmc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tawalmc/library/TinyDatabase_Arduino/1.0.2/TinyDatabase_Arduino-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyDatabase_Arduino-1.0.2.tar.gz",
+    "size_bytes": 16742,
+    "sha256": "aaa8549abfd6929d593edf605b8aabb00b6c9c46459075e2227776f1c5128236",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tawalmc/library/TinyDatabase_Arduino/1.0.2/TinyDatabase_Arduino-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tawalmc/library/TinyDatabase_Arduino/1.0.2/TinyDatabase_Arduino-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mwilkens241",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mwilkens241/library/TCA9548/0.0.0+sha.79996efbdcb2/TCA9548-0.0.0+sha.79996efbdcb2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCA9548-0.0.0+sha.79996efbdcb2.tar.gz",
+    "size_bytes": 1680,
+    "sha256": "00a026b107a2776befac81db6a5a9cb40e084cbf855eb28ec3b191a9fe9237b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mwilkens241/library/TCA9548/0.0.0%2Bsha.79996efbdcb2/TCA9548-0.0.0%2Bsha.79996efbdcb2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mwilkens241/library/TCA9548/0.0.0%2Bsha.79996efbdcb2/TCA9548-0.0.0%2Bsha.79996efbdcb2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mwilkens241/library/libTCS34725/0.0.0+sha.41f1acad69e5/libTCS34725-0.0.0+sha.41f1acad69e5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libTCS34725-0.0.0+sha.41f1acad69e5.tar.gz",
+    "size_bytes": 2917,
+    "sha256": "2a6614ab92fddd451c804650282c7f0ce89b0aa7bc1d56178af582fa7ec5203a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mwilkens241/library/libTCS34725/0.0.0%2Bsha.41f1acad69e5/libTCS34725-0.0.0%2Bsha.41f1acad69e5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mwilkens241/library/libTCS34725/0.0.0%2Bsha.41f1acad69e5/libTCS34725-0.0.0%2Bsha.41f1acad69e5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

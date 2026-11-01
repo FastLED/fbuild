@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-julepalme",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-julepalme/library/DHT22/0.0.0+sha.7fd3ff04ae95/DHT22-0.0.0+sha.7fd3ff04ae95.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DHT22-0.0.0+sha.7fd3ff04ae95.tar.gz",
+    "size_bytes": 1409,
+    "sha256": "eccb5734e4ced6b6b6011536a9ae989e04b746e30b5d412d072837eb31733538",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-julepalme/library/DHT22/0.0.0%2Bsha.7fd3ff04ae95/DHT22-0.0.0%2Bsha.7fd3ff04ae95.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-julepalme/library/DHT22/0.0.0%2Bsha.7fd3ff04ae95/DHT22-0.0.0%2Bsha.7fd3ff04ae95.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-julepalme/library/TLC5940/0.0.0+sha.bdf7a64b89a7/TLC5940-0.0.0+sha.bdf7a64b89a7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLC5940-0.0.0+sha.bdf7a64b89a7.tar.gz",
+    "size_bytes": 1194,
+    "sha256": "c8209b027de10d12a2a2143dd0f4ac9e9893b6679b3906409fec8242aa908358",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-julepalme/library/TLC5940/0.0.0%2Bsha.bdf7a64b89a7/TLC5940-0.0.0%2Bsha.bdf7a64b89a7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-julepalme/library/TLC5940/0.0.0%2Bsha.bdf7a64b89a7/TLC5940-0.0.0%2Bsha.bdf7a64b89a7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mikronik",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mikronik/library/ServoX/1.0/ServoX-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ServoX-1.0.tar.gz",
+    "size_bytes": 2766,
+    "sha256": "4d58244f4386f52ef605c31e39df47496a131eee5d4b5682a9eaf57a9baa50da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mikronik/library/ServoX/1.0/ServoX-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mikronik/library/ServoX/1.0/ServoX-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

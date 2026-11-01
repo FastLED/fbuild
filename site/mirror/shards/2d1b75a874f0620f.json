@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kikuchan98",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kikuchan98/library/pngle/1.0.2/pngle-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pngle-1.0.2.tar.gz",
+    "size_bytes": 62392,
+    "sha256": "68add091f61b8bb72696cabdbc9570631ed683083be713b53a2a44af05d04204",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kikuchan98/library/pngle/1.0.2/pngle-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kikuchan98/library/pngle/1.0.2/pngle-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kikuchan98/library/pngle/1.1.0/pngle-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pngle-1.1.0.tar.gz",
+    "size_bytes": 63526,
+    "sha256": "0d2042a0ca3c1a0c25790d56ebda9d04b969cff8a4f6101a37f7ae7783f09641",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kikuchan98/library/pngle/1.1.0/pngle-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kikuchan98/library/pngle/1.1.0/pngle-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

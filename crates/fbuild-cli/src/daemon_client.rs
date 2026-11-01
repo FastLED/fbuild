@@ -1255,6 +1255,42 @@ async fn start_daemon(client: &DaemonClient) -> fbuild_core::Result<Option<u32>>
         );
     }
 
+    // FastLED/fbuild#1627: three failed attempts are not the end when the
+    // reason is a leftover daemon from an earlier step that still owns the
+    // cache root (`root-owner.lock busy`) or a wedged one that owns the
+    // endpoint (#1360). #1732 explained those failures and #1734 widened the
+    // readiness budget; this retires the verified dead weight and makes
+    // exactly ONE final attempt, so a CI runner self-heals instead of failing
+    // a release gate that then needs a manual rerun. The retirement is
+    // fail-closed on process identity and never touches a daemon that
+    // answers, so a parallel build on the same machine is safe.
+    let mut leftover_note = String::new();
+    if let Some(retired_pid) =
+        crate::cli::daemon_cmd::retire_unresponsive_for_recovery(client).await
+    {
+        leftover_note = format!(
+            "\n\nA leftover fbuild-daemon (PID {retired_pid}) was still alive while nothing \
+             answered at this endpoint, so it was terminated and one final spawn attempt was \
+             made (FastLED/fbuild#1627)."
+        );
+        match spawn_daemon_process().await {
+            Ok(pid) => {
+                if client
+                    .wait_until_healthy(std::time::Duration::from_secs(
+                        startup_log::readiness_timeout_secs(),
+                    ))
+                    .await?
+                {
+                    tracing::info!(
+                        "daemon started (pid {pid}) after retiring unresponsive PID {retired_pid}"
+                    );
+                    return Ok(Some(pid));
+                }
+            }
+            Err(e) => tracing::warn!("final daemon spawn attempt after retirement failed: {e}"),
+        }
+    }
+
     let readiness_secs = startup_log::readiness_timeout_secs();
     Err(fbuild_core::FbuildError::DaemonError(format!(
         "daemon did not become healthy after 3 spawn attempts \
@@ -1265,9 +1301,10 @@ async fn start_daemon(client: &DaemonClient) -> fbuild_core::Result<Option<u32>>
          version (FastLED/fbuild#1009), so a version-mismatched daemon listens on a different \
          port than this CLI polls and can never be reached. When running a locally-built CLI, \
          build the daemon too (`soldr cargo build -p fbuild-daemon`) so a sibling binary exists \
-         instead of resolving `fbuild-daemon` from PATH.{}",
+         instead of resolving `fbuild-daemon` from PATH.{}{}",
         runtime_diagnostic(),
         wedged_daemon_hint(),
+        leftover_note,
         startup_log::startup_problems_note(&spawn_started)
     )))
 }

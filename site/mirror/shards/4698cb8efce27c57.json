@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-macgyveremir",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-macgyveremir/library/DAC7311/0.0.0+sha.5497575badba/DAC7311-0.0.0+sha.5497575badba.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DAC7311-0.0.0+sha.5497575badba.tar.gz",
+    "size_bytes": 1175,
+    "sha256": "8bc1a20a6807a094540431b0b753d264ab5138de9336bd75bc2d6d4557ab28c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macgyveremir/library/DAC7311/0.0.0%2Bsha.5497575badba/DAC7311-0.0.0%2Bsha.5497575badba.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macgyveremir/library/DAC7311/0.0.0%2Bsha.5497575badba/DAC7311-0.0.0%2Bsha.5497575badba.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-macgyveremir/library/MAX1120x/0.0.0+sha.9bf082d65d25/MAX1120x-0.0.0+sha.9bf082d65d25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX1120x-0.0.0+sha.9bf082d65d25.tar.gz",
+    "size_bytes": 2257,
+    "sha256": "a31f6c5551c37d27fa8c6d8a0d4446546a5513c55556f101c3c67524f15d2f92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macgyveremir/library/MAX1120x/0.0.0%2Bsha.9bf082d65d25/MAX1120x-0.0.0%2Bsha.9bf082d65d25.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macgyveremir/library/MAX1120x/0.0.0%2Bsha.9bf082d65d25/MAX1120x-0.0.0%2Bsha.9bf082d65d25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-macgyveremir/library/SimpleSocket/0.0.0+sha.1e4a74c2c16f/SimpleSocket-0.0.0+sha.1e4a74c2c16f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleSocket-0.0.0+sha.1e4a74c2c16f.tar.gz",
+    "size_bytes": 6454,
+    "sha256": "6d5779cdcf501a7fb2cb4ec7d34ed741be7683fad749c55c309f4148ac1a71f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macgyveremir/library/SimpleSocket/0.0.0%2Bsha.1e4a74c2c16f/SimpleSocket-0.0.0%2Bsha.1e4a74c2c16f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macgyveremir/library/SimpleSocket/0.0.0%2Bsha.1e4a74c2c16f/SimpleSocket-0.0.0%2Bsha.1e4a74c2c16f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

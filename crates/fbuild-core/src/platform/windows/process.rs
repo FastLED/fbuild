@@ -23,6 +23,37 @@ pub(crate) async fn daemon_terminate_signal() {
     std::future::pending::<()>().await
 }
 
+/// Resident memory of `pid` from `GetProcessMemoryInfo`.
+///
+/// `PROCESS_QUERY_LIMITED_INFORMATION` is the narrowest right that answers
+/// this for another user's process, and is what Vista+ grants without
+/// elevation. A failed open (protected or recycled pid) yields `None`
+/// (FastLED/fbuild#1785).
+pub(crate) fn resident_memory(pid: u32) -> Option<crate::platform::process::MemoryUsage> {
+    const PROCESS_QUERY_LIMITED_INFORMATION: u32 = 0x1000;
+    // SAFETY: the handle is closed on every path that obtains one, and the
+    // counters struct is passed with its own byte length.
+    unsafe {
+        let process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, 0, pid);
+        if process.is_null() {
+            return None;
+        }
+        let mut counters = ProcessMemoryCounters {
+            cb: std::mem::size_of::<ProcessMemoryCounters>() as u32,
+            ..ProcessMemoryCounters::default()
+        };
+        let reported = GetProcessMemoryInfo(process, &mut counters, counters.cb);
+        CloseHandle(process);
+        if reported == 0 {
+            return None;
+        }
+        Some(crate::platform::process::MemoryUsage {
+            resident_bytes: counters.working_set_size as u64,
+            peak_resident_bytes: Some(counters.peak_working_set_size as u64),
+        })
+    }
+}
+
 pub(crate) fn daemon_graceful_termination_budget() -> std::time::Duration {
     std::time::Duration::from_secs(5)
 }
@@ -415,8 +446,30 @@ struct JobObjectExtendedLimitInformation {
     peak_job_memory_used: usize,
 }
 
+/// `PROCESS_MEMORY_COUNTERS` from `psapi.h`, at the `usize` width Windows uses
+/// for `SIZE_T`.
+#[repr(C)]
+#[derive(Default)]
+struct ProcessMemoryCounters {
+    cb: u32,
+    page_fault_count: u32,
+    peak_working_set_size: usize,
+    working_set_size: usize,
+    quota_peak_paged_pool_usage: usize,
+    quota_paged_pool_usage: usize,
+    quota_peak_non_paged_pool_usage: usize,
+    quota_non_paged_pool_usage: usize,
+    pagefile_usage: usize,
+    peak_pagefile_usage: usize,
+}
+
 #[link(name = "kernel32")]
 extern "system" {
+    fn GetProcessMemoryInfo(
+        process: Handle,
+        counters: *mut ProcessMemoryCounters,
+        counters_len: u32,
+    ) -> i32;
     fn SetConsoleCtrlHandler(
         handler_routine: Option<unsafe extern "system" fn(u32) -> i32>,
         add: i32,

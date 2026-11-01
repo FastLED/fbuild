@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kojto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kojto/library/cc3000_hostdriver_mbedsocket/0.0.0+sha.192e2fde71e9/cc3000_hostdriver_mbedsocket-0.0.0+sha.192e2fde71e9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cc3000_hostdriver_mbedsocket-0.0.0+sha.192e2fde71e9.tar.gz",
+    "size_bytes": 52819,
+    "sha256": "a53947e802b31ed9104984074f0d942561108efa23bf5e8ae809b7094aad0c08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kojto/library/cc3000_hostdriver_mbedsocket/0.0.0%2Bsha.192e2fde71e9/cc3000_hostdriver_mbedsocket-0.0.0%2Bsha.192e2fde71e9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kojto/library/cc3000_hostdriver_mbedsocket/0.0.0%2Bsha.192e2fde71e9/cc3000_hostdriver_mbedsocket-0.0.0%2Bsha.192e2fde71e9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-kojto/library/tsi_sensor/0.0.0+sha.976904559b5c/tsi_sensor-0.0.0+sha.976904559b5c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tsi_sensor-0.0.0+sha.976904559b5c.tar.gz",
+    "size_bytes": 4484,
+    "sha256": "8c113bef952b4d6f0d7cb7cc1060f937d6d84a192fb9e53168995d7e2337ea6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kojto/library/tsi_sensor/0.0.0%2Bsha.976904559b5c/tsi_sensor-0.0.0%2Bsha.976904559b5c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kojto/library/tsi_sensor/0.0.0%2Bsha.976904559b5c/tsi_sensor-0.0.0%2Bsha.976904559b5c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

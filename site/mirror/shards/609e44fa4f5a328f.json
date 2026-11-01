@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pontuso",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pontuso/library/EspATMQTT/1.0.0/EspATMQTT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspATMQTT-1.0.0.tar.gz",
+    "size_bytes": 52747,
+    "sha256": "22af45a086320d21ed5d3c5e0c34c1969b24ec90ba0c9be5dabaad9e3a5509f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pontuso/library/EspATMQTT/1.0.0/EspATMQTT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pontuso/library/EspATMQTT/1.0.0/EspATMQTT-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

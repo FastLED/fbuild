@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-math991e",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-math991e/library/SoundSensor/0.0.0+sha.c38836e5d1f5/SoundSensor-0.0.0+sha.c38836e5d1f5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoundSensor-0.0.0+sha.c38836e5d1f5.tar.gz",
+    "size_bytes": 1873,
+    "sha256": "6cc8775747ff66f5201297976666dc361c8332c9e5c4d3a212803b49188dfc96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-math991e/library/SoundSensor/0.0.0%2Bsha.c38836e5d1f5/SoundSensor-0.0.0%2Bsha.c38836e5d1f5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-math991e/library/SoundSensor/0.0.0%2Bsha.c38836e5d1f5/SoundSensor-0.0.0%2Bsha.c38836e5d1f5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-math991e/library/StepperMotor/0.0.0+sha.7b7c58bb9831/StepperMotor-0.0.0+sha.7b7c58bb9831.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperMotor-0.0.0+sha.7b7c58bb9831.tar.gz",
+    "size_bytes": 1597,
+    "sha256": "e5b11e4da187873aa14f24f04e219bf2507362190bde149da123b91fc764b858",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-math991e/library/StepperMotor/0.0.0%2Bsha.7b7c58bb9831/StepperMotor-0.0.0%2Bsha.7b7c58bb9831.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-math991e/library/StepperMotor/0.0.0%2Bsha.7b7c58bb9831/StepperMotor-0.0.0%2Bsha.7b7c58bb9831.tar.gz"
+    ]
+   }
+  }
+ ]
+}

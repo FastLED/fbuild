@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-chris215",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-chris215/library/4dGENIE/0.0.0+sha.9196f72fc325/4dGENIE-0.0.0+sha.9196f72fc325.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "4dGENIE-0.0.0+sha.9196f72fc325.tar.gz",
+    "size_bytes": 5208,
+    "sha256": "b739afdf3bc6e5b85bb7420e4c7eb102131a9b46ee943a0cfb9d3c0643ab5ac3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-chris215/library/4dGENIE/0.0.0%2Bsha.9196f72fc325/4dGENIE-0.0.0%2Bsha.9196f72fc325.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-chris215/library/4dGENIE/0.0.0%2Bsha.9196f72fc325/4dGENIE-0.0.0%2Bsha.9196f72fc325.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-chris215/library/RingBuffer/0.0.0+sha.959aad917307/RingBuffer-0.0.0+sha.959aad917307.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RingBuffer-0.0.0+sha.959aad917307.tar.gz",
+    "size_bytes": 1981,
+    "sha256": "49afd8e47aa7a5dc69c1216060bb5f89024fad948158ca7cd3f49c19780121ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-chris215/library/RingBuffer/0.0.0%2Bsha.959aad917307/RingBuffer-0.0.0%2Bsha.959aad917307.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-chris215/library/RingBuffer/0.0.0%2Bsha.959aad917307/RingBuffer-0.0.0%2Bsha.959aad917307.tar.gz"
+    ]
+   }
+  }
+ ]
+}

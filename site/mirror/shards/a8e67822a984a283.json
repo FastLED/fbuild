@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shaggydog",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shaggydog/library/OneButton/1.5.0/OneButton-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneButton-1.5.0.tar.gz",
+    "size_bytes": 11862,
+    "sha256": "e68370136b79353f7c3c19e643326fa28074a59f0f026fa3fcbfaf38662cb0bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shaggydog/library/OneButton/1.5.0/OneButton-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shaggydog/library/OneButton/1.5.0/OneButton-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shaggydog/library/SD_MHZ19B/1.0/SD_MHZ19B-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SD_MHZ19B-1.0.tar.gz",
+    "size_bytes": 18617,
+    "sha256": "99a47d85a9271f90205f988e25c903c8d8de96a8bd5aaf55c63789e1337cd5cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shaggydog/library/SD_MHZ19B/1.0/SD_MHZ19B-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shaggydog/library/SD_MHZ19B/1.0/SD_MHZ19B-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shaggydog/library/SD_SayNumber/1.0/SD_SayNumber-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SD_SayNumber-1.0.tar.gz",
+    "size_bytes": 21038,
+    "sha256": "9ae10b472f29fb5b18b89fc86fc21b1ec645442cece70e4c3ac7304dc74666b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shaggydog/library/SD_SayNumber/1.0/SD_SayNumber-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shaggydog/library/SD_SayNumber/1.0/SD_SayNumber-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shaggydog/library/SD_ZH03B/1.0/SD_ZH03B-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SD_ZH03B-1.0.tar.gz",
+    "size_bytes": 17207,
+    "sha256": "6722a0dbf2c08d346ce09a114e5f48b18da85225ef07af13e374902a8835c478",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shaggydog/library/SD_ZH03B/1.0/SD_ZH03B-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shaggydog/library/SD_ZH03B/1.0/SD_ZH03B-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

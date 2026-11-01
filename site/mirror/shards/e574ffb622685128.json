@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/discord-intech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "discord-intech/library/FreeRTOS-Teensy4/10.0.5/FreeRTOS-Teensy4-10.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreeRTOS-Teensy4-10.0.5.tar.gz",
+    "size_bytes": 197580,
+    "sha256": "fe56b6eb2e3e8fb53a8c8d64f998f5d611fe75c141a598fb9d36480df9be842e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/discord-intech/library/FreeRTOS-Teensy4/10.0.5/FreeRTOS-Teensy4-10.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/discord-intech/library/FreeRTOS-Teensy4/10.0.5/FreeRTOS-Teensy4-10.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

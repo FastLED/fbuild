@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gltest26",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gltest26/library/ADXL345/0.0.0+sha.122a504fcfa3/ADXL345-0.0.0+sha.122a504fcfa3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADXL345-0.0.0+sha.122a504fcfa3.tar.gz",
+    "size_bytes": 7693,
+    "sha256": "54afb9e781f749a3877ad2b8d0017586681eaeb2b3938628c243c8568af1955b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gltest26/library/ADXL345/0.0.0%2Bsha.122a504fcfa3/ADXL345-0.0.0%2Bsha.122a504fcfa3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gltest26/library/ADXL345/0.0.0%2Bsha.122a504fcfa3/ADXL345-0.0.0%2Bsha.122a504fcfa3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gltest26/library/HMC5843/0.0.0+sha.05aa3555fce6/HMC5843-0.0.0+sha.05aa3555fce6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC5843-0.0.0+sha.05aa3555fce6.tar.gz",
+    "size_bytes": 4093,
+    "sha256": "ec71cc3bf69f86b88d25464be45194452f632446f7660cb0836cff62aed6a6c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gltest26/library/HMC5843/0.0.0%2Bsha.05aa3555fce6/HMC5843-0.0.0%2Bsha.05aa3555fce6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gltest26/library/HMC5843/0.0.0%2Bsha.05aa3555fce6/HMC5843-0.0.0%2Bsha.05aa3555fce6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-gltest26/library/ITG3200/0.0.0+sha.05396b551a9a/ITG3200-0.0.0+sha.05396b551a9a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ITG3200-0.0.0+sha.05396b551a9a.tar.gz",
+    "size_bytes": 6952,
+    "sha256": "25f6745c3f965b605d727fb00a314fb3ed1fbf19e1200579039bdb3b3e30c67f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gltest26/library/ITG3200/0.0.0%2Bsha.05396b551a9a/ITG3200-0.0.0%2Bsha.05396b551a9a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gltest26/library/ITG3200/0.0.0%2Bsha.05396b551a9a/ITG3200-0.0.0%2Bsha.05396b551a9a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

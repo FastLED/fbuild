@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/openslab-osu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "openslab-osu/library/EthernetLarge/2.0.0/EthernetLarge-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EthernetLarge-2.0.0.tar.gz",
+    "size_bytes": 37726,
+    "sha256": "971549157ee86de6072fe446cc7ed4ab441b1403f239a6e2ea25456f5353e165",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openslab-osu/library/EthernetLarge/2.0.0/EthernetLarge-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/openslab-osu/library/EthernetLarge/2.0.0/EthernetLarge-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openslab-osu/library/FeatherFault/1.1.7/FeatherFault-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FeatherFault-1.1.7.tar.gz",
+    "size_bytes": 25841,
+    "sha256": "c9dfda9068ae6f2a351c7536ab9d7abc5b159635d0c26000aac0daf96e5b6d37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openslab-osu/library/FeatherFault/1.1.7/FeatherFault-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/openslab-osu/library/FeatherFault/1.1.7/FeatherFault-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openslab-osu/library/SSLClient/1.6.11/SSLClient-1.6.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSLClient-1.6.11.tar.gz",
+    "size_bytes": 603290,
+    "sha256": "007128b2ba11de8fc8226589f6a04bf795fe2564890790684fec954facc0219e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openslab-osu/library/SSLClient/1.6.11/SSLClient-1.6.11.tar.gz",
+     "https://dl.registry.platformio.org/download/openslab-osu/library/SSLClient/1.6.11/SSLClient-1.6.11.tar.gz"
+    ]
+   }
+  }
+ ]
+}

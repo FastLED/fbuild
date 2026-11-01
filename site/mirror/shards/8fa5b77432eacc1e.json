@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/felix900006",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "felix900006/library/Profinet-for-Arduino/1.0.1/Profinet-for-Arduino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Profinet-for-Arduino-1.0.1.tar.gz",
+    "size_bytes": 15531,
+    "sha256": "b7b464fa45d07a9f46d8d39fb6fe1fa12215189f859f36a06f348218e0438f1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felix900006/library/Profinet-for-Arduino/1.0.1/Profinet-for-Arduino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/felix900006/library/Profinet-for-Arduino/1.0.1/Profinet-for-Arduino-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

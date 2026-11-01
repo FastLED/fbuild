@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-takuo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-takuo/library/ACM1602NI/0.0.0+sha.661827681a12/ACM1602NI-0.0.0+sha.661827681a12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ACM1602NI-0.0.0+sha.661827681a12.tar.gz",
+    "size_bytes": 2809,
+    "sha256": "634c196b6b354ff975808b8029ac3e57321e62488e65b5b8c856da3c567c2d76",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-takuo/library/ACM1602NI/0.0.0%2Bsha.661827681a12/ACM1602NI-0.0.0%2Bsha.661827681a12.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-takuo/library/ACM1602NI/0.0.0%2Bsha.661827681a12/ACM1602NI-0.0.0%2Bsha.661827681a12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-takuo/library/STTS751/0.0.0+sha.f9d3008f7e8f/STTS751-0.0.0+sha.f9d3008f7e8f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STTS751-0.0.0+sha.f9d3008f7e8f.tar.gz",
+    "size_bytes": 3440,
+    "sha256": "affbe542f8cf52e1c7016f22ab5bb533ee553f529a76427647be63c595d3d02f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-takuo/library/STTS751/0.0.0%2Bsha.f9d3008f7e8f/STTS751-0.0.0%2Bsha.f9d3008f7e8f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-takuo/library/STTS751/0.0.0%2Bsha.f9d3008f7e8f/STTS751-0.0.0%2Bsha.f9d3008f7e8f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-takuo/library/pin_port/0.0.0+sha.5b6a266f2211/pin_port-0.0.0+sha.5b6a266f2211.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pin_port-0.0.0+sha.5b6a266f2211.tar.gz",
+    "size_bytes": 1377,
+    "sha256": "5cdd6f618c2c7f857b4077d4e2a2ebde410703530a3398558cc37c6fb2daa9d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-takuo/library/pin_port/0.0.0%2Bsha.5b6a266f2211/pin_port-0.0.0%2Bsha.5b6a266f2211.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-takuo/library/pin_port/0.0.0%2Bsha.5b6a266f2211/pin_port-0.0.0%2Bsha.5b6a266f2211.tar.gz"
+    ]
+   }
+  }
+ ]
+}

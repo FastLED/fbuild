@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-o-thom",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-o-thom/library/BMP280/0.0.0+sha.7a04d0f5950e/BMP280-0.0.0+sha.7a04d0f5950e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMP280-0.0.0+sha.7a04d0f5950e.tar.gz",
+    "size_bytes": 2916,
+    "sha256": "c0bdff1ea645e95969880028719203f43b2b13344a1c2c87407307dc5e1cacec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-o-thom/library/BMP280/0.0.0%2Bsha.7a04d0f5950e/BMP280-0.0.0%2Bsha.7a04d0f5950e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-o-thom/library/BMP280/0.0.0%2Bsha.7a04d0f5950e/BMP280-0.0.0%2Bsha.7a04d0f5950e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

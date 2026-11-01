@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vdesmedt",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vdesmedt/library/HelloHome%20Core/0.9.3/HelloHomeCore-0.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HelloHomeCore-0.9.3.tar.gz",
+    "size_bytes": 5375,
+    "sha256": "8a8f07e47b218c41447e4a3334afd393f1853c0a7f744e3e3ccf7c2352d8dee2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vdesmedt/library/HelloHome%2520Core/0.9.3/HelloHomeCore-0.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/vdesmedt/library/HelloHome%20Core/0.9.3/HelloHomeCore-0.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vdesmedt/library/MCP7941x/0.1.5/MCP7941x-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP7941x-0.1.5.tar.gz",
+    "size_bytes": 4303,
+    "sha256": "d81fab9666b3c009b46558f54fd79033673c38a1a2ed97997f0caa67f7c2e48b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vdesmedt/library/MCP7941x/0.1.5/MCP7941x-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/vdesmedt/library/MCP7941x/0.1.5/MCP7941x-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "vdesmedt/library/Vrekrer%20scpi%20parser/0.4.1.2/Vrekrerscpiparser-0.4.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Vrekrerscpiparser-0.4.1.2.tar.gz",
+    "size_bytes": 9069,
+    "sha256": "583673adb56f0dc58e94e4650dd07abaf275a528224f450540526c0e8cabf8a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vdesmedt/library/Vrekrer%2520scpi%2520parser/0.4.1.2/Vrekrerscpiparser-0.4.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/vdesmedt/library/Vrekrer%20scpi%20parser/0.4.1.2/Vrekrerscpiparser-0.4.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

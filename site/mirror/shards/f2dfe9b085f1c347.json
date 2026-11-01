@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ggta-team",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ggta-team/library/nRF51822/0.0.0+sha.5fd73fb47b21/nRF51822-0.0.0+sha.5fd73fb47b21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF51822-0.0.0+sha.5fd73fb47b21.tar.gz",
+    "size_bytes": 217340,
+    "sha256": "89399a4856c51328b67717c11e0b233268f6b8b545601867b83ac8a37ac911d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ggta-team/library/nRF51822/0.0.0%2Bsha.5fd73fb47b21/nRF51822-0.0.0%2Bsha.5fd73fb47b21.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ggta-team/library/nRF51822/0.0.0%2Bsha.5fd73fb47b21/nRF51822-0.0.0%2Bsha.5fd73fb47b21.tar.gz"
+    ]
+   }
+  }
+ ]
+}

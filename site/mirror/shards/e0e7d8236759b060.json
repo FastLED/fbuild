@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sirsundays",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sirsundays/library/LDC1312-1314%20I2C%20Library/1.0.0/LDC1312-1314I2CLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LDC1312-1314I2CLibrary-1.0.0.tar.gz",
+    "size_bytes": 17327,
+    "sha256": "8ee6817ae3e4cbf3fd5b18bd7b0de964d0660ca4eec1930d146833bf3f15fdb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sirsundays/library/LDC1312-1314%2520I2C%2520Library/1.0.0/LDC1312-1314I2CLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sirsundays/library/LDC1312-1314%20I2C%20Library/1.0.0/LDC1312-1314I2CLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

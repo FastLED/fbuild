@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lodevd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lodevd/library/TimLib/1.0.0/TimLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TimLib-1.0.0.tar.gz",
+    "size_bytes": 19327,
+    "sha256": "e6ed9d8d1973a5d08018730c24c892b10a1352a3609e850a524c3278c7e9fb1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lodevd/library/TimLib/1.0.0/TimLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lodevd/library/TimLib/1.0.0/TimLib-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

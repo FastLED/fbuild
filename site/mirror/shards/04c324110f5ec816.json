@@ -1,0 +1,295 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wisefang",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wisefang/library/WelldoneESP32/1.8.3/WelldoneESP32-1.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.8.3.tar.gz",
+    "size_bytes": 146299,
+    "sha256": "a81ecc0c198b7ded5d6d4f49a4f6f919336b9dddededb8965edec6795c40e102",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.8.3/WelldoneESP32-1.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.8.3/WelldoneESP32-1.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.8.4/WelldoneESP32-1.8.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.8.4.tar.gz",
+    "size_bytes": 146404,
+    "sha256": "2989d8f3cf7c6d38316ef617bbc769ce4ed66834ceba826de4bde0dcbc856472",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.8.4/WelldoneESP32-1.8.4.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.8.4/WelldoneESP32-1.8.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.8.5/WelldoneESP32-1.8.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.8.5.tar.gz",
+    "size_bytes": 127648,
+    "sha256": "d9c71296abcc154be7e41d04245c7e23c97228a271215094690c74523cafd8f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.8.5/WelldoneESP32-1.8.5.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.8.5/WelldoneESP32-1.8.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.8.6/WelldoneESP32-1.8.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.8.6.tar.gz",
+    "size_bytes": 128467,
+    "sha256": "d3a1bf017d9c22790528e453d4be8ce9361836743c6641a7397c863b1a6c0ab4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.8.6/WelldoneESP32-1.8.6.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.8.6/WelldoneESP32-1.8.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.8.7/WelldoneESP32-1.8.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.8.7.tar.gz",
+    "size_bytes": 128470,
+    "sha256": "3df7c0c6397630ceae74d8b30ed2c67772b956fc69e6173f8cbddc311e3db218",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.8.7/WelldoneESP32-1.8.7.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.8.7/WelldoneESP32-1.8.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.8.8/WelldoneESP32-1.8.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.8.8.tar.gz",
+    "size_bytes": 128764,
+    "sha256": "021b3cf4bc2fb86c97976b5b218e1f107b4051ea216aa7efb4c215bc356fe3ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.8.8/WelldoneESP32-1.8.8.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.8.8/WelldoneESP32-1.8.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.8.9/WelldoneESP32-1.8.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.8.9.tar.gz",
+    "size_bytes": 129671,
+    "sha256": "9cddd30cf1dbce20a4c16a7670f4c62c2f124a15158f393ac6b2f38052270b28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.8.9/WelldoneESP32-1.8.9.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.8.9/WelldoneESP32-1.8.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.9.0/WelldoneESP32-1.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.9.0.tar.gz",
+    "size_bytes": 129719,
+    "sha256": "36f49b75beafea025246157c4515135aeb5fd66b15c967b1750e37cfbf946fc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.9.0/WelldoneESP32-1.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.9.0/WelldoneESP32-1.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.9.1/WelldoneESP32-1.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.9.1.tar.gz",
+    "size_bytes": 129717,
+    "sha256": "32a421d4f5506d025478976fa2d1bc03b86acf45961da83127d7bc73f5f9a7d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.9.1/WelldoneESP32-1.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.9.1/WelldoneESP32-1.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.9.2/WelldoneESP32-1.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.9.2.tar.gz",
+    "size_bytes": 129379,
+    "sha256": "e0d372a326329be5cb00be1fbb76cbbeac4646a397cd7a76cb07fb15aec5f0ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.9.2/WelldoneESP32-1.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.9.2/WelldoneESP32-1.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.9.3/WelldoneESP32-1.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.9.3.tar.gz",
+    "size_bytes": 129895,
+    "sha256": "d84d1291534c5ae29c483c3a2ca3d844dee06e53b4df132df6ccf4871675c1cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.9.3/WelldoneESP32-1.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.9.3/WelldoneESP32-1.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.9.4/WelldoneESP32-1.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.9.4.tar.gz",
+    "size_bytes": 130550,
+    "sha256": "fe6289f6dc0abbb7e123ca2f23974bafededd7d12b55901b6c8c243a855b7934",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.9.4/WelldoneESP32-1.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.9.4/WelldoneESP32-1.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.9.5/WelldoneESP32-1.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.9.5.tar.gz",
+    "size_bytes": 141232,
+    "sha256": "a209608402330dbe30c658b2e11c35cfa11a90e4d54650247452b2c4de0b6574",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.9.5/WelldoneESP32-1.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.9.5/WelldoneESP32-1.9.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.9.6/WelldoneESP32-1.9.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.9.6.tar.gz",
+    "size_bytes": 141788,
+    "sha256": "daab1809a88a7ea52e1daa3c7fc58b7b8c3c968fdf278a02e1082071593cfbe4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.9.6/WelldoneESP32-1.9.6.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.9.6/WelldoneESP32-1.9.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.9.7/WelldoneESP32-1.9.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.9.7.tar.gz",
+    "size_bytes": 141906,
+    "sha256": "d7d09fffcd9bc2dfe497cc2bd793145eb515f15d3c0bf97d43275fbb57b0d47e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.9.7/WelldoneESP32-1.9.7.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.9.7/WelldoneESP32-1.9.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.9.8/WelldoneESP32-1.9.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.9.8.tar.gz",
+    "size_bytes": 142967,
+    "sha256": "4c0f58bf5b4610ec6a8aa84260e608c212fb316f5aefe0fdcdcebf773fa614f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.9.8/WelldoneESP32-1.9.8.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.9.8/WelldoneESP32-1.9.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/1.9.9/WelldoneESP32-1.9.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-1.9.9.tar.gz",
+    "size_bytes": 143326,
+    "sha256": "fa9823a02623292ebd11cd743820584a96521a3d67e6b8c327c7c49cc3f38a24",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/1.9.9/WelldoneESP32-1.9.9.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/1.9.9/WelldoneESP32-1.9.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/2.0.0/WelldoneESP32-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-2.0.0.tar.gz",
+    "size_bytes": 147024,
+    "sha256": "390800d27383f0a136adcfb352f653acd7f2ea9e67070f7bc3e8d7d46c9bdae8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/2.0.0/WelldoneESP32-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/2.0.0/WelldoneESP32-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/2.0.1/WelldoneESP32-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-2.0.1.tar.gz",
+    "size_bytes": 151636,
+    "sha256": "12185632b2d50703345fd2f9e7668dfa36d7d4f8ff9ad18d0a68083363c48970",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/2.0.1/WelldoneESP32-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/2.0.1/WelldoneESP32-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/2.0.2/WelldoneESP32-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-2.0.2.tar.gz",
+    "size_bytes": 169983,
+    "sha256": "3a0732c1516249d5d65f7cf195a2ab854c8dbef664d7667ceee71aad0f8c02a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/2.0.2/WelldoneESP32-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/2.0.2/WelldoneESP32-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneESP32/2.0.3/WelldoneESP32-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneESP32-2.0.3.tar.gz",
+    "size_bytes": 189292,
+    "sha256": "5db401cb5c71379796936ecdc6705d0ef856f506e65505b36900e66070071338",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneESP32/2.0.3/WelldoneESP32-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneESP32/2.0.3/WelldoneESP32-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wisefang/library/WelldoneSTM32/1.0.2/WelldoneSTM32-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WelldoneSTM32-1.0.2.tar.gz",
+    "size_bytes": 60941,
+    "sha256": "e8c8fac3859bbd00e198a9cf665e4a464afbfbc5c40ffad5163484844353a3fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wisefang/library/WelldoneSTM32/1.0.2/WelldoneSTM32-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/wisefang/library/WelldoneSTM32/1.0.2/WelldoneSTM32-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

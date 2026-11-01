@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alfan459",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alfan459/library/ElasticNetModel/1.0.1/ElasticNetModel-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ElasticNetModel-1.0.1.tar.gz",
+    "size_bytes": 2775,
+    "sha256": "679a77d9e3836e01ff9e685542ac7f955f8168b44553499dcf4518a5c3b0b151",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfan459/library/ElasticNetModel/1.0.1/ElasticNetModel-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alfan459/library/ElasticNetModel/1.0.1/ElasticNetModel-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfan459/library/LinearRegressionModel/1.0.1/LinearRegressionModel-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LinearRegressionModel-1.0.1.tar.gz",
+    "size_bytes": 2483,
+    "sha256": "3bc7c436267aa7df24669a410c3b21e0e17c24d94458fe6d001fb232eee5ea3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfan459/library/LinearRegressionModel/1.0.1/LinearRegressionModel-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alfan459/library/LinearRegressionModel/1.0.1/LinearRegressionModel-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alfan459/library/RandomForestModel/1.0.1/RandomForestModel-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RandomForestModel-1.0.1.tar.gz",
+    "size_bytes": 2586,
+    "sha256": "7174b98e466d34a366e8bbc309bd777876b9fcefc6ace41ad03c4fd9fca43c41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alfan459/library/RandomForestModel/1.0.1/RandomForestModel-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/alfan459/library/RandomForestModel/1.0.1/RandomForestModel-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rotario",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rotario/library/CurveFitting/1.0.6/CurveFitting-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CurveFitting-1.0.6.tar.gz",
+    "size_bytes": 3878,
+    "sha256": "189ad1f1d469fbc239cd9d8feb7afc4246e9e0ab5da683be29a8b7fa4fee8311",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rotario/library/CurveFitting/1.0.6/CurveFitting-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/rotario/library/CurveFitting/1.0.6/CurveFitting-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rotario/library/NoveltyDetection/1.0.2/NoveltyDetection-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NoveltyDetection-1.0.2.tar.gz",
+    "size_bytes": 5751,
+    "sha256": "af72afd0de246f1619af8f54407eec46958f3f422dda0d0ba0e4d0a88a0a09e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rotario/library/NoveltyDetection/1.0.2/NoveltyDetection-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rotario/library/NoveltyDetection/1.0.2/NoveltyDetection-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

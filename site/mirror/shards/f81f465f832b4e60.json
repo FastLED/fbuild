@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-teapack-cz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-teapack-cz/library/TonePlayer/0.0.0+sha.9a8ae3a8e5ea/TonePlayer-0.0.0+sha.9a8ae3a8e5ea.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TonePlayer-0.0.0+sha.9a8ae3a8e5ea.tar.gz",
+    "size_bytes": 2705,
+    "sha256": "a47eb6685216dc534a9e7ebfc1058e9fd1aee75659d9961e43f3101ac1872a25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-teapack-cz/library/TonePlayer/0.0.0%2Bsha.9a8ae3a8e5ea/TonePlayer-0.0.0%2Bsha.9a8ae3a8e5ea.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-teapack-cz/library/TonePlayer/0.0.0%2Bsha.9a8ae3a8e5ea/TonePlayer-0.0.0%2Bsha.9a8ae3a8e5ea.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/finianlandes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "finianlandes/library/SpotifyEsp32/3.0.0/SpotifyEsp32-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyEsp32-3.0.0.tar.gz",
+    "size_bytes": 34167,
+    "sha256": "24ae65b9ec7915bc3748159e91ba488171520430be5b29d5b911ee72c1b20124",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/finianlandes/library/SpotifyEsp32/3.0.0/SpotifyEsp32-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/finianlandes/library/SpotifyEsp32/3.0.0/SpotifyEsp32-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "finianlandes/library/SpotifyEsp32/4.0.0/SpotifyEsp32-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyEsp32-4.0.0.tar.gz",
+    "size_bytes": 32123,
+    "sha256": "f3f539d7c55282761ad9730fca9a492218c091ce3d68c917347cdfab3c76e3b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/finianlandes/library/SpotifyEsp32/4.0.0/SpotifyEsp32-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/finianlandes/library/SpotifyEsp32/4.0.0/SpotifyEsp32-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "finianlandes/library/SpotifyEsp32/4.0.1/SpotifyEsp32-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyEsp32-4.0.1.tar.gz",
+    "size_bytes": 32158,
+    "sha256": "d4e327c91adb758763bd45426a97798daf10abe5cda0712fe9bd655b6fd5dfdc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/finianlandes/library/SpotifyEsp32/4.0.1/SpotifyEsp32-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/finianlandes/library/SpotifyEsp32/4.0.1/SpotifyEsp32-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "finianlandes/library/SpotifyEsp32/5.0.0/SpotifyEsp32-5.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyEsp32-5.0.0.tar.gz",
+    "size_bytes": 32580,
+    "sha256": "d87695d773e0c1f85f2e5a57b0ad52db65c75f87e2e9470b1560ef08ba7f9a9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/finianlandes/library/SpotifyEsp32/5.0.0/SpotifyEsp32-5.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/finianlandes/library/SpotifyEsp32/5.0.0/SpotifyEsp32-5.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "finianlandes/library/SpotifyEsp32/5.0.1/SpotifyEsp32-5.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpotifyEsp32-5.0.1.tar.gz",
+    "size_bytes": 32623,
+    "sha256": "0a7995fdbeec32d5f1826b65fdd017c8bbb2eddd001e9051118f3a1d96feb41f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/finianlandes/library/SpotifyEsp32/5.0.1/SpotifyEsp32-5.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/finianlandes/library/SpotifyEsp32/5.0.1/SpotifyEsp32-5.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

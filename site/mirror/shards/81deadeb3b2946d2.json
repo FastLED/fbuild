@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/manuxc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "manuxc/library/Value_Eeprom/1.0.4/Value_Eeprom-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Value_Eeprom-1.0.4.tar.gz",
+    "size_bytes": 4798,
+    "sha256": "d8eed4fb0633eacfc15ac816811df2576df7ed74711a857e822c7f8cb66eefac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/manuxc/library/Value_Eeprom/1.0.4/Value_Eeprom-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/manuxc/library/Value_Eeprom/1.0.4/Value_Eeprom-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

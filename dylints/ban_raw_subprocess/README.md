@@ -56,16 +56,16 @@ Current entries:
 
 ## Toolchain
 
-Pinned to `nightly-2026-05-28` and Dylint 6.0.3, matching every other
+Pinned to `nightly-2026-08-15` and Dylint 6.2.0, matching every other
 Dylint library in this repository.
 
 ## Running locally
 
 ```bash
 # One-time setup
-soldr rustup toolchain install nightly-2026-05-28 --component llvm-tools-preview \
+soldr rustup toolchain install nightly-2026-08-15 --component llvm-tools-preview \
     --component rust-src --component rustc-dev --component rustfmt --profile minimal
-soldr cargo install cargo-dylint dylint-link --version 6.0.3
+soldr cargo install cargo-dylint dylint-link --version 6.2.0
 
 # Run the lint over the workspace
 soldr cargo dylint --all -- --workspace --all-targets

@@ -835,7 +835,6 @@ impl Esp32Deployer {
         }
     }
 }
-
 #[async_trait::async_trait]
 impl Deployer for Esp32Deployer {
     async fn deploy(

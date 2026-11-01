@@ -57,6 +57,35 @@ pub enum ShrinkMode {
     Printf,
 }
 
+impl ShrinkMode {
+    /// Kebab-case spelling accepted by the CLI and the daemon request.
+    #[must_use]
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Self::Auto => "auto",
+            Self::Off => "off",
+            Self::Safe => "safe",
+            Self::Aggressive => "aggressive",
+            Self::Printf => "printf",
+        }
+    }
+}
+
+impl std::str::FromStr for ShrinkMode {
+    type Err = String;
+
+    fn from_str(value: &str) -> Result<Self, Self::Err> {
+        match value {
+            "auto" => Ok(Self::Auto),
+            "off" => Ok(Self::Off),
+            "safe" => Ok(Self::Safe),
+            "aggressive" => Ok(Self::Aggressive),
+            "printf" => Ok(Self::Printf),
+            other => Err(format!("unknown shrink mode: {other}")),
+        }
+    }
+}
+
 /// Combine the CLI inputs into a single resolved [`ShrinkMode`].
 ///
 /// Precedence (highest wins):
@@ -109,6 +138,20 @@ mod tests {
             resolve_explicit(Some(ShrinkMode::Aggressive), None, false),
             ShrinkMode::Aggressive,
         );
+    }
+
+    #[test]
+    fn mode_names_round_trip_through_str() {
+        for mode in [
+            ShrinkMode::Auto,
+            ShrinkMode::Off,
+            ShrinkMode::Safe,
+            ShrinkMode::Aggressive,
+            ShrinkMode::Printf,
+        ] {
+            assert_eq!(mode.as_str().parse::<ShrinkMode>(), Ok(mode));
+        }
+        assert!("nope".parse::<ShrinkMode>().is_err());
     }
 
     #[test]

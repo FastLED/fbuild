@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lfranklinapps",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lfranklinapps/library/Custom_Robot_Control/1.1.2/Custom_Robot_Control-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Custom_Robot_Control-1.1.2.tar.gz",
+    "size_bytes": 2785,
+    "sha256": "45b330f076f891d4ff89d27e7aea87706ef2de78599e50b3010ce18bdb2d9751",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lfranklinapps/library/Custom_Robot_Control/1.1.2/Custom_Robot_Control-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lfranklinapps/library/Custom_Robot_Control/1.1.2/Custom_Robot_Control-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tomylord",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tomylord/library/IRGree/1.0.0/IRGree-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IRGree-1.0.0.tar.gz",
+    "size_bytes": 4582,
+    "sha256": "36ddb10cd94db28ac4fd892adc9fb474cf4024d3fc27045b3221fa86f51a6362",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tomylord/library/IRGree/1.0.0/IRGree-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/tomylord/library/IRGree/1.0.0/IRGree-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-senet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-senet/library/Senet%20NAMote/0.0.0+sha.e37b3bd60d5a/SenetNAMote-0.0.0+sha.e37b3bd60d5a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SenetNAMote-0.0.0+sha.e37b3bd60d5a.tar.gz",
+    "size_bytes": 7254,
+    "sha256": "4a60561a946e4c4d09014da079a81b812151700eecaa6e234b37ed81c97f9822",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-senet/library/Senet%2520NAMote/0.0.0%2Bsha.e37b3bd60d5a/SenetNAMote-0.0.0%2Bsha.e37b3bd60d5a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-senet/library/Senet%20NAMote/0.0.0%2Bsha.e37b3bd60d5a/SenetNAMote-0.0.0%2Bsha.e37b3bd60d5a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-senet/library/Senet_Packet/0.0.0+sha.17e4e5f99d0c/Senet_Packet-0.0.0+sha.17e4e5f99d0c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Senet_Packet-0.0.0+sha.17e4e5f99d0c.tar.gz",
+    "size_bytes": 4964,
+    "sha256": "b4fe944b8d446c465591a1ffdc145bc7067710cae0fc763f623def6630a308a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-senet/library/Senet_Packet/0.0.0%2Bsha.17e4e5f99d0c/Senet_Packet-0.0.0%2Bsha.17e4e5f99d0c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-senet/library/Senet_Packet/0.0.0%2Bsha.17e4e5f99d0c/Senet_Packet-0.0.0%2Bsha.17e4e5f99d0c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

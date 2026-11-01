@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ethanjli",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ethanjli/library/Linear%20Position%20Control/1.1.1/LinearPositionControl-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LinearPositionControl-1.1.1.tar.gz",
+    "size_bytes": 13067,
+    "sha256": "3d9a658fd3b2cb088610997a4dfafc3476dfc22a89c7d6a2d58f16d514bacd1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ethanjli/library/Linear%2520Position%2520Control/1.1.1/LinearPositionControl-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ethanjli/library/Linear%20Position%20Control/1.1.1/LinearPositionControl-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ethanjli/library/Phyllo/0.0.0-broken/Phyllo-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Phyllo-0.2.1.tar.gz",
+    "size_bytes": 699,
+    "sha256": "df0de11cccbeb5a2dcf9dd990d73de22f0643570149e4351f247bee414ec403f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ethanjli/library/Phyllo/0.0.0-broken/Phyllo-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ethanjli/library/Phyllo/0.0.0-broken/Phyllo-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

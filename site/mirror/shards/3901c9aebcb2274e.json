@@ -1,0 +1,230 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/joergtiedemann",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/0.0.3/ESP32-IoT-Framework-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-0.0.3.tar.gz",
+    "size_bytes": 491327,
+    "sha256": "b6a7d1100409c7dd70cb133ae453b3ad30091a59632dbcb0e36d9436074226b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/0.0.3/ESP32-IoT-Framework-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/0.0.3/ESP32-IoT-Framework-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/0.0.4/ESP32-IoT-Framework-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-0.0.4.tar.gz",
+    "size_bytes": 491391,
+    "sha256": "3fa37de6088e9451c6a77eb799c7fe80062f20dcfc6a5e7d0882c5363a45fb1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/0.0.4/ESP32-IoT-Framework-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/0.0.4/ESP32-IoT-Framework-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/0.0.5/ESP32-IoT-Framework-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-0.0.5.tar.gz",
+    "size_bytes": 491383,
+    "sha256": "5c3b3c83d6c83740d57c90ce4feef01f8674d4f5ddfbdbad46e1cba6f1957e8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/0.0.5/ESP32-IoT-Framework-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/0.0.5/ESP32-IoT-Framework-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/0.0.6/ESP32-IoT-Framework-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-0.0.6.tar.gz",
+    "size_bytes": 491560,
+    "sha256": "802a698ec381f7af72404ef39e14365239c742329537aed23963d9f64ff8f516",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/0.0.6/ESP32-IoT-Framework-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/0.0.6/ESP32-IoT-Framework-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/0.0.7/ESP32-IoT-Framework-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-0.0.7.tar.gz",
+    "size_bytes": 491613,
+    "sha256": "5cb4bf1f873041ea23d7ece52f299080b30d1062abb783759ccebac0dbd2c803",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/0.0.7/ESP32-IoT-Framework-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/0.0.7/ESP32-IoT-Framework-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/0.0.8/ESP32-IoT-Framework-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-0.0.8.tar.gz",
+    "size_bytes": 491620,
+    "sha256": "757f07bcf776eb03ec1070bd4998bb061a1b748cd5ea92bcb011c86025417862",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/0.0.8/ESP32-IoT-Framework-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/0.0.8/ESP32-IoT-Framework-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/1.0.0/ESP32-IoT-Framework-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-1.0.0.tar.gz",
+    "size_bytes": 492121,
+    "sha256": "2f76d7c0f8e2dc62065a15b7f84478cf6026cdeebd9949a2dad03576d012e250",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/1.0.0/ESP32-IoT-Framework-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/1.0.0/ESP32-IoT-Framework-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/1.0.1/ESP32-IoT-Framework-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-1.0.1.tar.gz",
+    "size_bytes": 492179,
+    "sha256": "1e3f18cb660aa3bea6241c633d941dc5f257a0119ddadaaf7e21c71aa1b00218",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/1.0.1/ESP32-IoT-Framework-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/1.0.1/ESP32-IoT-Framework-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/2.0.0/ESP32-IoT-Framework-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-2.0.0.tar.gz",
+    "size_bytes": 449208,
+    "sha256": "2a80ded19ce0606dab346515cbac3e9687d61b6e61b85191f873da8fa5a3c04f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/2.0.0/ESP32-IoT-Framework-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/2.0.0/ESP32-IoT-Framework-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/2.0.1/ESP32-IoT-Framework-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-2.0.1.tar.gz",
+    "size_bytes": 228805,
+    "sha256": "0f8ff4bc012ece4ccb83e221cff51307319885f37fa2d5f313b5b82caf18115d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/2.0.1/ESP32-IoT-Framework-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/2.0.1/ESP32-IoT-Framework-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/2.0.2/ESP32-IoT-Framework-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-2.0.2.tar.gz",
+    "size_bytes": 228969,
+    "sha256": "c1aef501dd6cf2478fe82daded8e0585bbdd042abeb46a3caa46c9ac9c7c3b18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/2.0.2/ESP32-IoT-Framework-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/2.0.2/ESP32-IoT-Framework-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/2.0.3/ESP32-IoT-Framework-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-2.0.3.tar.gz",
+    "size_bytes": 229404,
+    "sha256": "51e6e0e4aae3e20c4432d4c0855d16891ba1e5b1670ca361fab2ebb6b136f5e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/2.0.3/ESP32-IoT-Framework-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/2.0.3/ESP32-IoT-Framework-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/2.0.4/ESP32-IoT-Framework-2.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-2.0.4.tar.gz",
+    "size_bytes": 229412,
+    "sha256": "96790377b09cd5e4ce6d2ab7a0b8fceb72f8437f8aeb43df9325989ff0146cdf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/2.0.4/ESP32-IoT-Framework-2.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/2.0.4/ESP32-IoT-Framework-2.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/2.1.0/ESP32-IoT-Framework-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-2.1.0.tar.gz",
+    "size_bytes": 230914,
+    "sha256": "e0391ddeb52e5bbdad135ac1795d59f5d003655ff91b9dc1548246d2e1e2da65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/2.1.0/ESP32-IoT-Framework-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/2.1.0/ESP32-IoT-Framework-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/2.1.1/ESP32-IoT-Framework-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-2.1.1.tar.gz",
+    "size_bytes": 231043,
+    "sha256": "fcc7a44732abbe95ada006434cdd1937d8dfb827a9789aa6937b3c7e74844772",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/2.1.1/ESP32-IoT-Framework-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/2.1.1/ESP32-IoT-Framework-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/2.2.0/ESP32-IoT-Framework-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-2.2.0.tar.gz",
+    "size_bytes": 233694,
+    "sha256": "2b766242a71fb8373e50cceaa950a12e7abaef3dfbfd3ab4c52fb228dce7ec9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/2.2.0/ESP32-IoT-Framework-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/2.2.0/ESP32-IoT-Framework-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joergtiedemann/library/ESP32-IoT-Framework/2.2.1/ESP32-IoT-Framework-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-IoT-Framework-2.2.1.tar.gz",
+    "size_bytes": 233720,
+    "sha256": "3555fffa5b418320414d7bad5abf74d754c15c0e6a8f7ae0ec3a0caf632cdf46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joergtiedemann/library/ESP32-IoT-Framework/2.2.1/ESP32-IoT-Framework-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/joergtiedemann/library/ESP32-IoT-Framework/2.2.1/ESP32-IoT-Framework-2.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

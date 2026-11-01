@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-freecontrol",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-freecontrol/library/FastSPI/0.0.0+sha.3787bbf77ca8/FastSPI-0.0.0+sha.3787bbf77ca8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastSPI-0.0.0+sha.3787bbf77ca8.tar.gz",
+    "size_bytes": 3418,
+    "sha256": "8872b6c84abbd7e451a7dbee67c50d5e4fe88f6589d5b6d541001f3072878c3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-freecontrol/library/FastSPI/0.0.0%2Bsha.3787bbf77ca8/FastSPI-0.0.0%2Bsha.3787bbf77ca8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-freecontrol/library/FastSPI/0.0.0%2Bsha.3787bbf77ca8/FastSPI-0.0.0%2Bsha.3787bbf77ca8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

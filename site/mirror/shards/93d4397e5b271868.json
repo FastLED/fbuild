@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jdonnal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jdonnal/library/ContinuousServo/0.0.0+sha.d6371727ce0c/ContinuousServo-0.0.0+sha.d6371727ce0c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ContinuousServo-0.0.0+sha.d6371727ce0c.tar.gz",
+    "size_bytes": 1352,
+    "sha256": "34a0bc14be968ea75d6d7881d184da492c6dbed2e79ce37641169781db93063a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jdonnal/library/ContinuousServo/0.0.0%2Bsha.d6371727ce0c/ContinuousServo-0.0.0%2Bsha.d6371727ce0c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jdonnal/library/ContinuousServo/0.0.0%2Bsha.d6371727ce0c/ContinuousServo-0.0.0%2Bsha.d6371727ce0c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jdonnal/library/Motor/0.0.0+sha.0394af44cf3e/Motor-0.0.0+sha.0394af44cf3e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor-0.0.0+sha.0394af44cf3e.tar.gz",
+    "size_bytes": 2110,
+    "sha256": "8d1d64d1adbc1f263b2180883abfd9490e85d2b951f8c4f2639b4cb750947273",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jdonnal/library/Motor/0.0.0%2Bsha.0394af44cf3e/Motor-0.0.0%2Bsha.0394af44cf3e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jdonnal/library/Motor/0.0.0%2Bsha.0394af44cf3e/Motor-0.0.0%2Bsha.0394af44cf3e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jdonnal/library/Tach/0.0.0+sha.c165325c9e3f/Tach-0.0.0+sha.c165325c9e3f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tach-0.0.0+sha.c165325c9e3f.tar.gz",
+    "size_bytes": 1763,
+    "sha256": "0c898fb8b8408c3126e63ed44e56df47899ad01ef82bf491d416c51cc6660722",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jdonnal/library/Tach/0.0.0%2Bsha.c165325c9e3f/Tach-0.0.0%2Bsha.c165325c9e3f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jdonnal/library/Tach/0.0.0%2Bsha.c165325c9e3f/Tach-0.0.0%2Bsha.c165325c9e3f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

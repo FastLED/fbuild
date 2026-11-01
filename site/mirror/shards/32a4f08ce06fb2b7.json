@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/idaga",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "idaga/library/golain-platformio-sdk/0.2/golain-platformio-sdk-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "golain-platformio-sdk-0.2.tar.gz",
+    "size_bytes": 18682,
+    "sha256": "c795bdde6a47ee894d3b8940171a2d368de75cc4bf12a6cfae003c0110fa3efc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/idaga/library/golain-platformio-sdk/0.2/golain-platformio-sdk-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/idaga/library/golain-platformio-sdk/0.2/golain-platformio-sdk-0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

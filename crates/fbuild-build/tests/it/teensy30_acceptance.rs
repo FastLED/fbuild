@@ -104,6 +104,7 @@ async fn teensy30_analog_output_meets_205_ac2() {
     ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
+        shrink: Default::default(),
         // WHY env_name = "teensy30": must match the [env:teensy30] key
         // in the platformio.ini we just wrote. Same root-cause family
         // as #220 / #221.

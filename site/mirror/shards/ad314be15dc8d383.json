@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-lisper",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-lisper/library/millis/0.0.0+sha.9492904126e9/millis-0.0.0+sha.9492904126e9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "millis-0.0.0+sha.9492904126e9.tar.gz",
+    "size_bytes": 1466,
+    "sha256": "91c2fd4cb464d4b80348feecf8ea51176bff288254c68f5498bf74f7b5ecf523",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-lisper/library/millis/0.0.0%2Bsha.9492904126e9/millis-0.0.0%2Bsha.9492904126e9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-lisper/library/millis/0.0.0%2Bsha.9492904126e9/millis-0.0.0%2Bsha.9492904126e9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

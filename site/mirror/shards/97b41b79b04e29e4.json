@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-singhs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-singhs/library/SeeedStudioTFTv2/0.0.0+sha.2ae913686bd3/SeeedStudioTFTv2-0.0.0+sha.2ae913686bd3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SeeedStudioTFTv2-0.0.0+sha.2ae913686bd3.tar.gz",
+    "size_bytes": 3242,
+    "sha256": "f7764b9ebb1be16e153a4a10c1c45349a10de9e8b5b13d167d6721f0c8c7bc0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-singhs/library/SeeedStudioTFTv2/0.0.0%2Bsha.2ae913686bd3/SeeedStudioTFTv2-0.0.0%2Bsha.2ae913686bd3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-singhs/library/SeeedStudioTFTv2/0.0.0%2Bsha.2ae913686bd3/SeeedStudioTFTv2-0.0.0%2Bsha.2ae913686bd3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-charlesbl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-charlesbl/library/DRV8825/0.0.0+sha.083f6414ff0c/DRV8825-0.0.0+sha.083f6414ff0c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DRV8825-0.0.0+sha.083f6414ff0c.tar.gz",
+    "size_bytes": 1746,
+    "sha256": "87ec3a911f39c53dd269a122ab9f0167d48ce6b71dff96239a67a746e1a4a1cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-charlesbl/library/DRV8825/0.0.0%2Bsha.083f6414ff0c/DRV8825-0.0.0%2Bsha.083f6414ff0c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-charlesbl/library/DRV8825/0.0.0%2Bsha.083f6414ff0c/DRV8825-0.0.0%2Bsha.083f6414ff0c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-charlesbl/library/VL53L0X/0.0.0+sha.022507164b8e/VL53L0X-0.0.0+sha.022507164b8e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL53L0X-0.0.0+sha.022507164b8e.tar.gz",
+    "size_bytes": 9970,
+    "sha256": "fd7ff601080461d9d4f75257efd250014ee25054e9ac9e937af8d1fccd47bb19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-charlesbl/library/VL53L0X/0.0.0%2Bsha.022507164b8e/VL53L0X-0.0.0%2Bsha.022507164b8e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-charlesbl/library/VL53L0X/0.0.0%2Bsha.022507164b8e/VL53L0X-0.0.0%2Bsha.022507164b8e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

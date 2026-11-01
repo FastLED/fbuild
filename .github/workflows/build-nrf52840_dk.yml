@@ -22,6 +22,7 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/template_build.yml
+    secrets: inherit
     with:
       workflow-name: "Nordic nRF52840-DK"
       test-dir: "tests/platform/nrf52840_dk"

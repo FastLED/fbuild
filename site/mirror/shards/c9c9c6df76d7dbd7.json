@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-i-failed-cpp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-i-failed-cpp/library/ZumoReflectanceSensorArray/0.0.0+sha.e3afbfd0a71c/ZumoReflectanceSensorArray-0.0.0+sha.e3afbfd0a71c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZumoReflectanceSensorArray-0.0.0+sha.e3afbfd0a71c.tar.gz",
+    "size_bytes": 6365,
+    "sha256": "8ae534999779a56764624cce84634c25287186d6ba3a7e964dbb08938ed9cd7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-i-failed-cpp/library/ZumoReflectanceSensorArray/0.0.0%2Bsha.e3afbfd0a71c/ZumoReflectanceSensorArray-0.0.0%2Bsha.e3afbfd0a71c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-i-failed-cpp/library/ZumoReflectanceSensorArray/0.0.0%2Bsha.e3afbfd0a71c/ZumoReflectanceSensorArray-0.0.0%2Bsha.e3afbfd0a71c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

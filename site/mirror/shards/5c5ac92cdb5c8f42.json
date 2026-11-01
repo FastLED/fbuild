@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/simplefoc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "simplefoc/library/SimpleCANio/1.0.0/SimpleCANio-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleCANio-1.0.0.tar.gz",
+    "size_bytes": 19847,
+    "sha256": "92b6651c645526b1a895bc840d46c91f6b2ee2fa155a8c75b0f85c688362566b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simplefoc/library/SimpleCANio/1.0.0/SimpleCANio-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/simplefoc/library/SimpleCANio/1.0.0/SimpleCANio-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simplefoc/library/SimpleDCMotor/1.0.3/SimpleDCMotor-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleDCMotor-1.0.3.tar.gz",
+    "size_bytes": 12607,
+    "sha256": "d6fd0fcd3771255a7786df93ba9e310b33e1d1ce773ef56893be50a3cf6e01a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simplefoc/library/SimpleDCMotor/1.0.3/SimpleDCMotor-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/simplefoc/library/SimpleDCMotor/1.0.3/SimpleDCMotor-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simplefoc/library/SimpleFOCDrivers/1.0.7/SimpleFOCDrivers-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFOCDrivers-1.0.7.tar.gz",
+    "size_bytes": 105155,
+    "sha256": "5807d6aa4057887ba53209e6b8b07623138d56aff60f77d5d5577431c8f17167",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simplefoc/library/SimpleFOCDrivers/1.0.7/SimpleFOCDrivers-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/simplefoc/library/SimpleFOCDrivers/1.0.7/SimpleFOCDrivers-1.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simplefoc/library/SimpleFOCDrivers/1.0.8/SimpleFOCDrivers-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFOCDrivers-1.0.8.tar.gz",
+    "size_bytes": 110753,
+    "sha256": "3fe7af1c84309e1fe8a4cba5094d5eecf92709af62c869ae3de5400f97af5712",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simplefoc/library/SimpleFOCDrivers/1.0.8/SimpleFOCDrivers-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/simplefoc/library/SimpleFOCDrivers/1.0.8/SimpleFOCDrivers-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "simplefoc/library/SimpleFOCDrivers/1.0.9/SimpleFOCDrivers-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleFOCDrivers-1.0.9.tar.gz",
+    "size_bytes": 117002,
+    "sha256": "eec19d7305b9b5d0184ed1ca05c500cebe159e1e97ddd17622da42328e0a1e8a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/simplefoc/library/SimpleFOCDrivers/1.0.9/SimpleFOCDrivers-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/simplefoc/library/SimpleFOCDrivers/1.0.9/SimpleFOCDrivers-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rafab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rafab/library/TSIServo/0.0.0+sha.53d8d4e25c00/TSIServo-0.0.0+sha.53d8d4e25c00.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TSIServo-0.0.0+sha.53d8d4e25c00.tar.gz",
+    "size_bytes": 3439,
+    "sha256": "57c3c4e056ae7404e8e39c9c2dc7db03be7ae1a3057a0869c35533a0b154e10c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rafab/library/TSIServo/0.0.0%2Bsha.53d8d4e25c00/TSIServo-0.0.0%2Bsha.53d8d4e25c00.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rafab/library/TSIServo/0.0.0%2Bsha.53d8d4e25c00/TSIServo-0.0.0%2Bsha.53d8d4e25c00.tar.gz"
+    ]
+   }
+  }
+ ]
+}

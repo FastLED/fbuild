@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/salernosimone",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "salernosimone/library/espdlx/1.0.0/espdlx-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espdlx-1.0.0.tar.gz",
+    "size_bytes": 1226338,
+    "sha256": "c99f25f73a71d82ce98ef56647ac08b6a18ad488cc7d94169cf9cbd9156a3def",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/salernosimone/library/espdlx/1.0.0/espdlx-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/salernosimone/library/espdlx/1.0.0/espdlx-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "salernosimone/library/espdlx/1.1.0/espdlx-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espdlx-1.1.0.tar.gz",
+    "size_bytes": 1237365,
+    "sha256": "188ed237726149ec626fbe2127711c725b483fad3204376201f146cbca695dcd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/salernosimone/library/espdlx/1.1.0/espdlx-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/salernosimone/library/espdlx/1.1.0/espdlx-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "salernosimone/library/esptoolkit/1.0.1/esptoolkit-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esptoolkit-1.0.1.tar.gz",
+    "size_bytes": 59797,
+    "sha256": "fdb3586fa66830bf860b7e49ae432eb2b582d35cb8f836046a2e10b567cd015a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/salernosimone/library/esptoolkit/1.0.1/esptoolkit-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/salernosimone/library/esptoolkit/1.0.1/esptoolkit-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "salernosimone/library/espx/1.0.4/espx-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espx-1.0.4.tar.gz",
+    "size_bytes": 29465,
+    "sha256": "3eaf2e8d5ededac39265e8a2130573607d86566424265a95b6059101c99d4a2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/salernosimone/library/espx/1.0.4/espx-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/salernosimone/library/espx/1.0.4/espx-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "salernosimone/library/espx/1.0.6/espx-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "espx-1.0.6.tar.gz",
+    "size_bytes": 32275,
+    "sha256": "5bd3211841a54333aaacf011bd5b53b606f0f381e1a702f2adc80c75fc3f0ffa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/salernosimone/library/espx/1.0.6/espx-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/salernosimone/library/espx/1.0.6/espx-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "salernosimone/library/tensorflow-runtime-universal/1.0.0/tensorflow-runtime-universal-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tensorflow-runtime-universal-1.0.0.tar.gz",
+    "size_bytes": 1387657,
+    "sha256": "0fcb6fa27c7a8536e9f62e46bd5140ad5ad68aa9c2bba53cdbc9889de24ada46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/salernosimone/library/tensorflow-runtime-universal/1.0.0/tensorflow-runtime-universal-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/salernosimone/library/tensorflow-runtime-universal/1.0.0/tensorflow-runtime-universal-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -4,7 +4,7 @@ use std::io::Write;
 use std::path::Path;
 use std::time::Duration;
 
-use crate::{FbuildError, Result, subprocess::run_command};
+use crate::{FbuildError, Result, disk_full, subprocess::run_command};
 
 // Leave room below CreateProcess's 32,767 UTF-16-unit limit for quoting.
 const RESPONSE_THRESHOLD: usize = 30_000;
@@ -94,6 +94,14 @@ pub async fn create(
     let args: Vec<_> = command.args.iter().map(String::as_str).collect();
     let result = run_command(&args, None, None, Some(timeout)).await?;
     if !result.success() {
+        // A full volume is not an archiver error (FastLED/fbuild#1750 item 4):
+        // say what it is instead of forwarding the raw ENOSPC text.
+        if let Some(signature) = disk_full::enospc_signature(&result.stderr) {
+            return Err(disk_full::disk_full_error(
+                &format!("{label} (archive {})", output.display()),
+                signature,
+            ));
+        }
         return Err(FbuildError::BuildFailed(format!(
             "{label} failed: {}",
             result.stderr

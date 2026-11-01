@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-eic-mbed",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-eic-mbed/library/Adafruit-GFX/0.0.0+sha.ca74c390a0de/Adafruit-GFX-0.0.0+sha.ca74c390a0de.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit-GFX-0.0.0+sha.ca74c390a0de.tar.gz",
+    "size_bytes": 6530,
+    "sha256": "ea3296e9178bd0d80abc99e3e6fbd3052c94a50afd797888b4665723f1f72ca2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eic-mbed/library/Adafruit-GFX/0.0.0%2Bsha.ca74c390a0de/Adafruit-GFX-0.0.0%2Bsha.ca74c390a0de.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eic-mbed/library/Adafruit-GFX/0.0.0%2Bsha.ca74c390a0de/Adafruit-GFX-0.0.0%2Bsha.ca74c390a0de.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-eic-mbed/library/L3GD20_SPI/0.0.0+sha.6e935e7cec72/L3GD20_SPI-0.0.0+sha.6e935e7cec72.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "L3GD20_SPI-0.0.0+sha.6e935e7cec72.tar.gz",
+    "size_bytes": 4618,
+    "sha256": "816e76b8b82f7228a5b7e68848c7316be3f52eb807f0441175465179d4b1f647",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eic-mbed/library/L3GD20_SPI/0.0.0%2Bsha.6e935e7cec72/L3GD20_SPI-0.0.0%2Bsha.6e935e7cec72.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eic-mbed/library/L3GD20_SPI/0.0.0%2Bsha.6e935e7cec72/L3GD20_SPI-0.0.0%2Bsha.6e935e7cec72.tar.gz"
+    ]
+   }
+  }
+ ]
+}

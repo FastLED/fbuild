@@ -1,0 +1,620 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nubiraorg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nubiraorg/library/Trellis/0.1.8/Trellis-0.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.1.8.tar.gz",
+    "size_bytes": 16836,
+    "sha256": "7a7e6d4232e621c762d1da653f93d513557e228507a047367cfe2a1514d0c42f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.1.8/Trellis-0.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.1.8/Trellis-0.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.10.0/Trellis-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.10.0.tar.gz",
+    "size_bytes": 58852,
+    "sha256": "7142a489594bbfc8e99751ee68b376224e6715dc72b2bbe10120f5b36614f011",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.10.0/Trellis-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.10.0/Trellis-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.10.1/Trellis-0.10.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.10.1.tar.gz",
+    "size_bytes": 59104,
+    "sha256": "8160e5d0edfd2482b4990013c8d293a7e1481a92ecd1b4baf59b013bca67dbd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.10.1/Trellis-0.10.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.10.1/Trellis-0.10.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.11.0/Trellis-0.11.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.11.0.tar.gz",
+    "size_bytes": 59516,
+    "sha256": "23158b7e282bde45e3b96afa492c1f894d6951f8850d4df6fd2cb97760d89c72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.11.0/Trellis-0.11.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.11.0/Trellis-0.11.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.12.0/Trellis-0.12.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.12.0.tar.gz",
+    "size_bytes": 59883,
+    "sha256": "8ca4c6b6b9429eb5356c3928ee9a1a09c9da73c15dfbc3060eecffb3a6f08084",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.12.0/Trellis-0.12.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.12.0/Trellis-0.12.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.13.0/Trellis-0.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.13.0.tar.gz",
+    "size_bytes": 60559,
+    "sha256": "9c41056a2522aaef9d0b28c3465af8a7eedfbbb0ee8d520aaa3e899afe4d6245",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.13.0/Trellis-0.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.13.0/Trellis-0.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.14.0/Trellis-0.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.14.0.tar.gz",
+    "size_bytes": 61762,
+    "sha256": "0145f6645ccfaed43f45c63c382996ff563247812ac9fa61ba284f46fbc322c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.14.0/Trellis-0.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.14.0/Trellis-0.14.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.15.0/Trellis-0.15.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.15.0.tar.gz",
+    "size_bytes": 62854,
+    "sha256": "2ca9fbbb79c697519c7a206932de9e9da89fb59b8cbd0250af94216ea503f4d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.15.0/Trellis-0.15.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.15.0/Trellis-0.15.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.16.0/Trellis-0.16.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.16.0.tar.gz",
+    "size_bytes": 65977,
+    "sha256": "34e4c1d4356c648bfb53d84b82e926e77acd1b26ec9affccb8336070dd428fca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.16.0/Trellis-0.16.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.16.0/Trellis-0.16.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.17.0/Trellis-0.17.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.17.0.tar.gz",
+    "size_bytes": 68200,
+    "sha256": "22f9fffa03c6d2341b80a69d606308d805a2d1dc88962181b6e7bed6e320b488",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.17.0/Trellis-0.17.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.17.0/Trellis-0.17.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.18.0/Trellis-0.18.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.18.0.tar.gz",
+    "size_bytes": 70380,
+    "sha256": "b157e45156593decb8749c4d8310e9fdf72c48e71b1db28029fa2cb53a3f3cc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.18.0/Trellis-0.18.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.18.0/Trellis-0.18.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.19.0/Trellis-0.19.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.19.0.tar.gz",
+    "size_bytes": 71494,
+    "sha256": "cb05339431eaccf4aeab76d35f9578e30a31a4e007aaafc1d715f26ee07e7d47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.19.0/Trellis-0.19.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.19.0/Trellis-0.19.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.2.0/Trellis-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.2.0.tar.gz",
+    "size_bytes": 18403,
+    "sha256": "52ccfe44896496d67cdf92b4be72a344f1f22e7f09175cc77b66f313e9eb4799",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.2.0/Trellis-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.2.0/Trellis-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.2.1/Trellis-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.2.1.tar.gz",
+    "size_bytes": 18902,
+    "sha256": "db2737b4378e5b26e9764d77dbd4bcf6d351f941150a150190a02b139d3b5cd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.2.1/Trellis-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.2.1/Trellis-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.20.0/Trellis-0.20.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.20.0.tar.gz",
+    "size_bytes": 73137,
+    "sha256": "02d0d2d104f8b4f89f5b88972a2f82e27b23f47ad2aa65fc2349f98b4d15f7a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.20.0/Trellis-0.20.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.20.0/Trellis-0.20.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.21.0/Trellis-0.21.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.21.0.tar.gz",
+    "size_bytes": 74510,
+    "sha256": "91dbb3b1ee29578e0165e0118fafb1f258436dbfe9317f1bc5cbd52cbbf3684b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.21.0/Trellis-0.21.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.21.0/Trellis-0.21.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.22.0/Trellis-0.22.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.22.0.tar.gz",
+    "size_bytes": 77118,
+    "sha256": "4a95373feed3bb0b6ef57063aae782121ba9fd7cd1324722f4cd98017d0587c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.22.0/Trellis-0.22.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.22.0/Trellis-0.22.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.23.0/Trellis-0.23.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.23.0.tar.gz",
+    "size_bytes": 79100,
+    "sha256": "42fa29737db06baf82648e0e2c58662cc6d8734c94d3f3a9f441f4520d97adab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.23.0/Trellis-0.23.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.23.0/Trellis-0.23.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.24.0/Trellis-0.24.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.24.0.tar.gz",
+    "size_bytes": 80841,
+    "sha256": "272ac1e29b11459695adfab8e023dd4af7c293e2e8731c2ea34ba8cb441ad7e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.24.0/Trellis-0.24.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.24.0/Trellis-0.24.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.25.0/Trellis-0.25.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.25.0.tar.gz",
+    "size_bytes": 83127,
+    "sha256": "639537dde86e1447bdf274af94454c2f08d0a16ac44802852cf2c2277e3058b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.25.0/Trellis-0.25.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.25.0/Trellis-0.25.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.26.0/Trellis-0.26.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.26.0.tar.gz",
+    "size_bytes": 86000,
+    "sha256": "30517060a50ed924b6d812ee369b6fff981d99780dd02884410b668884e46ad0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.26.0/Trellis-0.26.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.26.0/Trellis-0.26.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.27.0/Trellis-0.27.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.27.0.tar.gz",
+    "size_bytes": 88301,
+    "sha256": "9595a1d3d6a901e3205447622d104a2777f4ec2e573c39b7cb97740718d74f2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.27.0/Trellis-0.27.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.27.0/Trellis-0.27.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.28.0/Trellis-0.28.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.28.0.tar.gz",
+    "size_bytes": 90642,
+    "sha256": "19c1adca7d9aa00c5981c3da1fc53dd66c19295c933f0bd62fd6a388e0a10127",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.28.0/Trellis-0.28.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.28.0/Trellis-0.28.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.29.0/Trellis-0.29.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.29.0.tar.gz",
+    "size_bytes": 93186,
+    "sha256": "91977dc5a3e2f08422c5e2971cee7e674daf0dc5420c1fc52dda1afcce274333",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.29.0/Trellis-0.29.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.29.0/Trellis-0.29.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.3.0/Trellis-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.3.0.tar.gz",
+    "size_bytes": 25809,
+    "sha256": "86813584220389dc6235160a3ed26c6349c60180f4b2871d11d890db02f79f59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.3.0/Trellis-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.3.0/Trellis-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.3.1/Trellis-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.3.1.tar.gz",
+    "size_bytes": 30978,
+    "sha256": "d118f559d2680012fd63138f9d146e5f8fc5da8fa64cc1a22c314d6988c77711",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.3.1/Trellis-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.3.1/Trellis-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.3.2/Trellis-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.3.2.tar.gz",
+    "size_bytes": 31593,
+    "sha256": "975c5e1836da75e41f5ddb3bb6f01ecf05d29ca4fee763b258c62c481c565d9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.3.2/Trellis-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.3.2/Trellis-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.3.3/Trellis-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.3.3.tar.gz",
+    "size_bytes": 37079,
+    "sha256": "693edcbc7df37c60fc29dd8f8a5700afe5b0ab1362df110bdc039897b5734a4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.3.3/Trellis-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.3.3/Trellis-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.3.4/Trellis-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.3.4.tar.gz",
+    "size_bytes": 39226,
+    "sha256": "c5f4a5a6ba274abf6273f5400560437bea8229a272d317b9144f9228467c3ab2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.3.4/Trellis-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.3.4/Trellis-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.30.0/Trellis-0.30.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.30.0.tar.gz",
+    "size_bytes": 96451,
+    "sha256": "a7af246ef1461c6d4c5188cd77446418b3021ad1a18fe64745faad67da17a3c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.30.0/Trellis-0.30.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.30.0/Trellis-0.30.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.31.0/Trellis-0.31.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.31.0.tar.gz",
+    "size_bytes": 98678,
+    "sha256": "20fc589ec83293ee714faebde6fdea11dcfe0f5f6bcc138c617679b1fb0fe82d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.31.0/Trellis-0.31.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.31.0/Trellis-0.31.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.32.0/Trellis-0.32.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.32.0.tar.gz",
+    "size_bytes": 30768,
+    "sha256": "74ffe1c581079437053b0a6b1db5b6656ddfd496007ba9b100321683429d57d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.32.0/Trellis-0.32.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.32.0/Trellis-0.32.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.4.0/Trellis-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.4.0.tar.gz",
+    "size_bytes": 41581,
+    "sha256": "96cde3dd34b98d1dc73e4498341c4a737b39dd2e95a2368e01996110a6f00376",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.4.0/Trellis-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.4.0/Trellis-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.4.1/Trellis-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.4.1.tar.gz",
+    "size_bytes": 42069,
+    "sha256": "695025764913cecee322d501b3867ce9ae554f8857c3be64c166d1302ce48661",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.4.1/Trellis-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.4.1/Trellis-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.4.2/Trellis-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.4.2.tar.gz",
+    "size_bytes": 43353,
+    "sha256": "95f3b652bac6343a0f5e6a4626a8c0263786786ae8b8361a84524b5e0eac9e7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.4.2/Trellis-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.4.2/Trellis-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.4.3/Trellis-0.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.4.3.tar.gz",
+    "size_bytes": 44254,
+    "sha256": "59338249663c38ac0a08dd4345fb8eef9095c46d94316fea6d09d3b2079020de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.4.3/Trellis-0.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.4.3/Trellis-0.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.4.4/Trellis-0.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.4.4.tar.gz",
+    "size_bytes": 44244,
+    "sha256": "a41ab0c91426eee64ff3bde7f8548d2d071fce1a942ae5a7a8017e8dded84856",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.4.4/Trellis-0.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.4.4/Trellis-0.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.4.5/Trellis-0.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.4.5.tar.gz",
+    "size_bytes": 45310,
+    "sha256": "c13eed5facd52c827344a4b7fc6d934b627b4260f9d60292a53474d0bc16dc7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.4.5/Trellis-0.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.4.5/Trellis-0.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.4.6/Trellis-0.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.4.6.tar.gz",
+    "size_bytes": 51774,
+    "sha256": "0bd992b3ae002440ed53c5793af40f67b0a2c833d3095753a054674a12dcb22c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.4.6/Trellis-0.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.4.6/Trellis-0.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.4.7/Trellis-0.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.4.7.tar.gz",
+    "size_bytes": 53526,
+    "sha256": "62e6b27b36fe061c0990d234e8386e3fc6f1199ec2a7ee618ae6b05ece0435c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.4.7/Trellis-0.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.4.7/Trellis-0.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.4.8/Trellis-0.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.4.8.tar.gz",
+    "size_bytes": 54670,
+    "sha256": "121b40fd8782fa1eb6d685bbf542637df62bdd331834018cea6dfe2de4ae50c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.4.8/Trellis-0.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.4.8/Trellis-0.4.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.4.9/Trellis-0.4.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.4.9.tar.gz",
+    "size_bytes": 55320,
+    "sha256": "78b2eced6a46506433505f8198ba5808d00a02b80f5c4ef127e0ccc7d421448d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.4.9/Trellis-0.4.9.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.4.9/Trellis-0.4.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.5.0/Trellis-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.5.0.tar.gz",
+    "size_bytes": 55880,
+    "sha256": "65ffffb9829a4f8aeb013b713d16494cb7d05a46281e0d10365d52d57e03a273",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.5.0/Trellis-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.5.0/Trellis-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.6.0/Trellis-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.6.0.tar.gz",
+    "size_bytes": 56645,
+    "sha256": "37a1e18517353579b1a83211574089fc7b3c64284ea452491fa778db6a6b3ad0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.6.0/Trellis-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.6.0/Trellis-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.7.0/Trellis-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.7.0.tar.gz",
+    "size_bytes": 57311,
+    "sha256": "20e98be53d8db1384d0efad96b8e308c0bdab24eb5dd6bf150898e5e66fa01eb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.7.0/Trellis-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.7.0/Trellis-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.8.0/Trellis-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.8.0.tar.gz",
+    "size_bytes": 57889,
+    "sha256": "d032f45693ca9b433271d0c75abceb3e587190b018242ec2e323c0db374f1f41",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.8.0/Trellis-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.8.0/Trellis-0.8.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nubiraorg/library/Trellis/0.9.0/Trellis-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Trellis-0.9.0.tar.gz",
+    "size_bytes": 57913,
+    "sha256": "035d4f0e6e2e549bd66357deea02fafc4515511c9d2830c9dbce2cecf91f92a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nubiraorg/library/Trellis/0.9.0/Trellis-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nubiraorg/library/Trellis/0.9.0/Trellis-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

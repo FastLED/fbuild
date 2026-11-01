@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/haldih",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "haldih/library/expected-lite/0.6.3/expected-lite-0.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "expected-lite-0.6.3.tar.gz",
+    "size_bytes": 30082,
+    "sha256": "de5c3ca4e9874e8e29e18d4214c5822e242e3ada3fa8711be6a018a8604b3b6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/haldih/library/expected-lite/0.6.3/expected-lite-0.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/haldih/library/expected-lite/0.6.3/expected-lite-0.6.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mahadihasan9",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mahadihasan9/library/TelegramBot/1.0.0/TelegramBot-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TelegramBot-1.0.0.tar.gz",
+    "size_bytes": 11001,
+    "sha256": "920f6a97a6f0db27ba86c852b8898622ce9bc6dbdf94d542bc6a1fabb7333639",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mahadihasan9/library/TelegramBot/1.0.0/TelegramBot-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mahadihasan9/library/TelegramBot/1.0.0/TelegramBot-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

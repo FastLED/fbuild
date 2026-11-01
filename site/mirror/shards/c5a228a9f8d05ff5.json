@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thorrak",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thorrak/library/esp_bus/1.0.3/esp_bus-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_bus-1.0.3.tar.gz",
+    "size_bytes": 19642,
+    "sha256": "8f650496b663daf0a95050f9561ab4295ff83b95368eac6497f4eccf1cb23e88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thorrak/library/esp_bus/1.0.3/esp_bus-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/thorrak/library/esp_bus/1.0.3/esp_bus-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thorrak/library/esp_wifi_config/0.0.2/esp_wifi_config-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wifi_config-0.0.2.tar.gz",
+    "size_bytes": 77892,
+    "sha256": "3c0571847c0116ccb9b8fd520ff315efd420971708b2f013a0b65df020d2e644",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thorrak/library/esp_wifi_config/0.0.2/esp_wifi_config-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thorrak/library/esp_wifi_config/0.0.2/esp_wifi_config-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thorrak/library/esp_wifi_config/0.0.3/esp_wifi_config-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wifi_config-0.0.3.tar.gz",
+    "size_bytes": 78020,
+    "sha256": "32c5f0bd0fa4c218984ab9565562f0d74b294d673831a1a04559f2bd64198fff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thorrak/library/esp_wifi_config/0.0.3/esp_wifi_config-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/thorrak/library/esp_wifi_config/0.0.3/esp_wifi_config-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thorrak/library/esp_wifi_config/0.0.4/esp_wifi_config-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wifi_config-0.0.4.tar.gz",
+    "size_bytes": 78516,
+    "sha256": "7a62e1e93702b4484cf21fbe02bcc3d641de3a8485e892431845dbad3afe6e59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thorrak/library/esp_wifi_config/0.0.4/esp_wifi_config-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/thorrak/library/esp_wifi_config/0.0.4/esp_wifi_config-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thorrak/library/esp_wifi_config/0.1.0/esp_wifi_config-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wifi_config-0.1.0.tar.gz",
+    "size_bytes": 96097,
+    "sha256": "33bbfaac3f72211646f983adb2721fda39fed0210216e1f4298b73e1c9689cd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thorrak/library/esp_wifi_config/0.1.0/esp_wifi_config-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thorrak/library/esp_wifi_config/0.1.0/esp_wifi_config-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thorrak/library/esp_wifi_config/0.2.0/esp_wifi_config-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wifi_config-0.2.0.tar.gz",
+    "size_bytes": 111980,
+    "sha256": "1f083df85f9912b597795e1d670031fa821fcb9c417e026965b777cc56614c66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thorrak/library/esp_wifi_config/0.2.0/esp_wifi_config-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thorrak/library/esp_wifi_config/0.2.0/esp_wifi_config-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thorrak/library/esp_wifi_config/0.2.1/esp_wifi_config-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wifi_config-0.2.1.tar.gz",
+    "size_bytes": 114394,
+    "sha256": "e5e6d6b44353731ad3d5f0df883754e45f7e180e6fe553c4bf94ff31b3cdb9de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thorrak/library/esp_wifi_config/0.2.1/esp_wifi_config-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thorrak/library/esp_wifi_config/0.2.1/esp_wifi_config-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thorrak/library/esp_wifi_config/0.2.2/esp_wifi_config-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wifi_config-0.2.2.tar.gz",
+    "size_bytes": 119020,
+    "sha256": "63be14bd1a519985bf5bcb58d0f8568ac1a9b33df1b8fa2e8b476bdd0e52f371",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thorrak/library/esp_wifi_config/0.2.2/esp_wifi_config-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thorrak/library/esp_wifi_config/0.2.2/esp_wifi_config-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thorrak/library/esp_wifi_config/0.2.3/esp_wifi_config-0.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wifi_config-0.2.3.tar.gz",
+    "size_bytes": 122305,
+    "sha256": "27a35903ad8c436465928b50e0cff2cddcd1f0998753ded3855bd4e96759bace",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thorrak/library/esp_wifi_config/0.2.3/esp_wifi_config-0.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/thorrak/library/esp_wifi_config/0.2.3/esp_wifi_config-0.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thorrak/library/esp_wifi_config/0.2.4/esp_wifi_config-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wifi_config-0.2.4.tar.gz",
+    "size_bytes": 123033,
+    "sha256": "2c957876e83dc45994a3b456102e92bc20c7dd2f9269e97313a4ed86b34a9399",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thorrak/library/esp_wifi_config/0.2.4/esp_wifi_config-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/thorrak/library/esp_wifi_config/0.2.4/esp_wifi_config-0.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thorrak/library/esp_wifi_config/0.3.1/esp_wifi_config-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wifi_config-0.3.1.tar.gz",
+    "size_bytes": 160095,
+    "sha256": "a2979890c576a6f4eeb98645f1bfa179cd4942b8492c6892133e84aa27fa36cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thorrak/library/esp_wifi_config/0.3.1/esp_wifi_config-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thorrak/library/esp_wifi_config/0.3.1/esp_wifi_config-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thorrak/library/esp_wifi_config/0.3.2/esp_wifi_config-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wifi_config-0.3.2.tar.gz",
+    "size_bytes": 175870,
+    "sha256": "b9a12996f2747fbf63c14a4e066b1cc683e0d5cac52a940a62e0d40712d94429",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thorrak/library/esp_wifi_config/0.3.2/esp_wifi_config-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thorrak/library/esp_wifi_config/0.3.2/esp_wifi_config-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thorrak/library/esp_wifi_config/0.4.0/esp_wifi_config-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wifi_config-0.4.0.tar.gz",
+    "size_bytes": 179211,
+    "sha256": "59b46da503a072bdd464ba65d33f75f5fba4704a3ce8b5a6a10e7cb93673a029",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thorrak/library/esp_wifi_config/0.4.0/esp_wifi_config-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thorrak/library/esp_wifi_config/0.4.0/esp_wifi_config-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thorrak/library/esp_wifi_config/0.4.1/esp_wifi_config-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp_wifi_config-0.4.1.tar.gz",
+    "size_bytes": 179862,
+    "sha256": "d863c7c162ac12ad410c2fb506614e6c9e24bc087bf2acd8cba027aa4d595917",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thorrak/library/esp_wifi_config/0.4.1/esp_wifi_config-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thorrak/library/esp_wifi_config/0.4.1/esp_wifi_config-0.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fow0ryl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fow0ryl/library/SerialTcp/1.4.7/SerialTcp-1.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialTcp-1.4.7.tar.gz",
+    "size_bytes": 4363,
+    "sha256": "b4540f9a4342548a4b9db66e0b3df5c595cbe649bd21c02263e0057f73067ced",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fow0ryl/library/SerialTcp/1.4.7/SerialTcp-1.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/fow0ryl/library/SerialTcp/1.4.7/SerialTcp-1.4.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

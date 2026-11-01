@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kinshuk-2005",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kinshuk-2005/library/ADF4159/0.9.0/ADF4159-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADF4159-0.9.0.tar.gz",
+    "size_bytes": 26377,
+    "sha256": "25cf38187074263220c32e557f3d1121d78392a0a143ad8c9a9b103473945ac4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kinshuk-2005/library/ADF4159/0.9.0/ADF4159-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kinshuk-2005/library/ADF4159/0.9.0/ADF4159-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kinshuk-2005/library/ADRF6655/1.0.0/ADRF6655-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADRF6655-1.0.0.tar.gz",
+    "size_bytes": 23410,
+    "sha256": "0445d353d0d0f43efed279ca199db2841fd719966ebeb177be756d94dccd9f9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kinshuk-2005/library/ADRF6655/1.0.0/ADRF6655-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kinshuk-2005/library/ADRF6655/1.0.0/ADRF6655-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "kinshuk-2005/library/ADRF6655/1.0.1/ADRF6655-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADRF6655-1.0.1.tar.gz",
+    "size_bytes": 23395,
+    "sha256": "eb97d055dc96ffa67feafd97437f106e7f9e3374452a75c8cb526df7030389c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kinshuk-2005/library/ADRF6655/1.0.1/ADRF6655-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kinshuk-2005/library/ADRF6655/1.0.1/ADRF6655-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/evert-arias",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "evert-arias/library/EasyButton/2.0.1/EasyButton-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyButton-2.0.1.tar.gz",
+    "size_bytes": 69410,
+    "sha256": "a935a948a925c7aaaad266ed406e92560389e02b902fb65ff36ca0c6fccd9c09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/evert-arias/library/EasyButton/2.0.1/EasyButton-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/evert-arias/library/EasyButton/2.0.1/EasyButton-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "evert-arias/library/EasyButton/2.0.3/EasyButton-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyButton-2.0.3.tar.gz",
+    "size_bytes": 8099,
+    "sha256": "171adc1b3a00e1cc68e74de931d3d01e2d1845b303f7a70537e66be7f7005852",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/evert-arias/library/EasyButton/2.0.3/EasyButton-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/evert-arias/library/EasyButton/2.0.3/EasyButton-2.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "evert-arias/library/EasyBuzzer/1.0.4/EasyBuzzer-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyBuzzer-1.0.4.tar.gz",
+    "size_bytes": 3847,
+    "sha256": "7f1e612e8878fec629db82f05254e760f501fe2cd5503fb4fa13fdae0f9259c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/evert-arias/library/EasyBuzzer/1.0.4/EasyBuzzer-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/evert-arias/library/EasyBuzzer/1.0.4/EasyBuzzer-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "evert-arias/library/LedSync/1.0.1/LedSync-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedSync-1.0.1.tar.gz",
+    "size_bytes": 5008,
+    "sha256": "c235dca09a949717c1f7c6c55e353edcc762a78ef46864fe1b60aef8764668b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/evert-arias/library/LedSync/1.0.1/LedSync-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/evert-arias/library/LedSync/1.0.1/LedSync-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "evert-arias/library/MyBlinker/0.1.0-alpha/MyBlinker-0.1.0-alpha.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MyBlinker-0.1.0-alpha.tar.gz",
+    "size_bytes": 5677,
+    "sha256": "feef29d28e15cd9aaf91c98965f7882f8c9754230c8445f1615500d3df1f6590",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/evert-arias/library/MyBlinker/0.1.0-alpha/MyBlinker-0.1.0-alpha.tar.gz",
+     "https://dl.registry.platformio.org/download/evert-arias/library/MyBlinker/0.1.0-alpha/MyBlinker-0.1.0-alpha.tar.gz"
+    ]
+   }
+  }
+ ]
+}

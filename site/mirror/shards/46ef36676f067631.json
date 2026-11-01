@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kpn-iot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kpn-iot/library/ThingsML/1.4.2/ThingsML-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThingsML-1.4.2.tar.gz",
+    "size_bytes": 120368,
+    "sha256": "39d58b7400634f6216203110ed936a95e3712bffa2f302a6c37d6380473bd925",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kpn-iot/library/ThingsML/1.4.2/ThingsML-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/kpn-iot/library/ThingsML/1.4.2/ThingsML-1.4.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

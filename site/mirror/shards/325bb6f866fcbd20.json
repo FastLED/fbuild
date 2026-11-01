@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mcorts",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mcorts/library/WindQX/1.0.1/WindQX-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WindQX-1.0.1.tar.gz",
+    "size_bytes": 3397,
+    "sha256": "7ed8b6cdcc83f81f218f9f047292bdaff6db3f6fe18ac78d69a29f262922e64d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcorts/library/WindQX/1.0.1/WindQX-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcorts/library/WindQX/1.0.1/WindQX-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcorts/library/WindQX_SolidState_Anemometer/1.0.1/WindQX_SolidState_Anemometer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WindQX_SolidState_Anemometer-1.0.1.tar.gz",
+    "size_bytes": 5357,
+    "sha256": "18e3fb237e1ed87b51b7bccfca01073b39689f52de08b4c5babb4805b6524619",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcorts/library/WindQX_SolidState_Anemometer/1.0.1/WindQX_SolidState_Anemometer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mcorts/library/WindQX_SolidState_Anemometer/1.0.1/WindQX_SolidState_Anemometer-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mcorts/library/WindQX_SolidState_Anemometer/2.0.0/WindQX_SolidState_Anemometer-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WindQX_SolidState_Anemometer-2.0.0.tar.gz",
+    "size_bytes": 9464,
+    "sha256": "a78fdf69aa323eebb08ce9e7da457a5ebed0bb3194db747e5a78aadfd4fbddb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mcorts/library/WindQX_SolidState_Anemometer/2.0.0/WindQX_SolidState_Anemometer-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mcorts/library/WindQX_SolidState_Anemometer/2.0.0/WindQX_SolidState_Anemometer-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

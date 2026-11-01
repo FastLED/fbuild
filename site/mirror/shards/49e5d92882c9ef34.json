@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hkoba",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hkoba/library/lcd_st7032i/0.0.0+sha.ccec7bf68a7e/lcd_st7032i-0.0.0+sha.ccec7bf68a7e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lcd_st7032i-0.0.0+sha.ccec7bf68a7e.tar.gz",
+    "size_bytes": 1279,
+    "sha256": "7dbb08bea2af70e8d2674bcfbf5c0fdd9b8ab69d5e9b6b892be0f1a1f05a7509",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hkoba/library/lcd_st7032i/0.0.0%2Bsha.ccec7bf68a7e/lcd_st7032i-0.0.0%2Bsha.ccec7bf68a7e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hkoba/library/lcd_st7032i/0.0.0%2Bsha.ccec7bf68a7e/lcd_st7032i-0.0.0%2Bsha.ccec7bf68a7e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

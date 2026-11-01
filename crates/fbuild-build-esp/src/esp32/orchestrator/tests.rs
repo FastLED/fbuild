@@ -3,8 +3,8 @@
 use super::Esp32Orchestrator;
 use super::cdc::{cdc_on_boot_enabled, is_esp32_project, warn_if_cdc_on_boot};
 use super::helpers::{
-    apply_effective_define_flags, reject_unsupported_esp_framework,
-    reject_unsupported_sdkconfig_overlay,
+    Esp32Integration, apply_effective_define_flags, esp32_package_stack_summary,
+    reject_unsupported_esp_framework, reject_unsupported_sdkconfig_overlay, requested_frameworks,
 };
 use super::helpers::{
     framework_failure_marker, framework_signature, record_failed_framework_lib,
@@ -12,6 +12,7 @@ use super::helpers::{
 };
 use crate::BuildOrchestrator;
 use fbuild_core::Platform;
+use std::collections::HashMap;
 use std::path::PathBuf;
 use std::time::Duration;
 
@@ -98,6 +99,7 @@ async fn sdkconfig_overlay_fails_before_cleaning_build_directory() {
     std::fs::write(&marker, "keep").unwrap();
     let params = crate::BuildParams {
         project_dir: tmp.path().to_path_buf(),
+        shrink: Default::default(),
         env_name: "esp32s3".into(),
         clean_all: false,
         clean_only: false,
@@ -352,4 +354,81 @@ fn deploy_esptool_requires_v5_cli() {
     assert!(!speaks_v5_cli(Path::new(
         "C:/cache/fbuild-tools/esptool/Scripts/esptool.py.exe"
     )));
+}
+
+fn package_info(name: &str, version: &str) -> fbuild_packages::PackageInfo {
+    fbuild_packages::PackageInfo {
+        name: name.to_string(),
+        version: version.to_string(),
+        url: format!("https://example.invalid/{name}-{version}.tar.gz"),
+        install_path: PathBuf::from("/nonexistent"),
+        checksum: None,
+        installed_bytes: None,
+    }
+}
+
+#[test]
+fn requested_frameworks_parses_single_and_dual_requests() {
+    let arduino = requested_frameworks("arduino");
+    assert!(arduino.arduino && !arduino.espidf);
+    assert_eq!(arduino.integration(), Some(Esp32Integration::ArduinoCore));
+
+    let dual = requested_frameworks("arduino, espidf");
+    assert!(dual.arduino && dual.espidf);
+    assert_eq!(dual.integration(), Some(Esp32Integration::ArduinoOnIdf));
+
+    // Order and spacing must not change the classification.
+    let reversed = requested_frameworks(" espidf , arduino ");
+    assert_eq!(reversed, dual);
+
+    let bare_idf = requested_frameworks("espidf");
+    assert_eq!(bare_idf.integration(), None, "bare espidf is unsupported");
+}
+
+#[test]
+fn stack_summary_records_requested_framework_and_integration_mode() {
+    let tmp = tempfile::TempDir::new().unwrap();
+    let installed = fbuild_packages::library::Esp32Framework::new(tmp.path(), "esp32s3");
+    let platform = package_info("espressif32", "6.13.0");
+    let framework = package_info("framework-arduinoespressif32", "3.3.7");
+    let toolchain = package_info("toolchain-xtensa-esp32s3", "8.4.0");
+
+    let mut dual_env = HashMap::new();
+    dual_env.insert("framework".to_string(), "arduino, espidf".to_string());
+    dual_env.insert(
+        "platform_packages".to_string(),
+        "framework-arduinoespressif32@https://example.invalid/fw.tar.gz".to_string(),
+    );
+    let summary = esp32_package_stack_summary(
+        Some(&dual_env),
+        &platform,
+        &framework,
+        &toolchain,
+        &installed,
+        "esp32s3",
+    );
+    assert!(summary.contains("framework=arduino, espidf"), "{summary}");
+    assert!(summary.contains("integration=arduino-on-idf"), "{summary}");
+    assert!(
+        summary.contains(
+            "framework_pin=framework-arduinoespressif32@https://example.invalid/fw.tar.gz"
+        ),
+        "{summary}"
+    );
+    assert!(
+        summary.contains(
+            "resolved platform=espressif32@6.13.0, framework=framework-arduinoespressif32@3.3.7"
+        ),
+        "{summary}"
+    );
+
+    let plain = esp32_package_stack_summary(
+        None, &platform, &framework, &toolchain, &installed, "esp32s3",
+    );
+    assert!(plain.contains("framework=<board default>"), "{plain}");
+    assert!(
+        plain.contains("framework_pin=<platform manifest>"),
+        "{plain}"
+    );
+    assert!(plain.contains("integration=arduino-core"), "{plain}");
 }

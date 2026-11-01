@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-roger5641",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-roger5641/library/LTC6811/0.0.0+sha.910d40021983/LTC6811-0.0.0+sha.910d40021983.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTC6811-0.0.0+sha.910d40021983.tar.gz",
+    "size_bytes": 6005,
+    "sha256": "ecf7ccf419781145b53356c2c4434db2032eda29b53dbf30bb754bc80e3ecf12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-roger5641/library/LTC6811/0.0.0%2Bsha.910d40021983/LTC6811-0.0.0%2Bsha.910d40021983.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-roger5641/library/LTC6811/0.0.0%2Bsha.910d40021983/LTC6811-0.0.0%2Bsha.910d40021983.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-roger5641/library/LTC681x/0.0.0+sha.c1ea93720ab4/LTC681x-0.0.0+sha.c1ea93720ab4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LTC681x-0.0.0+sha.c1ea93720ab4.tar.gz",
+    "size_bytes": 14615,
+    "sha256": "deb10e3fd724b84a52a171aabdf6475d250dcdd4269947440d49384fe0375d9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-roger5641/library/LTC681x/0.0.0%2Bsha.c1ea93720ab4/LTC681x-0.0.0%2Bsha.c1ea93720ab4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-roger5641/library/LTC681x/0.0.0%2Bsha.c1ea93720ab4/LTC681x-0.0.0%2Bsha.c1ea93720ab4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-roger5641/library/LT_SPI/0.0.0+sha.516e11acba42/LT_SPI-0.0.0+sha.516e11acba42.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LT_SPI-0.0.0+sha.516e11acba42.tar.gz",
+    "size_bytes": 4636,
+    "sha256": "6383648e5a32f3237fbebb7fa60b59da1daa11a0e13df2900ffca5d5145c7a07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-roger5641/library/LT_SPI/0.0.0%2Bsha.516e11acba42/LT_SPI-0.0.0%2Bsha.516e11acba42.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-roger5641/library/LT_SPI/0.0.0%2Bsha.516e11acba42/LT_SPI-0.0.0%2Bsha.516e11acba42.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-roger5641/library/bms_master/0.0.0+sha.2561f59cd3dd/bms_master-0.0.0+sha.2561f59cd3dd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bms_master-0.0.0+sha.2561f59cd3dd.tar.gz",
+    "size_bytes": 19694,
+    "sha256": "abfaa467ac10cd249c8c87a310c9a561ef81b8df9c8ee9895be16c99bc9f969b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-roger5641/library/bms_master/0.0.0%2Bsha.2561f59cd3dd/bms_master-0.0.0%2Bsha.2561f59cd3dd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-roger5641/library/bms_master/0.0.0%2Bsha.2561f59cd3dd/bms_master-0.0.0%2Bsha.2561f59cd3dd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

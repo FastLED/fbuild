@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gaetan-andrieu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gaetan-andrieu/library/AS5048/0.0.0+sha.12aba2c743f7/AS5048-0.0.0+sha.12aba2c743f7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AS5048-0.0.0+sha.12aba2c743f7.tar.gz",
+    "size_bytes": 2670,
+    "sha256": "81a3eea6840226e3c05eb6e8f615dd4660007938a306b7ca5e2e31f6795e436f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gaetan-andrieu/library/AS5048/0.0.0%2Bsha.12aba2c743f7/AS5048-0.0.0%2Bsha.12aba2c743f7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gaetan-andrieu/library/AS5048/0.0.0%2Bsha.12aba2c743f7/AS5048-0.0.0%2Bsha.12aba2c743f7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

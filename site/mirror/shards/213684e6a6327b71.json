@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gbr1mbed",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gbr1mbed/library/MMA8453/0.0.0+sha.78ba7ed0699c/MMA8453-0.0.0+sha.78ba7ed0699c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8453-0.0.0+sha.78ba7ed0699c.tar.gz",
+    "size_bytes": 2018,
+    "sha256": "e74e2383e4d0ed18c31b67da0b0c3e00805f4d082444518fc32eb1b5505522b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gbr1mbed/library/MMA8453/0.0.0%2Bsha.78ba7ed0699c/MMA8453-0.0.0%2Bsha.78ba7ed0699c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gbr1mbed/library/MMA8453/0.0.0%2Bsha.78ba7ed0699c/MMA8453-0.0.0%2Bsha.78ba7ed0699c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

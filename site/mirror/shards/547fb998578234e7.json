@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-sensors",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-sensors/library/MAX30102lib/1.0.0/MAX30102lib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30102lib-1.0.0.tar.gz",
+    "size_bytes": 24511,
+    "sha256": "b07bee825a995090798deb0115ffaa750575b77242eaa6148a06b64d23ac2814",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-sensors/library/MAX30102lib/1.0.0/MAX30102lib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-sensors/library/MAX30102lib/1.0.0/MAX30102lib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-sensors/library/VEGA_BMI088/1.0.0/VEGA_BMI088-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEGA_BMI088-1.0.0.tar.gz",
+    "size_bytes": 19641,
+    "sha256": "56d26185b77729901813ea01accf1cd56936f29ca7919ac5d369e55c11f21792",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-sensors/library/VEGA_BMI088/1.0.0/VEGA_BMI088-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-sensors/library/VEGA_BMI088/1.0.0/VEGA_BMI088-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-sensors/library/VEGA_MAX30100/1.0.0/VEGA_MAX30100-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEGA_MAX30100-1.0.0.tar.gz",
+    "size_bytes": 9695,
+    "sha256": "de88ea78c723cc3178b2e7e25f3d498fcb3dd3b0200fc8e3e7c5e4636d57001d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-sensors/library/VEGA_MAX30100/1.0.0/VEGA_MAX30100-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-sensors/library/VEGA_MAX30100/1.0.0/VEGA_MAX30100-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gitlab-sensors/library/VEGA_MLX90614/1.0.0/VEGA_MLX90614-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VEGA_MLX90614-1.0.0.tar.gz",
+    "size_bytes": 2698,
+    "sha256": "b9e92828c20192065430733aa1da34b54bb5dc2424d7d30bce230af60bc2546e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-sensors/library/VEGA_MLX90614/1.0.0/VEGA_MLX90614-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-sensors/library/VEGA_MLX90614/1.0.0/VEGA_MLX90614-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

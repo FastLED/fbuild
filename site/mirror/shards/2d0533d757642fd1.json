@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-capsavon",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-capsavon/library/BSP_DISCO_F746NG/0.0.0+sha.99a7fc4794c7/BSP_DISCO_F746NG-0.0.0+sha.99a7fc4794c7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSP_DISCO_F746NG-0.0.0+sha.99a7fc4794c7.tar.gz",
+    "size_bytes": 57994,
+    "sha256": "755e95ae71753eaf2b59d3cbddb4fcc0488313fe93762f78dd9700b0c08b2c39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-capsavon/library/BSP_DISCO_F746NG/0.0.0%2Bsha.99a7fc4794c7/BSP_DISCO_F746NG-0.0.0%2Bsha.99a7fc4794c7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-capsavon/library/BSP_DISCO_F746NG/0.0.0%2Bsha.99a7fc4794c7/BSP_DISCO_F746NG-0.0.0%2Bsha.99a7fc4794c7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-capsavon/library/QSPI_DISCO_F746NG/0.0.0+sha.f391cd8f34c1/QSPI_DISCO_F746NG-0.0.0+sha.f391cd8f34c1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QSPI_DISCO_F746NG-0.0.0+sha.f391cd8f34c1.tar.gz",
+    "size_bytes": 2575,
+    "sha256": "22df966f7750a81fce461c3ce59bfe490286b1d192bc9862b4644280e5317f78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-capsavon/library/QSPI_DISCO_F746NG/0.0.0%2Bsha.f391cd8f34c1/QSPI_DISCO_F746NG-0.0.0%2Bsha.f391cd8f34c1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-capsavon/library/QSPI_DISCO_F746NG/0.0.0%2Bsha.f391cd8f34c1/QSPI_DISCO_F746NG-0.0.0%2Bsha.f391cd8f34c1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

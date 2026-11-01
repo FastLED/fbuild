@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-acloitre",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-acloitre/library/UM6LT/0.0.0+sha.5651731cfb32/UM6LT-0.0.0+sha.5651731cfb32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UM6LT-0.0.0+sha.5651731cfb32.tar.gz",
+    "size_bytes": 6452,
+    "sha256": "c494d0674a0368e7336f9db31c8158d0de5d0ccc8da67e9160e3ec2f684d86d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-acloitre/library/UM6LT/0.0.0%2Bsha.5651731cfb32/UM6LT-0.0.0%2Bsha.5651731cfb32.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-acloitre/library/UM6LT/0.0.0%2Bsha.5651731cfb32/UM6LT-0.0.0%2Bsha.5651731cfb32.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/snowhalationmkii",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "snowhalationmkii/library/TTP229_BS81X_Serial/1.0.0/TTP229_BS81X_Serial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTP229_BS81X_Serial-1.0.0.tar.gz",
+    "size_bytes": 4832,
+    "sha256": "1b77d8b65636a346af459840151d19be8b6de15ae244ed10cceb2c92d316e575",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/snowhalationmkii/library/TTP229_BS81X_Serial/1.0.0/TTP229_BS81X_Serial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/snowhalationmkii/library/TTP229_BS81X_Serial/1.0.0/TTP229_BS81X_Serial-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/antonin1106",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "antonin1106/library/AsyncState/1.0.0/AsyncState-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncState-1.0.0.tar.gz",
+    "size_bytes": 5783,
+    "sha256": "41354413a466b5266621bfe1ddf1dd6da6d4dfb10afba8ff55713d4c6690dc5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/antonin1106/library/AsyncState/1.0.0/AsyncState-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/antonin1106/library/AsyncState/1.0.0/AsyncState-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

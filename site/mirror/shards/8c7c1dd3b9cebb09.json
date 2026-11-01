@@ -1,0 +1,360 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/akkoyun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "akkoyun/library/AT_Command/2.0.1/AT_Command-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT_Command-2.0.1.tar.gz",
+    "size_bytes": 18548,
+    "sha256": "c3bce3d10d89b94c0f3df28f5ed033f9271292f298571e7a1b072fb21381cea1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/AT_Command/2.0.1/AT_Command-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/AT_Command/2.0.1/AT_Command-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/AT_Command/2.1.0/AT_Command-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT_Command-2.1.0.tar.gz",
+    "size_bytes": 20174,
+    "sha256": "ae72cb105af5b6e3428c49ccbc2e08b10276a4907530607c3d6b22ec2645dba8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/AT_Command/2.1.0/AT_Command-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/AT_Command/2.1.0/AT_Command-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/AT_Command/2.1.1/AT_Command-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT_Command-2.1.1.tar.gz",
+    "size_bytes": 21323,
+    "sha256": "6b9fb02dfc1edae7628b0e74f21052d4289df25af4da855d7d0a2237cc06d80e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/AT_Command/2.1.1/AT_Command-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/AT_Command/2.1.1/AT_Command-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/AT_Command/2.2.0/AT_Command-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT_Command-2.2.0.tar.gz",
+    "size_bytes": 22066,
+    "sha256": "051c4cc459eea2f36d44402cd225f24f9b61a56279e024fe22872a19b78e520d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/AT_Command/2.2.0/AT_Command-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/AT_Command/2.2.0/AT_Command-2.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/AT_Command/2.2.1/AT_Command-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AT_Command-2.2.1.tar.gz",
+    "size_bytes": 22159,
+    "sha256": "e02be28ea54ab02bf03fe54d89099e429c964ec98393979dde99396d0365e194",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/AT_Command/2.2.1/AT_Command-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/AT_Command/2.2.1/AT_Command-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/AVR_Functions/1.1.0/AVR_Functions-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AVR_Functions-1.1.0.tar.gz",
+    "size_bytes": 8490,
+    "sha256": "5167863a244b5eb5603bfc48e0fe567f56491f9fb080517cd792f23fa9a060e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/AVR_Functions/1.1.0/AVR_Functions-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/AVR_Functions/1.1.0/AVR_Functions-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/BQ24298/3.0.1/BQ24298-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BQ24298-3.0.1.tar.gz",
+    "size_bytes": 20647,
+    "sha256": "5b078312aa5d44e2c253aafac217caf5ffa4d64ea74a6cfead6283a4196de647",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/BQ24298/3.0.1/BQ24298-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/BQ24298/3.0.1/BQ24298-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/Console/2.0.1/Console-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Console-2.0.1.tar.gz",
+    "size_bytes": 13230,
+    "sha256": "bfa7d2f97795b5090672bfd210f9abcf372729cedd55046b641b391b2a3d8c68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/Console/2.0.1/Console-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/Console/2.0.1/Console-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/DS28C/2.0.1/DS28C-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS28C-2.0.1.tar.gz",
+    "size_bytes": 5168,
+    "sha256": "86d83cb4e3f225b237c849f99c65a6dcd76a2dc6d01dc824cc3ffb01cc744834",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/DS28C/2.0.1/DS28C-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/DS28C/2.0.1/DS28C-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/EnergyBoard/3.0.3/EnergyBoard-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EnergyBoard-3.0.3.tar.gz",
+    "size_bytes": 7479,
+    "sha256": "ced194a396713f553ae791e6ff81eb180953127d2ba7797adfe535f9bf73e5e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/EnergyBoard/3.0.3/EnergyBoard-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/EnergyBoard/3.0.3/EnergyBoard-3.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/Environment/5.9.3/Environment-5.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Environment-5.9.3.tar.gz",
+    "size_bytes": 13676,
+    "sha256": "fd61ccc53be2690aaf70eb6ffa43c9216437d6e70701f5c32c1bb9f31cd42a7f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/Environment/5.9.3/Environment-5.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/Environment/5.9.3/Environment-5.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/I2C_Functions/2.0.1/I2C_Functions-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C_Functions-2.0.1.tar.gz",
+    "size_bytes": 22545,
+    "sha256": "3040f3904aad058a7ad27482ae4d53c110642fe6496023d0c85c5f47403d9439",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/I2C_Functions/2.0.1/I2C_Functions-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/I2C_Functions/2.0.1/I2C_Functions-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/I2C_Functions/3.0.1/I2C_Functions-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C_Functions-3.0.1.tar.gz",
+    "size_bytes": 13391,
+    "sha256": "32d0440b8d4aeec13b4e7363efdab2e79ad9f2d792c9a4f99793ec476f296e54",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/I2C_Functions/3.0.1/I2C_Functions-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/I2C_Functions/3.0.1/I2C_Functions-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/I2C_Scanner/1.0.8/I2C_Scanner-1.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2C_Scanner-1.0.8.tar.gz",
+    "size_bytes": 7116,
+    "sha256": "ce074c1da5c1ca0b35ad0e3482dd5a1c7d21d3ad7e82177e5c964c00f6271e85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/I2C_Scanner/1.0.8/I2C_Scanner-1.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/I2C_Scanner/1.0.8/I2C_Scanner-1.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/JSON/2.0.1/JSON-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JSON-2.0.1.tar.gz",
+    "size_bytes": 10207,
+    "sha256": "095acbd6eeecd0d30fb6798b9c0cee7cd4a736012923535e7d564e1d83d77661",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/JSON/2.0.1/JSON-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/JSON/2.0.1/JSON-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/MAX17055/3.0.1/MAX17055-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX17055-3.0.1.tar.gz",
+    "size_bytes": 32756,
+    "sha256": "6c86a2ba852e6a505c652d5ad757e4c14d26b74ce0639f51e9a4fc651fe2a067",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/MAX17055/3.0.1/MAX17055-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/MAX17055/3.0.1/MAX17055-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/MAX78630/5.0.1/MAX78630-5.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX78630-5.0.1.tar.gz",
+    "size_bytes": 23756,
+    "sha256": "e727bc89bf1b2b81e4d2ea183bfb5881a2b4fc4b9c1954dc3c6e39f2e49af14e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/MAX78630/5.0.1/MAX78630-5.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/MAX78630/5.0.1/MAX78630-5.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/MD5/1.0.0/MD5-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD5-1.0.0.tar.gz",
+    "size_bytes": 5373,
+    "sha256": "169092a362d6a826af91490ce5f963ab823384a3b43d4d630404e3f9c88dbce7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/MD5/1.0.0/MD5-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/MD5/1.0.0/MD5-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/MD5/1.2.0/MD5-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD5-1.2.0.tar.gz",
+    "size_bytes": 9496383,
+    "sha256": "74aae46cab90ab01384541cde7b687acd2d30453209b52e01c29005ebaa1bac5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/MD5/1.2.0/MD5-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/MD5/1.2.0/MD5-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/MD5/1.3.0/MD5-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD5-1.3.0.tar.gz",
+    "size_bytes": 9496372,
+    "sha256": "aad1aab20175a5ff574fdb36024b550cd42908f06130d39dc784d2935fa290db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/MD5/1.3.0/MD5-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/MD5/1.3.0/MD5-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/PostMan/1.18.6/PostMan-1.18.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PostMan-1.18.6.tar.gz",
+    "size_bytes": 33131,
+    "sha256": "9fedfcbc899ac577202dd643f5db4a94e2a76a107c0736926e7e2a64fb1e8ca9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/PostMan/1.18.6/PostMan-1.18.6.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/PostMan/1.18.6/PostMan-1.18.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/RV3028/2.0.1/RV3028-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RV3028-2.0.1.tar.gz",
+    "size_bytes": 12045,
+    "sha256": "457e7bd03db5b9beecbc8766335f38114320e4e38a41e13da0a45f17d0146f6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/RV3028/2.0.1/RV3028-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/RV3028/2.0.1/RV3028-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/Statistical/3.0.1/Statistical-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Statistical-3.0.1.tar.gz",
+    "size_bytes": 19931,
+    "sha256": "36155fcd883b96ade16d2ae855fe37af43c00f93a7858759fa5364242b99e4ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/Statistical/3.0.1/Statistical-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/Statistical/3.0.1/Statistical-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/Telit_xE910/4.3.24/Telit_xE910-4.3.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Telit_xE910-4.3.24.tar.gz",
+    "size_bytes": 27013,
+    "sha256": "34f337cf1faacdd46defed8eb117bd9510d3743cb53fd36b138b237bb060fbce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/Telit_xE910/4.3.24/Telit_xE910-4.3.24.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/Telit_xE910/4.3.24/Telit_xE910-4.3.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/TinyBool/1.0.1/TinyBool-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyBool-1.0.1.tar.gz",
+    "size_bytes": 5364,
+    "sha256": "98476a51ab4c476252321c9447e4a88a5ca36e6e3c60f567a139eb6538c9b9e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/TinyBool/1.0.1/TinyBool-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/TinyBool/1.0.1/TinyBool-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/Variable/1.3.5/Variable-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Variable-1.3.5.tar.gz",
+    "size_bytes": 7620,
+    "sha256": "bc77b221e2c30587f7df18a57196cea70e4f85936e290c99087867ba47dc93e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/Variable/1.3.5/Variable-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/Variable/1.3.5/Variable-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "akkoyun/library/dWin/2.0.9/dWin-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dWin-2.0.9.tar.gz",
+    "size_bytes": 8529,
+    "sha256": "d20c869783027e399529b85383142800e34ea8a296a26ace0bc4eb05c0329048",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akkoyun/library/dWin/2.0.9/dWin-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/akkoyun/library/dWin/2.0.9/dWin-2.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

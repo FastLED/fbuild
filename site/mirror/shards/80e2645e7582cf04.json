@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-marcush",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-marcush/library/HX711-123/0.0.0+sha.11d732f09d6f/HX711-123-0.0.0+sha.11d732f09d6f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HX711-123-0.0.0+sha.11d732f09d6f.tar.gz",
+    "size_bytes": 5723,
+    "sha256": "2a2f61fe3ca8632df3aa51ea4bc27cef45806b211dd12e22e06db528a889fc12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-marcush/library/HX711-123/0.0.0%2Bsha.11d732f09d6f/HX711-123-0.0.0%2Bsha.11d732f09d6f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-marcush/library/HX711-123/0.0.0%2Bsha.11d732f09d6f/HX711-123-0.0.0%2Bsha.11d732f09d6f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

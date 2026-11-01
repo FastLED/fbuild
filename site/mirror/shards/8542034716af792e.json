@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/teemuatlut",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "teemuatlut/library/TMC2130Stepper/2.5.1/TMC2130Stepper-2.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC2130Stepper-2.5.1.tar.gz",
+    "size_bytes": 36299,
+    "sha256": "fbfd998de9c657f38e795701aadaea78309bc2619aceb8c0611ba0842124bc79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teemuatlut/library/TMC2130Stepper/2.5.1/TMC2130Stepper-2.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/teemuatlut/library/TMC2130Stepper/2.5.1/TMC2130Stepper-2.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teemuatlut/library/TMC2208Stepper/0.2.5/TMC2208Stepper-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC2208Stepper-0.2.5.tar.gz",
+    "size_bytes": 29366,
+    "sha256": "cf4cd0afec0e8f12f6422bc343363ad749044760930aca8e388005443d900b40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teemuatlut/library/TMC2208Stepper/0.2.5/TMC2208Stepper-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/teemuatlut/library/TMC2208Stepper/0.2.5/TMC2208Stepper-0.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teemuatlut/library/TMCStepper/0.7.1/TMCStepper-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMCStepper-0.7.1.tar.gz",
+    "size_bytes": 64932,
+    "sha256": "87bfa7bf590f9e87cbb3943d28b11eddadb65ebfb108b6a0c4f8ea21a737cd46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teemuatlut/library/TMCStepper/0.7.1/TMCStepper-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/teemuatlut/library/TMCStepper/0.7.1/TMCStepper-0.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "teemuatlut/library/TMCStepper/0.7.3/TMCStepper-0.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMCStepper-0.7.3.tar.gz",
+    "size_bytes": 158065,
+    "sha256": "7954386803b67876fd13ed347eb19adc083bf5c05c1c694c4ff5e5243365033f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teemuatlut/library/TMCStepper/0.7.3/TMCStepper-0.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/teemuatlut/library/TMCStepper/0.7.3/TMCStepper-0.7.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

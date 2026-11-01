@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/flyingeinstein",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "flyingeinstein/library/Restfully/0.6.0-rc1/Restfully-0.6.0-rc1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Restfully-0.6.0-rc1.tar.gz",
+    "size_bytes": 45916,
+    "sha256": "d40ce55cd2b79fbdd14bba7a6476cf58ce46cf66b274dbe03b36d69f7d77585a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/flyingeinstein/library/Restfully/0.6.0-rc1/Restfully-0.6.0-rc1.tar.gz",
+     "https://dl.registry.platformio.org/download/flyingeinstein/library/Restfully/0.6.0-rc1/Restfully-0.6.0-rc1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

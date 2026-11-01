@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nesara-thejan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nesara-thejan/library/MPU6050_Nexa/1.0.5/MPU6050_Nexa-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU6050_Nexa-1.0.5.tar.gz",
+    "size_bytes": 4773,
+    "sha256": "749384e166a92b4d6ac99026c8e12cc1de83bdd64c42d45362cec984aab47da8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nesara-thejan/library/MPU6050_Nexa/1.0.5/MPU6050_Nexa-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/nesara-thejan/library/MPU6050_Nexa/1.0.5/MPU6050_Nexa-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

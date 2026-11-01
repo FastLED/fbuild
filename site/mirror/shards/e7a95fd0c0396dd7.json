@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/briand",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "briand/library/LibBriandIDF/1.5.0/LibBriandIDF-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibBriandIDF-1.5.0.tar.gz",
+    "size_bytes": 44793,
+    "sha256": "99d9fb6195e4fb0b294459456520a05c4118896126c2da775224890d14042e19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/briand/library/LibBriandIDF/1.5.0/LibBriandIDF-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/briand/library/LibBriandIDF/1.5.0/LibBriandIDF-1.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

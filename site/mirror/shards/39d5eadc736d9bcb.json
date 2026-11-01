@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/plerup",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "plerup/library/EspSoftwareSerial/6.15.1/EspSoftwareSerial-6.15.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspSoftwareSerial-6.15.1.tar.gz",
+    "size_bytes": 36031,
+    "sha256": "bae5ab71ce6ad936e37a78eea590c07c93eaedd7196470f16e873c9fed037238",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plerup/library/EspSoftwareSerial/6.15.1/EspSoftwareSerial-6.15.1.tar.gz",
+     "https://dl.registry.platformio.org/download/plerup/library/EspSoftwareSerial/6.15.1/EspSoftwareSerial-6.15.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plerup/library/EspSoftwareSerial/6.15.2/EspSoftwareSerial-6.15.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspSoftwareSerial-6.15.2.tar.gz",
+    "size_bytes": 36158,
+    "sha256": "92650760a0fae49510e1acf5c0b643c0261c24464fc62125cf83b84c07b66bf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plerup/library/EspSoftwareSerial/6.15.2/EspSoftwareSerial-6.15.2.tar.gz",
+     "https://dl.registry.platformio.org/download/plerup/library/EspSoftwareSerial/6.15.2/EspSoftwareSerial-6.15.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plerup/library/EspSoftwareSerial/6.16.1/EspSoftwareSerial-6.16.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspSoftwareSerial-6.16.1.tar.gz",
+    "size_bytes": 36722,
+    "sha256": "cadd89b4f0dea0b04e81c286f72958345d8f63ef91ea97ed421ac54395d002c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plerup/library/EspSoftwareSerial/6.16.1/EspSoftwareSerial-6.16.1.tar.gz",
+     "https://dl.registry.platformio.org/download/plerup/library/EspSoftwareSerial/6.16.1/EspSoftwareSerial-6.16.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plerup/library/EspSoftwareSerial/6.17.1/EspSoftwareSerial-6.17.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspSoftwareSerial-6.17.1.tar.gz",
+    "size_bytes": 36948,
+    "sha256": "d431c1c750af330eaaff2e4b00e4eb9c7f2aa460292cf0923045624443adc72c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plerup/library/EspSoftwareSerial/6.17.1/EspSoftwareSerial-6.17.1.tar.gz",
+     "https://dl.registry.platformio.org/download/plerup/library/EspSoftwareSerial/6.17.1/EspSoftwareSerial-6.17.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plerup/library/EspSoftwareSerial/7.0.1/EspSoftwareSerial-7.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspSoftwareSerial-7.0.1.tar.gz",
+    "size_bytes": 37949,
+    "sha256": "67b67031e84f8b4ab9ed209af17f931b1e0e2bf0edb06fc8cbec24022fab7434",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plerup/library/EspSoftwareSerial/7.0.1/EspSoftwareSerial-7.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/plerup/library/EspSoftwareSerial/7.0.1/EspSoftwareSerial-7.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plerup/library/EspSoftwareSerial/8.1.0/EspSoftwareSerial-8.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspSoftwareSerial-8.1.0.tar.gz",
+    "size_bytes": 39054,
+    "sha256": "e16b37d458e260327a94b3341d6a81f41609b251b1d71b72a8d7041ce7eb51f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plerup/library/EspSoftwareSerial/8.1.0/EspSoftwareSerial-8.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/plerup/library/EspSoftwareSerial/8.1.0/EspSoftwareSerial-8.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "plerup/library/EspSoftwareSerial/8.2.0/EspSoftwareSerial-8.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspSoftwareSerial-8.2.0.tar.gz",
+    "size_bytes": 27859,
+    "sha256": "d4d24777b1d5fae2bf211be18e6a464e93ae78f609aa5f4553366625be1510e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plerup/library/EspSoftwareSerial/8.2.0/EspSoftwareSerial-8.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/plerup/library/EspSoftwareSerial/8.2.0/EspSoftwareSerial-8.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

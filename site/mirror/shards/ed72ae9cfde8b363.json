@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/baaaaan1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "baaaaan1/library/BuzzerManager/2.2.2/BuzzerManager-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BuzzerManager-2.2.2.tar.gz",
+    "size_bytes": 14883,
+    "sha256": "3871549af0b44de832e4415274950dee8be394f478b9a580fc2e46c825fedd63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baaaaan1/library/BuzzerManager/2.2.2/BuzzerManager-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/baaaaan1/library/BuzzerManager/2.2.2/BuzzerManager-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baaaaan1/library/EEPROMHandler/1.3.0/EEPROMHandler-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROMHandler-1.3.0.tar.gz",
+    "size_bytes": 17335,
+    "sha256": "2f5734be106d83b56a2db7e34b0151048f6bd9a5c813e4628e4f1ff1134aaf4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baaaaan1/library/EEPROMHandler/1.3.0/EEPROMHandler-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/baaaaan1/library/EEPROMHandler/1.3.0/EEPROMHandler-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "baaaaan1/library/EEPROMHandler/2.1.0/EEPROMHandler-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROMHandler-2.1.0.tar.gz",
+    "size_bytes": 20114,
+    "sha256": "97545a1a2454772838f6574c0ebc41abff3b14070deb1ff7ab96923299e82799",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/baaaaan1/library/EEPROMHandler/2.1.0/EEPROMHandler-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/baaaaan1/library/EEPROMHandler/2.1.0/EEPROMHandler-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

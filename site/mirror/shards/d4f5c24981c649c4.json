@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/devnetx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "devnetx/library/devnetXButtonDebouncer/1.0.0/devnetXButtonDebouncer-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "devnetXButtonDebouncer-1.0.0.tar.gz",
+    "size_bytes": 6442,
+    "sha256": "941e7d3fe9f37f2622bff104cc61b02f5f8b060c98c4219536cb7612dca55f4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devnetx/library/devnetXButtonDebouncer/1.0.0/devnetXButtonDebouncer-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/devnetx/library/devnetXButtonDebouncer/1.0.0/devnetXButtonDebouncer-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devnetx/library/devnetXLOG/1.5.0/devnetXLOG-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "devnetXLOG-1.5.0.tar.gz",
+    "size_bytes": 5889,
+    "sha256": "ac26b8b24229f3ae570a51ff9b8d2f26a34303e0fb8e190fec145f974f8b8252",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devnetx/library/devnetXLOG/1.5.0/devnetXLOG-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/devnetx/library/devnetXLOG/1.5.0/devnetXLOG-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devnetx/library/devnetXStopWatch/1.0.0/devnetXStopWatch-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "devnetXStopWatch-1.0.0.tar.gz",
+    "size_bytes": 2679,
+    "sha256": "006ac306e5e9a795b980cf4dce9e55d4e5217d1f916e97dd57f7d57eb995bdb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devnetx/library/devnetXStopWatch/1.0.0/devnetXStopWatch-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/devnetx/library/devnetXStopWatch/1.0.0/devnetXStopWatch-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "devnetx/library/devnetXUptime/1.0.1/devnetXUptime-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "devnetXUptime-1.0.1.tar.gz",
+    "size_bytes": 2815,
+    "sha256": "cdd399cc336027dc4aafbdfcb9529295d5cf7b1262bcc45ec1151d1cd893a48a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/devnetx/library/devnetXUptime/1.0.1/devnetXUptime-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/devnetx/library/devnetXUptime/1.0.1/devnetXUptime-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

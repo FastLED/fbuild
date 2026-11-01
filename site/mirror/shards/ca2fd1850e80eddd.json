@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-flencina",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-flencina/library/TCC_MCSA/0.0.0+sha.398325c79937/TCC_MCSA-0.0.0+sha.398325c79937.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCC_MCSA-0.0.0+sha.398325c79937.tar.gz",
+    "size_bytes": 5726,
+    "sha256": "bc0ff92986dc9f2a186beb65182ca887ec5688715d3765c38aa43fd9c372bc16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-flencina/library/TCC_MCSA/0.0.0%2Bsha.398325c79937/TCC_MCSA-0.0.0%2Bsha.398325c79937.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-flencina/library/TCC_MCSA/0.0.0%2Bsha.398325c79937/TCC_MCSA-0.0.0%2Bsha.398325c79937.tar.gz"
+    ]
+   }
+  }
+ ]
+}

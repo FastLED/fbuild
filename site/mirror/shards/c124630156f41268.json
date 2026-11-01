@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/5p4k",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "5p4k/library/libNeon/1.0.1/libNeon-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libNeon-1.0.1.tar.gz",
+    "size_bytes": 21058,
+    "sha256": "1e122f4501e96cd4d279164710784dfb6a6bbb5b0f3a375f34249d7645cb0ecf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/5p4k/library/libNeon/1.0.1/libNeon-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/5p4k/library/libNeon/1.0.1/libNeon-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

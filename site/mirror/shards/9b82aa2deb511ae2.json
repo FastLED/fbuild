@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maquinitas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maquinitas/library/MaquinitasParams/0.0.4/MaquinitasParams-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MaquinitasParams-0.0.4.tar.gz",
+    "size_bytes": 3820,
+    "sha256": "5b5d7b3c798ce0ecd1d0374dc6d64c73c5daddd019abfd01ea4a879b5bad0a64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maquinitas/library/MaquinitasParams/0.0.4/MaquinitasParams-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/maquinitas/library/MaquinitasParams/0.0.4/MaquinitasParams-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "maquinitas/library/MaquinitasRitmos/0.0.1/MaquinitasRitmos-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MaquinitasRitmos-0.0.1.tar.gz",
+    "size_bytes": 2367,
+    "sha256": "b701735a7a36e0f691905ec42b43e139395ab61d6d4d2aee51b9a984ccf7405d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maquinitas/library/MaquinitasRitmos/0.0.1/MaquinitasRitmos-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/maquinitas/library/MaquinitasRitmos/0.0.1/MaquinitasRitmos-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

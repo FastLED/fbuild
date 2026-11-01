@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tedtoal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tedtoal/library/Button_TT/1.1.1/Button_TT-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Button_TT-1.1.1.tar.gz",
+    "size_bytes": 74261,
+    "sha256": "359f0dc77723a606dd01a06f3ba7806b3cdd8a46e5744b5723497acf1363ea11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tedtoal/library/Button_TT/1.1.1/Button_TT-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tedtoal/library/Button_TT/1.1.1/Button_TT-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tedtoal/library/XPT2046_Touchscreen_TT/1.8.1/XPT2046_Touchscreen_TT-1.8.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPT2046_Touchscreen_TT-1.8.1.tar.gz",
+    "size_bytes": 24971,
+    "sha256": "db9574d96417f64a96a40a589e70f3dbf90c1bcb62fc7394785e99c5ace4a1ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tedtoal/library/XPT2046_Touchscreen_TT/1.8.1/XPT2046_Touchscreen_TT-1.8.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tedtoal/library/XPT2046_Touchscreen_TT/1.8.1/XPT2046_Touchscreen_TT-1.8.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tedtoal/library/floatToString/1.3.1/floatToString-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "floatToString-1.3.1.tar.gz",
+    "size_bytes": 3882,
+    "sha256": "af4f84e69a53758ed43a625398801b82eef935e60f84dacf0eda6fd703180a6b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tedtoal/library/floatToString/1.3.1/floatToString-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tedtoal/library/floatToString/1.3.1/floatToString-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tedtoal/library/monitor_printf/1.6.1/monitor_printf-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "monitor_printf-1.6.1.tar.gz",
+    "size_bytes": 9129,
+    "sha256": "6855dd324ee5b1c86456d403786c02c5a7cdf9142f308cb1f79f650be200b025",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tedtoal/library/monitor_printf/1.6.1/monitor_printf-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tedtoal/library/monitor_printf/1.6.1/monitor_printf-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tedtoal/library/msToString/1.2.1/msToString-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "msToString-1.2.1.tar.gz",
+    "size_bytes": 7100,
+    "sha256": "715126b716d4922fd34969cc900e96169f8d57e5fd87b7d5d3b7663b003a8b93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tedtoal/library/msToString/1.2.1/msToString-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tedtoal/library/msToString/1.2.1/msToString-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tedtoal/library/wiring_analog_SAMD_TT/1.1.1/wiring_analog_SAMD_TT-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wiring_analog_SAMD_TT-1.1.1.tar.gz",
+    "size_bytes": 31872,
+    "sha256": "0448e141680d338094788bb7bdeafe603dae7f86dad6e5103442766c06a2dcc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tedtoal/library/wiring_analog_SAMD_TT/1.1.1/wiring_analog_SAMD_TT-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tedtoal/library/wiring_analog_SAMD_TT/1.1.1/wiring_analog_SAMD_TT-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

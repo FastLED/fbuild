@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mickey9801",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mickey9801/library/BlinkControl/1.1.0/BlinkControl-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BlinkControl-1.1.0.tar.gz",
+    "size_bytes": 7279,
+    "sha256": "d570f6e24480c2c59a29837a12a529fb4f7f33201b981a42530e740fbd80f4f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mickey9801/library/BlinkControl/1.1.0/BlinkControl-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mickey9801/library/BlinkControl/1.1.0/BlinkControl-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mickey9801/library/ButtonFever/1.0/ButtonFever-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ButtonFever-1.0.tar.gz",
+    "size_bytes": 7801,
+    "sha256": "0c7912e5c012bdaf23d8c51d0ff7db6b8ebf1e60025fbbabde53154ee9fa3d6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mickey9801/library/ButtonFever/1.0/ButtonFever-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mickey9801/library/ButtonFever/1.0/ButtonFever-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mickey9801/library/MultiButtons/1.0.1/MultiButtons-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiButtons-1.0.1.tar.gz",
+    "size_bytes": 6077,
+    "sha256": "6222ab8b7c35fca02b0be9297a783838068c4a88bbc0d0571c3e6e0639230ce8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mickey9801/library/MultiButtons/1.0.1/MultiButtons-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mickey9801/library/MultiButtons/1.0.1/MultiButtons-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbratch",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbratch/library/TaskJockey/1.0.4/TaskJockey-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskJockey-1.0.4.tar.gz",
+    "size_bytes": 8181,
+    "sha256": "e490f93e00655e6b0ae57b89c1c01c977555f5ab9e41b93ff08963837aaae8ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbratch/library/TaskJockey/1.0.4/TaskJockey-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbratch/library/TaskJockey/1.0.4/TaskJockey-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

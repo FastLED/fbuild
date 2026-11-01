@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dhruvkotian",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dhruvkotian/library/EM2M-ESP32-Driver/1.0.0/EM2M-ESP32-Driver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EM2M-ESP32-Driver-1.0.0.tar.gz",
+    "size_bytes": 3926,
+    "sha256": "747d7a4452ab43d33d0ec43f6e37ba2db9841e8df9217357dd1d023784137f1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dhruvkotian/library/EM2M-ESP32-Driver/1.0.0/EM2M-ESP32-Driver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dhruvkotian/library/EM2M-ESP32-Driver/1.0.0/EM2M-ESP32-Driver-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dhruvkotian/library/EM2M-ESP32-Driver/1.1.1/EM2M-ESP32-Driver-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EM2M-ESP32-Driver-1.1.1.tar.gz",
+    "size_bytes": 3969,
+    "sha256": "5d7159d6e8e4675832550b9e93ab422aca0f38b08fdc2c49552a81ff377347b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dhruvkotian/library/EM2M-ESP32-Driver/1.1.1/EM2M-ESP32-Driver-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dhruvkotian/library/EM2M-ESP32-Driver/1.1.1/EM2M-ESP32-Driver-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-langster1980",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-langster1980/library/4dGENIE/0.0.0+sha.bf1df2d55307/4dGENIE-0.0.0+sha.bf1df2d55307.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "4dGENIE-0.0.0+sha.bf1df2d55307.tar.gz",
+    "size_bytes": 6325,
+    "sha256": "a89dc5249a6aefab397ad8fc2be194c66905e9a80ef509b7432eb72450accab0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-langster1980/library/4dGENIE/0.0.0%2Bsha.bf1df2d55307/4dGENIE-0.0.0%2Bsha.bf1df2d55307.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-langster1980/library/4dGENIE/0.0.0%2Bsha.bf1df2d55307/4dGENIE-0.0.0%2Bsha.bf1df2d55307.tar.gz"
+    ]
+   }
+  }
+ ]
+}

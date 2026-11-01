@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fysetc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fysetc/library/SoftwareSerialM/1.0.0/SoftwareSerialM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftwareSerialM-1.0.0.tar.gz",
+    "size_bytes": 7215,
+    "sha256": "7629bc0e8c63e2a60c72cd0cdc24f29314acfaa5a96892e5d3e4c006671dc5ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fysetc/library/SoftwareSerialM/1.0.0/SoftwareSerialM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fysetc/library/SoftwareSerialM/1.0.0/SoftwareSerialM-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/enindza",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "enindza/library/IFTTTwebhooks/1.0.0/IFTTTwebhooks-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IFTTTwebhooks-1.0.0.tar.gz",
+    "size_bytes": 11265,
+    "sha256": "b93419c95d7df57b1226905a2b8cc072c57f42cfd8f30bb1cb84d7a22dca54c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/enindza/library/IFTTTwebhooks/1.0.0/IFTTTwebhooks-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/enindza/library/IFTTTwebhooks/1.0.0/IFTTTwebhooks-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

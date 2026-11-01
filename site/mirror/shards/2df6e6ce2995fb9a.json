@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/suculent",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "suculent/library/AESLib/2.3.6/AESLib-2.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AESLib-2.3.6.tar.gz",
+    "size_bytes": 484042,
+    "sha256": "4ef2600d8abec37adf64595e9761818c29b070f73f9921c4aa650a2c0c41cf40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suculent/library/AESLib/2.3.6/AESLib-2.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/suculent/library/AESLib/2.3.6/AESLib-2.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suculent/library/ESP32httpUpdate/2.1.145/ESP32httpUpdate-2.1.145.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32httpUpdate-2.1.145.tar.gz",
+    "size_bytes": 5057,
+    "sha256": "712926f49e90c288bc500f74d3e8fbf3de00e851ec9930a0e6d67b6a2eb13d3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suculent/library/ESP32httpUpdate/2.1.145/ESP32httpUpdate-2.1.145.tar.gz",
+     "https://dl.registry.platformio.org/download/suculent/library/ESP32httpUpdate/2.1.145/ESP32httpUpdate-2.1.145.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suculent/library/THiNX32/3.0.1/THiNX32-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "THiNX32-3.0.1.tar.gz",
+    "size_bytes": 197973,
+    "sha256": "a7ac0e9a53b2f19afe5f7b23318dd506116e30ee1674300bffc257ad7dbe4fc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suculent/library/THiNX32/3.0.1/THiNX32-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/suculent/library/THiNX32/3.0.1/THiNX32-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suculent/library/THiNXLib/3.0.270/THiNXLib-3.0.270.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "THiNXLib-3.0.270.tar.gz",
+    "size_bytes": 3279450,
+    "sha256": "d1fd4542f6a1a209de47b8db71308f36541501dd135bb300516ba1f13b3f3e71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suculent/library/THiNXLib/3.0.270/THiNXLib-3.0.270.tar.gz",
+     "https://dl.registry.platformio.org/download/suculent/library/THiNXLib/3.0.270/THiNXLib-3.0.270.tar.gz"
+    ]
+   }
+  }
+ ]
+}

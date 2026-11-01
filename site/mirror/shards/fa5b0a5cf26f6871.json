@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/n0m1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "n0m1/library/Comp6DOF_n0m1/0.1.1/Comp6DOF_n0m1-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Comp6DOF_n0m1-0.1.1.tar.gz",
+    "size_bytes": 10774,
+    "sha256": "bdbc3b31b08c4aa1a7809e8eb0406093317ffc323ddf6267a577834e3b93d932",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/n0m1/library/Comp6DOF_n0m1/0.1.1/Comp6DOF_n0m1-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/n0m1/library/Comp6DOF_n0m1/0.1.1/Comp6DOF_n0m1-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "n0m1/library/MMA8453_n0m1/1.0.1/MMA8453_n0m1-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8453_n0m1-1.0.1.tar.gz",
+    "size_bytes": 7698,
+    "sha256": "40e7c04d5318e502a8857c97d9760336ddfa690f59e0fd8fa3c91bfe739653e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/n0m1/library/MMA8453_n0m1/1.0.1/MMA8453_n0m1-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/n0m1/library/MMA8453_n0m1/1.0.1/MMA8453_n0m1-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "n0m1/library/Sleep_n0m1/1.1.1/Sleep_n0m1-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sleep_n0m1-1.1.1.tar.gz",
+    "size_bytes": 5277,
+    "sha256": "03a4b0a051675eb804298107e87e2e47312f5ee0c05a8832aa56d43d8bcfea05",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/n0m1/library/Sleep_n0m1/1.1.1/Sleep_n0m1-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/n0m1/library/Sleep_n0m1/1.1.1/Sleep_n0m1-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -72,11 +72,11 @@ impl RunningProcessDaemonMode {
 }
 
 pub fn running_process_disabled() -> bool {
-    env_flag_is_one(RUNNING_PROCESS_DISABLE_ENV)
+    fbuild_core::env_flag::is_set(RUNNING_PROCESS_DISABLE_ENV)
 }
 
 pub fn running_process_broker_requested() -> bool {
-    !running_process_disabled() && env_flag_is_one(FBUILD_RUNNING_PROCESS_BROKER_ENV)
+    !running_process_disabled() && fbuild_core::env_flag::is_set(FBUILD_RUNNING_PROCESS_BROKER_ENV)
 }
 
 pub fn running_process_daemon_mode() -> RunningProcessDaemonMode {
@@ -110,10 +110,6 @@ pub fn running_process_service_definition_path() -> PathBuf {
 
 pub fn running_process_service_definition_path_in(root: impl AsRef<Path>) -> PathBuf {
     root.as_ref().join(SERVICE_DEFINITION_FILE_NAME)
-}
-
-fn env_flag_is_one(name: &str) -> bool {
-    std::env::var(name).is_ok_and(|value| value == "1")
 }
 
 /// Broker/cache identity for local fbuild daemons.

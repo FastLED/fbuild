@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/martinvichnal",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "martinvichnal/library/AntiDelay/1.1.2/AntiDelay-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AntiDelay-1.1.2.tar.gz",
+    "size_bytes": 3126,
+    "sha256": "2c49673b5bdfb1683303b5a41d5e38a6bc9d77b40ffefd5057e8516d7b7b181b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinvichnal/library/AntiDelay/1.1.2/AntiDelay-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/martinvichnal/library/AntiDelay/1.1.2/AntiDelay-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

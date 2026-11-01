@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wickeddevice",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wickeddevice/library/WildFire-CC3000/0.0.0-alpha+sha.d206750071/WildFire-CC3000-0.0.0-alphasha.d206750071.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WildFire-CC3000-0.0.0-alphasha.d206750071.tar.gz",
+    "size_bytes": 186974,
+    "sha256": "f4fbe8f55b76d6f48b621de984f1dbde7844df5573af1f5944517e33d2ecac1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wickeddevice/library/WildFire-CC3000/0.0.0-alpha%2Bsha.d206750071/WildFire-CC3000-0.0.0-alphasha.d206750071.tar.gz",
+     "https://dl.registry.platformio.org/download/wickeddevice/library/WildFire-CC3000/0.0.0-alpha%2Bsha.d206750071/WildFire-CC3000-0.0.0-alphasha.d206750071.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wickeddevice/library/WildFireCore/0.0.0-alpha+sha.35f94f5487/WildFireCore-0.0.0-alphasha.35f94f5487.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WildFireCore-0.0.0-alphasha.35f94f5487.tar.gz",
+    "size_bytes": 1487,
+    "sha256": "ea9120dd35d4f7b2151392a5097fcd67e68e8c55e48de3a8c88636cd6feea7ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wickeddevice/library/WildFireCore/0.0.0-alpha%2Bsha.35f94f5487/WildFireCore-0.0.0-alphasha.35f94f5487.tar.gz",
+     "https://dl.registry.platformio.org/download/wickeddevice/library/WildFireCore/0.0.0-alpha%2Bsha.35f94f5487/WildFireCore-0.0.0-alphasha.35f94f5487.tar.gz"
+    ]
+   }
+  }
+ ]
+}

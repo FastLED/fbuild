@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mbed-cookbook-se",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mbed-cookbook-se/library/LM61CIZ/0.0.0+sha.3635002dc1de/LM61CIZ-0.0.0+sha.3635002dc1de.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LM61CIZ-0.0.0+sha.3635002dc1de.tar.gz",
+    "size_bytes": 1136,
+    "sha256": "c9e972ba05f2560758f75310e5ad5a1c115cb3ae112dc856e0aab29be87b839f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed-cookbook-se/library/LM61CIZ/0.0.0%2Bsha.3635002dc1de/LM61CIZ-0.0.0%2Bsha.3635002dc1de.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed-cookbook-se/library/LM61CIZ/0.0.0%2Bsha.3635002dc1de/LM61CIZ-0.0.0%2Bsha.3635002dc1de.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-mbed-cookbook-se/library/LedMatrix8x8Driver/0.0.0+sha.326fc1762064/LedMatrix8x8Driver-0.0.0+sha.326fc1762064.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LedMatrix8x8Driver-0.0.0+sha.326fc1762064.tar.gz",
+    "size_bytes": 1374,
+    "sha256": "8b3f1c236962eea8effe2d1612d8c093acbcc0705a7df380b401e5e4312749cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbed-cookbook-se/library/LedMatrix8x8Driver/0.0.0%2Bsha.326fc1762064/LedMatrix8x8Driver-0.0.0%2Bsha.326fc1762064.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbed-cookbook-se/library/LedMatrix8x8Driver/0.0.0%2Bsha.326fc1762064/LedMatrix8x8Driver-0.0.0%2Bsha.326fc1762064.tar.gz"
+    ]
+   }
+  }
+ ]
+}

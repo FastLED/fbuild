@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tympan",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tympan/library/Tympan_Library/3.2.1/Tympan_Library-3.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tympan_Library-3.2.1.tar.gz",
+    "size_bytes": 1423173,
+    "sha256": "95bd2e8fe03cd5df1efa769c9d50a1b358c693d0f036eeed0f689f8b7432d452",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tympan/library/Tympan_Library/3.2.1/Tympan_Library-3.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/tympan/library/Tympan_Library/3.2.1/Tympan_Library-3.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

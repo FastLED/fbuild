@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rodcoleman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rodcoleman/library/AD5258/0.0.0+sha.f5b60d166896/AD5258-0.0.0+sha.f5b60d166896.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD5258-0.0.0+sha.f5b60d166896.tar.gz",
+    "size_bytes": 2253,
+    "sha256": "d54648ff0e83378bbc5b601d7ac7bd1ee631ae20b3dd724867aafd3d902d26cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rodcoleman/library/AD5258/0.0.0%2Bsha.f5b60d166896/AD5258-0.0.0%2Bsha.f5b60d166896.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rodcoleman/library/AD5258/0.0.0%2Bsha.f5b60d166896/AD5258-0.0.0%2Bsha.f5b60d166896.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-rodcoleman/library/TextOLED20x4/0.0.0+sha.d955c3213b6a/TextOLED20x4-0.0.0+sha.d955c3213b6a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TextOLED20x4-0.0.0+sha.d955c3213b6a.tar.gz",
+    "size_bytes": 3594,
+    "sha256": "ad54f9f752f2947a57ea460582204204d5a7712897d546178c6c19776263a28d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rodcoleman/library/TextOLED20x4/0.0.0%2Bsha.d955c3213b6a/TextOLED20x4-0.0.0%2Bsha.d955c3213b6a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rodcoleman/library/TextOLED20x4/0.0.0%2Bsha.d955c3213b6a/TextOLED20x4-0.0.0%2Bsha.d955c3213b6a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

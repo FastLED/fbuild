@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ateyercheese",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ateyercheese/library/Sparkfun_TB6612/0.0.0+sha.9d2787060b3e/Sparkfun_TB6612-0.0.0+sha.9d2787060b3e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sparkfun_TB6612-0.0.0+sha.9d2787060b3e.tar.gz",
+    "size_bytes": 2362,
+    "sha256": "bd04124b8e2047173c328247860b19340f2c6867a3fb6b4e662ca46a9cb157b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ateyercheese/library/Sparkfun_TB6612/0.0.0%2Bsha.9d2787060b3e/Sparkfun_TB6612-0.0.0%2Bsha.9d2787060b3e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ateyercheese/library/Sparkfun_TB6612/0.0.0%2Bsha.9d2787060b3e/Sparkfun_TB6612-0.0.0%2Bsha.9d2787060b3e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

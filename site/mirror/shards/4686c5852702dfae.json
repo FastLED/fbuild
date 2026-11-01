@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hidori",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hidori/library/DigitalButton/1.0.0/DigitalButton-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DigitalButton-1.0.0.tar.gz",
+    "size_bytes": 8486,
+    "sha256": "f4c61f126ba406fc975742a5d9a9f3793e504a3e0d4a6eeb61f17fcd309ee615",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hidori/library/DigitalButton/1.0.0/DigitalButton-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hidori/library/DigitalButton/1.0.0/DigitalButton-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hidori/library/MicroSerial/1.0.0/MicroSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroSerial-1.0.0.tar.gz",
+    "size_bytes": 7586,
+    "sha256": "4e380da566401404403385386ffebea9b09dcabae4873217c9197692012b7a51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hidori/library/MicroSerial/1.0.0/MicroSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hidori/library/MicroSerial/1.0.0/MicroSerial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hidori/library/MicroSerial/1.1.0/MicroSerial-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroSerial-1.1.0.tar.gz",
+    "size_bytes": 8184,
+    "sha256": "07b6d79e10017e0ad352ed1142122ff488dcc04a5b4c72f409eda00fb66ba1e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hidori/library/MicroSerial/1.1.0/MicroSerial-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hidori/library/MicroSerial/1.1.0/MicroSerial-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hidori/library/ProgMemFS/1.0.0/ProgMemFS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ProgMemFS-1.0.0.tar.gz",
+    "size_bytes": 11378,
+    "sha256": "87de32249420a4ba290ffeae948e433e68ea7ff9a25ff7479e18a4b6f3e4c553",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hidori/library/ProgMemFS/1.0.0/ProgMemFS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hidori/library/ProgMemFS/1.0.0/ProgMemFS-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

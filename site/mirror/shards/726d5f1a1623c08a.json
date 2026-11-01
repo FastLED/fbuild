@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tudi-ts",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tudi-ts/library/ADP5585/0.0.0+sha.05c2f1dff741/ADP5585-0.0.0+sha.05c2f1dff741.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADP5585-0.0.0+sha.05c2f1dff741.tar.gz",
+    "size_bytes": 4633,
+    "sha256": "44f2470c830849b395ef2481baad65beb4ffac350b2feac88fac4f53d4956410",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tudi-ts/library/ADP5585/0.0.0%2Bsha.05c2f1dff741/ADP5585-0.0.0%2Bsha.05c2f1dff741.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tudi-ts/library/ADP5585/0.0.0%2Bsha.05c2f1dff741/ADP5585-0.0.0%2Bsha.05c2f1dff741.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-tudi-ts/library/ADP5585_V2/0.0.0+sha.4f4258fc4a6c/ADP5585_V2-0.0.0+sha.4f4258fc4a6c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADP5585_V2-0.0.0+sha.4f4258fc4a6c.tar.gz",
+    "size_bytes": 3736,
+    "sha256": "de59be934c1bbde0da94b5c6e2f09689a11c12a43ab7068275963cd6b1ebddc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tudi-ts/library/ADP5585_V2/0.0.0%2Bsha.4f4258fc4a6c/ADP5585_V2-0.0.0%2Bsha.4f4258fc4a6c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tudi-ts/library/ADP5585_V2/0.0.0%2Bsha.4f4258fc4a6c/ADP5585_V2-0.0.0%2Bsha.4f4258fc4a6c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

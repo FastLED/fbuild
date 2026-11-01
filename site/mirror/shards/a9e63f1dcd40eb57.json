@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alex-stone-github",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alex-stone-github/library/CNCShield/2.0/CNCShield-2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CNCShield-2.0.tar.gz",
+    "size_bytes": 3598,
+    "sha256": "1756721ae2e99a2db8165687e9813bbcf3b9a904cfa2f0cfb3a0f3761f062235",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alex-stone-github/library/CNCShield/2.0/CNCShield-2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alex-stone-github/library/CNCShield/2.0/CNCShield-2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alex-stone-github/library/pepstep/1.0/pepstep-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pepstep-1.0.tar.gz",
+    "size_bytes": 2735,
+    "sha256": "993d310a0504c5b352c33581c57f6289b294f255c262aa5911b7a80c8ecbf4b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alex-stone-github/library/pepstep/1.0/pepstep-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alex-stone-github/library/pepstep/1.0/pepstep-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

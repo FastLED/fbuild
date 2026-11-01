@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/felixardyansyah",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "felixardyansyah/library/FGV_CH224X/1.0.0/FGV_CH224X-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FGV_CH224X-1.0.0.tar.gz",
+    "size_bytes": 11543,
+    "sha256": "ead47ef6283bb7f4695bcf5c115da565936f3c1733f77180b4173af6f33676d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felixardyansyah/library/FGV_CH224X/1.0.0/FGV_CH224X-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/felixardyansyah/library/FGV_CH224X/1.0.0/FGV_CH224X-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "felixardyansyah/library/FGV_CH224X/1.0.1/FGV_CH224X-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FGV_CH224X-1.0.1.tar.gz",
+    "size_bytes": 11902,
+    "sha256": "75c9df3c2df044545cf645e224b350d12791d3de3970ca5a442e682b714faab8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/felixardyansyah/library/FGV_CH224X/1.0.1/FGV_CH224X-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/felixardyansyah/library/FGV_CH224X/1.0.1/FGV_CH224X-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sebastianregelmann",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sebastianregelmann/library/CypressCY8CMBR3116/1.0.0/CypressCY8CMBR3116-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CypressCY8CMBR3116-1.0.0.tar.gz",
+    "size_bytes": 9226,
+    "sha256": "eec65ab3f9b15a3d83a0bc0a1aef67d26b563ff5c381962f0fad05874e53d196",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebastianregelmann/library/CypressCY8CMBR3116/1.0.0/CypressCY8CMBR3116-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sebastianregelmann/library/CypressCY8CMBR3116/1.0.0/CypressCY8CMBR3116-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebastianregelmann/library/tflite-micro/1.0.0/tflite-micro-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tflite-micro-1.0.0.tar.gz",
+    "size_bytes": 1145738,
+    "sha256": "0639f182c6f1dff1518c3aa9b51cd59fc56e0c9e53b6438ced42f99a23b48003",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebastianregelmann/library/tflite-micro/1.0.0/tflite-micro-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sebastianregelmann/library/tflite-micro/1.0.0/tflite-micro-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebastianregelmann/library/tflite-micro/1.0.1/tflite-micro-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tflite-micro-1.0.1.tar.gz",
+    "size_bytes": 1123648,
+    "sha256": "7377ab1abf0e0297d65a0377c9bfc2e6b9b33b4e297821fd602baf05db38c3e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebastianregelmann/library/tflite-micro/1.0.1/tflite-micro-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sebastianregelmann/library/tflite-micro/1.0.1/tflite-micro-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebastianregelmann/library/tflite-micro/1.0.2/tflite-micro-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tflite-micro-1.0.2.tar.gz",
+    "size_bytes": 1123542,
+    "sha256": "2e31188a62e4f8b0bc7d9353b22ebb582f219132ae073287715f26e4ead151e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebastianregelmann/library/tflite-micro/1.0.2/tflite-micro-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sebastianregelmann/library/tflite-micro/1.0.2/tflite-micro-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebastianregelmann/library/tflite-micro/1.0.3/tflite-micro-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tflite-micro-1.0.3.tar.gz",
+    "size_bytes": 1122741,
+    "sha256": "6b7c8ec25e9617892aa18330f0d1bee52fe1b20c6e12d7f06c73a88f0a83108e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebastianregelmann/library/tflite-micro/1.0.3/tflite-micro-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sebastianregelmann/library/tflite-micro/1.0.3/tflite-micro-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebastianregelmann/library/tflite-micro/1.26.41/tflite-micro-1.26.41.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tflite-micro-1.26.41.tar.gz",
+    "size_bytes": 1122800,
+    "sha256": "fe3394e28146a46dbacb5b4cd9da1a6e7dfbb17b6ddd3757df086a82b330802c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebastianregelmann/library/tflite-micro/1.26.41/tflite-micro-1.26.41.tar.gz",
+     "https://dl.registry.platformio.org/download/sebastianregelmann/library/tflite-micro/1.26.41/tflite-micro-1.26.41.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebastianregelmann/library/tflite-micro/1.26.42/tflite-micro-1.26.42.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tflite-micro-1.26.42.tar.gz",
+    "size_bytes": 1121655,
+    "sha256": "d38401009d970af9c8a5168d3a447f8719b22b70c17635a52e06a2c6fa4cd173",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebastianregelmann/library/tflite-micro/1.26.42/tflite-micro-1.26.42.tar.gz",
+     "https://dl.registry.platformio.org/download/sebastianregelmann/library/tflite-micro/1.26.42/tflite-micro-1.26.42.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sebastianregelmann/library/tflite-micro/1.26.43/tflite-micro-1.26.43.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tflite-micro-1.26.43.tar.gz",
+    "size_bytes": 1121654,
+    "sha256": "c4f087564106a647a895bb9bff7664a76ed3f5c7e8833e68889c34d71c78b5ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sebastianregelmann/library/tflite-micro/1.26.43/tflite-micro-1.26.43.tar.gz",
+     "https://dl.registry.platformio.org/download/sebastianregelmann/library/tflite-micro/1.26.43/tflite-micro-1.26.43.tar.gz"
+    ]
+   }
+  }
+ ]
+}

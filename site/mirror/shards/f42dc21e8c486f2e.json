@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/domochip",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "domochip/library/Palazzetti/2.7.10/Palazzetti-2.7.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Palazzetti-2.7.10.tar.gz",
+    "size_bytes": 20099,
+    "sha256": "53aa03ddf1eb1a5b55ad9073b1f2d8449123b17454a1a8aa2e25db9fb8a7796b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/domochip/library/Palazzetti/2.7.10/Palazzetti-2.7.10.tar.gz",
+     "https://dl.registry.platformio.org/download/domochip/library/Palazzetti/2.7.10/Palazzetti-2.7.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "domochip/library/Palazzetti/3.0.0/Palazzetti-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Palazzetti-3.0.0.tar.gz",
+    "size_bytes": 19077,
+    "sha256": "3273e411deb77611e628ca4a50e0c29fb57e67001125cdf5113a53a165f3f7de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/domochip/library/Palazzetti/3.0.0/Palazzetti-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/domochip/library/Palazzetti/3.0.0/Palazzetti-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "domochip/library/Palazzetti/3.1.0/Palazzetti-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Palazzetti-3.1.0.tar.gz",
+    "size_bytes": 19129,
+    "sha256": "468097b741d1bae5fce4b2aa106fb58fdf16b3f034a2e2fa19542b2aceec15c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/domochip/library/Palazzetti/3.1.0/Palazzetti-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/domochip/library/Palazzetti/3.1.0/Palazzetti-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "domochip/library/Palazzetti/3.2.0/Palazzetti-3.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Palazzetti-3.2.0.tar.gz",
+    "size_bytes": 19114,
+    "sha256": "3c28325b52569e7ba4126d3fbe8ca3fbc3b022a2acb62c14d4fd7e777fb1e685",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/domochip/library/Palazzetti/3.2.0/Palazzetti-3.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/domochip/library/Palazzetti/3.2.0/Palazzetti-3.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "domochip/library/Palazzetti/3.3.0/Palazzetti-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Palazzetti-3.3.0.tar.gz",
+    "size_bytes": 19877,
+    "sha256": "79b5a2b648bd026dae45f559835296fc0b9bb5e35fb7870a694d4fcfaa24d83e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/domochip/library/Palazzetti/3.3.0/Palazzetti-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/domochip/library/Palazzetti/3.3.0/Palazzetti-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "domochip/library/Palazzetti/3.4.0/Palazzetti-3.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Palazzetti-3.4.0.tar.gz",
+    "size_bytes": 20050,
+    "sha256": "3fba56fa8c8b69f17fb84a83c1094b538eb5c237beb46c320797e0dbbd2bdf97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/domochip/library/Palazzetti/3.4.0/Palazzetti-3.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/domochip/library/Palazzetti/3.4.0/Palazzetti-3.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

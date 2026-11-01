@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/prosenb",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "prosenb/library/DeepSleepScheduler/3.3.0/DeepSleepScheduler-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DeepSleepScheduler-3.3.0.tar.gz",
+    "size_bytes": 22734,
+    "sha256": "63d16a5a2548283402d81ca5ea2691d70d14b03043e74fbdfa4d62452d686489",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prosenb/library/DeepSleepScheduler/3.3.0/DeepSleepScheduler-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/prosenb/library/DeepSleepScheduler/3.3.0/DeepSleepScheduler-3.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prosenb/library/EEPROMWearLevel/2.1.0/EEPROMWearLevel-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROMWearLevel-2.1.0.tar.gz",
+    "size_bytes": 14364,
+    "sha256": "7d8515f3722400e70ab0a01e9d9d70a7c500aca4320b214535e91f16dc5edbe4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prosenb/library/EEPROMWearLevel/2.1.0/EEPROMWearLevel-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/prosenb/library/EEPROMWearLevel/2.1.0/EEPROMWearLevel-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "prosenb/library/SPIFFS_FilePrint/1.1.0/SPIFFS_FilePrint-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPIFFS_FilePrint-1.1.0.tar.gz",
+    "size_bytes": 7764,
+    "sha256": "3c751fa4600b76189f2ffef39e7bb49d17e84c6c40af0cfbfa50ecbfa3d69a48",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/prosenb/library/SPIFFS_FilePrint/1.1.0/SPIFFS_FilePrint-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/prosenb/library/SPIFFS_FilePrint/1.1.0/SPIFFS_FilePrint-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

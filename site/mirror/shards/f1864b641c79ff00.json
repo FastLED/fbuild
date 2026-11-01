@@ -1,0 +1,477 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rei-vilo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rei-vilo/library/PDLS_Basic/10.0.0/PDLS_Basic-10.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Basic-10.0.0.tar.gz",
+    "size_bytes": 73894,
+    "sha256": "06b8d6bf522c6257ccbf219ed7ae2e6abf87fbc51621bb04cefca299e63585e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Basic/10.0.0/PDLS_Basic-10.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Basic/10.0.0/PDLS_Basic-10.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Basic/10.0.1/PDLS_Basic-10.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Basic-10.0.1.tar.gz",
+    "size_bytes": 73982,
+    "sha256": "4090e297b48a45bc7d5d47170415f97577fb8fee4606bbf7bfe20dd034f48193",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Basic/10.0.1/PDLS_Basic-10.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Basic/10.0.1/PDLS_Basic-10.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Basic/10.0.2/PDLS_Basic-10.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Basic-10.0.2.tar.gz",
+    "size_bytes": 73980,
+    "sha256": "ba56437e1e3609f1b0910b86e4ddd4007206b83c21d8af8f5d2d17f6077c32a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Basic/10.0.2/PDLS_Basic-10.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Basic/10.0.2/PDLS_Basic-10.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Basic/10.0.3/PDLS_Basic-10.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Basic-10.0.3.tar.gz",
+    "size_bytes": 74224,
+    "sha256": "e8ee7de3558c220e8e2ced3143d173c73ddb02e1abfe3af4e37b1a649d1f381a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Basic/10.0.3/PDLS_Basic-10.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Basic/10.0.3/PDLS_Basic-10.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Basic/10.0.4/PDLS_Basic-10.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Basic-10.0.4.tar.gz",
+    "size_bytes": 74224,
+    "sha256": "da73dbefceb34fc9484ea8e7bca5a1566210fbfbb90904ba611eb9aece8cdff3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Basic/10.0.4/PDLS_Basic-10.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Basic/10.0.4/PDLS_Basic-10.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Basic/10.0.5/PDLS_Basic-10.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Basic-10.0.5.tar.gz",
+    "size_bytes": 75324,
+    "sha256": "13d3a08d30518dea6b34cf55440d0974b7997d738d13c581a7a78e646a0f2eef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Basic/10.0.5/PDLS_Basic-10.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Basic/10.0.5/PDLS_Basic-10.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Basic/10.0.7/PDLS_Basic-10.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Basic-10.0.7.tar.gz",
+    "size_bytes": 75417,
+    "sha256": "6d9f47ff3d709f25fa6827aa39d9b75ede9ccbc85558964f92fd97a8418c5d03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Basic/10.0.7/PDLS_Basic-10.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Basic/10.0.7/PDLS_Basic-10.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Basic/10.0.8/PDLS_Basic-10.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Basic-10.0.8.tar.gz",
+    "size_bytes": 75625,
+    "sha256": "43535765c1861fed0ce1d3022521ce892e94052d37a3672ee60b15c4fe3839d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Basic/10.0.8/PDLS_Basic-10.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Basic/10.0.8/PDLS_Basic-10.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Basic/10.0.9/PDLS_Basic-10.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Basic-10.0.9.tar.gz",
+    "size_bytes": 75685,
+    "sha256": "f7a759be172ea30f9bd9e2a7869cf3132f407c35eb63d28c5597b0dc7079701e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Basic/10.0.9/PDLS_Basic-10.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Basic/10.0.9/PDLS_Basic-10.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Basic/10.1.0/PDLS_Basic-10.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Basic-10.1.0.tar.gz",
+    "size_bytes": 76421,
+    "sha256": "af9c9ef0f379496cba15b7ff9a3682256bf8be44d37ffcd88f8987563faa8ad1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Basic/10.1.0/PDLS_Basic-10.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Basic/10.1.0/PDLS_Basic-10.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Basic/10.1.1/PDLS_Basic-10.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Basic-10.1.1.tar.gz",
+    "size_bytes": 76425,
+    "sha256": "d87b40640bea62d2e23c27b5c66363d5d9e7ec0637ee2f3db9cc28e27ee6a154",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Basic/10.1.1/PDLS_Basic-10.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Basic/10.1.1/PDLS_Basic-10.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Basic/9.2.0/PDLS_Basic-9.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Basic-9.2.0.tar.gz",
+    "size_bytes": 72483,
+    "sha256": "1392e73b5cddc111cabad1eb839387b31421816943d421f5369814ad16866d1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Basic/9.2.0/PDLS_Basic-9.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Basic/9.2.0/PDLS_Basic-9.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Basic/9.2.1/PDLS_Basic-9.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Basic-9.2.1.tar.gz",
+    "size_bytes": 72252,
+    "sha256": "85bc0264aca72edb417826c28ae59356708dfc2da94b5ac71a60821f883ffc93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Basic/9.2.1/PDLS_Basic-9.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Basic/9.2.1/PDLS_Basic-9.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Basic/9.2.2/PDLS_Basic-9.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Basic-9.2.2.tar.gz",
+    "size_bytes": 72398,
+    "sha256": "550df549e9582e04119b6c4a28805029e4c03d6d9de3a44cddde5e7f747f3c2d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Basic/9.2.2/PDLS_Basic-9.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Basic/9.2.2/PDLS_Basic-9.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Common/10.0.0/PDLS_Common-10.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Common-10.0.0.tar.gz",
+    "size_bytes": 26897,
+    "sha256": "8d1aa52c295ef6a1810c6da8fabd012e119754145e55c0036dad818bf7290442",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Common/10.0.0/PDLS_Common-10.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Common/10.0.0/PDLS_Common-10.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Common/10.0.1/PDLS_Common-10.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Common-10.0.1.tar.gz",
+    "size_bytes": 27079,
+    "sha256": "e4e14e8ce4d322bba9536983a6e2ecb52ef1baf7089697c6139ab9732efe51d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Common/10.0.1/PDLS_Common-10.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Common/10.0.1/PDLS_Common-10.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Common/10.0.2/PDLS_Common-10.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Common-10.0.2.tar.gz",
+    "size_bytes": 27083,
+    "sha256": "ea688701f4c6197787bfc4dc9b14f9422cb4dab0bba21fcf5588f14971654d57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Common/10.0.2/PDLS_Common-10.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Common/10.0.2/PDLS_Common-10.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Common/10.0.3/PDLS_Common-10.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Common-10.0.3.tar.gz",
+    "size_bytes": 27234,
+    "sha256": "8ea0f01897acbad5c32c58add8b7ad08d5d2ad1318b68bb69b1439a70725136d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Common/10.0.3/PDLS_Common-10.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Common/10.0.3/PDLS_Common-10.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Common/10.0.4/PDLS_Common-10.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Common-10.0.4.tar.gz",
+    "size_bytes": 27244,
+    "sha256": "b6f0d40eed5bb3c983819989bdc20b7cb84c361bc2155a183e24146d354ee4fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Common/10.0.4/PDLS_Common-10.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Common/10.0.4/PDLS_Common-10.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Common/10.0.5/PDLS_Common-10.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Common-10.0.5.tar.gz",
+    "size_bytes": 27316,
+    "sha256": "d58b39e4eb8411cac48e9e78d1750a2e3350e28f72a2fe37a82ffa6a324640a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Common/10.0.5/PDLS_Common-10.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Common/10.0.5/PDLS_Common-10.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Common/10.0.7/PDLS_Common-10.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Common-10.0.7.tar.gz",
+    "size_bytes": 27340,
+    "sha256": "99b2f87d52917398c8672e7c82b326ad3edb570e31cf7f3ecba4eeff68e5e867",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Common/10.0.7/PDLS_Common-10.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Common/10.0.7/PDLS_Common-10.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Common/10.0.8/PDLS_Common-10.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Common-10.0.8.tar.gz",
+    "size_bytes": 27343,
+    "sha256": "023a354bbaba7ca4c99ab4ffcf2b82319c72156eacc98368f6a9a4d70907651b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Common/10.0.8/PDLS_Common-10.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Common/10.0.8/PDLS_Common-10.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Common/10.0.9/PDLS_Common-10.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Common-10.0.9.tar.gz",
+    "size_bytes": 27380,
+    "sha256": "9b10080e7b93a33774637bdd59fd10e92417b357906b56054213c599329e4b1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Common/10.0.9/PDLS_Common-10.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Common/10.0.9/PDLS_Common-10.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Common/10.1.0/PDLS_Common-10.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Common-10.1.0.tar.gz",
+    "size_bytes": 27392,
+    "sha256": "9449511b8a98127275e654809dcd1f8618109cd82785228c1c17fde80c2d0a60",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Common/10.1.0/PDLS_Common-10.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Common/10.1.0/PDLS_Common-10.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Common/10.1.1/PDLS_Common-10.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Common-10.1.1.tar.gz",
+    "size_bytes": 27442,
+    "sha256": "5afc91890e609183f1be3b653750b4093e2cc78f4003af36cf3e38c7319a6120",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Common/10.1.1/PDLS_Common-10.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Common/10.1.1/PDLS_Common-10.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Common/9.2.0/PDLS_Common-9.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Common-9.2.0.tar.gz",
+    "size_bytes": 25954,
+    "sha256": "d5aa2e034bed6f584da55d9ed47d9948e6e93f72d7abc93e11a4c977caf1dcfa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Common/9.2.0/PDLS_Common-9.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Common/9.2.0/PDLS_Common-9.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Common/9.2.1/PDLS_Common-9.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Common-9.2.1.tar.gz",
+    "size_bytes": 25954,
+    "sha256": "389a5ee69a373486badbc8842d4e2584155d00b16707c8e5f85604a9726f4159",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Common/9.2.1/PDLS_Common-9.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Common/9.2.1/PDLS_Common-9.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_Common/9.2.2/PDLS_Common-9.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_Common-9.2.2.tar.gz",
+    "size_bytes": 26257,
+    "sha256": "1d5e1e0ef17c379f0c543960f1708d1d2b7983a6e3bb46c34836b4a32f909c86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_Common/9.2.2/PDLS_Common-9.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_Common/9.2.2/PDLS_Common-9.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_EXT3_Basic_BWRY/8.2.0/PDLS_EXT3_Basic_BWRY-8.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_EXT3_Basic_BWRY-8.2.0.tar.gz",
+    "size_bytes": 65637,
+    "sha256": "e181244bdd51e87a06c1380e81b2520ca41a98529bac3531186d9a8dcedc48e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_EXT3_Basic_BWRY/8.2.0/PDLS_EXT3_Basic_BWRY-8.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_EXT3_Basic_BWRY/8.2.0/PDLS_EXT3_Basic_BWRY-8.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_EXT3_Basic_Fast/8.2.0/PDLS_EXT3_Basic_Fast-8.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_EXT3_Basic_Fast-8.2.0.tar.gz",
+    "size_bytes": 67784,
+    "sha256": "cb3618e61f4846f45c2b4091c83fa23cd0c2571b2f935488aff09566da03e951",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_EXT3_Basic_Fast/8.2.0/PDLS_EXT3_Basic_Fast-8.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_EXT3_Basic_Fast/8.2.0/PDLS_EXT3_Basic_Fast-8.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_EXT3_Basic_Fast_152/7.0.2/PDLS_EXT3_Basic_Fast_152-7.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_EXT3_Basic_Fast_152-7.0.2.tar.gz",
+    "size_bytes": 54088,
+    "sha256": "c15db78af25feb89e2bb1ac5c7f3a509b082aa3ff6dbb76727fb231ac62e24f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_EXT3_Basic_Fast_152/7.0.2/PDLS_EXT3_Basic_Fast_152-7.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_EXT3_Basic_Fast_152/7.0.2/PDLS_EXT3_Basic_Fast_152-7.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_EXT3_Basic_Global/8.2.0/PDLS_EXT3_Basic_Global-8.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_EXT3_Basic_Global-8.2.0.tar.gz",
+    "size_bytes": 67060,
+    "sha256": "6a85e756fa6bcb91ad82b4be4f829ea843ac0109521e9e8e7a8fe88dcb5f13cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_EXT3_Basic_Global/8.2.0/PDLS_EXT3_Basic_Global-8.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_EXT3_Basic_Global/8.2.0/PDLS_EXT3_Basic_Global-8.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_EXT3_Basic_Touch/8.2.0/PDLS_EXT3_Basic_Touch-8.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_EXT3_Basic_Touch-8.2.0.tar.gz",
+    "size_bytes": 75943,
+    "sha256": "d4a6652dc952f066c6045c5278b6978bb1fa82b28ab1941e17a19a6e6af58662",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_EXT3_Basic_Touch/8.2.0/PDLS_EXT3_Basic_Touch-8.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_EXT3_Basic_Touch/8.2.0/PDLS_EXT3_Basic_Touch-8.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_EXT3_Basic_Wide/8.2.0/PDLS_EXT3_Basic_Wide-8.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_EXT3_Basic_Wide-8.2.0.tar.gz",
+    "size_bytes": 68493,
+    "sha256": "2e970edeba9e2503d76b80d2a545986ec8679eb38a016e8d1759329d9c75d214",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_EXT3_Basic_Wide/8.2.0/PDLS_EXT3_Basic_Wide-8.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_EXT3_Basic_Wide/8.2.0/PDLS_EXT3_Basic_Wide-8.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/PDLS_EXT4_Basic_Matter/8.2.0/PDLS_EXT4_Basic_Matter-8.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PDLS_EXT4_Basic_Matter-8.2.0.tar.gz",
+    "size_bytes": 79086,
+    "sha256": "cb43348b050b5482f47ab248e35818fc2b295386136cdd84f485673003b99795",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/PDLS_EXT4_Basic_Matter/8.2.0/PDLS_EXT4_Basic_Matter-8.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/PDLS_EXT4_Basic_Matter/8.2.0/PDLS_EXT4_Basic_Matter-8.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rei-vilo/library/SD/0.0.0-alpha+sha.a8a1454af9/SD-0.0.0-alphasha.a8a1454af9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SD-0.0.0-alphasha.a8a1454af9.tar.gz",
+    "size_bytes": 48224,
+    "sha256": "047f1bc9bbd9208313637872626f3f226278a245b3f3de3983a284bc03778aeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rei-vilo/library/SD/0.0.0-alpha%2Bsha.a8a1454af9/SD-0.0.0-alphasha.a8a1454af9.tar.gz",
+     "https://dl.registry.platformio.org/download/rei-vilo/library/SD/0.0.0-alpha%2Bsha.a8a1454af9/SD-0.0.0-alphasha.a8a1454af9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

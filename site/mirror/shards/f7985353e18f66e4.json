@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dizcza",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dizcza/library/SDPSensor-ESP/0.0.4/SDPSensor-ESP-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDPSensor-ESP-0.0.4.tar.gz",
+    "size_bytes": 8212,
+    "sha256": "511da6c87832512d8bf11e5d3ac9d01612749b5fdc9b581dc0260d0f16ad2a83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dizcza/library/SDPSensor-ESP/0.0.4/SDPSensor-ESP-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dizcza/library/SDPSensor-ESP/0.0.4/SDPSensor-ESP-0.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rohitmaji004",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rohitmaji004/library/RohitCore-Base/1.0.0/RohitCore-Base-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RohitCore-Base-1.0.0.tar.gz",
+    "size_bytes": 2509,
+    "sha256": "e30c34be17536d9f78b094ab2f4a3e1ce6a173db21cc0f22339df2d281f79ef9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rohitmaji004/library/RohitCore-Base/1.0.0/RohitCore-Base-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rohitmaji004/library/RohitCore-Base/1.0.0/RohitCore-Base-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rohitmaji004/library/RohitCore-Communication/1.0.0/RohitCore-Communication-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RohitCore-Communication-1.0.0.tar.gz",
+    "size_bytes": 1764,
+    "sha256": "79ba11be6988b0cf9bd6ccecb388671c8731e6cf42120dfdad762a891f77eefe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rohitmaji004/library/RohitCore-Communication/1.0.0/RohitCore-Communication-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rohitmaji004/library/RohitCore-Communication/1.0.0/RohitCore-Communication-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rohitmaji004/library/RohitCore-Config/1.0.0/RohitCore-Config-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RohitCore-Config-1.0.0.tar.gz",
+    "size_bytes": 1816,
+    "sha256": "ddc62b8eb03b2064605a9b883ca8644b73c86eabe8de8ebd2e3e1ce9a8ec06e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rohitmaji004/library/RohitCore-Config/1.0.0/RohitCore-Config-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rohitmaji004/library/RohitCore-Config/1.0.0/RohitCore-Config-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rohitmaji004/library/RohitCore-Logger/1.0.0/RohitCore-Logger-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RohitCore-Logger-1.0.0.tar.gz",
+    "size_bytes": 2151,
+    "sha256": "d904f95cc378483fd8669421f5373c968f007e6d3ade852ebf001f6fe801b624",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rohitmaji004/library/RohitCore-Logger/1.0.0/RohitCore-Logger-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rohitmaji004/library/RohitCore-Logger/1.0.0/RohitCore-Logger-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rohitmaji004/library/RohitCore-Power/1.0.0/RohitCore-Power-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RohitCore-Power-1.0.0.tar.gz",
+    "size_bytes": 2247,
+    "sha256": "65bef161a553a2c54fa4b9a501ae027f9fc3dc311db4548902a23e91a74e8bc4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rohitmaji004/library/RohitCore-Power/1.0.0/RohitCore-Power-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rohitmaji004/library/RohitCore-Power/1.0.0/RohitCore-Power-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rohitmaji004/library/RohitCore-Sensor/1.0.0/RohitCore-Sensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RohitCore-Sensor-1.0.0.tar.gz",
+    "size_bytes": 2098,
+    "sha256": "031ad0b3371203e028d3b0c80092ec68251f5116e2a06076f40634b3d55c4b4e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rohitmaji004/library/RohitCore-Sensor/1.0.0/RohitCore-Sensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rohitmaji004/library/RohitCore-Sensor/1.0.0/RohitCore-Sensor-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rohitmaji004/library/RohitCore-Storage/1.0.0/RohitCore-Storage-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RohitCore-Storage-1.0.0.tar.gz",
+    "size_bytes": 1773,
+    "sha256": "228fc2810d878cb4f9631ca3fb78efff1d74fb43cfc238b1db3c051b3e5f5d2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rohitmaji004/library/RohitCore-Storage/1.0.0/RohitCore-Storage-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rohitmaji004/library/RohitCore-Storage/1.0.0/RohitCore-Storage-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rohitmaji004/library/RohitCore-Timer/1.0.1/RohitCore-Timer-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RohitCore-Timer-1.0.1.tar.gz",
+    "size_bytes": 2431,
+    "sha256": "29e5ff84e80ce554ade0f8f5ecc604bc41d1619ad0b670c825d7c970057d8f10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rohitmaji004/library/RohitCore-Timer/1.0.1/RohitCore-Timer-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rohitmaji004/library/RohitCore-Timer/1.0.1/RohitCore-Timer-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

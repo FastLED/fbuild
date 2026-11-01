@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-gcibeira",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-gcibeira/library/ds1302/0.0.0+sha.be8d71b29b37/ds1302-0.0.0+sha.be8d71b29b37.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ds1302-0.0.0+sha.be8d71b29b37.tar.gz",
+    "size_bytes": 1584,
+    "sha256": "7df22128d225c7460ccadf5e050e654c54201a5f47c235a9e0c76bcd8abbf64d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-gcibeira/library/ds1302/0.0.0%2Bsha.be8d71b29b37/ds1302-0.0.0%2Bsha.be8d71b29b37.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-gcibeira/library/ds1302/0.0.0%2Bsha.be8d71b29b37/ds1302-0.0.0%2Bsha.be8d71b29b37.tar.gz"
+    ]
+   }
+  }
+ ]
+}

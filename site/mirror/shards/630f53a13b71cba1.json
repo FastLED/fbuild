@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robotcing",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robotcing/library/Atmega328_IO/3.1.8/Atmega328_IO-3.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Atmega328_IO-3.1.8.tar.gz",
+    "size_bytes": 9999,
+    "sha256": "a69a73f28bc7a71830c3cdda3ee36eac8ee1b48f82e657d02befa3560e0580ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotcing/library/Atmega328_IO/3.1.8/Atmega328_IO-3.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/robotcing/library/Atmega328_IO/3.1.8/Atmega328_IO-3.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotcing/library/Atmega32u4_IO/3.0.3/Atmega32u4_IO-3.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Atmega32u4_IO-3.0.3.tar.gz",
+    "size_bytes": 6164,
+    "sha256": "213e4b1b8d050610387b5483a14c01d006d06c776797461406108c6ea6a3b7d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotcing/library/Atmega32u4_IO/3.0.3/Atmega32u4_IO-3.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/robotcing/library/Atmega32u4_IO/3.0.3/Atmega32u4_IO-3.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotcing/library/Atmega8_IO/3.0.7/Atmega8_IO-3.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Atmega8_IO-3.0.7.tar.gz",
+    "size_bytes": 3703,
+    "sha256": "6f66cf97eb580a65f7e2662d617f4e565fbaaa99eb72fb28f25e233cb5146096",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotcing/library/Atmega8_IO/3.0.7/Atmega8_IO-3.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/robotcing/library/Atmega8_IO/3.0.7/Atmega8_IO-3.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotcing/library/Atmega8_IO_basic/3.0.6/Atmega8_IO_basic-3.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Atmega8_IO_basic-3.0.6.tar.gz",
+    "size_bytes": 3078,
+    "sha256": "87024957847e2051d42ecd141aea3263ac438d1078e087cf12f5dc8c31de9c7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotcing/library/Atmega8_IO_basic/3.0.6/Atmega8_IO_basic-3.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/robotcing/library/Atmega8_IO_basic/3.0.6/Atmega8_IO_basic-3.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotcing/library/Attiny84_IO/3.0.7/Attiny84_IO-3.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Attiny84_IO-3.0.7.tar.gz",
+    "size_bytes": 3155,
+    "sha256": "dea08cded47d62cdb701edf01130fe4cc1bf8f8bd7afcb8da722975df2c70828",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotcing/library/Attiny84_IO/3.0.7/Attiny84_IO-3.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/robotcing/library/Attiny84_IO/3.0.7/Attiny84_IO-3.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotcing/library/Attiny84_IO_basic/3.0.7/Attiny84_IO_basic-3.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Attiny84_IO_basic-3.0.7.tar.gz",
+    "size_bytes": 3011,
+    "sha256": "0cb6440872938d471126597a72b4531774ce2eabfd2986af79b811b23f280c1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotcing/library/Attiny84_IO_basic/3.0.7/Attiny84_IO_basic-3.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/robotcing/library/Attiny84_IO_basic/3.0.7/Attiny84_IO_basic-3.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotcing/library/Attiny85_IO/3.0.7/Attiny85_IO-3.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Attiny85_IO-3.0.7.tar.gz",
+    "size_bytes": 2836,
+    "sha256": "05966759f8b4e1a894b6781704f21e67b88758d3b25ce32ed580eae5bb6f455c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotcing/library/Attiny85_IO/3.0.7/Attiny85_IO-3.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/robotcing/library/Attiny85_IO/3.0.7/Attiny85_IO-3.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robotcing/library/Attiny85_IO_basic/3.0.7/Attiny85_IO_basic-3.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Attiny85_IO_basic-3.0.7.tar.gz",
+    "size_bytes": 2640,
+    "sha256": "f96b8c2af933cd509e8a9a78cb55f656937c4a211a529b2de2af82e767e3d7f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robotcing/library/Attiny85_IO_basic/3.0.7/Attiny85_IO_basic-3.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/robotcing/library/Attiny85_IO_basic/3.0.7/Attiny85_IO_basic-3.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

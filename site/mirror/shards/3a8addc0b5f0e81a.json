@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-joosttromp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-joosttromp/library/SCP1000/0.0.0+sha.55ea30b5de1e/SCP1000-0.0.0+sha.55ea30b5de1e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SCP1000-0.0.0+sha.55ea30b5de1e.tar.gz",
+    "size_bytes": 2137,
+    "sha256": "941ba10521b4fc6d99fe2a3019cf04c441eb0adadec56de471b170b1238210fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joosttromp/library/SCP1000/0.0.0%2Bsha.55ea30b5de1e/SCP1000-0.0.0%2Bsha.55ea30b5de1e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joosttromp/library/SCP1000/0.0.0%2Bsha.55ea30b5de1e/SCP1000-0.0.0%2Bsha.55ea30b5de1e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

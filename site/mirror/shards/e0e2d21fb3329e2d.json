@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/engrpraven08",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "engrpraven08/library/SerialLedger/0.1.0-beta.1/SerialLedger-0.1.0-beta.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialLedger-0.1.0-beta.1.tar.gz",
+    "size_bytes": 9699,
+    "sha256": "ceed793d480508f8de7898239e09d7ae827d2a4a05c1b173f3d5ad035766b640",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/engrpraven08/library/SerialLedger/0.1.0-beta.1/SerialLedger-0.1.0-beta.1.tar.gz",
+     "https://dl.registry.platformio.org/download/engrpraven08/library/SerialLedger/0.1.0-beta.1/SerialLedger-0.1.0-beta.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

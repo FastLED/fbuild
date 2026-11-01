@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/palladinomarco",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "palladinomarco/library/AlignedJoy/1.0.1/AlignedJoy-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AlignedJoy-1.0.1.tar.gz",
+    "size_bytes": 7746,
+    "sha256": "eabc333147c5a014d62614ba57e417f1970fbda7b62d652536a1fbdac2f3ea37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/palladinomarco/library/AlignedJoy/1.0.1/AlignedJoy-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/palladinomarco/library/AlignedJoy/1.0.1/AlignedJoy-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

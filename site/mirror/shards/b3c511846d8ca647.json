@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dxinteractive",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dxinteractive/library/AnalogMultiButton/1.0/AnalogMultiButton-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AnalogMultiButton-1.0.tar.gz",
+    "size_bytes": 5487,
+    "sha256": "08d649fa46b4e66a6a610be8fa3ad46f2ee326c943ebe72dba2d99cbd62dafc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dxinteractive/library/AnalogMultiButton/1.0/AnalogMultiButton-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dxinteractive/library/AnalogMultiButton/1.0/AnalogMultiButton-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dxinteractive/library/ArduinoTapTempo/1.1/ArduinoTapTempo-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoTapTempo-1.1.tar.gz",
+    "size_bytes": 5731,
+    "sha256": "134f0d28911f404db02facecb2d04e917d7031b72c568dcda2efb506f7d340bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dxinteractive/library/ArduinoTapTempo/1.1/ArduinoTapTempo-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dxinteractive/library/ArduinoTapTempo/1.1/ArduinoTapTempo-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dxinteractive/library/ResponsiveAnalogRead/1.2.1/ResponsiveAnalogRead-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ResponsiveAnalogRead-1.2.1.tar.gz",
+    "size_bytes": 6255,
+    "sha256": "96df55a9b4dff56a976c1643facda40c56d65178afe7f2a850d0b55b43b157cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dxinteractive/library/ResponsiveAnalogRead/1.2.1/ResponsiveAnalogRead-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dxinteractive/library/ResponsiveAnalogRead/1.2.1/ResponsiveAnalogRead-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dxinteractive/library/TeensyAudioPlotter/0.0.1/TeensyAudioPlotter-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TeensyAudioPlotter-0.0.1.tar.gz",
+    "size_bytes": 12564,
+    "sha256": "7f84f27c4a50e9d2ed84da2b260a057f0cbc19b9538d8d641ca244e7c37d0aeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dxinteractive/library/TeensyAudioPlotter/0.0.1/TeensyAudioPlotter-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dxinteractive/library/TeensyAudioPlotter/0.0.1/TeensyAudioPlotter-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

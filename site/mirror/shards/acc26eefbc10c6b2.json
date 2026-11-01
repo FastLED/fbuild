@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sblair",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sblair/library/OLED160G1/0.0.0+sha.296a7ee30b3a/OLED160G1-0.0.0+sha.296a7ee30b3a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OLED160G1-0.0.0+sha.296a7ee30b3a.tar.gz",
+    "size_bytes": 4270,
+    "sha256": "95490c6aa6cb76732c46da8682a6473ac669b856d1de08ee2639c677df6c56f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sblair/library/OLED160G1/0.0.0%2Bsha.296a7ee30b3a/OLED160G1-0.0.0%2Bsha.296a7ee30b3a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sblair/library/OLED160G1/0.0.0%2Bsha.296a7ee30b3a/OLED160G1-0.0.0%2Bsha.296a7ee30b3a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

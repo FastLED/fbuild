@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/johnfleo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "johnfleo/library/Adafruit_BNO055/0.0.0+sha.8092160b6a59/Adafruit_BNO055-0.0.0+sha.8092160b6a59.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_BNO055-0.0.0+sha.8092160b6a59.tar.gz",
+    "size_bytes": 11935,
+    "sha256": "92dd1eff744ddfb15cde6f3910ff4a616d51757a9296c8b75a40690d934c20ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/johnfleo/library/Adafruit_BNO055/0.0.0%2Bsha.8092160b6a59/Adafruit_BNO055-0.0.0%2Bsha.8092160b6a59.tar.gz",
+     "https://dl.registry.platformio.org/download/johnfleo/library/Adafruit_BNO055/0.0.0%2Bsha.8092160b6a59/Adafruit_BNO055-0.0.0%2Bsha.8092160b6a59.tar.gz"
+    ]
+   }
+  }
+ ]
+}

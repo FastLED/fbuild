@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-heinrich-kevin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-heinrich-kevin/library/bertl14/0.0.0+sha.066936e2c097/bertl14-0.0.0+sha.066936e2c097.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bertl14-0.0.0+sha.066936e2c097.tar.gz",
+    "size_bytes": 2856,
+    "sha256": "45a590fa590b912ef8b28a86d2c67c194f92121ae35f6e7d1a9d2b152bad0bff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-heinrich-kevin/library/bertl14/0.0.0%2Bsha.066936e2c097/bertl14-0.0.0%2Bsha.066936e2c097.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-heinrich-kevin/library/bertl14/0.0.0%2Bsha.066936e2c097/bertl14-0.0.0%2Bsha.066936e2c097.tar.gz"
+    ]
+   }
+  }
+ ]
+}

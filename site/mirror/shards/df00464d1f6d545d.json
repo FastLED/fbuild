@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hamling-ling",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hamling-ling/library/OsakanaFft/0.0.0+sha.66a107b9d552/OsakanaFft-0.0.0+sha.66a107b9d552.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OsakanaFft-0.0.0+sha.66a107b9d552.tar.gz",
+    "size_bytes": 19045,
+    "sha256": "ec966e9b6c1e5383eb63d21060d66a83bb998fff26b8dbb939b5a6ddd89c7738",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hamling-ling/library/OsakanaFft/0.0.0%2Bsha.66a107b9d552/OsakanaFft-0.0.0%2Bsha.66a107b9d552.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hamling-ling/library/OsakanaFft/0.0.0%2Bsha.66a107b9d552/OsakanaFft-0.0.0%2Bsha.66a107b9d552.tar.gz"
+    ]
+   }
+  }
+ ]
+}

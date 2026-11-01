@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yyuri",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yyuri/library/Switch_lib/1.0/Switch_lib-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Switch_lib-1.0.tar.gz",
+    "size_bytes": 15158,
+    "sha256": "8aeeea4f2d20f0afc48a2e821d7c393d5ee4ba473966e38f6c9022f2f66709b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yyuri/library/Switch_lib/1.0/Switch_lib-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yyuri/library/Switch_lib/1.0/Switch_lib-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

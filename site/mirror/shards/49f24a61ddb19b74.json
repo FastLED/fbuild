@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rodolfoprieto",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rodolfoprieto/library/MCP3208/1.0.0/MCP3208-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP3208-1.0.0.tar.gz",
+    "size_bytes": 3844,
+    "sha256": "93385ef2058b26aec688ccb4e5acda5104b0a817356a46667c3d26e3743c87ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rodolfoprieto/library/MCP3208/1.0.0/MCP3208-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rodolfoprieto/library/MCP3208/1.0.0/MCP3208-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

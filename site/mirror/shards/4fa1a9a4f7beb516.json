@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jones1403",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jones1403/library/SPI-DAC7611/2.0.3/SPI-DAC7611-2.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI-DAC7611-2.0.3.tar.gz",
+    "size_bytes": 2938,
+    "sha256": "67d4017884eeb835be4b65f1cedc4e7abb9eb740365b2c127dbc3c6acef278b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jones1403/library/SPI-DAC7611/2.0.3/SPI-DAC7611-2.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jones1403/library/SPI-DAC7611/2.0.3/SPI-DAC7611-2.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

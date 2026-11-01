@@ -1,0 +1,178 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/locoduino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "locoduino/library/Accessories/1.2.4/Accessories-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Accessories-1.2.4.tar.gz",
+    "size_bytes": 110402,
+    "sha256": "572c772acf1271d02f2fcbde34f0d645408998f6173391c2b45cd6d744eb5867",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locoduino/library/Accessories/1.2.4/Accessories-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/locoduino/library/Accessories/1.2.4/Accessories-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "locoduino/library/Commanders/2.0.1/Commanders-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Commanders-2.0.1.tar.gz",
+    "size_bytes": 91748,
+    "sha256": "4f175296ef7fd93f7fa538e696d1dad681f6fbc08d24f3b96e573167aa5c3285",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locoduino/library/Commanders/2.0.1/Commanders-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/locoduino/library/Commanders/2.0.1/Commanders-2.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "locoduino/library/DCCpp/1.4.1/DCCpp-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DCCpp-1.4.1.tar.gz",
+    "size_bytes": 66417,
+    "sha256": "8fef7beeb9fa05b7dcf98b1d460a2bb61b4d653df2e4fbb8f51453e4eb67dad5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locoduino/library/DCCpp/1.4.1/DCCpp-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/locoduino/library/DCCpp/1.4.1/DCCpp-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "locoduino/library/DIO2/1.6.1/DIO2-1.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DIO2-1.6.1.tar.gz",
+    "size_bytes": 83108,
+    "sha256": "2baf68b1aca57f661e3707f8b24ead097954f4b606c76c427aceb9c240334ecc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locoduino/library/DIO2/1.6.1/DIO2-1.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/locoduino/library/DIO2/1.6.1/DIO2-1.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "locoduino/library/DcDccNanoController/1.2.1/DcDccNanoController-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DcDccNanoController-1.2.1.tar.gz",
+    "size_bytes": 47280,
+    "sha256": "81525cacdb4b498c16220165ad497e3d5251e0c2712f3e05cc78b52ffc2921cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locoduino/library/DcDccNanoController/1.2.1/DcDccNanoController-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/locoduino/library/DcDccNanoController/1.2.1/DcDccNanoController-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "locoduino/library/EEPROMextent/1.2.1/EEPROMextent-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROMextent-1.2.1.tar.gz",
+    "size_bytes": 19178,
+    "sha256": "3e3e7108d336baee6e31fa5664bb6c580d8c4e4fb5a0af2f5af315fa0e2d7c5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locoduino/library/EEPROMextent/1.2.1/EEPROMextent-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/locoduino/library/EEPROMextent/1.2.1/EEPROMextent-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "locoduino/library/LcdUi/1.0.3/LcdUi-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LcdUi-1.0.3.tar.gz",
+    "size_bytes": 37533,
+    "sha256": "17e9f92d0aaaaf4eb17c4683041ec6de10af6fd9953b322e703900411826ab00",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locoduino/library/LcdUi/1.0.3/LcdUi-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/locoduino/library/LcdUi/1.0.3/LcdUi-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "locoduino/library/LightDimmer/1.3.3/LightDimmer-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightDimmer-1.3.3.tar.gz",
+    "size_bytes": 12364,
+    "sha256": "fa3dac7fa30bd8a8bf6144d2410f358255a358d0543fd95c93745aee2a628b2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locoduino/library/LightDimmer/1.3.3/LightDimmer-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/locoduino/library/LightDimmer/1.3.3/LightDimmer-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "locoduino/library/LightEffect/1.0.0/LightEffect-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightEffect-1.0.0.tar.gz",
+    "size_bytes": 12890,
+    "sha256": "ea5f6145236ff5da7cf574ba20ebc369dbb044f6b7fff2d4755d1bff1b5c1903",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locoduino/library/LightEffect/1.0.0/LightEffect-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/locoduino/library/LightEffect/1.0.0/LightEffect-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "locoduino/library/MemoryUsage/2.21.1/MemoryUsage-2.21.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MemoryUsage-2.21.1.tar.gz",
+    "size_bytes": 541668,
+    "sha256": "636aacf26e9443969e396ae45c27903b211d81beaeef6fa2a0fed9e8e4c8a72f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locoduino/library/MemoryUsage/2.21.1/MemoryUsage-2.21.1.tar.gz",
+     "https://dl.registry.platformio.org/download/locoduino/library/MemoryUsage/2.21.1/MemoryUsage-2.21.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "locoduino/library/RingBuffer/1.0.5/RingBuffer-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RingBuffer-1.0.5.tar.gz",
+    "size_bytes": 15404,
+    "sha256": "0b12d5560e6275f0c81cc8bad60b5daf16922a5959a2e1f3bd94f683f4b74502",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locoduino/library/RingBuffer/1.0.5/RingBuffer-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/locoduino/library/RingBuffer/1.0.5/RingBuffer-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "locoduino/library/ScheduleTable/1.4.3/ScheduleTable-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ScheduleTable-1.4.3.tar.gz",
+    "size_bytes": 14735,
+    "sha256": "e646d13ff4e8ec90c1f0fc4bc4e02b362e8678703d2b9ad1e890429a01b33216",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locoduino/library/ScheduleTable/1.4.3/ScheduleTable-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/locoduino/library/ScheduleTable/1.4.3/ScheduleTable-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "locoduino/library/SlowMotionServo/1.3/SlowMotionServo-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SlowMotionServo-1.3.tar.gz",
+    "size_bytes": 17364,
+    "sha256": "f7c79ee0972a4902d6445db5c18f964b398c1441f9831fa33976716e959859b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/locoduino/library/SlowMotionServo/1.3/SlowMotionServo-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/locoduino/library/SlowMotionServo/1.3/SlowMotionServo-1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

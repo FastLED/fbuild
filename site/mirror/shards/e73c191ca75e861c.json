@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bmikuska46",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bmikuska46/library/OpenThermPlus/2.0.0/OpenThermPlus-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenThermPlus-2.0.0.tar.gz",
+    "size_bytes": 15145,
+    "sha256": "bcb154dceeb4d073e03b52e0734aa217ba378fde9118cf1cd21bb92e4315c3b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bmikuska46/library/OpenThermPlus/2.0.0/OpenThermPlus-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bmikuska46/library/OpenThermPlus/2.0.0/OpenThermPlus-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bmikuska46/library/OpenThermPlus/2.1.0/OpenThermPlus-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenThermPlus-2.1.0.tar.gz",
+    "size_bytes": 17021,
+    "sha256": "2641f7e7aac105c36d9bdf081c8e33067fdd0a8df86b5c2a92cc5ed55787a9b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bmikuska46/library/OpenThermPlus/2.1.0/OpenThermPlus-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bmikuska46/library/OpenThermPlus/2.1.0/OpenThermPlus-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bmikuska46/library/OpenThermPlus/2.2.0/OpenThermPlus-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenThermPlus-2.2.0.tar.gz",
+    "size_bytes": 19446,
+    "sha256": "8db8ad621c1bd3824cb4e65f07dab97bcbcb9c18a5de7eea3fcdee7b7fe20709",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bmikuska46/library/OpenThermPlus/2.2.0/OpenThermPlus-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bmikuska46/library/OpenThermPlus/2.2.0/OpenThermPlus-2.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

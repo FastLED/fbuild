@@ -59,6 +59,7 @@ fn make_params(project_dir: &Path) -> BuildParams {
     ));
     BuildParams {
         project_dir: project_dir.to_path_buf(),
+        shrink: Default::default(),
         env_name: "esp32dev".to_string(),
         clean_all: false,
         clean_only: false,

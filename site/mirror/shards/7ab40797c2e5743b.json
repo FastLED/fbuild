@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/brownby",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "brownby/library/Komotion/0.2.5/Komotion-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Komotion-0.2.5.tar.gz",
+    "size_bytes": 76791,
+    "sha256": "228a0aca67670985e945d762c1d3c00d7720d24ba63c8a77847ceb6b55257009",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brownby/library/Komotion/0.2.5/Komotion-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/brownby/library/Komotion/0.2.5/Komotion-0.2.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

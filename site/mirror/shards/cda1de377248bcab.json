@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ademuri",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ademuri/library/periodic-runner/0.1.0/periodic-runner-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "periodic-runner-0.1.0.tar.gz",
+    "size_bytes": 6604,
+    "sha256": "3345ce889da0c176d179c680c280e81d78262ee5e3bbb19a3069f15a7ed870f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ademuri/library/periodic-runner/0.1.0/periodic-runner-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ademuri/library/periodic-runner/0.1.0/periodic-runner-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ademuri/library/simple-web-dashboard/0.1.0/simple-web-dashboard-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "simple-web-dashboard-0.1.0.tar.gz",
+    "size_bytes": 7897,
+    "sha256": "5a9548052fdddc9a40204dcba35e8fd70c5252560ea4a91e6cb138f96d4ea62d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ademuri/library/simple-web-dashboard/0.1.0/simple-web-dashboard-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ademuri/library/simple-web-dashboard/0.1.0/simple-web-dashboard-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ademuri/library/smart-input-filter/0.3.2/smart-input-filter-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "smart-input-filter-0.3.2.tar.gz",
+    "size_bytes": 13568,
+    "sha256": "c003f284b263d085b7a55a22c8249ffb48834578948e66b926b9ea30e80fa24d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ademuri/library/smart-input-filter/0.3.2/smart-input-filter-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ademuri/library/smart-input-filter/0.3.2/smart-input-filter-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ademuri/library/twilio-esp32-client/0.1.0/twilio-esp32-client-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "twilio-esp32-client-0.1.0.tar.gz",
+    "size_bytes": 8327,
+    "sha256": "5fb06950c2417f0733b240bbb56e9348bcfce814c73ddfbe821ea9ec7b886b3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ademuri/library/twilio-esp32-client/0.1.0/twilio-esp32-client-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ademuri/library/twilio-esp32-client/0.1.0/twilio-esp32-client-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

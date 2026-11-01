@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/akessonulrik",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "akessonulrik/library/RLNode/1.2.0/RLNode-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RLNode-1.2.0.tar.gz",
+    "size_bytes": 7152,
+    "sha256": "9147da3ca13036a1a512af2520fcda0b0496eb23079a5ab14d9653f340ebdeba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/akessonulrik/library/RLNode/1.2.0/RLNode-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/akessonulrik/library/RLNode/1.2.0/RLNode-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

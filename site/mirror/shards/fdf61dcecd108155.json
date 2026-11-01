@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/neoge",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "neoge/library/stringToSevenSegmentDisplay/1.0.0/stringToSevenSegmentDisplay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stringToSevenSegmentDisplay-1.0.0.tar.gz",
+    "size_bytes": 245212,
+    "sha256": "b1a3c3534d895a7a2d13a8cc7832bc24cd2ed7e6b624c97008c00dfa373a9d5d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/neoge/library/stringToSevenSegmentDisplay/1.0.0/stringToSevenSegmentDisplay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/neoge/library/stringToSevenSegmentDisplay/1.0.0/stringToSevenSegmentDisplay-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/isaacrobinson2000",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "isaacrobinson2000/library/SoundPlayer/1.1.1/SoundPlayer-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoundPlayer-1.1.1.tar.gz",
+    "size_bytes": 7158,
+    "sha256": "466db7aa3dad1ec0d3bc69fdca084b3e7b4492505d7d0450e7ee2e639276a537",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/isaacrobinson2000/library/SoundPlayer/1.1.1/SoundPlayer-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/isaacrobinson2000/library/SoundPlayer/1.1.1/SoundPlayer-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

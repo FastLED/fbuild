@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rickyzhang82",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rickyzhang82/library/bREST/0.0.0-alpha+sha.e9d3008153/bREST-0.0.0-alphasha.e9d3008153.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bREST-0.0.0-alphasha.e9d3008153.tar.gz",
+    "size_bytes": 22689,
+    "sha256": "39c4f902f8777835487236d7613936e5a18f417af71fb32e1ac7b24330080e66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rickyzhang82/library/bREST/0.0.0-alpha%2Bsha.e9d3008153/bREST-0.0.0-alphasha.e9d3008153.tar.gz",
+     "https://dl.registry.platformio.org/download/rickyzhang82/library/bREST/0.0.0-alpha%2Bsha.e9d3008153/bREST-0.0.0-alphasha.e9d3008153.tar.gz"
+    ]
+   }
+  }
+ ]
+}

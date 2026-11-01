@@ -43,6 +43,14 @@ pub struct DaemonStatus {
     pub exit_code: Option<i32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub port: Option<String>,
+
+    /// Resident set size in bytes, refreshed on the maintenance tick
+    /// (FastLED/fbuild#1785). Absent when this host cannot report it.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub rss_bytes: Option<u64>,
+    /// Peak resident set size in bytes since the daemon started.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub peak_rss_bytes: Option<u64>,
 }
 
 impl DaemonStatus {
@@ -64,6 +72,8 @@ impl DaemonStatus {
             current_operation: None,
             exit_code: None,
             port: None,
+            rss_bytes: None,
+            peak_rss_bytes: None,
         }
     }
 }
@@ -170,6 +180,29 @@ impl StatusManager {
             s.port = None;
             self.write_atomic(&s);
         }
+    }
+
+    /// Refresh the memory fields from the live process.
+    ///
+    /// The status file is the only record that survives the daemon dying, so
+    /// it carries memory too: a wedged daemon cannot answer `/health`, but the
+    /// last good sample is still on disk (FastLED/fbuild#1785).
+    pub fn refresh_memory(&self) -> bool {
+        let Some(usage) = fbuild_core::platform::process::resident_memory(std::process::id())
+        else {
+            return false;
+        };
+        if let Ok(mut status) = self.current.lock() {
+            if status.rss_bytes == Some(usage.resident_bytes)
+                && status.peak_rss_bytes == usage.peak_resident_bytes
+            {
+                return false;
+            }
+            status.rss_bytes = Some(usage.resident_bytes);
+            status.peak_rss_bytes = usage.peak_resident_bytes;
+            self.write_atomic(&status);
+        }
+        true
     }
 
     /// Read status from disk (for testing or external consumers).
@@ -325,6 +358,42 @@ mod tests {
         assert!(status.environment.is_none());
         assert!(status.caller_pid.is_none());
         assert!(status.port.is_none());
+    }
+
+    #[test]
+    fn refresh_memory_round_trips_through_the_status_file() {
+        let (mgr, _dir) = make_mgr();
+        assert!(mgr.refresh_memory(), "first refresh changes the file");
+        let status = mgr.read_from_disk().unwrap();
+        let rss = status.rss_bytes.expect("this host reports resident memory");
+        assert!(rss > 0, "a running daemon holds at least one byte");
+        if let Some(peak) = status.peak_rss_bytes {
+            assert!(peak >= rss, "peak {peak} < rss {rss}");
+        }
+    }
+
+    #[test]
+    fn refresh_memory_keeps_the_operation_state() {
+        let (mgr, _dir) = make_mgr();
+        mgr.update(DaemonState::Building, "Building project", true);
+        assert!(mgr.refresh_memory(), "memory sample is written");
+        let status = mgr.read_from_disk().unwrap();
+        assert_eq!(status.state, DaemonState::Building);
+        assert_eq!(status.message, "Building project");
+        assert!(status.operation_in_progress);
+        assert!(status.rss_bytes.is_some_and(|rss| rss > 0));
+    }
+
+    #[test]
+    fn status_written_before_memory_existed_still_deserializes() {
+        let (mgr, dir) = make_mgr();
+        let path = dir.path().join("daemon_status.json");
+        let legacy = r#"{"state":"idle","message":"Daemon idle","updated_at":1.0,"operation_in_progress":false,"daemon_pid":7}"#;
+        fbuild_core::fs::write_atomic_sync(&path, legacy.as_bytes()).unwrap();
+        let status = mgr.read_from_disk().expect("legacy status parses");
+        assert_eq!(status.daemon_pid, Some(7));
+        assert!(status.rss_bytes.is_none());
+        assert!(status.peak_rss_bytes.is_none());
     }
 
     #[test]

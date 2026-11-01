@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-heptasattraining2019",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-heptasattraining2019/library/Hepta9axis/0.0.0+sha.de758e9f9e8e/Hepta9axis-0.0.0+sha.de758e9f9e8e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hepta9axis-0.0.0+sha.de758e9f9e8e.tar.gz",
+    "size_bytes": 2120,
+    "sha256": "4ac1a0d86a50d706854badac2ef578ee077082a5a3bd4e77d64a2c09b4a7ba1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-heptasattraining2019/library/Hepta9axis/0.0.0%2Bsha.de758e9f9e8e/Hepta9axis-0.0.0%2Bsha.de758e9f9e8e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-heptasattraining2019/library/Hepta9axis/0.0.0%2Bsha.de758e9f9e8e/Hepta9axis-0.0.0%2Bsha.de758e9f9e8e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

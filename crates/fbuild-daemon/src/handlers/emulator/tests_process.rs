@@ -141,6 +141,7 @@ async fn run_real_esp32s3_fixture_in_qemu() {
     .resolve();
     let params = BuildParams {
         project_dir: project_dir.clone(),
+        shrink: Default::default(),
         env_name: "esp32s3".to_string(),
         clean_all: false,
         clean_only: false,

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bexin3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bexin3/library/GigaScope/0.0.2/GigaScope-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GigaScope-0.0.2.tar.gz",
+    "size_bytes": 9759,
+    "sha256": "3c727e3f59959b43d4381e0991fe25ebee0c7348411972f9ab027c97ea298a18",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bexin3/library/GigaScope/0.0.2/GigaScope-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/bexin3/library/GigaScope/0.0.2/GigaScope-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bexin3/library/STMSpeeduino/0.2.1/STMSpeeduino-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STMSpeeduino-0.2.1.tar.gz",
+    "size_bytes": 13847,
+    "sha256": "77ec757fe976d8ef0b21e5f08210e61429f541fac52cf59f6d0bc024de50f4f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bexin3/library/STMSpeeduino/0.2.1/STMSpeeduino-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/bexin3/library/STMSpeeduino/0.2.1/STMSpeeduino-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bexin3/library/Speeduino/0.0.6/Speeduino-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Speeduino-0.0.6.tar.gz",
+    "size_bytes": 15185,
+    "sha256": "ba5b205a1b371254554a39d5fb6d0a7d7b7aecb3ed96107fb0b7f623256280e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bexin3/library/Speeduino/0.0.6/Speeduino-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/bexin3/library/Speeduino/0.0.6/Speeduino-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "bexin3/library/SpeeduinoGL/0.0.80/SpeeduinoGL-0.0.80.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpeeduinoGL-0.0.80.tar.gz",
+    "size_bytes": 8533,
+    "sha256": "c0bd3c3f71ee62805be1b5f7ba317a18bcb43eafc9cb4976eafefcd8cb0dd3cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bexin3/library/SpeeduinoGL/0.0.80/SpeeduinoGL-0.0.80.tar.gz",
+     "https://dl.registry.platformio.org/download/bexin3/library/SpeeduinoGL/0.0.80/SpeeduinoGL-0.0.80.tar.gz"
+    ]
+   }
+  }
+ ]
+}

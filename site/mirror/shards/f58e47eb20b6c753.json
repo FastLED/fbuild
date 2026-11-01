@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-benoit",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-benoit/library/mbedNet/0.0.0+sha.8e12f7357b9f/mbedNet-0.0.0+sha.8e12f7357b9f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbedNet-0.0.0+sha.8e12f7357b9f.tar.gz",
+    "size_bytes": 50802,
+    "sha256": "424966e6e903697d42c74adbf589e210c9b869f73b2abe9b72c55facdebfb36a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-benoit/library/mbedNet/0.0.0%2Bsha.8e12f7357b9f/mbedNet-0.0.0%2Bsha.8e12f7357b9f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-benoit/library/mbedNet/0.0.0%2Bsha.8e12f7357b9f/mbedNet-0.0.0%2Bsha.8e12f7357b9f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

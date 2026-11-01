@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-kohlerba",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-kohlerba/library/MAX30100/0.0.0+sha.0307ce7b7033/MAX30100-0.0.0+sha.0307ce7b7033.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30100-0.0.0+sha.0307ce7b7033.tar.gz",
+    "size_bytes": 2703,
+    "sha256": "af1ae5d497cab13545a9e157826b739ce0f5b1380c2c7402280e592174490c43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-kohlerba/library/MAX30100/0.0.0%2Bsha.0307ce7b7033/MAX30100-0.0.0%2Bsha.0307ce7b7033.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-kohlerba/library/MAX30100/0.0.0%2Bsha.0307ce7b7033/MAX30100-0.0.0%2Bsha.0307ce7b7033.tar.gz"
+    ]
+   }
+  }
+ ]
+}

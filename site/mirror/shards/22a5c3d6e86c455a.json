@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jessicamulein",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jessicamulein/library/QuietDSP/0.0.0-broken/QuietDSP-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QuietDSP-0.1.1.tar.gz",
+    "size_bytes": 656,
+    "sha256": "9a2b96e0fe154a3710a1adc31384d562df319256c72576132837222ad717409b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jessicamulein/library/QuietDSP/0.0.0-broken/QuietDSP-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jessicamulein/library/QuietDSP/0.0.0-broken/QuietDSP-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

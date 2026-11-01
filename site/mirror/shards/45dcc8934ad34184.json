@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/suzujun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "suzujun/library/EthernetClientSecure/0.1.0/EthernetClientSecure-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EthernetClientSecure-0.1.0.tar.gz",
+    "size_bytes": 11255,
+    "sha256": "932c85d569e185d174ec0a4e96c7400d5704359baca94281486498571135d590",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suzujun/library/EthernetClientSecure/0.1.0/EthernetClientSecure-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/suzujun/library/EthernetClientSecure/0.1.0/EthernetClientSecure-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "suzujun/library/EthernetClientSecure/0.1.1/EthernetClientSecure-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EthernetClientSecure-0.1.1.tar.gz",
+    "size_bytes": 11922,
+    "sha256": "5c5c90d17774e001be990c1e8540b12166210125a822876475d721a362a705f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suzujun/library/EthernetClientSecure/0.1.1/EthernetClientSecure-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/suzujun/library/EthernetClientSecure/0.1.1/EthernetClientSecure-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

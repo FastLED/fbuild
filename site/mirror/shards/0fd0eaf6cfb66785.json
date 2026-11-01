@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arduinocodedog",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arduinocodedog/library/SmartCardReader/1.0.0/SmartCardReader-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartCardReader-1.0.0.tar.gz",
+    "size_bytes": 7411,
+    "sha256": "2451453904a51308fc0b1ceb70840fad3c7b26248f44f9c73ad2710849d51fbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduinocodedog/library/SmartCardReader/1.0.0/SmartCardReader-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/arduinocodedog/library/SmartCardReader/1.0.0/SmartCardReader-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

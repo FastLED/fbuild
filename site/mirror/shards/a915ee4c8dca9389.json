@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/brinooficial",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "brinooficial/library/Brino/1.0.1/Brino-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Brino-1.0.1.tar.gz",
+    "size_bytes": 17080,
+    "sha256": "85ba8156ef9e171a6f582684ffb7816ff3bdcac5b3498fc71e6c8dd527821cd7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/brinooficial/library/Brino/1.0.1/Brino-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/brinooficial/library/Brino/1.0.1/Brino-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

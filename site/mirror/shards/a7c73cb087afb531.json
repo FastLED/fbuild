@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mrmeizongo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mrmeizongo/library/PID/1.0.0/PID-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PID-1.0.0.tar.gz",
+    "size_bytes": 3335,
+    "sha256": "90061e29e6273104df7a5607066c0c681f07616b7aa8015ec673804b9afb90e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrmeizongo/library/PID/1.0.0/PID-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mrmeizongo/library/PID/1.0.0/PID-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

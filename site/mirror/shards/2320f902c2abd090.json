@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dereibims",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dereibims/library/HomeAssistantManager/1.0.0/HomeAssistantManager-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantManager-1.0.0.tar.gz",
+    "size_bytes": 9492,
+    "sha256": "099d46b84d5d2b5f6678c06b9b5fee8c15c92c8984422dedbb80cb63894b30b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dereibims/library/HomeAssistantManager/1.0.0/HomeAssistantManager-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dereibims/library/HomeAssistantManager/1.0.0/HomeAssistantManager-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dereibims/library/HomeAssistantManager/1.0.1/HomeAssistantManager-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantManager-1.0.1.tar.gz",
+    "size_bytes": 14449,
+    "sha256": "9b373adf1858153e868990005e75e3a288a23f2f3905174330934053ecbb1359",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dereibims/library/HomeAssistantManager/1.0.1/HomeAssistantManager-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dereibims/library/HomeAssistantManager/1.0.1/HomeAssistantManager-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dereibims/library/HomeAssistantManager/1.0.2/HomeAssistantManager-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantManager-1.0.2.tar.gz",
+    "size_bytes": 14474,
+    "sha256": "336a7bebd12c78424e228cd385c2ab72f190ab5e518b690a81b29d5a5e748d4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dereibims/library/HomeAssistantManager/1.0.2/HomeAssistantManager-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dereibims/library/HomeAssistantManager/1.0.2/HomeAssistantManager-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dereibims/library/HomeAssistantManager/1.1.1/HomeAssistantManager-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantManager-1.1.1.tar.gz",
+    "size_bytes": 14767,
+    "sha256": "a169786654ac34439670591b8953b1af77410b3f3b3a3c4b6010fcabe18abb7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dereibims/library/HomeAssistantManager/1.1.1/HomeAssistantManager-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dereibims/library/HomeAssistantManager/1.1.1/HomeAssistantManager-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dereibims/library/HomeAssistantManager/1.1.2/HomeAssistantManager-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantManager-1.1.2.tar.gz",
+    "size_bytes": 20599,
+    "sha256": "87fe7574ff098bf09ed338e56eefc972c5ff1dacc855057c0cd9c751533b832a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dereibims/library/HomeAssistantManager/1.1.2/HomeAssistantManager-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/dereibims/library/HomeAssistantManager/1.1.2/HomeAssistantManager-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dereibims/library/HomeAssistantManager/1.1.3/HomeAssistantManager-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantManager-1.1.3.tar.gz",
+    "size_bytes": 21156,
+    "sha256": "450e8267aae386ca4f8376a9033fe1b75c8309619bd5da746466cac560729ed8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dereibims/library/HomeAssistantManager/1.1.3/HomeAssistantManager-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/dereibims/library/HomeAssistantManager/1.1.3/HomeAssistantManager-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "dereibims/library/HomeAssistantManager/1.1.4/HomeAssistantManager-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HomeAssistantManager-1.1.4.tar.gz",
+    "size_bytes": 21278,
+    "sha256": "b710d9ad8a9e7d8fda69d447b7f061e4b511fab2d87d8b114574e785f18e87c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dereibims/library/HomeAssistantManager/1.1.4/HomeAssistantManager-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dereibims/library/HomeAssistantManager/1.1.4/HomeAssistantManager-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

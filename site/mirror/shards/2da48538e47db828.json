@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dl9sec",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dl9sec/library/AioP13/1.0.4/AioP13-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AioP13-1.0.4.tar.gz",
+    "size_bytes": 295546,
+    "sha256": "6d0aae0ddf60d6b005b4e28db65fa6c9b0d6c24c47b77a88ebfba4aff3492e51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dl9sec/library/AioP13/1.0.4/AioP13-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/dl9sec/library/AioP13/1.0.4/AioP13-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

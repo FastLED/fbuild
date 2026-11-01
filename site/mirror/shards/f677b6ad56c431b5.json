@@ -1,0 +1,373 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/majicdesigns",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "majicdesigns/library/MD_AButton/1.1/MD_AButton-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_AButton-1.1.tar.gz",
+    "size_bytes": 3609,
+    "sha256": "b6801381348a31fb3b69381dd6814cad9abbc1668610417a688de38a7ce69990",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_AButton/1.1/MD_AButton-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_AButton/1.1/MD_AButton-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_AD9833/1.3.0/MD_AD9833-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_AD9833-1.3.0.tar.gz",
+    "size_bytes": 19875,
+    "sha256": "a273f47d37c44a9c49b908ad7347ca7c6365d20c715579b6812370d51beec2be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_AD9833/1.3.0/MD_AD9833-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_AD9833/1.3.0/MD_AD9833-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_CirQueue/1.0.3/MD_CirQueue-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_CirQueue-1.0.3.tar.gz",
+    "size_bytes": 50372,
+    "sha256": "7a567a7b5f410b04e31692c12a72076351326f439a5596ff5cc351188faa9d95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_CirQueue/1.0.3/MD_CirQueue-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_CirQueue/1.0.3/MD_CirQueue-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_Cubo/2.1.1/MD_Cubo-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_Cubo-2.1.1.tar.gz",
+    "size_bytes": 77412,
+    "sha256": "fc820648a771f5afa8d8e1da91150ac74e7f3a60ed843d79ba9f5a0ab5b3de62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_Cubo/2.1.1/MD_Cubo-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_Cubo/2.1.1/MD_Cubo-2.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_DS1307/1.3.5/MD_DS1307-1.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_DS1307-1.3.5.tar.gz",
+    "size_bytes": 21024,
+    "sha256": "5824d2a7357d977dbf7b7542369a67653e599e0e334a54b3b311d20cb4f488b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_DS1307/1.3.5/MD_DS1307-1.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_DS1307/1.3.5/MD_DS1307-1.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_DS3231/1.3.1/MD_DS3231-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_DS3231-1.3.1.tar.gz",
+    "size_bytes": 30569,
+    "sha256": "55fb74d992cff0ede88967393fd7d9bfa0f2c9d14fb91750892df1f4fe166be6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_DS3231/1.3.1/MD_DS3231-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_DS3231/1.3.1/MD_DS3231-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_HX711/1.0.0/MD_HX711-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_HX711-1.0.0.tar.gz",
+    "size_bytes": 23249,
+    "sha256": "d4546a920515e13528597f7cea360c536ea9d9dc86e8ea754402ae8f89e5ca0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_HX711/1.0.0/MD_HX711-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_HX711/1.0.0/MD_HX711-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_KeySwitch/1.4.2/MD_KeySwitch-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_KeySwitch-1.4.2.tar.gz",
+    "size_bytes": 6305,
+    "sha256": "f08ea8f8208739d5404e4812fd6234d838e5965d60393d5bd1d2039ba56a2159",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_KeySwitch/1.4.2/MD_KeySwitch-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_KeySwitch/1.4.2/MD_KeySwitch-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_LM335A/1.0/MD_LM335A-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_LM335A-1.0.tar.gz",
+    "size_bytes": 2192,
+    "sha256": "c9c181a35c9fd4ae66914786d919c34a667720f90d2cc951ac7890a5e25cfc7b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_LM335A/1.0/MD_LM335A-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_LM335A/1.0/MD_LM335A-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_MAX72XX/3.5.1/MD_MAX72XX-3.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_MAX72XX-3.5.1.tar.gz",
+    "size_bytes": 1917659,
+    "sha256": "b4bc3885c12e5c5171d92d799939bc50582188d0d2af175258ffc24fec1485b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_MAX72XX/3.5.1/MD_MAX72XX-3.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_MAX72XX/3.5.1/MD_MAX72XX-3.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_MAXPanel/1.2.3/MD_MAXPanel-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_MAXPanel-1.2.3.tar.gz",
+    "size_bytes": 56861,
+    "sha256": "5b77d040165ec7baad1213a4965b220f7ca251c01bf52e268a8d6919bc5474b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_MAXPanel/1.2.3/MD_MAXPanel-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_MAXPanel/1.2.3/MD_MAXPanel-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_MIDIFile/2.6.0/MD_MIDIFile-2.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_MIDIFile-2.6.0.tar.gz",
+    "size_bytes": 577163,
+    "sha256": "a111996763eed71fe425cbbadf5e697ab4296456627564bfd21d10a75f477cb4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_MIDIFile/2.6.0/MD_MIDIFile-2.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_MIDIFile/2.6.0/MD_MIDIFile-2.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_MSGEQ7/1.1.0/MD_MSGEQ7-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_MSGEQ7-1.1.0.tar.gz",
+    "size_bytes": 15235,
+    "sha256": "7bb9610b7afd14716e48aeb603a3b1e19a6f08ac677d131ebebbec403cb25e66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_MSGEQ7/1.1.0/MD_MSGEQ7-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_MSGEQ7/1.1.0/MD_MSGEQ7-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_Menu/2.1.3/MD_Menu-2.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_Menu-2.1.3.tar.gz",
+    "size_bytes": 163387,
+    "sha256": "263163214ad5df4ebec7429b7e8fc0cc3ede1b9cbff6ab5d967a656546c82967",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_Menu/2.1.3/MD_Menu-2.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_Menu/2.1.3/MD_Menu-2.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_OnePin/1.0.0/MD_OnePin-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_OnePin-1.0.0.tar.gz",
+    "size_bytes": 24220,
+    "sha256": "a3250dd3d973a29b5ba0e1328191d64155c5dbdfad7b35525d7391c2779b6363",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_OnePin/1.0.0/MD_OnePin-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_OnePin/1.0.0/MD_OnePin-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_PWM/1.1.1/MD_PWM-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_PWM-1.1.1.tar.gz",
+    "size_bytes": 17910,
+    "sha256": "f7d8192e877a697fe003aded0ecb7005965e6a80459790e4d76bfcc48c4f013e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_PWM/1.1.1/MD_PWM-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_PWM/1.1.1/MD_PWM-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_Parola/3.7.3/MD_Parola-3.7.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_Parola-3.7.3.tar.gz",
+    "size_bytes": 265942,
+    "sha256": "ea601880cfb96607a005ce18a50359d5d8d548617f6c05e0fbfb298e91b620cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_Parola/3.7.3/MD_Parola-3.7.3.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_Parola/3.7.3/MD_Parola-3.7.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_Parola/3.7.5/MD_Parola-3.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_Parola-3.7.5.tar.gz",
+    "size_bytes": 265946,
+    "sha256": "1874ea98a1811a4ee896d29fc348d2e9d28d70660d14ffe6c13116bfd9a6308a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_Parola/3.7.5/MD_Parola-3.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_Parola/3.7.5/MD_Parola-3.7.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_REncoder/1.0.1/MD_REncoder-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_REncoder-1.0.1.tar.gz",
+    "size_bytes": 15781,
+    "sha256": "1a6e3121e76fd338cd8c4325b1dd79f3e960e172ee469ed9487fed3193aab6c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_REncoder/1.0.1/MD_REncoder-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_REncoder/1.0.1/MD_REncoder-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_SN76489/1.1.1/MD_SN76489-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_SN76489-1.1.1.tar.gz",
+    "size_bytes": 537405,
+    "sha256": "756a334d87b3063511fa89565dac1c85b79384da78c245c971fa9c19800ec256",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_SN76489/1.1.1/MD_SN76489-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_SN76489/1.1.1/MD_SN76489-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_SmartCar/1.1.0/MD_SmartCar-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_SmartCar-1.1.0.tar.gz",
+    "size_bytes": 138188,
+    "sha256": "000d53933692a33ef2eab9140696672d00b65e2ff418ff26c2500a605a11a002",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_SmartCar/1.1.0/MD_SmartCar-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_SmartCar/1.1.0/MD_SmartCar-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_SmartCar2/1.0.0/MD_SmartCar2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_SmartCar2-1.0.0.tar.gz",
+    "size_bytes": 107867,
+    "sha256": "b98a3b8c5f7e1e7825f2bd6cb45958b9ffa155bf6380abb514fac3a966778ce3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_SmartCar2/1.0.0/MD_SmartCar2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_SmartCar2/1.0.0/MD_SmartCar2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_Stepper/1.1.1/MD_Stepper-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_Stepper-1.1.1.tar.gz",
+    "size_bytes": 26730,
+    "sha256": "7b6e2432cfe92bb08cd76538594e7fc90289c370a9c0d0249cc2cb40b8e6b7fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_Stepper/1.1.1/MD_Stepper-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_Stepper/1.1.1/MD_Stepper-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_TCS230/1.2.3/MD_TCS230-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_TCS230-1.2.3.tar.gz",
+    "size_bytes": 24344,
+    "sha256": "fc84918cbce259273211d997737ee8ba32ba3416475d61692d4463bc3de77322",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_TCS230/1.2.3/MD_TCS230-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_TCS230/1.2.3/MD_TCS230-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_TTT/1.0.1/MD_TTT-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_TTT-1.0.1.tar.gz",
+    "size_bytes": 25494,
+    "sha256": "e16c08e450b18dd8f578080f27fa78c8367d0159681e44347627d41063f6ed31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_TTT/1.0.1/MD_TTT-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_TTT/1.0.1/MD_TTT-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_UISwitch/2.2.2/MD_UISwitch-2.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_UISwitch-2.2.2.tar.gz",
+    "size_bytes": 26653,
+    "sha256": "3e3c0a790312350642ac141707be75b33a8f0a1854094bf4860567b1bb5f6b70",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_UISwitch/2.2.2/MD_UISwitch-2.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_UISwitch/2.2.2/MD_UISwitch-2.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_YM2413/1.1.0/MD_YM2413-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_YM2413-1.1.0.tar.gz",
+    "size_bytes": 899588,
+    "sha256": "4d858b5305596b221a01cf4b29a774b5ccb8823e3db1bf5dbc9bd870751db8c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_YM2413/1.1.0/MD_YM2413-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_YM2413/1.1.0/MD_YM2413-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "majicdesigns/library/MD_YX5300/1.3.1/MD_YX5300-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MD_YX5300-1.3.1.tar.gz",
+    "size_bytes": 12276311,
+    "sha256": "9d7f9f8c8ac83f127865ee63b37acf5b88ec0745a145fd3a6fc0af29cde8fe11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/majicdesigns/library/MD_YX5300/1.3.1/MD_YX5300-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/majicdesigns/library/MD_YX5300/1.3.1/MD_YX5300-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

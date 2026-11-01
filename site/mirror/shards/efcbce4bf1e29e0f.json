@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mauringo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mauringo/library/BMA580/1.1.1/BMA580-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BMA580-1.1.1.tar.gz",
+    "size_bytes": 51969,
+    "sha256": "eff42734b0c159e48077bf12020ae0f9c91ef6050f1280f5aa7c789297ba98ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mauringo/library/BMA580/1.1.1/BMA580-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mauringo/library/BMA580/1.1.1/BMA580-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mauringo/library/BME690-Arduino-lib-unofficial/0.0.1/BME690-Arduino-lib-unofficial-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BME690-Arduino-lib-unofficial-0.0.1.tar.gz",
+    "size_bytes": 31151,
+    "sha256": "bb2e58cf481cbd76818e703afc5a3e3fd5106906a9813505cd043fc790c91383",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mauringo/library/BME690-Arduino-lib-unofficial/0.0.1/BME690-Arduino-lib-unofficial-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mauringo/library/BME690-Arduino-lib-unofficial/0.0.1/BME690-Arduino-lib-unofficial-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mauringo/library/Bsec3-ArduinoLibrary-Unofficial/0.0.1/Bsec3-ArduinoLibrary-Unofficial-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bsec3-ArduinoLibrary-Unofficial-0.0.1.tar.gz",
+    "size_bytes": 33115,
+    "sha256": "fb5c6cf6ac2d264b495a1fe294ee2eeaf0aeaa71da39a6f63ee93a37d7081588",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mauringo/library/Bsec3-ArduinoLibrary-Unofficial/0.0.1/Bsec3-ArduinoLibrary-Unofficial-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mauringo/library/Bsec3-ArduinoLibrary-Unofficial/0.0.1/Bsec3-ArduinoLibrary-Unofficial-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lalten",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lalten/library/FastStepper/0.0.0-alpha+sha.01a5774918/FastStepper-0.0.0-alphasha.01a5774918.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastStepper-0.0.0-alphasha.01a5774918.tar.gz",
+    "size_bytes": 7392,
+    "sha256": "657033b0eb8e2b1a55ffaa571882ee9e78f68cd910cf5b065cf1243649d9f041",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lalten/library/FastStepper/0.0.0-alpha%2Bsha.01a5774918/FastStepper-0.0.0-alphasha.01a5774918.tar.gz",
+     "https://dl.registry.platformio.org/download/lalten/library/FastStepper/0.0.0-alpha%2Bsha.01a5774918/FastStepper-0.0.0-alphasha.01a5774918.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lalten/library/FreematicsONE/0.0.0-broken/FreematicsONE-0.0.0-alphasha.cf9736f536.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FreematicsONE-0.0.0-alphasha.cf9736f536.tar.gz",
+    "size_bytes": 563,
+    "sha256": "b7b558ecb24c9916a9a1cc747f2d6f986bcd56c4706193f4e3dd38fdd14d8a3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lalten/library/FreematicsONE/0.0.0-broken/FreematicsONE-0.0.0-alphasha.cf9736f536.tar.gz",
+     "https://dl.registry.platformio.org/download/lalten/library/FreematicsONE/0.0.0-broken/FreematicsONE-0.0.0-alphasha.cf9736f536.tar.gz"
+    ]
+   }
+  }
+ ]
+}

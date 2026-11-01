@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-benson516",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-benson516/library/FILTER_LIB/0.0.0+sha.10df955a92d9/FILTER_LIB-0.0.0+sha.10df955a92d9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FILTER_LIB-0.0.0+sha.10df955a92d9.tar.gz",
+    "size_bytes": 4993,
+    "sha256": "86510b576202b57a5f5b3a7a0d090066509691cd8308ab670faaaac1ffe2a0d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-benson516/library/FILTER_LIB/0.0.0%2Bsha.10df955a92d9/FILTER_LIB-0.0.0%2Bsha.10df955a92d9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-benson516/library/FILTER_LIB/0.0.0%2Bsha.10df955a92d9/FILTER_LIB-0.0.0%2Bsha.10df955a92d9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-benson516/library/MATRIX_LIB/0.0.0+sha.33b75d52d2a7/MATRIX_LIB-0.0.0+sha.33b75d52d2a7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MATRIX_LIB-0.0.0+sha.33b75d52d2a7.tar.gz",
+    "size_bytes": 9426,
+    "sha256": "47254e5443ad02a511f808dd90967fe751273f703a19aba2da9db524f6a5ff7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-benson516/library/MATRIX_LIB/0.0.0%2Bsha.33b75d52d2a7/MATRIX_LIB-0.0.0%2Bsha.33b75d52d2a7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-benson516/library/MATRIX_LIB/0.0.0%2Bsha.33b75d52d2a7/MATRIX_LIB-0.0.0%2Bsha.33b75d52d2a7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-benson516/library/MEASUREMENT_ERROR_ADAPTATION_CONTROL/0.0.0+sha.533d5685b66c/MEASUREMENT_ERROR_ADAPTATION_CONTROL-0.0.0+sha.533d5685b66c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MEASUREMENT_ERROR_ADAPTATION_CONTROL-0.0.0+sha.533d5685b66c.tar.gz",
+    "size_bytes": 3286,
+    "sha256": "edc1f3cf26d11f94e23ce83f8cabc44a9cfff82685c8e3337aec6ba8e905970f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-benson516/library/MEASUREMENT_ERROR_ADAPTATION_CONTROL/0.0.0%2Bsha.533d5685b66c/MEASUREMENT_ERROR_ADAPTATION_CONTROL-0.0.0%2Bsha.533d5685b66c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-benson516/library/MEASUREMENT_ERROR_ADAPTATION_CONTROL/0.0.0%2Bsha.533d5685b66c/MEASUREMENT_ERROR_ADAPTATION_CONTROL-0.0.0%2Bsha.533d5685b66c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-benson516/library/QEI/0.0.0+sha.4682b3d415bd/QEI-0.0.0+sha.4682b3d415bd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QEI-0.0.0+sha.4682b3d415bd.tar.gz",
+    "size_bytes": 5281,
+    "sha256": "6bf0dc39445562b000fe21475cc82bcc02802e9d9c4099fb55ab563899d2316e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-benson516/library/QEI/0.0.0%2Bsha.4682b3d415bd/QEI-0.0.0%2Bsha.4682b3d415bd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-benson516/library/QEI/0.0.0%2Bsha.4682b3d415bd/QEI-0.0.0%2Bsha.4682b3d415bd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

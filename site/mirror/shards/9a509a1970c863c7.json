@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/carlk3",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "carlk3/library/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico/3.5.1/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico-3.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "no-OS-FatFS-SD-SDIO-SPI-RPi-Pico-3.5.1.tar.gz",
+    "size_bytes": 923112,
+    "sha256": "a875480e83bea2124ced00b8749f8418a6fb51631c1df3c649c737d7b01cdde4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/carlk3/library/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico/3.5.1/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico-3.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/carlk3/library/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico/3.5.1/no-OS-FatFS-SD-SDIO-SPI-RPi-Pico-3.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "carlk3/library/no-OS-FatFS-SD-SPI-RPi-Pico/1.1.0/no-OS-FatFS-SD-SPI-RPi-Pico-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "no-OS-FatFS-SD-SPI-RPi-Pico-1.1.0.tar.gz",
+    "size_bytes": 867584,
+    "sha256": "f0e8bc8bc1c7058f816ba1cd50e1373c2fb360cb4e7eaa3c7da339b23f48cf19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/carlk3/library/no-OS-FatFS-SD-SPI-RPi-Pico/1.1.0/no-OS-FatFS-SD-SPI-RPi-Pico-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/carlk3/library/no-OS-FatFS-SD-SPI-RPi-Pico/1.1.0/no-OS-FatFS-SD-SPI-RPi-Pico-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

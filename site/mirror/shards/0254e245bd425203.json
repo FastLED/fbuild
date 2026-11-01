@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-tottori-tec-05",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-tottori-tec-05/library/led/0.0.0+sha.09fddfbe5168/led-0.0.0+sha.09fddfbe5168.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "led-0.0.0+sha.09fddfbe5168.tar.gz",
+    "size_bytes": 1002,
+    "sha256": "11407ca61607b1a46a2d6c0c49e24cae93355cc535ce673a94f5ed43759c6217",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-tottori-tec-05/library/led/0.0.0%2Bsha.09fddfbe5168/led-0.0.0%2Bsha.09fddfbe5168.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-tottori-tec-05/library/led/0.0.0%2Bsha.09fddfbe5168/led-0.0.0%2Bsha.09fddfbe5168.tar.gz"
+    ]
+   }
+  }
+ ]
+}

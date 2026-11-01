@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/botly-studio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "botly-studio/library/Botly/2.5.0/Botly-2.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Botly-2.5.0.tar.gz",
+    "size_bytes": 12030,
+    "sha256": "4252fb866bfda802ad393c27568464a2a4a67d63cc90fe79f57a634bb68257e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/botly-studio/library/Botly/2.5.0/Botly-2.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/botly-studio/library/Botly/2.5.0/Botly-2.5.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

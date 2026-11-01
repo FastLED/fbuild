@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/stechio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "stechio/library/Analog-Digital%20Multiplexers/3.0.0/Analog-DigitalMultiplexers-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Analog-DigitalMultiplexers-3.0.0.tar.gz",
+    "size_bytes": 9101,
+    "sha256": "028e1b88fb63cc4bfd0a1463ba4f8b37b5da067d2654f4087f3055a593601fa8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/stechio/library/Analog-Digital%2520Multiplexers/3.0.0/Analog-DigitalMultiplexers-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/stechio/library/Analog-Digital%20Multiplexers/3.0.0/Analog-DigitalMultiplexers-3.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

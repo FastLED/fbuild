@@ -1,0 +1,919 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-st",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-st/library/AUDIO_DISCO_F746NG/0.0.0+sha.7046ce26b7ed/AUDIO_DISCO_F746NG-0.0.0+sha.7046ce26b7ed.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AUDIO_DISCO_F746NG-0.0.0+sha.7046ce26b7ed.tar.gz",
+    "size_bytes": 4124,
+    "sha256": "af84657a9cd9c3e636be442d442d86993299d6d1f81a4dc3ed7fa9c2b524ea11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/AUDIO_DISCO_F746NG/0.0.0%2Bsha.7046ce26b7ed/AUDIO_DISCO_F746NG-0.0.0%2Bsha.7046ce26b7ed.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/AUDIO_DISCO_F746NG/0.0.0%2Bsha.7046ce26b7ed/AUDIO_DISCO_F746NG-0.0.0%2Bsha.7046ce26b7ed.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/BSP_DISCO_F429ZI/0.0.0+sha.53d9067a4feb/BSP_DISCO_F429ZI-0.0.0+sha.53d9067a4feb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSP_DISCO_F429ZI-0.0.0+sha.53d9067a4feb.tar.gz",
+    "size_bytes": 67908,
+    "sha256": "2ff92e7e6636f1ced72b43124c2d634e32c0982d4d138588309a5a06e9b8370d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/BSP_DISCO_F429ZI/0.0.0%2Bsha.53d9067a4feb/BSP_DISCO_F429ZI-0.0.0%2Bsha.53d9067a4feb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/BSP_DISCO_F429ZI/0.0.0%2Bsha.53d9067a4feb/BSP_DISCO_F429ZI-0.0.0%2Bsha.53d9067a4feb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/BSP_DISCO_F469NI/0.0.0+sha.3cdfcc4f7c9d/BSP_DISCO_F469NI-0.0.0+sha.3cdfcc4f7c9d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSP_DISCO_F469NI-0.0.0+sha.3cdfcc4f7c9d.tar.gz",
+    "size_bytes": 76863,
+    "sha256": "82680b2b8990ecb822d949f7f32f2778a9e90a32c92c6650a85ecc61638e6227",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/BSP_DISCO_F469NI/0.0.0%2Bsha.3cdfcc4f7c9d/BSP_DISCO_F469NI-0.0.0%2Bsha.3cdfcc4f7c9d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/BSP_DISCO_F469NI/0.0.0%2Bsha.3cdfcc4f7c9d/BSP_DISCO_F469NI-0.0.0%2Bsha.3cdfcc4f7c9d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/BSP_DISCO_F746NG/0.0.0+sha.85dbcff443aa/BSP_DISCO_F746NG-0.0.0+sha.85dbcff443aa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSP_DISCO_F746NG-0.0.0+sha.85dbcff443aa.tar.gz",
+    "size_bytes": 94363,
+    "sha256": "e17eb5732420156023c8680faf2acb3c699b44a880b3cdcad0aa128bdc22ebbe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/BSP_DISCO_F746NG/0.0.0%2Bsha.85dbcff443aa/BSP_DISCO_F746NG-0.0.0%2Bsha.85dbcff443aa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/BSP_DISCO_F746NG/0.0.0%2Bsha.85dbcff443aa/BSP_DISCO_F746NG-0.0.0%2Bsha.85dbcff443aa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/BSP_DISCO_F769NI/0.0.0+sha.d13d7c447539/BSP_DISCO_F769NI-0.0.0+sha.d13d7c447539.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSP_DISCO_F769NI-0.0.0+sha.d13d7c447539.tar.gz",
+    "size_bytes": 106169,
+    "sha256": "45207edc6a98880eace2ac70315ceb6d56361427e0c9b06bf1b65a30488dc6c2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/BSP_DISCO_F769NI/0.0.0%2Bsha.d13d7c447539/BSP_DISCO_F769NI-0.0.0%2Bsha.d13d7c447539.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/BSP_DISCO_F769NI/0.0.0%2Bsha.d13d7c447539/BSP_DISCO_F769NI-0.0.0%2Bsha.d13d7c447539.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/BSP_DISCO_H747I/0.0.0+sha.bc403474b366/BSP_DISCO_H747I-0.0.0+sha.bc403474b366.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSP_DISCO_H747I-0.0.0+sha.bc403474b366.tar.gz",
+    "size_bytes": 1062757,
+    "sha256": "2480386c7b1c5b0d8e9d53d308d391c6b49fbbffe70847440d0e31814a47e5a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/BSP_DISCO_H747I/0.0.0%2Bsha.bc403474b366/BSP_DISCO_H747I-0.0.0%2Bsha.bc403474b366.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/BSP_DISCO_H747I/0.0.0%2Bsha.bc403474b366/BSP_DISCO_H747I-0.0.0%2Bsha.bc403474b366.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/BSP_DISCO_L476VG/0.0.0+sha.4943b15cce9f/BSP_DISCO_L476VG-0.0.0+sha.4943b15cce9f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BSP_DISCO_L476VG-0.0.0+sha.4943b15cce9f.tar.gz",
+    "size_bytes": 71699,
+    "sha256": "402ca5fd9a2563293034af994b50fc7bc24357e50c9d98d1470ee42d1b502933",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/BSP_DISCO_L476VG/0.0.0%2Bsha.4943b15cce9f/BSP_DISCO_L476VG-0.0.0%2Bsha.4943b15cce9f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/BSP_DISCO_L476VG/0.0.0%2Bsha.4943b15cce9f/BSP_DISCO_L476VG-0.0.0%2Bsha.4943b15cce9f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/COMPASS_DISCO_L476VG/0.0.0+sha.6508fa5521e0/COMPASS_DISCO_L476VG-0.0.0+sha.6508fa5521e0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "COMPASS_DISCO_L476VG-0.0.0+sha.6508fa5521e0.tar.gz",
+    "size_bytes": 2362,
+    "sha256": "0861968f7b95fa7e349266acfd9ab4d3ac6180a4d39b9ca49334c9b6a2fc47c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/COMPASS_DISCO_L476VG/0.0.0%2Bsha.6508fa5521e0/COMPASS_DISCO_L476VG-0.0.0%2Bsha.6508fa5521e0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/COMPASS_DISCO_L476VG/0.0.0%2Bsha.6508fa5521e0/COMPASS_DISCO_L476VG-0.0.0%2Bsha.6508fa5521e0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/DISCO_H747I_AUDIO_demo/0.0.0+sha.78e37c7585e6/DISCO_H747I_AUDIO_demo-0.0.0+sha.78e37c7585e6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DISCO_H747I_AUDIO_demo-0.0.0+sha.78e37c7585e6.tar.gz",
+    "size_bytes": 4137,
+    "sha256": "629910db54d045a94b476deec2b2e4460adcecbaab53d42a1bdfe5b64975c252",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/DISCO_H747I_AUDIO_demo/0.0.0%2Bsha.78e37c7585e6/DISCO_H747I_AUDIO_demo-0.0.0%2Bsha.78e37c7585e6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/DISCO_H747I_AUDIO_demo/0.0.0%2Bsha.78e37c7585e6/DISCO_H747I_AUDIO_demo-0.0.0%2Bsha.78e37c7585e6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/DISCO_H747I_LCD_demo/0.0.0+sha.305555b58102/DISCO_H747I_LCD_demo-0.0.0+sha.305555b58102.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DISCO_H747I_LCD_demo-0.0.0+sha.305555b58102.tar.gz",
+    "size_bytes": 6299,
+    "sha256": "01ae57ee7a927d6c650cd51821610351b2c8a6df73215c94a302b5644ae2af61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/DISCO_H747I_LCD_demo/0.0.0%2Bsha.305555b58102/DISCO_H747I_LCD_demo-0.0.0%2Bsha.305555b58102.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/DISCO_H747I_LCD_demo/0.0.0%2Bsha.305555b58102/DISCO_H747I_LCD_demo-0.0.0%2Bsha.305555b58102.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/DISCO_L475VG_IOT01A_wifi/0.0.0-alpha+sha.c61a936354/DISCO_L475VG_IOT01A_wifi-0.0.0-alphasha.c61a936354.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DISCO_L475VG_IOT01A_wifi-0.0.0-alphasha.c61a936354.tar.gz",
+    "size_bytes": 17830,
+    "sha256": "02788f08a10769953a98d30e073b3e05ca36ca45cb9cf9bdd224e2409376d4fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/DISCO_L475VG_IOT01A_wifi/0.0.0-alpha%2Bsha.c61a936354/DISCO_L475VG_IOT01A_wifi-0.0.0-alphasha.c61a936354.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/DISCO_L475VG_IOT01A_wifi/0.0.0-alpha%2Bsha.c61a936354/DISCO_L475VG_IOT01A_wifi-0.0.0-alphasha.c61a936354.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/DISCO_L496AG-LCDTS-demo/0.0.0+sha.afd16909a960/DISCO_L496AG-LCDTS-demo-0.0.0+sha.afd16909a960.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DISCO_L496AG-LCDTS-demo-0.0.0+sha.afd16909a960.tar.gz",
+    "size_bytes": 1554,
+    "sha256": "c53745972d07bf7a827f16effe3ed6bcabe1c1e568dc9120c408f8eb678537ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/DISCO_L496AG-LCDTS-demo/0.0.0%2Bsha.afd16909a960/DISCO_L496AG-LCDTS-demo-0.0.0%2Bsha.afd16909a960.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/DISCO_L496AG-LCDTS-demo/0.0.0%2Bsha.afd16909a960/DISCO_L496AG-LCDTS-demo-0.0.0%2Bsha.afd16909a960.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/EEPROM_DISCO_F429ZI/0.0.0+sha.0980ff473345/EEPROM_DISCO_F429ZI-0.0.0+sha.0980ff473345.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM_DISCO_F429ZI-0.0.0+sha.0980ff473345.tar.gz",
+    "size_bytes": 3529,
+    "sha256": "aa7fe96359afaa63ea3682887b11180d95f640331d6b3de46b6b9d53549c2db4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/EEPROM_DISCO_F429ZI/0.0.0%2Bsha.0980ff473345/EEPROM_DISCO_F429ZI-0.0.0%2Bsha.0980ff473345.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/EEPROM_DISCO_F429ZI/0.0.0%2Bsha.0980ff473345/EEPROM_DISCO_F429ZI-0.0.0%2Bsha.0980ff473345.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/EEPROM_DISCO_F469NI/0.0.0+sha.cd22055cbc4b/EEPROM_DISCO_F469NI-0.0.0+sha.cd22055cbc4b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM_DISCO_F469NI-0.0.0+sha.cd22055cbc4b.tar.gz",
+    "size_bytes": 3487,
+    "sha256": "b468f31d9633f1497d692e2b0f6443cfe75770fa51d1942492b33034320ec63a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/EEPROM_DISCO_F469NI/0.0.0%2Bsha.cd22055cbc4b/EEPROM_DISCO_F469NI-0.0.0%2Bsha.cd22055cbc4b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/EEPROM_DISCO_F469NI/0.0.0%2Bsha.cd22055cbc4b/EEPROM_DISCO_F469NI-0.0.0%2Bsha.cd22055cbc4b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/EEPROM_DISCO_F746NG/0.0.0+sha.71d257cea6b2/EEPROM_DISCO_F746NG-0.0.0+sha.71d257cea6b2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEPROM_DISCO_F746NG-0.0.0+sha.71d257cea6b2.tar.gz",
+    "size_bytes": 3374,
+    "sha256": "eca1342c670c9559f464341462ae76a49fbf55e70d11d6d3443c5bb1488e1dc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/EEPROM_DISCO_F746NG/0.0.0%2Bsha.71d257cea6b2/EEPROM_DISCO_F746NG-0.0.0%2Bsha.71d257cea6b2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/EEPROM_DISCO_F746NG/0.0.0%2Bsha.71d257cea6b2/EEPROM_DISCO_F746NG-0.0.0%2Bsha.71d257cea6b2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/EPD_GDE021A1/0.0.0+sha.6ee9c1afd6ec/EPD_GDE021A1-0.0.0+sha.6ee9c1afd6ec.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EPD_GDE021A1-0.0.0+sha.6ee9c1afd6ec.tar.gz",
+    "size_bytes": 27624,
+    "sha256": "ff03811965dedc6ff7b851f8a66a799fa563fc031cdd34463d3453fb2ce820e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/EPD_GDE021A1/0.0.0%2Bsha.6ee9c1afd6ec/EPD_GDE021A1-0.0.0%2Bsha.6ee9c1afd6ec.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/EPD_GDE021A1/0.0.0%2Bsha.6ee9c1afd6ec/EPD_GDE021A1-0.0.0%2Bsha.6ee9c1afd6ec.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/GYRO_DISCO_F429ZI/0.0.0+sha.dfe10fcd7524/GYRO_DISCO_F429ZI-0.0.0+sha.dfe10fcd7524.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GYRO_DISCO_F429ZI-0.0.0+sha.dfe10fcd7524.tar.gz",
+    "size_bytes": 2424,
+    "sha256": "6e0e1aeeb827736a2f3dcef6bb7d7d771ddd1e38a3cdbf17e3f2b1778f40383e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/GYRO_DISCO_F429ZI/0.0.0%2Bsha.dfe10fcd7524/GYRO_DISCO_F429ZI-0.0.0%2Bsha.dfe10fcd7524.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/GYRO_DISCO_F429ZI/0.0.0%2Bsha.dfe10fcd7524/GYRO_DISCO_F429ZI-0.0.0%2Bsha.dfe10fcd7524.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/GYRO_DISCO_L476VG/0.0.0+sha.9dc4ecb46a75/GYRO_DISCO_L476VG-0.0.0+sha.9dc4ecb46a75.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GYRO_DISCO_L476VG-0.0.0+sha.9dc4ecb46a75.tar.gz",
+    "size_bytes": 2410,
+    "sha256": "24e937ff21a8e560f84ac90fed626ed652d028a09ca4bfd1fb5d6639c780c30a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/GYRO_DISCO_L476VG/0.0.0%2Bsha.9dc4ecb46a75/GYRO_DISCO_L476VG-0.0.0%2Bsha.9dc4ecb46a75.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/GYRO_DISCO_L476VG/0.0.0%2Bsha.9dc4ecb46a75/GYRO_DISCO_L476VG-0.0.0%2Bsha.9dc4ecb46a75.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/HTS221/0.0.0+sha.ccf7f36492ae/HTS221-0.0.0+sha.ccf7f36492ae.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTS221-0.0.0+sha.ccf7f36492ae.tar.gz",
+    "size_bytes": 11793,
+    "sha256": "5ff71e60b2e0697e03f0ff313db719355f4dfdd5bdcebd2b5682ea29b9a13e8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/HTS221/0.0.0%2Bsha.ccf7f36492ae/HTS221-0.0.0%2Bsha.ccf7f36492ae.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/HTS221/0.0.0%2Bsha.ccf7f36492ae/HTS221-0.0.0%2Bsha.ccf7f36492ae.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/HiBrightLED/0.0.0+sha.eb29c4c2a341/HiBrightLED-0.0.0+sha.eb29c4c2a341.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HiBrightLED-0.0.0+sha.eb29c4c2a341.tar.gz",
+    "size_bytes": 5442,
+    "sha256": "45af71640a4be4ebc4c4079104951091c01ccad9fdbad510e2fbd23273fa51a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/HiBrightLED/0.0.0%2Bsha.eb29c4c2a341/HiBrightLED-0.0.0%2Bsha.eb29c4c2a341.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/HiBrightLED/0.0.0%2Bsha.eb29c4c2a341/HiBrightLED-0.0.0%2Bsha.eb29c4c2a341.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/IIS2DLPC/0.0.0+sha.28ad92a16a36/IIS2DLPC-0.0.0+sha.28ad92a16a36.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IIS2DLPC-0.0.0+sha.28ad92a16a36.tar.gz",
+    "size_bytes": 21719,
+    "sha256": "97707a66ec85512e198b16743b22a0f929b12bdcc710a16537ff6ca3dae1617d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/IIS2DLPC/0.0.0%2Bsha.28ad92a16a36/IIS2DLPC-0.0.0%2Bsha.28ad92a16a36.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/IIS2DLPC/0.0.0%2Bsha.28ad92a16a36/IIS2DLPC-0.0.0%2Bsha.28ad92a16a36.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/LCD_DISCO_F429ZI/0.0.0+sha.dc55a068bc1a/LCD_DISCO_F429ZI-0.0.0+sha.dc55a068bc1a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_DISCO_F429ZI-0.0.0+sha.dc55a068bc1a.tar.gz",
+    "size_bytes": 4258,
+    "sha256": "07fb2fadd1095aea1f031c9aa0e81ac8bdd5a5dfb30eb2db213aa4924737c095",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/LCD_DISCO_F429ZI/0.0.0%2Bsha.dc55a068bc1a/LCD_DISCO_F429ZI-0.0.0%2Bsha.dc55a068bc1a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/LCD_DISCO_F429ZI/0.0.0%2Bsha.dc55a068bc1a/LCD_DISCO_F429ZI-0.0.0%2Bsha.dc55a068bc1a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/LCD_DISCO_F469NI/0.0.0+sha.d38374480318/LCD_DISCO_F469NI-0.0.0+sha.d38374480318.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_DISCO_F469NI-0.0.0+sha.d38374480318.tar.gz",
+    "size_bytes": 4501,
+    "sha256": "b4ae6a0b0073be3f6cf921b59e673e3bc091c5190b87f789ffb8b3082be22718",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/LCD_DISCO_F469NI/0.0.0%2Bsha.d38374480318/LCD_DISCO_F469NI-0.0.0%2Bsha.d38374480318.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/LCD_DISCO_F469NI/0.0.0%2Bsha.d38374480318/LCD_DISCO_F469NI-0.0.0%2Bsha.d38374480318.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/LCD_DISCO_F746NG/0.0.0+sha.d44525b1de98/LCD_DISCO_F746NG-0.0.0+sha.d44525b1de98.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_DISCO_F746NG-0.0.0+sha.d44525b1de98.tar.gz",
+    "size_bytes": 4391,
+    "sha256": "e133371f00359cd75cfee31560a39d97481ac19b6eec0b89b5287e610527e05b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/LCD_DISCO_F746NG/0.0.0%2Bsha.d44525b1de98/LCD_DISCO_F746NG-0.0.0%2Bsha.d44525b1de98.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/LCD_DISCO_F746NG/0.0.0%2Bsha.d44525b1de98/LCD_DISCO_F746NG-0.0.0%2Bsha.d44525b1de98.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/LCD_DISCO_F769NI/0.0.0+sha.fd7c63b20d54/LCD_DISCO_F769NI-0.0.0+sha.fd7c63b20d54.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_DISCO_F769NI-0.0.0+sha.fd7c63b20d54.tar.gz",
+    "size_bytes": 5184,
+    "sha256": "329b663c2c11e0e8cb73444198f5f04c4f6e2f35a09729dd7a685fdc0465a4ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/LCD_DISCO_F769NI/0.0.0%2Bsha.fd7c63b20d54/LCD_DISCO_F769NI-0.0.0%2Bsha.fd7c63b20d54.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/LCD_DISCO_F769NI/0.0.0%2Bsha.fd7c63b20d54/LCD_DISCO_F769NI-0.0.0%2Bsha.fd7c63b20d54.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/LCD_DISCO_L476VG/0.0.0+sha.6ac2ed34f595/LCD_DISCO_L476VG-0.0.0+sha.6ac2ed34f595.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_DISCO_L476VG-0.0.0+sha.6ac2ed34f595.tar.gz",
+    "size_bytes": 3549,
+    "sha256": "2b56ea4ab5103c1465bd076deeae3441cc27d75e325cdc5878695b26ce652d4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/LCD_DISCO_L476VG/0.0.0%2Bsha.6ac2ed34f595/LCD_DISCO_L476VG-0.0.0%2Bsha.6ac2ed34f595.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/LCD_DISCO_L476VG/0.0.0%2Bsha.6ac2ed34f595/LCD_DISCO_L476VG-0.0.0%2Bsha.6ac2ed34f595.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/LIS2DW12/0.0.0+sha.94c5d5546161/LIS2DW12-0.0.0+sha.94c5d5546161.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIS2DW12-0.0.0+sha.94c5d5546161.tar.gz",
+    "size_bytes": 21793,
+    "sha256": "6d7da3cf8dc028de2085409954b2c3fad325db931d9b307758083ac298854177",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/LIS2DW12/0.0.0%2Bsha.94c5d5546161/LIS2DW12-0.0.0%2Bsha.94c5d5546161.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/LIS2DW12/0.0.0%2Bsha.94c5d5546161/LIS2DW12-0.0.0%2Bsha.94c5d5546161.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/LIS3MDL/0.0.0+sha.308889c4d074/LIS3MDL-0.0.0+sha.308889c4d074.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LIS3MDL-0.0.0+sha.308889c4d074.tar.gz",
+    "size_bytes": 7902,
+    "sha256": "fb0c1c8cd11bcd8074f88ef4feb5668d5cc18684cef14bc1bfd479f1179826c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/LIS3MDL/0.0.0%2Bsha.308889c4d074/LIS3MDL-0.0.0%2Bsha.308889c4d074.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/LIS3MDL/0.0.0%2Bsha.308889c4d074/LIS3MDL-0.0.0%2Bsha.308889c4d074.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/LPS22HB/0.0.0+sha.3971e9431200/LPS22HB-0.0.0+sha.3971e9431200.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LPS22HB-0.0.0+sha.3971e9431200.tar.gz",
+    "size_bytes": 21358,
+    "sha256": "b20f5d884712261959dfb6f9e01cc1b47f01a20f79d4f6f5de1d7d8f63f28e4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/LPS22HB/0.0.0%2Bsha.3971e9431200/LPS22HB-0.0.0%2Bsha.3971e9431200.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/LPS22HB/0.0.0%2Bsha.3971e9431200/LPS22HB-0.0.0%2Bsha.3971e9431200.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/LSM303AGR/0.0.0+sha.6c7e83ae885e/LSM303AGR-0.0.0+sha.6c7e83ae885e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM303AGR-0.0.0+sha.6c7e83ae885e.tar.gz",
+    "size_bytes": 29764,
+    "sha256": "1bad744e6e68535d9a7fa85bd599ddb364bc585084d8d7a1488eedc8ae510e68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/LSM303AGR/0.0.0%2Bsha.6c7e83ae885e/LSM303AGR-0.0.0%2Bsha.6c7e83ae885e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/LSM303AGR/0.0.0%2Bsha.6c7e83ae885e/LSM303AGR-0.0.0%2Bsha.6c7e83ae885e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/LSM6DSL/0.0.0+sha.77ec4781b110/LSM6DSL-0.0.0+sha.77ec4781b110.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM6DSL-0.0.0+sha.77ec4781b110.tar.gz",
+    "size_bytes": 36712,
+    "sha256": "948bdd28dd96140f73f3791c676af58603811a1e8f8cc6b0d39e8ba1af15b28c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/LSM6DSL/0.0.0%2Bsha.77ec4781b110/LSM6DSL-0.0.0%2Bsha.77ec4781b110.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/LSM6DSL/0.0.0%2Bsha.77ec4781b110/LSM6DSL-0.0.0%2Bsha.77ec4781b110.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/LSM6DSO/0.0.0+sha.4274d9103f1d/LSM6DSO-0.0.0+sha.4274d9103f1d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM6DSO-0.0.0+sha.4274d9103f1d.tar.gz",
+    "size_bytes": 47329,
+    "sha256": "1a1e7ff557a85eee4883a76de9321e81ef606b8fc93d0f168aae60b78efe1254",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/LSM6DSO/0.0.0%2Bsha.4274d9103f1d/LSM6DSO-0.0.0%2Bsha.4274d9103f1d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/LSM6DSO/0.0.0%2Bsha.4274d9103f1d/LSM6DSO-0.0.0%2Bsha.4274d9103f1d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/LSM6DSOX/0.0.0+sha.f27ce43dee4f/LSM6DSOX-0.0.0+sha.f27ce43dee4f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM6DSOX-0.0.0+sha.f27ce43dee4f.tar.gz",
+    "size_bytes": 49379,
+    "sha256": "2d181ee9af8d571b85a1f8d6ae4da5a1db345b3a770b044a432d07349348eb9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/LSM6DSOX/0.0.0%2Bsha.f27ce43dee4f/LSM6DSOX-0.0.0%2Bsha.f27ce43dee4f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/LSM6DSOX/0.0.0%2Bsha.f27ce43dee4f/LSM6DSOX-0.0.0%2Bsha.f27ce43dee4f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/M24SR/0.0.0+sha.11161008d77a/M24SR-0.0.0+sha.11161008d77a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "M24SR-0.0.0+sha.11161008d77a.tar.gz",
+    "size_bytes": 22998,
+    "sha256": "a13ef3a62ac1dd9e2a68baf6760e5ac6ee108bed652cce849128db832d342235",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/M24SR/0.0.0%2Bsha.11161008d77a/M24SR-0.0.0%2Bsha.11161008d77a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/M24SR/0.0.0%2Bsha.11161008d77a/M24SR-0.0.0%2Bsha.11161008d77a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/MQTT/0.0.0+sha.c66fdbb9eb83/MQTT-0.0.0+sha.c66fdbb9eb83.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQTT-0.0.0+sha.c66fdbb9eb83.tar.gz",
+    "size_bytes": 11186,
+    "sha256": "69247f8bf02f84e3e422c8fe3be8218fc08882607a92048b6cf3be2711742c38",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/MQTT/0.0.0%2Bsha.c66fdbb9eb83/MQTT-0.0.0%2Bsha.c66fdbb9eb83.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/MQTT/0.0.0%2Bsha.c66fdbb9eb83/MQTT-0.0.0%2Bsha.c66fdbb9eb83.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/NDefLib/0.0.0+sha.72c86cbd49be/NDefLib-0.0.0+sha.72c86cbd49be.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NDefLib-0.0.0+sha.72c86cbd49be.tar.gz",
+    "size_bytes": 21419,
+    "sha256": "46993b1dc636241c3614ecf19467ddab403650e3d6c508379049672ad424c925",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/NDefLib/0.0.0%2Bsha.72c86cbd49be/NDefLib-0.0.0%2Bsha.72c86cbd49be.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/NDefLib/0.0.0%2Bsha.72c86cbd49be/NDefLib-0.0.0%2Bsha.72c86cbd49be.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/QSPI_DISCO_F469NI/0.0.0+sha.9fc24a384319/QSPI_DISCO_F469NI-0.0.0+sha.9fc24a384319.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QSPI_DISCO_F469NI-0.0.0+sha.9fc24a384319.tar.gz",
+    "size_bytes": 2416,
+    "sha256": "e1e52ca34028a22682d1e2d52427b26f932b6ff82dd1a3fe862d41d127a5f902",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/QSPI_DISCO_F469NI/0.0.0%2Bsha.9fc24a384319/QSPI_DISCO_F469NI-0.0.0%2Bsha.9fc24a384319.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/QSPI_DISCO_F469NI/0.0.0%2Bsha.9fc24a384319/QSPI_DISCO_F469NI-0.0.0%2Bsha.9fc24a384319.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/QSPI_DISCO_F746NG/0.0.0+sha.be9d625054cd/QSPI_DISCO_F746NG-0.0.0+sha.be9d625054cd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QSPI_DISCO_F746NG-0.0.0+sha.be9d625054cd.tar.gz",
+    "size_bytes": 2583,
+    "sha256": "86b2a3ddd7e48b689520fc68e0dd55d9a7e5cfb38abd02c401dc1409676d0394",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/QSPI_DISCO_F746NG/0.0.0%2Bsha.be9d625054cd/QSPI_DISCO_F746NG-0.0.0%2Bsha.be9d625054cd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/QSPI_DISCO_F746NG/0.0.0%2Bsha.be9d625054cd/QSPI_DISCO_F746NG-0.0.0%2Bsha.be9d625054cd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/QSPI_DISCO_L476VG/0.0.0+sha.ea63cbd848a3/QSPI_DISCO_L476VG-0.0.0+sha.ea63cbd848a3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QSPI_DISCO_L476VG-0.0.0+sha.ea63cbd848a3.tar.gz",
+    "size_bytes": 2445,
+    "sha256": "6d97b35e63cb8e12ada9d2b20fafaf1a6f3608262e380d554a2e2ba8a751951d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/QSPI_DISCO_L476VG/0.0.0%2Bsha.ea63cbd848a3/QSPI_DISCO_L476VG-0.0.0%2Bsha.ea63cbd848a3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/QSPI_DISCO_L476VG/0.0.0%2Bsha.ea63cbd848a3/QSPI_DISCO_L476VG-0.0.0%2Bsha.ea63cbd848a3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/SDRAM_DISCO_F429ZI/0.0.0+sha.d0070c48e1b9/SDRAM_DISCO_F429ZI-0.0.0+sha.d0070c48e1b9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDRAM_DISCO_F429ZI-0.0.0+sha.d0070c48e1b9.tar.gz",
+    "size_bytes": 2403,
+    "sha256": "2627f31a2db4af0a4468b6a5ff7d5352047b9a722f6a4bdb1ca74efe9e043631",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/SDRAM_DISCO_F429ZI/0.0.0%2Bsha.d0070c48e1b9/SDRAM_DISCO_F429ZI-0.0.0%2Bsha.d0070c48e1b9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/SDRAM_DISCO_F429ZI/0.0.0%2Bsha.d0070c48e1b9/SDRAM_DISCO_F429ZI-0.0.0%2Bsha.d0070c48e1b9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/SDRAM_DISCO_F469NI/0.0.0+sha.8dee094d9554/SDRAM_DISCO_F469NI-0.0.0+sha.8dee094d9554.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDRAM_DISCO_F469NI-0.0.0+sha.8dee094d9554.tar.gz",
+    "size_bytes": 2225,
+    "sha256": "5408176b22dafc6a3671817ea5946dc86af37ebd6e405f00416ad7e8012255c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/SDRAM_DISCO_F469NI/0.0.0%2Bsha.8dee094d9554/SDRAM_DISCO_F469NI-0.0.0%2Bsha.8dee094d9554.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/SDRAM_DISCO_F469NI/0.0.0%2Bsha.8dee094d9554/SDRAM_DISCO_F469NI-0.0.0%2Bsha.8dee094d9554.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/SDRAM_DISCO_F746NG/0.0.0+sha.370f402a2219/SDRAM_DISCO_F746NG-0.0.0+sha.370f402a2219.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDRAM_DISCO_F746NG-0.0.0+sha.370f402a2219.tar.gz",
+    "size_bytes": 2552,
+    "sha256": "73ea27e3bb8bcf9164fbf6209847cacca8a446b78542db1ac3daed39212bc201",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/SDRAM_DISCO_F746NG/0.0.0%2Bsha.370f402a2219/SDRAM_DISCO_F746NG-0.0.0%2Bsha.370f402a2219.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/SDRAM_DISCO_F746NG/0.0.0%2Bsha.370f402a2219/SDRAM_DISCO_F746NG-0.0.0%2Bsha.370f402a2219.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/SD_DISCO_F469NI/0.0.0+sha.c532df66d66a/SD_DISCO_F469NI-0.0.0+sha.c532df66d66a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SD_DISCO_F469NI-0.0.0+sha.c532df66d66a.tar.gz",
+    "size_bytes": 2751,
+    "sha256": "1cee8a9251d7db82e4da762127f1d2a6e4cfcac7e2d517e7418499f917cf0134",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/SD_DISCO_F469NI/0.0.0%2Bsha.c532df66d66a/SD_DISCO_F469NI-0.0.0%2Bsha.c532df66d66a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/SD_DISCO_F469NI/0.0.0%2Bsha.c532df66d66a/SD_DISCO_F469NI-0.0.0%2Bsha.c532df66d66a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/SD_DISCO_F746NG/0.0.0+sha.cf12f3d37081/SD_DISCO_F746NG-0.0.0+sha.cf12f3d37081.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SD_DISCO_F746NG-0.0.0+sha.cf12f3d37081.tar.gz",
+    "size_bytes": 2807,
+    "sha256": "8fd2092b7073f08edfad78942d58663d044744383687840a6842398f36934e1e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/SD_DISCO_F746NG/0.0.0%2Bsha.cf12f3d37081/SD_DISCO_F746NG-0.0.0%2Bsha.cf12f3d37081.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/SD_DISCO_F746NG/0.0.0%2Bsha.cf12f3d37081/SD_DISCO_F746NG-0.0.0%2Bsha.cf12f3d37081.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/SPWF01SA/0.0.0+sha.0dc1402f42a9/SPWF01SA-0.0.0+sha.0dc1402f42a9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPWF01SA-0.0.0+sha.0dc1402f42a9.tar.gz",
+    "size_bytes": 5465,
+    "sha256": "818ae99b62bdcdfd11e0d885c3be982f3e3a293267020547a9e918b938840870",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/SPWF01SA/0.0.0%2Bsha.0dc1402f42a9/SPWF01SA-0.0.0%2Bsha.0dc1402f42a9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/SPWF01SA/0.0.0%2Bsha.0dc1402f42a9/SPWF01SA-0.0.0%2Bsha.0dc1402f42a9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/ST_Events-old/0.0.0+sha.b95afde9ef7e/ST_Events-old-0.0.0+sha.b95afde9ef7e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST_Events-old-0.0.0+sha.b95afde9ef7e.tar.gz",
+    "size_bytes": 35430,
+    "sha256": "d38f426cbdbbee4aa8e74d33373ac1625d32aa0c6c56b3b53c0e0e02679d31cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/ST_Events-old/0.0.0%2Bsha.b95afde9ef7e/ST_Events-old-0.0.0%2Bsha.b95afde9ef7e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/ST_Events-old/0.0.0%2Bsha.b95afde9ef7e/ST_Events-old-0.0.0%2Bsha.b95afde9ef7e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/ST_I2S/0.0.0+sha.bb4bac0874da/ST_I2S-0.0.0+sha.bb4bac0874da.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST_I2S-0.0.0+sha.bb4bac0874da.tar.gz",
+    "size_bytes": 15383,
+    "sha256": "adc6b7ddcd414ba898c9bb294af6334b883fd74b1068d254f4b51a0d6a122a55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/ST_I2S/0.0.0%2Bsha.bb4bac0874da/ST_I2S-0.0.0%2Bsha.bb4bac0874da.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/ST_I2S/0.0.0%2Bsha.bb4bac0874da/ST_I2S-0.0.0%2Bsha.bb4bac0874da.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/ST_INTERFACES/0.0.0+sha.d3c9b33b992c/ST_INTERFACES-0.0.0+sha.d3c9b33b992c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST_INTERFACES-0.0.0+sha.d3c9b33b992c.tar.gz",
+    "size_bytes": 6029,
+    "sha256": "8b68c3108265b3f3b462f3a79a8b5c25ba3716baa0e39cb68cf7029a926cdcb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/ST_INTERFACES/0.0.0%2Bsha.d3c9b33b992c/ST_INTERFACES-0.0.0%2Bsha.d3c9b33b992c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/ST_INTERFACES/0.0.0%2Bsha.d3c9b33b992c/ST_INTERFACES-0.0.0%2Bsha.d3c9b33b992c.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/TS_DISCO_F429ZI/0.0.0+sha.4f8b6df8e235/TS_DISCO_F429ZI-0.0.0+sha.4f8b6df8e235.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TS_DISCO_F429ZI-0.0.0+sha.4f8b6df8e235.tar.gz",
+    "size_bytes": 2426,
+    "sha256": "a422d310fdb6cc781a7d9365796748dc5ae429760b094fd82cf0dfad9ad4ca2a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/TS_DISCO_F429ZI/0.0.0%2Bsha.4f8b6df8e235/TS_DISCO_F429ZI-0.0.0%2Bsha.4f8b6df8e235.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/TS_DISCO_F429ZI/0.0.0%2Bsha.4f8b6df8e235/TS_DISCO_F429ZI-0.0.0%2Bsha.4f8b6df8e235.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/TS_DISCO_F469NI/0.0.0+sha.ee8fa51422c7/TS_DISCO_F469NI-0.0.0+sha.ee8fa51422c7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TS_DISCO_F469NI-0.0.0+sha.ee8fa51422c7.tar.gz",
+    "size_bytes": 2568,
+    "sha256": "f19e4d3731d7207f65c0c8fbf75a5bb72fa023720f1825d00501d2bae07d71c0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/TS_DISCO_F469NI/0.0.0%2Bsha.ee8fa51422c7/TS_DISCO_F469NI-0.0.0%2Bsha.ee8fa51422c7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/TS_DISCO_F469NI/0.0.0%2Bsha.ee8fa51422c7/TS_DISCO_F469NI-0.0.0%2Bsha.ee8fa51422c7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/TS_DISCO_F746NG/0.0.0+sha.fe0cf5e2960f/TS_DISCO_F746NG-0.0.0+sha.fe0cf5e2960f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TS_DISCO_F746NG-0.0.0+sha.fe0cf5e2960f.tar.gz",
+    "size_bytes": 2633,
+    "sha256": "a92e487f100a486c76d6cd810a0ccca185abce5568f2d992803b4a0680eaaf2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/TS_DISCO_F746NG/0.0.0%2Bsha.fe0cf5e2960f/TS_DISCO_F746NG-0.0.0%2Bsha.fe0cf5e2960f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/TS_DISCO_F746NG/0.0.0%2Bsha.fe0cf5e2960f/TS_DISCO_F746NG-0.0.0%2Bsha.fe0cf5e2960f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/USBHOST/0.0.0+sha.d3ac9e1c0035/USBHOST-0.0.0+sha.d3ac9e1c0035.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBHOST-0.0.0+sha.d3ac9e1c0035.tar.gz",
+    "size_bytes": 222879,
+    "sha256": "c6a6a6fe64bdaf29e8d2ccff78982bbe34e4a39203772db9f7b1ae9960325444",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/USBHOST/0.0.0%2Bsha.d3ac9e1c0035/USBHOST-0.0.0%2Bsha.d3ac9e1c0035.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/USBHOST/0.0.0%2Bsha.d3ac9e1c0035/USBHOST-0.0.0%2Bsha.d3ac9e1c0035.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/VL53L0X/0.0.0+sha.8ac15bf6d635/VL53L0X-0.0.0+sha.8ac15bf6d635.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL53L0X-0.0.0+sha.8ac15bf6d635.tar.gz",
+    "size_bytes": 64682,
+    "sha256": "fed82e4a911b39f39482c7e3649e3c1f5455e6d682cff5df5d5cdcf3488ca2f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/VL53L0X/0.0.0%2Bsha.8ac15bf6d635/VL53L0X-0.0.0%2Bsha.8ac15bf6d635.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/VL53L0X/0.0.0%2Bsha.8ac15bf6d635/VL53L0X-0.0.0%2Bsha.8ac15bf6d635.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/X-NUCLEO-IHM05A1/0.0.0+sha.c73faac7197f/X-NUCLEO-IHM05A1-0.0.0+sha.c73faac7197f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "X-NUCLEO-IHM05A1-0.0.0+sha.c73faac7197f.tar.gz",
+    "size_bytes": 26332,
+    "sha256": "ed2a46fd36cfdbe616f3a5394303b61d9f3b7683f6445fd10da5752d1e943661",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/X-NUCLEO-IHM05A1/0.0.0%2Bsha.c73faac7197f/X-NUCLEO-IHM05A1-0.0.0%2Bsha.c73faac7197f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/X-NUCLEO-IHM05A1/0.0.0%2Bsha.c73faac7197f/X-NUCLEO-IHM05A1-0.0.0%2Bsha.c73faac7197f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/X_NUCLEO_COMMON/0.0.0+sha.21096473f63e/X_NUCLEO_COMMON-0.0.0+sha.21096473f63e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "X_NUCLEO_COMMON-0.0.0+sha.21096473f63e.tar.gz",
+    "size_bytes": 4581,
+    "sha256": "4f60efe28015d4020a153959274febafc9e415f96677aa601cbdf7e96f360933",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/X_NUCLEO_COMMON/0.0.0%2Bsha.21096473f63e/X_NUCLEO_COMMON-0.0.0%2Bsha.21096473f63e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/X_NUCLEO_COMMON/0.0.0%2Bsha.21096473f63e/X_NUCLEO_COMMON-0.0.0%2Bsha.21096473f63e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/X_NUCLEO_IDW01M1v2/0.0.0+sha.c8697141ce44/X_NUCLEO_IDW01M1v2-0.0.0+sha.c8697141ce44.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "X_NUCLEO_IDW01M1v2-0.0.0+sha.c8697141ce44.tar.gz",
+    "size_bytes": 5657,
+    "sha256": "d52b1447fad667f6f35aadb876bac48db283a9dfd46d0f84e936d216794bc79e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/X_NUCLEO_IDW01M1v2/0.0.0%2Bsha.c8697141ce44/X_NUCLEO_IDW01M1v2-0.0.0%2Bsha.c8697141ce44.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/X_NUCLEO_IDW01M1v2/0.0.0%2Bsha.c8697141ce44/X_NUCLEO_IDW01M1v2-0.0.0%2Bsha.c8697141ce44.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/X_NUCLEO_IHM01A1/0.0.0+sha.974ca699c792/X_NUCLEO_IHM01A1-0.0.0+sha.974ca699c792.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "X_NUCLEO_IHM01A1-0.0.0+sha.974ca699c792.tar.gz",
+    "size_bytes": 24509,
+    "sha256": "ae0726a5bf2448df6ecfcd02e4446f52ccc01907375d901c73abd04fa6eceb88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/X_NUCLEO_IHM01A1/0.0.0%2Bsha.974ca699c792/X_NUCLEO_IHM01A1-0.0.0%2Bsha.974ca699c792.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/X_NUCLEO_IHM01A1/0.0.0%2Bsha.974ca699c792/X_NUCLEO_IHM01A1-0.0.0%2Bsha.974ca699c792.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/X_NUCLEO_IHM02A1/0.0.0+sha.ff67801d7cd7/X_NUCLEO_IHM02A1-0.0.0+sha.ff67801d7cd7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "X_NUCLEO_IHM02A1-0.0.0+sha.ff67801d7cd7.tar.gz",
+    "size_bytes": 29222,
+    "sha256": "ca693f16e33afa11b2fe228424a8d925e0411462fe635d958b2bab29f56dd9ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/X_NUCLEO_IHM02A1/0.0.0%2Bsha.ff67801d7cd7/X_NUCLEO_IHM02A1-0.0.0%2Bsha.ff67801d7cd7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/X_NUCLEO_IHM02A1/0.0.0%2Bsha.ff67801d7cd7/X_NUCLEO_IHM02A1-0.0.0%2Bsha.ff67801d7cd7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/X_NUCLEO_IHM06A1/0.0.0+sha.fd1315beea32/X_NUCLEO_IHM06A1-0.0.0+sha.fd1315beea32.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "X_NUCLEO_IHM06A1-0.0.0+sha.fd1315beea32.tar.gz",
+    "size_bytes": 23980,
+    "sha256": "e87c1fecd2c3e998e98bf96422df7dd0202d2208d48f2bf2c1e6a2fcfb9178cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/X_NUCLEO_IHM06A1/0.0.0%2Bsha.fd1315beea32/X_NUCLEO_IHM06A1-0.0.0%2Bsha.fd1315beea32.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/X_NUCLEO_IHM06A1/0.0.0%2Bsha.fd1315beea32/X_NUCLEO_IHM06A1-0.0.0%2Bsha.fd1315beea32.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/X_NUCLEO_IKS01A2/0.0.0+sha.138a7a28bd21/X_NUCLEO_IKS01A2-0.0.0+sha.138a7a28bd21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "X_NUCLEO_IKS01A2-0.0.0+sha.138a7a28bd21.tar.gz",
+    "size_bytes": 4150,
+    "sha256": "486b7812a1966f8d8add9df49b7223179f91d706e5dc0de8624d74c78f4fb323",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/X_NUCLEO_IKS01A2/0.0.0%2Bsha.138a7a28bd21/X_NUCLEO_IKS01A2-0.0.0%2Bsha.138a7a28bd21.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/X_NUCLEO_IKS01A2/0.0.0%2Bsha.138a7a28bd21/X_NUCLEO_IKS01A2-0.0.0%2Bsha.138a7a28bd21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/X_NUCLEO_IKS01A3/0.0.0+sha.8f4fffc54c3d/X_NUCLEO_IKS01A3-0.0.0+sha.8f4fffc54c3d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "X_NUCLEO_IKS01A3-0.0.0+sha.8f4fffc54c3d.tar.gz",
+    "size_bytes": 4406,
+    "sha256": "5409ebe34384d0de2cbb402e2efe11edfbde2eb345ef8630c95818ad725139fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/X_NUCLEO_IKS01A3/0.0.0%2Bsha.8f4fffc54c3d/X_NUCLEO_IKS01A3-0.0.0%2Bsha.8f4fffc54c3d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/X_NUCLEO_IKS01A3/0.0.0%2Bsha.8f4fffc54c3d/X_NUCLEO_IKS01A3-0.0.0%2Bsha.8f4fffc54c3d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/X_NUCLEO_NFC01A1/0.0.0+sha.059115ea6ece/X_NUCLEO_NFC01A1-0.0.0+sha.059115ea6ece.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "X_NUCLEO_NFC01A1-0.0.0+sha.059115ea6ece.tar.gz",
+    "size_bytes": 3092,
+    "sha256": "e54503db9537fb35cda6e09be76083dfc8a69cc50c0627df1c8a2bf80bfd7b08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/X_NUCLEO_NFC01A1/0.0.0%2Bsha.059115ea6ece/X_NUCLEO_NFC01A1-0.0.0%2Bsha.059115ea6ece.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/X_NUCLEO_NFC01A1/0.0.0%2Bsha.059115ea6ece/X_NUCLEO_NFC01A1-0.0.0%2Bsha.059115ea6ece.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/X_NUCLEO_NFC02A1/0.0.0+sha.7c4cf671960b/X_NUCLEO_NFC02A1-0.0.0+sha.7c4cf671960b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "X_NUCLEO_NFC02A1-0.0.0+sha.7c4cf671960b.tar.gz",
+    "size_bytes": 13887,
+    "sha256": "97e000b2cda22eb0228313bbb9577ea7fa59f9a644b130f77da6310441522a8c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/X_NUCLEO_NFC02A1/0.0.0%2Bsha.7c4cf671960b/X_NUCLEO_NFC02A1-0.0.0%2Bsha.7c4cf671960b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/X_NUCLEO_NFC02A1/0.0.0%2Bsha.7c4cf671960b/X_NUCLEO_NFC02A1-0.0.0%2Bsha.7c4cf671960b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/ZumoShield/0.0.0+sha.c69b20870374/ZumoShield-0.0.0+sha.c69b20870374.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ZumoShield-0.0.0+sha.c69b20870374.tar.gz",
+    "size_bytes": 1705,
+    "sha256": "8f52e98742755e190755b874df1c0e1b008358b055099cd281c795c154f5c5c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/ZumoShield/0.0.0%2Bsha.c69b20870374/ZumoShield-0.0.0%2Bsha.c69b20870374.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/ZumoShield/0.0.0%2Bsha.c69b20870374/ZumoShield-0.0.0%2Bsha.c69b20870374.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/ble-button/0.0.1/ble-button-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ble-button-0.0.1.tar.gz",
+    "size_bytes": 4844,
+    "sha256": "710c054fc98feee8fc1610d969b0d8c3150fa4148a438dfbed9f7c2c5d4ba3b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/ble-button/0.0.1/ble-button-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/ble-button/0.0.1/ble-button-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/ble-eddystoneservice/0.0.1/ble-eddystoneservice-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ble-eddystoneservice-0.0.1.tar.gz",
+    "size_bytes": 23986,
+    "sha256": "61356a12676996aeea2bee48c1e3be79c9e0b5bb7ab045e6f5b1b122b18b3dda",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/ble-eddystoneservice/0.0.1/ble-eddystoneservice-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/ble-eddystoneservice/0.0.1/ble-eddystoneservice-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/ble-gapbutton/0.0.1/ble-gapbutton-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ble-gapbutton-0.0.1.tar.gz",
+    "size_bytes": 5010,
+    "sha256": "51d897692eb9b1a63ba4058f8115b8f7d4f78cb3b9f65e231aae97835db6e9cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/ble-gapbutton/0.0.1/ble-gapbutton-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/ble-gapbutton/0.0.1/ble-gapbutton-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/ble-heartrate/0.0.1/ble-heartrate-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ble-heartrate-0.0.1.tar.gz",
+    "size_bytes": 3826,
+    "sha256": "8d0776d4c2b21d11c48e800944b4f2f5e9cb5dea888a3f43195ebeeb47d01f92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/ble-heartrate/0.0.1/ble-heartrate-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/ble-heartrate/0.0.1/ble-heartrate-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/ble-led/0.0.1/ble-led-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ble-led-0.0.1.tar.gz",
+    "size_bytes": 4337,
+    "sha256": "24fadfc2a0a571b2f6e908d754e408b9c43cc83dc82dd24427b6df752e4bb624",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/ble-led/0.0.1/ble-led-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/ble-led/0.0.1/ble-led-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-st/library/stm-spirit1-rf-driver/0.0.0+sha.a18c22d2b83a/stm-spirit1-rf-driver-0.0.0+sha.a18c22d2b83a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "stm-spirit1-rf-driver-0.0.0+sha.a18c22d2b83a.tar.gz",
+    "size_bytes": 128392,
+    "sha256": "39a96ab46d24456a3d5a2529fa07b6ef41f2c9c0797bce8a9b0e5a940cbb65df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-st/library/stm-spirit1-rf-driver/0.0.0%2Bsha.a18c22d2b83a/stm-spirit1-rf-driver-0.0.0%2Bsha.a18c22d2b83a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-st/library/stm-spirit1-rf-driver/0.0.0%2Bsha.a18c22d2b83a/stm-spirit1-rf-driver-0.0.0%2Bsha.a18c22d2b83a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-blac3777",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-blac3777/library/ILI9225/0.0.0+sha.251e4d020501/ILI9225-0.0.0+sha.251e4d020501.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9225-0.0.0+sha.251e4d020501.tar.gz",
+    "size_bytes": 14653,
+    "sha256": "3033660d177db6e83efdfd6a7bfded55999b9abf8d2f689e39d7c55262a0ec69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-blac3777/library/ILI9225/0.0.0%2Bsha.251e4d020501/ILI9225-0.0.0%2Bsha.251e4d020501.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-blac3777/library/ILI9225/0.0.0%2Bsha.251e4d020501/ILI9225-0.0.0%2Bsha.251e4d020501.tar.gz"
+    ]
+   }
+  }
+ ]
+}

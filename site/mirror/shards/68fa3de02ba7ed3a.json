@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iwilz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iwilz/library/PicoSem/1.0.1/PicoSem-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoSem-1.0.1.tar.gz",
+    "size_bytes": 4848,
+    "sha256": "968733adaa36beea1b86f11f1f5de40a72d07c2923d3bea42f88c7076c291e03",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iwilz/library/PicoSem/1.0.1/PicoSem-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iwilz/library/PicoSem/1.0.1/PicoSem-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iwilz/library/PicoSound/1.0.0/PicoSound-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoSound-1.0.0.tar.gz",
+    "size_bytes": 41232,
+    "sha256": "5b3cabe19c37731edd15239991c977d6daacabfb40c57f18bd5b7485e06658a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iwilz/library/PicoSound/1.0.0/PicoSound-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iwilz/library/PicoSound/1.0.0/PicoSound-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iwilz/library/PicoSound/1.0.2/PicoSound-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoSound-1.0.2.tar.gz",
+    "size_bytes": 41266,
+    "sha256": "2c5c3261cbe350c70a0ec8a15bfce17a8b0e0c22c95ab2a535771af0265e3b83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iwilz/library/PicoSound/1.0.2/PicoSound-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/iwilz/library/PicoSound/1.0.2/PicoSound-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iwilz/library/PicoSound/1.1.1/PicoSound-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoSound-1.1.1.tar.gz",
+    "size_bytes": 67093,
+    "sha256": "e494bb917ad7edef35bf8d1d6e8f092efff0bec2e9823c024d1d59618e4a3d99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iwilz/library/PicoSound/1.1.1/PicoSound-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/iwilz/library/PicoSound/1.1.1/PicoSound-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iwilz/library/PicoSound/1.1.2/PicoSound-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoSound-1.1.2.tar.gz",
+    "size_bytes": 67423,
+    "sha256": "d524dcfd43be9441cd70c54f27cdae1e31d46f4d94bdb3a8b5d842afd56941cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iwilz/library/PicoSound/1.1.2/PicoSound-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/iwilz/library/PicoSound/1.1.2/PicoSound-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iwilz/library/PicoSound/1.1.4/PicoSound-1.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicoSound-1.1.4.tar.gz",
+    "size_bytes": 67556,
+    "sha256": "fa426a76e081446af81a461ac1ff169ab382f959d6e89cce0c2892016754e5a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iwilz/library/PicoSound/1.1.4/PicoSound-1.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/iwilz/library/PicoSound/1.1.4/PicoSound-1.1.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

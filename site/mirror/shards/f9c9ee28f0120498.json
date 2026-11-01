@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mudassar0121",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mudassar0121/library/example-ublox-csim-cellular/0.0.0+sha.daa596318097/example-ublox-csim-cellular-0.0.0+sha.daa596318097.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "example-ublox-csim-cellular-0.0.0+sha.daa596318097.tar.gz",
+    "size_bytes": 2255,
+    "sha256": "7b20368154f5e284fd8c44cdcee36d1f6651945df94350c64491f6227aaec1f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mudassar0121/library/example-ublox-csim-cellular/0.0.0%2Bsha.daa596318097/example-ublox-csim-cellular-0.0.0%2Bsha.daa596318097.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mudassar0121/library/example-ublox-csim-cellular/0.0.0%2Bsha.daa596318097/example-ublox-csim-cellular-0.0.0%2Bsha.daa596318097.tar.gz"
+    ]
+   }
+  }
+ ]
+}

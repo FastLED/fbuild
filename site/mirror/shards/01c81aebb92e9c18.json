@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/scottp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "scottp/library/MeshCoreCompanion/0.2.0/MeshCoreCompanion-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeshCoreCompanion-0.2.0.tar.gz",
+    "size_bytes": 45366,
+    "sha256": "358aef61aa75a82689aae98f81ece792a14088ceeeb63ce99c735063ee52b8e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scottp/library/MeshCoreCompanion/0.2.0/MeshCoreCompanion-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/scottp/library/MeshCoreCompanion/0.2.0/MeshCoreCompanion-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "scottp/library/MeshCoreCompanion/0.2.1/MeshCoreCompanion-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeshCoreCompanion-0.2.1.tar.gz",
+    "size_bytes": 45537,
+    "sha256": "9cc1d1ee5f6d19f45c46410f5921a553ac24847af73326c1c4a3a8b0fa46cec4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scottp/library/MeshCoreCompanion/0.2.1/MeshCoreCompanion-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/scottp/library/MeshCoreCompanion/0.2.1/MeshCoreCompanion-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "scottp/library/MeshCoreCompanion/0.2.2/MeshCoreCompanion-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeshCoreCompanion-0.2.2.tar.gz",
+    "size_bytes": 42797,
+    "sha256": "c062970b8a696b159acc918bf7114ba0be4bfbe177afcce8640c083a82518668",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scottp/library/MeshCoreCompanion/0.2.2/MeshCoreCompanion-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/scottp/library/MeshCoreCompanion/0.2.2/MeshCoreCompanion-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "scottp/library/SPPro/0.1.0/SPPro-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPPro-0.1.0.tar.gz",
+    "size_bytes": 20779,
+    "sha256": "7515b9211265684d851e012ac8995731160c4c8846a5556d2fa921338cfd3535",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scottp/library/SPPro/0.1.0/SPPro-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/scottp/library/SPPro/0.1.0/SPPro-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "scottp/library/victronble/0.1.1/victronble-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "victronble-0.1.1.tar.gz",
+    "size_bytes": 15785,
+    "sha256": "dccb77ddc32efd5ed9cc404fd55fd22753a1292eae2be9f8bdacbe5718a76626",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scottp/library/victronble/0.1.1/victronble-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/scottp/library/victronble/0.1.1/victronble-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "scottp/library/victronble/0.2.1/victronble-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "victronble-0.2.1.tar.gz",
+    "size_bytes": 25780,
+    "sha256": "6ce29ae6780d106110a84402aef332c86235aea720c2675b74333f01474c4a82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scottp/library/victronble/0.2.1/victronble-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/scottp/library/victronble/0.2.1/victronble-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "scottp/library/victronble/0.3.1/victronble-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "victronble-0.3.1.tar.gz",
+    "size_bytes": 28613,
+    "sha256": "0d33e0a3efa9f90b4a5805d6685b66153ebf1cfdf9ca0c7209caef28b4dc4bbc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scottp/library/victronble/0.3.1/victronble-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/scottp/library/victronble/0.3.1/victronble-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "scottp/library/victronble/0.4.1/victronble-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "victronble-0.4.1.tar.gz",
+    "size_bytes": 39038,
+    "sha256": "3e2b5494eefad553925ffd43b0e407d923e661ff6088851196d865dc44251e98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scottp/library/victronble/0.4.1/victronble-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/scottp/library/victronble/0.4.1/victronble-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "scottp/library/victronble/0.6.0/victronble-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "victronble-0.6.0.tar.gz",
+    "size_bytes": 53017,
+    "sha256": "9c4bb7d1c26757d67aa215428c7286a30ccd382abf1e134e41fda9a444a95c6e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scottp/library/victronble/0.6.0/victronble-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/scottp/library/victronble/0.6.0/victronble-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "scottp/library/victronble/0.6.1/victronble-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "victronble-0.6.1.tar.gz",
+    "size_bytes": 52628,
+    "sha256": "7926f5876b6df5103d6fb14ea8357c78a7c1db175f089ba8f3158383ff12c6d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scottp/library/victronble/0.6.1/victronble-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/scottp/library/victronble/0.6.1/victronble-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "scottp/library/victronble/0.7.1/victronble-0.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "victronble-0.7.1.tar.gz",
+    "size_bytes": 80557,
+    "sha256": "de07b3ec56a90ee5dbce8fe18b4a27b6cabf4e4cf8449e6a1dd2611e2642bb11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scottp/library/victronble/0.7.1/victronble-0.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/scottp/library/victronble/0.7.1/victronble-0.7.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

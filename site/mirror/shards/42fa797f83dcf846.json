@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jackson-lv",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jackson-lv/library/ChainableLED/0.0.0+sha.e7513df9d7cb/ChainableLED-0.0.0+sha.e7513df9d7cb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ChainableLED-0.0.0+sha.e7513df9d7cb.tar.gz",
+    "size_bytes": 2992,
+    "sha256": "f8090aa7fa56472ba9a220b7cbf79b1be830a973cd95e64cbfb1bac43d62bd4d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackson-lv/library/ChainableLED/0.0.0%2Bsha.e7513df9d7cb/ChainableLED-0.0.0%2Bsha.e7513df9d7cb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackson-lv/library/ChainableLED/0.0.0%2Bsha.e7513df9d7cb/ChainableLED-0.0.0%2Bsha.e7513df9d7cb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackson-lv/library/PWM_RGB/0.0.0+sha.22cae1dee34b/PWM_RGB-0.0.0+sha.22cae1dee34b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWM_RGB-0.0.0+sha.22cae1dee34b.tar.gz",
+    "size_bytes": 2537,
+    "sha256": "adf892533c0a265108efc65328d8ed36c09adfc45463290a45acb754d3741da4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackson-lv/library/PWM_RGB/0.0.0%2Bsha.22cae1dee34b/PWM_RGB-0.0.0%2Bsha.22cae1dee34b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackson-lv/library/PWM_RGB/0.0.0%2Bsha.22cae1dee34b/PWM_RGB-0.0.0%2Bsha.22cae1dee34b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackson-lv/library/SD/0.0.0+sha.405b46e831df/SD-0.0.0+sha.405b46e831df.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SD-0.0.0+sha.405b46e831df.tar.gz",
+    "size_bytes": 7143,
+    "sha256": "cc55e7a90c53fbd8e49bf19af81383581d7271d7946aa72096a05f8fe40e96f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackson-lv/library/SD/0.0.0%2Bsha.405b46e831df/SD-0.0.0%2Bsha.405b46e831df.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackson-lv/library/SD/0.0.0%2Bsha.405b46e831df/SD-0.0.0%2Bsha.405b46e831df.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackson-lv/library/SDCard/0.0.0+sha.3fe14de7b0cf/SDCard-0.0.0+sha.3fe14de7b0cf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SDCard-0.0.0+sha.3fe14de7b0cf.tar.gz",
+    "size_bytes": 4391,
+    "sha256": "6bca7b132bd5090c455e7f294cd63d2f52244504d8cc8e4bbf33ee8d8963c6af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackson-lv/library/SDCard/0.0.0%2Bsha.3fe14de7b0cf/SDCard-0.0.0%2Bsha.3fe14de7b0cf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackson-lv/library/SDCard/0.0.0%2Bsha.3fe14de7b0cf/SDCard-0.0.0%2Bsha.3fe14de7b0cf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jackson-lv/library/utility/0.0.0+sha.f6c99a47ce43/utility-0.0.0+sha.f6c99a47ce43.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "utility-0.0.0+sha.f6c99a47ce43.tar.gz",
+    "size_bytes": 35821,
+    "sha256": "bfc088f7c956947df1c19c8a165819e49e2c0428e68eb31d455dea0994eaf448",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jackson-lv/library/utility/0.0.0%2Bsha.f6c99a47ce43/utility-0.0.0%2Bsha.f6c99a47ce43.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jackson-lv/library/utility/0.0.0%2Bsha.f6c99a47ce43/utility-0.0.0%2Bsha.f6c99a47ce43.tar.gz"
+    ]
+   }
+  }
+ ]
+}

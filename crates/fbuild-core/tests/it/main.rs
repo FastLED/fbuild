@@ -4,6 +4,7 @@
 
 mod cpu_profiling;
 mod dep_identity;
+mod disk_reserve;
 mod platformio_avr_resolution;
 mod platformio_ch32v_resolution;
 mod platformio_esp8266_resolution;

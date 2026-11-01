@@ -5,9 +5,9 @@
 #[cfg(windows)]
 use fbuild_core::path::NormalizedPath;
 use fbuild_core::platformio_package::{
-    PackageKind, PackageLock, PackageSource, ResolutionError, parse_package_spec, registry_api_url,
-    require_platform_package, resolve_platform_requirements, resolve_registry_json,
-    sole_optional_manifest_version,
+    PackageKind, PackageLock, PackageSource, ResolutionError, parse_package_spec,
+    registry_package_path, require_platform_package, resolve_platform_requirements,
+    resolve_registry_json, sole_optional_manifest_version,
 };
 
 #[test]
@@ -30,8 +30,8 @@ fn parses_generic_registry_aliases_without_platform_dispatch() {
         Some("^6.0.0")
     );
     assert_eq!(
-        registry_api_url(PackageKind::Platform, unknown.registry().unwrap()).unwrap(),
-        "https://api.registry.platformio.org/v3/packages/acme/platform/custom-board"
+        registry_package_path(PackageKind::Platform, unknown.registry().unwrap()).unwrap(),
+        "acme/platform/custom-board"
     );
 }
 
@@ -49,10 +49,10 @@ fn explicit_registry_type_paths_normalize_without_native_dispatch() {
         ordinary.registry().unwrap().name
     );
     assert_eq!(
-        registry_api_url(PackageKind::Tool, owner_first.registry().unwrap()).unwrap(),
-        "https://api.registry.platformio.org/v3/packages/platformio/tool/toolchain-gccarmnoneeabi"
+        registry_package_path(PackageKind::Tool, owner_first.registry().unwrap()).unwrap(),
+        "platformio/tool/toolchain-gccarmnoneeabi"
     );
-    assert!(registry_api_url(PackageKind::Platform, owner_first.registry().unwrap()).is_err());
+    assert!(registry_package_path(PackageKind::Platform, owner_first.registry().unwrap()).is_err());
     assert!(parse_package_spec("platformio/unknown/toolchain-gccarmnoneeabi@1.0.0").is_err());
     let type_named_owner = parse_package_spec("tool/library/example@1.0.0").unwrap();
     assert_eq!(
@@ -60,8 +60,8 @@ fn explicit_registry_type_paths_normalize_without_native_dispatch() {
         Some("tool")
     );
     assert_eq!(
-        registry_api_url(PackageKind::Library, type_named_owner.registry().unwrap()).unwrap(),
-        "https://api.registry.platformio.org/v3/packages/tool/library/example"
+        registry_package_path(PackageKind::Library, type_named_owner.registry().unwrap()).unwrap(),
+        "tool/library/example"
     );
 }
 
@@ -891,7 +891,7 @@ fn generic_package_paths_and_kinds_do_not_depend_on_native_platforms() {
         assert_eq!(registry.name, name, "{raw}");
     }
     assert!(
-        registry_api_url(
+        registry_package_path(
             PackageKind::Platform,
             parse_package_spec("custom-board@1.2.3")
                 .unwrap()

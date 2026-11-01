@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-takkun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-takkun/library/AMT102/0.0.0+sha.e54a53f8b6ec/AMT102-0.0.0+sha.e54a53f8b6ec.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMT102-0.0.0+sha.e54a53f8b6ec.tar.gz",
+    "size_bytes": 2896,
+    "sha256": "ee9118ac8f1ef9acf6ce9bd6a5cf0a771d722d6a2629039be566df5b2ba1445c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-takkun/library/AMT102/0.0.0%2Bsha.e54a53f8b6ec/AMT102-0.0.0%2Bsha.e54a53f8b6ec.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-takkun/library/AMT102/0.0.0%2Bsha.e54a53f8b6ec/AMT102-0.0.0%2Bsha.e54a53f8b6ec.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rootshell",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rootshell/library/PS2Mouse/0.0.3/PS2Mouse-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PS2Mouse-0.0.3.tar.gz",
+    "size_bytes": 10027,
+    "sha256": "88a7aefab402c00d55320efb3efc7dc6a47dd975481cbb281ea7359131fdcc7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rootshell/library/PS2Mouse/0.0.3/PS2Mouse-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rootshell/library/PS2Mouse/0.0.3/PS2Mouse-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

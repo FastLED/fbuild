@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arduinomax",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arduinomax/library/ArduMax%20AD5241%20Driver/1.0.2/ArduMaxAD5241Driver-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduMaxAD5241Driver-1.0.2.tar.gz",
+    "size_bytes": 4434,
+    "sha256": "939a8d21520b4dcd21c409622dc45c46afbc2ac240f9ed393af88541de920b80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduinomax/library/ArduMax%2520AD5241%2520Driver/1.0.2/ArduMaxAD5241Driver-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/arduinomax/library/ArduMax%20AD5241%20Driver/1.0.2/ArduMaxAD5241Driver-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduinomax/library/ArduMax%20MCP41xxx%20Driver/1.0.6/ArduMaxMCP41xxxDriver-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduMaxMCP41xxxDriver-1.0.6.tar.gz",
+    "size_bytes": 4465,
+    "sha256": "1aaf8fe0ea55a282521ec6511fd384d7695d6cfc3d5eb9ea90c0cf9461f411bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduinomax/library/ArduMax%2520MCP41xxx%2520Driver/1.0.6/ArduMaxMCP41xxxDriver-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/arduinomax/library/ArduMax%20MCP41xxx%20Driver/1.0.6/ArduMaxMCP41xxxDriver-1.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "arduinomax/library/ArduMax%20TLC5615%20Driver/1.3.1/ArduMaxTLC5615Driver-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduMaxTLC5615Driver-1.3.1.tar.gz",
+    "size_bytes": 1573,
+    "sha256": "35d4a96180298e50c4078c42c73944ac581dfbb69b626684dd383d1f577bc8a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arduinomax/library/ArduMax%2520TLC5615%2520Driver/1.3.1/ArduMaxTLC5615Driver-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/arduinomax/library/ArduMax%20TLC5615%20Driver/1.3.1/ArduMaxTLC5615Driver-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

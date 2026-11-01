@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-mbedaustin",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-mbedaustin/library/IFTTT/0.0.0+sha.935972c2f628/IFTTT-0.0.0+sha.935972c2f628.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IFTTT-0.0.0+sha.935972c2f628.tar.gz",
+    "size_bytes": 3664,
+    "sha256": "aba1e38f8dc0ab90359f32ea43dcc97c8c300dbdb0338d0bfa2446e9c5e07598",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-mbedaustin/library/IFTTT/0.0.0%2Bsha.935972c2f628/IFTTT-0.0.0%2Bsha.935972c2f628.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-mbedaustin/library/IFTTT/0.0.0%2Bsha.935972c2f628/IFTTT-0.0.0%2Bsha.935972c2f628.tar.gz"
+    ]
+   }
+  }
+ ]
+}

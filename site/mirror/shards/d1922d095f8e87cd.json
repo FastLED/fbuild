@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/squix78",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "squix78/library/JsonStreamingParser/1.0.5/JsonStreamingParser-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JsonStreamingParser-1.0.5.tar.gz",
+    "size_bytes": 7662,
+    "sha256": "0a948c60389b724694c43cb785effa8f6c8f2e08e2d7efcc098342ba6a52b8bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/squix78/library/JsonStreamingParser/1.0.5/JsonStreamingParser-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/squix78/library/JsonStreamingParser/1.0.5/JsonStreamingParser-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "squix78/library/MAX7219LedMatrix/1.0.0/MAX7219LedMatrix-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX7219LedMatrix-1.0.0.tar.gz",
+    "size_bytes": 7607,
+    "sha256": "20286b7efe63d005fd0fa584d81b5068de61a5b175b02c80dd885383884fc5a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/squix78/library/MAX7219LedMatrix/1.0.0/MAX7219LedMatrix-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/squix78/library/MAX7219LedMatrix/1.0.0/MAX7219LedMatrix-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "squix78/library/Mini%20Grafx/1.2.4/MiniGrafx-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniGrafx-1.2.4.tar.gz",
+    "size_bytes": 246135,
+    "sha256": "2ee532e816ede247cd49ec28ed4348834aa9fa6cec4a561e8b7368297f4852e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/squix78/library/Mini%2520Grafx/1.2.4/MiniGrafx-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/squix78/library/Mini%20Grafx/1.2.4/MiniGrafx-1.2.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

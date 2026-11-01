@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/joshua1024",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "joshua1024/library/Derivs_Limiter/3.1.3/Derivs_Limiter-3.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Derivs_Limiter-3.1.3.tar.gz",
+    "size_bytes": 13427,
+    "sha256": "6d0aafdc220189a4467400ca27f51de07bd4b11625cc84cf6889da1b3db3ad94",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joshua1024/library/Derivs_Limiter/3.1.3/Derivs_Limiter-3.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/joshua1024/library/Derivs_Limiter/3.1.3/Derivs_Limiter-3.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joshua1024/library/ESP32_easy_wifi_data/1.4.3/ESP32_easy_wifi_data-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32_easy_wifi_data-1.4.3.tar.gz",
+    "size_bytes": 6357,
+    "sha256": "6b499dcd7cf3746a26cfade33b8090ab254ab561bb9ba8c0d5edbd403ed8d46f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joshua1024/library/ESP32_easy_wifi_data/1.4.3/ESP32_easy_wifi_data-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/joshua1024/library/ESP32_easy_wifi_data/1.4.3/ESP32_easy_wifi_data-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joshua1024/library/HCSRO4_attachInterrupt/1.0.2/HCSRO4_attachInterrupt-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HCSRO4_attachInterrupt-1.0.2.tar.gz",
+    "size_bytes": 4247,
+    "sha256": "3086f8b1d5b5c101dcd1f8613f4a1d119b3749a74a487c60adcb61c7133bdf92",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joshua1024/library/HCSRO4_attachInterrupt/1.0.2/HCSRO4_attachInterrupt-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/joshua1024/library/HCSRO4_attachInterrupt/1.0.2/HCSRO4_attachInterrupt-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joshua1024/library/JMotor/0.28.6/JMotor-0.28.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JMotor-0.28.6.tar.gz",
+    "size_bytes": 80248,
+    "sha256": "46f5d3e09a56407cd2ef13980baa048c854a64ff40d80b0ee93f0eea29d3c079",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joshua1024/library/JMotor/0.28.6/JMotor-0.28.6.tar.gz",
+     "https://dl.registry.platformio.org/download/joshua1024/library/JMotor/0.28.6/JMotor-0.28.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joshua1024/library/TMC5072/0.3.6/TMC5072-0.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC5072-0.3.6.tar.gz",
+    "size_bytes": 64426,
+    "sha256": "af4e8c336d92738119e2b6082f374feb9d27ac426f314647c587e7dd3252764a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joshua1024/library/TMC5072/0.3.6/TMC5072-0.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/joshua1024/library/TMC5072/0.3.6/TMC5072-0.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joshua1024/library/TMC7300/0.6.0/TMC7300-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TMC7300-0.6.0.tar.gz",
+    "size_bytes": 36433,
+    "sha256": "5fbf7371db27c97c572eb16e3b4280f6fe4dca5569a1ea6910f7453017b01aba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joshua1024/library/TMC7300/0.6.0/TMC7300-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joshua1024/library/TMC7300/0.6.0/TMC7300-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joshua1024/library/byte-sized-encoder-decoder/2.2.5/byte-sized-encoder-decoder-2.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "byte-sized-encoder-decoder-2.2.5.tar.gz",
+    "size_bytes": 33805,
+    "sha256": "6a71ad70c96f40b076c8fb2a6d6d5bc3b2c4544d63f26798006f5c40ee0027e7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joshua1024/library/byte-sized-encoder-decoder/2.2.5/byte-sized-encoder-decoder-2.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/joshua1024/library/byte-sized-encoder-decoder/2.2.5/byte-sized-encoder-decoder-2.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joshua1024/library/xrp-style-wpilib-comms/0.3.1/xrp-style-wpilib-comms-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xrp-style-wpilib-comms-0.3.1.tar.gz",
+    "size_bytes": 14177,
+    "sha256": "a1c64346672b90ac35da34bf77cfc62bd2ed004e14b4eb1b7ca71709d2a57bd0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joshua1024/library/xrp-style-wpilib-comms/0.3.1/xrp-style-wpilib-comms-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/joshua1024/library/xrp-style-wpilib-comms/0.3.1/xrp-style-wpilib-comms-0.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

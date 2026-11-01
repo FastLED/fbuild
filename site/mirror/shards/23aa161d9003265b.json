@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pubnub",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pubnub/library/Pubnub/3.3.0/Pubnub-3.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pubnub-3.3.0.tar.gz",
+    "size_bytes": 26306,
+    "sha256": "ec277047b1fdfaf2052d3d342d2ef0208eb4cfe943a1326ad5897bf666820de0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pubnub/library/Pubnub/3.3.0/Pubnub-3.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pubnub/library/Pubnub/3.3.0/Pubnub-3.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

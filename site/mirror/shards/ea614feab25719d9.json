@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/antoinepetty",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "antoinepetty/library/RMCS-220X/1.1.1/RMCS-220X-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RMCS-220X-1.1.1.tar.gz",
+    "size_bytes": 3775,
+    "sha256": "e15d58f2b19e22aa734d36a34c818ebeb7a08e3dfd38f2c8e6fca871f0bbdc16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/antoinepetty/library/RMCS-220X/1.1.1/RMCS-220X-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/antoinepetty/library/RMCS-220X/1.1.1/RMCS-220X-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

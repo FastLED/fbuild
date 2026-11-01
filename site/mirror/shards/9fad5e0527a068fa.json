@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/marek128b",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "marek128b/library/Addressable%20Seven%20Segment%20Display/1.0.5/AddressableSevenSegmentDisplay-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AddressableSevenSegmentDisplay-1.0.5.tar.gz",
+    "size_bytes": 165569,
+    "sha256": "f57393450533fd5ef5ad1921b93c4ff4363e4f7b7c2b64518158bd29cb8b868c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/marek128b/library/Addressable%2520Seven%2520Segment%2520Display/1.0.5/AddressableSevenSegmentDisplay-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/marek128b/library/Addressable%20Seven%20Segment%20Display/1.0.5/AddressableSevenSegmentDisplay-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

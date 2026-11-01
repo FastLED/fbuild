@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/icq4ever",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "icq4ever/library/ADS126X/1.0.2/ADS126X-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS126X-1.0.2.tar.gz",
+    "size_bytes": 16036,
+    "sha256": "6d7927dc1edeb64e7ed1a727a5ba3659bfc865d33dc6f4f7ed9aaab97759fdfd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/icq4ever/library/ADS126X/1.0.2/ADS126X-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/icq4ever/library/ADS126X/1.0.2/ADS126X-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "icq4ever/library/ADS126X_/1.0.0/ADS126X_-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS126X_-1.0.0.tar.gz",
+    "size_bytes": 15780,
+    "sha256": "016a2a8dfd1ff64bfe9f84366fa408eb1950549e06c4601f4b763a28fbaaccc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/icq4ever/library/ADS126X_/1.0.0/ADS126X_-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/icq4ever/library/ADS126X_/1.0.0/ADS126X_-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

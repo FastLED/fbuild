@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/engineeringroom",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "engineeringroom/library/Engineer%20EasyEEPROM/1.0.2/EngineerEasyEEPROM-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EngineerEasyEEPROM-1.0.2.tar.gz",
+    "size_bytes": 10962,
+    "sha256": "b8a51d07c4fefb19cfbfb258fef12e9080ab60e667fad064aa0319b174926fa0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/engineeringroom/library/Engineer%2520EasyEEPROM/1.0.2/EngineerEasyEEPROM-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/engineeringroom/library/Engineer%20EasyEEPROM/1.0.2/EngineerEasyEEPROM-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "engineeringroom/library/Engineer%20Regulator/1.0.1/EngineerRegulator-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EngineerRegulator-1.0.1.tar.gz",
+    "size_bytes": 36384,
+    "sha256": "ba0da2ea486dde3bc7b4a3093d0e327973d5b5716fa9904b8268abef391db12e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/engineeringroom/library/Engineer%2520Regulator/1.0.1/EngineerRegulator-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/engineeringroom/library/Engineer%20Regulator/1.0.1/EngineerRegulator-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

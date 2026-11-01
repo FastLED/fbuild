@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/adriano-severino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "adriano-severino/library/ASXNanoStream/1.0.1/ASXNanoStream-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ASXNanoStream-1.0.1.tar.gz",
+    "size_bytes": 6061,
+    "sha256": "5f24761ea20bd8cdd7092a8a5cc6c1315f22baad71034e38faa31f87f84a1821",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adriano-severino/library/ASXNanoStream/1.0.1/ASXNanoStream-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/adriano-severino/library/ASXNanoStream/1.0.1/ASXNanoStream-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adriano-severino/library/ASXNanoStream/1.0.2/ASXNanoStream-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ASXNanoStream-1.0.2.tar.gz",
+    "size_bytes": 6397,
+    "sha256": "c65ce62d8d2272bfaf703ce69f02519a6813d2a7e6d1aeabd5c5145bd8023be4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adriano-severino/library/ASXNanoStream/1.0.2/ASXNanoStream-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/adriano-severino/library/ASXNanoStream/1.0.2/ASXNanoStream-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adriano-severino/library/ASXNanoStream/1.0.4/ASXNanoStream-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ASXNanoStream-1.0.4.tar.gz",
+    "size_bytes": 20393,
+    "sha256": "fa1aec0ee40ed5514f334c5d9ccabafa920c5dfc8c2edb3ef92d380ad43c1528",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adriano-severino/library/ASXNanoStream/1.0.4/ASXNanoStream-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/adriano-severino/library/ASXNanoStream/1.0.4/ASXNanoStream-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "adriano-severino/library/ASXNanoStream/1.0.5/ASXNanoStream-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ASXNanoStream-1.0.5.tar.gz",
+    "size_bytes": 20773,
+    "sha256": "c24d213c2159a2a4a08261728e37f5624f3dc395ded5ed46d41fd3da4886e78b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/adriano-severino/library/ASXNanoStream/1.0.5/ASXNanoStream-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/adriano-severino/library/ASXNanoStream/1.0.5/ASXNanoStream-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

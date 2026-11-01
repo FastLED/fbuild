@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/boseji",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "boseji/library/PString-Arduino-lib/3.0.2/PString-Arduino-lib-3.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PString-Arduino-lib-3.0.2.tar.gz",
+    "size_bytes": 13708,
+    "sha256": "bd70f556c4fbdbc2d52471520015c93d19734738ea0c31bc187b98c2aa021f8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boseji/library/PString-Arduino-lib/3.0.2/PString-Arduino-lib-3.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/boseji/library/PString-Arduino-lib/3.0.2/PString-Arduino-lib-3.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boseji/library/rBase64/1.1.1/rBase64-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rBase64-1.1.1.tar.gz",
+    "size_bytes": 6450,
+    "sha256": "19391a085eb9915da946fb4ae428970e568f42813f7d6a6dfe55ffef0368f7f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boseji/library/rBase64/1.1.1/rBase64-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/boseji/library/rBase64/1.1.1/rBase64-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "boseji/library/xxtea-iot-crypt/2.0.1/xxtea-iot-crypt-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xxtea-iot-crypt-2.0.1.tar.gz",
+    "size_bytes": 8298,
+    "sha256": "789f5fad21dde85adc1886b9c1a92c28d759b819da6d8c6bee86fcf17773cf58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/boseji/library/xxtea-iot-crypt/2.0.1/xxtea-iot-crypt-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/boseji/library/xxtea-iot-crypt/2.0.1/xxtea-iot-crypt-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

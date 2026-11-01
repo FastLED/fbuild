@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dhinojosac",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dhinojosac/library/wiscore_sounds/1.0.1/wiscore_sounds-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wiscore_sounds-1.0.1.tar.gz",
+    "size_bytes": 1575,
+    "sha256": "d4bb4a8c811c337e91c68bd791796a2f82c589bf20641ba269ee203f392c4869",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dhinojosac/library/wiscore_sounds/1.0.1/wiscore_sounds-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/dhinojosac/library/wiscore_sounds/1.0.1/wiscore_sounds-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/exocet22",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "exocet22/library/TinyBME280/1.1.0/TinyBME280-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyBME280-1.1.0.tar.gz",
+    "size_bytes": 5030,
+    "sha256": "3df8b4ae2c5b2b5b917dcfffebec021c152c21654e7c5fcd370d929a52f2c239",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exocet22/library/TinyBME280/1.1.0/TinyBME280-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/exocet22/library/TinyBME280/1.1.0/TinyBME280-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "exocet22/library/TinyFTPClient/1.2.0/TinyFTPClient-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyFTPClient-1.2.0.tar.gz",
+    "size_bytes": 75958,
+    "sha256": "e1445dd3e23e0729efd349a3b129b4554003e1c517fecf675189ac7de4d0e4bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exocet22/library/TinyFTPClient/1.2.0/TinyFTPClient-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/exocet22/library/TinyFTPClient/1.2.0/TinyFTPClient-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "exocet22/library/TinyFTPClient/1.2.1/TinyFTPClient-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyFTPClient-1.2.1.tar.gz",
+    "size_bytes": 75894,
+    "sha256": "9946435b143a83c4aa77f6a9238f33bffc055e32425f2ecb917d404a9ccd0627",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exocet22/library/TinyFTPClient/1.2.1/TinyFTPClient-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/exocet22/library/TinyFTPClient/1.2.1/TinyFTPClient-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "exocet22/library/TinyFTPClient/1.3.0/TinyFTPClient-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyFTPClient-1.3.0.tar.gz",
+    "size_bytes": 76053,
+    "sha256": "4ed7fde9fc977ff14be2bd1ada15d4b51169e5a7bcf93c33d3d25cd192f0fa79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exocet22/library/TinyFTPClient/1.3.0/TinyFTPClient-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/exocet22/library/TinyFTPClient/1.3.0/TinyFTPClient-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "exocet22/library/TinyMQTTClient/1.4.1/TinyMQTTClient-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyMQTTClient-1.4.1.tar.gz",
+    "size_bytes": 6766,
+    "sha256": "85924ae30134610e86ee590db5ea932c6c80066b27373eb51eaecd124c39116f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exocet22/library/TinyMQTTClient/1.4.1/TinyMQTTClient-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/exocet22/library/TinyMQTTClient/1.4.1/TinyMQTTClient-1.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "exocet22/library/TinyMQTTClient/1.4.2/TinyMQTTClient-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyMQTTClient-1.4.2.tar.gz",
+    "size_bytes": 6868,
+    "sha256": "d7e8e46e97467b382140ede175ee526b0ee35dd3b1acf0a271650114a501be01",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exocet22/library/TinyMQTTClient/1.4.2/TinyMQTTClient-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/exocet22/library/TinyMQTTClient/1.4.2/TinyMQTTClient-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "exocet22/library/TinyMQTTClient/1.4.3/TinyMQTTClient-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyMQTTClient-1.4.3.tar.gz",
+    "size_bytes": 6948,
+    "sha256": "20a910d2ea6a3aad26aebb201ab914f7564262dc3607311e09f6dc9a580446f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exocet22/library/TinyMQTTClient/1.4.3/TinyMQTTClient-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/exocet22/library/TinyMQTTClient/1.4.3/TinyMQTTClient-1.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "exocet22/library/TinyRC522/1.3.0/TinyRC522-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinyRC522-1.3.0.tar.gz",
+    "size_bytes": 8336,
+    "sha256": "263f51e28d40ef591c20975811f25dc66043f6573d81acd4d41b34cb70bdd334",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exocet22/library/TinyRC522/1.3.0/TinyRC522-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/exocet22/library/TinyRC522/1.3.0/TinyRC522-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "exocet22/library/TinySerial/1.0.0/TinySerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinySerial-1.0.0.tar.gz",
+    "size_bytes": 5840,
+    "sha256": "62db5602d3faabcc49095d2bcfaf1dea4793042f58ed00cdf37e91070ebbbfcf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exocet22/library/TinySerial/1.0.0/TinySerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/exocet22/library/TinySerial/1.0.0/TinySerial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "exocet22/library/btAudio/1.1.0/btAudio-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "btAudio-1.1.0.tar.gz",
+    "size_bytes": 4750825,
+    "sha256": "3f07850822379153c48012792fa95987d0f75fb43e4fcd813b6aaf0a1c38b6ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/exocet22/library/btAudio/1.1.0/btAudio-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/exocet22/library/btAudio/1.1.0/btAudio-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

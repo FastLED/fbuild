@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dvsproductions",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dvsproductions/library/LiquidCrystal_I2C/0.0.0+sha.402a5c6b2457/LiquidCrystal_I2C-0.0.0+sha.402a5c6b2457.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LiquidCrystal_I2C-0.0.0+sha.402a5c6b2457.tar.gz",
+    "size_bytes": 4472,
+    "sha256": "ff127729e3d9d911da65d5dfcbc4ff135d7278fab7a9034968b1b94a352be01d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dvsproductions/library/LiquidCrystal_I2C/0.0.0%2Bsha.402a5c6b2457/LiquidCrystal_I2C-0.0.0%2Bsha.402a5c6b2457.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dvsproductions/library/LiquidCrystal_I2C/0.0.0%2Bsha.402a5c6b2457/LiquidCrystal_I2C-0.0.0%2Bsha.402a5c6b2457.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dvsproductions/library/Print/0.0.0+sha.4f62090ee72f/Print-0.0.0+sha.4f62090ee72f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Print-0.0.0+sha.4f62090ee72f.tar.gz",
+    "size_bytes": 2959,
+    "sha256": "586b12fe39032886edaf15e5fe2ac22833d3b3f3a5f349cf89fd77e602583b39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dvsproductions/library/Print/0.0.0%2Bsha.4f62090ee72f/Print-0.0.0%2Bsha.4f62090ee72f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dvsproductions/library/Print/0.0.0%2Bsha.4f62090ee72f/Print-0.0.0%2Bsha.4f62090ee72f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

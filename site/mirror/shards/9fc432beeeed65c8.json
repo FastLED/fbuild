@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rkram3r",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rkram3r/library/logistic_regression/1.2.0/logistic_regression-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "logistic_regression-1.2.0.tar.gz",
+    "size_bytes": 831,
+    "sha256": "ca5de7522aedfc8629a0cc0b1bafc5252f9eeceffed3eea62a8a883fc152a95b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rkram3r/library/logistic_regression/1.2.0/logistic_regression-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rkram3r/library/logistic_regression/1.2.0/logistic_regression-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

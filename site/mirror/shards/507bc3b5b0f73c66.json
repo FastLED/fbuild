@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-martin13",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-martin13/library/Diablo_Serial_4DLib/0.0.0+sha.7cff98af2c68/Diablo_Serial_4DLib-0.0.0+sha.7cff98af2c68.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Diablo_Serial_4DLib-0.0.0+sha.7cff98af2c68.tar.gz",
+    "size_bytes": 21794,
+    "sha256": "0f35b094e91791987908ef7d9588c92ba97e8743553203399773b3dd2638e3dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-martin13/library/Diablo_Serial_4DLib/0.0.0%2Bsha.7cff98af2c68/Diablo_Serial_4DLib-0.0.0%2Bsha.7cff98af2c68.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-martin13/library/Diablo_Serial_4DLib/0.0.0%2Bsha.7cff98af2c68/Diablo_Serial_4DLib-0.0.0%2Bsha.7cff98af2c68.tar.gz"
+    ]
+   }
+  }
+ ]
+}

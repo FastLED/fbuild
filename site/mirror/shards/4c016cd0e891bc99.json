@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nxp-rr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nxp-rr/library/MQ9/0.0.0+sha.c366191f8865/MQ9-0.0.0+sha.c366191f8865.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQ9-0.0.0+sha.c366191f8865.tar.gz",
+    "size_bytes": 1400,
+    "sha256": "0e022af6d1c11d512bddb8a39ea040cca9dc94b26b55ee13e51b210c3b279a25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nxp-rr/library/MQ9/0.0.0%2Bsha.c366191f8865/MQ9-0.0.0%2Bsha.c366191f8865.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nxp-rr/library/MQ9/0.0.0%2Bsha.c366191f8865/MQ9-0.0.0%2Bsha.c366191f8865.tar.gz"
+    ]
+   }
+  }
+ ]
+}

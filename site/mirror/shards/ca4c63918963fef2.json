@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cvrelectronica",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cvrelectronica/library/EasyRobot/1.0.1/EasyRobot-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyRobot-1.0.1.tar.gz",
+    "size_bytes": 5984,
+    "sha256": "0d3e51e1bb12d79680f76560b30c754e94453a2e0ac9281c807631ac507614a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cvrelectronica/library/EasyRobot/1.0.1/EasyRobot-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cvrelectronica/library/EasyRobot/1.0.1/EasyRobot-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

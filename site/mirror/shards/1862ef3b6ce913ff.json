@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/polishprogrammer2023",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "polishprogrammer2023/library/KenwoodXS-for-KR-V6030/1.0.0/KenwoodXS-for-KR-V6030-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KenwoodXS-for-KR-V6030-1.0.0.tar.gz",
+    "size_bytes": 14618,
+    "sha256": "daf9265e41f8474bd010028b26e91cb796eccfd038ce52237e85a1ca42f9081d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/polishprogrammer2023/library/KenwoodXS-for-KR-V6030/1.0.0/KenwoodXS-for-KR-V6030-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/polishprogrammer2023/library/KenwoodXS-for-KR-V6030/1.0.0/KenwoodXS-for-KR-V6030-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "polishprogrammer2023/library/KenwoodXS-for-KR-V6030/1.0.3/KenwoodXS-for-KR-V6030-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KenwoodXS-for-KR-V6030-1.0.3.tar.gz",
+    "size_bytes": 14928,
+    "sha256": "f82c69c6d2173b469e55df7fc6a48defe60636b52760fe01908cdc58fef9545a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/polishprogrammer2023/library/KenwoodXS-for-KR-V6030/1.0.3/KenwoodXS-for-KR-V6030-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/polishprogrammer2023/library/KenwoodXS-for-KR-V6030/1.0.3/KenwoodXS-for-KR-V6030-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

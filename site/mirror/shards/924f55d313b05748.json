@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/openenergymonitor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "openenergymonitor/library/EmonLib/1.1.0/EmonLib-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmonLib-1.1.0.tar.gz",
+    "size_bytes": 5194,
+    "sha256": "6abe1912eb30e03942ba5d2a70bd0754edab6f141db6441307e816c83ad79502",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openenergymonitor/library/EmonLib/1.1.0/EmonLib-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/openenergymonitor/library/EmonLib/1.1.0/EmonLib-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "openenergymonitor/library/EmonLibCM/2.1.0/EmonLibCM-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EmonLibCM-2.1.0.tar.gz",
+    "size_bytes": 25629,
+    "sha256": "3d0bb22e91831302f234edc437e4c46b7e696f7a748d96c29faaeebb3804ddc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/openenergymonitor/library/EmonLibCM/2.1.0/EmonLibCM-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/openenergymonitor/library/EmonLibCM/2.1.0/EmonLibCM-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

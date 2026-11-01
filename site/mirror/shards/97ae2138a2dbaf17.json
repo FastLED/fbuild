@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sarwesvaran",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sarwesvaran/library/DC_AirSoundSensor/1.0.0/DC_AirSoundSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DC_AirSoundSensor-1.0.0.tar.gz",
+    "size_bytes": 2271,
+    "sha256": "dd15dbe03d023cf5497d8070330bf0d11da0909321d39f7ab7e7ce5c248e1bd3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sarwesvaran/library/DC_AirSoundSensor/1.0.0/DC_AirSoundSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sarwesvaran/library/DC_AirSoundSensor/1.0.0/DC_AirSoundSensor-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

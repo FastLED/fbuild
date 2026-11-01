@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lobaro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lobaro/library/lobaro-coap/1.2/lobaro-coap-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "lobaro-coap-1.2.tar.gz",
+    "size_bytes": 44552,
+    "sha256": "b7c5dcf9bfd3556ebceed271dcab081f9c2e6dc6773a7c33e460aba2efda0a4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lobaro/library/lobaro-coap/1.2/lobaro-coap-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/lobaro/library/lobaro-coap/1.2/lobaro-coap-1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

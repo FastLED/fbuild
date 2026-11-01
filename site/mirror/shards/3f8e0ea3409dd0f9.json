@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ubtedu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ubtedu/library/uKit%20Explore/1.2.28-1/uKitExplore-1.2.28-1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uKitExplore-1.2.28-1.tar.gz",
+    "size_bytes": 120296,
+    "sha256": "133c6c66cf3d4c26b37d3f28e50b1f1bcce2cb24a2efbf12f9b53eb3deccf406",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ubtedu/library/uKit%2520Explore/1.2.28-1/uKitExplore-1.2.28-1.tar.gz",
+     "https://dl.registry.platformio.org/download/ubtedu/library/uKit%20Explore/1.2.28-1/uKitExplore-1.2.28-1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

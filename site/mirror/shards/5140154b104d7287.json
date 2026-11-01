@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xively",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xively/library/Xively/0.0.0-alpha+sha.8bd6dd28fd/Xively-0.0.0-alphasha.8bd6dd28fd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Xively-0.0.0-alphasha.8bd6dd28fd.tar.gz",
+    "size_bytes": 9852,
+    "sha256": "404c731fc950fb6bf76b89894ba89634907118f1b6a5bebb51375f891f89aa46",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xively/library/Xively/0.0.0-alpha%2Bsha.8bd6dd28fd/Xively-0.0.0-alphasha.8bd6dd28fd.tar.gz",
+     "https://dl.registry.platformio.org/download/xively/library/Xively/0.0.0-alpha%2Bsha.8bd6dd28fd/Xively-0.0.0-alphasha.8bd6dd28fd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

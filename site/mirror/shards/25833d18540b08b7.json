@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jmar7",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jmar7/library/LSM9DS1_Library/0.0.0+sha.87d535bf8c53/LSM9DS1_Library-0.0.0+sha.87d535bf8c53.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM9DS1_Library-0.0.0+sha.87d535bf8c53.tar.gz",
+    "size_bytes": 17919,
+    "sha256": "9f2502aa533db9f3188f36dc8e78b6f0ff32eb30709cf13325773ca6156e39d7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jmar7/library/LSM9DS1_Library/0.0.0%2Bsha.87d535bf8c53/LSM9DS1_Library-0.0.0%2Bsha.87d535bf8c53.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jmar7/library/LSM9DS1_Library/0.0.0%2Bsha.87d535bf8c53/LSM9DS1_Library-0.0.0%2Bsha.87d535bf8c53.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jmar7/library/wave_player/0.0.0+sha.3af9b368c30c/wave_player-0.0.0+sha.3af9b368c30c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "wave_player-0.0.0+sha.3af9b368c30c.tar.gz",
+    "size_bytes": 3795,
+    "sha256": "a031d8f5a33d4536c18f0453dad9b27d673e5d91c8c44273a71f5b0a2d24f946",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jmar7/library/wave_player/0.0.0%2Bsha.3af9b368c30c/wave_player-0.0.0%2Bsha.3af9b368c30c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jmar7/library/wave_player/0.0.0%2Bsha.3af9b368c30c/wave_player-0.0.0%2Bsha.3af9b368c30c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

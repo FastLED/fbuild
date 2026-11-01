@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-joeata2wh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-joeata2wh/library/data_log/0.0.0+sha.bf816d33be80/data_log-0.0.0+sha.bf816d33be80.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "data_log-0.0.0+sha.bf816d33be80.tar.gz",
+    "size_bytes": 11542,
+    "sha256": "826cb125b99a0f1f68c4d67a4a5a44f28a2dd0e8ca68123e73a8d614e61122fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joeata2wh/library/data_log/0.0.0%2Bsha.bf816d33be80/data_log-0.0.0%2Bsha.bf816d33be80.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joeata2wh/library/data_log/0.0.0%2Bsha.bf816d33be80/data_log-0.0.0%2Bsha.bf816d33be80.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-joeata2wh/library/hdc1080/0.0.0+sha.dd3a07b44fe2/hdc1080-0.0.0+sha.dd3a07b44fe2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "hdc1080-0.0.0+sha.dd3a07b44fe2.tar.gz",
+    "size_bytes": 2431,
+    "sha256": "516d4446bb7a5d29741e074fb38f999df60080867de2b239388468720cadbde7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joeata2wh/library/hdc1080/0.0.0%2Bsha.dd3a07b44fe2/hdc1080-0.0.0%2Bsha.dd3a07b44fe2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joeata2wh/library/hdc1080/0.0.0%2Bsha.dd3a07b44fe2/hdc1080-0.0.0%2Bsha.dd3a07b44fe2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-joeata2wh/library/multi-serial-command-listener/0.0.0+sha.294ac985aded/multi-serial-command-listener-0.0.0+sha.294ac985aded.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "multi-serial-command-listener-0.0.0+sha.294ac985aded.tar.gz",
+    "size_bytes": 4346,
+    "sha256": "cee1a5f280b2945d4d99b614a59b616a240989347a2af5d15bb8c5253b18e17f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joeata2wh/library/multi-serial-command-listener/0.0.0%2Bsha.294ac985aded/multi-serial-command-listener-0.0.0%2Bsha.294ac985aded.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joeata2wh/library/multi-serial-command-listener/0.0.0%2Bsha.294ac985aded/multi-serial-command-listener-0.0.0%2Bsha.294ac985aded.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-joeata2wh/library/ohms_law/0.0.0+sha.b4592b0ae1e3/ohms_law-0.0.0+sha.b4592b0ae1e3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ohms_law-0.0.0+sha.b4592b0ae1e3.tar.gz",
+    "size_bytes": 3521,
+    "sha256": "71947b8f6ac02c42dd739ee6261c3a78a61b6f4f8b0f7ac0931a6ab1095c4f1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joeata2wh/library/ohms_law/0.0.0%2Bsha.b4592b0ae1e3/ohms_law-0.0.0%2Bsha.b4592b0ae1e3.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joeata2wh/library/ohms_law/0.0.0%2Bsha.b4592b0ae1e3/ohms_law-0.0.0%2Bsha.b4592b0ae1e3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-joeata2wh/library/temp-thermisterfor-ERT-J0/0.0.0+sha.3c9cb2bd08c6/temp-thermisterfor-ERT-J0-0.0.0+sha.3c9cb2bd08c6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "temp-thermisterfor-ERT-J0-0.0.0+sha.3c9cb2bd08c6.tar.gz",
+    "size_bytes": 2467,
+    "sha256": "40cfd3900a0d0e9a13d6974d68bb0c3667b2de294ed55766210ae0c8b75bf8e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joeata2wh/library/temp-thermisterfor-ERT-J0/0.0.0%2Bsha.3c9cb2bd08c6/temp-thermisterfor-ERT-J0-0.0.0%2Bsha.3c9cb2bd08c6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joeata2wh/library/temp-thermisterfor-ERT-J0/0.0.0%2Bsha.3c9cb2bd08c6/temp-thermisterfor-ERT-J0-0.0.0%2Bsha.3c9cb2bd08c6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-joeata2wh/library/uniqueCPUID/0.0.0+sha.08766dc8051a/uniqueCPUID-0.0.0+sha.08766dc8051a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uniqueCPUID-0.0.0+sha.08766dc8051a.tar.gz",
+    "size_bytes": 1881,
+    "sha256": "a9f33112fade199636918ce668a5f492909e35374d43b5ba468500aaf225f9f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-joeata2wh/library/uniqueCPUID/0.0.0%2Bsha.08766dc8051a/uniqueCPUID-0.0.0%2Bsha.08766dc8051a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-joeata2wh/library/uniqueCPUID/0.0.0%2Bsha.08766dc8051a/uniqueCPUID-0.0.0%2Bsha.08766dc8051a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

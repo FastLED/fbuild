@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-13075593",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-13075593/library/TCP_COMM/0.0.0+sha.174bf74eba86/TCP_COMM-0.0.0+sha.174bf74eba86.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCP_COMM-0.0.0+sha.174bf74eba86.tar.gz",
+    "size_bytes": 1943,
+    "sha256": "0c397da5ed4d639301ced8020e9566c3d71eb787e25246081abb915671ba72ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-13075593/library/TCP_COMM/0.0.0%2Bsha.174bf74eba86/TCP_COMM-0.0.0%2Bsha.174bf74eba86.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-13075593/library/TCP_COMM/0.0.0%2Bsha.174bf74eba86/TCP_COMM-0.0.0%2Bsha.174bf74eba86.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-13075593/library/WS_COMM/0.0.0+sha.c10e8dc4cffd/WS_COMM-0.0.0+sha.c10e8dc4cffd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WS_COMM-0.0.0+sha.c10e8dc4cffd.tar.gz",
+    "size_bytes": 1021,
+    "sha256": "56a71355e88167597e318dab4440246250231178679c5fe53fe1b521058da808",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-13075593/library/WS_COMM/0.0.0%2Bsha.c10e8dc4cffd/WS_COMM-0.0.0%2Bsha.c10e8dc4cffd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-13075593/library/WS_COMM/0.0.0%2Bsha.c10e8dc4cffd/WS_COMM-0.0.0%2Bsha.c10e8dc4cffd.tar.gz"
+    ]
+   }
+  }
+ ]
+}

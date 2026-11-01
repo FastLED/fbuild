@@ -152,7 +152,7 @@ async fn download_github_library(url: &str, name: &str, lib_dir: &Path) -> Resul
 
 /// Download a library from the PlatformIO registry.
 async fn download_registry_library(spec: &LibrarySpec, lib_dir: &Path) -> Result<()> {
-    tracing::info!("resolving {} from PlatformIO registry", spec.name);
+    tracing::info!("resolving {} from fbuild's registry index", spec.name);
 
     let resolved =
         registry::resolve_library(&spec.owner, &spec.name, spec.version.as_deref()).await?;

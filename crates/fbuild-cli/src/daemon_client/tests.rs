@@ -66,7 +66,10 @@ fn daemon_info_for_cache_identity(
         status: "running".to_string(),
         uptime_seconds: 1.0,
         version: "2.2.29".to_string(),
+        build_id: "test".to_string(),
         pid: 123,
+        rss_bytes: None,
+        peak_rss_bytes: None,
         port: 8765,
         dev_mode: fbuild_paths::is_dev_mode(),
         operation_in_progress: false,
@@ -241,14 +244,11 @@ fn foreign_root_owner_message_names_the_owner() {
     // the unix literal below into backslashes and fail the match).
     let exe = claim.exe.display().to_string();
     let message = foreign_root_owner_message(&claim, 19142);
-    for needle in [
-        "98258",
-        "2.5.44",
-        "60903",
-        "19142",
-        exe.as_str(),
-        "No compilation",
-    ] {
+    assert!(
+        message.contains(&exe),
+        "the owner's executable must be named: {message}"
+    );
+    for needle in ["98258", "2.5.44", "60903", "19142", "No compilation"] {
         assert!(message.contains(needle), "{needle} missing from: {message}");
     }
 }

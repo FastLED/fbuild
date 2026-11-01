@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/usefullcodenet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "usefullcodenet/library/UcnBrushlessDCMotorPWM/1.2/UcnBrushlessDCMotorPWM-1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UcnBrushlessDCMotorPWM-1.2.tar.gz",
+    "size_bytes": 9448,
+    "sha256": "79545ce4b401c9bd16cb9390aaab2e5f7963471f402b8552d9b7ea13710ef6b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/usefullcodenet/library/UcnBrushlessDCMotorPWM/1.2/UcnBrushlessDCMotorPWM-1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/usefullcodenet/library/UcnBrushlessDCMotorPWM/1.2/UcnBrushlessDCMotorPWM-1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

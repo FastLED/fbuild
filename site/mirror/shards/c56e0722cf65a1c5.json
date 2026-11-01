@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-doersing",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-doersing/library/dist/0.0.0+sha.6efa4bc2f3ab/dist-0.0.0+sha.6efa4bc2f3ab.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "dist-0.0.0+sha.6efa4bc2f3ab.tar.gz",
+    "size_bytes": 2815,
+    "sha256": "5d0bb98a7d8d1624a7facff7bb7851683385f915d04c768be96fa10171cbf619",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-doersing/library/dist/0.0.0%2Bsha.6efa4bc2f3ab/dist-0.0.0%2Bsha.6efa4bc2f3ab.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-doersing/library/dist/0.0.0%2Bsha.6efa4bc2f3ab/dist-0.0.0%2Bsha.6efa4bc2f3ab.tar.gz"
+    ]
+   }
+  }
+ ]
+}

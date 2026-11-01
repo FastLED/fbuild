@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-xavierbouvard",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-xavierbouvard/library/herkulex/0.0.0+sha.fb5f919f2700/herkulex-0.0.0+sha.fb5f919f2700.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "herkulex-0.0.0+sha.fb5f919f2700.tar.gz",
+    "size_bytes": 5670,
+    "sha256": "aa05a2ec79d55aa879c9cc356e2a2051840fa0ce6c94c927e03a0afce392aeef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-xavierbouvard/library/herkulex/0.0.0%2Bsha.fb5f919f2700/herkulex-0.0.0%2Bsha.fb5f919f2700.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-xavierbouvard/library/herkulex/0.0.0%2Bsha.fb5f919f2700/herkulex-0.0.0%2Bsha.fb5f919f2700.tar.gz"
+    ]
+   }
+  }
+ ]
+}

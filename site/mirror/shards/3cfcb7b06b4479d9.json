@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/maithelord",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "maithelord/library/BetterOTA/1.2.2/BetterOTA-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BetterOTA-1.2.2.tar.gz",
+    "size_bytes": 5847,
+    "sha256": "ffe88c8e24c3aefa0db3b9f67f7fe857b498b0b0233466137ab3c4d687ead351",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/maithelord/library/BetterOTA/1.2.2/BetterOTA-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/maithelord/library/BetterOTA/1.2.2/BetterOTA-1.2.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

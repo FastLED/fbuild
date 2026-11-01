@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jobitjoseph",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jobitjoseph/library/CH32X035_USBSerial/1.0.0/CH32X035_USBSerial-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH32X035_USBSerial-1.0.0.tar.gz",
+    "size_bytes": 14570,
+    "sha256": "e4f1188a4fc5e2f9b5ea02ab32b3bacacc7fe59f00f2ca10104a05a3d0627e11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jobitjoseph/library/CH32X035_USBSerial/1.0.0/CH32X035_USBSerial-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jobitjoseph/library/CH32X035_USBSerial/1.0.0/CH32X035_USBSerial-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jobitjoseph/library/CH32X035_USBSerial/1.0.1/CH32X035_USBSerial-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CH32X035_USBSerial-1.0.1.tar.gz",
+    "size_bytes": 14608,
+    "sha256": "547941ea6585e860c53013577c53f629905f05c1132c4ff318cc53026d08ede2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jobitjoseph/library/CH32X035_USBSerial/1.0.1/CH32X035_USBSerial-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jobitjoseph/library/CH32X035_USBSerial/1.0.1/CH32X035_USBSerial-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jobitjoseph/library/EspWebFileManager/1.4.2/EspWebFileManager-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspWebFileManager-1.4.2.tar.gz",
+    "size_bytes": 577654,
+    "sha256": "5f5e6292bb9f3111e3c608a8fd2f4d5c996c3a197b6e782c0962a72301c37b19",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jobitjoseph/library/EspWebFileManager/1.4.2/EspWebFileManager-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jobitjoseph/library/EspWebFileManager/1.4.2/EspWebFileManager-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jobitjoseph/library/LottieMCU/1.1.0/LottieMCU-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LottieMCU-1.1.0.tar.gz",
+    "size_bytes": 304739,
+    "sha256": "39af84a95356f04ba4b7e83a5792c11f3d9b336b2ffb88d480ad599e3eed7207",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jobitjoseph/library/LottieMCU/1.1.0/LottieMCU-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jobitjoseph/library/LottieMCU/1.1.0/LottieMCU-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jobitjoseph/library/PAC1xxx/1.0.0/PAC1xxx-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PAC1xxx-1.0.0.tar.gz",
+    "size_bytes": 61074,
+    "sha256": "f0d1602543861d34fc3ab1a64ed61844951d7e11d1a8a0cb6339d055bb19f94b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jobitjoseph/library/PAC1xxx/1.0.0/PAC1xxx-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jobitjoseph/library/PAC1xxx/1.0.0/PAC1xxx-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jobitjoseph/library/SimpleOLED/1.0.0/SimpleOLED-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleOLED-1.0.0.tar.gz",
+    "size_bytes": 7350,
+    "sha256": "514e37e578a885d39b6011e98b46652e944a32a71ee0ec2ba5fb2509bc81c00d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jobitjoseph/library/SimpleOLED/1.0.0/SimpleOLED-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jobitjoseph/library/SimpleOLED/1.0.0/SimpleOLED-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jobitjoseph/library/SoftWire_CH32/1.0.0/SoftWire_CH32-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftWire_CH32-1.0.0.tar.gz",
+    "size_bytes": 10098,
+    "sha256": "ecf7a9de4b43e29c15f5098bf4ff77c21ba1962797b52c69d15a1d516fa83983",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jobitjoseph/library/SoftWire_CH32/1.0.0/SoftWire_CH32-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jobitjoseph/library/SoftWire_CH32/1.0.0/SoftWire_CH32-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jobitjoseph/library/WitAITTS/1.0.0/WitAITTS-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WitAITTS-1.0.0.tar.gz",
+    "size_bytes": 22021,
+    "sha256": "126911bc41342205a28166183ba46c2509a8c90a53270c70ac5734c97fa6a3af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jobitjoseph/library/WitAITTS/1.0.0/WitAITTS-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jobitjoseph/library/WitAITTS/1.0.0/WitAITTS-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jobitjoseph/library/WitAITTS/1.0.2/WitAITTS-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WitAITTS-1.0.2.tar.gz",
+    "size_bytes": 22196,
+    "sha256": "8180a8deae77d6df127d47c9836450d1c1e5b2cbd55ce5ce7d0822a26f835e8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jobitjoseph/library/WitAITTS/1.0.2/WitAITTS-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jobitjoseph/library/WitAITTS/1.0.2/WitAITTS-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

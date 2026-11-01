@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dennis-ard",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dennis-ard/library/Arducam_Mega/2.0.9/Arducam_Mega-2.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arducam_Mega-2.0.9.tar.gz",
+    "size_bytes": 11845749,
+    "sha256": "777cc26ab03c25f79775a78d784c5d9e26d1c9abf4b5c1c351b1a31b921e5acf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dennis-ard/library/Arducam_Mega/2.0.9/Arducam_Mega-2.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/dennis-ard/library/Arducam_Mega/2.0.9/Arducam_Mega-2.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

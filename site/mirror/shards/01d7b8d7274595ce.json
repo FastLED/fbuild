@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/groeiacademie",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "groeiacademie/library/GroeiAcademie%20FrameWork/1.0.0/GroeiAcademie-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroeiAcademie-1.0.0.tar.gz",
+    "size_bytes": 64696,
+    "sha256": "2b8e04ff8d226b29f0acd2b2af5c1e345e914be8d85cc6fc9702899cfcc95a0f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/groeiacademie/library/GroeiAcademie%2520FrameWork/1.0.0/GroeiAcademie-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/groeiacademie/library/GroeiAcademie%20FrameWork/1.0.0/GroeiAcademie-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "groeiacademie/library/GroeiAcademie%20FrameWork/1.0.2/GroeiAcademieFrameWork-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroeiAcademieFrameWork-1.0.2.tar.gz",
+    "size_bytes": 67123,
+    "sha256": "e0fc0f7249060713c9988c5addbf3e5eb73882946764ab2628c2235e2fb2f9ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/groeiacademie/library/GroeiAcademie%2520FrameWork/1.0.2/GroeiAcademieFrameWork-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/groeiacademie/library/GroeiAcademie%20FrameWork/1.0.2/GroeiAcademieFrameWork-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "groeiacademie/library/GroeiAcademie%20FrameWork/1.0.3/GroeiAcademieFrameWork-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroeiAcademieFrameWork-1.0.3.tar.gz",
+    "size_bytes": 67737,
+    "sha256": "7c80b63ea086ec90f8867ea1389aba41ca36b63e3f886eac61cc765e447e22b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/groeiacademie/library/GroeiAcademie%2520FrameWork/1.0.3/GroeiAcademieFrameWork-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/groeiacademie/library/GroeiAcademie%20FrameWork/1.0.3/GroeiAcademieFrameWork-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "groeiacademie/library/GroeiAcademie%20FrameWork/1.0.4/GroeiAcademieFrameWork-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroeiAcademieFrameWork-1.0.4.tar.gz",
+    "size_bytes": 72239,
+    "sha256": "86505a3964e84338b6e497c00d2df8aa511c4fd1d5c69c93c48505f442ecc06b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/groeiacademie/library/GroeiAcademie%2520FrameWork/1.0.4/GroeiAcademieFrameWork-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/groeiacademie/library/GroeiAcademie%20FrameWork/1.0.4/GroeiAcademieFrameWork-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "groeiacademie/library/GroeiAcademie%20FrameWork/1.1.0/GroeiAcademieFrameWork-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroeiAcademieFrameWork-1.1.0.tar.gz",
+    "size_bytes": 131495,
+    "sha256": "220f8c04a930bba103e9d45134c54e02a39df305656a8cb2ce9f031aa4219582",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/groeiacademie/library/GroeiAcademie%2520FrameWork/1.1.0/GroeiAcademieFrameWork-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/groeiacademie/library/GroeiAcademie%20FrameWork/1.1.0/GroeiAcademieFrameWork-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "groeiacademie/library/GroeiAcademie%20FrameWork/1.1.1/GroeiAcademieFrameWork-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroeiAcademieFrameWork-1.1.1.tar.gz",
+    "size_bytes": 139845,
+    "sha256": "a4f3439215d0a02a11e7fe95a31faad9959a4f371fb46dc219cda02fbd9bfaa9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/groeiacademie/library/GroeiAcademie%2520FrameWork/1.1.1/GroeiAcademieFrameWork-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/groeiacademie/library/GroeiAcademie%20FrameWork/1.1.1/GroeiAcademieFrameWork-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "groeiacademie/library/GroeiAcademie%20FrameWork/1.1.2/GroeiAcademieFrameWork-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroeiAcademieFrameWork-1.1.2.tar.gz",
+    "size_bytes": 155089,
+    "sha256": "cc94831894d4a1a44980164ad12b3fd568b93cf8721540ac644f6b970c98c69f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/groeiacademie/library/GroeiAcademie%2520FrameWork/1.1.2/GroeiAcademieFrameWork-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/groeiacademie/library/GroeiAcademie%20FrameWork/1.1.2/GroeiAcademieFrameWork-1.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

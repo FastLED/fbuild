@@ -15,6 +15,7 @@ exceeds the 1000-LOC gate.
 | `embed.rs` | `objcopy --input-target binary` conversion of embedded files. |
 | `embed_stage.rs` | `.lnk` resolution and target selection wrapper around `embed`. |
 | `boot_artifacts.rs` | Produces `bootloader.bin`, `partitions.bin`, `boot_app0.bin`. |
+| `boot_artifacts_cache.rs` | Content-addressed reuse of the derived `bootloader.bin` / `partitions.bin` across project dirs, keyed on the producing tool's stamp + its parameters (FastLED/fbuild#1414). Tests in `boot_artifacts_cache_tests.rs`. |
 | `fingerprint.rs` | Serialised metadata struct used for the fast-path hash. |
 | `helpers.rs` | Failure markers, signature, profile labels, compile-db freshness. (Flag merging — `apply_user_flags` / `apply_overlay_flags` — moved up to `crate::flag_overlay` so the nxplpc orchestrator can share it; see fbuild#587.) |
 | `cdc.rs` | USB-CDC-on-boot warning + small public convenience helpers. |

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-harshavardan61",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-harshavardan61/library/BipoarStepperMotor/0.0.0+sha.ac1e3b571cef/BipoarStepperMotor-0.0.0+sha.ac1e3b571cef.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BipoarStepperMotor-0.0.0+sha.ac1e3b571cef.tar.gz",
+    "size_bytes": 1606,
+    "sha256": "b54fdcd20fa0647ed3fd60642d1e4a06f316802480c76b191b7911635dd1f90d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-harshavardan61/library/BipoarStepperMotor/0.0.0%2Bsha.ac1e3b571cef/BipoarStepperMotor-0.0.0%2Bsha.ac1e3b571cef.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-harshavardan61/library/BipoarStepperMotor/0.0.0%2Bsha.ac1e3b571cef/BipoarStepperMotor-0.0.0%2Bsha.ac1e3b571cef.tar.gz"
+    ]
+   }
+  }
+ ]
+}

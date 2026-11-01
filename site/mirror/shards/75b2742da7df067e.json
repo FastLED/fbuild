@@ -1,0 +1,438 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chl33",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chl33/library/og3/0.3.91/og3-0.3.91.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.3.91.tar.gz",
+    "size_bytes": 103373,
+    "sha256": "9edc876d15dec9e1adbb6c44815e367075eae50c66ba20b2d70fc5212782262a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.3.91/og3-0.3.91.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.3.91/og3-0.3.91.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.3.92/og3-0.3.92.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.3.92.tar.gz",
+    "size_bytes": 103631,
+    "sha256": "9046e89a4a3b1b71b7a371c08e066dbda3a102b41892c987d3d80a29599f88d6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.3.92/og3-0.3.92.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.3.92/og3-0.3.92.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.3.93/og3-0.3.93.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.3.93.tar.gz",
+    "size_bytes": 103956,
+    "sha256": "d4d2025c3e816de9c73fd156726c50ecfbc5db600b604de5aa7490dd700503d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.3.93/og3-0.3.93.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.3.93/og3-0.3.93.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.3.94/og3-0.3.94.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.3.94.tar.gz",
+    "size_bytes": 103969,
+    "sha256": "3b06a48b6e69526cfb18147eaf0dca6507724fa915eff83f7cceb9accae04822",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.3.94/og3-0.3.94.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.3.94/og3-0.3.94.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.3.95/og3-0.3.95.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.3.95.tar.gz",
+    "size_bytes": 103990,
+    "sha256": "7dc95d2cf063833bf624c1f17b1eb5536d7bd12bb7d8729b00cac3f56d26e799",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.3.95/og3-0.3.95.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.3.95/og3-0.3.95.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.3.96/og3-0.3.96.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.3.96.tar.gz",
+    "size_bytes": 104034,
+    "sha256": "39b76da122aef9d013153917e829217dc3132d2055155755976cf34614ad9e2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.3.96/og3-0.3.96.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.3.96/og3-0.3.96.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.3.98/og3-0.3.98.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.3.98.tar.gz",
+    "size_bytes": 105226,
+    "sha256": "36a714cb779bbfb387d8cc67f34dd608cb1f0df4933111d0d6a8ab48cb20280f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.3.98/og3-0.3.98.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.3.98/og3-0.3.98.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.3.99/og3-0.3.99.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.3.99.tar.gz",
+    "size_bytes": 106034,
+    "sha256": "ab0c031c947e9580ca147a7e24174f4ccb363121c8d731c2c91588989071d9fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.3.99/og3-0.3.99.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.3.99/og3-0.3.99.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.4.0/og3-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.4.0.tar.gz",
+    "size_bytes": 110167,
+    "sha256": "d7ba8de84c178f6b14021073d4d4cae13140170185e85d5e2966ed847e4dac04",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.4.0/og3-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.4.0/og3-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.4.1/og3-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.4.1.tar.gz",
+    "size_bytes": 113049,
+    "sha256": "6c92caa52a843a38673a2142408aac64eb1a0cdd801877fd759bc3914cf286aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.4.1/og3-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.4.1/og3-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.4.2/og3-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.4.2.tar.gz",
+    "size_bytes": 113627,
+    "sha256": "5398d2dd90eaffdd0be4614444c2bbf096f16aaffe9e799bd6b1c8adb647c9b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.4.2/og3-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.4.2/og3-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.4.3/og3-0.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.4.3.tar.gz",
+    "size_bytes": 113769,
+    "sha256": "4f0abc464abcbc0d8c4b90227053bc80db2f44669a22e8f8f6d41cd493183b8b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.4.3/og3-0.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.4.3/og3-0.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.4.4/og3-0.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.4.4.tar.gz",
+    "size_bytes": 113792,
+    "sha256": "b74b58d082c23a137b5655c8d18202268007065dcc66dcc4358f6bac4b0b6d17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.4.4/og3-0.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.4.4/og3-0.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.4.5/og3-0.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.4.5.tar.gz",
+    "size_bytes": 111886,
+    "sha256": "aa1717cd3f8cd847f4609773944394d7899f6ad9dd9fc576293c32c0db0334ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.4.5/og3-0.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.4.5/og3-0.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.5.0/og3-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.5.0.tar.gz",
+    "size_bytes": 116753,
+    "sha256": "bce075c496a8be0d9d62638323944d9fad368b9b85aa8b0bd9e8c053e48af4c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.5.0/og3-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.5.0/og3-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.6.0/og3-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.6.0.tar.gz",
+    "size_bytes": 112820,
+    "sha256": "e710c749c44568ef0b7731ec0c514f1c86d5027eccc8464438df2687d83d57ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.6.0/og3-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.6.0/og3-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.6.1/og3-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.6.1.tar.gz",
+    "size_bytes": 113369,
+    "sha256": "3191a72e992ea85d06a6ec7b183600bff0bee4efe2fd5edb4e4e17ad3d84a5be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.6.1/og3-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.6.1/og3-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.6.2/og3-0.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.6.2.tar.gz",
+    "size_bytes": 113605,
+    "sha256": "3fabd7f23091b9778a485c4553a933bf586b4bf20164ce0740392bbb7cc92fed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.6.2/og3-0.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.6.2/og3-0.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.6.3/og3-0.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.6.3.tar.gz",
+    "size_bytes": 113729,
+    "sha256": "ae591b8ea012f9b0ffba66d7cf74cb1f339d500d05b9d973f0cef7680ef35d20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.6.3/og3-0.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.6.3/og3-0.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.6.4/og3-0.6.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.6.4.tar.gz",
+    "size_bytes": 113893,
+    "sha256": "d97aee55a47ae61802f907c3f4a8809c03e12b36f6bee646a089679e986c1855",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.6.4/og3-0.6.4.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.6.4/og3-0.6.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3/0.7.0/og3-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3-0.7.0.tar.gz",
+    "size_bytes": 120130,
+    "sha256": "9fcbe92c773c1262ee6125f7932fffbd1ffe60ea1e2123fb42f20dc6cfef7228",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3/0.7.0/og3-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3/0.7.0/og3-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3x-lora/0.6.0/og3x-lora-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3x-lora-0.6.0.tar.gz",
+    "size_bytes": 5829,
+    "sha256": "01a3e346b33a64bb4f72ff84efd76b169fa5177f474ae242bb9a4f6190c77f95",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3x-lora/0.6.0/og3x-lora-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3x-lora/0.6.0/og3x-lora-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3x-lora/0.6.1/og3x-lora-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3x-lora-0.6.1.tar.gz",
+    "size_bytes": 5923,
+    "sha256": "0566593583c6288abbf043c002058c79579f877e8052549c269fcd52d7fe302b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3x-lora/0.6.1/og3x-lora-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3x-lora/0.6.1/og3x-lora-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3x-lora/0.6.3/og3x-lora-0.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3x-lora-0.6.3.tar.gz",
+    "size_bytes": 5973,
+    "sha256": "46520cb7b862616642b38da7862dbe3bf4f7aae617bffb3e260a04cc77deab62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3x-lora/0.6.3/og3x-lora-0.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3x-lora/0.6.3/og3x-lora-0.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3x-lora/0.7.0/og3x-lora-0.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3x-lora-0.7.0.tar.gz",
+    "size_bytes": 7108,
+    "sha256": "7ed699f19a2b9ab0fe08cf1010d52aa9cfaf5c2b2cb8def090ef4dd05710eaca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3x-lora/0.7.0/og3x-lora-0.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3x-lora/0.7.0/og3x-lora-0.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3x-oled/0.5.0/og3x-oled-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3x-oled-0.5.0.tar.gz",
+    "size_bytes": 5987,
+    "sha256": "281197cb020ee1fe6f9df5a89e166cf6f4e24ef705e2f6c86b2de9dc6d172072",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3x-oled/0.5.0/og3x-oled-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3x-oled/0.5.0/og3x-oled-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3x-oled/0.6.0/og3x-oled-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3x-oled-0.6.0.tar.gz",
+    "size_bytes": 6045,
+    "sha256": "57fd4115dad422fe18b23e7ab98f89a93bba910aa661614b0a622ca01ebc71f9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3x-oled/0.6.0/og3x-oled-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3x-oled/0.6.0/og3x-oled-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3x-oled/0.6.1/og3x-oled-0.6.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3x-oled-0.6.1.tar.gz",
+    "size_bytes": 5999,
+    "sha256": "26b2466dd5e084474c9d8a6b8baf0e68c97bec09f729d2a07263132a69c3dbd6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3x-oled/0.6.1/og3x-oled-0.6.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3x-oled/0.6.1/og3x-oled-0.6.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3x-satellite/0.6.0/og3x-satellite-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3x-satellite-0.6.0.tar.gz",
+    "size_bytes": 10583,
+    "sha256": "938bae4734777129b363168c0394994a01c7e26287403d6ead6f2a2c6a928764",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3x-satellite/0.6.0/og3x-satellite-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3x-satellite/0.6.0/og3x-satellite-0.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3x-satellite/0.6.2/og3x-satellite-0.6.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3x-satellite-0.6.2.tar.gz",
+    "size_bytes": 13521,
+    "sha256": "deb87395447f4379e83938f6971a830d7832390e24d2d34aaebc660b0f37b01e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3x-satellite/0.6.2/og3x-satellite-0.6.2.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3x-satellite/0.6.2/og3x-satellite-0.6.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3x-satellite/0.6.3/og3x-satellite-0.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3x-satellite-0.6.3.tar.gz",
+    "size_bytes": 13356,
+    "sha256": "39837c0517d63c07d65299cc15bbb96e4c692b10538fa531d6678991f2ecc78b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3x-satellite/0.6.3/og3x-satellite-0.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3x-satellite/0.6.3/og3x-satellite-0.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3x-shtc3/0.5.0/og3x-shtc3-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3x-shtc3-0.5.0.tar.gz",
+    "size_bytes": 6521,
+    "sha256": "c3ff04a6d250f2e430f22417aa2ec16772f3c6a7b0b7ed916e2fb01d1795476e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3x-shtc3/0.5.0/og3x-shtc3-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3x-shtc3/0.5.0/og3x-shtc3-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chl33/library/og3x-shtc3/0.6.0/og3x-shtc3-0.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "og3x-shtc3-0.6.0.tar.gz",
+    "size_bytes": 6601,
+    "sha256": "48d40e361241b14de037eb299130f4ee936cb9c6d517467f04cf6a12c8293573",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chl33/library/og3x-shtc3/0.6.0/og3x-shtc3-0.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chl33/library/og3x-shtc3/0.6.0/og3x-shtc3-0.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

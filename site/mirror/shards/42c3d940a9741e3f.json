@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jay94ks",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jay94ks/library/DXLR01/1.0.0/DXLR01-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DXLR01-1.0.0.tar.gz",
+    "size_bytes": 19229,
+    "sha256": "cda27bac09a2e0839910cc7466f2fc3feab48dcca6cea0efb089df0ffd328019",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jay94ks/library/DXLR01/1.0.0/DXLR01-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jay94ks/library/DXLR01/1.0.0/DXLR01-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

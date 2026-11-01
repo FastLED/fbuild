@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/skorokithakis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "skorokithakis/library/A6lib/0.0.0-alpha+sha.e7aabb5bbb/A6lib-0.0.0-alphasha.e7aabb5bbb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "A6lib-0.0.0-alphasha.e7aabb5bbb.tar.gz",
+    "size_bytes": 9925,
+    "sha256": "297c75736bb8475fe56650cb5253a7d4bb4e399b7ccf56d2ac00e7b43a2069dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/skorokithakis/library/A6lib/0.0.0-alpha%2Bsha.e7aabb5bbb/A6lib-0.0.0-alphasha.e7aabb5bbb.tar.gz",
+     "https://dl.registry.platformio.org/download/skorokithakis/library/A6lib/0.0.0-alpha%2Bsha.e7aabb5bbb/A6lib-0.0.0-alphasha.e7aabb5bbb.tar.gz"
+    ]
+   }
+  }
+ ]
+}

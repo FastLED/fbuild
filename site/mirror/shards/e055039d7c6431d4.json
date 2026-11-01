@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-contest-iot-gse5",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-contest-iot-gse5/library/buzzer/0.0.0+sha.45560d98de8a/buzzer-0.0.0+sha.45560d98de8a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "buzzer-0.0.0+sha.45560d98de8a.tar.gz",
+    "size_bytes": 1700,
+    "sha256": "bd194013acf5efb3a8ece696bceaee59694112953138321366751a135ee7825e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-contest-iot-gse5/library/buzzer/0.0.0%2Bsha.45560d98de8a/buzzer-0.0.0%2Bsha.45560d98de8a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-contest-iot-gse5/library/buzzer/0.0.0%2Bsha.45560d98de8a/buzzer-0.0.0%2Bsha.45560d98de8a.tar.gz"
+    ]
+   }
+  }
+ ]
+}

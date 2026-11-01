@@ -1,0 +1,191 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sumotoy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sumotoy/library/CAT9552/2.1/CAT9552-2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CAT9552-2.1.tar.gz",
+    "size_bytes": 4552,
+    "sha256": "9b54f9990f7ba1b9bbc21d23010f8ac315335baca90ab2983af13e2f23503ae6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sumotoy/library/CAT9552/2.1/CAT9552-2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sumotoy/library/CAT9552/2.1/CAT9552-2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sumotoy/library/GY953/0.1/GY953-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GY953-0.1.tar.gz",
+    "size_bytes": 6033,
+    "sha256": "387b2e2bd97a51b1a508a317348efffc1caeb16fe48a754dc0ddb70d3b8299fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sumotoy/library/GY953/0.1/GY953-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sumotoy/library/GY953/0.1/GY953-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sumotoy/library/HPDL1414/0.5/HPDL1414-0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HPDL1414-0.5.tar.gz",
+    "size_bytes": 6893,
+    "sha256": "51d446912e4f81e1abcedc72521f1f47946ef209b3e12bbca948dd1e362869fd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sumotoy/library/HPDL1414/0.5/HPDL1414-0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sumotoy/library/HPDL1414/0.5/HPDL1414-0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sumotoy/library/OLED_pictivaWide/1.1/OLED_pictivaWide-1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OLED_pictivaWide-1.1.tar.gz",
+    "size_bytes": 126493,
+    "sha256": "02eb5f9e969fce84105835202aa8fb7012a01792671d9141ca40f02e316288ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sumotoy/library/OLED_pictivaWide/1.1/OLED_pictivaWide-1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sumotoy/library/OLED_pictivaWide/1.1/OLED_pictivaWide-1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sumotoy/library/PT2313/1.0/PT2313-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PT2313-1.0.tar.gz",
+    "size_bytes": 4074,
+    "sha256": "fef39dfede048627c02fcfded171ff36df914b77811ab057afee49d10286bfdb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sumotoy/library/PT2313/1.0/PT2313-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sumotoy/library/PT2313/1.0/PT2313-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sumotoy/library/RA8875/0.70.11/RA8875-0.70.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RA8875-0.70.11.tar.gz",
+    "size_bytes": 316996,
+    "sha256": "ef29567e65c5e1c9b4fda656952fd189597798ea85088646e71ecc7db7c384ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sumotoy/library/RA8875/0.70.11/RA8875-0.70.11.tar.gz",
+     "https://dl.registry.platformio.org/download/sumotoy/library/RA8875/0.70.11/RA8875-0.70.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sumotoy/library/SSD_13XX/1.0/SSD_13XX-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD_13XX-1.0.tar.gz",
+    "size_bytes": 402130,
+    "sha256": "3d5a5ecd98ab562e331895eb41d58bf2423cfd999a7e5d2019dcefa8e8e7d597",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sumotoy/library/SSD_13XX/1.0/SSD_13XX-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sumotoy/library/SSD_13XX/1.0/SSD_13XX-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sumotoy/library/TFT_ILI9163/0.0.0-alpha+sha.9b2928a2df/TFT_ILI9163-0.0.0-alphasha.9b2928a2df.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_ILI9163-0.0.0-alphasha.9b2928a2df.tar.gz",
+    "size_bytes": 73306,
+    "sha256": "0fa1162c299fc58b581916872633528d9b96c11806c077f967d7485cf192bd14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sumotoy/library/TFT_ILI9163/0.0.0-alpha%2Bsha.9b2928a2df/TFT_ILI9163-0.0.0-alphasha.9b2928a2df.tar.gz",
+     "https://dl.registry.platformio.org/download/sumotoy/library/TFT_ILI9163/0.0.0-alpha%2Bsha.9b2928a2df/TFT_ILI9163-0.0.0-alphasha.9b2928a2df.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sumotoy/library/TFT_ILI93XX/1.0/TFT_ILI93XX-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_ILI93XX-1.0.tar.gz",
+    "size_bytes": 246608,
+    "sha256": "b2ebc14bd6b401b2bea6e0204c1038505e971c79aea92acbd668c7139554894e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sumotoy/library/TFT_ILI93XX/1.0/TFT_ILI93XX-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sumotoy/library/TFT_ILI93XX/1.0/TFT_ILI93XX-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sumotoy/library/TFT_ST7735/1.0.1b1/TFT_ST7735-1.0.1b1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_ST7735-1.0.1b1.tar.gz",
+    "size_bytes": 89205,
+    "sha256": "b6479186eed739a8d7e47b140fdb4180d17b619e3655474271d3029bbdaf88ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sumotoy/library/TFT_ST7735/1.0.1b1/TFT_ST7735-1.0.1b1.tar.gz",
+     "https://dl.registry.platformio.org/download/sumotoy/library/TFT_ST7735/1.0.1b1/TFT_ST7735-1.0.1b1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sumotoy/library/gpio_MCP23S17/0.9/gpio_MCP23S17-0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gpio_MCP23S17-0.9.tar.gz",
+    "size_bytes": 7846,
+    "sha256": "a403e00827df18e32065a41e508fa25e7450646a7ae54618bf5c7b6aa62ac9d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sumotoy/library/gpio_MCP23S17/0.9/gpio_MCP23S17-0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/sumotoy/library/gpio_MCP23S17/0.9/gpio_MCP23S17-0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sumotoy/library/gpio_expander/0.8.3/gpio_expander-0.8.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "gpio_expander-0.8.3.tar.gz",
+    "size_bytes": 581449,
+    "sha256": "f071580628c69b003c886dca9e4cdd9995dba546ee02136b1941ec43a141d2cd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sumotoy/library/gpio_expander/0.8.3/gpio_expander-0.8.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sumotoy/library/gpio_expander/0.8.3/gpio_expander-0.8.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sumotoy/library/servo_PCA9685/1.0.0/servo_PCA9685-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "servo_PCA9685-1.0.0.tar.gz",
+    "size_bytes": 5198,
+    "sha256": "11174ebc73e8d11a7bc7425361402c8f1b6563f9c4f1ceefd3ef8ac33ad410da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sumotoy/library/servo_PCA9685/1.0.0/servo_PCA9685-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sumotoy/library/servo_PCA9685/1.0.0/servo_PCA9685-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sumotoy/library/simplyEncoder/2.1/simplyEncoder-2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "simplyEncoder-2.1.tar.gz",
+    "size_bytes": 2925,
+    "sha256": "736af13e4f3fc76bd1e20a51231c7fccd83e8133ab78dd0ea528abaa9c2a0428",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sumotoy/library/simplyEncoder/2.1/simplyEncoder-2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sumotoy/library/simplyEncoder/2.1/simplyEncoder-2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

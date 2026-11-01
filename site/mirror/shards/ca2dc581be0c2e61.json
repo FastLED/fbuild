@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pauls-3d-things",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pauls-3d-things/library/mini-iot-client/1.0.3/mini-iot-client-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mini-iot-client-1.0.3.tar.gz",
+    "size_bytes": 2066,
+    "sha256": "6614bcff310d61f3b0db60f79bf00cfc6743aba93a974f72ef7ee59acf11a3e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pauls-3d-things/library/mini-iot-client/1.0.3/mini-iot-client-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pauls-3d-things/library/mini-iot-client/1.0.3/mini-iot-client-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pauls-3d-things/library/mini-wifi/2.0.1/mini-wifi-2.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mini-wifi-2.0.1.tar.gz",
+    "size_bytes": 2631,
+    "sha256": "950c44f771fc91c2550709e800fa781cb0f1c6a4f700f8be07d21ef6ecdcd7e4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pauls-3d-things/library/mini-wifi/2.0.1/mini-wifi-2.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pauls-3d-things/library/mini-wifi/2.0.1/mini-wifi-2.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

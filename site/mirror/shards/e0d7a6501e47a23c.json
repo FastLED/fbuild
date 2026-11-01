@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-the-new-engineer-s",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-the-new-engineer-s/library/C12832_lcd/0.0.0+sha.4a09a5e0d6d8/C12832_lcd-0.0.0+sha.4a09a5e0d6d8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C12832_lcd-0.0.0+sha.4a09a5e0d6d8.tar.gz",
+    "size_bytes": 10759,
+    "sha256": "2d61a34e593ac61cc589dac56d25533467a56906c52bbd8976e6a878035c36f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-the-new-engineer-s/library/C12832_lcd/0.0.0%2Bsha.4a09a5e0d6d8/C12832_lcd-0.0.0%2Bsha.4a09a5e0d6d8.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-the-new-engineer-s/library/C12832_lcd/0.0.0%2Bsha.4a09a5e0d6d8/C12832_lcd-0.0.0%2Bsha.4a09a5e0d6d8.tar.gz"
+    ]
+   }
+  }
+ ]
+}

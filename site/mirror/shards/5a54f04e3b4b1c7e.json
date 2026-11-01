@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jonmarsh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jonmarsh/library/m3pimaze/0.0.0+sha.e1dac380452c/m3pimaze-0.0.0+sha.e1dac380452c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m3pimaze-0.0.0+sha.e1dac380452c.tar.gz",
+    "size_bytes": 4055,
+    "sha256": "252349e20a0fd8ebd4a7a8f9c65e59ea004fba0690e31f38367757919f52cb27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jonmarsh/library/m3pimaze/0.0.0%2Bsha.e1dac380452c/m3pimaze-0.0.0%2Bsha.e1dac380452c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jonmarsh/library/m3pimaze/0.0.0%2Bsha.e1dac380452c/m3pimaze-0.0.0%2Bsha.e1dac380452c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

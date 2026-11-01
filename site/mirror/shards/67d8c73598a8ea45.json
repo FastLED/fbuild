@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-eseerge",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-eseerge/library/MS5611_01BA03/0.0.0+sha.4343d7e75385/MS5611_01BA03-0.0.0+sha.4343d7e75385.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MS5611_01BA03-0.0.0+sha.4343d7e75385.tar.gz",
+    "size_bytes": 3923,
+    "sha256": "f7984b3ece4dd1f6e33aa3e66c1de399da49e0eb2c0be04715020c6d16efcecd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-eseerge/library/MS5611_01BA03/0.0.0%2Bsha.4343d7e75385/MS5611_01BA03-0.0.0%2Bsha.4343d7e75385.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-eseerge/library/MS5611_01BA03/0.0.0%2Bsha.4343d7e75385/MS5611_01BA03-0.0.0%2Bsha.4343d7e75385.tar.gz"
+    ]
+   }
+  }
+ ]
+}

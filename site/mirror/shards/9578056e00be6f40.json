@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/birmanish",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "birmanish/library/PID_5_Sensors/1.0.0/PID_5_Sensors-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PID_5_Sensors-1.0.0.tar.gz",
+    "size_bytes": 3952,
+    "sha256": "5003fbeefc3328a1851bade59c5897f52e60e4c447fdad5e53a11f0b8a5a9356",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/birmanish/library/PID_5_Sensors/1.0.0/PID_5_Sensors-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/birmanish/library/PID_5_Sensors/1.0.0/PID_5_Sensors-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

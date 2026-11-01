@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-macc0704",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-macc0704/library/Sound/0.0.0+sha.d186cda6e354/Sound-0.0.0+sha.d186cda6e354.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sound-0.0.0+sha.d186cda6e354.tar.gz",
+    "size_bytes": 840,
+    "sha256": "db5b03164f99dbdabf732f88f655cb0ce6960ba3e19281155954fd7885005126",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-macc0704/library/Sound/0.0.0%2Bsha.d186cda6e354/Sound-0.0.0%2Bsha.d186cda6e354.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-macc0704/library/Sound/0.0.0%2Bsha.d186cda6e354/Sound-0.0.0%2Bsha.d186cda6e354.tar.gz"
+    ]
+   }
+  }
+ ]
+}

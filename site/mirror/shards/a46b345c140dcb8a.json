@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rob040",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rob040/library/ESP_WiFiManagerLite2/2.0.0/ESP_WiFiManagerLite2-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_WiFiManagerLite2-2.0.0.tar.gz",
+    "size_bytes": 214327,
+    "sha256": "2ecafc3934feff572fde6eec2a40514e5d817fbc5a927db49d9e4a8bb241e77f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rob040/library/ESP_WiFiManagerLite2/2.0.0/ESP_WiFiManagerLite2-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rob040/library/ESP_WiFiManagerLite2/2.0.0/ESP_WiFiManagerLite2-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

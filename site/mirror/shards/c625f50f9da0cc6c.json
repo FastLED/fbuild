@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hii-nice-2-meet-u",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hii-nice-2-meet-u/library/HANUMAN_32/0.1.0/HANUMAN_32-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HANUMAN_32-0.1.0.tar.gz",
+    "size_bytes": 18037,
+    "sha256": "cbe13ae89269e3eeef659af3a348807c3b5eb7d9f6bed913228429a817e8c9b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hii-nice-2-meet-u/library/HANUMAN_32/0.1.0/HANUMAN_32-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hii-nice-2-meet-u/library/HANUMAN_32/0.1.0/HANUMAN_32-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hii-nice-2-meet-u/library/HANUMAN_32/0.1.1/HANUMAN_32-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HANUMAN_32-0.1.1.tar.gz",
+    "size_bytes": 22072,
+    "sha256": "e1999ee463913f6785ef1fb20fed96bb8d38f9f408786750f2056b8125c1ec26",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hii-nice-2-meet-u/library/HANUMAN_32/0.1.1/HANUMAN_32-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hii-nice-2-meet-u/library/HANUMAN_32/0.1.1/HANUMAN_32-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hii-nice-2-meet-u/library/HANUMAN_32/0.1.2/HANUMAN_32-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HANUMAN_32-0.1.2.tar.gz",
+    "size_bytes": 22942,
+    "sha256": "8e028b3dc2cfa65942df69c212dba006f254a43363d379ea96e607d8bc66078a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hii-nice-2-meet-u/library/HANUMAN_32/0.1.2/HANUMAN_32-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/hii-nice-2-meet-u/library/HANUMAN_32/0.1.2/HANUMAN_32-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hii-nice-2-meet-u/library/HANUMAN_32/0.1.3/HANUMAN_32-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HANUMAN_32-0.1.3.tar.gz",
+    "size_bytes": 32825,
+    "sha256": "978a271de88a30bfe205e10c907e3503e070073abf14bd2617f2b614111906ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hii-nice-2-meet-u/library/HANUMAN_32/0.1.3/HANUMAN_32-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hii-nice-2-meet-u/library/HANUMAN_32/0.1.3/HANUMAN_32-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hii-nice-2-meet-u/library/HANUMAN_32/0.1.4/HANUMAN_32-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HANUMAN_32-0.1.4.tar.gz",
+    "size_bytes": 34093,
+    "sha256": "fa1704723ae05e2ddeb823a726baaf0c137c1edbcd9700df8daf88631e6ab7cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hii-nice-2-meet-u/library/HANUMAN_32/0.1.4/HANUMAN_32-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/hii-nice-2-meet-u/library/HANUMAN_32/0.1.4/HANUMAN_32-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hii-nice-2-meet-u/library/HANUMAN_32/0.1.5/HANUMAN_32-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HANUMAN_32-0.1.5.tar.gz",
+    "size_bytes": 32849,
+    "sha256": "f2a736dcc26696a4f9371c5023be3f60bd9b3b73b2a8165d549f47a9845327af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hii-nice-2-meet-u/library/HANUMAN_32/0.1.5/HANUMAN_32-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/hii-nice-2-meet-u/library/HANUMAN_32/0.1.5/HANUMAN_32-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hii-nice-2-meet-u/library/HANUMAN_32_mini/0.1.1/HANUMAN_32_mini-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HANUMAN_32_mini-0.1.1.tar.gz",
+    "size_bytes": 8538,
+    "sha256": "89dd0e504b827dfac9ee7336eb9224eea166c2588c35ee0a4d0c5f721a5a04c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hii-nice-2-meet-u/library/HANUMAN_32_mini/0.1.1/HANUMAN_32_mini-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hii-nice-2-meet-u/library/HANUMAN_32_mini/0.1.1/HANUMAN_32_mini-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hii-nice-2-meet-u/library/HANUMAN_32_mini/0.1.3/HANUMAN_32_mini-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HANUMAN_32_mini-0.1.3.tar.gz",
+    "size_bytes": 9507,
+    "sha256": "bebfa1a44e564074ca38f620c24b2e4c5a1de3357dd1d2800890216ac3bccd28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hii-nice-2-meet-u/library/HANUMAN_32_mini/0.1.3/HANUMAN_32_mini-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hii-nice-2-meet-u/library/HANUMAN_32_mini/0.1.3/HANUMAN_32_mini-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hii-nice-2-meet-u/library/HANUMAN_32_mini/0.1.4/HANUMAN_32_mini-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HANUMAN_32_mini-0.1.4.tar.gz",
+    "size_bytes": 9490,
+    "sha256": "c9c3285acd303fcdea9e3188a5f5a45fd84a1fac4970e6fa558d7eb4f7b2d450",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hii-nice-2-meet-u/library/HANUMAN_32_mini/0.1.4/HANUMAN_32_mini-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/hii-nice-2-meet-u/library/HANUMAN_32_mini/0.1.4/HANUMAN_32_mini-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hii-nice-2-meet-u/library/HANUMAN_32_mini/0.1.5/HANUMAN_32_mini-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HANUMAN_32_mini-0.1.5.tar.gz",
+    "size_bytes": 9501,
+    "sha256": "a2b4ceea0d04d2fe6fd2bd3ebda1617644c2280c219d69c4368133c7a155bbf6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hii-nice-2-meet-u/library/HANUMAN_32_mini/0.1.5/HANUMAN_32_mini-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/hii-nice-2-meet-u/library/HANUMAN_32_mini/0.1.5/HANUMAN_32_mini-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hii-nice-2-meet-u/library/luminous/1.0.0/luminous-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "luminous-1.0.0.tar.gz",
+    "size_bytes": 14027,
+    "sha256": "30fc81046e03fdb4d243b302a7a4fb56d4ec8134e3cbe8761e92c17f5d2c60db",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hii-nice-2-meet-u/library/luminous/1.0.0/luminous-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hii-nice-2-meet-u/library/luminous/1.0.0/luminous-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hii-nice-2-meet-u/library/luminous/2.0.0/luminous-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "luminous-2.0.0.tar.gz",
+    "size_bytes": 17174,
+    "sha256": "6cb52313a9bcffce4d0b28d2784a92cb437b087eb2aa7be6f089c16459a6c331",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hii-nice-2-meet-u/library/luminous/2.0.0/luminous-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hii-nice-2-meet-u/library/luminous/2.0.0/luminous-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

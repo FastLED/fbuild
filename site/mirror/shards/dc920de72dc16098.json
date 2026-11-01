@@ -1,0 +1,256 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/chrmlinux",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "chrmlinux/library/ArrayExt/0.0.1/ArrayExt-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArrayExt-0.0.1.tar.gz",
+    "size_bytes": 2626,
+    "sha256": "82ce82a11398cd4847394fb1eac2290f220f0d10e74c87c8b714cd013909c1b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/ArrayExt/0.0.1/ArrayExt-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/ArrayExt/0.0.1/ArrayExt-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/ESPDisplay/0.0.1/ESPDisplay-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPDisplay-0.0.1.tar.gz",
+    "size_bytes": 14715,
+    "sha256": "ac21e537196520d8013f0c6b3b21639f0f2c018deb77e5afd4dd0847a7454036",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/ESPDisplay/0.0.1/ESPDisplay-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/ESPDisplay/0.0.1/ESPDisplay-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/ThreeD/0.0.8/ThreeD-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ThreeD-0.0.8.tar.gz",
+    "size_bytes": 5177,
+    "sha256": "db1a6f83d24da2757c6ee2597b4b4155f3314836416f8b3ac2887948a3983cc5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/ThreeD/0.0.8/ThreeD-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/ThreeD/0.0.8/ThreeD-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/TrapeZoid/0.0.2/TrapeZoid-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TrapeZoid-0.0.2.tar.gz",
+    "size_bytes": 1992,
+    "sha256": "1a0e85aa91a7ab62fb32d1f6408d68bc4b79dcf545dac008f80c15dd8dd2e127",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/TrapeZoid/0.0.2/TrapeZoid-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/TrapeZoid/0.0.2/TrapeZoid-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/WiFiWire/0.0.2/WiFiWire-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiWire-0.0.2.tar.gz",
+    "size_bytes": 2881,
+    "sha256": "53db7876d5f93fa341aa36a36f53e50c39b0c285a8095c1349c3afc002867e21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/WiFiWire/0.0.2/WiFiWire-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/WiFiWire/0.0.2/WiFiWire-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/easyLiDAR/0.0.1.3/easyLiDAR-0.0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "easyLiDAR-0.0.1.3.tar.gz",
+    "size_bytes": 3039,
+    "sha256": "0fa9233b656a8e4b2755273b042171176006a75f8e224c711ce631c1a4c236ea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/easyLiDAR/0.0.1.3/easyLiDAR-0.0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/easyLiDAR/0.0.1.3/easyLiDAR-0.0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/extendFor/0.0.1/extendFor-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "extendFor-0.0.1.tar.gz",
+    "size_bytes": 1849,
+    "sha256": "d28c4d73af81fd4dbe04f35aae9a816501b43d7115c8dddd10cd1584963853c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/extendFor/0.0.1/extendFor-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/extendFor/0.0.1/extendFor-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/linaGFX/0.1.2/linaGFX-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "linaGFX-0.1.2.tar.gz",
+    "size_bytes": 5365,
+    "sha256": "3d6fcd63fb45ade76b60c47d73d92d727b69bc201200378610f5324ca1920bc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/linaGFX/0.1.2/linaGFX-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/linaGFX/0.1.2/linaGFX-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/rssRead/0.1.0/rssRead-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rssRead-0.1.0.tar.gz",
+    "size_bytes": 3043,
+    "sha256": "cac0c1dfb4a1ad4b22d204f8e3d3c0ba9f0266f4a81b57a2ed86f048045c366f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/rssRead/0.1.0/rssRead-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/rssRead/0.1.0/rssRead-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/spreGnssRtcLib/0.1.1/spreGnssRtcLib-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "spreGnssRtcLib-0.1.1.tar.gz",
+    "size_bytes": 4730,
+    "sha256": "00f0f0605c21ff6e0d4231dd04830ec65e556a09d3f0d5d648c7048a99b31c4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/spreGnssRtcLib/0.1.1/spreGnssRtcLib-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/spreGnssRtcLib/0.1.1/spreGnssRtcLib-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/spreLgfxTouch/0.1.0/spreLgfxTouch-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "spreLgfxTouch-0.1.0.tar.gz",
+    "size_bytes": 3359,
+    "sha256": "1bfa3afcf7d4e1f62cd76e887167dc3f2f6e4ba0e92a3d0d0c073be7123c3b2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/spreLgfxTouch/0.1.0/spreLgfxTouch-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/spreLgfxTouch/0.1.0/spreLgfxTouch-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/spreMP3Lib/0.1.0/spreMP3Lib-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "spreMP3Lib-0.1.0.tar.gz",
+    "size_bytes": 3721,
+    "sha256": "d9f288374bb467a62e6ea542e9e7e21ceb908a6becb09a2d91e3ab55c82aa8b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/spreMP3Lib/0.1.0/spreMP3Lib-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/spreMP3Lib/0.1.0/spreMP3Lib-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/tinyCommand/0.1.0/tinyCommand-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyCommand-0.1.0.tar.gz",
+    "size_bytes": 2668,
+    "sha256": "0231dfcb4ed79d6b637d25a1be45ed248f121b23599626a8b30018306796ec6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/tinyCommand/0.1.0/tinyCommand-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/tinyCommand/0.1.0/tinyCommand-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/tinyCore/0.3.0/tinyCore-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyCore-0.3.0.tar.gz",
+    "size_bytes": 2723,
+    "sha256": "8360bd20a1cee2bd4ce2954994b48552b65799d0655be131dd1dc24b106f48f3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/tinyCore/0.3.0/tinyCore-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/tinyCore/0.3.0/tinyCore-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/tinyESPNow/0.0.1/tinyESPNow-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyESPNow-0.0.1.tar.gz",
+    "size_bytes": 3355,
+    "sha256": "8ff49b66bbc46c8a411a51ae75f8150a2a8e96cbc084b0e11b94490c1a596df9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/tinyESPNow/0.0.1/tinyESPNow-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/tinyESPNow/0.0.1/tinyESPNow-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/tinyI2S/0.0.3/tinyI2S-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyI2S-0.0.3.tar.gz",
+    "size_bytes": 3880,
+    "sha256": "dc509274e57cedf6508904a42c544ecb305842ede602a57d341cbca291c75b37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/tinyI2S/0.0.3/tinyI2S-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/tinyI2S/0.0.3/tinyI2S-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/tinyTimeR/0.0.1/tinyTimeR-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyTimeR-0.0.1.tar.gz",
+    "size_bytes": 1874,
+    "sha256": "49a8d9ad514d6b105312c9f4fe6ef138bc515bd9580077b342af5f1b0c9da4a0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/tinyTimeR/0.0.1/tinyTimeR-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/tinyTimeR/0.0.1/tinyTimeR-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/tinyUDP/0.0.2/tinyUDP-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tinyUDP-0.0.2.tar.gz",
+    "size_bytes": 3760,
+    "sha256": "ea3a5ae5801b2fa70803a238031f11438871bbb2cde8cc3bb7e322831851ad37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/tinyUDP/0.0.2/tinyUDP-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/tinyUDP/0.0.2/tinyUDP-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "chrmlinux/library/tynyDC/0.0.1/tynyDC-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "tynyDC-0.0.1.tar.gz",
+    "size_bytes": 1950,
+    "sha256": "9cf3cd64c2cb46276e893eff854ea04e0d42f6acdf38cb65cea749042ac7a186",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/chrmlinux/library/tynyDC/0.0.1/tynyDC-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/chrmlinux/library/tynyDC/0.0.1/tynyDC-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

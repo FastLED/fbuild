@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mikeedudee",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mikeedudee/library/MS5611-Mike-Refactored/1.0.8_exp_build_01082025/MS5611-Mike-Refactored-1.0.8_exp_build_01082025.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MS5611-Mike-Refactored-1.0.8_exp_build_01082025.tar.gz",
+    "size_bytes": 22798,
+    "sha256": "062711b32daddf762fcc08737b9c296c7936fac3d5b715d59041b4d08ec6f8e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mikeedudee/library/MS5611-Mike-Refactored/1.0.8_exp_build_01082025/MS5611-Mike-Refactored-1.0.8_exp_build_01082025.tar.gz",
+     "https://dl.registry.platformio.org/download/mikeedudee/library/MS5611-Mike-Refactored/1.0.8_exp_build_01082025/MS5611-Mike-Refactored-1.0.8_exp_build_01082025.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dumont",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dumont/library/FileIni/0.0.0+sha.79f68acc26ec/FileIni-0.0.0+sha.79f68acc26ec.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FileIni-0.0.0+sha.79f68acc26ec.tar.gz",
+    "size_bytes": 3458,
+    "sha256": "f1281cc61af419ec2e9eef0d2d9fb192dc6b855ab51d180e09e727425ecd08be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dumont/library/FileIni/0.0.0%2Bsha.79f68acc26ec/FileIni-0.0.0%2Bsha.79f68acc26ec.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dumont/library/FileIni/0.0.0%2Bsha.79f68acc26ec/FileIni-0.0.0%2Bsha.79f68acc26ec.tar.gz"
+    ]
+   }
+  }
+ ]
+}

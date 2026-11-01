@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/microbahner",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "microbahner/library/MobaTools/2.7.0/MobaTools-2.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MobaTools-2.7.0.tar.gz",
+    "size_bytes": 134678,
+    "sha256": "39168a922de603c0fdd57746b536ad26a5bed4039d42baa06ba7e1d4af813090",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbahner/library/MobaTools/2.7.0/MobaTools-2.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microbahner/library/MobaTools/2.7.0/MobaTools-2.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbahner/library/MobaTools/3.0.0/MobaTools-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MobaTools-3.0.0.tar.gz",
+    "size_bytes": 154452,
+    "sha256": "88bdb372579eaa32c251d1aa134d0f4ab5d6d0d006fa1e82144a53bacd2d725a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbahner/library/MobaTools/3.0.0/MobaTools-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microbahner/library/MobaTools/3.0.0/MobaTools-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbahner/library/MobaTools/3.1.0/MobaTools-3.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MobaTools-3.1.0.tar.gz",
+    "size_bytes": 156636,
+    "sha256": "46bdfe332f77a64faa9b46a539249bbeeb863c543fd262eb712ec986290ce35d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbahner/library/MobaTools/3.1.0/MobaTools-3.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/microbahner/library/MobaTools/3.1.0/MobaTools-3.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbahner/library/MobaTools/3.1.1/MobaTools-3.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MobaTools-3.1.1.tar.gz",
+    "size_bytes": 156733,
+    "sha256": "18a7dbbbb69ce64beb35d87b5a4cc8758ac450008bf28503e76e44702006b51d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbahner/library/MobaTools/3.1.1/MobaTools-3.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/microbahner/library/MobaTools/3.1.1/MobaTools-3.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "microbahner/library/MobaTools/3.1.2/MobaTools-3.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MobaTools-3.1.2.tar.gz",
+    "size_bytes": 156765,
+    "sha256": "6ea293ade00df87a0d7c7a7b593878da35e0090117926db4dfd317462e367513",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/microbahner/library/MobaTools/3.1.2/MobaTools-3.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/microbahner/library/MobaTools/3.1.2/MobaTools-3.1.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/botclibs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "botclibs/library/BrgOfTheCyber_RTC/1.1.2/BrgOfTheCyber_RTC-1.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BrgOfTheCyber_RTC-1.1.2.tar.gz",
+    "size_bytes": 10380,
+    "sha256": "ab766aebf5c5a1d4246f2e75433b5a21a4ef891e033533d8c0e9ef73d0843ee2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/botclibs/library/BrgOfTheCyber_RTC/1.1.2/BrgOfTheCyber_RTC-1.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/botclibs/library/BrgOfTheCyber_RTC/1.1.2/BrgOfTheCyber_RTC-1.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "botclibs/library/BrgOfTheCyber_SCD4x/1.0.0/BrgOfTheCyber_SCD4x-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BrgOfTheCyber_SCD4x-1.0.0.tar.gz",
+    "size_bytes": 7484,
+    "sha256": "e604b87f4f10b78e60446236b41796eca19caa88b0f5b0cd6e640b0145490c25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/botclibs/library/BrgOfTheCyber_SCD4x/1.0.0/BrgOfTheCyber_SCD4x-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/botclibs/library/BrgOfTheCyber_SCD4x/1.0.0/BrgOfTheCyber_SCD4x-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

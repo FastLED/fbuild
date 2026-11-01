@@ -1,0 +1,2089 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/martinbudden",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "martinbudden/library/Backchannel/0.1.0/Backchannel-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Backchannel-0.1.0.tar.gz",
+    "size_bytes": 10874,
+    "sha256": "1edf89dd2f749d0d572528819eb3dc00ff34ab84d6ee6d91e9767d52ed60ddbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Backchannel/0.1.0/Backchannel-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Backchannel/0.1.0/Backchannel-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Backchannel/0.1.1/Backchannel-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Backchannel-0.1.1.tar.gz",
+    "size_bytes": 10872,
+    "sha256": "62cdbbffedc5be254a07f283de011914480866dfb30883d1f450c2091a663fd1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Backchannel/0.1.1/Backchannel-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Backchannel/0.1.1/Backchannel-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Backchannel/0.1.10/Backchannel-0.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Backchannel-0.1.10.tar.gz",
+    "size_bytes": 11009,
+    "sha256": "108f41a9140c8fe1b95edadc8d40a835fec399c9c14b037ae0c0b8ab8926f969",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Backchannel/0.1.10/Backchannel-0.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Backchannel/0.1.10/Backchannel-0.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Backchannel/0.1.11/Backchannel-0.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Backchannel-0.1.11.tar.gz",
+    "size_bytes": 11398,
+    "sha256": "f2f9a00084e43311d79224f7ef33c435f2e964b02029aa43c29e03a182a0a8bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Backchannel/0.1.11/Backchannel-0.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Backchannel/0.1.11/Backchannel-0.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Backchannel/0.1.12/Backchannel-0.1.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Backchannel-0.1.12.tar.gz",
+    "size_bytes": 11399,
+    "sha256": "155a5a7888ef39ffdeec9cdca0c2a89c5cb5178e8ccb73cadb06f537367007b9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Backchannel/0.1.12/Backchannel-0.1.12.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Backchannel/0.1.12/Backchannel-0.1.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Backchannel/0.1.13/Backchannel-0.1.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Backchannel-0.1.13.tar.gz",
+    "size_bytes": 11555,
+    "sha256": "c6ab27bc324228130d1c3e9da764169f1637b5c801763b0100a7c9427d4ccb40",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Backchannel/0.1.13/Backchannel-0.1.13.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Backchannel/0.1.13/Backchannel-0.1.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Backchannel/0.1.14/Backchannel-0.1.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Backchannel-0.1.14.tar.gz",
+    "size_bytes": 15809,
+    "sha256": "7d81851817fcf5a787dd23067be811d569f258bd8a262810fcb7e4d8e39afbf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Backchannel/0.1.14/Backchannel-0.1.14.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Backchannel/0.1.14/Backchannel-0.1.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Backchannel/0.1.2/Backchannel-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Backchannel-0.1.2.tar.gz",
+    "size_bytes": 10771,
+    "sha256": "080ad2a045403a166b83685cd117f7dc4152d2eb0e30bd12628636223eabd960",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Backchannel/0.1.2/Backchannel-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Backchannel/0.1.2/Backchannel-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Backchannel/0.1.3/Backchannel-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Backchannel-0.1.3.tar.gz",
+    "size_bytes": 10871,
+    "sha256": "1061bbd0f41a73479b1a0b566f8fe28603391b1717104286b9fb9828e0c1b229",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Backchannel/0.1.3/Backchannel-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Backchannel/0.1.3/Backchannel-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Backchannel/0.1.4/Backchannel-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Backchannel-0.1.4.tar.gz",
+    "size_bytes": 10935,
+    "sha256": "3b7f8e54b61c1d6acbaeaa901044f93e4d284045d13ca939ef786d349cd7eeb9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Backchannel/0.1.4/Backchannel-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Backchannel/0.1.4/Backchannel-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Backchannel/0.1.5/Backchannel-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Backchannel-0.1.5.tar.gz",
+    "size_bytes": 10862,
+    "sha256": "e6d62fd654ed641afb9433a95a1561ed5ec556411c82e1f06f71ebbe465f84ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Backchannel/0.1.5/Backchannel-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Backchannel/0.1.5/Backchannel-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Backchannel/0.1.6/Backchannel-0.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Backchannel-0.1.6.tar.gz",
+    "size_bytes": 10872,
+    "sha256": "6e89bcde69a1936caa737cc8d061ef93f807fa0cf8446d94968f5e00849370cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Backchannel/0.1.6/Backchannel-0.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Backchannel/0.1.6/Backchannel-0.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Backchannel/0.1.7/Backchannel-0.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Backchannel-0.1.7.tar.gz",
+    "size_bytes": 10899,
+    "sha256": "bce406ae33584e2c0ebb6c4449f31d0ecaff43a053eaa3a05b033e26b84ec277",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Backchannel/0.1.7/Backchannel-0.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Backchannel/0.1.7/Backchannel-0.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Backchannel/0.1.8/Backchannel-0.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Backchannel-0.1.8.tar.gz",
+    "size_bytes": 10929,
+    "sha256": "d5a225ca86ee899e472bad1c875cb83ed0650431960bfe5b91b368ca09043b7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Backchannel/0.1.8/Backchannel-0.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Backchannel/0.1.8/Backchannel-0.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Backchannel/0.1.9/Backchannel-0.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Backchannel-0.1.9.tar.gz",
+    "size_bytes": 11018,
+    "sha256": "c64b30a51d20e53aff209f5492770cf6cc6e090a6a18deff8fd883429a2091f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Backchannel/0.1.9/Backchannel-0.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Backchannel/0.1.9/Backchannel-0.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.10/Blackbox-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.10.tar.gz",
+    "size_bytes": 37709,
+    "sha256": "020fe985ec5c13ae2d18fb9e5276a7bb80023f1c04db13c19755a925f607e72e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.10/Blackbox-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.10/Blackbox-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.11/Blackbox-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.11.tar.gz",
+    "size_bytes": 37925,
+    "sha256": "690ee31030b2d63aea0db080da924e83319b1b182b6c32ca0b0edcb4b85ffb1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.11/Blackbox-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.11/Blackbox-0.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.12/Blackbox-0.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.12.tar.gz",
+    "size_bytes": 37933,
+    "sha256": "250cfc7bf007fe14ac8ff90ef4ed3b256daa0c54dd83975f1c061ab9c17dd7fb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.12/Blackbox-0.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.12/Blackbox-0.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.13/Blackbox-0.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.13.tar.gz",
+    "size_bytes": 37932,
+    "sha256": "774715b83509d6666b67208f05ef22a677d21d6a75579669b85bdeda0bdf3c99",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.13/Blackbox-0.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.13/Blackbox-0.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.14/Blackbox-0.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.14.tar.gz",
+    "size_bytes": 38100,
+    "sha256": "e45ae8c2a423e2be652b417d08a30e6f2f75188d832c76e41388cf1a95611296",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.14/Blackbox-0.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.14/Blackbox-0.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.15/Blackbox-0.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.15.tar.gz",
+    "size_bytes": 38214,
+    "sha256": "e39bf7baed102ec1bd1dfc62117bc3779b02abc99ada1da6dd02f7c8f41e03c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.15/Blackbox-0.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.15/Blackbox-0.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.16/Blackbox-0.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.16.tar.gz",
+    "size_bytes": 38302,
+    "sha256": "b714f816548bc5dbe17433a9fda7660b3ee97f52b57a1dd344758dca4d3a6bd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.16/Blackbox-0.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.16/Blackbox-0.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.17/Blackbox-0.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.17.tar.gz",
+    "size_bytes": 37676,
+    "sha256": "3094899fa821516838dbcb1fe858fa823701f7cd5d188c2a619d5cf9b06ab3d3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.17/Blackbox-0.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.17/Blackbox-0.0.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.18/Blackbox-0.0.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.18.tar.gz",
+    "size_bytes": 37777,
+    "sha256": "b76955519e4a2a51befd3a85626676e87da68b8ef8f9ae3a123b07694e979840",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.18/Blackbox-0.0.18.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.18/Blackbox-0.0.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.19/Blackbox-0.0.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.19.tar.gz",
+    "size_bytes": 38323,
+    "sha256": "6f85cd23483769e4376c2d6cd56286093ec9249661907460765eaf85ab6fd63f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.19/Blackbox-0.0.19.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.19/Blackbox-0.0.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.20/Blackbox-0.0.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.20.tar.gz",
+    "size_bytes": 38169,
+    "sha256": "3bbf606a10a26e6a24adbf3e0e5615decaed04a81f1f65d69cb62d0a0ee1cccc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.20/Blackbox-0.0.20.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.20/Blackbox-0.0.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.21/Blackbox-0.0.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.21.tar.gz",
+    "size_bytes": 38159,
+    "sha256": "69e7cb319c215481898ff0cc144e4411bc6cbf8cff2525180b5966f0f008296d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.21/Blackbox-0.0.21.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.21/Blackbox-0.0.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.22/Blackbox-0.0.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.22.tar.gz",
+    "size_bytes": 38160,
+    "sha256": "2712ee5de76d18698f97920adfd92302d7963984834c2343f9e142af843bbbe4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.22/Blackbox-0.0.22.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.22/Blackbox-0.0.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.23/Blackbox-0.0.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.23.tar.gz",
+    "size_bytes": 38186,
+    "sha256": "75ddba87d2d7d11e29ad516f24cf50c9cfb7dbfdfcece7a4e5211c4edb716f2c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.23/Blackbox-0.0.23.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.23/Blackbox-0.0.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.24/Blackbox-0.0.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.24.tar.gz",
+    "size_bytes": 38302,
+    "sha256": "188aca39ed2df1209e119428f5cb453c49383e02a98e44bd8750b4009f7ee712",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.24/Blackbox-0.0.24.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.24/Blackbox-0.0.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.25/Blackbox-0.0.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.25.tar.gz",
+    "size_bytes": 38704,
+    "sha256": "8242b28c250259db3b638f83b2075552a10e3a6ad35a6ea71b9d47dc488c73bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.25/Blackbox-0.0.25.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.25/Blackbox-0.0.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.8/Blackbox-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.8.tar.gz",
+    "size_bytes": 37793,
+    "sha256": "129e6a066dc714887b3339c3c35c3a8ab0a6ef2f5b48da9af5388dbd9ee1ebce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.8/Blackbox-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.8/Blackbox-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Blackbox/0.0.9/Blackbox-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Blackbox-0.0.9.tar.gz",
+    "size_bytes": 37815,
+    "sha256": "70aeaf0c37a6964dc13b2970cd111c08cd617b1fc478ad1ede48f6228a6cfca9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Blackbox/0.0.9/Blackbox-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Blackbox/0.0.9/Blackbox-0.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Filter/0.0.1/Filter-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Filter-0.0.1.tar.gz",
+    "size_bytes": 10188,
+    "sha256": "abb09a27401b43a3ecc2fbbf2dd017159d475bf8de4b85220fa8d935a2db6235",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Filter/0.0.1/Filter-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Filter/0.0.1/Filter-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Filters/0.9.2/Filters-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Filters-0.9.2.tar.gz",
+    "size_bytes": 10485,
+    "sha256": "d6ad29556e7277bfd4624404b6e9cb812f543b619e139f7d454e346c332802a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Filters/0.9.2/Filters-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Filters/0.9.2/Filters-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Filters/0.9.3/Filters-0.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Filters-0.9.3.tar.gz",
+    "size_bytes": 10562,
+    "sha256": "627b889f91048a7fb92e5e086f231150d4b4211710285dd000eef462594bac6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Filters/0.9.3/Filters-0.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Filters/0.9.3/Filters-0.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Filters/0.9.4/Filters-0.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Filters-0.9.4.tar.gz",
+    "size_bytes": 10565,
+    "sha256": "6cbb1bab8782ed45d14319b21faa8acd05a074cdfb79df6654589b4a0fb42332",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Filters/0.9.4/Filters-0.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Filters/0.9.4/Filters-0.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/FlashKLV/0.0.1/FlashKLV-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashKLV-0.0.1.tar.gz",
+    "size_bytes": 15069,
+    "sha256": "b23cb0c6a559cc304cb0698a8596beecb49688c670da7e64f673ac279d3f8cb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/FlashKLV/0.0.1/FlashKLV-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/FlashKLV/0.0.1/FlashKLV-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/FlashKLV/0.0.2/FlashKLV-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashKLV-0.0.2.tar.gz",
+    "size_bytes": 15276,
+    "sha256": "cfde5c55749e4c0e3661159bbdfd4d6f478ddaccf5c819cd277a83f729020bf1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/FlashKLV/0.0.2/FlashKLV-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/FlashKLV/0.0.2/FlashKLV-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/FlashKLV/0.0.3/FlashKLV-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashKLV-0.0.3.tar.gz",
+    "size_bytes": 15650,
+    "sha256": "153d0cb3b38e76ba7440b09bc7c16c415dcb48a0f8a79cecdb49cb94ca81806a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/FlashKLV/0.0.3/FlashKLV-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/FlashKLV/0.0.3/FlashKLV-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/IMU/0.9.0/IMU-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU-0.9.0.tar.gz",
+    "size_bytes": 62685,
+    "sha256": "22561509dc85c8ce58a9d46c8cccefa972927eb582922b3b82ce1e2592b0f0f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/IMU/0.9.0/IMU-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/IMU/0.9.0/IMU-0.9.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/IMU/0.9.1/IMU-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU-0.9.1.tar.gz",
+    "size_bytes": 66850,
+    "sha256": "20882585e1ed3f2cac1934bcce29aced265e447a40cb9b3d7aaf9de99ec95a02",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/IMU/0.9.1/IMU-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/IMU/0.9.1/IMU-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/IMU/0.9.2/IMU-0.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU-0.9.2.tar.gz",
+    "size_bytes": 65611,
+    "sha256": "5ef095199bb01f4155b75ffa7aec683f12be68f50e47021ae7f4c46af7a7dafd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/IMU/0.9.2/IMU-0.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/IMU/0.9.2/IMU-0.9.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/IMU/0.9.3/IMU-0.9.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU-0.9.3.tar.gz",
+    "size_bytes": 65889,
+    "sha256": "3f339246e99fe18ddfae7cdb4e66214ac2b85654c0e51717066cbc130a0d41d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/IMU/0.9.3/IMU-0.9.3.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/IMU/0.9.3/IMU-0.9.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/IMU/0.9.4/IMU-0.9.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU-0.9.4.tar.gz",
+    "size_bytes": 65895,
+    "sha256": "c2b9aeaccf733331a5bcb9a2a17fbbfea6c05d46615bbec8d4a9719b5f5df599",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/IMU/0.9.4/IMU-0.9.4.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/IMU/0.9.4/IMU-0.9.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/IMU/0.9.5/IMU-0.9.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU-0.9.5.tar.gz",
+    "size_bytes": 66817,
+    "sha256": "5913fa207d8bf782986832aad06db4730e6fd95ce5e7712a75ebd325c60e4e15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/IMU/0.9.5/IMU-0.9.5.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/IMU/0.9.5/IMU-0.9.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/IMU/0.9.6/IMU-0.9.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU-0.9.6.tar.gz",
+    "size_bytes": 69554,
+    "sha256": "25f1648143b336a957041e53427849fba8340df91192c1c38c4934c71db0f820",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/IMU/0.9.6/IMU-0.9.6.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/IMU/0.9.6/IMU-0.9.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/IMU/0.9.7/IMU-0.9.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU-0.9.7.tar.gz",
+    "size_bytes": 69126,
+    "sha256": "e86c4c726f86459490706c6fe3e423aeb0a375809ff8778c917c1ee0093b1234",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/IMU/0.9.7/IMU-0.9.7.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/IMU/0.9.7/IMU-0.9.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/IMU/0.9.8/IMU-0.9.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU-0.9.8.tar.gz",
+    "size_bytes": 74963,
+    "sha256": "e653590224f9c54fba50772ee0b09f6dcb3080d809e7df81bba3ae23de97c56a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/IMU/0.9.8/IMU-0.9.8.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/IMU/0.9.8/IMU-0.9.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/IMU_TYPES/0.2.2/IMU_TYPES-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IMU_TYPES-0.2.2.tar.gz",
+    "size_bytes": 9852,
+    "sha256": "daad8355015cd153c71b5c5531f35614015c365c91ebb623543990150803a6bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/IMU_TYPES/0.2.2/IMU_TYPES-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/IMU_TYPES/0.2.2/IMU_TYPES-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MotorMixers/0.0.1/MotorMixers-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorMixers-0.0.1.tar.gz",
+    "size_bytes": 33760,
+    "sha256": "a04c5d3c1af932b108496873d9d9ca8635d6ecd0fdad7e9b6db2ba05797213a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MotorMixers/0.0.1/MotorMixers-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MotorMixers/0.0.1/MotorMixers-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MotorMixers/0.0.2/MotorMixers-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorMixers-0.0.2.tar.gz",
+    "size_bytes": 33789,
+    "sha256": "bac2c6b3cf82215b434480892e1e7f11d0971c56b0b8cf91f26865331899b6fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MotorMixers/0.0.2/MotorMixers-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MotorMixers/0.0.2/MotorMixers-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MotorMixers/0.0.3/MotorMixers-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorMixers-0.0.3.tar.gz",
+    "size_bytes": 33841,
+    "sha256": "f2b55dc959dc269fac701a6f0c0ebd3aaeb1195a65f956b525793be566ddea2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MotorMixers/0.0.3/MotorMixers-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MotorMixers/0.0.3/MotorMixers-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MotorMixers/0.0.4/MotorMixers-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorMixers-0.0.4.tar.gz",
+    "size_bytes": 36132,
+    "sha256": "f359593922f4fe3eb5ece3e6ecc59fce3536a77ac2a5925e8f8c36717e96d1ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MotorMixers/0.0.4/MotorMixers-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MotorMixers/0.0.4/MotorMixers-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MotorMixers/0.0.5/MotorMixers-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorMixers-0.0.5.tar.gz",
+    "size_bytes": 43673,
+    "sha256": "97490bb80a96ce36b7308e789549310f0ff273faa590bc59219c7811ca5c6160",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MotorMixers/0.0.5/MotorMixers-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MotorMixers/0.0.5/MotorMixers-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MotorMixers/0.0.6/MotorMixers-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorMixers-0.0.6.tar.gz",
+    "size_bytes": 47008,
+    "sha256": "fa16b96140916b472be6dbd7d6b4e40db180f2d6a3d29c3e2e258cb7bd1c27a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MotorMixers/0.0.6/MotorMixers-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MotorMixers/0.0.6/MotorMixers-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MotorMixers/0.0.7/MotorMixers-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorMixers-0.0.7.tar.gz",
+    "size_bytes": 40166,
+    "sha256": "39d04f05e0ba65944b14587c713ff3788706146f09e4ff82ca3007e9f26bee14",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MotorMixers/0.0.7/MotorMixers-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MotorMixers/0.0.7/MotorMixers-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MultiWiiSerialProtocol/0.0.10/MultiWiiSerialProtocol-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiWiiSerialProtocol-0.0.10.tar.gz",
+    "size_bytes": 28671,
+    "sha256": "d3ff656d4ee5cdb173577ea048f10fcf7a36b11fada49e0706ebba5c7a114c59",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MultiWiiSerialProtocol/0.0.10/MultiWiiSerialProtocol-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MultiWiiSerialProtocol/0.0.10/MultiWiiSerialProtocol-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MultiWiiSerialProtocol/0.0.11/MultiWiiSerialProtocol-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiWiiSerialProtocol-0.0.11.tar.gz",
+    "size_bytes": 28672,
+    "sha256": "64e00ff44029b0c9e35396886b734a256c45ccbbdf6827ae61bb4cfffc6824fa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MultiWiiSerialProtocol/0.0.11/MultiWiiSerialProtocol-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MultiWiiSerialProtocol/0.0.11/MultiWiiSerialProtocol-0.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MultiWiiSerialProtocol/0.0.12/MultiWiiSerialProtocol-0.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiWiiSerialProtocol-0.0.12.tar.gz",
+    "size_bytes": 28678,
+    "sha256": "165c6e7d428e735bc23e5684305b62bd99bb212a290a6bcf41956f3e8af0c73e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MultiWiiSerialProtocol/0.0.12/MultiWiiSerialProtocol-0.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MultiWiiSerialProtocol/0.0.12/MultiWiiSerialProtocol-0.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MultiWiiSerialProtocol/0.0.13/MultiWiiSerialProtocol-0.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiWiiSerialProtocol-0.0.13.tar.gz",
+    "size_bytes": 28672,
+    "sha256": "b855f8ef9e31e55c4d1d7364e0c32d441292b1f3a94cb58409896372ffb18541",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MultiWiiSerialProtocol/0.0.13/MultiWiiSerialProtocol-0.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MultiWiiSerialProtocol/0.0.13/MultiWiiSerialProtocol-0.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MultiWiiSerialProtocol/0.0.14/MultiWiiSerialProtocol-0.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiWiiSerialProtocol-0.0.14.tar.gz",
+    "size_bytes": 28687,
+    "sha256": "025f216fb70b914516d1844c035fc38068ef4b8c7378741353e65da03bf7c83a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MultiWiiSerialProtocol/0.0.14/MultiWiiSerialProtocol-0.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MultiWiiSerialProtocol/0.0.14/MultiWiiSerialProtocol-0.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MultiWiiSerialProtocol/0.0.15/MultiWiiSerialProtocol-0.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiWiiSerialProtocol-0.0.15.tar.gz",
+    "size_bytes": 29927,
+    "sha256": "9bf5d21d095c99cb9e4cf8e0b758760c4ea2a783dd56df0977eac77dbfb10d5e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MultiWiiSerialProtocol/0.0.15/MultiWiiSerialProtocol-0.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MultiWiiSerialProtocol/0.0.15/MultiWiiSerialProtocol-0.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MultiWiiSerialProtocol/0.0.16/MultiWiiSerialProtocol-0.0.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiWiiSerialProtocol-0.0.16.tar.gz",
+    "size_bytes": 30166,
+    "sha256": "29aa7b11ce4fbcf3c5c8f2634fbcfbfd64bcfb4d75deed0a6ec748dab6d1ae15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MultiWiiSerialProtocol/0.0.16/MultiWiiSerialProtocol-0.0.16.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MultiWiiSerialProtocol/0.0.16/MultiWiiSerialProtocol-0.0.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MultiWiiSerialProtocol/0.0.17/MultiWiiSerialProtocol-0.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiWiiSerialProtocol-0.0.17.tar.gz",
+    "size_bytes": 25202,
+    "sha256": "45b70791d35556ae3d8236a0319d41180ad64dd14c2054481420daa227ad3b43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MultiWiiSerialProtocol/0.0.17/MultiWiiSerialProtocol-0.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MultiWiiSerialProtocol/0.0.17/MultiWiiSerialProtocol-0.0.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MultiWiiSerialProtocol/0.0.5/MultiWiiSerialProtocol-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiWiiSerialProtocol-0.0.5.tar.gz",
+    "size_bytes": 21350,
+    "sha256": "a9a369b1edb0ef4d215526fac8b7ac7b7f769ff024db783f943b30ca59b7137c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MultiWiiSerialProtocol/0.0.5/MultiWiiSerialProtocol-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MultiWiiSerialProtocol/0.0.5/MultiWiiSerialProtocol-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MultiWiiSerialProtocol/0.0.6/MultiWiiSerialProtocol-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiWiiSerialProtocol-0.0.6.tar.gz",
+    "size_bytes": 21486,
+    "sha256": "2786436dacdc611045617f5e2bd8fe3b260bd3fc23fc5acff6917009d8684548",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MultiWiiSerialProtocol/0.0.6/MultiWiiSerialProtocol-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MultiWiiSerialProtocol/0.0.6/MultiWiiSerialProtocol-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MultiWiiSerialProtocol/0.0.7/MultiWiiSerialProtocol-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiWiiSerialProtocol-0.0.7.tar.gz",
+    "size_bytes": 21526,
+    "sha256": "8037a3c21e5b0db6d72d9a3298d43c4ee4a3bedfc42ced8c5c1f9de0b7018704",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MultiWiiSerialProtocol/0.0.7/MultiWiiSerialProtocol-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MultiWiiSerialProtocol/0.0.7/MultiWiiSerialProtocol-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MultiWiiSerialProtocol/0.0.8/MultiWiiSerialProtocol-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiWiiSerialProtocol-0.0.8.tar.gz",
+    "size_bytes": 28219,
+    "sha256": "b716057e29cb300c344a21186af56abbcb572d0969d278446ad75545fb75243c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MultiWiiSerialProtocol/0.0.8/MultiWiiSerialProtocol-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MultiWiiSerialProtocol/0.0.8/MultiWiiSerialProtocol-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/MultiWiiSerialProtocol/0.0.9/MultiWiiSerialProtocol-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiWiiSerialProtocol-0.0.9.tar.gz",
+    "size_bytes": 28657,
+    "sha256": "ecc9d63b59b32cc0bfe685470bc9c6bc9da78bf9336fd423ed5b061b0cff2383",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/MultiWiiSerialProtocol/0.0.9/MultiWiiSerialProtocol-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/MultiWiiSerialProtocol/0.0.9/MultiWiiSerialProtocol-0.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/PID/0.0.1/PID-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PID-0.0.1.tar.gz",
+    "size_bytes": 7427,
+    "sha256": "120a3c3bab9d025e21031c298f62a55e2a40e0a10bdc7f782421fa0eacd1418e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/PID/0.0.1/PID-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/PID/0.0.1/PID-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/PIDF/0.3.3/PIDF-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIDF-0.3.3.tar.gz",
+    "size_bytes": 6514,
+    "sha256": "e3a3b7fdd4f67fa49073eee7d3f2a32155f827a49f7fa20455d91d125617e982",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/PIDF/0.3.3/PIDF-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/PIDF/0.3.3/PIDF-0.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/PIDF/0.3.4/PIDF-0.3.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIDF-0.3.4.tar.gz",
+    "size_bytes": 6682,
+    "sha256": "63345e43db4993c73cea849629cd8f311e9a779121cad2ff47551880ac2b86b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/PIDF/0.3.4/PIDF-0.3.4.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/PIDF/0.3.4/PIDF-0.3.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/PIDF/0.3.5/PIDF-0.3.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIDF-0.3.5.tar.gz",
+    "size_bytes": 6910,
+    "sha256": "50ff546e54b0e921bc75bbbab7af4e07a12a31f26b05d9aaa3d1a510e718b35a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/PIDF/0.3.5/PIDF-0.3.5.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/PIDF/0.3.5/PIDF-0.3.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/PIDF/0.3.6/PIDF-0.3.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIDF-0.3.6.tar.gz",
+    "size_bytes": 7051,
+    "sha256": "58de128f2f07c8398987dc8bed24701afafc1f7d7af53d9957ed30494f2a9d4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/PIDF/0.3.6/PIDF-0.3.6.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/PIDF/0.3.6/PIDF-0.3.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/PIDF/0.4.0/PIDF-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIDF-0.4.0.tar.gz",
+    "size_bytes": 7165,
+    "sha256": "8923950dcdb76ea96e49c10c59fce7deeca05ef8af92f5711e4ae888337644c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/PIDF/0.4.0/PIDF-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/PIDF/0.4.0/PIDF-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/PIDF/0.4.1/PIDF-0.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIDF-0.4.1.tar.gz",
+    "size_bytes": 7188,
+    "sha256": "bcfd2401311cab60156040157c3e023d4892e64b5464fff0729016380322be74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/PIDF/0.4.1/PIDF-0.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/PIDF/0.4.1/PIDF-0.4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/PIDF/0.4.2/PIDF-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PIDF-0.4.2.tar.gz",
+    "size_bytes": 7172,
+    "sha256": "3ba12712c50c9ebb5e03186e3522706d47b08d2a621f3e1a004958b87449ceb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/PIDF/0.4.2/PIDF-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/PIDF/0.4.2/PIDF-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receiver/0.5.0/Receiver-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receiver-0.5.0.tar.gz",
+    "size_bytes": 19244,
+    "sha256": "1338bd81d88ea6469d5e0505aa7622d626a36aa0bf40a5e1c565b00f8c93b69d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receiver/0.5.0/Receiver-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receiver/0.5.0/Receiver-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receiver/0.5.1/Receiver-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receiver-0.5.1.tar.gz",
+    "size_bytes": 19441,
+    "sha256": "77eef7e359f5b1685f6b1bae5e47a1539e9d96c8e20a7b0a4f1921661935b803",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receiver/0.5.1/Receiver-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receiver/0.5.1/Receiver-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receiver/0.5.10/Receiver-0.5.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receiver-0.5.10.tar.gz",
+    "size_bytes": 25248,
+    "sha256": "e969f6fbb6217611d116203028716cb6917696c795523575800d3b410a59245e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receiver/0.5.10/Receiver-0.5.10.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receiver/0.5.10/Receiver-0.5.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receiver/0.5.11/Receiver-0.5.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receiver-0.5.11.tar.gz",
+    "size_bytes": 25265,
+    "sha256": "6fea41009aefa786d6c1642102d1e195905fd251d8bbec5e40a95a040ceb39e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receiver/0.5.11/Receiver-0.5.11.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receiver/0.5.11/Receiver-0.5.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receiver/0.5.12/Receiver-0.5.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receiver-0.5.12.tar.gz",
+    "size_bytes": 25273,
+    "sha256": "6c03f88bb3bbe80584afe51957f3581d0717ad1de9bc7ad0e3f4f2c1ac082682",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receiver/0.5.12/Receiver-0.5.12.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receiver/0.5.12/Receiver-0.5.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receiver/0.5.13/Receiver-0.5.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receiver-0.5.13.tar.gz",
+    "size_bytes": 26487,
+    "sha256": "8302b8f2fa79aa61f2b95607a17e55bdbf468e344d9ab0408b52d3d30a031d97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receiver/0.5.13/Receiver-0.5.13.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receiver/0.5.13/Receiver-0.5.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receiver/0.5.14/Receiver-0.5.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receiver-0.5.14.tar.gz",
+    "size_bytes": 27341,
+    "sha256": "7a6f88a5be23942172190ec0af10dec4b50d2c0f192cfcb67ce992d491552a9b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receiver/0.5.14/Receiver-0.5.14.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receiver/0.5.14/Receiver-0.5.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receiver/0.5.2/Receiver-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receiver-0.5.2.tar.gz",
+    "size_bytes": 20457,
+    "sha256": "4225e1177bc5e96c67c4724aac527d22b991e418920bac807d42584825401b1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receiver/0.5.2/Receiver-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receiver/0.5.2/Receiver-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receiver/0.5.3/Receiver-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receiver-0.5.3.tar.gz",
+    "size_bytes": 20233,
+    "sha256": "7caee31d36695da27ef700b54cc03cbe70c7b22fa061d55a57e2b1e3d1545fc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receiver/0.5.3/Receiver-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receiver/0.5.3/Receiver-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receiver/0.5.4/Receiver-0.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receiver-0.5.4.tar.gz",
+    "size_bytes": 20512,
+    "sha256": "802400d89d46a6d2b10ad6d16caa1bf7053930c8f4c0340d9ab7d2d7e17aeb68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receiver/0.5.4/Receiver-0.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receiver/0.5.4/Receiver-0.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receiver/0.5.5/Receiver-0.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receiver-0.5.5.tar.gz",
+    "size_bytes": 20510,
+    "sha256": "0fbba5b83dc8e3c743bbc6c737b60f5d60969a30ca263d33f709a43c43cc31a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receiver/0.5.5/Receiver-0.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receiver/0.5.5/Receiver-0.5.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receiver/0.5.6/Receiver-0.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receiver-0.5.6.tar.gz",
+    "size_bytes": 20489,
+    "sha256": "8a4ce7ab271b3b36f733ab9c96806aa6b8847020040778278e6001de171abd30",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receiver/0.5.6/Receiver-0.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receiver/0.5.6/Receiver-0.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receiver/0.5.7/Receiver-0.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receiver-0.5.7.tar.gz",
+    "size_bytes": 23803,
+    "sha256": "9b062eba8e8ba7951d456f528a88791388862f86f38e9d512c330f331fa1eda4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receiver/0.5.7/Receiver-0.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receiver/0.5.7/Receiver-0.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receiver/0.5.8/Receiver-0.5.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receiver-0.5.8.tar.gz",
+    "size_bytes": 23925,
+    "sha256": "68a5f346258cd5db53fed8f391f93c0877e5a37af2c8c0b108ed4bdbab7134e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receiver/0.5.8/Receiver-0.5.8.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receiver/0.5.8/Receiver-0.5.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receiver/0.5.9/Receiver-0.5.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receiver-0.5.9.tar.gz",
+    "size_bytes": 23923,
+    "sha256": "ac93e63dc8be116c0efd0e77c9421ebefa91a3f4dbfaf07b4ca96b79bb3a6776",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receiver/0.5.9/Receiver-0.5.9.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receiver/0.5.9/Receiver-0.5.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Receivers/0.0.1/Receivers-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Receivers-0.0.1.tar.gz",
+    "size_bytes": 28252,
+    "sha256": "b25848109e92b4ac7874b31fa7f9c69b116f204608776cb0434f74a4a87b7bf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Receivers/0.0.1/Receivers-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Receivers/0.0.1/Receivers-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/SensorFusion/0.2.10/SensorFusion-0.2.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorFusion-0.2.10.tar.gz",
+    "size_bytes": 22250,
+    "sha256": "f81fd7eefb04bf1fa2769e6537c76620792b0ea703c064504b11d631f192c813",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/SensorFusion/0.2.10/SensorFusion-0.2.10.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/SensorFusion/0.2.10/SensorFusion-0.2.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/SensorFusion/0.2.11/SensorFusion-0.2.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorFusion-0.2.11.tar.gz",
+    "size_bytes": 22255,
+    "sha256": "bca08c5b779308d0895b46e7a56cb9c4cd7dbf765b6b91a0b25b5878875ce49d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/SensorFusion/0.2.11/SensorFusion-0.2.11.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/SensorFusion/0.2.11/SensorFusion-0.2.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/SensorFusion/0.2.12/SensorFusion-0.2.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorFusion-0.2.12.tar.gz",
+    "size_bytes": 22146,
+    "sha256": "d7daf3f5aaba969aa085f69310fa3d4531cb38f0aaeb5c6ff22ac067925b614d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/SensorFusion/0.2.12/SensorFusion-0.2.12.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/SensorFusion/0.2.12/SensorFusion-0.2.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/SensorFusion/0.2.13/SensorFusion-0.2.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorFusion-0.2.13.tar.gz",
+    "size_bytes": 22151,
+    "sha256": "bdfeed37d41d8d25b346cdfc9422a4f3d869851f7da3380ed6f7ee46223f8f53",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/SensorFusion/0.2.13/SensorFusion-0.2.13.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/SensorFusion/0.2.13/SensorFusion-0.2.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/SensorFusion/0.2.14/SensorFusion-0.2.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorFusion-0.2.14.tar.gz",
+    "size_bytes": 22161,
+    "sha256": "e5c0a50a0874d61192868f2a01299dff541cbb580698099238f50f8375353d98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/SensorFusion/0.2.14/SensorFusion-0.2.14.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/SensorFusion/0.2.14/SensorFusion-0.2.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/SensorFusion/0.2.4/SensorFusion-0.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorFusion-0.2.4.tar.gz",
+    "size_bytes": 20897,
+    "sha256": "cf5f03a28f1e2eb37acbe6346af6d3b76e01a5ca9cd8ae361ee9a8b9c20eafd9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/SensorFusion/0.2.4/SensorFusion-0.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/SensorFusion/0.2.4/SensorFusion-0.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/SensorFusion/0.2.5/SensorFusion-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorFusion-0.2.5.tar.gz",
+    "size_bytes": 21542,
+    "sha256": "380eac9dce102e8386754c04f60811508afe5ed29c74c9359888cd4b6ba24812",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/SensorFusion/0.2.5/SensorFusion-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/SensorFusion/0.2.5/SensorFusion-0.2.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/SensorFusion/0.2.6/SensorFusion-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorFusion-0.2.6.tar.gz",
+    "size_bytes": 21591,
+    "sha256": "99e1f75c81eac12aba2a751ec75447398c55b41125f2917d6ed39da7385f0bfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/SensorFusion/0.2.6/SensorFusion-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/SensorFusion/0.2.6/SensorFusion-0.2.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/SensorFusion/0.2.7/SensorFusion-0.2.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorFusion-0.2.7.tar.gz",
+    "size_bytes": 22168,
+    "sha256": "58a42aa85d036c963de0a85a1765956558cb0567329a4ff8dbf4befcb049d90e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/SensorFusion/0.2.7/SensorFusion-0.2.7.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/SensorFusion/0.2.7/SensorFusion-0.2.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/SensorFusion/0.2.8/SensorFusion-0.2.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorFusion-0.2.8.tar.gz",
+    "size_bytes": 22176,
+    "sha256": "db4df9960f719119a4c84a93d148d4308292238d762d7407ef49eb070acf1296",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/SensorFusion/0.2.8/SensorFusion-0.2.8.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/SensorFusion/0.2.8/SensorFusion-0.2.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/SensorFusion/0.2.9/SensorFusion-0.2.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SensorFusion-0.2.9.tar.gz",
+    "size_bytes": 22173,
+    "sha256": "a5d54c8475fc8fed07d31001b17319de25b1fb73f28af9edebe90afc889eb44d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/SensorFusion/0.2.9/SensorFusion-0.2.9.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/SensorFusion/0.2.9/SensorFusion-0.2.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Sensors/0.0.1/Sensors-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sensors-0.0.1.tar.gz",
+    "size_bytes": 75293,
+    "sha256": "d64ef21cd4ea3dee59c80e608283292fa2efbb404e0e67dc794c0691511c6819",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Sensors/0.0.1/Sensors-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Sensors/0.0.1/Sensors-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Sensors/0.0.2/Sensors-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sensors-0.0.2.tar.gz",
+    "size_bytes": 74440,
+    "sha256": "1046ac1b2ff2956228d90990a08afac78971fa2a9f06aa3fb89af1f70860182a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Sensors/0.0.2/Sensors-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Sensors/0.0.2/Sensors-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Sensors/0.0.3/Sensors-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sensors-0.0.3.tar.gz",
+    "size_bytes": 78433,
+    "sha256": "f790e49ec462dbe6e90e0a603014ddb898cbb47a39f1252178f71ae0a1f689e2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Sensors/0.0.3/Sensors-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Sensors/0.0.3/Sensors-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Sensors/0.0.4/Sensors-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sensors-0.0.4.tar.gz",
+    "size_bytes": 85066,
+    "sha256": "a5a80c7befe9b89aea51cb6bc526e112175788b0f2e123a25161bf334640e13c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Sensors/0.0.4/Sensors-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Sensors/0.0.4/Sensors-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Sensors/0.0.5/Sensors-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sensors-0.0.5.tar.gz",
+    "size_bytes": 85831,
+    "sha256": "ac18e34b93c5389957ed196cafe57fad9190037aeee5043c60c09ef3354c6feb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Sensors/0.0.5/Sensors-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Sensors/0.0.5/Sensors-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/Sensors/0.0.6/Sensors-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sensors-0.0.6.tar.gz",
+    "size_bytes": 87594,
+    "sha256": "2ba83c2770bad7b88efd69e4a36298640124cbc5eee0a51732db13c0cff44ab2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/Sensors/0.0.6/Sensors-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/Sensors/0.0.6/Sensors-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.0/StabilizedVehicle-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.0.tar.gz",
+    "size_bytes": 18445,
+    "sha256": "460835ec83a4ef0aeba8be169d161c0e63d9fd873f97bfd27e5613fe9546bb0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.0/StabilizedVehicle-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.0/StabilizedVehicle-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.1/StabilizedVehicle-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.1.tar.gz",
+    "size_bytes": 18254,
+    "sha256": "33d82223e7cf9d980bfeae723658b0abbcda66a7a511717f2fc7b4e25e20937c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.1/StabilizedVehicle-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.1/StabilizedVehicle-0.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.10/StabilizedVehicle-0.5.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.10.tar.gz",
+    "size_bytes": 19321,
+    "sha256": "5c54c4156e2cae4cdff6e317f7712cee25c2bd145b6ba5fa889acce48c1aa60b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.10/StabilizedVehicle-0.5.10.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.10/StabilizedVehicle-0.5.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.11/StabilizedVehicle-0.5.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.11.tar.gz",
+    "size_bytes": 19342,
+    "sha256": "0e78e50917bc6b9ee9a62a1d77d26c20763daeda42fa7eb0de49f8a70855c456",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.11/StabilizedVehicle-0.5.11.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.11/StabilizedVehicle-0.5.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.12/StabilizedVehicle-0.5.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.12.tar.gz",
+    "size_bytes": 19374,
+    "sha256": "69bffb76626052350391e4df901a8f776a8bad2b98619695d84f2296061f3c1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.12/StabilizedVehicle-0.5.12.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.12/StabilizedVehicle-0.5.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.13/StabilizedVehicle-0.5.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.13.tar.gz",
+    "size_bytes": 19376,
+    "sha256": "2eda012af12caa88561c89bed332830caff0ac16b6dd2a56809f7ed3f2d2a942",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.13/StabilizedVehicle-0.5.13.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.13/StabilizedVehicle-0.5.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.14/StabilizedVehicle-0.5.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.14.tar.gz",
+    "size_bytes": 19384,
+    "sha256": "8b1070dc7f36be33ebd0c0a925c8300f908e1262094e14ccff75c78e8bac5878",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.14/StabilizedVehicle-0.5.14.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.14/StabilizedVehicle-0.5.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.15/StabilizedVehicle-0.5.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.15.tar.gz",
+    "size_bytes": 19350,
+    "sha256": "f5c89f9c8632b05b4d02bbf63b3824a9ad22d7f1d193fba235684d6d2a99266e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.15/StabilizedVehicle-0.5.15.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.15/StabilizedVehicle-0.5.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.16/StabilizedVehicle-0.5.16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.16.tar.gz",
+    "size_bytes": 19258,
+    "sha256": "ec4e2164357030826be6d112b1ed1498ab9744052b9dfaa59391bcd99cb060cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.16/StabilizedVehicle-0.5.16.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.16/StabilizedVehicle-0.5.16.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.17/StabilizedVehicle-0.5.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.17.tar.gz",
+    "size_bytes": 18541,
+    "sha256": "9c26d17b652f273fcf81c92897b9697aaeaad82afb50fd183dbd9fdfd345fbb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.17/StabilizedVehicle-0.5.17.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.17/StabilizedVehicle-0.5.17.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.18/StabilizedVehicle-0.5.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.18.tar.gz",
+    "size_bytes": 18551,
+    "sha256": "dcde8c5362a538e5bd74f1adfd0be8231452717a6a1662f7c12cf6ea01306bc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.18/StabilizedVehicle-0.5.18.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.18/StabilizedVehicle-0.5.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.19/StabilizedVehicle-0.5.19.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.19.tar.gz",
+    "size_bytes": 18544,
+    "sha256": "31b78c3fe792dad5161b63e3b58bc291eaa7d1820a7afddd33ca408bd5e81aa3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.19/StabilizedVehicle-0.5.19.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.19/StabilizedVehicle-0.5.19.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.2/StabilizedVehicle-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.2.tar.gz",
+    "size_bytes": 18659,
+    "sha256": "22af67c923b076b73da7822f5fe389593c6509f2a0b07b2d3d703655432b2436",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.2/StabilizedVehicle-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.2/StabilizedVehicle-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.20/StabilizedVehicle-0.5.20.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.20.tar.gz",
+    "size_bytes": 18573,
+    "sha256": "976ac7fe1f3bc2de15386f23d59c68b303b9436fc15a617ce543adad0b75dd50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.20/StabilizedVehicle-0.5.20.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.20/StabilizedVehicle-0.5.20.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.21/StabilizedVehicle-0.5.21.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.21.tar.gz",
+    "size_bytes": 18310,
+    "sha256": "b6bab2d411ff29055585bf35c91224ff7d38702bfc529ed48da4e70e0e28a844",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.21/StabilizedVehicle-0.5.21.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.21/StabilizedVehicle-0.5.21.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.22/StabilizedVehicle-0.5.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.22.tar.gz",
+    "size_bytes": 18242,
+    "sha256": "ce502f6f72c8a842cc89f27c7d5c7e2a38408d9a2dbe99fa3646bea8028f2567",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.22/StabilizedVehicle-0.5.22.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.22/StabilizedVehicle-0.5.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.23/StabilizedVehicle-0.5.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.23.tar.gz",
+    "size_bytes": 18305,
+    "sha256": "412abea8d4455e566ae48f7de0e6e6d1a9ac07a6a6e0a3d72f69d1e527f90e56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.23/StabilizedVehicle-0.5.23.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.23/StabilizedVehicle-0.5.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.24/StabilizedVehicle-0.5.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.24.tar.gz",
+    "size_bytes": 18888,
+    "sha256": "b4a6aeca114181a1c02f731a098ee85f488170010273ccbf539c42a40dd2ec97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.24/StabilizedVehicle-0.5.24.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.24/StabilizedVehicle-0.5.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.25/StabilizedVehicle-0.5.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.25.tar.gz",
+    "size_bytes": 13622,
+    "sha256": "2c985e9a56862a2682a5773461068b593c675da3496075cea4f05e9a3ac278f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.25/StabilizedVehicle-0.5.25.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.25/StabilizedVehicle-0.5.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.3/StabilizedVehicle-0.5.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.3.tar.gz",
+    "size_bytes": 18674,
+    "sha256": "a3a5f0d3457b98b8c48c5d517ec95c9588a7799f5f568e9f3d24597c1cd99586",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.3/StabilizedVehicle-0.5.3.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.3/StabilizedVehicle-0.5.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.4/StabilizedVehicle-0.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.4.tar.gz",
+    "size_bytes": 18538,
+    "sha256": "733f0d03cf4057fd2c24c3cac1588244100185d35fe1e01a91c219a2740e1350",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.4/StabilizedVehicle-0.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.4/StabilizedVehicle-0.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.5/StabilizedVehicle-0.5.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.5.tar.gz",
+    "size_bytes": 18750,
+    "sha256": "de537d2ac596ea62bde076a6c12c062040fadef1f4219e7892e6591dc6a27cba",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.5/StabilizedVehicle-0.5.5.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.5/StabilizedVehicle-0.5.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.6/StabilizedVehicle-0.5.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.6.tar.gz",
+    "size_bytes": 19264,
+    "sha256": "b5459bcd2065a7c9f98305ae967f40dbb196651e0ce4905d589a8b80b8a07f83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.6/StabilizedVehicle-0.5.6.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.6/StabilizedVehicle-0.5.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.7/StabilizedVehicle-0.5.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.7.tar.gz",
+    "size_bytes": 19230,
+    "sha256": "9a4448382366c0b8b733d8f792522b542bb29c8168fc7934786820ee1935f8f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.7/StabilizedVehicle-0.5.7.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.7/StabilizedVehicle-0.5.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.8/StabilizedVehicle-0.5.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.8.tar.gz",
+    "size_bytes": 19249,
+    "sha256": "ad05c1f19e30c2eb930b237ee88e844a6ed8b85a262c31443a45cf9eb552861d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.8/StabilizedVehicle-0.5.8.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.8/StabilizedVehicle-0.5.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StabilizedVehicle/0.5.9/StabilizedVehicle-0.5.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StabilizedVehicle-0.5.9.tar.gz",
+    "size_bytes": 19299,
+    "sha256": "826c0f1671e31ba86976b2612b0a50ff43308a0fae3b51db98891774159c0753",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StabilizedVehicle/0.5.9/StabilizedVehicle-0.5.9.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StabilizedVehicle/0.5.9/StabilizedVehicle-0.5.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StreamBuf/0.0.2/StreamBuf-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamBuf-0.0.2.tar.gz",
+    "size_bytes": 4816,
+    "sha256": "a9ba27b6ef2f5b4279a1c0becd70aac84a0cdf7f0dfa78b090fae654a438d7be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StreamBuf/0.0.2/StreamBuf-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StreamBuf/0.0.2/StreamBuf-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StreamBuf/0.0.3/StreamBuf-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamBuf-0.0.3.tar.gz",
+    "size_bytes": 5077,
+    "sha256": "9128e8d75fbe44806e4d5cf2fb95c6f9c9aafcebfdb16b65cade630c7b3a824f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StreamBuf/0.0.3/StreamBuf-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StreamBuf/0.0.3/StreamBuf-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/StreamBuf/0.0.4/StreamBuf-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamBuf-0.0.4.tar.gz",
+    "size_bytes": 5380,
+    "sha256": "935ac2f7e241604f0af954508824fd912ca9b700b2fc58788fd2d850e8b972f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/StreamBuf/0.0.4/StreamBuf-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/StreamBuf/0.0.4/StreamBuf-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/TaskBase/0.0.10/TaskBase-0.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskBase-0.0.10.tar.gz",
+    "size_bytes": 4985,
+    "sha256": "a3e01acba0a98d3c24f6b3890e9a9a66b2bae0711d856e43fc1402de4ea20301",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/TaskBase/0.0.10/TaskBase-0.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/TaskBase/0.0.10/TaskBase-0.0.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/TaskBase/0.0.11/TaskBase-0.0.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskBase-0.0.11.tar.gz",
+    "size_bytes": 4992,
+    "sha256": "362b653fdcd0acdde602a0e779266d8122b9bce167a37984582c37e6dc8f2ebc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/TaskBase/0.0.11/TaskBase-0.0.11.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/TaskBase/0.0.11/TaskBase-0.0.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/TaskBase/0.0.12/TaskBase-0.0.12.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskBase-0.0.12.tar.gz",
+    "size_bytes": 5090,
+    "sha256": "60c796f1ec4bf015ef4ed318d2cb12ebd665abc14fdfd8aab253eeb414f84228",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/TaskBase/0.0.12/TaskBase-0.0.12.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/TaskBase/0.0.12/TaskBase-0.0.12.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/TaskBase/0.0.13/TaskBase-0.0.13.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskBase-0.0.13.tar.gz",
+    "size_bytes": 5229,
+    "sha256": "e874ba95f1d2ba9a5637c63988b2eeaf9149b52456919f8b98e3bb8aa05fc768",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/TaskBase/0.0.13/TaskBase-0.0.13.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/TaskBase/0.0.13/TaskBase-0.0.13.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/TaskBase/0.0.4/TaskBase-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskBase-0.0.4.tar.gz",
+    "size_bytes": 4389,
+    "sha256": "2546730066cae36ee3008d5b1f5d19f9f333f35cf3d02ae2dc6e0b00de4bb7d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/TaskBase/0.0.4/TaskBase-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/TaskBase/0.0.4/TaskBase-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/TaskBase/0.0.5/TaskBase-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskBase-0.0.5.tar.gz",
+    "size_bytes": 4371,
+    "sha256": "21d63c11677e37253a6a3ca3b6ffdb97d8fd685e77d9f0790c81ded0c80a1c55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/TaskBase/0.0.5/TaskBase-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/TaskBase/0.0.5/TaskBase-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/TaskBase/0.0.6/TaskBase-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskBase-0.0.6.tar.gz",
+    "size_bytes": 4386,
+    "sha256": "14084a50ab5c2f692bceb77d1518323f54804f9bb8e3a0a0b41bbb2e473fa71e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/TaskBase/0.0.6/TaskBase-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/TaskBase/0.0.6/TaskBase-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/TaskBase/0.0.7/TaskBase-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskBase-0.0.7.tar.gz",
+    "size_bytes": 4859,
+    "sha256": "bcbaa89aa34cd947678f38651c2461d3f58d6f3946b92525dfd1042840b4f9c6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/TaskBase/0.0.7/TaskBase-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/TaskBase/0.0.7/TaskBase-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/TaskBase/0.0.8/TaskBase-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskBase-0.0.8.tar.gz",
+    "size_bytes": 4990,
+    "sha256": "36cc10fd7a5863252256fc215c5cea9ebe01fdb3abd0d3f5fda8bb84f3d525a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/TaskBase/0.0.8/TaskBase-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/TaskBase/0.0.8/TaskBase-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/TaskBase/0.0.9/TaskBase-0.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskBase-0.0.9.tar.gz",
+    "size_bytes": 4998,
+    "sha256": "6f92fbebdb86f4dc80e3554cec204a73dbc86e9fefd0a011dd0984f37ae27c75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/TaskBase/0.0.9/TaskBase-0.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/TaskBase/0.0.9/TaskBase-0.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/TaskUtilities/0.0.1/TaskUtilities-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TaskUtilities-0.0.1.tar.gz",
+    "size_bytes": 5462,
+    "sha256": "6a443a4df6a0b9ee0852f8f354eb181aa8ae41fe3457b7e36e4b16bd87bd301f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/TaskUtilities/0.0.1/TaskUtilities-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/TaskUtilities/0.0.1/TaskUtilities-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/VectorQuaternionMatrix/0.4.10/VectorQuaternionMatrix-0.4.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VectorQuaternionMatrix-0.4.10.tar.gz",
+    "size_bytes": 15453,
+    "sha256": "02f504b24ee60d315e9bc2af01a8fb701911e37ed0eb4a139fb3905713a98438",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/VectorQuaternionMatrix/0.4.10/VectorQuaternionMatrix-0.4.10.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/VectorQuaternionMatrix/0.4.10/VectorQuaternionMatrix-0.4.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/VectorQuaternionMatrix/0.4.2/VectorQuaternionMatrix-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VectorQuaternionMatrix-0.4.2.tar.gz",
+    "size_bytes": 12199,
+    "sha256": "5d5b8d70ad11eb94cdfcd56101fa034f1638e43a9ed9b3f24a072d868216c3a7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/VectorQuaternionMatrix/0.4.2/VectorQuaternionMatrix-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/VectorQuaternionMatrix/0.4.2/VectorQuaternionMatrix-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/VectorQuaternionMatrix/0.4.3/VectorQuaternionMatrix-0.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VectorQuaternionMatrix-0.4.3.tar.gz",
+    "size_bytes": 12402,
+    "sha256": "2aa6eea47b0220ef3ebff49018242f8ac768ec9b64e24e55c994b990314a5566",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/VectorQuaternionMatrix/0.4.3/VectorQuaternionMatrix-0.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/VectorQuaternionMatrix/0.4.3/VectorQuaternionMatrix-0.4.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/VectorQuaternionMatrix/0.4.4/VectorQuaternionMatrix-0.4.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VectorQuaternionMatrix-0.4.4.tar.gz",
+    "size_bytes": 12407,
+    "sha256": "99b8d7f94198a6e81d4c59a0955bdca064706b4cb38c93d39fafa950666e1324",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/VectorQuaternionMatrix/0.4.4/VectorQuaternionMatrix-0.4.4.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/VectorQuaternionMatrix/0.4.4/VectorQuaternionMatrix-0.4.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/VectorQuaternionMatrix/0.4.5/VectorQuaternionMatrix-0.4.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VectorQuaternionMatrix-0.4.5.tar.gz",
+    "size_bytes": 13352,
+    "sha256": "c2e7458c3835cc9ae6394af58a0ab6995556d23f702ef4208a26b4a452fd8fc3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/VectorQuaternionMatrix/0.4.5/VectorQuaternionMatrix-0.4.5.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/VectorQuaternionMatrix/0.4.5/VectorQuaternionMatrix-0.4.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/VectorQuaternionMatrix/0.4.6/VectorQuaternionMatrix-0.4.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VectorQuaternionMatrix-0.4.6.tar.gz",
+    "size_bytes": 14195,
+    "sha256": "8f2c1fdb9cdf9844fc3e9418d4779865a58d3c58bbe9913180a1874fd16dd0a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/VectorQuaternionMatrix/0.4.6/VectorQuaternionMatrix-0.4.6.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/VectorQuaternionMatrix/0.4.6/VectorQuaternionMatrix-0.4.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/VectorQuaternionMatrix/0.4.7/VectorQuaternionMatrix-0.4.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VectorQuaternionMatrix-0.4.7.tar.gz",
+    "size_bytes": 14135,
+    "sha256": "58b0add538f2b5dd73108505855d8babd6bdeac56680111088d2bd8775295759",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/VectorQuaternionMatrix/0.4.7/VectorQuaternionMatrix-0.4.7.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/VectorQuaternionMatrix/0.4.7/VectorQuaternionMatrix-0.4.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/VectorQuaternionMatrix/0.4.8/VectorQuaternionMatrix-0.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VectorQuaternionMatrix-0.4.8.tar.gz",
+    "size_bytes": 15364,
+    "sha256": "530a4ce0e20f87e0ab87b95d77988d431893a03ac108df683d254ae480363e80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/VectorQuaternionMatrix/0.4.8/VectorQuaternionMatrix-0.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/VectorQuaternionMatrix/0.4.8/VectorQuaternionMatrix-0.4.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "martinbudden/library/VectorQuaternionMatrix/0.4.9/VectorQuaternionMatrix-0.4.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VectorQuaternionMatrix-0.4.9.tar.gz",
+    "size_bytes": 15391,
+    "sha256": "8a42523a9c2d01944599da859ff7daa66982dbf4b0271ac7dcc8078fae1e44b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/martinbudden/library/VectorQuaternionMatrix/0.4.9/VectorQuaternionMatrix-0.4.9.tar.gz",
+     "https://dl.registry.platformio.org/download/martinbudden/library/VectorQuaternionMatrix/0.4.9/VectorQuaternionMatrix-0.4.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

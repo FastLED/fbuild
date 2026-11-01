@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shaduzlabs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shaduzlabs/library/Synapse/1.0.2/Synapse-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Synapse-1.0.2.tar.gz",
+    "size_bytes": 262995,
+    "sha256": "aca4f8ab106e8c46e70f5e933174dd5bc69550a813e780f1b3e4d91c2d194b8e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shaduzlabs/library/Synapse/1.0.2/Synapse-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/shaduzlabs/library/Synapse/1.0.2/Synapse-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shaduzlabs/library/rastr/0.1.1/rastr-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "rastr-0.1.1.tar.gz",
+    "size_bytes": 11781,
+    "sha256": "ac09eaf398cc9307627403850480ef77b2027fee8c9f0a3ec86e4c5e17fa05b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shaduzlabs/library/rastr/0.1.1/rastr-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/shaduzlabs/library/rastr/0.1.1/rastr-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

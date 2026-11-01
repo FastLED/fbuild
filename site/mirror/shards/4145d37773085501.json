@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kasedy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kasedy/library/ResetDetector/1.0.3/ResetDetector-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ResetDetector-1.0.3.tar.gz",
+    "size_bytes": 3205,
+    "sha256": "a7b35620bb94fd901d42ea53df0694689470453c6afaf69006fc1025addd6667",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kasedy/library/ResetDetector/1.0.3/ResetDetector-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/kasedy/library/ResetDetector/1.0.3/ResetDetector-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

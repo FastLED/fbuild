@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-marcpl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-marcpl/library/Adafruit-GFX/0.0.0+sha.ca74c390a0de/Adafruit-GFX-0.0.0+sha.ca74c390a0de.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit-GFX-0.0.0+sha.ca74c390a0de.tar.gz",
+    "size_bytes": 6460,
+    "sha256": "5d595172c1fc04f3c27ccec6f0aa454bffe58d3c184787dbfe626f717786b57b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-marcpl/library/Adafruit-GFX/0.0.0%2Bsha.ca74c390a0de/Adafruit-GFX-0.0.0%2Bsha.ca74c390a0de.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-marcpl/library/Adafruit-GFX/0.0.0%2Bsha.ca74c390a0de/Adafruit-GFX-0.0.0%2Bsha.ca74c390a0de.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-marcpl/library/Adafruit_FONA_Library/0.0.0+sha.a47b72e3654e/Adafruit_FONA_Library-0.0.0+sha.a47b72e3654e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_FONA_Library-0.0.0+sha.a47b72e3654e.tar.gz",
+    "size_bytes": 12122,
+    "sha256": "a8b74ec873bc21290100fef234c20eb823c7057f116bde6e4e1765b347f37757",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-marcpl/library/Adafruit_FONA_Library/0.0.0%2Bsha.a47b72e3654e/Adafruit_FONA_Library-0.0.0%2Bsha.a47b72e3654e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-marcpl/library/Adafruit_FONA_Library/0.0.0%2Bsha.a47b72e3654e/Adafruit_FONA_Library-0.0.0%2Bsha.a47b72e3654e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-marcpl/library/Adafruit_SHARP_Memory_Display/0.0.0+sha.99cc0e72e165/Adafruit_SHARP_Memory_Display-0.0.0+sha.99cc0e72e165.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_SHARP_Memory_Display-0.0.0+sha.99cc0e72e165.tar.gz",
+    "size_bytes": 3584,
+    "sha256": "dde0be4a2d1820437f2dd5cb80e7d0852b0cc088ff59879aa6daddded39334b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-marcpl/library/Adafruit_SHARP_Memory_Display/0.0.0%2Bsha.99cc0e72e165/Adafruit_SHARP_Memory_Display-0.0.0%2Bsha.99cc0e72e165.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-marcpl/library/Adafruit_SHARP_Memory_Display/0.0.0%2Bsha.99cc0e72e165/Adafruit_SHARP_Memory_Display-0.0.0%2Bsha.99cc0e72e165.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-marcpl/library/SoftSerial/0.0.0+sha.7fdc1c46de79/SoftSerial-0.0.0+sha.7fdc1c46de79.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SoftSerial-0.0.0+sha.7fdc1c46de79.tar.gz",
+    "size_bytes": 3496,
+    "sha256": "3a27b691f08a62dfb943bae99936d657e0a98f86c91fe768e1535c01a3b0f470",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-marcpl/library/SoftSerial/0.0.0%2Bsha.7fdc1c46de79/SoftSerial-0.0.0%2Bsha.7fdc1c46de79.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-marcpl/library/SoftSerial/0.0.0%2Bsha.7fdc1c46de79/SoftSerial-0.0.0%2Bsha.7fdc1c46de79.tar.gz"
+    ]
+   }
+  }
+ ]
+}

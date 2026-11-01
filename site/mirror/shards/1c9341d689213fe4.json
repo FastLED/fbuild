@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zlalanne",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zlalanne/library/HttpClient/0.0.0-alpha+sha.dac246b21f/HttpClient-0.0.0-alphasha.dac246b21f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HttpClient-0.0.0-alphasha.dac246b21f.tar.gz",
+    "size_bytes": 10909,
+    "sha256": "52723be1515d1791ef13a019d3471d4e70fef23e22f02392e79be85bd49b7e74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zlalanne/library/HttpClient/0.0.0-alpha%2Bsha.dac246b21f/HttpClient-0.0.0-alphasha.dac246b21f.tar.gz",
+     "https://dl.registry.platformio.org/download/zlalanne/library/HttpClient/0.0.0-alpha%2Bsha.dac246b21f/HttpClient-0.0.0-alphasha.dac246b21f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zlalanne/library/RedBot-BoosterPack/0.0.0-broken/RedBot-BoosterPack-0.0.0-alphasha.bc5921a473.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RedBot-BoosterPack-0.0.0-alphasha.bc5921a473.tar.gz",
+    "size_bytes": 528,
+    "sha256": "15a03a37d76180afc46be601081f666f3471842a10b2f0e6d5caa70a713695a6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zlalanne/library/RedBot-BoosterPack/0.0.0-broken/RedBot-BoosterPack-0.0.0-alphasha.bc5921a473.tar.gz",
+     "https://dl.registry.platformio.org/download/zlalanne/library/RedBot-BoosterPack/0.0.0-broken/RedBot-BoosterPack-0.0.0-alphasha.bc5921a473.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zlalanne/library/Xively/0.0.0-alpha+sha.8112d2c3b0/Xively-0.0.0-alphasha.8112d2c3b0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Xively-0.0.0-alphasha.8112d2c3b0.tar.gz",
+    "size_bytes": 8537,
+    "sha256": "c3ad8b49488e1c37963d9462d9926497cdaa54304a7aa14a7c1cea20d94ab393",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zlalanne/library/Xively/0.0.0-alpha%2Bsha.8112d2c3b0/Xively-0.0.0-alphasha.8112d2c3b0.tar.gz",
+     "https://dl.registry.platformio.org/download/zlalanne/library/Xively/0.0.0-alpha%2Bsha.8112d2c3b0/Xively-0.0.0-alphasha.8112d2c3b0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

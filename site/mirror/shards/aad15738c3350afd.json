@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/andynewlands",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "andynewlands/library/DualEncoderMenuSystem/1.0.0/DualEncoderMenuSystem-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DualEncoderMenuSystem-1.0.0.tar.gz",
+    "size_bytes": 23538,
+    "sha256": "c00a88bc369874c2ad67b42617339a7dc260bbf6420d84b5377af5cc22f65da1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/andynewlands/library/DualEncoderMenuSystem/1.0.0/DualEncoderMenuSystem-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/andynewlands/library/DualEncoderMenuSystem/1.0.0/DualEncoderMenuSystem-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

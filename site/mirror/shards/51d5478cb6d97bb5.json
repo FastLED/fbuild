@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/roboteach-es",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "roboteach-es/library/Escornabot-lib/1.4.1/Escornabot-lib-1.4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Escornabot-lib-1.4.1.tar.gz",
+    "size_bytes": 69549,
+    "sha256": "826ca77563d3a078dfef0c442657e2ff7d9dbf2cc59695ef876f98606ae5d768",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/roboteach-es/library/Escornabot-lib/1.4.1/Escornabot-lib-1.4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/roboteach-es/library/Escornabot-lib/1.4.1/Escornabot-lib-1.4.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ostaquet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ostaquet/library/MQ131%20gas%20sensor/1.5.4/MQ131gassensor-1.5.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MQ131gassensor-1.5.4.tar.gz",
+    "size_bytes": 8269,
+    "sha256": "bd1052e1c6d7c8a86fda6ca75700511e9923c51e7a17f0b84001b80c46cb07ae",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ostaquet/library/MQ131%2520gas%2520sensor/1.5.4/MQ131gassensor-1.5.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ostaquet/library/MQ131%20gas%20sensor/1.5.4/MQ131gassensor-1.5.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ostaquet/library/SIM800L%20HTTP%20connector/1.14.0/SIM800LHTTPconnector-1.14.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SIM800LHTTPconnector-1.14.0.tar.gz",
+    "size_bytes": 13456,
+    "sha256": "8fdf1c4c276f345071d6b722d529086f69c066344cb163de4685df5f2fcdbb79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ostaquet/library/SIM800L%2520HTTP%2520connector/1.14.0/SIM800LHTTPconnector-1.14.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ostaquet/library/SIM800L%20HTTP%20connector/1.14.0/SIM800LHTTPconnector-1.14.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-donde",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-donde/library/EthernetNetif/0.0.0+sha.005eb30e83da/EthernetNetif-0.0.0+sha.005eb30e83da.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EthernetNetif-0.0.0+sha.005eb30e83da.tar.gz",
+    "size_bytes": 2385,
+    "sha256": "efc236f11ed9f036949c7f34893053a5abb4fd12863d4c49bf869037da7f5aca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-donde/library/EthernetNetif/0.0.0%2Bsha.005eb30e83da/EthernetNetif-0.0.0%2Bsha.005eb30e83da.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-donde/library/EthernetNetif/0.0.0%2Bsha.005eb30e83da/EthernetNetif-0.0.0%2Bsha.005eb30e83da.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-donde/library/NokiaLCD/0.0.0+sha.18ae1fbb4c63/NokiaLCD-0.0.0+sha.18ae1fbb4c63.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NokiaLCD-0.0.0+sha.18ae1fbb4c63.tar.gz",
+    "size_bytes": 5315,
+    "sha256": "50aff4185a59049961e1449d888511d0e17515349294a72af214e6db48a6dcca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-donde/library/NokiaLCD/0.0.0%2Bsha.18ae1fbb4c63/NokiaLCD-0.0.0%2Bsha.18ae1fbb4c63.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-donde/library/NokiaLCD/0.0.0%2Bsha.18ae1fbb4c63/NokiaLCD-0.0.0%2Bsha.18ae1fbb4c63.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-donde/library/m3pi/0.0.0+sha.4d063fa5d347/m3pi-0.0.0+sha.4d063fa5d347.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m3pi-0.0.0+sha.4d063fa5d347.tar.gz",
+    "size_bytes": 3983,
+    "sha256": "dcb3336a5e23de0c6466c2a8ede334e7015e31a4e399d5bf1d5f456d92ae764b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-donde/library/m3pi/0.0.0%2Bsha.4d063fa5d347/m3pi-0.0.0%2Bsha.4d063fa5d347.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-donde/library/m3pi/0.0.0%2Bsha.4d063fa5d347/m3pi-0.0.0%2Bsha.4d063fa5d347.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/torsteinnh",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "torsteinnh/library/ConductivityLib/1.0.0/ConductivityLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConductivityLib-1.0.0.tar.gz",
+    "size_bytes": 2293,
+    "sha256": "1f480dbf25f968aef81774e297f4aea719072a3821397a2d21a25c29a61823ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/torsteinnh/library/ConductivityLib/1.0.0/ConductivityLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/torsteinnh/library/ConductivityLib/1.0.0/ConductivityLib-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

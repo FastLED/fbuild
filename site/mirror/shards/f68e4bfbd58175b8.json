@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nadjibotics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nadjibotics/library/nrf_905/0.0.0+sha.a7fd293e6467/nrf_905-0.0.0+sha.a7fd293e6467.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nrf_905-0.0.0+sha.a7fd293e6467.tar.gz",
+    "size_bytes": 2440,
+    "sha256": "356f8f0ba21cc870f8e166bf3f6bf2134a2994708398132577c07af2d03f910b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nadjibotics/library/nrf_905/0.0.0%2Bsha.a7fd293e6467/nrf_905-0.0.0%2Bsha.a7fd293e6467.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nadjibotics/library/nrf_905/0.0.0%2Bsha.a7fd293e6467/nrf_905-0.0.0%2Bsha.a7fd293e6467.tar.gz"
+    ]
+   }
+  }
+ ]
+}

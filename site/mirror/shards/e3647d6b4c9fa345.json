@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-b50559",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-b50559/library/Madgwick_Algorithm/0.0.0+sha.756055ce357a/Madgwick_Algorithm-0.0.0+sha.756055ce357a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Madgwick_Algorithm-0.0.0+sha.756055ce357a.tar.gz",
+    "size_bytes": 3387,
+    "sha256": "23b5856dab029bf538b405fb2ba25f9e51d26ff32996d7d29d97799f54f55a4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-b50559/library/Madgwick_Algorithm/0.0.0%2Bsha.756055ce357a/Madgwick_Algorithm-0.0.0%2Bsha.756055ce357a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-b50559/library/Madgwick_Algorithm/0.0.0%2Bsha.756055ce357a/Madgwick_Algorithm-0.0.0%2Bsha.756055ce357a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-b50559/library/Mahony_Algorithm/0.0.0+sha.da9dac34fd93/Mahony_Algorithm-0.0.0+sha.da9dac34fd93.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mahony_Algorithm-0.0.0+sha.da9dac34fd93.tar.gz",
+    "size_bytes": 3080,
+    "sha256": "3e9302e70d5923a728ce96f3c964765a52b53d0f22e626fac88b586dfaf7866e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-b50559/library/Mahony_Algorithm/0.0.0%2Bsha.da9dac34fd93/Mahony_Algorithm-0.0.0%2Bsha.da9dac34fd93.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-b50559/library/Mahony_Algorithm/0.0.0%2Bsha.da9dac34fd93/Mahony_Algorithm-0.0.0%2Bsha.da9dac34fd93.tar.gz"
+    ]
+   }
+  }
+ ]
+}

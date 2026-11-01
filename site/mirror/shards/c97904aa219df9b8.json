@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-matsujirushi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-matsujirushi/library/MJ_LineSerial/0.0.0+sha.2338acfb180d/MJ_LineSerial-0.0.0+sha.2338acfb180d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MJ_LineSerial-0.0.0+sha.2338acfb180d.tar.gz",
+    "size_bytes": 1449,
+    "sha256": "202c6bf888cd39b7792da4f5ba8847c7f031e142e5e14c9a4a81c73ac777d511",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-matsujirushi/library/MJ_LineSerial/0.0.0%2Bsha.2338acfb180d/MJ_LineSerial-0.0.0%2Bsha.2338acfb180d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-matsujirushi/library/MJ_LineSerial/0.0.0%2Bsha.2338acfb180d/MJ_LineSerial-0.0.0%2Bsha.2338acfb180d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-matsujirushi/library/MjGP2Y0E03/0.0.0+sha.1832cde75561/MjGP2Y0E03-0.0.0+sha.1832cde75561.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MjGP2Y0E03-0.0.0+sha.1832cde75561.tar.gz",
+    "size_bytes": 1581,
+    "sha256": "a796ecb5e89de38aa84fca89bbc88c5662bb5d37297f2af6b5b83a2480b48d80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-matsujirushi/library/MjGP2Y0E03/0.0.0%2Bsha.1832cde75561/MjGP2Y0E03-0.0.0%2Bsha.1832cde75561.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-matsujirushi/library/MjGP2Y0E03/0.0.0%2Bsha.1832cde75561/MjGP2Y0E03-0.0.0%2Bsha.1832cde75561.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-matsujirushi/library/MjHover/0.0.0+sha.a3b72910732d/MjHover-0.0.0+sha.a3b72910732d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MjHover-0.0.0+sha.a3b72910732d.tar.gz",
+    "size_bytes": 3092,
+    "sha256": "34d47028c46088605bb1585f3f10030704a3c9d6b0ae3e8a12b54e7f3f4f53ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-matsujirushi/library/MjHover/0.0.0%2Bsha.a3b72910732d/MjHover-0.0.0%2Bsha.a3b72910732d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-matsujirushi/library/MjHover/0.0.0%2Bsha.a3b72910732d/MjHover-0.0.0%2Bsha.a3b72910732d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-matsujirushi/library/MjLineSerial/0.0.0+sha.b7902dd4ab46/MjLineSerial-0.0.0+sha.b7902dd4ab46.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MjLineSerial-0.0.0+sha.b7902dd4ab46.tar.gz",
+    "size_bytes": 1572,
+    "sha256": "5b40749045a36dc682d2dbbdba939042a11844139a1fb0dd245259bfd0c4d820",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-matsujirushi/library/MjLineSerial/0.0.0%2Bsha.b7902dd4ab46/MjLineSerial-0.0.0%2Bsha.b7902dd4ab46.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-matsujirushi/library/MjLineSerial/0.0.0%2Bsha.b7902dd4ab46/MjLineSerial-0.0.0%2Bsha.b7902dd4ab46.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-matsujirushi/library/MjTextileSensor/0.0.0+sha.9f5d5e904cb9/MjTextileSensor-0.0.0+sha.9f5d5e904cb9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MjTextileSensor-0.0.0+sha.9f5d5e904cb9.tar.gz",
+    "size_bytes": 1146,
+    "sha256": "b4b3823b3f2ba9810118a5ab6937276416dce41ebda0a50c3ccd854a2129b98b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-matsujirushi/library/MjTextileSensor/0.0.0%2Bsha.9f5d5e904cb9/MjTextileSensor-0.0.0%2Bsha.9f5d5e904cb9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-matsujirushi/library/MjTextileSensor/0.0.0%2Bsha.9f5d5e904cb9/MjTextileSensor-0.0.0%2Bsha.9f5d5e904cb9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-matsujirushi/library/PAJ7620U2/0.0.0+sha.b3125f4faa38/PAJ7620U2-0.0.0+sha.b3125f4faa38.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PAJ7620U2-0.0.0+sha.b3125f4faa38.tar.gz",
+    "size_bytes": 2551,
+    "sha256": "f3e6b05da84ec1440e75de0af1b1b4f8d73fd32c90ea6e420dd2db05b8f096d4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-matsujirushi/library/PAJ7620U2/0.0.0%2Bsha.b3125f4faa38/PAJ7620U2-0.0.0%2Bsha.b3125f4faa38.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-matsujirushi/library/PAJ7620U2/0.0.0%2Bsha.b3125f4faa38/PAJ7620U2-0.0.0%2Bsha.b3125f4faa38.tar.gz"
+    ]
+   }
+  }
+ ]
+}

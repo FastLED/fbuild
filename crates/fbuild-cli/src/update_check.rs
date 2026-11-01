@@ -26,7 +26,8 @@
 //!
 //! # Suppression order
 //!
-//! - `FBUILD_NO_UPDATE_CHECK` env set to non-empty non-`0` value → skip.
+//! - `FBUILD_NO_UPDATE_CHECK` env set to a truthy spelling (`1`/`true`/`yes`/`on`,
+//!   trimmed, case-insensitive — see `fbuild_core::env_flag`) → skip.
 //! - `--no-update-check` CLI flag → skip.
 //! - `CI` / `GITHUB_ACTIONS` env indicates CI → skip.
 //! - Cache says the last check was within TTL and reported not-stale → skip
@@ -159,6 +160,16 @@ pub struct CheckOptions {
 const CACHE_FILENAME: &str = "update_check.json";
 const DEFAULT_TTL_SECS: u64 = 24 * 60 * 60; // 24 hours per issue's default suggestion.
 const HTTP_TIMEOUT: Duration = Duration::from_secs(3);
+/// Per-request UA that deliberately overrides the shared client's
+/// `PlatformIO/...` default (`fbuild_core::http::registry_user_agent`).
+///
+/// That default exists only to satisfy `dl.registry.platformio.org`, which
+/// 403s any other agent (FastLED/fbuild#1783). The two endpoints below are
+/// PyPI and the GitHub API, neither of which gates on UA — so here we can and
+/// should be honest about who is calling. Claiming to be PlatformIO Core
+/// would misattribute fbuild's requests in PyPI download statistics.
+///
+/// Do not "unify" this with the registry UA: the override is the point.
 const USER_AGENT: &str = concat!("fbuild-cli/", env!("CARGO_PKG_VERSION"));
 
 /// Top-level entry point. Non-blocking on all paths that matter — completes
@@ -237,7 +248,7 @@ async fn try_run_passive_check(
 // --------------------------------------------------------------------------
 
 fn suppress_from_env() -> bool {
-    if is_truthy_env("FBUILD_NO_UPDATE_CHECK") {
+    if fbuild_core::env_flag::is_set("FBUILD_NO_UPDATE_CHECK") {
         return true;
     }
     // CI auto-skip — the issue's open question lists this as reasonable default.
@@ -245,20 +256,6 @@ fn suppress_from_env() -> bool {
         return true;
     }
     false
-}
-
-/// True when the env var is set to a truthy value. Empty, `0`, and any
-/// case-fold of `false` are treated as falsy — matches the convention
-/// PowerShell / GitHub Actions / bash all seem to converge on.
-fn is_truthy_env(key: &str) -> bool {
-    let Ok(v) = std::env::var(key) else {
-        return false;
-    };
-    let trimmed = v.trim();
-    if trimmed.is_empty() || trimmed == "0" || trimmed.eq_ignore_ascii_case("false") {
-        return false;
-    }
-    true
 }
 
 fn is_ci_env() -> bool {
@@ -272,7 +269,7 @@ fn is_ci_env() -> bool {
         "JENKINS_URL",
     ]
     .iter()
-    .any(|k| is_truthy_env(k))
+    .any(|k| fbuild_core::env_flag::is_set(k))
 }
 
 /// Classify the running binary's install source. Never panics; returns
@@ -565,6 +562,57 @@ mod tests {
     use super::*;
     use tempfile::tempdir;
 
+    /// Serializes the two tests that mutate process-wide environment markers;
+    /// without it the CI-marker assertions race across test threads.
+    static ENV_LOCK: std::sync::Mutex<()> = std::sync::Mutex::new(());
+
+    /// Suppression uses the one canonical truth table (`fbuild_core::env_flag`),
+    /// so `no`/`off` no longer mean "suppress" (FastLED/fbuild#1798).
+    #[test]
+    fn no_update_check_follows_the_canonical_env_flag_table() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
+        const CI_KEYS: [&str; 5] = [
+            "CI",
+            "GITHUB_ACTIONS",
+            "GITLAB_CI",
+            "CIRCLECI",
+            "JENKINS_URL",
+        ];
+        let saved: Vec<(&str, Option<String>)> = CI_KEYS
+            .iter()
+            .map(|k| (*k, std::env::var(*k).ok()))
+            .collect();
+        for k in CI_KEYS {
+            std::env::remove_var(k);
+        }
+        for (value, expected) in [
+            ("1", true),
+            ("true", true),
+            ("on", true),
+            (" Yes ", true),
+            ("0", false),
+            ("no", false),
+            ("off", false),
+            ("ture", false),
+            ("", false),
+        ] {
+            std::env::set_var("FBUILD_NO_UPDATE_CHECK", value);
+            assert_eq!(
+                suppress_from_env(),
+                expected,
+                "FBUILD_NO_UPDATE_CHECK={value:?}"
+            );
+        }
+        std::env::remove_var("FBUILD_NO_UPDATE_CHECK");
+        assert!(!suppress_from_env());
+        for (k, v) in saved {
+            match v {
+                Some(val) => std::env::set_var(k, val),
+                None => std::env::remove_var(k),
+            }
+        }
+    }
+
     #[test]
     fn install_source_env_parsing() {
         assert_eq!(
@@ -773,6 +821,7 @@ mod tests {
 
     #[test]
     fn ci_detection_via_ci_env() {
+        let _guard = ENV_LOCK.lock().unwrap_or_else(|e| e.into_inner());
         // Snapshot + clear ALL CI markers we recognize, not just CI —
         // otherwise GitHub Actions' own GITHUB_ACTIONS=true poisons the
         // `assert!(!is_ci_env())` checks below.
@@ -787,7 +836,7 @@ mod tests {
             .iter()
             .map(|k| (*k, std::env::var(*k).ok()))
             .collect();
-        // SAFETY: single-threaded test process.
+        // SAFETY: held under ENV_LOCK; no other test reads these keys.
         for k in CI_KEYS {
             std::env::remove_var(k);
         }

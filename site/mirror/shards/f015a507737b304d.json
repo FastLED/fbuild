@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jibai",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jibai/library/AliyunMqttArduino/0.2.0/AliyunMqttArduino-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AliyunMqttArduino-0.2.0.tar.gz",
+    "size_bytes": 7760,
+    "sha256": "0e27b2cfd581d57f9dd05f82518adec966de74882509932a0f2a2e6d8144413a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jibai/library/AliyunMqttArduino/0.2.0/AliyunMqttArduino-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jibai/library/AliyunMqttArduino/0.2.0/AliyunMqttArduino-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

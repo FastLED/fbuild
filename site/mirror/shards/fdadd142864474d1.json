@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mickaelh51",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mickaelh51/library/Oregon/1.0.1/Oregon-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Oregon-1.0.1.tar.gz",
+    "size_bytes": 6188,
+    "sha256": "f84a38991351ee1bfa1a82e92551b6ac6efc18aab75eff7daad6b926af685b32",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mickaelh51/library/Oregon/1.0.1/Oregon-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mickaelh51/library/Oregon/1.0.1/Oregon-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

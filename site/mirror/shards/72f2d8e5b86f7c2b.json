@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/poelstra",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "poelstra/library/MultiButton/1.3.0/MultiButton-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiButton-1.3.0.tar.gz",
+    "size_bytes": 6581,
+    "sha256": "be81ff72939604cabeecff497a30dac8b1f8747054d13eab8b3e3767c65e3506",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/poelstra/library/MultiButton/1.3.0/MultiButton-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/poelstra/library/MultiButton/1.3.0/MultiButton-1.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

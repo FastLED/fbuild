@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-treebykooba",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-treebykooba/library/TwitPic/0.0.0+sha.e8e33b39c3cc/TwitPic-0.0.0+sha.e8e33b39c3cc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TwitPic-0.0.0+sha.e8e33b39c3cc.tar.gz",
+    "size_bytes": 4760,
+    "sha256": "1e69ed457156c8ef9114cfae5a981b241ac051844605b86ccb098fcc0c1cc921",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-treebykooba/library/TwitPic/0.0.0%2Bsha.e8e33b39c3cc/TwitPic-0.0.0%2Bsha.e8e33b39c3cc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-treebykooba/library/TwitPic/0.0.0%2Bsha.e8e33b39c3cc/TwitPic-0.0.0%2Bsha.e8e33b39c3cc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

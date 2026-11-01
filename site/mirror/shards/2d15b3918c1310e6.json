@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dannellyz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dannellyz/library/easyNeo/0.0.0+sha.2d59dae9531d/easyNeo-0.0.0+sha.2d59dae9531d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "easyNeo-0.0.0+sha.2d59dae9531d.tar.gz",
+    "size_bytes": 2243,
+    "sha256": "e30072805c6da0b209f603d19412d30b79540fc7ba3c8517276fa860357b3d35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dannellyz/library/easyNeo/0.0.0%2Bsha.2d59dae9531d/easyNeo-0.0.0%2Bsha.2d59dae9531d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dannellyz/library/easyNeo/0.0.0%2Bsha.2d59dae9531d/easyNeo-0.0.0%2Bsha.2d59dae9531d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

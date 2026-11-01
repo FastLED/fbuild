@@ -5,6 +5,7 @@ pub mod esp32_linker;
 pub mod fixups;
 pub mod mcu_config;
 pub mod orchestrator;
+pub mod printf_thin;
 pub(crate) mod size_report;
 
 pub use esp32_compiler::Esp32Compiler;

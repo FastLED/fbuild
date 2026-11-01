@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mmarchetti",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mmarchetti/library/DirectIO/1.2.0/DirectIO-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DirectIO-1.2.0.tar.gz",
+    "size_bytes": 25224,
+    "sha256": "622a1a455eac31d56d9f10e553c4ac3a1981e50648067a3ec3eb36e0970f1006",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mmarchetti/library/DirectIO/1.2.0/DirectIO-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mmarchetti/library/DirectIO/1.2.0/DirectIO-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

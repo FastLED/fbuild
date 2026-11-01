@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/teruyamato0731",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "teruyamato0731/library/Chassis/2.1.1/Chassis-2.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Chassis-2.1.1.tar.gz",
+    "size_bytes": 8920,
+    "sha256": "fac8dbe0de3c63f2ec78bd8a58bb9e3381dbe27aa361aa0b2339ffc68242004b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/teruyamato0731/library/Chassis/2.1.1/Chassis-2.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/teruyamato0731/library/Chassis/2.1.1/Chassis-2.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

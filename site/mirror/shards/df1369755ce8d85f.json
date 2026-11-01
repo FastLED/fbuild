@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-iut-geii-tours",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-iut-geii-tours/library/LCD_GEII_F746NG/0.0.0+sha.6e4e470c630f/LCD_GEII_F746NG-0.0.0+sha.6e4e470c630f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_GEII_F746NG-0.0.0+sha.6e4e470c630f.tar.gz",
+    "size_bytes": 4289,
+    "sha256": "f460395c285b1dac7772e4eec7d3b16f08f73353925a9cdac7392972f203dc73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-iut-geii-tours/library/LCD_GEII_F746NG/0.0.0%2Bsha.6e4e470c630f/LCD_GEII_F746NG-0.0.0%2Bsha.6e4e470c630f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-iut-geii-tours/library/LCD_GEII_F746NG/0.0.0%2Bsha.6e4e470c630f/LCD_GEII_F746NG-0.0.0%2Bsha.6e4e470c630f.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-iut-geii-tours/library/buttons/0.0.0+sha.055a9eb7d5eb/buttons-0.0.0+sha.055a9eb7d5eb.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "buttons-0.0.0+sha.055a9eb7d5eb.tar.gz",
+    "size_bytes": 1519,
+    "sha256": "05af2f203d933598a1e41cea56e297d84192c6efe30bfb85ace524d3d02ec452",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-iut-geii-tours/library/buttons/0.0.0%2Bsha.055a9eb7d5eb/buttons-0.0.0%2Bsha.055a9eb7d5eb.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-iut-geii-tours/library/buttons/0.0.0%2Bsha.055a9eb7d5eb/buttons-0.0.0%2Bsha.055a9eb7d5eb.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-iut-geii-tours/library/touches/0.0.0+sha.99bd999c4225/touches-0.0.0+sha.99bd999c4225.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "touches-0.0.0+sha.99bd999c4225.tar.gz",
+    "size_bytes": 1435,
+    "sha256": "55d4bc629bb88df9b60ea49224644a13a96a231fde77d56928062f33bdd94671",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-iut-geii-tours/library/touches/0.0.0%2Bsha.99bd999c4225/touches-0.0.0%2Bsha.99bd999c4225.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-iut-geii-tours/library/touches/0.0.0%2Bsha.99bd999c4225/touches-0.0.0%2Bsha.99bd999c4225.tar.gz"
+    ]
+   }
+  }
+ ]
+}

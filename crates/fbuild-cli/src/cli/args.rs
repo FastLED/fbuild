@@ -297,9 +297,12 @@ pub enum Commands {
         /// CH32V deploy protocol: `wlink` (default) or factory USB-ISP `isp`
         #[arg(long, value_parser = ["wlink", "isp"])]
         protocol: Option<String>,
-        /// RP2040 deploy transport: `picotool` (default, PICOBOOT-primary)
-        /// or `uf2` (mass-storage primary, historical order)
-        #[arg(long, value_parser = ["picotool", "uf2"])]
+        /// RP2040 deploy transport: `picotool` (default, PICOBOOT-primary),
+        /// `uf2` (mass-storage primary, historical order) or `swd` (CMSIS-DAP
+        /// probe via probe-rs; reaches a board that never enumerates USB).
+        /// `picotool`/`uf2` automatically retry over SWD when they fail and a
+        /// debug probe is attached (FastLED/fbuild#1423)
+        #[arg(long, value_parser = ["picotool", "uf2", "swd"])]
         transport: Option<String>,
         #[arg(short = 'c', long)]
         clean: bool,
@@ -678,6 +681,24 @@ pub enum Commands {
         #[command(subcommand)]
         action: LnkAction,
     },
+    /// Build a flash filesystem image (LittleFS/SPIFFS) from the project's
+    /// `data/` directory — PlatformIO's `buildfs` (FastLED/fbuild#1358).
+    ///
+    /// The filesystem partition's offset and size come from the board's
+    /// partition CSV, so the image is sized for the region the firmware
+    /// mounts and an oversized `data/` fails here instead of failing to
+    /// mount on the device.
+    ///
+    /// Flash the image with `fbuild uploadfs`.
+    Buildfs(super::buildfs::BuildfsArgs),
+    /// Flash a filesystem image to the partition it was built for —
+    /// PlatformIO's `uploadfs` (FastLED/fbuild#1358).
+    ///
+    /// The offset and capacity check come from the same partition CSV
+    /// `fbuild buildfs` sizes the image with, so the image is written exactly
+    /// where the firmware mounts it. A missing image is built first unless
+    /// `--no-build` is given, and `--verify` reads the region back afterwards.
+    Uploadfs(super::uploadfs::UploadfsArgs),
     /// Diagnostic: drive the LDF-style library-selection resolver and print
     /// the selected library set. Useful for debugging FastLED/fbuild#202 /
     /// `#204`-style "library not found" issues without running a full build.
@@ -806,6 +827,11 @@ pub enum Commands {
         #[command(subcommand)]
         action: super::port_scan::PortAction,
     },
+
+    /// Read-only host diagnostics (FastLED/fbuild#1750). `fbuild doctor
+    /// --check-disk` prints the free space of every root a cold ESP32 build
+    /// writes plus the bytes the caches could give back, without building.
+    Doctor(super::doctor::DoctorArgs),
 
     /// Save / restore / list / verify the fbuild cache as a single
     /// portable `.tar.zst` archive (toolchains, platforms, framework,
@@ -1124,6 +1150,8 @@ pub const KNOWN_SUBCOMMANDS: &[&str] = &[
     "bloat",
     "sync",
     "install",
+    "buildfs",
+    "uploadfs",
 ];
 
 /// Rewrite `fbuild <dir> <subcommand> ...` → `fbuild <subcommand> <dir> ...`

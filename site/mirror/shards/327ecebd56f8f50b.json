@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ropolexi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ropolexi/library/IO22C04/1.0.1/IO22C04-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IO22C04-1.0.1.tar.gz",
+    "size_bytes": 2897,
+    "sha256": "049102cb92001f4eec45e7c8b1e779d041eca4b2c3000b4c2c5f70312f3e5df9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ropolexi/library/IO22C04/1.0.1/IO22C04-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ropolexi/library/IO22C04/1.0.1/IO22C04-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

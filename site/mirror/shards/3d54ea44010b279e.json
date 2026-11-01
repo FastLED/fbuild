@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/samyz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "samyz/library/CESmartCamp/12.2.0/CESmartCamp-12.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CESmartCamp-12.2.0.tar.gz",
+    "size_bytes": 5352,
+    "sha256": "fbb08b30ec2da3d521772056c5d2945a3bc4912442a35fdce2c29fd1f71fe5ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/samyz/library/CESmartCamp/12.2.0/CESmartCamp-12.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/samyz/library/CESmartCamp/12.2.0/CESmartCamp-12.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

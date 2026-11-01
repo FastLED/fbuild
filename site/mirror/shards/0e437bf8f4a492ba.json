@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/lilcmu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "lilcmu/library/GoGoBoard%20Arduino%20Library/1.7.0/GoGoBoardArduinoLibrary-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GoGoBoardArduinoLibrary-1.7.0.tar.gz",
+    "size_bytes": 7518,
+    "sha256": "a29c6924125ed44cd2252d4cd67207e2bc168627874a8a671291dcfa9c59e895",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilcmu/library/GoGoBoard%2520Arduino%2520Library/1.7.0/GoGoBoardArduinoLibrary-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lilcmu/library/GoGoBoard%20Arduino%20Library/1.7.0/GoGoBoardArduinoLibrary-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilcmu/library/GoGoBoard%20Arduino%20Library/3.0.0/GoGoBoardArduinoLibrary-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GoGoBoardArduinoLibrary-3.0.0.tar.gz",
+    "size_bytes": 15093,
+    "sha256": "70fa3c624340c966b32c99713e902ca6c574c644bd9ca63ddab96268b91c1cc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilcmu/library/GoGoBoard%2520Arduino%2520Library/3.0.0/GoGoBoardArduinoLibrary-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lilcmu/library/GoGoBoard%20Arduino%20Library/3.0.0/GoGoBoardArduinoLibrary-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "lilcmu/library/LILCMU%20GoGoBright%20Library/1.0.0/LILCMUGoGoBrightLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LILCMUGoGoBrightLibrary-1.0.0.tar.gz",
+    "size_bytes": 3969,
+    "sha256": "20d99c44ccd90de9268532e6e31d60c0be1f37f21c131d55b965a8feb331d753",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/lilcmu/library/LILCMU%2520GoGoBright%2520Library/1.0.0/LILCMUGoGoBrightLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/lilcmu/library/LILCMU%20GoGoBright%20Library/1.0.0/LILCMUGoGoBrightLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

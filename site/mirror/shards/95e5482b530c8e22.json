@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pairble",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pairble/library/pairble-arduino/0.3.0/pairble-arduino-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pairble-arduino-0.3.0.tar.gz",
+    "size_bytes": 153200,
+    "sha256": "01d646769bd17e2698cfa4d52be12d05722748abf2555cb5b6be320375342641",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pairble/library/pairble-arduino/0.3.0/pairble-arduino-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pairble/library/pairble-arduino/0.3.0/pairble-arduino-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

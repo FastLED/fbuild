@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-b",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-b/library/MMA8451Q_tb/0.0.0+sha.34878ff9bbd7/MMA8451Q_tb-0.0.0+sha.34878ff9bbd7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MMA8451Q_tb-0.0.0+sha.34878ff9bbd7.tar.gz",
+    "size_bytes": 1884,
+    "sha256": "aade0e24e16be9490f715f4bcdf07fcd369b886380448acc2c4ce31b9a0b8fc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-b/library/MMA8451Q_tb/0.0.0%2Bsha.34878ff9bbd7/MMA8451Q_tb-0.0.0%2Bsha.34878ff9bbd7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-b/library/MMA8451Q_tb/0.0.0%2Bsha.34878ff9bbd7/MMA8451Q_tb-0.0.0%2Bsha.34878ff9bbd7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-b/library/MultiSerial/0.0.0+sha.fde0f01a0c7b/MultiSerial-0.0.0+sha.fde0f01a0c7b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiSerial-0.0.0+sha.fde0f01a0c7b.tar.gz",
+    "size_bytes": 2653,
+    "sha256": "744c00582c10076bf51e0da41bb3c77e8a29739c19d1f38e26753623af5fae43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-b/library/MultiSerial/0.0.0%2Bsha.fde0f01a0c7b/MultiSerial-0.0.0%2Bsha.fde0f01a0c7b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-b/library/MultiSerial/0.0.0%2Bsha.fde0f01a0c7b/MultiSerial-0.0.0%2Bsha.fde0f01a0c7b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-b/library/serial_extend/0.0.0+sha.e808dd01f134/serial_extend-0.0.0+sha.e808dd01f134.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "serial_extend-0.0.0+sha.e808dd01f134.tar.gz",
+    "size_bytes": 2219,
+    "sha256": "c846f6b63268a6962922ee2fcae08dee0d7b901279b5e30113c464401274283a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-b/library/serial_extend/0.0.0%2Bsha.e808dd01f134/serial_extend-0.0.0%2Bsha.e808dd01f134.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-b/library/serial_extend/0.0.0%2Bsha.e808dd01f134/serial_extend-0.0.0%2Bsha.e808dd01f134.tar.gz"
+    ]
+   }
+  }
+ ]
+}

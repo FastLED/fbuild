@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aparticka",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aparticka/library/ESP32%20BLE%20Keyboard%20Power%20Button/0.3.3/ESP32BLEKeyboardPowerButton-0.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32BLEKeyboardPowerButton-0.3.3.tar.gz",
+    "size_bytes": 8695,
+    "sha256": "0e5a0f4da0687f790badd43ba574d600a4cca2ae2e6a8931ce7b2f12c036e9e1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aparticka/library/ESP32%2520BLE%2520Keyboard%2520Power%2520Button/0.3.3/ESP32BLEKeyboardPowerButton-0.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/aparticka/library/ESP32%20BLE%20Keyboard%20Power%20Button/0.3.3/ESP32BLEKeyboardPowerButton-0.3.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

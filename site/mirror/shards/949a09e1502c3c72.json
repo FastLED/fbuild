@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/alessandromrc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "alessandromrc/library/Fastcore/1.0.0/Fastcore-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Fastcore-1.0.0.tar.gz",
+    "size_bytes": 1897,
+    "sha256": "1465d63f9af382223c0b5a262f30fce98ac3b55cc772f50d4b956e6b8ff64183",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alessandromrc/library/Fastcore/1.0.0/Fastcore-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alessandromrc/library/Fastcore/1.0.0/Fastcore-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alessandromrc/library/JOAAT/1.0.0/JOAAT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JOAAT-1.0.0.tar.gz",
+    "size_bytes": 2252,
+    "sha256": "61206ea7a5d1a7535026704cc5b09377f9dc5d968bf878c44bf96aa3e441682f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alessandromrc/library/JOAAT/1.0.0/JOAAT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/alessandromrc/library/JOAAT/1.0.0/JOAAT-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "alessandromrc/library/custom_PortentaBreakout/1.0.2/custom_PortentaBreakout-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "custom_PortentaBreakout-1.0.2.tar.gz",
+    "size_bytes": 22920,
+    "sha256": "62c17e06bb0ee610290db9e9e8990fa7e4da68cfe68c2c7a4a1c9388562f93ab",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/alessandromrc/library/custom_PortentaBreakout/1.0.2/custom_PortentaBreakout-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/alessandromrc/library/custom_PortentaBreakout/1.0.2/custom_PortentaBreakout-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

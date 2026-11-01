@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-elec2645-201516",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-elec2645-201516/library/Joystick/0.0.0+sha.c9f2a9e2f304/Joystick-0.0.0+sha.c9f2a9e2f304.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Joystick-0.0.0+sha.c9f2a9e2f304.tar.gz",
+    "size_bytes": 2533,
+    "sha256": "4586e6ec9015e25071a843ba1b2d86edf1fc7d7e6c01bceda390bbe0ef1b87b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-elec2645-201516/library/Joystick/0.0.0%2Bsha.c9f2a9e2f304/Joystick-0.0.0%2Bsha.c9f2a9e2f304.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-elec2645-201516/library/Joystick/0.0.0%2Bsha.c9f2a9e2f304/Joystick-0.0.0%2Bsha.c9f2a9e2f304.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-elec2645-201516/library/Tetris/0.0.0+sha.16c174ded933/Tetris-0.0.0+sha.16c174ded933.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tetris-0.0.0+sha.16c174ded933.tar.gz",
+    "size_bytes": 2114,
+    "sha256": "da7f0ee5c0cc63d0ecc0be0c84507324800471b92960a9708c9e9e5b82fe6e5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-elec2645-201516/library/Tetris/0.0.0%2Bsha.16c174ded933/Tetris-0.0.0%2Bsha.16c174ded933.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-elec2645-201516/library/Tetris/0.0.0%2Bsha.16c174ded933/Tetris-0.0.0%2Bsha.16c174ded933.tar.gz"
+    ]
+   }
+  }
+ ]
+}

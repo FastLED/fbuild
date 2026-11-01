@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wualeds",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wualeds/library/WuaLeds_AW20216S/0.1.1/WuaLeds_AW20216S-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WuaLeds_AW20216S-0.1.1.tar.gz",
+    "size_bytes": 6966,
+    "sha256": "c80e6e33ca3b9e3c6664001534d4f745bfbf73ee89c1281032c86a49fa112c35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wualeds/library/WuaLeds_AW20216S/0.1.1/WuaLeds_AW20216S-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/wualeds/library/WuaLeds_AW20216S/0.1.1/WuaLeds_AW20216S-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wualeds/library/WuaLeds_AW20216S/0.2.2/WuaLeds_AW20216S-0.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WuaLeds_AW20216S-0.2.2.tar.gz",
+    "size_bytes": 9483,
+    "sha256": "2d1edc97589c94e938414479bc373996370268cc456337e6f961e5614be95a74",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wualeds/library/WuaLeds_AW20216S/0.2.2/WuaLeds_AW20216S-0.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/wualeds/library/WuaLeds_AW20216S/0.2.2/WuaLeds_AW20216S-0.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "wualeds/library/WuaLeds_AW20216S/0.2.5/WuaLeds_AW20216S-0.2.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WuaLeds_AW20216S-0.2.5.tar.gz",
+    "size_bytes": 38588,
+    "sha256": "921eea2d41c6a9e17136a32b6a5d79f0edf432a0639b28a90ea027448fbaa7df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wualeds/library/WuaLeds_AW20216S/0.2.5/WuaLeds_AW20216S-0.2.5.tar.gz",
+     "https://dl.registry.platformio.org/download/wualeds/library/WuaLeds_AW20216S/0.2.5/WuaLeds_AW20216S-0.2.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

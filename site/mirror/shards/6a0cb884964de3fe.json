@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/joaquimflavio",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "joaquimflavio/library/GuaraTeca_Hardware/2.0.0/GuaraTeca_Hardware-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GuaraTeca_Hardware-2.0.0.tar.gz",
+    "size_bytes": 24722,
+    "sha256": "0534613537a02544a62b25a6c3d8314856be0e24796ce5a2ae6a20343e1418ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joaquimflavio/library/GuaraTeca_Hardware/2.0.0/GuaraTeca_Hardware-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joaquimflavio/library/GuaraTeca_Hardware/2.0.0/GuaraTeca_Hardware-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joaquimflavio/library/GuaraTeca_OBR/1.5.1/GuaraTeca_OBR-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GuaraTeca_OBR-1.5.1.tar.gz",
+    "size_bytes": 21698,
+    "sha256": "06100bff1bc6d9b6aec020b882ac307c31ba4e3410cb3456afa2c34d23171f80",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joaquimflavio/library/GuaraTeca_OBR/1.5.1/GuaraTeca_OBR-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/joaquimflavio/library/GuaraTeca_OBR/1.5.1/GuaraTeca_OBR-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joaquimflavio/library/Guarateca/1.0/Guarateca-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Guarateca-1.0.tar.gz",
+    "size_bytes": 15124,
+    "sha256": "d233a14c352b675e5cc78326d9fa553d206c12b7a643e705f344bc63cddf6c1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joaquimflavio/library/Guarateca/1.0/Guarateca-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/joaquimflavio/library/Guarateca/1.0/Guarateca-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

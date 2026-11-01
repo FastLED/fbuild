@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sleepdefic1t",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sleepdefic1t/library/BIP66/0.3.2/BIP66-0.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BIP66-0.3.2.tar.gz",
+    "size_bytes": 6684,
+    "sha256": "9e11aad32f256645c68f1856aaeb834fb8874340c36a7bdb110a5b67bf1299d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sleepdefic1t/library/BIP66/0.3.2/BIP66-0.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sleepdefic1t/library/BIP66/0.3.2/BIP66-0.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sleepdefic1t/library/bcl/0.0.5/bcl-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bcl-0.0.5.tar.gz",
+    "size_bytes": 25080,
+    "sha256": "554f32dbc3409ddec903d4c6214d97873b6061ac9bfa6394b4181d68eed4aa4a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sleepdefic1t/library/bcl/0.0.5/bcl-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/sleepdefic1t/library/bcl/0.0.5/bcl-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sleepdefic1t/library/uSTL/0.0.1/uSTL-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "uSTL-0.0.1.tar.gz",
+    "size_bytes": 3204,
+    "sha256": "bc68d1acd3106623e571b2baef2a6bb6b714d7335cffbbaca94cf45b3509292b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sleepdefic1t/library/uSTL/0.0.1/uSTL-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sleepdefic1t/library/uSTL/0.0.1/uSTL-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

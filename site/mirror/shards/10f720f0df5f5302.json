@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mrrwa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mrrwa/library/LocoNet/1.1.6/LocoNet-1.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LocoNet-1.1.6.tar.gz",
+    "size_bytes": 63106,
+    "sha256": "a7e9206fc9ad98c81691913884c5e239065fe9405babd99d342dd9c0a76595de",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrrwa/library/LocoNet/1.1.6/LocoNet-1.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/mrrwa/library/LocoNet/1.1.6/LocoNet-1.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrrwa/library/NceCabBus/0.4.0/NceCabBus-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NceCabBus-0.4.0.tar.gz",
+    "size_bytes": 78908,
+    "sha256": "347dec0284368c8d5921d8a74f181f1b41818fb2f73e37f3c52f5a2738f9ea89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrrwa/library/NceCabBus/0.4.0/NceCabBus-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mrrwa/library/NceCabBus/0.4.0/NceCabBus-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mrrwa/library/NmraDcc/2.0.17/NmraDcc-2.0.17.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NmraDcc-2.0.17.tar.gz",
+    "size_bytes": 291581,
+    "sha256": "bfb0f77ee623eae0106d1bd4038f0c1a71323984497cd1a2e3449811a01e6f11",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mrrwa/library/NmraDcc/2.0.17/NmraDcc-2.0.17.tar.gz",
+     "https://dl.registry.platformio.org/download/mrrwa/library/NmraDcc/2.0.17/NmraDcc-2.0.17.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -9,6 +9,9 @@ on:
       - 'bench/fastled-examples/src/build_comparison*.rs'
       - 'bench/fastled-examples/Cargo.toml'
       - '.github/workflows/benchmark-build-comparison.yml'
+      # Server-side download fallback settings ride the same Pages site
+      # (FastLED/fbuild#1810).
+      - 'site/mirror/**'
   schedule:
     # Off-hour UTC slot avoids the hosted-runner top-of-hour surge.
     - cron: '17 9 * * *'
@@ -27,6 +30,9 @@ env:
   ARDUINO_CLI_VERSION: '1.5.0'
   ARDUINO_AVR_CORE_VERSION: '1.8.8'
   ARDUINO_ESP32_CORE_VERSION: '3.3.7'
+  # Resolve against the registry index committed at this sha, not the copy
+  # this very workflow is about to publish (FastLED/fbuild#1829).
+  FBUILD_MIRROR_MANIFEST_URL: https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/site/mirror/manifest.json
 
 jobs:
   benchmark:
@@ -191,6 +197,23 @@ jobs:
         with:
           name: build-comparison-site-${{ github.sha }}
           path: benchmark-stats
+
+      - name: Check out the mirror manifest
+        uses: actions/checkout@v6
+        with:
+          path: repo
+          sparse-checkout: site/mirror
+          sparse-checkout-cone-mode: false
+
+      # Pages deploys replace the whole site, so every deploy must carry the
+      # download mirror manifest fbuild clients fetch (FastLED/fbuild#1810).
+      - name: Add the mirror manifest to the site
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p benchmark-stats/mirror
+          # The Index points at per-owner shards (FastLED/fbuild#1815); ship them too.
+          cp -a repo/site/mirror/. benchmark-stats/mirror/
 
       - name: Publish one-commit benchmark-stats branch
         shell: bash

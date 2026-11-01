@@ -87,38 +87,60 @@ pub(super) async fn prepare_boot_artifacts(
                 board.max_flash,
                 mcu_config.default_flash_size(),
             );
-            // Prefer the provisioned standalone esptool binary; fall back to an
-            // `esptool` on PATH (FastLED/fbuild#954).
-            let argv = crate::esp32::esp32_linker::esptool_elf2image_argv(
-                esptool_bin,
-                &board.mcu,
-                boot_flash_mode,
-                flash_freq,
-                flash_size,
-                &boot_elf_str,
-                &boot_dst_str,
-            );
-            let args: Vec<&str> = argv.iter().map(|s| s.as_str()).collect();
-            match fbuild_core::subprocess::run_command(
-                &args,
-                None,
-                spawn_env.as_deref(),
-                Some(std::time::Duration::from_secs(60)),
-            )
-            .await
-            {
-                Ok(result) if result.success() => {
-                    tracing::info!("converted bootloader ELF → bootloader.bin");
-                }
-                Ok(result) => {
-                    tracing::warn!(
-                        "bootloader elf2image failed: {}{}",
-                        result.stderr,
-                        result.stdout
-                    );
-                }
-                Err(e) => {
-                    tracing::warn!("esptool not found for bootloader conversion: {}", e);
+            // A fresh project dir converts the same immutable framework ELF
+            // with the same tool and parameters as every earlier project, so
+            // reuse that output instead of spawning esptool again
+            // (FastLED/fbuild#1414). The key is a bare-name tool's absence:
+            // an unresolvable `esptool` on PATH cannot be stamped.
+            let cache_root = fbuild_paths::get_cache_root();
+            let cache_key = esptool_bin.and_then(|bin| {
+                super::boot_artifacts_cache::ArtifactKey::new(
+                    bin,
+                    &[board.mcu.as_str(), boot_flash_mode, flash_freq, flash_size],
+                )
+            });
+            let reused = cache_key
+                .as_ref()
+                .is_some_and(|key| key.materialize(&cache_root, &boot_dst));
+            if reused {
+                tracing::info!("bootloader.bin: reused cached conversion");
+            } else {
+                // Prefer the provisioned standalone esptool binary; fall back to an
+                // `esptool` on PATH (FastLED/fbuild#954).
+                let argv = crate::esp32::esp32_linker::esptool_elf2image_argv(
+                    esptool_bin,
+                    &board.mcu,
+                    boot_flash_mode,
+                    flash_freq,
+                    flash_size,
+                    &boot_elf_str,
+                    &boot_dst_str,
+                );
+                let args: Vec<&str> = argv.iter().map(|s| s.as_str()).collect();
+                match fbuild_core::subprocess::run_command(
+                    &args,
+                    None,
+                    spawn_env.as_deref(),
+                    Some(std::time::Duration::from_secs(60)),
+                )
+                .await
+                {
+                    Ok(result) if result.success() => {
+                        tracing::info!("converted bootloader ELF → bootloader.bin");
+                        if let Some(key) = &cache_key {
+                            key.store(&cache_root, &boot_dst);
+                        }
+                    }
+                    Ok(result) => {
+                        tracing::warn!(
+                            "bootloader elf2image failed: {}{}",
+                            result.stderr,
+                            result.stdout
+                        );
+                    }
+                    Err(e) => {
+                        tracing::warn!("esptool not found for bootloader conversion: {}", e);
+                    }
                 }
             }
         } else {
@@ -149,38 +171,56 @@ pub(super) async fn prepare_boot_artifacts(
             let gen_tool_str = gen_tool.to_string_lossy();
             let parts_csv_str = parts_csv.to_string_lossy();
             let parts_dst_str = parts_dst.to_string_lossy();
-            // `python` doesn't exist on modern distros (ubuntu 24.04 ships
-            // only `python3`); resolve the interpreter the same way the
-            // extra_scripts runtime does.
-            let python = match managed_python(esptool_bin) {
-                Some(python) => vec![python.to_string_lossy().into_owned()],
-                None => crate::script_runtime::find_python_with_path(caller_path)
-                    .await
-                    .unwrap_or_else(|| vec!["python".to_string()]),
-            };
-            let mut args: Vec<&str> = python.iter().map(|s| s.as_str()).collect();
-            args.extend([
-                gen_tool_str.as_ref(),
-                "-q",
-                parts_csv_str.as_ref(),
-                parts_dst_str.as_ref(),
-            ]);
-            match fbuild_core::subprocess::run_command(
-                &args,
-                None,
-                spawn_env.as_deref(),
-                Some(std::time::Duration::from_secs(10)),
-            )
-            .await
-            {
-                Ok(result) if result.success() => {
-                    tracing::info!("generated partitions.bin from {}", partitions_name);
-                }
-                Ok(result) => {
-                    tracing::warn!("gen_esp32part.py failed: {}", result.stderr);
-                }
-                Err(e) => {
-                    tracing::warn!("python not found for partitions generation: {}", e);
+            // The generated table is a pure function of the CSV bytes and the
+            // generator script, so a fresh project dir reuses the previous
+            // output instead of spawning python (FastLED/fbuild#1414).
+            let cache_root = fbuild_paths::get_cache_root();
+            let cache_key = std::fs::read(&parts_csv).ok().and_then(|bytes| {
+                let hash = super::boot_artifacts_cache::content_hash(&bytes);
+                super::boot_artifacts_cache::ArtifactKey::new(&gen_tool, &[hash.as_str()])
+            });
+            let reused = cache_key
+                .as_ref()
+                .is_some_and(|key| key.materialize(&cache_root, &parts_dst));
+            if reused {
+                tracing::info!("partitions.bin: reused cached generation");
+            } else {
+                // `python` doesn't exist on modern distros (ubuntu 24.04 ships
+                // only `python3`); resolve the interpreter the same way the
+                // extra_scripts runtime does.
+                let python = match managed_python(esptool_bin) {
+                    Some(python) => vec![python.to_string_lossy().into_owned()],
+                    None => crate::script_runtime::find_python_with_path(caller_path)
+                        .await
+                        .unwrap_or_else(|| vec!["python".to_string()]),
+                };
+                let mut args: Vec<&str> = python.iter().map(|s| s.as_str()).collect();
+                args.extend([
+                    gen_tool_str.as_ref(),
+                    "-q",
+                    parts_csv_str.as_ref(),
+                    parts_dst_str.as_ref(),
+                ]);
+                match fbuild_core::subprocess::run_command(
+                    &args,
+                    None,
+                    spawn_env.as_deref(),
+                    Some(std::time::Duration::from_secs(10)),
+                )
+                .await
+                {
+                    Ok(result) if result.success() => {
+                        tracing::info!("generated partitions.bin from {}", partitions_name);
+                        if let Some(key) = &cache_key {
+                            key.store(&cache_root, &parts_dst);
+                        }
+                    }
+                    Ok(result) => {
+                        tracing::warn!("gen_esp32part.py failed: {}", result.stderr);
+                    }
+                    Err(e) => {
+                        tracing::warn!("python not found for partitions generation: {}", e);
+                    }
                 }
             }
         } else {

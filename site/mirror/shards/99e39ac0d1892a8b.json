@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/otadrive",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "otadrive/library/OTAdrive/1.1.33/OTAdrive-1.1.33.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OTAdrive-1.1.33.tar.gz",
+    "size_bytes": 1504621,
+    "sha256": "37e3bbf3e45153d3d6fc812f9ef3c22ef6fc825404234f930268dad9f3aa49f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/otadrive/library/OTAdrive/1.1.33/OTAdrive-1.1.33.tar.gz",
+     "https://dl.registry.platformio.org/download/otadrive/library/OTAdrive/1.1.33/OTAdrive-1.1.33.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "otadrive/library/OTAdrive/1.1.34/OTAdrive-1.1.34.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OTAdrive-1.1.34.tar.gz",
+    "size_bytes": 1505917,
+    "sha256": "8f95f72f161be7a4fdf169f547ad2f1fe2ffaba786172cfc357dd52e5d63f82f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/otadrive/library/OTAdrive/1.1.34/OTAdrive-1.1.34.tar.gz",
+     "https://dl.registry.platformio.org/download/otadrive/library/OTAdrive/1.1.34/OTAdrive-1.1.34.tar.gz"
+    ]
+   }
+  }
+ ]
+}

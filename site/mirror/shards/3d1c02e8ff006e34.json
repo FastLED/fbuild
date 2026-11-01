@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cwi-dis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cwi-dis/library/iotsa/2.9.1/iotsa-2.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iotsa-2.9.1.tar.gz",
+    "size_bytes": 128006,
+    "sha256": "7b1671e5cb4efee12404d3bf8d8ca50b1798b33fecffcc55c4c62d35768b42ad",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cwi-dis/library/iotsa/2.9.1/iotsa-2.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cwi-dis/library/iotsa/2.9.1/iotsa-2.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cwi-dis/library/iotsa/2.9.2/iotsa-2.9.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "iotsa-2.9.2.tar.gz",
+    "size_bytes": 132367,
+    "sha256": "4d81aa61836e993dab4d4f57bc1944765d8cd9581e7aa2ab5116c7477d7a4879",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cwi-dis/library/iotsa/2.9.2/iotsa-2.9.2.tar.gz",
+     "https://dl.registry.platformio.org/download/cwi-dis/library/iotsa/2.9.2/iotsa-2.9.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

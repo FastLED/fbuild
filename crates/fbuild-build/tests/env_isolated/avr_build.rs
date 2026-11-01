@@ -132,6 +132,7 @@ async fn build_uno_minimal() {
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
+        shrink: Default::default(),
         env_name: "uno".to_string(),
         clean_all: false,
         clean_only: false,
@@ -241,6 +242,7 @@ async fn compare_with_python_output() {
 
     let params = BuildParams {
         project_dir: project_dir.clone(),
+        shrink: Default::default(),
         env_name: "uno".to_string(),
         clean_all: false,
         clean: true,
@@ -340,6 +342,7 @@ void loop() {
     ));
     let params = BuildParams {
         project_dir: project_dir.to_path_buf(),
+        shrink: Default::default(),
         env_name: "uno".to_string(),
         clean_all: false,
         clean: true,
@@ -408,6 +411,7 @@ fn scaffold_uno_blink(project_dir: &Path) {
 fn uno_build_params(project_dir: &Path, build_dir: PathBuf, clean: bool) -> BuildParams {
     BuildParams {
         project_dir: project_dir.to_path_buf(),
+        shrink: Default::default(),
         env_name: "uno".to_string(),
         clean,
         clean_all: false,

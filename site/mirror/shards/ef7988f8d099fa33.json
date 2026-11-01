@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-maxint",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-maxint/library/RETRO_BallsAndThings/0.0.0+sha.19dd2a538cbe/RETRO_BallsAndThings-0.0.0+sha.19dd2a538cbe.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RETRO_BallsAndThings-0.0.0+sha.19dd2a538cbe.tar.gz",
+    "size_bytes": 8233,
+    "sha256": "3b19c034856237f5a89a7678cc8b79e2b759303dc4e237e9643ab0f77615e91c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-maxint/library/RETRO_BallsAndThings/0.0.0%2Bsha.19dd2a538cbe/RETRO_BallsAndThings-0.0.0%2Bsha.19dd2a538cbe.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-maxint/library/RETRO_BallsAndThings/0.0.0%2Bsha.19dd2a538cbe/RETRO_BallsAndThings-0.0.0%2Bsha.19dd2a538cbe.tar.gz"
+    ]
+   }
+  }
+ ]
+}

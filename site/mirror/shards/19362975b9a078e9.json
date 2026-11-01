@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gamebuino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gamebuino/library/Gamebuino%20Classic/0.5.2/GamebuinoClassic-0.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GamebuinoClassic-0.5.2.tar.gz",
+    "size_bytes": 59708,
+    "sha256": "db17558d7ddc3af5cacba181e7345b11d6a3f41150a9445cbefa86fe7bb53e39",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gamebuino/library/Gamebuino%2520Classic/0.5.2/GamebuinoClassic-0.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gamebuino/library/Gamebuino%20Classic/0.5.2/GamebuinoClassic-0.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gamebuino/library/Gamebuino%20META/1.3.3/GamebuinoMETA-1.3.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GamebuinoMETA-1.3.3.tar.gz",
+    "size_bytes": 5855488,
+    "sha256": "b1963458c9cedfe8a21b6d6a44d87e0d45a05487f49f48d7310da7741c1998bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gamebuino/library/Gamebuino%2520META/1.3.3/GamebuinoMETA-1.3.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gamebuino/library/Gamebuino%20META/1.3.3/GamebuinoMETA-1.3.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gamebuino/library/Gamebuino/0.4/Gamebuino-0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Gamebuino-0.4.tar.gz",
+    "size_bytes": 59693,
+    "sha256": "b532e7bc6712c266bfe34da33c18aafdc7e013d348d153945258f47fbdedfd10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gamebuino/library/Gamebuino/0.4/Gamebuino-0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/gamebuino/library/Gamebuino/0.4/Gamebuino-0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

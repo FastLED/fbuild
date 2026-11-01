@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/h3cx",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "h3cx/library/MuBus/0.0.1/MuBus-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MuBus-0.0.1.tar.gz",
+    "size_bytes": 2524,
+    "sha256": "5f368b104d578370e5ffee4554516e5f963fee941957f8f01f5294b659f4ad51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h3cx/library/MuBus/0.0.1/MuBus-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/h3cx/library/MuBus/0.0.1/MuBus-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h3cx/library/MuBus/0.0.2/MuBus-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MuBus-0.0.2.tar.gz",
+    "size_bytes": 2534,
+    "sha256": "614a9a7ca8f5d9c45ba90ac609d118e2731569df79a5f7b09d53fafb5f1399aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h3cx/library/MuBus/0.0.2/MuBus-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/h3cx/library/MuBus/0.0.2/MuBus-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "h3cx/library/MuBus/0.0.3/MuBus-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MuBus-0.0.3.tar.gz",
+    "size_bytes": 2539,
+    "sha256": "166cef0eb7ffeab76967708ca627727457c2e194d74f17f5e092b0b4b400f38f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/h3cx/library/MuBus/0.0.3/MuBus-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/h3cx/library/MuBus/0.0.3/MuBus-0.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aitinkr",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aitinkr/library/AITINKR_AIOT_DEVBOARD/1.0.0/AITINKR_AIOT_DEVBOARD-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AITINKR_AIOT_DEVBOARD-1.0.0.tar.gz",
+    "size_bytes": 2493,
+    "sha256": "f9e564956c58cc66e185a94be02a4aafd51806246e5b387c8b445b3f5ed598a8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aitinkr/library/AITINKR_AIOT_DEVBOARD/1.0.0/AITINKR_AIOT_DEVBOARD-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aitinkr/library/AITINKR_AIOT_DEVBOARD/1.0.0/AITINKR_AIOT_DEVBOARD-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aitinkr/library/AITINKR_AIOT_V2/1.2.0/AITINKR_AIOT_V2-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AITINKR_AIOT_V2-1.2.0.tar.gz",
+    "size_bytes": 18454,
+    "sha256": "eca610f297819e15ab4cd81dc43263d0eed1f2ada9dc6bb935d493b3f9f36db9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aitinkr/library/AITINKR_AIOT_V2/1.2.0/AITINKR_AIOT_V2-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aitinkr/library/AITINKR_AIOT_V2/1.2.0/AITINKR_AIOT_V2-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aitinkr/library/AITINKR_JSON_FIELDS/1.0.1/AITINKR_JSON_FIELDS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AITINKR_JSON_FIELDS-1.0.1.tar.gz",
+    "size_bytes": 2681,
+    "sha256": "ba7466b3499cbea4e0f9dc22e94ac52af991388aa66b6c120e2714bb37d8b79c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aitinkr/library/AITINKR_JSON_FIELDS/1.0.1/AITINKR_JSON_FIELDS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aitinkr/library/AITINKR_JSON_FIELDS/1.0.1/AITINKR_JSON_FIELDS-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "aitinkr/library/AITINKR_SHIELDS/1.0.1/AITINKR_SHIELDS-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AITINKR_SHIELDS-1.0.1.tar.gz",
+    "size_bytes": 1818,
+    "sha256": "986beac1616d6bb887d449652e9f8a9a047c9681815121ac91205128e520061a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aitinkr/library/AITINKR_SHIELDS/1.0.1/AITINKR_SHIELDS-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aitinkr/library/AITINKR_SHIELDS/1.0.1/AITINKR_SHIELDS-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

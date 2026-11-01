@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gerlech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gerlech/library/AsyncWebConfig/1.0.2/AsyncWebConfig-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncWebConfig-1.0.2.tar.gz",
+    "size_bytes": 13070,
+    "sha256": "e12d9f163d024ea8d19c8e1c75a263e5d6985ba4b83311da905f3be6c8c62e55",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gerlech/library/AsyncWebConfig/1.0.2/AsyncWebConfig-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gerlech/library/AsyncWebConfig/1.0.2/AsyncWebConfig-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gerlech/library/LG_Matrix_Print/1.0/LG_Matrix_Print-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LG_Matrix_Print-1.0.tar.gz",
+    "size_bytes": 18326,
+    "sha256": "2a673f9ef0dd5d6b85573786bb9013af3fdf2341037ee034591b630433c0d7c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gerlech/library/LG_Matrix_Print/1.0/LG_Matrix_Print-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gerlech/library/LG_Matrix_Print/1.0/LG_Matrix_Print-1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gerlech/library/Talking_Display/1.5/Talking_Display-1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Talking_Display-1.5.tar.gz",
+    "size_bytes": 19805,
+    "sha256": "74837ba2e58530ab789e163df688cbe7aec31143ef7581c9472089572306a227",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gerlech/library/Talking_Display/1.5/Talking_Display-1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/gerlech/library/Talking_Display/1.5/Talking_Display-1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gerlech/library/TouchEvent/1.3/TouchEvent-1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TouchEvent-1.3.tar.gz",
+    "size_bytes": 18572,
+    "sha256": "d77d37c2fc02847d80cb37e46fc9f5f6d9095fbb02a65d766d398918337b56a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gerlech/library/TouchEvent/1.3/TouchEvent-1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/gerlech/library/TouchEvent/1.3/TouchEvent-1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gerlech/library/WebConfig/1.4.2/WebConfig-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WebConfig-1.4.2.tar.gz",
+    "size_bytes": 13042,
+    "sha256": "1eba7dd00504d13971c8c16fb7d05d0eea98ffc181b000078a751f115c932c63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gerlech/library/WebConfig/1.4.2/WebConfig-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gerlech/library/WebConfig/1.4.2/WebConfig-1.4.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

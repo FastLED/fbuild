@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/anuragpanda",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "anuragpanda/library/ECGFilter/1.0.0/ECGFilter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ECGFilter-1.0.0.tar.gz",
+    "size_bytes": 4282,
+    "sha256": "af2f014947ae5b294552823facfbcc7dbdd5aaa9ac165f0d789303cd9036cbc6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anuragpanda/library/ECGFilter/1.0.0/ECGFilter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/anuragpanda/library/ECGFilter/1.0.0/ECGFilter-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anuragpanda/library/EEGFilter/1.0.0/EEGFilter-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEGFilter-1.0.0.tar.gz",
+    "size_bytes": 5882,
+    "sha256": "6cd5b2d7dc2653ffbb1f389ed97ec5bedc8bf87b26e86cf685adc714aa7e81d9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anuragpanda/library/EEGFilter/1.0.0/EEGFilter-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/anuragpanda/library/EEGFilter/1.0.0/EEGFilter-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anuragpanda/library/EEGFilter/1.0.1/EEGFilter-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EEGFilter-1.0.1.tar.gz",
+    "size_bytes": 5533,
+    "sha256": "7669097e23f96514db9add384986fc9e8b3247d919ef278ce8209b26fb20e0c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anuragpanda/library/EEGFilter/1.0.1/EEGFilter-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/anuragpanda/library/EEGFilter/1.0.1/EEGFilter-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

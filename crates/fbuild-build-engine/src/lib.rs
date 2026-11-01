@@ -17,6 +17,8 @@ pub mod build_output;
 pub mod compile_backend;
 pub mod compile_database;
 pub mod compiler;
+pub mod disk_footprint;
+pub mod disk_preflight;
 pub mod eh_frame_policy;
 pub mod eh_frame_policy_compute;
 pub mod flag_overlay;
@@ -199,6 +201,13 @@ pub struct BuildParams {
     /// actually emitted. This unblocks per-symbol bloat analysis on
     /// over-budget builds. See FastLED/fbuild#594.
     pub bloat_analysis: bool,
+    /// Resolved `--shrink` mode for this build (FastLED/fbuild#1459).
+    ///
+    /// Resolved once at the CLI boundary (`shrink::resolve_explicit` +
+    /// `resolve_for_context`) and forwarded per request like `caller_path`,
+    /// because the daemon does not inherit the caller's flags. Distinct from
+    /// `extra_build_flags`: shrinkers change the link, not the compile line.
+    pub shrink: crate::shrink::ShrinkMode,
     /// The CLI caller's PATH, forwarded per request so bare-name tool
     /// spawns (esptool, python, objcopy) resolve against the caller's
     /// environment instead of the daemon's spawn-time PATH
@@ -242,3 +251,8 @@ mod tests {
         warn_debug_build_flags(&["-O2".to_string(), "-Wall".to_string()]);
     }
 }
+
+#[cfg(test)]
+mod disk_footprint_tests;
+#[cfg(test)]
+mod disk_preflight_tests;

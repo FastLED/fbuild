@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pupariaa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pupariaa/library/Lucarne/0.1.1/Lucarne-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lucarne-0.1.1.tar.gz",
+    "size_bytes": 59031,
+    "sha256": "a909f476f912b33230e28881b4a261c73ce006f09741b9c536167a5b975aa889",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pupariaa/library/Lucarne/0.1.1/Lucarne-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pupariaa/library/Lucarne/0.1.1/Lucarne-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pupariaa/library/Lucarne/0.1.4/Lucarne-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lucarne-0.1.4.tar.gz",
+    "size_bytes": 89867,
+    "sha256": "cc36fad608e642e5363db59d9d577620c9eec47ec5839c1786480103a96174df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pupariaa/library/Lucarne/0.1.4/Lucarne-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/pupariaa/library/Lucarne/0.1.4/Lucarne-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pupariaa/library/Lucarne/0.2.0/Lucarne-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lucarne-0.2.0.tar.gz",
+    "size_bytes": 91862,
+    "sha256": "86dbd3efcce0305b17643a198f5df961cb2daf0d4b0649f73902b3dd34a4ddbf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pupariaa/library/Lucarne/0.2.0/Lucarne-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pupariaa/library/Lucarne/0.2.0/Lucarne-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pupariaa/library/Lucarne/0.3.0/Lucarne-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Lucarne-0.3.0.tar.gz",
+    "size_bytes": 1242788,
+    "sha256": "ae67e5fb90838f0ed2ede6f8424843fc295622fc5e32113e6bc6cdb87c5a0339",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pupariaa/library/Lucarne/0.3.0/Lucarne-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pupariaa/library/Lucarne/0.3.0/Lucarne-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

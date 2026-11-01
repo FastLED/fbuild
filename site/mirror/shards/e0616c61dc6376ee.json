@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ailagari",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ailagari/library/JMCMotorControl/1.3.1/JMCMotorControl-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JMCMotorControl-1.3.1.tar.gz",
+    "size_bytes": 26339,
+    "sha256": "691c27db9f14c431f937419a22ae17002b36b619c1acb5d9bca571191f548ec3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ailagari/library/JMCMotorControl/1.3.1/JMCMotorControl-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ailagari/library/JMCMotorControl/1.3.1/JMCMotorControl-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ailagari/library/JMCMotorControl/1.5.1/JMCMotorControl-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JMCMotorControl-1.5.1.tar.gz",
+    "size_bytes": 28292,
+    "sha256": "37ca3b62d0985ffc4cf631da711c851a07bc9df32ed990592e75ece4816d2b3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ailagari/library/JMCMotorControl/1.5.1/JMCMotorControl-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ailagari/library/JMCMotorControl/1.5.1/JMCMotorControl-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ailagari/library/JMCMotorControl/1.7.0/JMCMotorControl-1.7.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JMCMotorControl-1.7.0.tar.gz",
+    "size_bytes": 33195,
+    "sha256": "a88f6eaf20cdf27addd036dd40b1a246a08f24bf241861874c592878b5a3ee86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ailagari/library/JMCMotorControl/1.7.0/JMCMotorControl-1.7.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ailagari/library/JMCMotorControl/1.7.0/JMCMotorControl-1.7.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ailagari/library/JMCMotorControl/1.7.1/JMCMotorControl-1.7.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JMCMotorControl-1.7.1.tar.gz",
+    "size_bytes": 36928,
+    "sha256": "6b7304e335216356bf96cad21a333c03426d72eea38da52f310a640533e728e0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ailagari/library/JMCMotorControl/1.7.1/JMCMotorControl-1.7.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ailagari/library/JMCMotorControl/1.7.1/JMCMotorControl-1.7.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ailagari/library/JMCMotors/0.1.1/LagariMotors-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LagariMotors-0.1.1.tar.gz",
+    "size_bytes": 29611,
+    "sha256": "2b34d3b53aa6241ce0243caa2e961a4f8c6c8b5e62efc0bfe8592bad3612efd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ailagari/library/JMCMotors/0.1.1/LagariMotors-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ailagari/library/JMCMotors/0.1.1/LagariMotors-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ailagari/library/JMCMotors/0.3.0/LagariMotors-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LagariMotors-0.3.0.tar.gz",
+    "size_bytes": 31363,
+    "sha256": "50b54cea17eefca18351e6c7e005172d16e4c0edc7cfeced3f399e8b9ca2fb35",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ailagari/library/JMCMotors/0.3.0/LagariMotors-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ailagari/library/JMCMotors/0.3.0/LagariMotors-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ailagari/library/JMCMotors/0.5.1/JMCMotors-0.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JMCMotors-0.5.1.tar.gz",
+    "size_bytes": 45287,
+    "sha256": "26772e36d87b59714e62a5d5e0d49967b407c1a238fbc934bac09fd565875932",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ailagari/library/JMCMotors/0.5.1/JMCMotors-0.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ailagari/library/JMCMotors/0.5.1/JMCMotors-0.5.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

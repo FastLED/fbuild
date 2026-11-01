@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nseinlet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nseinlet/library/Modelisme/1.0/Modelisme-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modelisme-1.0.tar.gz",
+    "size_bytes": 20291,
+    "sha256": "11b8aa0f2627b52451aac82c6c31725fa07b18e70beee126f682ad96be54ae3b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nseinlet/library/Modelisme/1.0/Modelisme-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nseinlet/library/Modelisme/1.0/Modelisme-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/virtual-maker",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "virtual-maker/library/MaterialBoard/1.0.0/MaterialBoard-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MaterialBoard-1.0.0.tar.gz",
+    "size_bytes": 87266,
+    "sha256": "fd6d2beb7321b472c9c91bcbeaafeff50ee417f7b258057982989fcf411f53dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/virtual-maker/library/MaterialBoard/1.0.0/MaterialBoard-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/virtual-maker/library/MaterialBoard/1.0.0/MaterialBoard-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

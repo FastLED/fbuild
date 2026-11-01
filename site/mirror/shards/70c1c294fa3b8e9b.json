@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jhershey69",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jhershey69/library/DarkSkySevenDay/1.0.0/DarkSkySevenDay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DarkSkySevenDay-1.0.0.tar.gz",
+    "size_bytes": 19583,
+    "sha256": "344d1bcfd5085705d7bb1eee73dbbac39b02652164a82ca137eb16c07d4b2ca3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jhershey69/library/DarkSkySevenDay/1.0.0/DarkSkySevenDay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jhershey69/library/DarkSkySevenDay/1.0.0/DarkSkySevenDay-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jhershey69/library/MoonStruck/1.0.0/MoonStruck-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MoonStruck-1.0.0.tar.gz",
+    "size_bytes": 14200,
+    "sha256": "d5b8a512a8022a0992135b737fb39528193b4e7d1e8107d6dd139aab4cd523f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jhershey69/library/MoonStruck/1.0.0/MoonStruck-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jhershey69/library/MoonStruck/1.0.0/MoonStruck-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jhershey69/library/OpenWeatherOneCall/4.0.3/OpenWeatherOneCall-4.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenWeatherOneCall-4.0.3.tar.gz",
+    "size_bytes": 59962,
+    "sha256": "35b04be9a67e4d85d9693e5116a9c4a2cd2689cc338287364ee61b6061149d3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jhershey69/library/OpenWeatherOneCall/4.0.3/OpenWeatherOneCall-4.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jhershey69/library/OpenWeatherOneCall/4.0.3/OpenWeatherOneCall-4.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jhershey69/library/WiFiTri/1.0.0/WiFiTri-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WiFiTri-1.0.0.tar.gz",
+    "size_bytes": 14555,
+    "sha256": "e6bdefed6d1e74e7153934905d1bb1c1a0d0dbe9ef328a53e4a2edca11a59abf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jhershey69/library/WiFiTri/1.0.0/WiFiTri-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jhershey69/library/WiFiTri/1.0.0/WiFiTri-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jhershey69/library/weatherLocation/1.0.5/weatherLocation-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "weatherLocation-1.0.5.tar.gz",
+    "size_bytes": 17325,
+    "sha256": "ecaa65c637eb927f67ec0b08e3352c3517b4f8b65f8a211ee9deafc1e8d60892",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jhershey69/library/weatherLocation/1.0.5/weatherLocation-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/jhershey69/library/weatherLocation/1.0.5/weatherLocation-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

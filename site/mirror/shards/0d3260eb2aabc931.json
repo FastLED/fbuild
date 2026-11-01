@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-cox",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-cox/library/LCD4884/0.0.0+sha.28f3c9274ea7/LCD4884-0.0.0+sha.28f3c9274ea7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD4884-0.0.0+sha.28f3c9274ea7.tar.gz",
+    "size_bytes": 4872,
+    "sha256": "f869ab58f3750da7ffe6012063d73497ee49c9302467ac4b5d9c70e6de888c3c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-cox/library/LCD4884/0.0.0%2Bsha.28f3c9274ea7/LCD4884-0.0.0%2Bsha.28f3c9274ea7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-cox/library/LCD4884/0.0.0%2Bsha.28f3c9274ea7/LCD4884-0.0.0%2Bsha.28f3c9274ea7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

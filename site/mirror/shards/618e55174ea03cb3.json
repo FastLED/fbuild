@@ -1,0 +1,139 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/me-no-dev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "me-no-dev/library/AsyncTCP/1.0.3/AsyncTCP-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-1.0.3.tar.gz",
+    "size_bytes": 11848,
+    "sha256": "edff029661a76688262020b39747cbfc6b46db77e7b5367f28adc163f21a5c33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/me-no-dev/library/AsyncTCP/1.0.3/AsyncTCP-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/me-no-dev/library/AsyncTCP/1.0.3/AsyncTCP-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "me-no-dev/library/AsyncTCP/1.1.1/AsyncTCP-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-1.1.1.tar.gz",
+    "size_bytes": 17086,
+    "sha256": "b8e82e6804699ecb9f6c4ac78613fbfc32ce41c6d3f14cccd1612b294a3f5f06",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/me-no-dev/library/AsyncTCP/1.1.1/AsyncTCP-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/me-no-dev/library/AsyncTCP/1.1.1/AsyncTCP-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "me-no-dev/library/AsyncTCP/3.3.2/AsyncTCP-3.3.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AsyncTCP-3.3.2.tar.gz",
+    "size_bytes": 17570,
+    "sha256": "ccf7f1d36f6612fa8a2866406a63c2370270689de1899bd9a7d9f58e1b051170",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/me-no-dev/library/AsyncTCP/3.3.2/AsyncTCP-3.3.2.tar.gz",
+     "https://dl.registry.platformio.org/download/me-no-dev/library/AsyncTCP/3.3.2/AsyncTCP-3.3.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "me-no-dev/library/ESPAsyncTCP/1.2.0/ESPAsyncTCP-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncTCP-1.2.0.tar.gz",
+    "size_bytes": 25992,
+    "sha256": "bc148f2b64d332e6a62a6eed9af459c532aabc84a23f657ae9e2ab09d0f47d20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/me-no-dev/library/ESPAsyncTCP/1.2.0/ESPAsyncTCP-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/me-no-dev/library/ESPAsyncTCP/1.2.0/ESPAsyncTCP-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "me-no-dev/library/ESPAsyncTCP/1.2.2/ESPAsyncTCP-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncTCP-1.2.2.tar.gz",
+    "size_bytes": 36896,
+    "sha256": "13a0f5265d0657519acebefe3909d47f2a3094e225aa229095d2593394d5103a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/me-no-dev/library/ESPAsyncTCP/1.2.2/ESPAsyncTCP-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/me-no-dev/library/ESPAsyncTCP/1.2.2/ESPAsyncTCP-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "me-no-dev/library/ESPAsyncTCP/2.0.0/ESPAsyncTCP-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncTCP-2.0.0.tar.gz",
+    "size_bytes": 37411,
+    "sha256": "182cfe0ba290b4d16d68931b06a4c73378e66f5d37bce28ba131ef8d82347472",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/me-no-dev/library/ESPAsyncTCP/2.0.0/ESPAsyncTCP-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/me-no-dev/library/ESPAsyncTCP/2.0.0/ESPAsyncTCP-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "me-no-dev/library/ESPAsyncUDP/0.0.0-alpha+sha.697c75a025/ESPAsyncUDP-0.0.0-alphasha.697c75a025.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncUDP-0.0.0-alphasha.697c75a025.tar.gz",
+    "size_bytes": 8348,
+    "sha256": "44f19c4fa16467954d4e5046372c036756bca3f5b9da7c5a1839d075059e0dc9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/me-no-dev/library/ESPAsyncUDP/0.0.0-alpha%2Bsha.697c75a025/ESPAsyncUDP-0.0.0-alphasha.697c75a025.tar.gz",
+     "https://dl.registry.platformio.org/download/me-no-dev/library/ESPAsyncUDP/0.0.0-alpha%2Bsha.697c75a025/ESPAsyncUDP-0.0.0-alphasha.697c75a025.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "me-no-dev/library/ESPAsyncWebServer/1.2.3/ESPAsyncWebServer-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-1.2.3.tar.gz",
+    "size_bytes": 79939,
+    "sha256": "4ddb739c3e06fc34ab91e2b2c8953930a77f041379b1b06023cfe661e5bf7ff5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/me-no-dev/library/ESPAsyncWebServer/1.2.3/ESPAsyncWebServer-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/me-no-dev/library/ESPAsyncWebServer/1.2.3/ESPAsyncWebServer-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "me-no-dev/library/ESPAsyncWebServer/1.2.4/ESPAsyncWebServer-1.2.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-1.2.4.tar.gz",
+    "size_bytes": 74912,
+    "sha256": "72b132028e9e917d1077b266af8e6cb8e9da08150db4ae259fe2ee169524ab90",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/me-no-dev/library/ESPAsyncWebServer/1.2.4/ESPAsyncWebServer-1.2.4.tar.gz",
+     "https://dl.registry.platformio.org/download/me-no-dev/library/ESPAsyncWebServer/1.2.4/ESPAsyncWebServer-1.2.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "me-no-dev/library/ESPAsyncWebServer/3.6.0/ESPAsyncWebServer-3.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAsyncWebServer-3.6.0.tar.gz",
+    "size_bytes": 90681,
+    "sha256": "d37315c163af259aabcaafe6f954d98a44c0139b52b6c7992d840a1375906e79",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/me-no-dev/library/ESPAsyncWebServer/3.6.0/ESPAsyncWebServer-3.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/me-no-dev/library/ESPAsyncWebServer/3.6.0/ESPAsyncWebServer-3.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

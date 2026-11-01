@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/master811129",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "master811129/library/MicroTone/2.0.2/MicroTone-2.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroTone-2.0.2.tar.gz",
+    "size_bytes": 3317,
+    "sha256": "073fbe2d9b5ea6a32adc18d521e2c7a2d15d016a389dbcd1ac233be9ac3c7600",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/master811129/library/MicroTone/2.0.2/MicroTone-2.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/master811129/library/MicroTone/2.0.2/MicroTone-2.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "master811129/library/PF/1.1.1/PF-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PF-1.1.1.tar.gz",
+    "size_bytes": 18017,
+    "sha256": "9b44c906004fa532a6b47c1a7249fe20a9d539a9e20e50dc3c707ffeef9715ca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/master811129/library/PF/1.1.1/PF-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/master811129/library/PF/1.1.1/PF-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

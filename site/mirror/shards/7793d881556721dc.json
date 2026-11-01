@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-highroads",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-highroads/library/FRDM_KL46Z_LCD/0.0.0+sha.c5fea5b6b339/FRDM_KL46Z_LCD-0.0.0+sha.c5fea5b6b339.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FRDM_KL46Z_LCD-0.0.0+sha.c5fea5b6b339.tar.gz",
+    "size_bytes": 12159,
+    "sha256": "d80033f38df69b12217685babe50074a5e32805d6d6ab849648087494640dc57",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-highroads/library/FRDM_KL46Z_LCD/0.0.0%2Bsha.c5fea5b6b339/FRDM_KL46Z_LCD-0.0.0%2Bsha.c5fea5b6b339.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-highroads/library/FRDM_KL46Z_LCD/0.0.0%2Bsha.c5fea5b6b339/FRDM_KL46Z_LCD-0.0.0%2Bsha.c5fea5b6b339.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-highroads/library/VL6180x/0.0.0+sha.99fb447bba81/VL6180x-0.0.0+sha.99fb447bba81.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL6180x-0.0.0+sha.99fb447bba81.tar.gz",
+    "size_bytes": 6070,
+    "sha256": "33d3c1433697239d1880f8a968092628860368b1cf0bcba91bb50793e1bbef27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-highroads/library/VL6180x/0.0.0%2Bsha.99fb447bba81/VL6180x-0.0.0%2Bsha.99fb447bba81.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-highroads/library/VL6180x/0.0.0%2Bsha.99fb447bba81/VL6180x-0.0.0%2Bsha.99fb447bba81.tar.gz"
+    ]
+   }
+  }
+ ]
+}

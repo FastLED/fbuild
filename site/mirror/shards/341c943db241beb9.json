@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bobgiesberts",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bobgiesberts/library/LDC1101/0.0.0+sha.05dd145c7997/LDC1101-0.0.0+sha.05dd145c7997.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LDC1101-0.0.0+sha.05dd145c7997.tar.gz",
+    "size_bytes": 6035,
+    "sha256": "d05c2c37e3dc58669ea6720319becaae73ff469d0caf42094a9f7396399f277b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bobgiesberts/library/LDC1101/0.0.0%2Bsha.05dd145c7997/LDC1101-0.0.0%2Bsha.05dd145c7997.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bobgiesberts/library/LDC1101/0.0.0%2Bsha.05dd145c7997/LDC1101-0.0.0%2Bsha.05dd145c7997.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bobgiesberts/library/LDC1614/0.0.0+sha.6a4e28dadae6/LDC1614-0.0.0+sha.6a4e28dadae6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LDC1614-0.0.0+sha.6a4e28dadae6.tar.gz",
+    "size_bytes": 7962,
+    "sha256": "01ed0c62636f09d523229b14020cf135c9001846010f3269553fdc1eee3cdba5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bobgiesberts/library/LDC1614/0.0.0%2Bsha.6a4e28dadae6/LDC1614-0.0.0%2Bsha.6a4e28dadae6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bobgiesberts/library/LDC1614/0.0.0%2Bsha.6a4e28dadae6/LDC1614-0.0.0%2Bsha.6a4e28dadae6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

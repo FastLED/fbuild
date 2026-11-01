@@ -1,0 +1,152 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xinyuan-lilygo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xinyuan-lilygo/library/LILYGO%20T-Keyboard-S3-Pro%20Library/0.1.0/LILYGOT-Keyboard-S3-ProLibrary-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LILYGOT-Keyboard-S3-ProLibrary-0.1.0.tar.gz",
+    "size_bytes": 38699,
+    "sha256": "f4e6f70659b6c4a5b22e060afb7ea4eb5e83faf67e1241c11274d7c746f71701",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xinyuan-lilygo/library/LILYGO%2520T-Keyboard-S3-Pro%2520Library/0.1.0/LILYGOT-Keyboard-S3-ProLibrary-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xinyuan-lilygo/library/LILYGO%20T-Keyboard-S3-Pro%20Library/0.1.0/LILYGOT-Keyboard-S3-ProLibrary-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xinyuan-lilygo/library/LilyGO%20T-Wristband%20and%20T-Glass/1.0.0/LilyGOT-WristbandandT-Glass-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LilyGOT-WristbandandT-Glass-1.0.0.tar.gz",
+    "size_bytes": 313696,
+    "sha256": "dcfb6310864de9615c8b65d5619a9f8925be0ae59c42e657227a3eba01e325cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xinyuan-lilygo/library/LilyGO%2520T-Wristband%2520and%2520T-Glass/1.0.0/LilyGOT-WristbandandT-Glass-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xinyuan-lilygo/library/LilyGO%20T-Wristband%20and%20T-Glass/1.0.0/LilyGOT-WristbandandT-Glass-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xinyuan-lilygo/library/LilyGo-AMOLED-Series/1.2.3/LilyGo-AMOLED-Series-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LilyGo-AMOLED-Series-1.2.3.tar.gz",
+    "size_bytes": 7296113,
+    "sha256": "cb63eca7aca2b24c83006e4a8a40574ac1669e4594c24f6fbf3150000789da22",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xinyuan-lilygo/library/LilyGo-AMOLED-Series/1.2.3/LilyGo-AMOLED-Series-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/xinyuan-lilygo/library/LilyGo-AMOLED-Series/1.2.3/LilyGo-AMOLED-Series-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xinyuan-lilygo/library/LilyGo-T-RGB/1.0.5/LilyGo-T-RGB-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LilyGo-T-RGB-1.0.5.tar.gz",
+    "size_bytes": 5945574,
+    "sha256": "b82a8f6304f2785bba175ca0b9705b2d36ccfbee06e9694d81ac2687b2088441",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xinyuan-lilygo/library/LilyGo-T-RGB/1.0.5/LilyGo-T-RGB-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/xinyuan-lilygo/library/LilyGo-T-RGB/1.0.5/LilyGo-T-RGB-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xinyuan-lilygo/library/LilyGo-display-library/0.1.0/LilyGo-display-library-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LilyGo-display-library-0.1.0.tar.gz",
+    "size_bytes": 9189,
+    "sha256": "668e8c90ea4cbec11c34c7ad3552314971a8a6a06e9a27f3df549b9c4fe020da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xinyuan-lilygo/library/LilyGo-display-library/0.1.0/LilyGo-display-library-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xinyuan-lilygo/library/LilyGo-display-library/0.1.0/LilyGo-display-library-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xinyuan-lilygo/library/LilyGoEPD47/0.3.0/LilyGoEPD47-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LilyGoEPD47-0.3.0.tar.gz",
+    "size_bytes": 44242747,
+    "sha256": "e8d432f2bcf3c8b423e78a098d3208f6c5f627d6ddf7ec071e2bcc1752313704",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xinyuan-lilygo/library/LilyGoEPD47/0.3.0/LilyGoEPD47-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xinyuan-lilygo/library/LilyGoEPD47/0.3.0/LilyGoEPD47-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xinyuan-lilygo/library/LilyGoLib/0.2.0/LilyGoLib-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LilyGoLib-0.2.0.tar.gz",
+    "size_bytes": 5125517,
+    "sha256": "103e83b9ecc5f3fa4a4728f86803a5ce1f7bd3bcccf749784d7b299dd5e23db7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xinyuan-lilygo/library/LilyGoLib/0.2.0/LilyGoLib-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xinyuan-lilygo/library/LilyGoLib/0.2.0/LilyGoLib-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xinyuan-lilygo/library/LilyGoLib/0.2.1/LilyGoLib-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LilyGoLib-0.2.1.tar.gz",
+    "size_bytes": 6712982,
+    "sha256": "be09ba12f390313e6268834a490895f400fec64a4e19d9b0f0959d85aa368f66",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xinyuan-lilygo/library/LilyGoLib/0.2.1/LilyGoLib-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xinyuan-lilygo/library/LilyGoLib/0.2.1/LilyGoLib-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xinyuan-lilygo/library/LilyGoLib/0.3.0/LilyGoLib-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LilyGoLib-0.3.0.tar.gz",
+    "size_bytes": 5819699,
+    "sha256": "0f48f14bacc92b6d94a6712aa16f9dc0ae09d16421eca1d4b8519e91401ead50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xinyuan-lilygo/library/LilyGoLib/0.3.0/LilyGoLib-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xinyuan-lilygo/library/LilyGoLib/0.3.0/LilyGoLib-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xinyuan-lilygo/library/TTGO%20TWatch%20Library/1.4.2/TTGOTWatchLibrary-1.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTGOTWatchLibrary-1.4.2.tar.gz",
+    "size_bytes": 23717926,
+    "sha256": "23e34ca3be7767f54c6afab2bba9126320ae5ff4058932a80dce24b48ded991a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xinyuan-lilygo/library/TTGO%2520TWatch%2520Library/1.4.2/TTGOTWatchLibrary-1.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xinyuan-lilygo/library/TTGO%20TWatch%20Library/1.4.2/TTGOTWatchLibrary-1.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xinyuan-lilygo/library/TTGO%20TWatch%20Library/2.0.0/TTGOTWatchLibrary-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TTGOTWatchLibrary-2.0.0.tar.gz",
+    "size_bytes": 2188568,
+    "sha256": "22833cf67dd8c40312b1547652d8ff60355ae99996e0393aa62d89eb2f6d6425",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xinyuan-lilygo/library/TTGO%2520TWatch%2520Library/2.0.0/TTGOTWatchLibrary-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xinyuan-lilygo/library/TTGO%20TWatch%20Library/2.0.0/TTGOTWatchLibrary-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

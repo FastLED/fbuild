@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tanmaywankar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tanmaywankar/library/Grobot_Animations/0.1.2/Grobot_Animations-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grobot_Animations-0.1.2.tar.gz",
+    "size_bytes": 8361,
+    "sha256": "409c0d7ae121a39997918ecb93a9ac1278fa96676aa8460a88c4308cf991eda0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanmaywankar/library/Grobot_Animations/0.1.2/Grobot_Animations-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tanmaywankar/library/Grobot_Animations/0.1.2/Grobot_Animations-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanmaywankar/library/Grobot_Animations/0.1.3/Grobot_Animations-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grobot_Animations-0.1.3.tar.gz",
+    "size_bytes": 8662,
+    "sha256": "d340576627e33b4affd1e066beca76a33f7966c5d83b4cf90bfd9777909796a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanmaywankar/library/Grobot_Animations/0.1.3/Grobot_Animations-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/tanmaywankar/library/Grobot_Animations/0.1.3/Grobot_Animations-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanmaywankar/library/Grobot_Animations/0.1.4/Grobot_Animations-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grobot_Animations-0.1.4.tar.gz",
+    "size_bytes": 8387,
+    "sha256": "fe7ae8da78cbde02a2487ccbe16cb4c80efc0b68b1961dfd3f2e8e0f517f33e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanmaywankar/library/Grobot_Animations/0.1.4/Grobot_Animations-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/tanmaywankar/library/Grobot_Animations/0.1.4/Grobot_Animations-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "tanmaywankar/library/Grobot_Animations/0.1.5/Grobot_Animations-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Grobot_Animations-0.1.5.tar.gz",
+    "size_bytes": 8404,
+    "sha256": "bddd9c3456bb58db653f6d51c1b9c2ceca4d0479a2143e92c35d2c648c6cadea",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tanmaywankar/library/Grobot_Animations/0.1.5/Grobot_Animations-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/tanmaywankar/library/Grobot_Animations/0.1.5/Grobot_Animations-0.1.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

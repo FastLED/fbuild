@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yashuyathi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yashuyathi/library/controlKeyboard/1.0.0/controlKeyboard-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "controlKeyboard-1.0.0.tar.gz",
+    "size_bytes": 4603,
+    "sha256": "9251fb35ce2e68cf54633db0c8b467d0405f1a2d6eacb9bcd93c668b74f3751c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yashuyathi/library/controlKeyboard/1.0.0/controlKeyboard-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yashuyathi/library/controlKeyboard/1.0.0/controlKeyboard-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

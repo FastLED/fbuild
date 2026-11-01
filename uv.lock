@@ -1,11 +1,11 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.10"
 
 [[package]]
 name = "fbuild"
-version = "2.5.42"
-source = { virtual = "." }
+version = "2.5.48"
+source = { editable = "." }
 
 [package.dev-dependencies]
 dev = [

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/trippylighting",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "trippylighting/library/EthernetBonjour/1.0.0/EthernetBonjour-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EthernetBonjour-1.0.0.tar.gz",
+    "size_bytes": 15995,
+    "sha256": "a4583e5e942ac22be094859a5ea588ab101ab5e7d95504196f538d36169a3c07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/trippylighting/library/EthernetBonjour/1.0.0/EthernetBonjour-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/trippylighting/library/EthernetBonjour/1.0.0/EthernetBonjour-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

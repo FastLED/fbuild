@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/zalhashfi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "zalhashfi/library/Insight/0.2.0/Insight-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Insight-0.2.0.tar.gz",
+    "size_bytes": 11959,
+    "sha256": "d05f34ab85ac971464956705511171672f342781958662d6ef5ea0b750c39955",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zalhashfi/library/Insight/0.2.0/Insight-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/zalhashfi/library/Insight/0.2.0/Insight-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "zalhashfi/library/Insight/0.2.1/Insight-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Insight-0.2.1.tar.gz",
+    "size_bytes": 11874,
+    "sha256": "26d2def606e0ce6597b42dbe3fd4a2b9a1c560e0504575db4691dab0846593a5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/zalhashfi/library/Insight/0.2.1/Insight-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/zalhashfi/library/Insight/0.2.1/Insight-0.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

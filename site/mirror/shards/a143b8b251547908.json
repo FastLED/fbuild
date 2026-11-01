@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-masaaki-makabe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-masaaki-makabe/library/BLE_API/0.0.0+sha.3cca74c30551/BLE_API-0.0.0+sha.3cca74c30551.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE_API-0.0.0+sha.3cca74c30551.tar.gz",
+    "size_bytes": 22077,
+    "sha256": "79125e7ad92472bdf40591cebd3ba14183dc10d27a06cb49216438027de6ee6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-masaaki-makabe/library/BLE_API/0.0.0%2Bsha.3cca74c30551/BLE_API-0.0.0%2Bsha.3cca74c30551.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-masaaki-makabe/library/BLE_API/0.0.0%2Bsha.3cca74c30551/BLE_API-0.0.0%2Bsha.3cca74c30551.tar.gz"
+    ]
+   }
+  }
+ ]
+}

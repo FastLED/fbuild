@@ -1,0 +1,165 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/watterott",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "watterott/library/ADS7846/1.0.0/ADS7846-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADS7846-1.0.0.tar.gz",
+    "size_bytes": 4306,
+    "sha256": "01924d8aa112db5f0a79e0b81943c32273fe1b764f09b38afb8a47c408cd15d2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/watterott/library/ADS7846/1.0.0/ADS7846-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/watterott/library/ADS7846/1.0.0/ADS7846-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "watterott/library/DAC8760/1.0.0/DAC8760-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DAC8760-1.0.0.tar.gz",
+    "size_bytes": 4233,
+    "sha256": "763c95b72c4b1c6871f5fc603f20c44d2aea508cffcd6cdad68dade3d6d46e2b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/watterott/library/DAC8760/1.0.0/DAC8760-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/watterott/library/DAC8760/1.0.0/DAC8760-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "watterott/library/DS1307/1.0.0/DS1307-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1307-1.0.0.tar.gz",
+    "size_bytes": 1998,
+    "sha256": "88323f363c7a01b269e13cffe17f359882de2ee6df999325a6266ac5d921d973",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/watterott/library/DS1307/1.0.0/DS1307-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/watterott/library/DS1307/1.0.0/DS1307-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "watterott/library/DisplayI2C/1.0.0/DisplayI2C-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplayI2C-1.0.0.tar.gz",
+    "size_bytes": 6318,
+    "sha256": "7c91def59cbf6c1061cbde2c908369cac169c71a4b3423d2d23057a663d7b0aa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/watterott/library/DisplayI2C/1.0.0/DisplayI2C-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/watterott/library/DisplayI2C/1.0.0/DisplayI2C-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "watterott/library/DisplaySPI/1.0.0/DisplaySPI-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DisplaySPI-1.0.0.tar.gz",
+    "size_bytes": 6538,
+    "sha256": "81be5095dbd2dea93964d96234d8366b2a2eada236e4c785e69eb66440312b1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/watterott/library/DisplaySPI/1.0.0/DisplaySPI-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/watterott/library/DisplaySPI/1.0.0/DisplaySPI-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "watterott/library/GraphicsLib/1.0.0/GraphicsLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GraphicsLib-1.0.0.tar.gz",
+    "size_bytes": 44507,
+    "sha256": "7bbbbe9c4ea4dfe26c57b7ff86976a95f0fe2088d210d2348852429b90798cee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/watterott/library/GraphicsLib/1.0.0/GraphicsLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/watterott/library/GraphicsLib/1.0.0/GraphicsLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "watterott/library/MCP2515/1.0.0/MCP2515-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP2515-1.0.0.tar.gz",
+    "size_bytes": 4269,
+    "sha256": "670141f30b4bf9ece9a26544f2613b64fc410c463840c3a70cd69351b2505ec6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/watterott/library/MCP2515/1.0.0/MCP2515-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/watterott/library/MCP2515/1.0.0/MCP2515-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "watterott/library/MI0283QT2/1.0.0/MI0283QT2-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MI0283QT2-1.0.0.tar.gz",
+    "size_bytes": 4382,
+    "sha256": "8c5af96bf1b92e5d91f55f1b8bbe1d273427445b8e42a6ec9a4d0763a0c42c12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/watterott/library/MI0283QT2/1.0.0/MI0283QT2-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/watterott/library/MI0283QT2/1.0.0/MI0283QT2-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "watterott/library/RedFly/1.0.0/RedFly-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RedFly-1.0.0.tar.gz",
+    "size_bytes": 35456,
+    "sha256": "7e14fb583408aab7338d67f17aaa736b61ff0117fd34dc92bb246fb4d0ab7d6f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/watterott/library/RedFly/1.0.0/RedFly-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/watterott/library/RedFly/1.0.0/RedFly-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "watterott/library/RotaryEncoder/1.0.0/RotaryEncoder-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RotaryEncoder-1.0.0.tar.gz",
+    "size_bytes": 2212,
+    "sha256": "c22ff2eafb96d6db9c2519e1f3917b560eb119f05106689e3c67cb52bac09ee0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/watterott/library/RotaryEncoder/1.0.0/RotaryEncoder-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/watterott/library/RotaryEncoder/1.0.0/RotaryEncoder-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "watterott/library/SSD1331/1.0.0/SSD1331-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSD1331-1.0.0.tar.gz",
+    "size_bytes": 3020,
+    "sha256": "e18a6e664d53a48d887a442b6cb29f11f85f6932b457f6d822a7275fb3c761e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/watterott/library/SSD1331/1.0.0/SSD1331-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/watterott/library/SSD1331/1.0.0/SSD1331-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "watterott/library/digitalWriteFast/1.0.0/digitalWriteFast-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "digitalWriteFast-1.0.0.tar.gz",
+    "size_bytes": 4611,
+    "sha256": "54c3905ddf9ff98c58e4e37206c5e3cde7e6d737d8a91fdc0a62396d2def9f0c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/watterott/library/digitalWriteFast/1.0.0/digitalWriteFast-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/watterott/library/digitalWriteFast/1.0.0/digitalWriteFast-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bhadreshmewada",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bhadreshmewada/library/Universal%20Debug%20Library/1.0.0/UniversalDebugLibrary-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UniversalDebugLibrary-1.0.0.tar.gz",
+    "size_bytes": 5068,
+    "sha256": "b1d075dbe9d724751b519cc3bc1c04e9133d58da9eb40544c2074bbebece81be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bhadreshmewada/library/Universal%2520Debug%2520Library/1.0.0/UniversalDebugLibrary-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bhadreshmewada/library/Universal%20Debug%20Library/1.0.0/UniversalDebugLibrary-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

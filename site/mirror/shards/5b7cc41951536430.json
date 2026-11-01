@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hulliskoa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hulliskoa/library/ConnectionManager/1.0.1/ConnectionManager-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConnectionManager-1.0.1.tar.gz",
+    "size_bytes": 1916,
+    "sha256": "f5968291daa429213d5fe76b186fefe602099f7d7dddda9f03f394318d24c5d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hulliskoa/library/ConnectionManager/1.0.1/ConnectionManager-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hulliskoa/library/ConnectionManager/1.0.1/ConnectionManager-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

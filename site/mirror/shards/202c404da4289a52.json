@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/georgines",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "georgines/library/BotaoPressao/1.0.0/BotaoPressao-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BotaoPressao-1.0.0.tar.gz",
+    "size_bytes": 1374,
+    "sha256": "b893d590c90d901feff54e77e57ef44285d4fbe0f0e9323bea2d84e848b9bb43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/georgines/library/BotaoPressao/1.0.0/BotaoPressao-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/georgines/library/BotaoPressao/1.0.0/BotaoPressao-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "georgines/library/Luz/1.0.1/Luz-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Luz-1.0.1.tar.gz",
+    "size_bytes": 1199,
+    "sha256": "ff8ebe6cafeaf85e4e61912a026445395698f07e387ca53bb12bacae33cc5291",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/georgines/library/Luz/1.0.1/Luz-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/georgines/library/Luz/1.0.1/Luz-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "georgines/library/U8g2_ch1116/1.0.2/U8g2_ch1116-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "U8g2_ch1116-1.0.2.tar.gz",
+    "size_bytes": 3318,
+    "sha256": "eb939e94f46568f316b9564f70fa004dfdb051e908c6402209b324592a5b753c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/georgines/library/U8g2_ch1116/1.0.2/U8g2_ch1116-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/georgines/library/U8g2_ch1116/1.0.2/U8g2_ch1116-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

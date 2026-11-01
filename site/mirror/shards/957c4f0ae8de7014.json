@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ifwui",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ifwui/library/ArduIMULib/0.0.0+sha.d0d40a6fe11c/ArduIMULib-0.0.0+sha.d0d40a6fe11c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduIMULib-0.0.0+sha.d0d40a6fe11c.tar.gz",
+    "size_bytes": 1529,
+    "sha256": "07d5aa1c50f34f52ae3d321a632bf435ad66182379fdc63351f3d1b101b2f425",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ifwui/library/ArduIMULib/0.0.0%2Bsha.d0d40a6fe11c/ArduIMULib-0.0.0%2Bsha.d0d40a6fe11c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ifwui/library/ArduIMULib/0.0.0%2Bsha.d0d40a6fe11c/ArduIMULib-0.0.0%2Bsha.d0d40a6fe11c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kaist-iclab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kaist-iclab/library/KAIST_IoTDataScience/1.0.0/KAIST_IoTDataScience-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "KAIST_IoTDataScience-1.0.0.tar.gz",
+    "size_bytes": 8481482,
+    "sha256": "2e294dcc76eca27921ef574c777b939b980ac8532e6405e0c038e08fa8d9eff9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kaist-iclab/library/KAIST_IoTDataScience/1.0.0/KAIST_IoTDataScience-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/kaist-iclab/library/KAIST_IoTDataScience/1.0.0/KAIST_IoTDataScience-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

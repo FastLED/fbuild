@@ -176,6 +176,23 @@ fn normalize_signature_flag(flag: &str, normalize_value: &dyn Fn(&str) -> String
             return format!("{prefix}{}", normalize_value(value));
         }
     }
+    // `-f{debug,file,macro}-prefix-map=OLD=NEW`: OLD is a path and is often
+    // project-local (`-fdebug-prefix-map=<project>=.`, FastLED/fbuild#1414),
+    // so it has to be normalized like any other path-bearing value. Without
+    // this the map flag alone would give every project a unique signature and
+    // defeat the cross-project core cache it exists to enable.
+    for prefix in [
+        "-fdebug-prefix-map=",
+        "-ffile-prefix-map=",
+        "-fmacro-prefix-map=",
+    ] {
+        if let Some(value) = flag.strip_prefix(prefix) {
+            return match value.rsplit_once('=') {
+                Some((old, new)) => format!("{prefix}{}={new}", normalize_value(old)),
+                None => flag.to_string(),
+            };
+        }
+    }
     flag.to_string()
 }
 
@@ -389,5 +406,48 @@ mod tests {
 
         let probes = std::fs::read_to_string(&log).unwrap().lines().count();
         assert_eq!(probes, 1, "16 concurrent callers spawned {probes} probes");
+    }
+
+    /// The `-fdebug-prefix-map=<project>=.` flag (FastLED/fbuild#1414) names
+    /// the project directory, so it must not make two projects' signatures
+    /// differ — that would cost the cross-project core cache the flag is
+    /// there to fill.
+    #[test]
+    fn prefix_map_flags_normalize_their_source_path() {
+        // FastLED/fbuild#1780: a rootless POSIX-looking path is *not* absolute
+        // on Windows, so the flag value would never relativize there and the
+        // assertion below would compare two unrelated paths. Fabricate the
+        // projects under a host-native root instead.
+        let base = if fbuild_core::platform::host::current().is_windows() {
+            "C:/projects"
+        } else {
+            "/home"
+        };
+        let project_a = format!("{base}/one/blink");
+        let project_b = format!("{base}/two/other-blink");
+        let compiler = Path::new("/tools/gcc");
+        let flags_for =
+            |project: &str| vec![format!("-fdebug-prefix-map={project}=."), "-O2".to_string()];
+        let signature_for = |project: &str| {
+            build_rebuild_signature_for_project(
+                Path::new(project),
+                compiler,
+                &flags_for(project),
+                &[],
+                &[],
+                &[],
+            )
+        };
+        assert_eq!(signature_for(&project_a), signature_for(&project_b));
+        // A different remap target is still a different build.
+        let other_target = build_rebuild_signature_for_project(
+            Path::new(&project_a),
+            compiler,
+            &[format!("-fdebug-prefix-map={project_a}={base}/elsewhere")],
+            &[],
+            &[],
+            &[],
+        );
+        assert_ne!(signature_for(&project_a), other_target);
     }
 }

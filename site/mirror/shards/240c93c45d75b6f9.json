@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jozo132",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jozo132/library/NOTA/0.0.3/NOTA-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NOTA-0.0.3.tar.gz",
+    "size_bytes": 29282,
+    "sha256": "ad8310430b48064b88f5d1aab4b1f0d74def4de7aec47a62ae9e4c1ea20ae7f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jozo132/library/NOTA/0.0.3/NOTA-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jozo132/library/NOTA/0.0.3/NOTA-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jozo132/library/cdc-dfu/1.0.0/cdc-dfu-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cdc-dfu-1.0.0.tar.gz",
+    "size_bytes": 5075,
+    "sha256": "912b7e74f6ef1ee05f40e9b142005b47ed131a1cb5bfc3723cb3bb497ea6a4a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jozo132/library/cdc-dfu/1.0.0/cdc-dfu-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jozo132/library/cdc-dfu/1.0.0/cdc-dfu-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jozo132/library/cdc-dfu/1.0.1/cdc-dfu-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cdc-dfu-1.0.1.tar.gz",
+    "size_bytes": 5094,
+    "sha256": "7235596a36b5ef419dd2028a793baf1d1f3910f703f22287f149ffb194e5526e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jozo132/library/cdc-dfu/1.0.1/cdc-dfu-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jozo132/library/cdc-dfu/1.0.1/cdc-dfu-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jozo132/library/cdc-dfu/1.1.0/cdc-dfu-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cdc-dfu-1.1.0.tar.gz",
+    "size_bytes": 6169,
+    "sha256": "0f9097a184596149ad65a9570cc26d0238059d379e95e974ba6970701178a34c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jozo132/library/cdc-dfu/1.1.0/cdc-dfu-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jozo132/library/cdc-dfu/1.1.0/cdc-dfu-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jozo132/library/cdc-dfu/1.1.1/cdc-dfu-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cdc-dfu-1.1.1.tar.gz",
+    "size_bytes": 6637,
+    "sha256": "212c744af609456db69ad49b5350eca309550e2c302f3684df7fcf71deef3695",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jozo132/library/cdc-dfu/1.1.1/cdc-dfu-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jozo132/library/cdc-dfu/1.1.1/cdc-dfu-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jozo132/library/xtp-lib/0.1.0/xtp-lib-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xtp-lib-0.1.0.tar.gz",
+    "size_bytes": 70375,
+    "sha256": "de139b719073fe79da2ec2d6bdb1d523e601693b6e8a8faafa743bb44ffa7fac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jozo132/library/xtp-lib/0.1.0/xtp-lib-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jozo132/library/xtp-lib/0.1.0/xtp-lib-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jozo132/library/xtp-lib/0.1.1/xtp-lib-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xtp-lib-0.1.1.tar.gz",
+    "size_bytes": 70469,
+    "sha256": "3e27beae107b94c508f60d4bda67d29be899e3f9bd5ae9de0f7f283e2f2d0b64",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jozo132/library/xtp-lib/0.1.1/xtp-lib-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jozo132/library/xtp-lib/0.1.1/xtp-lib-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jozo132/library/xtp-lib/0.1.2/xtp-lib-0.1.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xtp-lib-0.1.2.tar.gz",
+    "size_bytes": 70155,
+    "sha256": "37122930ed24f5d52768d756601319de14927f84f94643c5df3d551767f1f4b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jozo132/library/xtp-lib/0.1.2/xtp-lib-0.1.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jozo132/library/xtp-lib/0.1.2/xtp-lib-0.1.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jozo132/library/xtp-lib/0.1.3/xtp-lib-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "xtp-lib-0.1.3.tar.gz",
+    "size_bytes": 72367,
+    "sha256": "b124e6329776d5f4c8a525f70f92d21a3c3f98d67591abb50c0b75f61e96622b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jozo132/library/xtp-lib/0.1.3/xtp-lib-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jozo132/library/xtp-lib/0.1.3/xtp-lib-0.1.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

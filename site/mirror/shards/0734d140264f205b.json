@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/acierdev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "acierdev/library/ESP32-WebCommunication/1.0.1/ESP32-WebCommunication-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-WebCommunication-1.0.1.tar.gz",
+    "size_bytes": 21663,
+    "sha256": "d2040f736d8320a3a27138686e8114b848d5db7b6c83b327a315ee1a379b742a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acierdev/library/ESP32-WebCommunication/1.0.1/ESP32-WebCommunication-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/acierdev/library/ESP32-WebCommunication/1.0.1/ESP32-WebCommunication-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "acierdev/library/Evercode-Core/4.0.2/Evercode-Core-4.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Evercode-Core-4.0.2.tar.gz",
+    "size_bytes": 43707,
+    "sha256": "c1257b8772c1e95f8ae2543af87296e079786d1f024786466814ad6aaf024649",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/acierdev/library/Evercode-Core/4.0.2/Evercode-Core-4.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/acierdev/library/Evercode-Core/4.0.2/Evercode-Core-4.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

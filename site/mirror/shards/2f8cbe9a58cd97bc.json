@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-basyo38",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-basyo38/library/HMC5883L/0.0.0+sha.1b7f05908981/HMC5883L-0.0.0+sha.1b7f05908981.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HMC5883L-0.0.0+sha.1b7f05908981.tar.gz",
+    "size_bytes": 4071,
+    "sha256": "0003b09480e274ebb2fa78d420c7a5444a200686168fa536c61f48a52721625e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-basyo38/library/HMC5883L/0.0.0%2Bsha.1b7f05908981/HMC5883L-0.0.0%2Bsha.1b7f05908981.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-basyo38/library/HMC5883L/0.0.0%2Bsha.1b7f05908981/HMC5883L-0.0.0%2Bsha.1b7f05908981.tar.gz"
+    ]
+   }
+  }
+ ]
+}

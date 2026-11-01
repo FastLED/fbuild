@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/erikmeinders",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "erikmeinders/library/esp32_switchbot_api/0.1.5/esp32_switchbot_api-0.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32_switchbot_api-0.1.5.tar.gz",
+    "size_bytes": 4837,
+    "sha256": "2bbe947a81943a377baf4d13edf0fe3c6e52ac0f222f47e56febd383107fa732",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erikmeinders/library/esp32_switchbot_api/0.1.5/esp32_switchbot_api-0.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/erikmeinders/library/esp32_switchbot_api/0.1.5/esp32_switchbot_api-0.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erikmeinders/library/knx_platformio/2.1.0/knx_platformio-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "knx_platformio-2.1.0.tar.gz",
+    "size_bytes": 23428,
+    "sha256": "d2020b895ab4581a9aa33363c101f9ae2efd43c01ca583cbfb43c5399b4dc229",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erikmeinders/library/knx_platformio/2.1.0/knx_platformio-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/erikmeinders/library/knx_platformio/2.1.0/knx_platformio-2.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "erikmeinders/library/profiler/0.7.5/profiler-0.7.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "profiler-0.7.5.tar.gz",
+    "size_bytes": 5186,
+    "sha256": "4bf983cd68108b59544fb96265ef32e80b809b92402e6cebc5ff2714b9d1e216",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/erikmeinders/library/profiler/0.7.5/profiler-0.7.5.tar.gz",
+     "https://dl.registry.platformio.org/download/erikmeinders/library/profiler/0.7.5/profiler-0.7.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

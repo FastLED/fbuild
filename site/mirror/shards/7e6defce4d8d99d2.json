@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-diegorivera",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-diegorivera/library/MotorAPasos/0.0.0+sha.34a6a7784d9e/MotorAPasos-0.0.0+sha.34a6a7784d9e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MotorAPasos-0.0.0+sha.34a6a7784d9e.tar.gz",
+    "size_bytes": 1202,
+    "sha256": "b30c6d7035d0cbf00075262f5e76c8fdcc2966bcd7b4984e3e3bbc176f3b1634",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-diegorivera/library/MotorAPasos/0.0.0%2Bsha.34a6a7784d9e/MotorAPasos-0.0.0%2Bsha.34a6a7784d9e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-diegorivera/library/MotorAPasos/0.0.0%2Bsha.34a6a7784d9e/MotorAPasos-0.0.0%2Bsha.34a6a7784d9e.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/and900",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "and900/library/AMYTOL_Robot/1.2.2/AMYTOL_Robot-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AMYTOL_Robot-1.2.2.tar.gz",
+    "size_bytes": 18695,
+    "sha256": "1b44222ba489010c49dc40af2b98c77e0e7c9440cfd5a4ca92b633c96d133460",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/and900/library/AMYTOL_Robot/1.2.2/AMYTOL_Robot-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/and900/library/AMYTOL_Robot/1.2.2/AMYTOL_Robot-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "and900/library/Amytol_Sample/1.0.0/Amytol_Sample-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Amytol_Sample-1.0.0.tar.gz",
+    "size_bytes": 10822,
+    "sha256": "058f754fa511556e3507e168ea95f65d53b8fd7e0e52e330f5475d6cef9143e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/and900/library/Amytol_Sample/1.0.0/Amytol_Sample-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/and900/library/Amytol_Sample/1.0.0/Amytol_Sample-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

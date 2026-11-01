@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-p07gbar",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-p07gbar/library/AndroidAccessory/0.0.0+sha.98fbe1660f0a/AndroidAccessory-0.0.0+sha.98fbe1660f0a.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AndroidAccessory-0.0.0+sha.98fbe1660f0a.tar.gz",
+    "size_bytes": 24585,
+    "sha256": "ab05ed9244a3f454ee41285c5e483874d63f1e01e63ec1206b6b2c80ff6babf0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-p07gbar/library/AndroidAccessory/0.0.0%2Bsha.98fbe1660f0a/AndroidAccessory-0.0.0%2Bsha.98fbe1660f0a.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-p07gbar/library/AndroidAccessory/0.0.0%2Bsha.98fbe1660f0a/AndroidAccessory-0.0.0%2Bsha.98fbe1660f0a.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-p07gbar/library/Flasher/0.0.0+sha.e94a73b015cc/Flasher-0.0.0+sha.e94a73b015cc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Flasher-0.0.0+sha.e94a73b015cc.tar.gz",
+    "size_bytes": 3034,
+    "sha256": "6d9d98adeb8a48632b10d9dd0d1896e260649c1d3bfde49bfe0ee3391a00ead7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-p07gbar/library/Flasher/0.0.0%2Bsha.e94a73b015cc/Flasher-0.0.0%2Bsha.e94a73b015cc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-p07gbar/library/Flasher/0.0.0%2Bsha.e94a73b015cc/Flasher-0.0.0%2Bsha.e94a73b015cc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-p07gbar/library/HBridge/0.0.0+sha.16208393c7ae/HBridge-0.0.0+sha.16208393c7ae.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HBridge-0.0.0+sha.16208393c7ae.tar.gz",
+    "size_bytes": 2518,
+    "sha256": "d92ce43e329d5966bf02b4439ad864276cb721efb2a6dd83b163c5b73ede9cec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-p07gbar/library/HBridge/0.0.0%2Bsha.16208393c7ae/HBridge-0.0.0%2Bsha.16208393c7ae.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-p07gbar/library/HBridge/0.0.0%2Bsha.16208393c7ae/HBridge-0.0.0%2Bsha.16208393c7ae.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-p07gbar/library/I2S/0.0.0+sha.455d5826751b/I2S-0.0.0+sha.455d5826751b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "I2S-0.0.0+sha.455d5826751b.tar.gz",
+    "size_bytes": 6622,
+    "sha256": "2c0fc9f7fbaa8bfe9802092c462003c83c202d569f0f4ce1bcd0c3105a1519b6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-p07gbar/library/I2S/0.0.0%2Bsha.455d5826751b/I2S-0.0.0%2Bsha.455d5826751b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-p07gbar/library/I2S/0.0.0%2Bsha.455d5826751b/I2S-0.0.0%2Bsha.455d5826751b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-p07gbar/library/PWMAverage/0.0.0+sha.a3d3a60e30b7/PWMAverage-0.0.0+sha.a3d3a60e30b7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PWMAverage-0.0.0+sha.a3d3a60e30b7.tar.gz",
+    "size_bytes": 2969,
+    "sha256": "7556e5e2a108d4819a16dcb75d88fa3ff13169a00a33f3a4d3c141e983670ccc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-p07gbar/library/PWMAverage/0.0.0%2Bsha.a3d3a60e30b7/PWMAverage-0.0.0%2Bsha.a3d3a60e30b7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-p07gbar/library/PWMAverage/0.0.0%2Bsha.a3d3a60e30b7/PWMAverage-0.0.0%2Bsha.a3d3a60e30b7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-p07gbar/library/TLV320/0.0.0+sha.3ee50344f8f4/TLV320-0.0.0+sha.3ee50344f8f4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TLV320-0.0.0+sha.3ee50344f8f4.tar.gz",
+    "size_bytes": 4931,
+    "sha256": "1b428877b184eeddc1d1f323b54fd1f5fae0dd15f1efa2468d377414ac511eb3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-p07gbar/library/TLV320/0.0.0%2Bsha.3ee50344f8f4/TLV320-0.0.0%2Bsha.3ee50344f8f4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-p07gbar/library/TLV320/0.0.0%2Bsha.3ee50344f8f4/TLV320-0.0.0%2Bsha.3ee50344f8f4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-p07gbar/library/WavPlayer/0.0.0+sha.a7380cfc1987/WavPlayer-0.0.0+sha.a7380cfc1987.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WavPlayer-0.0.0+sha.a7380cfc1987.tar.gz",
+    "size_bytes": 22027,
+    "sha256": "f2df540d53c7127df3ebbeef749544a0950f096169241bdc29ac983f6864de3f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-p07gbar/library/WavPlayer/0.0.0%2Bsha.a7380cfc1987/WavPlayer-0.0.0%2Bsha.a7380cfc1987.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-p07gbar/library/WavPlayer/0.0.0%2Bsha.a7380cfc1987/WavPlayer-0.0.0%2Bsha.a7380cfc1987.tar.gz"
+    ]
+   }
+  }
+ ]
+}

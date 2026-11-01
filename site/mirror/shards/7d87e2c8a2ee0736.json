@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/x-dron",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "x-dron/library/X-Dron_lib/0.1/X-Dron_lib-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "X-Dron_lib-0.1.tar.gz",
+    "size_bytes": 8070,
+    "sha256": "1e8b250eed3a70f8b63d17f9a8faafa6d9955bc098a5c110bda4fddc7a1e785b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/x-dron/library/X-Dron_lib/0.1/X-Dron_lib-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/x-dron/library/X-Dron_lib/0.1/X-Dron_lib-0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

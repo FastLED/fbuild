@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ohtsuka",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ohtsuka/library/MultiClick/0.0.0+sha.7d56935ba84d/MultiClick-0.0.0+sha.7d56935ba84d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MultiClick-0.0.0+sha.7d56935ba84d.tar.gz",
+    "size_bytes": 2897,
+    "sha256": "a91b0561561f131d52fc4075cd382230c6600488597c5212cc9455de7eafaf4b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ohtsuka/library/MultiClick/0.0.0%2Bsha.7d56935ba84d/MultiClick-0.0.0%2Bsha.7d56935ba84d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ohtsuka/library/MultiClick/0.0.0%2Bsha.7d56935ba84d/MultiClick-0.0.0%2Bsha.7d56935ba84d.tar.gz"
+    ]
+   }
+  }
+ ]
+}

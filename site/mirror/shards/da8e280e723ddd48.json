@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-chaegle",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-chaegle/library/DS1721/0.0.0+sha.3c182751e655/DS1721-0.0.0+sha.3c182751e655.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1721-0.0.0+sha.3c182751e655.tar.gz",
+    "size_bytes": 3967,
+    "sha256": "a1a3424278b93f248b97ce32e58e959f9691ea29a71538b5da7bbf9003124222",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-chaegle/library/DS1721/0.0.0%2Bsha.3c182751e655/DS1721-0.0.0%2Bsha.3c182751e655.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-chaegle/library/DS1721/0.0.0%2Bsha.3c182751e655/DS1721-0.0.0%2Bsha.3c182751e655.tar.gz"
+    ]
+   }
+  }
+ ]
+}

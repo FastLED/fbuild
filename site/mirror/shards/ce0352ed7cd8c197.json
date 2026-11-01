@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/takeshi-yashiro",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "takeshi-yashiro/library/mtk3_bsp2_unor4/0.0.1/mtk3_bsp2_unor4-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mtk3_bsp2_unor4-0.0.1.tar.gz",
+    "size_bytes": 342793,
+    "sha256": "ab845c6f7be107f08425d68c23ae3ec0ba167c61d4311d8db8f5c9ec9417d6b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/takeshi-yashiro/library/mtk3_bsp2_unor4/0.0.1/mtk3_bsp2_unor4-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/takeshi-yashiro/library/mtk3_bsp2_unor4/0.0.1/mtk3_bsp2_unor4-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "takeshi-yashiro/library/mtk3_bsp2_unor4/0.0.2/mtk3_bsp2_unor4-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mtk3_bsp2_unor4-0.0.2.tar.gz",
+    "size_bytes": 343577,
+    "sha256": "fcba65004108dc37865f32f6a5c00b6d46a3690fee319b31513a70014ac275b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/takeshi-yashiro/library/mtk3_bsp2_unor4/0.0.2/mtk3_bsp2_unor4-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/takeshi-yashiro/library/mtk3_bsp2_unor4/0.0.2/mtk3_bsp2_unor4-0.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "takeshi-yashiro/library/webserver-unor4-wifi/1.0.2/webserver-unor4-wifi-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "webserver-unor4-wifi-1.0.2.tar.gz",
+    "size_bytes": 40162,
+    "sha256": "bd45a88e0281983b40a2fae51933e952f21d836519331f023babf098c648feca",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/takeshi-yashiro/library/webserver-unor4-wifi/1.0.2/webserver-unor4-wifi-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/takeshi-yashiro/library/webserver-unor4-wifi/1.0.2/webserver-unor4-wifi-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-michaelvisimid",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-michaelvisimid/library/C027_Support/0.0.0+sha.20f28fa0210b/C027_Support-0.0.0+sha.20f28fa0210b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C027_Support-0.0.0+sha.20f28fa0210b.tar.gz",
+    "size_bytes": 38393,
+    "sha256": "57871998086e8fd374269a6475b2cca355e858d23e7d64ffc247fa2779faa669",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-michaelvisimid/library/C027_Support/0.0.0%2Bsha.20f28fa0210b/C027_Support-0.0.0%2Bsha.20f28fa0210b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-michaelvisimid/library/C027_Support/0.0.0%2Bsha.20f28fa0210b/C027_Support-0.0.0%2Bsha.20f28fa0210b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

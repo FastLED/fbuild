@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/herbycheck",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "herbycheck/library/Dsmr/0.8.0/Dsmr-0.8.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dsmr-0.8.0.tar.gz",
+    "size_bytes": 21784,
+    "sha256": "bb49a74365b3c34945574506c5f0e44c462999a02145689c03753e34f3742360",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/herbycheck/library/Dsmr/0.8.0/Dsmr-0.8.0.tar.gz",
+     "https://dl.registry.platformio.org/download/herbycheck/library/Dsmr/0.8.0/Dsmr-0.8.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

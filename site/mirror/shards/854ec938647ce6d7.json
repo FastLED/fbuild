@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mlxxxp",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mlxxxp/library/Arduboy2/6.0.0/Arduboy2-6.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Arduboy2-6.0.0.tar.gz",
+    "size_bytes": 90932,
+    "sha256": "ad29510896f7fb28af4d849a1bfb8afd47fb5f9c65ac2811c86498edac4a884c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlxxxp/library/Arduboy2/6.0.0/Arduboy2-6.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mlxxxp/library/Arduboy2/6.0.0/Arduboy2-6.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mlxxxp/library/ArduboyTones/1.0.3/ArduboyTones-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduboyTones-1.0.3.tar.gz",
+    "size_bytes": 13273,
+    "sha256": "0719ad4b773c971bfbabfaf54ad17250b84cd50f43d96b34085db0a6f77444af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mlxxxp/library/ArduboyTones/1.0.3/ArduboyTones-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mlxxxp/library/ArduboyTones/1.0.3/ArduboyTones-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

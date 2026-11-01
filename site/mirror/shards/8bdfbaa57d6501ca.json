@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jbru",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jbru/library/BLE_HID/0.0.0+sha.4f8429a1905b/BLE_HID-0.0.0+sha.4f8429a1905b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BLE_HID-0.0.0+sha.4f8429a1905b.tar.gz",
+    "size_bytes": 12723,
+    "sha256": "ea6c04e3e39b6d397950a371ed819a4099a72b065a58f4f06cf8568727c5c793",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jbru/library/BLE_HID/0.0.0%2Bsha.4f8429a1905b/BLE_HID-0.0.0%2Bsha.4f8429a1905b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jbru/library/BLE_HID/0.0.0%2Bsha.4f8429a1905b/BLE_HID-0.0.0%2Bsha.4f8429a1905b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/versianih",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "versianih/library/HDW%20Utils/1.0.0/HDWUtils-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HDWUtils-1.0.0.tar.gz",
+    "size_bytes": 14802,
+    "sha256": "a5e6d75f6087bb212b886cf91305afaf212e0b557b63f3031f4ac192e50fefa5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/versianih/library/HDW%2520Utils/1.0.0/HDWUtils-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/versianih/library/HDW%20Utils/1.0.0/HDWUtils-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "versianih/library/HDW%20Utils/1.0.4/HDWUtils-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HDWUtils-1.0.4.tar.gz",
+    "size_bytes": 15099,
+    "sha256": "2a4986fccfc0a27c58b8b5a390108cc72aec67579adafcf52fa97baf99d3e022",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/versianih/library/HDW%2520Utils/1.0.4/HDWUtils-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/versianih/library/HDW%20Utils/1.0.4/HDWUtils-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "versianih/library/HDW%20Utils/1.0.5/HDWUtils-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HDWUtils-1.0.5.tar.gz",
+    "size_bytes": 15263,
+    "sha256": "47d11aad2e5be6897e4f39241e9ebf743f5aefd69acf458dcfce9156cd4ec68f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/versianih/library/HDW%2520Utils/1.0.5/HDWUtils-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/versianih/library/HDW%20Utils/1.0.5/HDWUtils-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

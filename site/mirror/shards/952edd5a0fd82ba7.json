@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nhluan37",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nhluan37/library/SerialMP3/1.1.0/SerialMP3-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialMP3-1.1.0.tar.gz",
+    "size_bytes": 4442,
+    "sha256": "60f9ff5c043df3aa46e45ddd2874c557194c9870b3f8e77dba84ef25f0ec6fc8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nhluan37/library/SerialMP3/1.1.0/SerialMP3-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nhluan37/library/SerialMP3/1.1.0/SerialMP3-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

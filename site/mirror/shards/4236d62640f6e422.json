@@ -1,0 +1,1062 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/picovoice",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "picovoice/library/Cobra/3.0.0/Cobra-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Cobra-3.0.0.tar.gz",
+    "size_bytes": 126698,
+    "sha256": "71320626ad039b740fe1c2966a4c88e72d5346803f154d800d08b704c17cf7ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Cobra/3.0.0/Cobra-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Cobra/3.0.0/Cobra-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Cobra/3.0.1/Cobra-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Cobra-3.0.1.tar.gz",
+    "size_bytes": 126649,
+    "sha256": "a391fa74b5bf967f3eb044d13a44ce8b5bae20d119e85eb021933a5499da148d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Cobra/3.0.1/Cobra-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Cobra/3.0.1/Cobra-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_AR/3.0.0/Picovoice_AR-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_AR-3.0.0.tar.gz",
+    "size_bytes": 553001,
+    "sha256": "50f5bb56fb0543a08de349d05e7ddb8a8012f66439a99d886531bc2238d3ff63",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_AR/3.0.0/Picovoice_AR-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_AR/3.0.0/Picovoice_AR-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_DE/4.0.0/Picovoice_DE-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_DE-4.0.0.tar.gz",
+    "size_bytes": 11248,
+    "sha256": "1343c26e9360e488a81f02f8c861513e08beea186aafee29812d9518c6a35181",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_DE/4.0.0/Picovoice_DE-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_DE/4.0.0/Picovoice_DE-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_DE/4.0.1/Picovoice_DE-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_DE-4.0.1.tar.gz",
+    "size_bytes": 11733,
+    "sha256": "7a3eec70683bbb7329c34a46f5d98d059a13b1dfea6f7e13a58d559da7cf1984",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_DE/4.0.1/Picovoice_DE-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_DE/4.0.1/Picovoice_DE-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_EN/4.0.0/Picovoice_EN-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_EN-4.0.0.tar.gz",
+    "size_bytes": 13391,
+    "sha256": "9b616040ba240df4002a0ad285656fa99c15a78a0399da16a800aae98e3517e9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_EN/4.0.0/Picovoice_EN-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_EN/4.0.0/Picovoice_EN-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_EN/4.0.1/Picovoice_EN-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_EN-4.0.1.tar.gz",
+    "size_bytes": 13877,
+    "sha256": "4811796f25829b5920bcc1b82dc20c65893e85a2ae27013f2f94c4ec07108101",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_EN/4.0.1/Picovoice_EN-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_EN/4.0.1/Picovoice_EN-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_ES/4.0.0/Picovoice_ES-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_ES-4.0.0.tar.gz",
+    "size_bytes": 10627,
+    "sha256": "1ccd3e73b7ef68e9437ddfc280a01cf23255a467c813dec6dd71b519aed2f69a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_ES/4.0.0/Picovoice_ES-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_ES/4.0.0/Picovoice_ES-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_ES/4.0.1/Picovoice_ES-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_ES-4.0.1.tar.gz",
+    "size_bytes": 11174,
+    "sha256": "49b377c816183f4052287c7700598a07970ff86e6d7650a982f280f72a8d7b07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_ES/4.0.1/Picovoice_ES-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_ES/4.0.1/Picovoice_ES-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_FA/3.0.1/Picovoice_FA-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_FA-3.0.1.tar.gz",
+    "size_bytes": 546027,
+    "sha256": "4fc98a0bb0b305811f3e1e0738fd24e12cc906a3cc5d9a2b4e41f812e1bebbff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_FA/3.0.1/Picovoice_FA-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_FA/3.0.1/Picovoice_FA-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_FR/4.0.0/Picovoice_FR-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_FR-4.0.0.tar.gz",
+    "size_bytes": 10583,
+    "sha256": "8c819dccc916006aa50dd148512fe24ec23cfa1c446c74f33d49f1dd85dfd3d1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_FR/4.0.0/Picovoice_FR-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_FR/4.0.0/Picovoice_FR-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_FR/4.0.1/Picovoice_FR-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_FR-4.0.1.tar.gz",
+    "size_bytes": 11059,
+    "sha256": "40c35fa785577165a4d26d2baa322fc90c3605af7765f2b0e56e9d8936de6a7c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_FR/4.0.1/Picovoice_FR-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_FR/4.0.1/Picovoice_FR-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_HI/3.0.1/Picovoice_HI-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_HI-3.0.1.tar.gz",
+    "size_bytes": 545777,
+    "sha256": "3e6c40ff64906162c48d5955b3ffa0759a4f3eb5406ddf32f4cf86489d989ee1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_HI/3.0.1/Picovoice_HI-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_HI/3.0.1/Picovoice_HI-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_IT/4.0.0/Picovoice_IT-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_IT-4.0.0.tar.gz",
+    "size_bytes": 12078,
+    "sha256": "7fda37610bf5c62dd9cda4e2fd675db50eee778f3b7c68d5c5a92a21c8176926",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_IT/4.0.0/Picovoice_IT-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_IT/4.0.0/Picovoice_IT-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_IT/4.0.1/Picovoice_IT-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_IT-4.0.1.tar.gz",
+    "size_bytes": 12636,
+    "sha256": "6b6a64fc2f19a3e5e61c2bcfa35b6ef119bf4198c1ccf50a957392d733f4cb93",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_IT/4.0.1/Picovoice_IT-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_IT/4.0.1/Picovoice_IT-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_JA/4.0.0/Picovoice_JA-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_JA-4.0.0.tar.gz",
+    "size_bytes": 13320,
+    "sha256": "32496bee3235261a520f52e847c78c6045c6abbc63a743466d52a5c79bffa6a1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_JA/4.0.0/Picovoice_JA-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_JA/4.0.0/Picovoice_JA-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_JA/4.0.1/Picovoice_JA-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_JA-4.0.1.tar.gz",
+    "size_bytes": 13811,
+    "sha256": "85dca5144a4cdd101a4007d949505c60324d0e8e9110d95ddf6881dfb45a5b09",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_JA/4.0.1/Picovoice_JA-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_JA/4.0.1/Picovoice_JA-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_KO/4.0.0/Picovoice_KO-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_KO-4.0.0.tar.gz",
+    "size_bytes": 12036,
+    "sha256": "6f18d21de5521e7d729050ca3e7ce8475116544dbe6769a8e908e43fc33e9bf3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_KO/4.0.0/Picovoice_KO-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_KO/4.0.0/Picovoice_KO-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_KO/4.0.1/Picovoice_KO-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_KO-4.0.1.tar.gz",
+    "size_bytes": 12526,
+    "sha256": "211f54dfefc0c243fd85b2a8f54190246041bdea9641f7a645dbdcc246413470",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_KO/4.0.1/Picovoice_KO-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_KO/4.0.1/Picovoice_KO-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_NL/3.0.1/Picovoice_NL-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_NL-3.0.1.tar.gz",
+    "size_bytes": 546150,
+    "sha256": "bdbfc8f0e91c92ac57545d5490bb35581fc652f13c6dd2127095bb5b6c5bd4ff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_NL/3.0.1/Picovoice_NL-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_NL/3.0.1/Picovoice_NL-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_PL/3.0.1/Picovoice_PL-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_PL-3.0.1.tar.gz",
+    "size_bytes": 543687,
+    "sha256": "1ce2463a7dfafe37efd074c568ca2cf880b62f3493c839bd1b25e11ab4942d2f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_PL/3.0.1/Picovoice_PL-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_PL/3.0.1/Picovoice_PL-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_PT/4.0.0/Picovoice_PT-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_PT-4.0.0.tar.gz",
+    "size_bytes": 12018,
+    "sha256": "8b3908abd15e2c2fea19d5c5513e85c773a3b993524550b1a8e4523468cd92ec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_PT/4.0.0/Picovoice_PT-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_PT/4.0.0/Picovoice_PT-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_PT/4.0.1/Picovoice_PT-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_PT-4.0.1.tar.gz",
+    "size_bytes": 12504,
+    "sha256": "92828d7714ea9411354a6ebc5439368621485658344f59546a92eaea2c4a3e9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_PT/4.0.1/Picovoice_PT-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_PT/4.0.1/Picovoice_PT-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_RU/3.0.1/Picovoice_RU-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_RU-3.0.1.tar.gz",
+    "size_bytes": 546808,
+    "sha256": "2575ddc070cf324bf1294150a0316fb5c76435ee1e284254f055120941269863",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_RU/3.0.1/Picovoice_RU-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_RU/3.0.1/Picovoice_RU-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_SV/3.0.1/Picovoice_SV-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_SV-3.0.1.tar.gz",
+    "size_bytes": 544734,
+    "sha256": "aa4606b5aa8b61c28ac54acf782910a001352fda0b4992f30ec209d9eacc95a9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_SV/3.0.1/Picovoice_SV-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_SV/3.0.1/Picovoice_SV-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_VN/3.0.1/Picovoice_VN-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_VN-3.0.1.tar.gz",
+    "size_bytes": 532894,
+    "sha256": "7f979937ed59d63eae6425911a76e687862944693f7a7c88880ff75e91ec777c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_VN/3.0.1/Picovoice_VN-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_VN/3.0.1/Picovoice_VN-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_ZH/4.0.0/Picovoice_ZH-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_ZH-4.0.0.tar.gz",
+    "size_bytes": 13653,
+    "sha256": "760277806066d2bd4c003ca9e95deeacf2b47e835ffe24e5beb672828e7823bb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_ZH/4.0.0/Picovoice_ZH-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_ZH/4.0.0/Picovoice_ZH-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Picovoice_ZH/4.0.1/Picovoice_ZH-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Picovoice_ZH-4.0.1.tar.gz",
+    "size_bytes": 14214,
+    "sha256": "7767f94ac2b23f6f68d5f5b8170795a9edd0f20fd9ccdc6701732f1dc2ad1f10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Picovoice_ZH/4.0.1/Picovoice_ZH-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Picovoice_ZH/4.0.1/Picovoice_ZH-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_AR/3.0.1/Porcupine_AR-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_AR-3.0.1.tar.gz",
+    "size_bytes": 525106,
+    "sha256": "a0a5c17ed2763278947033d7a26b7e0feb9af5464e3f9517e7dc42640d975c98",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_AR/3.0.1/Porcupine_AR-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_AR/3.0.1/Porcupine_AR-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_DE/4.0.0/Porcupine_DE-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_DE-4.0.0.tar.gz",
+    "size_bytes": 285746,
+    "sha256": "173fc438d82758334da3358cd759efb9dde0d96342d8ca42955398b5ae3d912c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_DE/4.0.0/Porcupine_DE-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_DE/4.0.0/Porcupine_DE-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_DE/4.0.1/Porcupine_DE-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_DE-4.0.1.tar.gz",
+    "size_bytes": 285670,
+    "sha256": "b76dacc953adfe6396c6f76d412c5dae369532579fe0e786313dd3390c364ef0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_DE/4.0.1/Porcupine_DE-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_DE/4.0.1/Porcupine_DE-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_EN/4.0.0/Porcupine_EN-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_EN-4.0.0.tar.gz",
+    "size_bytes": 287335,
+    "sha256": "3dae634a0486996ac79f64460cf3d4aab53c2196416244f8a701839d666c4fb0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_EN/4.0.0/Porcupine_EN-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_EN/4.0.0/Porcupine_EN-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_EN/4.0.1/Porcupine_EN-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_EN-4.0.1.tar.gz",
+    "size_bytes": 287258,
+    "sha256": "9e7d45795b0017c56ce0a1ba5e52c8af0f89b1d8517c66ab92c665ee2850b44f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_EN/4.0.1/Porcupine_EN-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_EN/4.0.1/Porcupine_EN-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_ES/4.0.0/Porcupine_ES-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_ES-4.0.0.tar.gz",
+    "size_bytes": 284206,
+    "sha256": "cff0046833976ae145465e318c6dffb7860767b8aad00c79cad5cbe1120b8c71",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_ES/4.0.0/Porcupine_ES-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_ES/4.0.0/Porcupine_ES-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_ES/4.0.1/Porcupine_ES-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_ES-4.0.1.tar.gz",
+    "size_bytes": 284136,
+    "sha256": "520eb4fa8674aa42ca93fba2d0cd2227977abd3e8fd305a114111053d60dbbbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_ES/4.0.1/Porcupine_ES-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_ES/4.0.1/Porcupine_ES-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_FA/3.0.1/Porcupine_FA-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_FA-3.0.1.tar.gz",
+    "size_bytes": 519783,
+    "sha256": "bf73c9711c81f0e79e57b4686ddeaa263b1b99048df98a6834ff223af378868f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_FA/3.0.1/Porcupine_FA-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_FA/3.0.1/Porcupine_FA-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_FR/4.0.0/Porcupine_FR-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_FR-4.0.0.tar.gz",
+    "size_bytes": 283872,
+    "sha256": "2d03ceeab5abd9395f80d08d0888cd20f015721e0934d24e34bd5c3bb63ab245",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_FR/4.0.0/Porcupine_FR-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_FR/4.0.0/Porcupine_FR-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_FR/4.0.1/Porcupine_FR-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_FR-4.0.1.tar.gz",
+    "size_bytes": 283805,
+    "sha256": "58c2adcecea89dd0edcb973cf558324b5f027d7760fc709a602f7f04912f42cc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_FR/4.0.1/Porcupine_FR-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_FR/4.0.1/Porcupine_FR-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_HI/3.0.1/Porcupine_HI-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_HI-3.0.1.tar.gz",
+    "size_bytes": 519184,
+    "sha256": "9d5cda4a053b08cc760e0be60d270b5a8a8a5c12efbadec5dee09487af22ba6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_HI/3.0.1/Porcupine_HI-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_HI/3.0.1/Porcupine_HI-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_IT/4.0.0/Porcupine_IT-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_IT-4.0.0.tar.gz",
+    "size_bytes": 294973,
+    "sha256": "1009e6c4a40cf528ab2bcd1e5913d69c3cbb6d8e8e7f8ab2b2d39548a5c3b64b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_IT/4.0.0/Porcupine_IT-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_IT/4.0.0/Porcupine_IT-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_IT/4.0.1/Porcupine_IT-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_IT-4.0.1.tar.gz",
+    "size_bytes": 294902,
+    "sha256": "97feb8a4f62143b5b455ce8d9303f27e5801323e10d7446ff82b9ecb07306f44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_IT/4.0.1/Porcupine_IT-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_IT/4.0.1/Porcupine_IT-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_JA/4.0.0/Porcupine_JA-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_JA-4.0.0.tar.gz",
+    "size_bytes": 282916,
+    "sha256": "d76f07822caee4286f7c5ff967994796a37969a307ab8c8a11cc24cc87869c3d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_JA/4.0.0/Porcupine_JA-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_JA/4.0.0/Porcupine_JA-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_JA/4.0.1/Porcupine_JA-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_JA-4.0.1.tar.gz",
+    "size_bytes": 282848,
+    "sha256": "7a3b65570131e711c642a68f6f30b430168aea990d85b09351001535ef2d1f37",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_JA/4.0.1/Porcupine_JA-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_JA/4.0.1/Porcupine_JA-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_KO/4.0.0/Porcupine_KO-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_KO-4.0.0.tar.gz",
+    "size_bytes": 283315,
+    "sha256": "218a20df0ec7ee3c3a079cc86dddc08672a4bc4ad4fc033f03c2270e5131eaf7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_KO/4.0.0/Porcupine_KO-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_KO/4.0.0/Porcupine_KO-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_KO/4.0.1/Porcupine_KO-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_KO-4.0.1.tar.gz",
+    "size_bytes": 283248,
+    "sha256": "91d197c1c9894f9ad8158bb2c25d67fc8077e5c2573e9c6ff2f65c64e10da935",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_KO/4.0.1/Porcupine_KO-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_KO/4.0.1/Porcupine_KO-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_NL/3.0.1/Porcupine_NL-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_NL-3.0.1.tar.gz",
+    "size_bytes": 519873,
+    "sha256": "16827e66c0a106aa627709259e880bac0c19f69ad7d4109a1602aa8e20bbce16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_NL/3.0.1/Porcupine_NL-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_NL/3.0.1/Porcupine_NL-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_PL/3.0.1/Porcupine_PL-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_PL-3.0.1.tar.gz",
+    "size_bytes": 517270,
+    "sha256": "48d0aefc465e96802071a4bfd7ca06c6a6246be8ef7723eb6b189bbe1e5f4d1a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_PL/3.0.1/Porcupine_PL-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_PL/3.0.1/Porcupine_PL-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_PT/4.0.0/Porcupine_PT-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_PT-4.0.0.tar.gz",
+    "size_bytes": 283143,
+    "sha256": "9d4ccc1b566a386c460327ab705e8c4659a9275a4592a0451672eb2cad76ea6d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_PT/4.0.0/Porcupine_PT-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_PT/4.0.0/Porcupine_PT-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_PT/4.0.1/Porcupine_PT-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_PT-4.0.1.tar.gz",
+    "size_bytes": 283082,
+    "sha256": "5e69939ceb5448355283c376109c17e057ffb8372ebf5ec48a9a0dfe84350f43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_PT/4.0.1/Porcupine_PT-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_PT/4.0.1/Porcupine_PT-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_RU/3.0.1/Porcupine_RU-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_RU-3.0.1.tar.gz",
+    "size_bytes": 520475,
+    "sha256": "efd934ce8d6dd772f8cb8c70ae1e38b98aa75449805ceb5e2911175f96872937",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_RU/3.0.1/Porcupine_RU-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_RU/3.0.1/Porcupine_RU-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_SV/3.0.1/Porcupine_SV-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_SV-3.0.1.tar.gz",
+    "size_bytes": 518492,
+    "sha256": "d2a4d91d44d6a8a4e622819e008880afdcac5dcd83a340b6b41fad362b34a8d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_SV/3.0.1/Porcupine_SV-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_SV/3.0.1/Porcupine_SV-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_VN/3.0.1/Porcupine_VN-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_VN-3.0.1.tar.gz",
+    "size_bytes": 505433,
+    "sha256": "a8fde63355e23863a8f78fb995a965b6e20a48faa012ca3c828cafce42be1746",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_VN/3.0.1/Porcupine_VN-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_VN/3.0.1/Porcupine_VN-3.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_ZH/4.0.0/Porcupine_ZH-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_ZH-4.0.0.tar.gz",
+    "size_bytes": 530205,
+    "sha256": "449c43bfc6be614f338cbc1afb24623b369acf60d2a187a239744a3a67039111",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_ZH/4.0.0/Porcupine_ZH-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_ZH/4.0.0/Porcupine_ZH-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Porcupine_ZH/4.0.1/Porcupine_ZH-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Porcupine_ZH-4.0.1.tar.gz",
+    "size_bytes": 530123,
+    "sha256": "e3df2423c849eaf0081d3b59db5f88f0dea158fd95f2115ea4a8ed72f30ed3f7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Porcupine_ZH/4.0.1/Porcupine_ZH-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Porcupine_ZH/4.0.1/Porcupine_ZH-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_DE/4.0.0/Rhino_DE-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_DE-4.0.0.tar.gz",
+    "size_bytes": 289541,
+    "sha256": "19329a7de1a767f66faf67cd38b11477df68fb3fe54ed615f70ce8b9b3b9f4b8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_DE/4.0.0/Rhino_DE-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_DE/4.0.0/Rhino_DE-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_DE/4.0.1/Rhino_DE-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_DE-4.0.1.tar.gz",
+    "size_bytes": 289456,
+    "sha256": "3aa49c260f1606b590b2bbfaa1fc3695ab75b703f0e23fb87cc7fb6ccd9002b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_DE/4.0.1/Rhino_DE-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_DE/4.0.1/Rhino_DE-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_DE/4.1.0/Rhino_DE-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_DE-4.1.0.tar.gz",
+    "size_bytes": 291067,
+    "sha256": "33ca4e799281d60d8abc98bb5e7fbf0b5a6f5dd79ad1f73830a2e895ab265018",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_DE/4.1.0/Rhino_DE-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_DE/4.1.0/Rhino_DE-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_EN/4.0.0/Rhino_EN-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_EN-4.0.0.tar.gz",
+    "size_bytes": 290552,
+    "sha256": "17df70ae67a30802571f2ddb0b82a2fd05afc062ae53e86e804456a85c348fd5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_EN/4.0.0/Rhino_EN-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_EN/4.0.0/Rhino_EN-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_EN/4.0.1/Rhino_EN-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_EN-4.0.1.tar.gz",
+    "size_bytes": 290493,
+    "sha256": "3ade3d39ce2b0fee184418723dc90144f9b1bfe66fafe5bebcc719dad492ee47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_EN/4.0.1/Rhino_EN-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_EN/4.0.1/Rhino_EN-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_EN/4.1.0/Rhino_EN-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_EN-4.1.0.tar.gz",
+    "size_bytes": 292169,
+    "sha256": "d0ca158fa9a01bb7147f08de65ea3e7c87aeff786ed405e53fe3dca2c4c49c07",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_EN/4.1.0/Rhino_EN-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_EN/4.1.0/Rhino_EN-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_ES/4.0.0/Rhino_ES-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_ES-4.0.0.tar.gz",
+    "size_bytes": 287639,
+    "sha256": "092a22c72581e6ecd2de3898855bb4475bb74e53924c33fc8e961981cda1679a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_ES/4.0.0/Rhino_ES-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_ES/4.0.0/Rhino_ES-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_ES/4.0.1/Rhino_ES-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_ES-4.0.1.tar.gz",
+    "size_bytes": 287582,
+    "sha256": "bf59123745154cc02002968f960b45ccfd02d7cb6d80ae4b83ee6baebe217030",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_ES/4.0.1/Rhino_ES-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_ES/4.0.1/Rhino_ES-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_ES/4.1.0/Rhino_ES-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_ES-4.1.0.tar.gz",
+    "size_bytes": 288884,
+    "sha256": "3244f8b3016ef2f95ff438a6af4eedf5965a8fe5fda395947c4574f93bb35ea6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_ES/4.1.0/Rhino_ES-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_ES/4.1.0/Rhino_ES-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_FR/4.0.0/Rhino_FR-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_FR-4.0.0.tar.gz",
+    "size_bytes": 287621,
+    "sha256": "ebe53c9036adef21b8698f5359ad15c3e6f525179faef740212be032fd5af665",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_FR/4.0.0/Rhino_FR-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_FR/4.0.0/Rhino_FR-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_FR/4.0.1/Rhino_FR-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_FR-4.0.1.tar.gz",
+    "size_bytes": 287543,
+    "sha256": "b5148b64c7d5404f4655d2eaa0571639af14a72d067cfd6af3705a62d170d970",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_FR/4.0.1/Rhino_FR-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_FR/4.0.1/Rhino_FR-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_FR/4.1.0/Rhino_FR-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_FR-4.1.0.tar.gz",
+    "size_bytes": 288872,
+    "sha256": "2c7343035aed52ba20429afa6b9ea39834c8661033555616e45e9b11b0b05e8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_FR/4.1.0/Rhino_FR-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_FR/4.1.0/Rhino_FR-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_IT/4.0.0/Rhino_IT-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_IT-4.0.0.tar.gz",
+    "size_bytes": 287650,
+    "sha256": "e8392684fb755afc0793bc5c7a93d30170352099e7a48270bba89073fdfaf361",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_IT/4.0.0/Rhino_IT-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_IT/4.0.0/Rhino_IT-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_IT/4.0.1/Rhino_IT-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_IT-4.0.1.tar.gz",
+    "size_bytes": 287536,
+    "sha256": "951e2d980a781c241472025d66039df977a27621fbbd0a9f47a695c006186b1b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_IT/4.0.1/Rhino_IT-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_IT/4.0.1/Rhino_IT-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_IT/4.1.0/Rhino_IT-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_IT-4.1.0.tar.gz",
+    "size_bytes": 289190,
+    "sha256": "31c27410764d71b18a0670527e92d5041d759af471510e54790e98af2a6ae811",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_IT/4.1.0/Rhino_IT-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_IT/4.1.0/Rhino_IT-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_JA/4.0.0/Rhino_JA-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_JA-4.0.0.tar.gz",
+    "size_bytes": 286111,
+    "sha256": "ef2c06eaefef2f272667b62b1f12f803ed85c04dc359827f5a85cda29ef68cbd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_JA/4.0.0/Rhino_JA-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_JA/4.0.0/Rhino_JA-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_JA/4.0.1/Rhino_JA-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_JA-4.0.1.tar.gz",
+    "size_bytes": 286007,
+    "sha256": "83456c48515bbdc81103c5cf67cc182ca928f310f5659fe56029dcc1d52d3cb1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_JA/4.0.1/Rhino_JA-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_JA/4.0.1/Rhino_JA-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_JA/4.1.0/Rhino_JA-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_JA-4.1.0.tar.gz",
+    "size_bytes": 287654,
+    "sha256": "5cc9534ebaeef919aac36bc5452535ccfe9918a159548ffd9aea0f6728d62ae0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_JA/4.1.0/Rhino_JA-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_JA/4.1.0/Rhino_JA-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_KO/4.0.0/Rhino_KO-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_KO-4.0.0.tar.gz",
+    "size_bytes": 286816,
+    "sha256": "c4b0e67be2ce112840fe72eea4b39696c185f18e387c3373702326da101b65b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_KO/4.0.0/Rhino_KO-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_KO/4.0.0/Rhino_KO-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_KO/4.0.1/Rhino_KO-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_KO-4.0.1.tar.gz",
+    "size_bytes": 286741,
+    "sha256": "f1d6feb70419b19e9b327803b411cc5122b33dc89a9738692f352c4811f91126",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_KO/4.0.1/Rhino_KO-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_KO/4.0.1/Rhino_KO-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_KO/4.1.0/Rhino_KO-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_KO-4.1.0.tar.gz",
+    "size_bytes": 288393,
+    "sha256": "aa9043a7cbe62945216c52af40dc298ca3329d71585bb1b4ed864eb18712ebc7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_KO/4.1.0/Rhino_KO-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_KO/4.1.0/Rhino_KO-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_PT/4.0.0/Rhino_PT-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_PT-4.0.0.tar.gz",
+    "size_bytes": 286665,
+    "sha256": "9208409ae48861c970fff1b47529990fdc2fad5a269fcce74e4310923d290a25",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_PT/4.0.0/Rhino_PT-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_PT/4.0.0/Rhino_PT-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_PT/4.0.1/Rhino_PT-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_PT-4.0.1.tar.gz",
+    "size_bytes": 286611,
+    "sha256": "02b3d02e99f33724b88f10b379f0306093c4251a3fa6aff03a79a75f94e39530",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_PT/4.0.1/Rhino_PT-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_PT/4.0.1/Rhino_PT-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_PT/4.1.0/Rhino_PT-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_PT-4.1.0.tar.gz",
+    "size_bytes": 287952,
+    "sha256": "003066e9cf4fa4102caf3d84e4d1bdf3e1e0288d09b73bdfddee01334ea40598",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_PT/4.1.0/Rhino_PT-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_PT/4.1.0/Rhino_PT-4.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_ZH/4.0.0/Rhino_ZH-4.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_ZH-4.0.0.tar.gz",
+    "size_bytes": 282059,
+    "sha256": "b1c514102e70635f7fe25795064915ce0684159338b60aa63771a92d49b90a31",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_ZH/4.0.0/Rhino_ZH-4.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_ZH/4.0.0/Rhino_ZH-4.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_ZH/4.0.1/Rhino_ZH-4.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_ZH-4.0.1.tar.gz",
+    "size_bytes": 281973,
+    "sha256": "4ee76eac089ec23339fe068c0de3d6dbd31cff284a92d549917bcba50f60c154",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_ZH/4.0.1/Rhino_ZH-4.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_ZH/4.0.1/Rhino_ZH-4.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "picovoice/library/Rhino_ZH/4.1.0/Rhino_ZH-4.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Rhino_ZH-4.1.0.tar.gz",
+    "size_bytes": 283561,
+    "sha256": "566f8ea0ac5210edd9d753a0f6c23ff6562d554aee78913dd9cd6c4ca883b321",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/picovoice/library/Rhino_ZH/4.1.0/Rhino_ZH-4.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/picovoice/library/Rhino_ZH/4.1.0/Rhino_ZH-4.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

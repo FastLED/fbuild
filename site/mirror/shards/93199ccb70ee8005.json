@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/belem2050",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "belem2050/library/LightTaskScheduler/1.1.0/LightTaskScheduler-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LightTaskScheduler-1.1.0.tar.gz",
+    "size_bytes": 3400,
+    "sha256": "0c615aa8c2d953602b5b1d79ebc0f9e24ecc9bc94b2f827dc6683451e6a8f2f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/belem2050/library/LightTaskScheduler/1.1.0/LightTaskScheduler-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/belem2050/library/LightTaskScheduler/1.1.0/LightTaskScheduler-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

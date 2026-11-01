@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/icrs",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "icrs/library/IC%20Hack%20Badge/1.1.0/ICHackBadge-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICHackBadge-1.1.0.tar.gz",
+    "size_bytes": 5090,
+    "sha256": "8105b9e37438254f091fe9447da0408a04987acfb746071fd82dc00e1adace51",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/icrs/library/IC%2520Hack%2520Badge/1.1.0/ICHackBadge-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/icrs/library/IC%20Hack%20Badge/1.1.0/ICHackBadge-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "icrs/library/ICRS%20101/2.2.0/ICRS101-2.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICRS101-2.2.0.tar.gz",
+    "size_bytes": 6460,
+    "sha256": "384ab0756d32855c80c92a483da08414e547dbdbdd39a3d9ee0f30b58ac1afc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/icrs/library/ICRS%2520101/2.2.0/ICRS101-2.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/icrs/library/ICRS%20101/2.2.0/ICRS101-2.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rodneyosodo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rodneyosodo/library/driver/1.0.0/driver-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "driver-1.0.0.tar.gz",
+    "size_bytes": 2819,
+    "sha256": "2484d8f101aef024270ae24a45afaf607d5f624bbd9b9e01e56b123f2dfb7f10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rodneyosodo/library/driver/1.0.0/driver-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rodneyosodo/library/driver/1.0.0/driver-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

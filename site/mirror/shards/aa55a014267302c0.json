@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-knk-yama",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-knk-yama/library/LCD_AQM0802/0.0.0+sha.c1cc1a932ae1/LCD_AQM0802-0.0.0+sha.c1cc1a932ae1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_AQM0802-0.0.0+sha.c1cc1a932ae1.tar.gz",
+    "size_bytes": 1496,
+    "sha256": "a301a89afde9396ddb52f5acfc5e57e55e49f1bd2d4afa08999db17390d85d58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-knk-yama/library/LCD_AQM0802/0.0.0%2Bsha.c1cc1a932ae1/LCD_AQM0802-0.0.0%2Bsha.c1cc1a932ae1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-knk-yama/library/LCD_AQM0802/0.0.0%2Bsha.c1cc1a932ae1/LCD_AQM0802-0.0.0%2Bsha.c1cc1a932ae1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

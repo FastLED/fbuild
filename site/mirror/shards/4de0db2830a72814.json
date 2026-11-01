@@ -1,0 +1,100 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ardnew",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ardnew/library/ESP32-3248S035/0.2.1/ESP32-3248S035-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32-3248S035-0.2.1.tar.gz",
+    "size_bytes": 14271,
+    "sha256": "1924244338bc22102117aee37bd4ac43b7e785394b0324c41dd536c5eb36fc28",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardnew/library/ESP32-3248S035/0.2.1/ESP32-3248S035-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ardnew/library/ESP32-3248S035/0.2.1/ESP32-3248S035-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardnew/library/ILI9341-Layout-Manager/1.0.5/ILI9341-Layout-Manager-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ILI9341-Layout-Manager-1.0.5.tar.gz",
+    "size_bytes": 17432,
+    "sha256": "e2e9b1c2725c281f06d457dbcefa8bf03220a4d227b58f71dfd41ab1eb8b3bfc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardnew/library/ILI9341-Layout-Manager/1.0.5/ILI9341-Layout-Manager-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/ardnew/library/ILI9341-Layout-Manager/1.0.5/ILI9341-Layout-Manager-1.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardnew/library/STUSB4500/1.0.3/STUSB4500-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STUSB4500-1.0.3.tar.gz",
+    "size_bytes": 14099,
+    "sha256": "9eeb4710b5711b88f4a77fe42741f6b1d25a155ee16be7fb0d0f6d039b2ed8f2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardnew/library/STUSB4500/1.0.3/STUSB4500-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/ardnew/library/STUSB4500/1.0.3/STUSB4500-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardnew/library/XPT2046_Calibrated/1.0.1/XPT2046_Calibrated-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XPT2046_Calibrated-1.0.1.tar.gz",
+    "size_bytes": 8055,
+    "sha256": "800bad61792b8b12bdc265e1d600236194d9a037aa509897c615a34d9ccd1e78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardnew/library/XPT2046_Calibrated/1.0.1/XPT2046_Calibrated-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ardnew/library/XPT2046_Calibrated/1.0.1/XPT2046_Calibrated-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardnew/library/byte-order/0.3.1/byte-order-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "byte-order-0.3.1.tar.gz",
+    "size_bytes": 4318,
+    "sha256": "031d6c7fba7719f0d95cfbd124cc7e01014b0151d9cac42cf52aac185d954cc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardnew/library/byte-order/0.3.1/byte-order-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ardnew/library/byte-order/0.3.1/byte-order-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardnew/library/cronos/0.2.1/cronos-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cronos-0.2.1.tar.gz",
+    "size_bytes": 4329,
+    "sha256": "6e2e9a10439a8ab9961b05a02fb2c1593d434c452d3399f8da91bb56af562dc1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardnew/library/cronos/0.2.1/cronos-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/ardnew/library/cronos/0.2.1/cronos-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ardnew/library/libpvc/0.4.0/libpvc-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libpvc-0.4.0.tar.gz",
+    "size_bytes": 9431,
+    "sha256": "e7faeb891d127b9715a69df72ca3c57b182b8f6cb131ccf79ee2510f59efdd3a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ardnew/library/libpvc/0.4.0/libpvc-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ardnew/library/libpvc/0.4.0/libpvc-0.4.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

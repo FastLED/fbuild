@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-stevenor1997",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-stevenor1997/library/Move_Servos/0.0.0+sha.5bc741e99c53/Move_Servos-0.0.0+sha.5bc741e99c53.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Move_Servos-0.0.0+sha.5bc741e99c53.tar.gz",
+    "size_bytes": 1518,
+    "sha256": "4a76fee592c383332a46108ac62b27c9406c14df65712aa3781fa3d1e0600f15",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stevenor1997/library/Move_Servos/0.0.0%2Bsha.5bc741e99c53/Move_Servos-0.0.0%2Bsha.5bc741e99c53.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stevenor1997/library/Move_Servos/0.0.0%2Bsha.5bc741e99c53/Move_Servos-0.0.0%2Bsha.5bc741e99c53.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-stevenor1997/library/Step_Motor/0.0.0+sha.8581e6927b36/Step_Motor-0.0.0+sha.8581e6927b36.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Step_Motor-0.0.0+sha.8581e6927b36.tar.gz",
+    "size_bytes": 1758,
+    "sha256": "f9cb91b86223d73ab38eb5ead8658d97dfd00339f45b1b69a96b1e473d51b9a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stevenor1997/library/Step_Motor/0.0.0%2Bsha.8581e6927b36/Step_Motor-0.0.0%2Bsha.8581e6927b36.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stevenor1997/library/Step_Motor/0.0.0%2Bsha.8581e6927b36/Step_Motor-0.0.0%2Bsha.8581e6927b36.tar.gz"
+    ]
+   }
+  }
+ ]
+}

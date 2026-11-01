@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jakesmd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jakesmd/library/ExcelStepper/1.2.2/ExcelStepper-1.2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ExcelStepper-1.2.2.tar.gz",
+    "size_bytes": 7077,
+    "sha256": "d7094bd07664855cea331df265fb01502bf8e7c15608c2463d07e2100b9999bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jakesmd/library/ExcelStepper/1.2.2/ExcelStepper-1.2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jakesmd/library/ExcelStepper/1.2.2/ExcelStepper-1.2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jakesmd/library/FastPin/1.0.2/FastPin-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FastPin-1.0.2.tar.gz",
+    "size_bytes": 4165,
+    "sha256": "6077af378273d756a286cab5e02501aeb07cb59ba4b66a7f2467eecfc7331322",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jakesmd/library/FastPin/1.0.2/FastPin-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jakesmd/library/FastPin/1.0.2/FastPin-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

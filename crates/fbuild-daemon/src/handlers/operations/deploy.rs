@@ -188,6 +188,7 @@ pub async fn deploy(
         );
         let params = fbuild_build::BuildParams {
             project_dir: project_dir.clone(),
+            shrink: Default::default(),
             env_name: env_name.clone(),
             clean_all: req.clean_all,
             clean_only: false,

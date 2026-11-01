@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-garfield38",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-garfield38/library/NazaDecoder/0.0.0+sha.de84f8a0a706/NazaDecoder-0.0.0+sha.de84f8a0a706.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NazaDecoder-0.0.0+sha.de84f8a0a706.tar.gz",
+    "size_bytes": 3747,
+    "sha256": "5ffcc262f80d99305b1a6dacefa2ec5eb78f2dc94b14a1c74c169b64cc785b86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-garfield38/library/NazaDecoder/0.0.0%2Bsha.de84f8a0a706/NazaDecoder-0.0.0%2Bsha.de84f8a0a706.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-garfield38/library/NazaDecoder/0.0.0%2Bsha.de84f8a0a706/NazaDecoder-0.0.0%2Bsha.de84f8a0a706.tar.gz"
+    ]
+   }
+  }
+ ]
+}

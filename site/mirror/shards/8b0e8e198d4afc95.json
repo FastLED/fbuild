@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jdfraire-p",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jdfraire-p/library/ColorsUtils/1.0.0/ColorsUtils-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ColorsUtils-1.0.0.tar.gz",
+    "size_bytes": 7155,
+    "sha256": "1b38ff029889108f0795544277de7fb544b925524efcd37173c433e917fb4a77",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jdfraire-p/library/ColorsUtils/1.0.0/ColorsUtils-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jdfraire-p/library/ColorsUtils/1.0.0/ColorsUtils-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

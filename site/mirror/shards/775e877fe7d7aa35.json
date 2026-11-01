@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eccnil",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eccnil/library/EspNow2Mqtt/1.3.1/EspNow2Mqtt-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspNow2Mqtt-1.3.1.tar.gz",
+    "size_bytes": 18128,
+    "sha256": "b747406f4fbe336233f8b2651e65fc33e2f04e6c94d396a4ddb7a2d71d161e73",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eccnil/library/EspNow2Mqtt/1.3.1/EspNow2Mqtt-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/eccnil/library/EspNow2Mqtt/1.3.1/EspNow2Mqtt-1.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

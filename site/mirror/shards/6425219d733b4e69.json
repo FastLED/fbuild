@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pbosetti",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pbosetti/library/SerialRPC/0.1.0/SerialRPC-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialRPC-0.1.0.tar.gz",
+    "size_bytes": 51043,
+    "sha256": "fca5f3e27fda9814a122debeeef7dec240ecfe7e34f14a39b74fa68cb2a206f0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pbosetti/library/SerialRPC/0.1.0/SerialRPC-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pbosetti/library/SerialRPC/0.1.0/SerialRPC-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pbosetti/library/SerialRPC/0.1.1/SerialRPC-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialRPC-0.1.1.tar.gz",
+    "size_bytes": 51476,
+    "sha256": "e3c9e748914b57105deb419c2a6451a97693a2142cff5558cc82d375b4c990e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pbosetti/library/SerialRPC/0.1.1/SerialRPC-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pbosetti/library/SerialRPC/0.1.1/SerialRPC-0.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pbosetti/library/UsbIo/0.1.0/UsbIo-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UsbIo-0.1.0.tar.gz",
+    "size_bytes": 49143,
+    "sha256": "081ecc92adb034a56feb6e1d754277655b9e57e8d12f9383ffc3dab998df0243",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pbosetti/library/UsbIo/0.1.0/UsbIo-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pbosetti/library/UsbIo/0.1.0/UsbIo-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pbosetti/library/UsbIo/0.2.1/UsbIo-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UsbIo-0.2.1.tar.gz",
+    "size_bytes": 63214,
+    "sha256": "3c5c3afbdb265a94bac264c39da8599574445632ee90e47ac99ef2a3c7786905",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pbosetti/library/UsbIo/0.2.1/UsbIo-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pbosetti/library/UsbIo/0.2.1/UsbIo-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pbosetti/library/UsbIo/0.3.0/UsbIo-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UsbIo-0.3.0.tar.gz",
+    "size_bytes": 65932,
+    "sha256": "9748d0f98cb389cd056f0b7099edf822e94a314191f5032c481a17ab346a1065",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pbosetti/library/UsbIo/0.3.0/UsbIo-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pbosetti/library/UsbIo/0.3.0/UsbIo-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pbosetti/library/UsbIo/0.4.0/UsbIo-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UsbIo-0.4.0.tar.gz",
+    "size_bytes": 77658,
+    "sha256": "282d77e067a0cfbdf7f07b1090dee65f801ee05774d3cd341dc9c1c23aec7e2e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pbosetti/library/UsbIo/0.4.0/UsbIo-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pbosetti/library/UsbIo/0.4.0/UsbIo-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pbosetti/library/UsbIo/0.4.2/UsbIo-0.4.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UsbIo-0.4.2.tar.gz",
+    "size_bytes": 80095,
+    "sha256": "fe13c13e3b2a981c1d53840772675d1046cb25247d845c893d83ca76236be329",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pbosetti/library/UsbIo/0.4.2/UsbIo-0.4.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pbosetti/library/UsbIo/0.4.2/UsbIo-0.4.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pbosetti/library/UsbIo/0.4.3/UsbIo-0.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UsbIo-0.4.3.tar.gz",
+    "size_bytes": 81002,
+    "sha256": "956282564413a8cdc43260d89e7356d1ad6ffd1c4b1ab7443d875ed7832eefa2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pbosetti/library/UsbIo/0.4.3/UsbIo-0.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/pbosetti/library/UsbIo/0.4.3/UsbIo-0.4.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

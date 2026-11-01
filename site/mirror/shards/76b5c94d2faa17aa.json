@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/duckythescientist",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "duckythescientist/library/AVRfix/1.1.1/AVRfix-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AVRfix-1.1.1.tar.gz",
+    "size_bytes": 28996,
+    "sha256": "998a8629796883842f780d2140cd4afc5c83e1ad0689449bbf7699ef153e4624",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/duckythescientist/library/AVRfix/1.1.1/AVRfix-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/duckythescientist/library/AVRfix/1.1.1/AVRfix-1.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/voronii",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "voronii/library/Dial2AbstractSensors/1.0.9/Dial2AbstractSensors-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dial2AbstractSensors-1.0.9.tar.gz",
+    "size_bytes": 7407,
+    "sha256": "34eb4698c01243bfb2a10e7d419f8c333d5f622c58e8038109043a250b1f14be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/voronii/library/Dial2AbstractSensors/1.0.9/Dial2AbstractSensors-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/voronii/library/Dial2AbstractSensors/1.0.9/Dial2AbstractSensors-1.0.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "voronii/library/Dial2HardwareSensors/1.0.5/Dial2HardwareSensors-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Dial2HardwareSensors-1.0.5.tar.gz",
+    "size_bytes": 62425,
+    "sha256": "3ac6641d269d22bfc32f3dc8c6b886382e625e6ddccd9c0213e874889453ffeb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/voronii/library/Dial2HardwareSensors/1.0.5/Dial2HardwareSensors-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/voronii/library/Dial2HardwareSensors/1.0.5/Dial2HardwareSensors-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

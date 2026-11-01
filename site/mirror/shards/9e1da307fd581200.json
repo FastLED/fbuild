@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/solarcaratuva",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "solarcaratuva/library/bitprotolib/0.4.5patch1/bitprotolib-0.4.5patch1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "bitprotolib-0.4.5patch1.tar.gz",
+    "size_bytes": 6357,
+    "sha256": "de65c733919dad7eda086506111f9bb38172679809ee901df482bc70802ebeb8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solarcaratuva/library/bitprotolib/0.4.5patch1/bitprotolib-0.4.5patch1.tar.gz",
+     "https://dl.registry.platformio.org/download/solarcaratuva/library/bitprotolib/0.4.5patch1/bitprotolib-0.4.5patch1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "solarcaratuva/library/boost-preprocessor/1.77.0/boost-preprocessor-1.77.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "boost-preprocessor-1.77.0.tar.gz",
+    "size_bytes": 641615,
+    "sha256": "13e41a9166fe022dffa894d396ae59baeda584017c3809b89816973b28ca309b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/solarcaratuva/library/boost-preprocessor/1.77.0/boost-preprocessor-1.77.0.tar.gz",
+     "https://dl.registry.platformio.org/download/solarcaratuva/library/boost-preprocessor/1.77.0/boost-preprocessor-1.77.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

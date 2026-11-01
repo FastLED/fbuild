@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-hsgw",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-hsgw/library/MCP23017/0.0.0+sha.6dd30d790eff/MCP23017-0.0.0+sha.6dd30d790eff.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP23017-0.0.0+sha.6dd30d790eff.tar.gz",
+    "size_bytes": 2588,
+    "sha256": "3e1dacd51e34343232b76695bdfc2ceae597cbf8d5db617ea14af9a5e9075346",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hsgw/library/MCP23017/0.0.0%2Bsha.6dd30d790eff/MCP23017-0.0.0%2Bsha.6dd30d790eff.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hsgw/library/MCP23017/0.0.0%2Bsha.6dd30d790eff/MCP23017-0.0.0%2Bsha.6dd30d790eff.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hsgw/library/YoApi/0.0.0+sha.013176e14f42/YoApi-0.0.0+sha.013176e14f42.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YoApi-0.0.0+sha.013176e14f42.tar.gz",
+    "size_bytes": 1155,
+    "sha256": "67efb6d892cc4d76935ce8888a40b06a5188a799c2de3f6dc460bf368138ea20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hsgw/library/YoApi/0.0.0%2Bsha.013176e14f42/YoApi-0.0.0%2Bsha.013176e14f42.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hsgw/library/YoApi/0.0.0%2Bsha.013176e14f42/YoApi-0.0.0%2Bsha.013176e14f42.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-hsgw/library/libpff/0.0.0+sha.845390b117a7/libpff-0.0.0+sha.845390b117a7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libpff-0.0.0+sha.845390b117a7.tar.gz",
+    "size_bytes": 14669,
+    "sha256": "33628eef2d0a4069f48fc8d73900440d52fde24e73cd8dcb28d5ca8f45dad2b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-hsgw/library/libpff/0.0.0%2Bsha.845390b117a7/libpff-0.0.0%2Bsha.845390b117a7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-hsgw/library/libpff/0.0.0%2Bsha.845390b117a7/libpff-0.0.0%2Bsha.845390b117a7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

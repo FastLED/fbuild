@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/modac",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "modac/library/NewAttinyOneWire/0.2/NewAttinyOneWire-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NewAttinyOneWire-0.2.tar.gz",
+    "size_bytes": 4419,
+    "sha256": "b60060f5455513e8de9eae4984f0481c685822cff09e96b57a553bc9700a7d58",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/modac/library/NewAttinyOneWire/0.2/NewAttinyOneWire-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/modac/library/NewAttinyOneWire/0.2/NewAttinyOneWire-0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

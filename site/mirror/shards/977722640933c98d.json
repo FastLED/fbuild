@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-farbodjam",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-farbodjam/library/Motordriver/0.0.0+sha.541fb1742c8b/Motordriver-0.0.0+sha.541fb1742c8b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motordriver-0.0.0+sha.541fb1742c8b.tar.gz",
+    "size_bytes": 2920,
+    "sha256": "73c467cd15ba7f764e0e845bf9b01a0948bd58203f29bce1770856548b185845",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-farbodjam/library/Motordriver/0.0.0%2Bsha.541fb1742c8b/Motordriver-0.0.0%2Bsha.541fb1742c8b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-farbodjam/library/Motordriver/0.0.0%2Bsha.541fb1742c8b/Motordriver-0.0.0%2Bsha.541fb1742c8b.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-farbodjam/library/StepperMotor/0.0.0+sha.6a968d1c95c7/StepperMotor-0.0.0+sha.6a968d1c95c7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperMotor-0.0.0+sha.6a968d1c95c7.tar.gz",
+    "size_bytes": 3826,
+    "sha256": "08e429ac37b6edab2f4e829ad8a3b419541a055e3035c66d0d6474d8160ddbe4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-farbodjam/library/StepperMotor/0.0.0%2Bsha.6a968d1c95c7/StepperMotor-0.0.0%2Bsha.6a968d1c95c7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-farbodjam/library/StepperMotor/0.0.0%2Bsha.6a968d1c95c7/StepperMotor-0.0.0%2Bsha.6a968d1c95c7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

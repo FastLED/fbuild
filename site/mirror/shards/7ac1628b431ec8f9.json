@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xlottech",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xlottech/library/XLOT-QuadSwitch/1.0.1/XLOT-QuadSwitch-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLOT-QuadSwitch-1.0.1.tar.gz",
+    "size_bytes": 3300,
+    "sha256": "fa25b24d302b027dbce1accdcb2bd6c02ea44687c141a4430459a8fef7f7a619",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xlottech/library/XLOT-QuadSwitch/1.0.1/XLOT-QuadSwitch-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/xlottech/library/XLOT-QuadSwitch/1.0.1/XLOT-QuadSwitch-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "xlottech/library/XLOT-QuadSwitch/1.0.2/XLOT-QuadSwitch-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XLOT-QuadSwitch-1.0.2.tar.gz",
+    "size_bytes": 4279,
+    "sha256": "7b79bccbdf565357ff092c8555eb361f1014cb8dd8b83de06fe6c49946fec7e5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xlottech/library/XLOT-QuadSwitch/1.0.2/XLOT-QuadSwitch-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/xlottech/library/XLOT-QuadSwitch/1.0.2/XLOT-QuadSwitch-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

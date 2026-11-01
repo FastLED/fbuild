@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jaderb-rnd",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jaderb-rnd/library/Spiderbot/1.0.0/Spiderbot-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Spiderbot-1.0.0.tar.gz",
+    "size_bytes": 4152,
+    "sha256": "6b68bc487838d2951cd5841aded2f64ca6e023310375f1db61286f09af390a82",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jaderb-rnd/library/Spiderbot/1.0.0/Spiderbot-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jaderb-rnd/library/Spiderbot/1.0.0/Spiderbot-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

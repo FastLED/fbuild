@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jbryu",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jbryu/library/mDNS/0.0.0+sha.25a82eb200c7/mDNS-0.0.0+sha.25a82eb200c7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mDNS-0.0.0+sha.25a82eb200c7.tar.gz",
+    "size_bytes": 6004,
+    "sha256": "19ba6292c2b81d70f8c3ed1299d34a7450b6dd32c99eff7d2a0493c18abb26af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jbryu/library/mDNS/0.0.0%2Bsha.25a82eb200c7/mDNS-0.0.0%2Bsha.25a82eb200c7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jbryu/library/mDNS/0.0.0%2Bsha.25a82eb200c7/mDNS-0.0.0%2Bsha.25a82eb200c7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

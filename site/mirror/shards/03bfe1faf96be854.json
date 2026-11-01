@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/joba-1",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "joba-1/library/Joba_ESmart3/4.1/Joba_ESmart3-4.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Joba_ESmart3-4.1.tar.gz",
+    "size_bytes": 24602,
+    "sha256": "fea0e40ffe93ad614973a470ab9231e9854ef6d6bcfd9bad1c3c34f9f775340f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joba-1/library/Joba_ESmart3/4.1/Joba_ESmart3-4.1.tar.gz",
+     "https://dl.registry.platformio.org/download/joba-1/library/Joba_ESmart3/4.1/Joba_ESmart3-4.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joba-1/library/Joba_JbdBms/2.1/Joba_JbdBms-2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Joba_JbdBms-2.1.tar.gz",
+    "size_bytes": 14101,
+    "sha256": "d875eaaacb5cc64ea1f7bd7ae2ecb93542ee47dd6a1d7dc0db9a92a05486f243",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joba-1/library/Joba_JbdBms/2.1/Joba_JbdBms-2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/joba-1/library/Joba_JbdBms/2.1/Joba_JbdBms-2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joba-1/library/Joba_JbdBms/2.2/Joba_JbdBms-2.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Joba_JbdBms-2.2.tar.gz",
+    "size_bytes": 16922,
+    "sha256": "234ed0f17e06bcc5a1799f323e19e3775305af69cf81abcfcc51e4a5ffd80faf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joba-1/library/Joba_JbdBms/2.2/Joba_JbdBms-2.2.tar.gz",
+     "https://dl.registry.platformio.org/download/joba-1/library/Joba_JbdBms/2.2/Joba_JbdBms-2.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "joba-1/library/Joba_Tsl2561/2.0.10/Joba_Tsl2561-2.0.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Joba_Tsl2561-2.0.10.tar.gz",
+    "size_bytes": 24028,
+    "sha256": "41b8ee0668f01a25be78b24020a0119eb4187b333fe8e96ec5b00aaf4d31706f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/joba-1/library/Joba_Tsl2561/2.0.10/Joba_Tsl2561-2.0.10.tar.gz",
+     "https://dl.registry.platformio.org/download/joba-1/library/Joba_Tsl2561/2.0.10/Joba_Tsl2561-2.0.10.tar.gz"
+    ]
+   }
+  }
+ ]
+}

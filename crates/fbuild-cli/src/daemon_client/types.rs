@@ -62,6 +62,9 @@ pub struct BuildRequest {
     /// See FastLED/fbuild#594.
     #[serde(default)]
     pub bloat_analysis: bool,
+    /// Resolved `--shrink` mode forwarded to the daemon (FastLED/fbuild#1459).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub shrink: Option<String>,
 }
 
 /// `POST /api/install-deps` request. Mirrors
@@ -91,7 +94,7 @@ pub struct DeployRequest {
     /// Explicit deploy protocol, currently `isp` or `wlink` for CH32V.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub protocol: Option<String>,
-    /// RP2040 deploy transport, `picotool` (default) or `uf2`.
+    /// RP2040 deploy transport, `picotool` (default), `uf2` or `swd`.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub transport: Option<String>,
     pub monitor_after: bool,
@@ -233,7 +236,18 @@ pub struct DaemonInfoResponse {
     pub status: String,
     pub uptime_seconds: f64,
     pub version: String,
+    /// Compile-time build id; absent on daemons that predate
+    /// FastLED/fbuild#1742.
+    #[serde(default)]
+    pub build_id: String,
     pub pid: u32,
+    /// Resident set size in bytes, absent on daemons that predate
+    /// FastLED/fbuild#1785 or hosts that cannot report it.
+    #[serde(default)]
+    pub rss_bytes: Option<u64>,
+    /// Peak resident set size in bytes (FastLED/fbuild#1785).
+    #[serde(default)]
+    pub peak_rss_bytes: Option<u64>,
     pub port: u16,
     pub dev_mode: bool,
     #[serde(default)]

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aelse",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aelse/library/StatsD/2.0.0/StatsD-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StatsD-2.0.0.tar.gz",
+    "size_bytes": 3882,
+    "sha256": "79f813755c51a4dffe05715119f6f8bcd1f2fa5104ae613989d16c2b2b6062c4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aelse/library/StatsD/2.0.0/StatsD-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aelse/library/StatsD/2.0.0/StatsD-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

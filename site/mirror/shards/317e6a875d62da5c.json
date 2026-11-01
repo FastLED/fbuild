@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-jonebuckman",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-jonebuckman/library/MovingAverageFilter/0.0.0+sha.9002522153d7/MovingAverageFilter-0.0.0+sha.9002522153d7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MovingAverageFilter-0.0.0+sha.9002522153d7.tar.gz",
+    "size_bytes": 1362,
+    "sha256": "c30e9bf0bd8108e78631adea7edcf5de16938eef319697a258c0d305cd1de0dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jonebuckman/library/MovingAverageFilter/0.0.0%2Bsha.9002522153d7/MovingAverageFilter-0.0.0%2Bsha.9002522153d7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jonebuckman/library/MovingAverageFilter/0.0.0%2Bsha.9002522153d7/MovingAverageFilter-0.0.0%2Bsha.9002522153d7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-jonebuckman/library/OneStep/0.0.0+sha.92e1b5622620/OneStep-0.0.0+sha.92e1b5622620.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OneStep-0.0.0+sha.92e1b5622620.tar.gz",
+    "size_bytes": 8132,
+    "sha256": "af20cbcddfc3df5ea923ec1a74739b388dc7c8b979283247392b5c53c485390e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-jonebuckman/library/OneStep/0.0.0%2Bsha.92e1b5622620/OneStep-0.0.0%2Bsha.92e1b5622620.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-jonebuckman/library/OneStep/0.0.0%2Bsha.92e1b5622620/OneStep-0.0.0%2Bsha.92e1b5622620.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nvsl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nvsl/library/Gadgetron%20Libraries/1.0.7/GadgetronLibraries-1.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GadgetronLibraries-1.0.7.tar.gz",
+    "size_bytes": 79730,
+    "sha256": "0a7ce04f976525859fdde8257dc23f9cf6b7a08a538ef3635d8bbb66d1877012",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nvsl/library/Gadgetron%2520Libraries/1.0.7/GadgetronLibraries-1.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/nvsl/library/Gadgetron%20Libraries/1.0.7/GadgetronLibraries-1.0.7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

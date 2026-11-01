@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/suntrix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "suntrix/library/EasyESP/1.0.0/EasyESP-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EasyESP-1.0.0.tar.gz",
+    "size_bytes": 4490,
+    "sha256": "7c24f095612a6c56bae55afd29184952d387cddebb33182f37b173a5906f6571",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/suntrix/library/EasyESP/1.0.0/EasyESP-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/suntrix/library/EasyESP/1.0.0/EasyESP-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/peanut-king-solution",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "peanut-king-solution/library/PeanutKing%20Soccer/4.2.0/PeanutKingSoccer-4.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PeanutKingSoccer-4.2.0.tar.gz",
+    "size_bytes": 320048,
+    "sha256": "2e6b6f19386faf8b4383fe9a043d4841318326ea6a67db6d93d08911062c8dff",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peanut-king-solution/library/PeanutKing%2520Soccer/4.2.0/PeanutKingSoccer-4.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/peanut-king-solution/library/PeanutKing%20Soccer/4.2.0/PeanutKingSoccer-4.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "peanut-king-solution/library/PeanutKing%20Soccer/4.2.1/PeanutKingSoccer-4.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PeanutKingSoccer-4.2.1.tar.gz",
+    "size_bytes": 371040,
+    "sha256": "51d02fdd55fc36b047e667a0016470b9b9e629951ac6d6068b8ff5afa1f2c5b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/peanut-king-solution/library/PeanutKing%2520Soccer/4.2.1/PeanutKingSoccer-4.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/peanut-king-solution/library/PeanutKing%20Soccer/4.2.1/PeanutKingSoccer-4.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

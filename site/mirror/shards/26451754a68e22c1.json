@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-instrumentation",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-instrumentation/library/MTRCTL/0.0.0+sha.681973914ddd/MTRCTL-0.0.0+sha.681973914ddd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MTRCTL-0.0.0+sha.681973914ddd.tar.gz",
+    "size_bytes": 1772,
+    "sha256": "f6dba1002fe40e8bd15ade819ab3914620b4bf5595f5e2471a134061b58d11bf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-instrumentation/library/MTRCTL/0.0.0%2Bsha.681973914ddd/MTRCTL-0.0.0%2Bsha.681973914ddd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-instrumentation/library/MTRCTL/0.0.0%2Bsha.681973914ddd/MTRCTL-0.0.0%2Bsha.681973914ddd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-instrumentation/library/SRVCTL/0.0.0+sha.b76be70801ed/SRVCTL-0.0.0+sha.b76be70801ed.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SRVCTL-0.0.0+sha.b76be70801ed.tar.gz",
+    "size_bytes": 1265,
+    "sha256": "ced6a5c3ce3692576f36be3b33f2fb7a1a45bc1e37d09fed26d73267b053d5fe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-instrumentation/library/SRVCTL/0.0.0%2Bsha.b76be70801ed/SRVCTL-0.0.0%2Bsha.b76be70801ed.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-instrumentation/library/SRVCTL/0.0.0%2Bsha.b76be70801ed/SRVCTL-0.0.0%2Bsha.b76be70801ed.tar.gz"
+    ]
+   }
+  }
+ ]
+}

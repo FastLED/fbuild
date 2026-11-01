@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cole-abbott",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cole-abbott/library/ESP32PulseCounter_Modified/0.2.0/ESP32PulseCounter_Modified-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP32PulseCounter_Modified-0.2.0.tar.gz",
+    "size_bytes": 5400,
+    "sha256": "af54d6f634c4e214571ace18cafefb193be37327b8f34992e0525207453d9285",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cole-abbott/library/ESP32PulseCounter_Modified/0.2.0/ESP32PulseCounter_Modified-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cole-abbott/library/ESP32PulseCounter_Modified/0.2.0/ESP32PulseCounter_Modified-0.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

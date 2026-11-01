@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gunanag38",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gunanag38/library/MiniMicroKitPTL/1.0.0/MiniMicroKitPTL-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniMicroKitPTL-1.0.0.tar.gz",
+    "size_bytes": 36355,
+    "sha256": "e2353b7dec18b8be856f7a0df58b6ee1da3f94010bcc45d63f074e7ef3625366",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gunanag38/library/MiniMicroKitPTL/1.0.0/MiniMicroKitPTL-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gunanag38/library/MiniMicroKitPTL/1.0.0/MiniMicroKitPTL-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gunanag38/library/MiniMicroKit_PTL/1.0.0/MiniMicroKit-PTL-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniMicroKit-PTL-1.0.0.tar.gz",
+    "size_bytes": 34559,
+    "sha256": "1ebba0b1910797b3fcaed36aa50ba0315f01c456f3601f34a02dee41e8d44674",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gunanag38/library/MiniMicroKit_PTL/1.0.0/MiniMicroKit-PTL-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gunanag38/library/MiniMicroKit_PTL/1.0.0/MiniMicroKit-PTL-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gunanag38/library/MiniMicroKit_PTL/1.0.1/MiniMicroKit_PTL-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniMicroKit_PTL-1.0.1.tar.gz",
+    "size_bytes": 35546,
+    "sha256": "2b64a2f50535cf224b730689709d3e36a91e88707a757e59123f64d728cab558",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gunanag38/library/MiniMicroKit_PTL/1.0.1/MiniMicroKit_PTL-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gunanag38/library/MiniMicroKit_PTL/1.0.1/MiniMicroKit_PTL-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gunanag38/library/MiniMicroKit_PTL/1.0.2/MiniMicroKit_PTL-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniMicroKit_PTL-1.0.2.tar.gz",
+    "size_bytes": 35552,
+    "sha256": "dd2eceb84e48c166806c341f306356e20d578c66ec842176a948a75f7afa7786",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gunanag38/library/MiniMicroKit_PTL/1.0.2/MiniMicroKit_PTL-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/gunanag38/library/MiniMicroKit_PTL/1.0.2/MiniMicroKit_PTL-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "gunanag38/library/MiniMicroKit_PTL/1.1.0/MiniMicroKit_PTL-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MiniMicroKit_PTL-1.1.0.tar.gz",
+    "size_bytes": 35655,
+    "sha256": "ac0f9b34582014c2768e84abc6c9a054424c87582330f7a8e4b3c84ca95eb579",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gunanag38/library/MiniMicroKit_PTL/1.1.0/MiniMicroKit_PTL-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/gunanag38/library/MiniMicroKit_PTL/1.1.0/MiniMicroKit_PTL-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

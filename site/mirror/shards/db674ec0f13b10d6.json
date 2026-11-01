@@ -1,0 +1,373 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jeremypoulter",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jeremypoulter/library/ArduinoMongoose/0.0.18/ArduinoMongoose-0.0.18.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMongoose-0.0.18.tar.gz",
+    "size_bytes": 208986,
+    "sha256": "d5c813681dda7296dc1408d92a6786de9fe964821dc8454e1149284ad651cf7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ArduinoMongoose/0.0.18/ArduinoMongoose-0.0.18.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ArduinoMongoose/0.0.18/ArduinoMongoose-0.0.18.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ArduinoMongoose/0.0.22/ArduinoMongoose-0.0.22.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMongoose-0.0.22.tar.gz",
+    "size_bytes": 207905,
+    "sha256": "0b7dc69038e5e7d4a69a9c0628d020f380d2fa224b6da80ec94258883d8d1c0e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ArduinoMongoose/0.0.22/ArduinoMongoose-0.0.22.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ArduinoMongoose/0.0.22/ArduinoMongoose-0.0.22.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ArduinoMongoose/0.0.23/ArduinoMongoose-0.0.23.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMongoose-0.0.23.tar.gz",
+    "size_bytes": 207432,
+    "sha256": "7c5dec3ddf0b21356bd98bb5d934bd3bc8b4cbdffef2c0835cc50494c7f3b8f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ArduinoMongoose/0.0.23/ArduinoMongoose-0.0.23.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ArduinoMongoose/0.0.23/ArduinoMongoose-0.0.23.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ArduinoMongoose/0.0.24/ArduinoMongoose-0.0.24.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMongoose-0.0.24.tar.gz",
+    "size_bytes": 213069,
+    "sha256": "eff086ffce4eb0d101fa236aa08364bfc0d41ad8db6d9a85ccc4831197343a4c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ArduinoMongoose/0.0.24/ArduinoMongoose-0.0.24.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ArduinoMongoose/0.0.24/ArduinoMongoose-0.0.24.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ArduinoMongoose/0.0.25/ArduinoMongoose-0.0.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMongoose-0.0.25.tar.gz",
+    "size_bytes": 216704,
+    "sha256": "7bd70d129fca0341db66ddf8f55cc3af8ef5f704cd90cf1267ffa07f97b17db5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ArduinoMongoose/0.0.25/ArduinoMongoose-0.0.25.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ArduinoMongoose/0.0.25/ArduinoMongoose-0.0.25.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ArduinoMongoose/0.0.26/ArduinoMongoose-0.0.26.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMongoose-0.0.26.tar.gz",
+    "size_bytes": 216800,
+    "sha256": "8b28f815220156538c958280d894908a34724f6303c0611b8588bd30d4f4008a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ArduinoMongoose/0.0.26/ArduinoMongoose-0.0.26.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ArduinoMongoose/0.0.26/ArduinoMongoose-0.0.26.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ArduinoMongoose/1.0.0/ArduinoMongoose-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMongoose-1.0.0.tar.gz",
+    "size_bytes": 396449,
+    "sha256": "b5b839cfb3c4ef869b2e401b343c2603cff01179b988a6e82cb324759ff70388",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ArduinoMongoose/1.0.0/ArduinoMongoose-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ArduinoMongoose/1.0.0/ArduinoMongoose-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ArduinoMongoose/1.1.0/ArduinoMongoose-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMongoose-1.1.0.tar.gz",
+    "size_bytes": 416109,
+    "sha256": "be0efc5d6c8cfd09e8d1c3149c6961eec8d2ddc0bf3e2968fd070e362dfe248a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ArduinoMongoose/1.1.0/ArduinoMongoose-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ArduinoMongoose/1.1.0/ArduinoMongoose-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ArduinoMongoose/1.1.1/ArduinoMongoose-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMongoose-1.1.1.tar.gz",
+    "size_bytes": 416147,
+    "sha256": "9e45d125e246124afff5edacd964babb0c7fc409838fb5e288ec685e7a8cd63c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ArduinoMongoose/1.1.1/ArduinoMongoose-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ArduinoMongoose/1.1.1/ArduinoMongoose-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ArduinoMongoose/1.2.0/ArduinoMongoose-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMongoose-1.2.0.tar.gz",
+    "size_bytes": 417729,
+    "sha256": "3226956ae3fec088e1e70bdbfdf55832a986368c552dab082de1f5cf56e55c7d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ArduinoMongoose/1.2.0/ArduinoMongoose-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ArduinoMongoose/1.2.0/ArduinoMongoose-1.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ArduinoMongoose/1.2.1/ArduinoMongoose-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoMongoose-1.2.1.tar.gz",
+    "size_bytes": 417810,
+    "sha256": "beee00ef1108df94a49f5f83f8c62cd52c4f9fea0e9d15cb41cc4c7ac013d962",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ArduinoMongoose/1.2.1/ArduinoMongoose-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ArduinoMongoose/1.2.1/ArduinoMongoose-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ConfigJson/0.0.5/ConfigJson-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConfigJson-0.0.5.tar.gz",
+    "size_bytes": 7348,
+    "sha256": "2f998a6110ccf367bbb8b9744238dc0ffdbb81af3df9a5b9de5baeb2abbc0412",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ConfigJson/0.0.5/ConfigJson-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ConfigJson/0.0.5/ConfigJson-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ConfigJson/0.0.6/ConfigJson-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConfigJson-0.0.6.tar.gz",
+    "size_bytes": 7518,
+    "sha256": "891e412ab98226f865b1e1d89bfc0c62b14a9ff700747da61a004a29404e41c3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ConfigJson/0.0.6/ConfigJson-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ConfigJson/0.0.6/ConfigJson-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ConfigJson/0.0.7/ConfigJson-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConfigJson-0.0.7.tar.gz",
+    "size_bytes": 7610,
+    "sha256": "41c3695e1e7f7b25e4159580c9c9ddd7a6b5cb7bc6dd36464d9ed6359ddec716",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ConfigJson/0.0.7/ConfigJson-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ConfigJson/0.0.7/ConfigJson-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ConfigJson/0.0.8/ConfigJson-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConfigJson-0.0.8.tar.gz",
+    "size_bytes": 11741,
+    "sha256": "bfdcc6973d21eb44f09b927e9d7ec4c3c32825f76d661cb114787ff228387abe",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ConfigJson/0.0.8/ConfigJson-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ConfigJson/0.0.8/ConfigJson-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ESPAL/0.0.4/ESPAL-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAL-0.0.4.tar.gz",
+    "size_bytes": 6609,
+    "sha256": "76339377b8c7198b182c1ec40930d17b40e34f3cadeb51d12168eb4263551ca2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ESPAL/0.0.4/ESPAL-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ESPAL/0.0.4/ESPAL-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ESPAL/0.0.5/ESPAL-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAL-0.0.5.tar.gz",
+    "size_bytes": 6295,
+    "sha256": "474b4980dd307a3af285a120fd6ce541ba6d5ba92f6fff5afb714e7fb6b20b88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ESPAL/0.0.5/ESPAL-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ESPAL/0.0.5/ESPAL-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ESPAL/0.0.6/ESPAL-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAL-0.0.6.tar.gz",
+    "size_bytes": 6295,
+    "sha256": "444c28917a86215edf7a6e008bad9b854320b8fb60bee4902a89182b7ff2aac9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ESPAL/0.0.6/ESPAL-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ESPAL/0.0.6/ESPAL-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/ESPAL/0.0.7/ESPAL-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPAL-0.0.7.tar.gz",
+    "size_bytes": 6522,
+    "sha256": "bbf1e2820e17774b14bcbb233a8ede8b4e9983e29795d624066706f846db07a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/ESPAL/0.0.7/ESPAL-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/ESPAL/0.0.7/ESPAL-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/Micro%20Debug/0.0.3/MicroDebug-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroDebug-0.0.3.tar.gz",
+    "size_bytes": 1041,
+    "sha256": "c85197b1c907906ddc5f0087f8576b0b5b28bdc5a44627069cb35fd9f656a4ac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/Micro%2520Debug/0.0.3/MicroDebug-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/Micro%20Debug/0.0.3/MicroDebug-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/Micro%20Debug/0.0.5/MicroDebug-0.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroDebug-0.0.5.tar.gz",
+    "size_bytes": 1022,
+    "sha256": "3c4c2270fc4249c548a48eb4fca63512b8b960d5b255a8c9174a2e2c81a22c9f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/Micro%2520Debug/0.0.5/MicroDebug-0.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/Micro%20Debug/0.0.5/MicroDebug-0.0.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/MicroTasks/0.0.3/MicroTasks-0.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroTasks-0.0.3.tar.gz",
+    "size_bytes": 14954,
+    "sha256": "896c1878e10c3c67609efeb82475676cf5c39d4a347d495596a60343041d4b20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/MicroTasks/0.0.3/MicroTasks-0.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/MicroTasks/0.0.3/MicroTasks-0.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/MicroTasks/0.0.4/MicroTasks-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MicroTasks-0.0.4.tar.gz",
+    "size_bytes": 14787,
+    "sha256": "76dfbb8382a9a453d23f8449a7f9dc32ed6925703b2ad662f3ba185988a773bc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/MicroTasks/0.0.4/MicroTasks-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/MicroTasks/0.0.4/MicroTasks-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/NeoScreen/0.0.1/NeoScreen-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoScreen-0.0.1.tar.gz",
+    "size_bytes": 7367,
+    "sha256": "2890fe239e9a8299d769ac02182e5239d3dc1c613384576edea693db43209145",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/NeoScreen/0.0.1/NeoScreen-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/NeoScreen/0.0.1/NeoScreen-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/OpenEVSE/0.0.14/OpenEVSE-0.0.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenEVSE-0.0.14.tar.gz",
+    "size_bytes": 16241,
+    "sha256": "6de16d8ceacca7bb8047e4820db02d9b50121dee696e604b631c64495ffd7f78",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/OpenEVSE/0.0.14/OpenEVSE-0.0.14.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/OpenEVSE/0.0.14/OpenEVSE-0.0.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/OpenEVSE/0.0.15/OpenEVSE-0.0.15.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "OpenEVSE-0.0.15.tar.gz",
+    "size_bytes": 16299,
+    "sha256": "cb93846438c494f7b581768629190c4b31e00064a27e9572777676a2d83621b1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/OpenEVSE/0.0.15/OpenEVSE-0.0.15.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/OpenEVSE/0.0.15/OpenEVSE-0.0.15.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/StreamSpy/0.0.1/StreamSpy-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamSpy-0.0.1.tar.gz",
+    "size_bytes": 6408,
+    "sha256": "9d84a8996b739f1fba7ce714cae169be80fbf552a82794b220fb17db0f8b5d96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/StreamSpy/0.0.1/StreamSpy-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/StreamSpy/0.0.1/StreamSpy-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jeremypoulter/library/StreamSpy/0.0.2/StreamSpy-0.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StreamSpy-0.0.2.tar.gz",
+    "size_bytes": 6806,
+    "sha256": "4d277d18c8a100733e31bfd652340f1a673fbf2fb5358fbc88ed86c0caa91ef3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jeremypoulter/library/StreamSpy/0.0.2/StreamSpy-0.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jeremypoulter/library/StreamSpy/0.0.2/StreamSpy-0.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

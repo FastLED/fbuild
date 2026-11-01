@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/edukits",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "edukits/library/ColourKit/1.0.4/ColourKit-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ColourKit-1.0.4.tar.gz",
+    "size_bytes": 17971,
+    "sha256": "4488b634e20c35f2f75f9048e0d2b6609d999141d504d9efaae637740b3236be",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/edukits/library/ColourKit/1.0.4/ColourKit-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/edukits/library/ColourKit/1.0.4/ColourKit-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "edukits/library/ConnectKit/0.1.0/ConnectKit-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ConnectKit-0.1.0.tar.gz",
+    "size_bytes": 7493,
+    "sha256": "fa685baebee643427b1aecac489471eeb8b8f88d265d85aee8db55ba7100a1d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/edukits/library/ConnectKit/0.1.0/ConnectKit-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/edukits/library/ConnectKit/0.1.0/ConnectKit-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "edukits/library/ManagedButtons/1.0.0/ManagedButtons-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ManagedButtons-1.0.0.tar.gz",
+    "size_bytes": 3421,
+    "sha256": "bdd1fe18bd6cda14edda46c35170a965be67c1665f23a6d6552e40f00dc45673",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/edukits/library/ManagedButtons/1.0.0/ManagedButtons-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/edukits/library/ManagedButtons/1.0.0/ManagedButtons-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "edukits/library/UltraPing/1.0.0/UltraPing-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UltraPing-1.0.0.tar.gz",
+    "size_bytes": 5297,
+    "sha256": "4945d79dfa1ab2c2b6b204dc35d3f210eb4650034762d13e9eb73ada1d39830f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/edukits/library/UltraPing/1.0.0/UltraPing-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/edukits/library/UltraPing/1.0.0/UltraPing-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

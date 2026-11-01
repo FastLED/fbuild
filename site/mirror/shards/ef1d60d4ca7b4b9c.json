@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rodriguj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rodriguj/library/ssd1306_library/0.0.0+sha.57209a7e9cba/ssd1306_library-0.0.0+sha.57209a7e9cba.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ssd1306_library-0.0.0+sha.57209a7e9cba.tar.gz",
+    "size_bytes": 8446,
+    "sha256": "e2e6947669b46eeacf1e308639e9efb9adb07b65007245b39074d07aec9dffe5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rodriguj/library/ssd1306_library/0.0.0%2Bsha.57209a7e9cba/ssd1306_library-0.0.0%2Bsha.57209a7e9cba.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rodriguj/library/ssd1306_library/0.0.0%2Bsha.57209a7e9cba/ssd1306_library-0.0.0%2Bsha.57209a7e9cba.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/bitbucket-jamesneko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "bitbucket-jamesneko/library/LazySerial/2.1.0/LazySerial-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LazySerial-2.1.0.tar.gz",
+    "size_bytes": 13544,
+    "sha256": "2b1e556121229486f971d0ed0dccaa83c71cf47dee68fec6ffb5efb447377975",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/bitbucket-jamesneko/library/LazySerial/2.1.0/LazySerial-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/bitbucket-jamesneko/library/LazySerial/2.1.0/LazySerial-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

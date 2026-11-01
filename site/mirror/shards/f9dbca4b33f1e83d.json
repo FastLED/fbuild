@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/olmanqj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "olmanqj/library/embedded-cli/0.1.3/embedded-cli-0.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "embedded-cli-0.1.3.tar.gz",
+    "size_bytes": 31460,
+    "sha256": "9775df98265516f81d8402af9e409ce4a6985d3ec893c4df60dd449ead0d7dd8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olmanqj/library/embedded-cli/0.1.3/embedded-cli-0.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/olmanqj/library/embedded-cli/0.1.3/embedded-cli-0.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "olmanqj/library/libcsp-pio-wrapper/1.6/libcsp-pio-wrapper-1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "libcsp-pio-wrapper-1.6.tar.gz",
+    "size_bytes": 12452,
+    "sha256": "534226bfd92ce154c3de2d9243e6534a72e48ff4efaabadbb29ffa7702ce967b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/olmanqj/library/libcsp-pio-wrapper/1.6/libcsp-pio-wrapper-1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/olmanqj/library/libcsp-pio-wrapper/1.6/libcsp-pio-wrapper-1.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

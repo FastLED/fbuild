@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ghi-electronics",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ghi-electronics/library/DUELink/0.0.4/DUELink-0.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DUELink-0.0.4.tar.gz",
+    "size_bytes": 11307,
+    "sha256": "73400db9dd99b799d97deb9e2f3e1947df0973d96a9b69ca3018d233e854136e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ghi-electronics/library/DUELink/0.0.4/DUELink-0.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/ghi-electronics/library/DUELink/0.0.4/DUELink-0.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ghi-electronics/library/DUELink/0.0.6/DUELink-0.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DUELink-0.0.6.tar.gz",
+    "size_bytes": 11423,
+    "sha256": "53d70616bf840df93f536e945022eb02990aade176a8819498292f04eca71650",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ghi-electronics/library/DUELink/0.0.6/DUELink-0.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/ghi-electronics/library/DUELink/0.0.6/DUELink-0.0.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ghi-electronics/library/DUELink/0.0.7/DUELink-0.0.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DUELink-0.0.7.tar.gz",
+    "size_bytes": 11488,
+    "sha256": "9ac0e7c492be5984c80da04ec570ebaf42fe2d5b16bcf52dee34bc287807a04b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ghi-electronics/library/DUELink/0.0.7/DUELink-0.0.7.tar.gz",
+     "https://dl.registry.platformio.org/download/ghi-electronics/library/DUELink/0.0.7/DUELink-0.0.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ghi-electronics/library/DUELink/0.0.8/DUELink-0.0.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DUELink-0.0.8.tar.gz",
+    "size_bytes": 11604,
+    "sha256": "4037b7a7ddb075df2385be2d3d3464fa526b381fc599754411f5226f9ef25f8f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ghi-electronics/library/DUELink/0.0.8/DUELink-0.0.8.tar.gz",
+     "https://dl.registry.platformio.org/download/ghi-electronics/library/DUELink/0.0.8/DUELink-0.0.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "ghi-electronics/library/DUELink/0.1.0/DUELink-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DUELink-0.1.0.tar.gz",
+    "size_bytes": 10331,
+    "sha256": "69807f7074138627a6b560727301707c33cc32488e2fc2ab97f74d18e32b6e17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ghi-electronics/library/DUELink/0.1.0/DUELink-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/ghi-electronics/library/DUELink/0.1.0/DUELink-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-anaesthetix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-anaesthetix/library/LSM9DS1_SPI/0.0.0+sha.dc98084cf6be/LSM9DS1_SPI-0.0.0+sha.dc98084cf6be.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM9DS1_SPI-0.0.0+sha.dc98084cf6be.tar.gz",
+    "size_bytes": 3951,
+    "sha256": "e29e6a4e5d28f0a70d0f824f7010f6ce082ed445268f238a16627cc1417c10f4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-anaesthetix/library/LSM9DS1_SPI/0.0.0%2Bsha.dc98084cf6be/LSM9DS1_SPI-0.0.0%2Bsha.dc98084cf6be.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-anaesthetix/library/LSM9DS1_SPI/0.0.0%2Bsha.dc98084cf6be/LSM9DS1_SPI-0.0.0%2Bsha.dc98084cf6be.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-anaesthetix/library/Madgwick/0.0.0+sha.d7c70d593694/Madgwick-0.0.0+sha.d7c70d593694.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Madgwick-0.0.0+sha.d7c70d593694.tar.gz",
+    "size_bytes": 3810,
+    "sha256": "6bf7abded790e65c3f441bef25878f8109fffa7213dfc597c262e3d64c13d764",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-anaesthetix/library/Madgwick/0.0.0%2Bsha.d7c70d593694/Madgwick-0.0.0%2Bsha.d7c70d593694.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-anaesthetix/library/Madgwick/0.0.0%2Bsha.d7c70d593694/Madgwick-0.0.0%2Bsha.d7c70d593694.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-anaesthetix/library/SSH1106/0.0.0+sha.b55dd362afb9/SSH1106-0.0.0+sha.b55dd362afb9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SSH1106-0.0.0+sha.b55dd362afb9.tar.gz",
+    "size_bytes": 19728,
+    "sha256": "cc92a100307e0cd264598c40603c607e04b49b8543763cec6e76648d44047081",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-anaesthetix/library/SSH1106/0.0.0%2Bsha.b55dd362afb9/SSH1106-0.0.0%2Bsha.b55dd362afb9.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-anaesthetix/library/SSH1106/0.0.0%2Bsha.b55dd362afb9/SSH1106-0.0.0%2Bsha.b55dd362afb9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-anaesthetix/library/UC1701/0.0.0+sha.7494bdca926b/UC1701-0.0.0+sha.7494bdca926b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UC1701-0.0.0+sha.7494bdca926b.tar.gz",
+    "size_bytes": 17720,
+    "sha256": "6dbca87054ac9b149066d6482ac0736a32f34a1d2a92f4d4281bd5f686041450",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-anaesthetix/library/UC1701/0.0.0%2Bsha.7494bdca926b/UC1701-0.0.0%2Bsha.7494bdca926b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-anaesthetix/library/UC1701/0.0.0%2Bsha.7494bdca926b/UC1701-0.0.0%2Bsha.7494bdca926b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

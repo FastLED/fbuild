@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-betztechnik",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-betztechnik/library/mRotaryEncoder/0.0.0+sha.20ad86601057/mRotaryEncoder-0.0.0+sha.20ad86601057.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mRotaryEncoder-0.0.0+sha.20ad86601057.tar.gz",
+    "size_bytes": 2881,
+    "sha256": "6d0a148a24289bc9cc710c7e0ad7e330564d2b1158ac17d21c509d551ac1a59b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-betztechnik/library/mRotaryEncoder/0.0.0%2Bsha.20ad86601057/mRotaryEncoder-0.0.0%2Bsha.20ad86601057.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-betztechnik/library/mRotaryEncoder/0.0.0%2Bsha.20ad86601057/mRotaryEncoder-0.0.0%2Bsha.20ad86601057.tar.gz"
+    ]
+   }
+  }
+ ]
+}

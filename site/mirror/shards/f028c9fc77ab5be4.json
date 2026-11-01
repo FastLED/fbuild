@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fabianoriccardi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fabianoriccardi/library/Dimmable%20Light%20for%20Arduino/1.6.0/DimmableLightforArduino-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DimmableLightforArduino-1.6.0.tar.gz",
+    "size_bytes": 41704,
+    "sha256": "fc7a7986c19331c473cff099bedaecfcc3a047ab7ee67877826ba4b6087de072",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabianoriccardi/library/Dimmable%2520Light%2520for%2520Arduino/1.6.0/DimmableLightforArduino-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fabianoriccardi/library/Dimmable%20Light%20for%20Arduino/1.6.0/DimmableLightforArduino-1.6.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fabianoriccardi/library/ESPLogger/2.0.0/ESPLogger-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPLogger-2.0.0.tar.gz",
+    "size_bytes": 21503,
+    "sha256": "ab181e8e39e1becc464692c25e9926998f6221a6aa05cb6c986ada7f55a1cca4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabianoriccardi/library/ESPLogger/2.0.0/ESPLogger-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fabianoriccardi/library/ESPLogger/2.0.0/ESPLogger-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fabianoriccardi/library/Melody%20Player/2.4.0/MelodyPlayer-2.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MelodyPlayer-2.4.0.tar.gz",
+    "size_bytes": 38404,
+    "sha256": "d0e578ee4efb0892e6cc063436b508759803a09855388cc6ac47e71ff9d0d908",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabianoriccardi/library/Melody%2520Player/2.4.0/MelodyPlayer-2.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fabianoriccardi/library/Melody%20Player/2.4.0/MelodyPlayer-2.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "fabianoriccardi/library/RTCMemory/2.0.0/RTCMemory-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RTCMemory-2.0.0.tar.gz",
+    "size_bytes": 18226,
+    "sha256": "e33c920d0dda30337c826f7bd3b834cddc3d75586efcdfc230ded0c9e00df7dc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fabianoriccardi/library/RTCMemory/2.0.0/RTCMemory-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/fabianoriccardi/library/RTCMemory/2.0.0/RTCMemory-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

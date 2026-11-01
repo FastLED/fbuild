@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-toucyy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-toucyy/library/QEI/0.0.0+sha.ba892225df71/QEI-0.0.0+sha.ba892225df71.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "QEI-0.0.0+sha.ba892225df71.tar.gz",
+    "size_bytes": 4465,
+    "sha256": "7f60ebe24647b97f6a90efc702ae7febeb66be7c3b41f9617238b933e567c85f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-toucyy/library/QEI/0.0.0%2Bsha.ba892225df71/QEI-0.0.0%2Bsha.ba892225df71.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-toucyy/library/QEI/0.0.0%2Bsha.ba892225df71/QEI-0.0.0%2Bsha.ba892225df71.tar.gz"
+    ]
+   }
+  }
+ ]
+}

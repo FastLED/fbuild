@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/ulrichstern",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "ulrichstern/library/Tlc59711/1.0.2/Tlc59711-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tlc59711-1.0.2.tar.gz",
+    "size_bytes": 5527,
+    "sha256": "8713e311dc7fb979db52813279bca56dd9b7e4d1876d01975884e283c2aa73a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/ulrichstern/library/Tlc59711/1.0.2/Tlc59711-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/ulrichstern/library/Tlc59711/1.0.2/Tlc59711-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

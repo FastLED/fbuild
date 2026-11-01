@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/developer310301",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "developer310301/library/STDUtils/1.0.0/STDUtils-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "STDUtils-1.0.0.tar.gz",
+    "size_bytes": 4008,
+    "sha256": "2238e3aa35b55e20c0ad1c858e4b6af1d6c67cb13b1c27f0e3f05ef0e9323100",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/developer310301/library/STDUtils/1.0.0/STDUtils-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/developer310301/library/STDUtils/1.0.0/STDUtils-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "developer310301/library/TreeForest/1.0.0/TreeForest-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TreeForest-1.0.0.tar.gz",
+    "size_bytes": 17550,
+    "sha256": "f2de37c26b5ce11ca5193f256cf820c356eb446afd170a2cd62dab8ef5d634df",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/developer310301/library/TreeForest/1.0.0/TreeForest-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/developer310301/library/TreeForest/1.0.0/TreeForest-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

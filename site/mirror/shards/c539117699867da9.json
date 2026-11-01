@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-denes",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-denes/library/Leds/0.0.0+sha.a4b5a924ad86/Leds-0.0.0+sha.a4b5a924ad86.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Leds-0.0.0+sha.a4b5a924ad86.tar.gz",
+    "size_bytes": 948,
+    "sha256": "2665226ebeeb12a3d310f0b7f31f9b3421916d179ccd507f9734f271c658663a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-denes/library/Leds/0.0.0%2Bsha.a4b5a924ad86/Leds-0.0.0%2Bsha.a4b5a924ad86.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-denes/library/Leds/0.0.0%2Bsha.a4b5a924ad86/Leds-0.0.0%2Bsha.a4b5a924ad86.tar.gz"
+    ]
+   }
+  }
+ ]
+}

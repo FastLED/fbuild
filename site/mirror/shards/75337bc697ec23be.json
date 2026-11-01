@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/texhoum",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "texhoum/library/TEXHOUM_MOTOR/1.0.3/TEXHOUM_MOTOR-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TEXHOUM_MOTOR-1.0.3.tar.gz",
+    "size_bytes": 14408,
+    "sha256": "6fc38cb0e0f7edefcd8da136a3ccc973ce3da1de7abbf8d883dd4291c013e3e6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/texhoum/library/TEXHOUM_MOTOR/1.0.3/TEXHOUM_MOTOR-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/texhoum/library/TEXHOUM_MOTOR/1.0.3/TEXHOUM_MOTOR-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "texhoum/library/TEXHOUM_MOTOR/1.0.4/TEXHOUM_MOTOR-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TEXHOUM_MOTOR-1.0.4.tar.gz",
+    "size_bytes": 14920,
+    "sha256": "6a35e089aeb4af3827ffee997055f1828e47dfaceb061ecf4e2389721ead487a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/texhoum/library/TEXHOUM_MOTOR/1.0.4/TEXHOUM_MOTOR-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/texhoum/library/TEXHOUM_MOTOR/1.0.4/TEXHOUM_MOTOR-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "texhoum/library/TEXHOUM_PAC/1.0.0/TEXHOUM_PAC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TEXHOUM_PAC-1.0.0.tar.gz",
+    "size_bytes": 7809,
+    "sha256": "55b2501a79534c58c498c14c6d136e3a7af851b1b1f2906857e512b1fcaeb1c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/texhoum/library/TEXHOUM_PAC/1.0.0/TEXHOUM_PAC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/texhoum/library/TEXHOUM_PAC/1.0.0/TEXHOUM_PAC-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "texhoum/library/TEXHOUM_SERVO/1.0.4/TEXHOUM_SERVO-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TEXHOUM_SERVO-1.0.4.tar.gz",
+    "size_bytes": 14347,
+    "sha256": "3dee56ffa559679461066deb33007403901a4f69e6eacc756b0ffe8884fe2dd2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/texhoum/library/TEXHOUM_SERVO/1.0.4/TEXHOUM_SERVO-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/texhoum/library/TEXHOUM_SERVO/1.0.4/TEXHOUM_SERVO-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "texhoum/library/TEXHOUM_US/1.0.2/TEXHOUM_US-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TEXHOUM_US-1.0.2.tar.gz",
+    "size_bytes": 14931,
+    "sha256": "37b6f79b3a5d25f1a43c09b03af264a0e38d51b8e82d04e9c7e8f3258509368e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/texhoum/library/TEXHOUM_US/1.0.2/TEXHOUM_US-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/texhoum/library/TEXHOUM_US/1.0.2/TEXHOUM_US-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

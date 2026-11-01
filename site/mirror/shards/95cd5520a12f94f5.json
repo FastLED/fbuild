@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/wuigor",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "wuigor/library/mannaNAUTA%20WS2812/2.0.0/mannaNAUTAWS2812-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mannaNAUTAWS2812-2.0.0.tar.gz",
+    "size_bytes": 5862,
+    "sha256": "120fec5908fcc4cfaca05ebada0e31ae0590d1a39477094633e4669d7de2f1e3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/wuigor/library/mannaNAUTA%2520WS2812/2.0.0/mannaNAUTAWS2812-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/wuigor/library/mannaNAUTA%20WS2812/2.0.0/mannaNAUTAWS2812-2.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

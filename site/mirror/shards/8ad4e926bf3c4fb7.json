@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/finani",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "finani/library/ICM20689/1.1.3/ICM20689-1.1.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM20689-1.1.3.tar.gz",
+    "size_bytes": 14566,
+    "sha256": "26a6cc8e68a99b24a50ee322af310aac47a18000907e37cffcec9d3ae45a79dd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/finani/library/ICM20689/1.1.3/ICM20689-1.1.3.tar.gz",
+     "https://dl.registry.platformio.org/download/finani/library/ICM20689/1.1.3/ICM20689-1.1.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "finani/library/ICM42688/1.1.0/ICM42688-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ICM42688-1.1.0.tar.gz",
+    "size_bytes": 13905,
+    "sha256": "d823e3a68d19c9969259426cb0ca0758196831d2e2c142442543c775e7216643",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/finani/library/ICM42688/1.1.0/ICM42688-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/finani/library/ICM42688/1.1.0/ICM42688-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "finani/library/TriSonica_Mini/1.0.0/TriSonica_Mini-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TriSonica_Mini-1.0.0.tar.gz",
+    "size_bytes": 4232,
+    "sha256": "1f9304f68727449f7b5aa588d1562a726f67f6f8ac00614d0dbf0205f2a3b643",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/finani/library/TriSonica_Mini/1.0.0/TriSonica_Mini-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/finani/library/TriSonica_Mini/1.0.0/TriSonica_Mini-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

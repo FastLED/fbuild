@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jskorepa",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jskorepa/library/BitPP/0.0.1/BitPP-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BitPP-0.0.1.tar.gz",
+    "size_bytes": 28699,
+    "sha256": "5496c1ef795701c1d8e9e5520fb38652972fef72632a4992645994944b14518d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jskorepa/library/BitPP/0.0.1/BitPP-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jskorepa/library/BitPP/0.0.1/BitPP-0.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

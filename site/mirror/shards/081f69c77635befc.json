@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/jonathand131",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "jonathand131/library/EspCoreArchitecture/0.1/EspCoreArchitecture-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspCoreArchitecture-0.1.tar.gz",
+    "size_bytes": 1297,
+    "sha256": "f4c613ecd91b66443abf73608927781e4953bd4e15884e89ee65292af731b05e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jonathand131/library/EspCoreArchitecture/0.1/EspCoreArchitecture-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jonathand131/library/EspCoreArchitecture/0.1/EspCoreArchitecture-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jonathand131/library/EspSpiffsService/0.1/EspSpiffsService-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspSpiffsService-0.1.tar.gz",
+    "size_bytes": 938,
+    "sha256": "35c1374b220afb525f5db083b10a7f5baa5947894cec5e015479705552e268c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jonathand131/library/EspSpiffsService/0.1/EspSpiffsService-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/jonathand131/library/EspSpiffsService/0.1/EspSpiffsService-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "jonathand131/library/EspWebServerService/0.2/EspWebServerService-0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EspWebServerService-0.2.tar.gz",
+    "size_bytes": 1423,
+    "sha256": "363591bd39e1df87bceb7cf45b856ec9c74afe215c7500db3e3c0299c21a4127",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/jonathand131/library/EspWebServerService/0.2/EspWebServerService-0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/jonathand131/library/EspWebServerService/0.2/EspWebServerService-0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thehapyone",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thehapyone/library/BareBoneSim800/1.25/BareBoneSim800-1.25.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BareBoneSim800-1.25.tar.gz",
+    "size_bytes": 31250,
+    "sha256": "686e31e6101ea5531a50f4f55a7071cde3e700d683d640be24e9bf754795614b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thehapyone/library/BareBoneSim800/1.25/BareBoneSim800-1.25.tar.gz",
+     "https://dl.registry.platformio.org/download/thehapyone/library/BareBoneSim800/1.25/BareBoneSim800-1.25.tar.gz"
+    ]
+   }
+  }
+ ]
+}

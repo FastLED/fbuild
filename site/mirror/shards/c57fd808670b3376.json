@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ryantm",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ryantm/library/m3pi/0.0.0+sha.68c904e3f9d0/m3pi-0.0.0+sha.68c904e3f9d0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "m3pi-0.0.0+sha.68c904e3f9d0.tar.gz",
+    "size_bytes": 4067,
+    "sha256": "cd453fbf5d93bd6d4f2c85bfd55a7ab358c8c9d36fa829777995d935a1333b5c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ryantm/library/m3pi/0.0.0%2Bsha.68c904e3f9d0/m3pi-0.0.0%2Bsha.68c904e3f9d0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ryantm/library/m3pi/0.0.0%2Bsha.68c904e3f9d0/m3pi-0.0.0%2Bsha.68c904e3f9d0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

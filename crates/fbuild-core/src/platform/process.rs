@@ -274,6 +274,30 @@ pub fn pid_exe_stem_matches(pid: u32, expected_stem: &str) -> bool {
     super::selected::process::exe_stem_matches(stem, expected_stem)
 }
 
+/// Resident memory reported by the host for one process.
+///
+/// `resident_bytes` is the physical memory the process currently holds;
+/// `peak_resident_bytes` is the high-water mark the host tracks for it, which
+/// is the value a wedged process is judged by. The peak stays `None` where the
+/// host does not expose a per-pid high-water mark (a non-self pid on macOS).
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct MemoryUsage {
+    pub resident_bytes: u64,
+    pub peak_resident_bytes: Option<u64>,
+}
+
+/// Resident memory of `pid`, or `None` when this host cannot report it.
+///
+/// `None` is a real answer, not a stand-in for zero: a missing `/proc`, a
+/// denied task port, or a recycled pid all mean "no measurement". Callers
+/// report the absence instead of printing `0 B` (FastLED/fbuild#1785).
+pub fn resident_memory(pid: u32) -> Option<MemoryUsage> {
+    if pid == 0 {
+        return None;
+    }
+    super::selected::process::resident_memory(pid)
+}
+
 /// Perform one native termination operation. Escalation timing stays with the caller.
 pub fn terminate_pid(pid: u32, termination: Termination) -> std::io::Result<()> {
     if pid == 0 || pid > i32::MAX as u32 {
@@ -401,6 +425,28 @@ mod tests {
         assert!(pid_executable_path(0).is_none());
         assert!(!pid_exe_stem_matches(0, "fbuild-daemon"));
         assert!(wait_for_pid_exit(0, Duration::ZERO));
+    }
+
+    #[test]
+    fn current_process_reports_resident_memory() {
+        let usage = resident_memory(std::process::id()).expect("current process resident memory");
+        assert!(
+            usage.resident_bytes > 0,
+            "a live process holds at least one byte: {}",
+            usage.resident_bytes
+        );
+        if let Some(peak) = usage.peak_resident_bytes {
+            assert!(
+                peak >= usage.resident_bytes,
+                "peak {peak} must cover the current {usage}",
+                usage = usage.resident_bytes
+            );
+        }
+    }
+
+    #[test]
+    fn resident_memory_of_pid_zero_is_absent_not_zero() {
+        assert!(resident_memory(0).is_none());
     }
 
     #[test]

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-ella-robotics-inc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-ella-robotics-inc/library/Adafruit_GFX_1351/0.0.0+sha.0a4bb1070fd5/Adafruit_GFX_1351-0.0.0+sha.0a4bb1070fd5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_GFX_1351-0.0.0+sha.0a4bb1070fd5.tar.gz",
+    "size_bytes": 12861,
+    "sha256": "bb40ef97c8d5c0f800f7f903f3f1fa06fd05620a9c4c41398005da4208e94da9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-ella-robotics-inc/library/Adafruit_GFX_1351/0.0.0%2Bsha.0a4bb1070fd5/Adafruit_GFX_1351-0.0.0%2Bsha.0a4bb1070fd5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-ella-robotics-inc/library/Adafruit_GFX_1351/0.0.0%2Bsha.0a4bb1070fd5/Adafruit_GFX_1351-0.0.0%2Bsha.0a4bb1070fd5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

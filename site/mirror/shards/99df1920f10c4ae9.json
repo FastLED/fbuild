@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/anton-freddy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "anton-freddy/library/Move%20Buffer/1.1.1/MoveBuffer-1.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MoveBuffer-1.1.1.tar.gz",
+    "size_bytes": 7294,
+    "sha256": "04b74966d5f4565b68b80445339ac82d76191dc121123e4142a74aa14786e550",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anton-freddy/library/Move%2520Buffer/1.1.1/MoveBuffer-1.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/anton-freddy/library/Move%20Buffer/1.1.1/MoveBuffer-1.1.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "anton-freddy/library/SpeedyStepper%20forked/1.1.0/SpeedyStepperforked-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SpeedyStepperforked-1.1.0.tar.gz",
+    "size_bytes": 22276,
+    "sha256": "13d0c4909171acb189955ce8cdf1589b599e13326df0b4ffe145e6b64abd4586",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/anton-freddy/library/SpeedyStepper%2520forked/1.1.0/SpeedyStepperforked-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/anton-freddy/library/SpeedyStepper%20forked/1.1.0/SpeedyStepperforked-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

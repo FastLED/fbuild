@@ -80,6 +80,72 @@ const GRACEFUL_STOP_BUDGET: std::time::Duration = std::time::Duration::from_secs
 /// is not going.
 const TERMINATION_BUDGET: std::time::Duration = std::time::Duration::from_secs(5);
 
+/// What a CLI that has just failed every spawn attempt should do next
+/// (FastLED/fbuild#1627).
+///
+/// Three failed attempts used to be terminal. Two of the three reported causes
+/// are recoverable without a human: the endpoint came up late (`Adopt` — the
+/// same adoption the spawn loop already performs before each attempt), or a
+/// leftover daemon from an earlier step still owns the cache root / endpoint
+/// and is no longer answering (`RetireAndRetry`). Only "nothing is alive and
+/// nothing answers" is genuinely hopeless at this point.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) enum SpawnRecovery {
+    /// The endpoint answers after all: attach to it, spawn nothing.
+    Adopt,
+    /// A PID verified to be an fbuild-daemon is alive while the endpoint is
+    /// silent. Retire it, then make one final spawn attempt.
+    RetireAndRetry(u32),
+    /// Nothing alive to retire and nothing answering: report the failure.
+    GiveUp,
+}
+
+/// Decide the post-failure step. `live_daemon_pid` comes from
+/// [`recorded_daemon_pid`], so it is already fail-closed on process identity.
+pub(crate) fn plan_spawn_recovery(
+    endpoint_healthy: bool,
+    live_daemon_pid: Option<u32>,
+) -> SpawnRecovery {
+    match (endpoint_healthy, live_daemon_pid) {
+        // Never shoot a daemon that answers: it is serving somebody, and
+        // adopting it is exactly what the failed spawn was trying to achieve.
+        (true, _) => SpawnRecovery::Adopt,
+        (false, Some(pid)) => SpawnRecovery::RetireAndRetry(pid),
+        (false, None) => SpawnRecovery::GiveUp,
+    }
+}
+
+/// Retire the unresponsive leftover daemon, if there is one, and report the
+/// PID that was retired.
+///
+/// Deliberately built on [`recorded_daemon_pid`]'s verified-identity rule and
+/// the same terminate-and-confirm escalation `daemon stop` uses, so this
+/// codebase still kills daemon processes in exactly one way. A retirement that
+/// fails is not fatal — the caller reports its original spawn failure either
+/// way, with the retirement noted in the message.
+pub(crate) async fn retire_unresponsive_for_recovery(client: &DaemonClient) -> Option<u32> {
+    match plan_spawn_recovery(client.health().await, recorded_daemon_pid()) {
+        SpawnRecovery::RetireAndRetry(pid) => {
+            tracing::warn!(
+                pid,
+                "every spawn attempt failed and PID {pid} is an unresponsive fbuild-daemon; \
+                 retiring it before one final attempt (FastLED/fbuild#1627)"
+            );
+            match terminate_and_confirm(pid).await {
+                Ok(()) => {
+                    clear_daemon_records();
+                    Some(pid)
+                }
+                Err(error) => {
+                    tracing::warn!(pid, %error, "could not retire the unresponsive daemon");
+                    None
+                }
+            }
+        }
+        SpawnRecovery::Adopt | SpawnRecovery::GiveUp => None,
+    }
+}
+
 /// `fbuild daemon stop` — stop the daemon for *this* endpoint and report what
 /// actually happened.
 ///

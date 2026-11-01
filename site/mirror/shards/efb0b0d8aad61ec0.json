@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cport",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cport/library/DS28E18/0.9.1/DS28E18-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS28E18-0.9.1.tar.gz",
+    "size_bytes": 7419,
+    "sha256": "8bfd35cf36689de159090b8f75691e17319393ad44df9fc2b5f3e4769feb6337",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cport/library/DS28E18/0.9.1/DS28E18-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/cport/library/DS28E18/0.9.1/DS28E18-0.9.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tobiastl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tobiastl/library/LD2412/1.0.2/LD2412-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LD2412-1.0.2.tar.gz",
+    "size_bytes": 4988,
+    "sha256": "0f64f5eab40bb481e363fb1165a6a180914a78bec69d35b81750fa2dc48fd7c8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tobiastl/library/LD2412/1.0.2/LD2412-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tobiastl/library/LD2412/1.0.2/LD2412-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

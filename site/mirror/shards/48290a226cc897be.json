@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-avelardev",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-avelardev/library/LibThreadProcess/0.0.0+sha.3b34689ec230/LibThreadProcess-0.0.0+sha.3b34689ec230.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LibThreadProcess-0.0.0+sha.3b34689ec230.tar.gz",
+    "size_bytes": 1200,
+    "sha256": "66b3865afdb8762db742146c885ac2da4aedfd31d358fa8d3569d3ceda31b713",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-avelardev/library/LibThreadProcess/0.0.0%2Bsha.3b34689ec230/LibThreadProcess-0.0.0%2Bsha.3b34689ec230.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-avelardev/library/LibThreadProcess/0.0.0%2Bsha.3b34689ec230/LibThreadProcess-0.0.0%2Bsha.3b34689ec230.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-avelardev/library/MAX30100/0.0.0+sha.010b908e2187/MAX30100-0.0.0+sha.010b908e2187.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAX30100-0.0.0+sha.010b908e2187.tar.gz",
+    "size_bytes": 7139,
+    "sha256": "d659822e5e2c3d354ed83f9430e0de8d4e213ab25cbe790269252beb93b6bd75",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-avelardev/library/MAX30100/0.0.0%2Bsha.010b908e2187/MAX30100-0.0.0%2Bsha.010b908e2187.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-avelardev/library/MAX30100/0.0.0%2Bsha.010b908e2187/MAX30100-0.0.0%2Bsha.010b908e2187.tar.gz"
+    ]
+   }
+  }
+ ]
+}

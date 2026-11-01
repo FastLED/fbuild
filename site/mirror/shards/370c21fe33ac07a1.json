@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/eecharlie",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "eecharlie/library/MatrixMath/1.0/MatrixMath-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MatrixMath-1.0.tar.gz",
+    "size_bytes": 10545,
+    "sha256": "e9e4843a68c8dd8357162f9d89a1ddd05eadb56f8519fa0f3b11db3dae32695e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/eecharlie/library/MatrixMath/1.0/MatrixMath-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/eecharlie/library/MatrixMath/1.0/MatrixMath-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

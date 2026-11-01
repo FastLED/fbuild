@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hinyhiny",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hinyhiny/library/ESP_NowAdhoc/1.0.3/ESP_NowAdhoc-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESP_NowAdhoc-1.0.3.tar.gz",
+    "size_bytes": 15666,
+    "sha256": "3706e0ed6b0be88ffc3bf8b5e2d630c3f49da69559478bf9e7716a7953ec7e89",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hinyhiny/library/ESP_NowAdhoc/1.0.3/ESP_NowAdhoc-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/hinyhiny/library/ESP_NowAdhoc/1.0.3/ESP_NowAdhoc-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hinyhiny/library/XiaoMiaoLED/1.0.0/XiaoMiaoLED-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XiaoMiaoLED-1.0.0.tar.gz",
+    "size_bytes": 4998,
+    "sha256": "3cf27ea87c2bef6c5f3b4d569c2ab455ea750959c36111c124c2d40292f1ea1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hinyhiny/library/XiaoMiaoLED/1.0.0/XiaoMiaoLED-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hinyhiny/library/XiaoMiaoLED/1.0.0/XiaoMiaoLED-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "hinyhiny/library/XiaoMiaoLED/1.0.1/XiaoMiaoLED-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "XiaoMiaoLED-1.0.1.tar.gz",
+    "size_bytes": 4996,
+    "sha256": "617db3b70b10b01ea98e854b690f80bb79af7e039c4363cf7280de63b5528a44",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hinyhiny/library/XiaoMiaoLED/1.0.1/XiaoMiaoLED-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/hinyhiny/library/XiaoMiaoLED/1.0.1/XiaoMiaoLED-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

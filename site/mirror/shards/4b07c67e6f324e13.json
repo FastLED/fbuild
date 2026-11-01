@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nw-wind",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nw-wind/library/SmartButton/0.9.1/SmartButton-0.9.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartButton-0.9.1.tar.gz",
+    "size_bytes": 4129,
+    "sha256": "19a3d1b82ac1141b90ffb20e5b3184c9021ae04d8b739bfbcfd78bcbdf12f4c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nw-wind/library/SmartButton/0.9.1/SmartButton-0.9.1.tar.gz",
+     "https://dl.registry.platformio.org/download/nw-wind/library/SmartButton/0.9.1/SmartButton-0.9.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "nw-wind/library/SmartDelay/1.0.0/SmartDelay-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SmartDelay-1.0.0.tar.gz",
+    "size_bytes": 3918,
+    "sha256": "c18028bb6e54635119f1f60280e78f52824b426629a0d0caf43f5f5a4045132f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nw-wind/library/SmartDelay/1.0.0/SmartDelay-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/nw-wind/library/SmartDelay/1.0.0/SmartDelay-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

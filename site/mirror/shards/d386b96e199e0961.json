@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-wolfssl",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-wolfssl/library/HTTPClient/0.0.0+sha.76aa4f4021c1/HTTPClient-0.0.0+sha.76aa4f4021c1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HTTPClient-0.0.0+sha.76aa4f4021c1.tar.gz",
+    "size_bytes": 11627,
+    "sha256": "9ef4b17830b64f996f2054a4fe586f7a271cb86ef2366f7603d4653dcbaf73a3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-wolfssl/library/HTTPClient/0.0.0%2Bsha.76aa4f4021c1/HTTPClient-0.0.0%2Bsha.76aa4f4021c1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-wolfssl/library/HTTPClient/0.0.0%2Bsha.76aa4f4021c1/HTTPClient-0.0.0%2Bsha.76aa4f4021c1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

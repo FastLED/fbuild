@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/carlos4621",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "carlos4621/library/ArduinoPins/1.0.0/ArduinoPins-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoPins-1.0.0.tar.gz",
+    "size_bytes": 3181,
+    "sha256": "d1afea0c22b886838f0123f8920c7959849b425645fc884a08e246e6e1547bce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/carlos4621/library/ArduinoPins/1.0.0/ArduinoPins-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/carlos4621/library/ArduinoPins/1.0.0/ArduinoPins-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

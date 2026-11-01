@@ -33,6 +33,13 @@ while traversing. The volume root is validated without changing its ACL.
 Callers retain layout policy and must not use this operation to claim foreign
 or explicitly configured cache directories.
 
+`process` also owns resident-memory facts: `resident_memory(pid)` returns the
+current resident set and, where the host tracks one, the peak. Linux reads
+`VmRSS`/`VmHWM` from `/proc/<pid>/status`, macOS asks `proc_pidinfo` and takes
+this process's peak from `getrusage`, and Windows calls `GetProcessMemoryInfo`.
+A host that cannot answer returns `None`, never zero; formatting, sampling
+cadence, and what a memory trend means stay with the daemon.
+
 `ipc` owns fbuild local-endpoint bind/connect/accept and peer facts, owner-only
 Unix endpoint creation, TCP listener socket policy, and endpoint readiness
 probing. Broker framing/routing, daemon retry/yield policy, and HTTP/protobuf

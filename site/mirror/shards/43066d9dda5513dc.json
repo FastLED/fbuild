@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sedislab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sedislab/library/Sentil/0.3.0/Sentil-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sentil-0.3.0.tar.gz",
+    "size_bytes": 21489339,
+    "sha256": "5e3987213c290cabde3f1ce80536d941be6ddd6c997fc717fd47e861e115e641",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sedislab/library/Sentil/0.3.0/Sentil-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sedislab/library/Sentil/0.3.0/Sentil-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sedislab/library/Sentil/0.3.1/Sentil-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Sentil-0.3.1.tar.gz",
+    "size_bytes": 21483180,
+    "sha256": "55ae9fa93c324485ea6e378b60d5f8627c54fcdd6770b3bb0e7673185638e697",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sedislab/library/Sentil/0.3.1/Sentil-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sedislab/library/Sentil/0.3.1/Sentil-0.3.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

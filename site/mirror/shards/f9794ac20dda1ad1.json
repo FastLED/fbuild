@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-haaspors",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-haaspors/library/HCSR04Lib/0.0.0+sha.dbd45b08936b/HCSR04Lib-0.0.0+sha.dbd45b08936b.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HCSR04Lib-0.0.0+sha.dbd45b08936b.tar.gz",
+    "size_bytes": 4281,
+    "sha256": "7e0949f475cb3159264dd6e23a811b0b19dfa06128567d021828dd2c8230e7d5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-haaspors/library/HCSR04Lib/0.0.0%2Bsha.dbd45b08936b/HCSR04Lib-0.0.0%2Bsha.dbd45b08936b.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-haaspors/library/HCSR04Lib/0.0.0%2Bsha.dbd45b08936b/HCSR04Lib-0.0.0%2Bsha.dbd45b08936b.tar.gz"
+    ]
+   }
+  }
+ ]
+}

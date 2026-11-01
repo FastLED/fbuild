@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/malachi-iot",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "malachi-iot/library/estdlib/0.8.10/estdlib-0.8.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "estdlib-0.8.10.tar.gz",
+    "size_bytes": 362756,
+    "sha256": "d6dc073fe3e41ffe5d905d49d15dd0c1c63b50e2695d43a4ec5af8c51b2444b3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/malachi-iot/library/estdlib/0.8.10/estdlib-0.8.10.tar.gz",
+     "https://dl.registry.platformio.org/download/malachi-iot/library/estdlib/0.8.10/estdlib-0.8.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "malachi-iot/library/estdlib/0.8.9/estdlib-0.8.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "estdlib-0.8.9.tar.gz",
+    "size_bytes": 353043,
+    "sha256": "8967225e8e2fa8783dcf019375f87c22c587b124526c5cc08a4d7aef20bc7712",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/malachi-iot/library/estdlib/0.8.9/estdlib-0.8.9.tar.gz",
+     "https://dl.registry.platformio.org/download/malachi-iot/library/estdlib/0.8.9/estdlib-0.8.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

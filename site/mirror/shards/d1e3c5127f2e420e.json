@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-redbird",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-redbird/library/emwin/0.0.0+sha.1bf8f02b0770/emwin-0.0.0+sha.1bf8f02b0770.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "emwin-0.0.0+sha.1bf8f02b0770.tar.gz",
+    "size_bytes": 91049,
+    "sha256": "8f6cca402991fd7b3fdd8805af6bb5fb2fa65c8b8f1b54629d77405fb88f5ac3",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-redbird/library/emwin/0.0.0%2Bsha.1bf8f02b0770/emwin-0.0.0%2Bsha.1bf8f02b0770.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-redbird/library/emwin/0.0.0%2Bsha.1bf8f02b0770/emwin-0.0.0%2Bsha.1bf8f02b0770.tar.gz"
+    ]
+   }
+  }
+ ]
+}

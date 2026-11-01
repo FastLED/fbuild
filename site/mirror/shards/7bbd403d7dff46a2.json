@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/antoniopetruzzella",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "antoniopetruzzella/library/BeaconNano/1.0.0/BeaconNano-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BeaconNano-1.0.0.tar.gz",
+    "size_bytes": 11394,
+    "sha256": "f36438be4a34566c1ffb8cbe9d915101615bae736273094bd443b00868d1a369",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/antoniopetruzzella/library/BeaconNano/1.0.0/BeaconNano-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/antoniopetruzzella/library/BeaconNano/1.0.0/BeaconNano-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

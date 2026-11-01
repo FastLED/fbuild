@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/tripplefox",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "tripplefox/library/TsicSensor/1.0.2/TsicSensor-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TsicSensor-1.0.2.tar.gz",
+    "size_bytes": 6335,
+    "sha256": "354a169a4842b28fe729fa7055a86bbe9263759c8ee488046f74e1b27db54ba6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/tripplefox/library/TsicSensor/1.0.2/TsicSensor-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/tripplefox/library/TsicSensor/1.0.2/TsicSensor-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

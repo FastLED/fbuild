@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/fatlab101",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "fatlab101/library/FixedString/0.1.1/FixedString-0.1.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FixedString-0.1.1.tar.gz",
+    "size_bytes": 19127,
+    "sha256": "ed94d15bb33d4ceca7fa2974f41e9cd6e5b23cb82765d854b297a88ee6a24d87",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/fatlab101/library/FixedString/0.1.1/FixedString-0.1.1.tar.gz",
+     "https://dl.registry.platformio.org/download/fatlab101/library/FixedString/0.1.1/FixedString-0.1.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

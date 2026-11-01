@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sangstbk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sangstbk/library/New/0.0.0+sha.c674504a6536/New-0.0.0+sha.c674504a6536.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "New-0.0.0+sha.c674504a6536.tar.gz",
+    "size_bytes": 57258,
+    "sha256": "0837123c3962dbff17cc936ebbe9e2fdc554cec0a09bbd5692ebd86093bea244",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sangstbk/library/New/0.0.0%2Bsha.c674504a6536/New-0.0.0%2Bsha.c674504a6536.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sangstbk/library/New/0.0.0%2Bsha.c674504a6536/New-0.0.0%2Bsha.c674504a6536.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sangstbk/library/RF22/0.0.0+sha.e16ffa7cb900/RF22-0.0.0+sha.e16ffa7cb900.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RF22-0.0.0+sha.e16ffa7cb900.tar.gz",
+    "size_bytes": 34700,
+    "sha256": "f7fc6341f828c9df8ee703146cf73eadb0d7f682b627f01876a4e4263cf106a2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sangstbk/library/RF22/0.0.0%2Bsha.e16ffa7cb900/RF22-0.0.0%2Bsha.e16ffa7cb900.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sangstbk/library/RF22/0.0.0%2Bsha.e16ffa7cb900/RF22-0.0.0%2Bsha.e16ffa7cb900.tar.gz"
+    ]
+   }
+  }
+ ]
+}

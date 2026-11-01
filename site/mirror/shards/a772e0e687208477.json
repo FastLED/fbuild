@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-adelino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-adelino/library/BuzzerLib/0.0.0+sha.b0c0c7d002aa/BuzzerLib-0.0.0+sha.b0c0c7d002aa.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BuzzerLib-0.0.0+sha.b0c0c7d002aa.tar.gz",
+    "size_bytes": 3952,
+    "sha256": "3a8d09e432caba1e34d55f318dabd2058f14f2e2811b9d1188146030cf1f7f21",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adelino/library/BuzzerLib/0.0.0%2Bsha.b0c0c7d002aa/BuzzerLib-0.0.0%2Bsha.b0c0c7d002aa.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adelino/library/BuzzerLib/0.0.0%2Bsha.b0c0c7d002aa/BuzzerLib-0.0.0%2Bsha.b0c0c7d002aa.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-adelino/library/Mcp4921Lib/0.0.0+sha.1352606a60c6/Mcp4921Lib-0.0.0+sha.1352606a60c6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Mcp4921Lib-0.0.0+sha.1352606a60c6.tar.gz",
+    "size_bytes": 2023,
+    "sha256": "86377947ab102219b8f2db1c1dcf541b8a670d031162961c50312cd13182811e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adelino/library/Mcp4921Lib/0.0.0%2Bsha.1352606a60c6/Mcp4921Lib-0.0.0%2Bsha.1352606a60c6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adelino/library/Mcp4921Lib/0.0.0%2Bsha.1352606a60c6/Mcp4921Lib-0.0.0%2Bsha.1352606a60c6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-adelino/library/NunchukLib/0.0.0+sha.0a8f43931041/NunchukLib-0.0.0+sha.0a8f43931041.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NunchukLib-0.0.0+sha.0a8f43931041.tar.gz",
+    "size_bytes": 2196,
+    "sha256": "b0861234c35bdebe0cc6efe06c5f6a72db88126a897b82df815d8cb5f9b5f41c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adelino/library/NunchukLib/0.0.0%2Bsha.0a8f43931041/NunchukLib-0.0.0%2Bsha.0a8f43931041.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adelino/library/NunchukLib/0.0.0%2Bsha.0a8f43931041/NunchukLib-0.0.0%2Bsha.0a8f43931041.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-adelino/library/PicasoLib/0.0.0+sha.a74e42cf52b2/PicasoLib-0.0.0+sha.a74e42cf52b2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PicasoLib-0.0.0+sha.a74e42cf52b2.tar.gz",
+    "size_bytes": 27601,
+    "sha256": "996b96dbc281155f44669bf40138277358acc0dc1147eda6ee715b75d51a2f9e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-adelino/library/PicasoLib/0.0.0%2Bsha.a74e42cf52b2/PicasoLib-0.0.0%2Bsha.a74e42cf52b2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-adelino/library/PicasoLib/0.0.0%2Bsha.a74e42cf52b2/PicasoLib-0.0.0%2Bsha.a74e42cf52b2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-electrotiger",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-electrotiger/library/HC06Bluetooth/0.0.0+sha.cce827364df1/HC06Bluetooth-0.0.0+sha.cce827364df1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "HC06Bluetooth-0.0.0+sha.cce827364df1.tar.gz",
+    "size_bytes": 4592,
+    "sha256": "2ea77efc64c0779d8dbb2f75a50c09b9627234ee0a88e3a594a71c42ff73ccec",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-electrotiger/library/HC06Bluetooth/0.0.0%2Bsha.cce827364df1/HC06Bluetooth-0.0.0%2Bsha.cce827364df1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-electrotiger/library/HC06Bluetooth/0.0.0%2Bsha.cce827364df1/HC06Bluetooth-0.0.0%2Bsha.cce827364df1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-electrotiger/library/MAE433_Library/0.0.0+sha.da95e4ccbe4c/MAE433_Library-0.0.0+sha.da95e4ccbe4c.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MAE433_Library-0.0.0+sha.da95e4ccbe4c.tar.gz",
+    "size_bytes": 10138,
+    "sha256": "9488989d19b6f872eb71e1023f1a91aca1d76a11ecea782f0ca72be744638b61",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-electrotiger/library/MAE433_Library/0.0.0%2Bsha.da95e4ccbe4c/MAE433_Library-0.0.0%2Bsha.da95e4ccbe4c.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-electrotiger/library/MAE433_Library/0.0.0%2Bsha.da95e4ccbe4c/MAE433_Library-0.0.0%2Bsha.da95e4ccbe4c.tar.gz"
+    ]
+   }
+  }
+ ]
+}

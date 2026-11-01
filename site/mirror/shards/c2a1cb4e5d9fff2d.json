@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/vahidtvj",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "vahidtvj/library/TinySMS/1.1.0/TinySMS-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TinySMS-1.1.0.tar.gz",
+    "size_bytes": 8315,
+    "sha256": "ac17296f237898338b21dfecd8fd58c0e66070ed5ea15fc54424e931c284ecf4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/vahidtvj/library/TinySMS/1.1.0/TinySMS-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/vahidtvj/library/TinySMS/1.1.0/TinySMS-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/turnede0",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "turnede0/library/onenet_MQTT/1.0.0/onenet_MQTT-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "onenet_MQTT-1.0.0.tar.gz",
+    "size_bytes": 2812,
+    "sha256": "7fb2ca68ec6c343a3f777022616cf257987c2af565cd761f5175400e103ef62b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/turnede0/library/onenet_MQTT/1.0.0/onenet_MQTT-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/turnede0/library/onenet_MQTT/1.0.0/onenet_MQTT-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

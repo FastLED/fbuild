@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rbohne",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rbohne/library/ArduinoHAL/0.0.0+sha.40396527a068/ArduinoHAL-0.0.0+sha.40396527a068.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ArduinoHAL-0.0.0+sha.40396527a068.tar.gz",
+    "size_bytes": 5075,
+    "sha256": "65d27feb009bcb5d39a8b76fc4c634584e3df2ee837803f92322eb72dded75c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rbohne/library/ArduinoHAL/0.0.0%2Bsha.40396527a068/ArduinoHAL-0.0.0%2Bsha.40396527a068.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rbohne/library/ArduinoHAL/0.0.0%2Bsha.40396527a068/ArduinoHAL-0.0.0%2Bsha.40396527a068.tar.gz"
+    ]
+   }
+  }
+ ]
+}

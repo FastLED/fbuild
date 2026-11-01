@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/remotexy",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "remotexy/library/RemoteXY/3.1.14/RemoteXY-3.1.14.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteXY-3.1.14.tar.gz",
+    "size_bytes": 38252,
+    "sha256": "235c014c9c0bb9c9edf23b37b3ab705d557d9421be6c74acdff6cb6920dbb141",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remotexy/library/RemoteXY/3.1.14/RemoteXY-3.1.14.tar.gz",
+     "https://dl.registry.platformio.org/download/remotexy/library/RemoteXY/3.1.14/RemoteXY-3.1.14.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remotexy/library/RemoteXY/4.1.10/RemoteXY-4.1.10.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteXY-4.1.10.tar.gz",
+    "size_bytes": 55062,
+    "sha256": "b08dbcdff18f6b1c48f43059b52d89603152abf6aa07d8e649b773b15dcb29af",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remotexy/library/RemoteXY/4.1.10/RemoteXY-4.1.10.tar.gz",
+     "https://dl.registry.platformio.org/download/remotexy/library/RemoteXY/4.1.10/RemoteXY-4.1.10.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remotexy/library/RemoteXY/4.1.11/RemoteXY-4.1.11.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteXY-4.1.11.tar.gz",
+    "size_bytes": 55004,
+    "sha256": "238f3c62ab4756d0dcaae06ccf93dfd609989071b2a3df627da9e47921f749e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remotexy/library/RemoteXY/4.1.11/RemoteXY-4.1.11.tar.gz",
+     "https://dl.registry.platformio.org/download/remotexy/library/RemoteXY/4.1.11/RemoteXY-4.1.11.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remotexy/library/RemoteXY/4.1.4/RemoteXY-4.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteXY-4.1.4.tar.gz",
+    "size_bytes": 52095,
+    "sha256": "94dfa12086bc37ef722069667f21547b41a872d46fcf553d50182a45b81bd337",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remotexy/library/RemoteXY/4.1.4/RemoteXY-4.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/remotexy/library/RemoteXY/4.1.4/RemoteXY-4.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remotexy/library/RemoteXY/4.1.5/RemoteXY-4.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteXY-4.1.5.tar.gz",
+    "size_bytes": 54049,
+    "sha256": "d902cd917e29d81f2f6ea23fa23094259acf609cfa8d2d0730954218b42ef8ce",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remotexy/library/RemoteXY/4.1.5/RemoteXY-4.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/remotexy/library/RemoteXY/4.1.5/RemoteXY-4.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remotexy/library/RemoteXY/4.1.6/RemoteXY-4.1.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteXY-4.1.6.tar.gz",
+    "size_bytes": 53489,
+    "sha256": "56a6c794c55730250e464f945d1a94e7da22e3265e26db8961fa164a34d9f843",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remotexy/library/RemoteXY/4.1.6/RemoteXY-4.1.6.tar.gz",
+     "https://dl.registry.platformio.org/download/remotexy/library/RemoteXY/4.1.6/RemoteXY-4.1.6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remotexy/library/RemoteXY/4.1.7/RemoteXY-4.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteXY-4.1.7.tar.gz",
+    "size_bytes": 54400,
+    "sha256": "a5c7f8d5ed0042a23bf4de545ce3d10d0513a3050f8553481f0c009e7c9ecd9d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remotexy/library/RemoteXY/4.1.7/RemoteXY-4.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/remotexy/library/RemoteXY/4.1.7/RemoteXY-4.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remotexy/library/RemoteXY/4.1.8/RemoteXY-4.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteXY-4.1.8.tar.gz",
+    "size_bytes": 54591,
+    "sha256": "505bfa04d383fb98cf891174e6030972bb69ad63357f53c2169a62f267456a33",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remotexy/library/RemoteXY/4.1.8/RemoteXY-4.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/remotexy/library/RemoteXY/4.1.8/RemoteXY-4.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "remotexy/library/RemoteXY/4.1.9/RemoteXY-4.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RemoteXY-4.1.9.tar.gz",
+    "size_bytes": 55058,
+    "sha256": "0e2ade1994d8dd0b77df7983a56dd6fe65a29e55e98492f5dc64331eb2ec3bc0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/remotexy/library/RemoteXY/4.1.9/RemoteXY-4.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/remotexy/library/RemoteXY/4.1.9/RemoteXY-4.1.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

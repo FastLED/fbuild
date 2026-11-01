@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-takuto003",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-takuto003/library/MPU9250/0.0.0+sha.ca2a40219dc1/MPU9250-0.0.0+sha.ca2a40219dc1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MPU9250-0.0.0+sha.ca2a40219dc1.tar.gz",
+    "size_bytes": 11341,
+    "sha256": "55639ef47b84ecd4bc5157a784dfed2fc98d31ecfe3c5aaca312199fb4fea91e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-takuto003/library/MPU9250/0.0.0%2Bsha.ca2a40219dc1/MPU9250-0.0.0%2Bsha.ca2a40219dc1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-takuto003/library/MPU9250/0.0.0%2Bsha.ca2a40219dc1/MPU9250-0.0.0%2Bsha.ca2a40219dc1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/rcmags",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "rcmags/library/ADNS3080/1.0.2/ADNS3080-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ADNS3080-1.0.2.tar.gz",
+    "size_bytes": 4551,
+    "sha256": "46049844e7498a865a81b5636445f19f9fdf8c645d1cb5c06f023bcbe4c93f83",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rcmags/library/ADNS3080/1.0.2/ADNS3080-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/rcmags/library/ADNS3080/1.0.2/ADNS3080-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rcmags/library/Vector%20datatype/1.3.1/Vectordatatype-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Vectordatatype-1.3.1.tar.gz",
+    "size_bytes": 7115,
+    "sha256": "6c00ac4fdf0a6543834e75349917978053b6bf0f88e3a9c20a056318ae44b5c5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rcmags/library/Vector%2520datatype/1.3.1/Vectordatatype-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rcmags/library/Vector%20datatype/1.3.1/Vectordatatype-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rcmags/library/basicCalculus/0.1.0/basicCalculus-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "basicCalculus-0.1.0.tar.gz",
+    "size_bytes": 3419,
+    "sha256": "e94c7ad995f827d6260383a0faded524fd2d0a7646866b345768e397eb107e0d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rcmags/library/basicCalculus/0.1.0/basicCalculus-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rcmags/library/basicCalculus/0.1.0/basicCalculus-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rcmags/library/basicMPU6050/0.3.1/basicMPU6050-0.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "basicMPU6050-0.3.1.tar.gz",
+    "size_bytes": 5352,
+    "sha256": "963deac8989c04c6556d96e68c32184a245abb59f5889bc761760b4bd0b08f42",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rcmags/library/basicMPU6050/0.3.1/basicMPU6050-0.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/rcmags/library/basicMPU6050/0.3.1/basicMPU6050-0.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rcmags/library/imuFilter/1.6.3/imuFilter-1.6.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "imuFilter-1.6.3.tar.gz",
+    "size_bytes": 7496,
+    "sha256": "3d51a7f7f9baae620d7179f3e76d23315494cf0d032d4751585cd7ac2bf71d9a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rcmags/library/imuFilter/1.6.3/imuFilter-1.6.3.tar.gz",
+     "https://dl.registry.platformio.org/download/rcmags/library/imuFilter/1.6.3/imuFilter-1.6.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "rcmags/library/pulseInput/1.1.0/pulseInput-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "pulseInput-1.1.0.tar.gz",
+    "size_bytes": 3524,
+    "sha256": "cbb022e651bdbd40c4325d4f2828638fbc5907e03d644b96a30dd28f41100a08",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/rcmags/library/pulseInput/1.1.0/pulseInput-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/rcmags/library/pulseInput/1.1.0/pulseInput-1.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

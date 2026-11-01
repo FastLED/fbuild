@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/candale",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "candale/library/TUANPMT%20ESP8266%20MQTT%20Arduino%20Wrapper/1.0.0/TUANPMTESP8266MQTTArduinoWrapper-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TUANPMTESP8266MQTTArduinoWrapper-1.0.0.tar.gz",
+    "size_bytes": 17096,
+    "sha256": "352ba758dbe2846590db530d76b564802c86d4a84977f9cd18cb3fbac61ace97",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/candale/library/TUANPMT%2520ESP8266%2520MQTT%2520Arduino%2520Wrapper/1.0.0/TUANPMTESP8266MQTTArduinoWrapper-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/candale/library/TUANPMT%20ESP8266%20MQTT%20Arduino%20Wrapper/1.0.0/TUANPMTESP8266MQTTArduinoWrapper-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

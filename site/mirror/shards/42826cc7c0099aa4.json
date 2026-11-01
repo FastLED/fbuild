@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thanerenevv",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thanerenevv/library/Ember/1.0.1/Ember-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ember-1.0.1.tar.gz",
+    "size_bytes": 9750,
+    "sha256": "1ae5b1be84150c6b0b921806fd4d7fca7a148c8b15709e5f3106152bb66f4a91",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thanerenevv/library/Ember/1.0.1/Ember-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/thanerenevv/library/Ember/1.0.1/Ember-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thanerenevv/library/Ember/1.0.2/Ember-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ember-1.0.2.tar.gz",
+    "size_bytes": 9999,
+    "sha256": "35657b2de1139f30c430df9dd9ae4f494b6bce41a1ed20505d9d744dc52e663e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thanerenevv/library/Ember/1.0.2/Ember-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/thanerenevv/library/Ember/1.0.2/Ember-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "thanerenevv/library/Ember/1.0.3/Ember-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Ember-1.0.3.tar.gz",
+    "size_bytes": 11076,
+    "sha256": "e442d006416f6a42058c6ef9226538353d236471de540e4a728a2d4faa51e00f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thanerenevv/library/Ember/1.0.3/Ember-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/thanerenevv/library/Ember/1.0.3/Ember-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

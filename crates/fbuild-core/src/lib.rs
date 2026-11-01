@@ -7,12 +7,16 @@
 //! - Size info parsing (avr-size / arm-none-eabi-size output)
 
 pub mod archive;
+pub mod build_id;
 pub mod build_log;
 pub mod channel;
 pub mod compiler_flags;
 pub mod daemon_health;
+pub mod disk_full;
+pub mod disk_reserve;
 pub mod elapsed;
 pub mod emulator;
+pub mod env_flag;
 pub mod env_namespace;
 pub mod file_lock;
 pub mod fs;

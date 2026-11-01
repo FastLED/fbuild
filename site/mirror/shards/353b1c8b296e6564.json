@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/xiaoming-sun6",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "xiaoming-sun6/library/SerialDebugger/1.0.0/SerialDebugger-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SerialDebugger-1.0.0.tar.gz",
+    "size_bytes": 4596,
+    "sha256": "5cdf799371adb4a1fa0e301eb136379902952db32bda14184c7b5c29974bbe43",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/xiaoming-sun6/library/SerialDebugger/1.0.0/SerialDebugger-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/xiaoming-sun6/library/SerialDebugger/1.0.0/SerialDebugger-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

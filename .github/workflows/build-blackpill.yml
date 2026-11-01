@@ -22,6 +22,7 @@ concurrency:
 jobs:
   build:
     uses: ./.github/workflows/template_build.yml
+    secrets: inherit
     with:
       workflow-name: "STM32 BlackPill F411CE"
       test-dir: "tests/platform/blackpill_f411ce"

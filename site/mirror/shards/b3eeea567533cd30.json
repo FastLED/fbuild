@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-bas",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-bas/library/DS1621/0.0.0+sha.20bfb7df0470/DS1621-0.0.0+sha.20bfb7df0470.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS1621-0.0.0+sha.20bfb7df0470.tar.gz",
+    "size_bytes": 2591,
+    "sha256": "35cc2fc2652c2721e8956a53f9b07cec46b46a3b96256622170f570d108fd983",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bas/library/DS1621/0.0.0%2Bsha.20bfb7df0470/DS1621-0.0.0%2Bsha.20bfb7df0470.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bas/library/DS1621/0.0.0%2Bsha.20bfb7df0470/DS1621-0.0.0%2Bsha.20bfb7df0470.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bas/library/LED_CUBE/0.0.0+sha.e08a4d27f534/LED_CUBE-0.0.0+sha.e08a4d27f534.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LED_CUBE-0.0.0+sha.e08a4d27f534.tar.gz",
+    "size_bytes": 4360,
+    "sha256": "d5d2830447d79c7f09d42b44a791b4f3912101e1c7c351b3080854fb5076bd65",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bas/library/LED_CUBE/0.0.0%2Bsha.e08a4d27f534/LED_CUBE-0.0.0%2Bsha.e08a4d27f534.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bas/library/LED_CUBE/0.0.0%2Bsha.e08a4d27f534/LED_CUBE-0.0.0%2Bsha.e08a4d27f534.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bas/library/PCF8574/0.0.0+sha.7913586369c2/PCF8574-0.0.0+sha.7913586369c2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8574-0.0.0+sha.7913586369c2.tar.gz",
+    "size_bytes": 1827,
+    "sha256": "a95614a25031b757fb42a5ece3df0952adff93b92c7592045f14fcdf78e570f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bas/library/PCF8574/0.0.0%2Bsha.7913586369c2/PCF8574-0.0.0%2Bsha.7913586369c2.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bas/library/PCF8574/0.0.0%2Bsha.7913586369c2/PCF8574-0.0.0%2Bsha.7913586369c2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bas/library/PCF8575/0.0.0+sha.95cf83ce54ec/PCF8575-0.0.0+sha.95cf83ce54ec.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "PCF8575-0.0.0+sha.95cf83ce54ec.tar.gz",
+    "size_bytes": 1790,
+    "sha256": "690408bd2aa0424034f73beebd3a357efda4a87a2794d1626cc782f03b0b9b12",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bas/library/PCF8575/0.0.0%2Bsha.95cf83ce54ec/PCF8575-0.0.0%2Bsha.95cf83ce54ec.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bas/library/PCF8575/0.0.0%2Bsha.95cf83ce54ec/PCF8575-0.0.0%2Bsha.95cf83ce54ec.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-bas/library/ST7920/0.0.0+sha.1a97e0243dbc/ST7920-0.0.0+sha.1a97e0243dbc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST7920-0.0.0+sha.1a97e0243dbc.tar.gz",
+    "size_bytes": 4305,
+    "sha256": "96c4c3e8199aab413fc36400e276f7801e43578074eded9e18adda8a50b2c75a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-bas/library/ST7920/0.0.0%2Bsha.1a97e0243dbc/ST7920-0.0.0%2Bsha.1a97e0243dbc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-bas/library/ST7920/0.0.0%2Bsha.1a97e0243dbc/ST7920-0.0.0%2Bsha.1a97e0243dbc.tar.gz"
+    ]
+   }
+  }
+ ]
+}

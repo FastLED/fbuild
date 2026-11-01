@@ -1,0 +1,113 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pilotak",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pilotak/library/Hysteresis/1.0.1/Hysteresis-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Hysteresis-1.0.1.tar.gz",
+    "size_bytes": 4335,
+    "sha256": "9937e0880d82b340344070c73d474b10c1077288efaae7360f69e3df7e2aa157",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pilotak/library/Hysteresis/1.0.1/Hysteresis-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pilotak/library/Hysteresis/1.0.1/Hysteresis-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pilotak/library/LPS35HW/1.0.2/LPS35HW-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LPS35HW-1.0.2.tar.gz",
+    "size_bytes": 5163,
+    "sha256": "933fabf3fbfe8cb01b99db9d895515c00bf823acba64b59f3730f559e53f7857",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pilotak/library/LPS35HW/1.0.2/LPS35HW-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/pilotak/library/LPS35HW/1.0.2/LPS35HW-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pilotak/library/MCP3X21/1.0.1/MCP3X21-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MCP3X21-1.0.1.tar.gz",
+    "size_bytes": 3559,
+    "sha256": "356531e35baf4db9c84f6a34b3ce7339b6725a2a1b0eea216e2ed6f1f0563b6a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pilotak/library/MCP3X21/1.0.1/MCP3X21-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pilotak/library/MCP3X21/1.0.1/MCP3X21-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pilotak/library/MeteoFunctions/1.1.0/MeteoFunctions-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MeteoFunctions-1.1.0.tar.gz",
+    "size_bytes": 4882,
+    "sha256": "5ef86b55da71ce4dc5883a3ba0a8970d031d9025d2dcddc23f6d766c3236b123",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pilotak/library/MeteoFunctions/1.1.0/MeteoFunctions-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pilotak/library/MeteoFunctions/1.1.0/MeteoFunctions-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pilotak/library/MovingAverage/1.2.1/MovingAverage-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MovingAverage-1.2.1.tar.gz",
+    "size_bytes": 4583,
+    "sha256": "95c54bbce4304f74621a50bf900d64f717bc062a44f1cc6f3d295e9d2817e215",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pilotak/library/MovingAverage/1.2.1/MovingAverage-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pilotak/library/MovingAverage/1.2.1/MovingAverage-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pilotak/library/MovingAverageAngle/1.1.0/MovingAverageAngle-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MovingAverageAngle-1.1.0.tar.gz",
+    "size_bytes": 4375,
+    "sha256": "018d5e035845b8a119432d9d92d7defb04256691f85f7fa86365f9dea3e127c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pilotak/library/MovingAverageAngle/1.1.0/MovingAverageAngle-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pilotak/library/MovingAverageAngle/1.1.0/MovingAverageAngle-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pilotak/library/MovingAverageFloat/1.0.1/MovingAverageFloat-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MovingAverageFloat-1.0.1.tar.gz",
+    "size_bytes": 4006,
+    "sha256": "105b708e959d7b12e98e4865a453855c09a49f23b5f00065713ec031fdffda16",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pilotak/library/MovingAverageFloat/1.0.1/MovingAverageFloat-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pilotak/library/MovingAverageFloat/1.0.1/MovingAverageFloat-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pilotak/library/WeatherMeters/2.1.0/WeatherMeters-2.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WeatherMeters-2.1.0.tar.gz",
+    "size_bytes": 6327,
+    "sha256": "0e4fd61f942b278bb46cfee70c36b02950cddeb8defd7c4a93c1ec01a68f5574",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pilotak/library/WeatherMeters/2.1.0/WeatherMeters-2.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pilotak/library/WeatherMeters/2.1.0/WeatherMeters-2.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

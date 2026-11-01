@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pfeerick",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pfeerick/library/elapsedMillis/1.0.6/elapsedMillis-1.0.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "elapsedMillis-1.0.6.tar.gz",
+    "size_bytes": 7961,
+    "sha256": "50edd0de59f0bc95c7aa05348f6ff474effc002bf3821773cc246073bd78223a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pfeerick/library/elapsedMillis/1.0.6/elapsedMillis-1.0.6.tar.gz",
+     "https://dl.registry.platformio.org/download/pfeerick/library/elapsedMillis/1.0.6/elapsedMillis-1.0.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

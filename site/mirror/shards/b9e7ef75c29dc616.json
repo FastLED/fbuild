@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/niccokunzmann",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "niccokunzmann/library/UC121902-TNARX-A/1.0/UC121902-TNARX-A-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UC121902-TNARX-A-1.0.tar.gz",
+    "size_bytes": 7051,
+    "sha256": "c4bdacb33ea242a161ec8741710635627a5f4d09e9196d53cf6df2e5cd320ff2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/niccokunzmann/library/UC121902-TNARX-A/1.0/UC121902-TNARX-A-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/niccokunzmann/library/UC121902-TNARX-A/1.0/UC121902-TNARX-A-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -65,3 +65,11 @@ workflow = "dylint.yml"
 all-jobs = true
 event = "pull_request"
 inputs = {}
+
+# RUST-033 (FastLED/fbuild#1793): the whole lint phase as one lane. soldr runs
+# rustfmt, Clippy for the host and every declared [workspace.metadata.soldr]
+# target, plus Dylint per target through --cross-dylint. One successful run
+# attests rust/<target>/{clippy,dylint} for every declared target.
+[gate.lanes.lint]
+run = ["uv", "run", "--no-project", "--python", "3.12", "python", "-m", "ci.local_gate", "--lane", "lint"]
+tools = ["soldr", "uv"]

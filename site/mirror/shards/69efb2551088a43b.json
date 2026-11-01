@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-nyamfg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-nyamfg/library/LPS331_I2C/0.0.0+sha.b7d3d6e82049/LPS331_I2C-0.0.0+sha.b7d3d6e82049.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LPS331_I2C-0.0.0+sha.b7d3d6e82049.tar.gz",
+    "size_bytes": 2348,
+    "sha256": "9a11bd8eabb85a76937fb154b03b6d59281481fa8b4ab7f4d8c3797e4e04363e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-nyamfg/library/LPS331_I2C/0.0.0%2Bsha.b7d3d6e82049/LPS331_I2C-0.0.0%2Bsha.b7d3d6e82049.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-nyamfg/library/LPS331_I2C/0.0.0%2Bsha.b7d3d6e82049/LPS331_I2C-0.0.0%2Bsha.b7d3d6e82049.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -39,9 +39,16 @@ pub async fn run_daemon(action: DaemonAction) -> fbuild_core::Result<()> {
                             info.port
                         ));
                         output::result(format!("  PID:     {}", info.pid));
+                        if let Some(rss) = info.rss_bytes {
+                            output::result(format!(
+                                "  Memory:  {}",
+                                memory_label(rss, info.peak_rss_bytes)
+                            ));
+                        }
                         output::result(format!("  Port:    {}", info.port));
                         output::result(format!("  Uptime:  {}", uptime));
                         output::result(format!("  Version: {}", info.version));
+                        output::result(format!("  Build:   {}", build_label(&info.build_id)));
                         output::result(format!(
                             "  Mode:    {}",
                             if info.dev_mode { "dev" } else { "prod" }
@@ -308,6 +315,7 @@ pub async fn run_daemon_list(client: &DaemonClient) -> fbuild_core::Result<()> {
                 output::result(format!("  Port:    {}", info.port));
                 output::result(format!("  Uptime:  {}", uptime));
                 output::result(format!("  Version: {}", info.version));
+                output::result(format!("  Build:   {}", build_label(&info.build_id)));
                 output::result(format!(
                     "  Mode:    {}",
                     if info.dev_mode { "dev" } else { "prod" }
@@ -765,6 +773,22 @@ pub async fn find_daemon_pids() -> fbuild_core::Result<Vec<u32>> {
     }
 }
 
+/// Render a daemon memory sample for `daemon status`.
+///
+/// The peak is what diagnoses a process that grew and then released, so it is
+/// printed beside the current value rather than folded into it
+/// (FastLED/fbuild#1785).
+pub fn memory_label(resident_bytes: u64, peak_resident_bytes: Option<u64>) -> String {
+    match peak_resident_bytes {
+        Some(peak) if peak > resident_bytes => format!(
+            "{} (peak {})",
+            format_size(resident_bytes),
+            format_size(peak)
+        ),
+        _ => format_size(resident_bytes),
+    }
+}
+
 pub fn format_uptime(seconds: f64) -> String {
     let secs = seconds as u64;
     if secs < 60 {
@@ -814,4 +838,64 @@ fn clear_daemon_records() -> Vec<&'static str> {
         removed.push("owner-claim");
     }
     removed
+}
+
+/// Render the daemon's build id for `daemon status` / `daemon list`.
+///
+/// A daemon from this same checkout prints its id alone. Anything else is
+/// spelled out, because "same version, different build" is exactly the
+/// confusion FastLED/fbuild#1742 was filed for: an older daemon happily serves
+/// a newer CLI, and a same-version editable install can be from any commit.
+fn build_label(daemon_build_id: &str) -> String {
+    let cli_build_id = fbuild_core::build_id::build_id();
+    let daemon_build_id = daemon_build_id.trim();
+    if daemon_build_id.is_empty() {
+        return format!("{cli_build_id} (daemon predates build ids; reported by this CLI)");
+    }
+    if daemon_build_id == cli_build_id {
+        return daemon_build_id.to_string();
+    }
+    format!("{daemon_build_id} (this CLI: {cli_build_id})")
+}
+
+#[cfg(test)]
+mod build_id_tests {
+    use super::*;
+
+    #[test]
+    fn matching_daemon_reports_the_bare_build_id() {
+        let cli = fbuild_core::build_id::build_id();
+        assert_eq!(build_label(&format!(" {cli} ")), cli);
+    }
+
+    #[test]
+    fn differing_daemon_names_both_builds() {
+        let cli = fbuild_core::build_id::build_id();
+        let label = build_label("0000000000aa");
+        assert!(label.starts_with("0000000000aa"));
+        assert!(label.contains(&format!("this CLI: {cli}")), "{label}");
+    }
+
+    #[test]
+    fn older_daemon_without_a_stamp_still_prints_a_build() {
+        let label = build_label("");
+        assert!(label.contains(&fbuild_core::build_id::build_id()));
+        assert!(label.contains("predates build ids"));
+    }
+}
+
+#[cfg(test)]
+mod memory_label_tests {
+    use super::memory_label;
+
+    #[test]
+    fn a_current_sample_alone_has_no_peak_suffix() {
+        assert_eq!(memory_label(1024, None), "1.0 KB");
+        assert_eq!(memory_label(1024, Some(1024)), "1.0 KB");
+    }
+
+    #[test]
+    fn a_released_peak_stays_visible() {
+        assert_eq!(memory_label(1024, Some(4096)), "1.0 KB (peak 4.0 KB)");
+    }
 }

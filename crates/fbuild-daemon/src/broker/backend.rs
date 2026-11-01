@@ -143,6 +143,7 @@ fn health_response(ctx: &DaemonContext) -> HealthResponse {
         status: "healthy".to_string(),
         uptime_seconds: ctx.started_at.elapsed().as_secs_f64(),
         version: env!("CARGO_PKG_VERSION").to_string(),
+        build_id: fbuild_core::build_id::build_id(),
         pid: std::process::id(),
         source_mtime: ctx.source_mtime,
         source_exe: ctx.source_exe.clone(),
@@ -160,12 +161,16 @@ fn daemon_info_response(ctx: &DaemonContext) -> DaemonInfoResponse {
         .read()
         .unwrap_or_else(|e| e.into_inner())
         .clone();
+    let memory = fbuild_core::platform::process::resident_memory(std::process::id());
     let cache_identity = fbuild_paths::running_process::DaemonCacheIdentity::discover();
     DaemonInfoResponse {
         status: "running".to_string(),
         uptime_seconds: ctx.started_at.elapsed().as_secs_f64(),
         version: env!("CARGO_PKG_VERSION").to_string(),
+        build_id: fbuild_core::build_id::build_id(),
         pid: std::process::id(),
+        rss_bytes: memory.map(|usage| usage.resident_bytes),
+        peak_rss_bytes: memory.and_then(|usage| usage.peak_resident_bytes),
         port: ctx.port,
         started_at: ctx.started_at_unix,
         dev_mode: fbuild_paths::is_dev_mode(),

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/yurii-vasylchuk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "yurii-vasylchuk/library/YvaBtnFsm/0.1.0/YvaBtnFsm-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "YvaBtnFsm-0.1.0.tar.gz",
+    "size_bytes": 3981,
+    "sha256": "f1e85a33373b7eb98f04d9d9cbf0533a9b0079af268aa017725d304fa002af1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/yurii-vasylchuk/library/YvaBtnFsm/0.1.0/YvaBtnFsm-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/yurii-vasylchuk/library/YvaBtnFsm/0.1.0/YvaBtnFsm-0.1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

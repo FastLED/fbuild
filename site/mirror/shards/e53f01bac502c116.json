@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cmaglie",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cmaglie/library/FlashStorage/1.0.0/FlashStorage-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FlashStorage-1.0.0.tar.gz",
+    "size_bytes": 6537,
+    "sha256": "7eab1580f2cf290ad8a7aa43f9bbf80f8dd330a697d2c6a0641739c431a3fd0a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmaglie/library/FlashStorage/1.0.0/FlashStorage-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cmaglie/library/FlashStorage/1.0.0/FlashStorage-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmaglie/library/UselessLib/1.0.0/UselessLib-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "UselessLib-1.0.0.tar.gz",
+    "size_bytes": 505,
+    "sha256": "8762cec0a14b3b926b78f36dd3e63bc0f1628f747f1d9ce6cf0895d235f21e10",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmaglie/library/UselessLib/1.0.0/UselessLib-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cmaglie/library/UselessLib/1.0.0/UselessLib-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "cmaglie/library/VirtualWire/1.0/VirtualWire-1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VirtualWire-1.0.tar.gz",
+    "size_bytes": 13998,
+    "sha256": "e75a8d02345f790e67584dc2f14b47cd48a2b7dae53724ab38b24acecca53d1d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cmaglie/library/VirtualWire/1.0/VirtualWire-1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/cmaglie/library/VirtualWire/1.0/VirtualWire-1.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

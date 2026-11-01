@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/kastara-digital-technology",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "kastara-digital-technology/library/Kadita/1.17.1/Kadita-1.17.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Kadita-1.17.1.tar.gz",
+    "size_bytes": 67602,
+    "sha256": "4ce74bad1e6e984d74bb9b9978d6fae774e35b390175e10855422b645cf9dbdc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/kastara-digital-technology/library/Kadita/1.17.1/Kadita-1.17.1.tar.gz",
+     "https://dl.registry.platformio.org/download/kastara-digital-technology/library/Kadita/1.17.1/Kadita-1.17.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

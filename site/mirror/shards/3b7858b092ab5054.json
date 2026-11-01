@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aligator",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aligator/library/NeoPixelBusGfx/1.2.1/NeoPixelBusGfx-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NeoPixelBusGfx-1.2.1.tar.gz",
+    "size_bytes": 30992,
+    "sha256": "a79f45b28fe196f6a7030d74dac955085f398f18de22bea0c698c178532b0f86",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aligator/library/NeoPixelBusGfx/1.2.1/NeoPixelBusGfx-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/aligator/library/NeoPixelBusGfx/1.2.1/NeoPixelBusGfx-1.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

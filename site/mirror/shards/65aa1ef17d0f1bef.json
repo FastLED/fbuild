@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/reeltwo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "reeltwo/library/Reeltwo/1.0.0/Reeltwo-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Reeltwo-1.0.0.tar.gz",
+    "size_bytes": 131420,
+    "sha256": "15ee2bb529065811fdb49311db3e7aacbefea08d87c9dcbd35065fbafaa827da",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/reeltwo/library/Reeltwo/1.0.0/Reeltwo-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/reeltwo/library/Reeltwo/1.0.0/Reeltwo-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

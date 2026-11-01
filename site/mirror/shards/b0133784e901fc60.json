@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/gitlab-airbornemint",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "gitlab-airbornemint/library/Protothreads/1.4.0-arduino.beta.1/Protothreads-1.4.0-arduino.beta.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Protothreads-1.4.0-arduino.beta.1.tar.gz",
+    "size_bytes": 8105,
+    "sha256": "5f756a34daa095d462b1450ac70f3f16a63281745fac1c68d169ece86103348e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/gitlab-airbornemint/library/Protothreads/1.4.0-arduino.beta.1/Protothreads-1.4.0-arduino.beta.1.tar.gz",
+     "https://dl.registry.platformio.org/download/gitlab-airbornemint/library/Protothreads/1.4.0-arduino.beta.1/Protothreads-1.4.0-arduino.beta.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/robolinkinc",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "robolinkinc/library/CoDrone/2.2.1/CoDrone-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "CoDrone-2.2.1.tar.gz",
+    "size_bytes": 53979,
+    "sha256": "d85859bcef5808d2f498187a501f14f9806052bdbed20647979463816f3d560f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robolinkinc/library/CoDrone/2.2.1/CoDrone-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/robolinkinc/library/CoDrone/2.2.1/CoDrone-2.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "robolinkinc/library/RokitSmart/1.0.9/RokitSmart-1.0.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RokitSmart-1.0.9.tar.gz",
+    "size_bytes": 78105,
+    "sha256": "91e9526a059173581af8f39e56d4a761d3c752661a58ce15f31035860e028848",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/robolinkinc/library/RokitSmart/1.0.9/RokitSmart-1.0.9.tar.gz",
+     "https://dl.registry.platformio.org/download/robolinkinc/library/RokitSmart/1.0.9/RokitSmart-1.0.9.tar.gz"
+    ]
+   }
+  }
+ ]
+}

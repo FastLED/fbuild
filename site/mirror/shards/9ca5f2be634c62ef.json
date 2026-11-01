@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/janw-cz",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "janw-cz/library/JWA%20BME280/1.0.4/JWABME280-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "JWABME280-1.0.4.tar.gz",
+    "size_bytes": 17329,
+    "sha256": "a27bf1c67495de1f5649da994a3ee782317e395f941fe91b2741872d496f15a4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/janw-cz/library/JWA%2520BME280/1.0.4/JWABME280-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/janw-cz/library/JWA%20BME280/1.0.4/JWABME280-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

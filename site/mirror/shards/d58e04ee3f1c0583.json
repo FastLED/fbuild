@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/aaryaapg",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "aaryaapg/library/SPC/1.0.0/SPC-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPC-1.0.0.tar.gz",
+    "size_bytes": 2737,
+    "sha256": "8e01771b58985c15eddb33968409c08d1e34766e719ccf84f0fa5ccc4d3ca147",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/aaryaapg/library/SPC/1.0.0/SPC-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/aaryaapg/library/SPC/1.0.0/SPC-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

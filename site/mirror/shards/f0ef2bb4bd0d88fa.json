@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/c-klinger",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "c-klinger/library/DWDOpenDataPollenflugGefahrenindex/1.0.0/DWDOpenDataPollenflugGefahrenindex-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DWDOpenDataPollenflugGefahrenindex-1.0.0.tar.gz",
+    "size_bytes": 8578,
+    "sha256": "402d860e4771248676a06055fab5459787050aac9c36fd3517060b23e8789064",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/c-klinger/library/DWDOpenDataPollenflugGefahrenindex/1.0.0/DWDOpenDataPollenflugGefahrenindex-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/c-klinger/library/DWDOpenDataPollenflugGefahrenindex/1.0.0/DWDOpenDataPollenflugGefahrenindex-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

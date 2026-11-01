@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-5hel2l2y",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-5hel2l2y/library/BNO055/0.0.0+sha.f43b1aa99e08/BNO055-0.0.0+sha.f43b1aa99e08.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BNO055-0.0.0+sha.f43b1aa99e08.tar.gz",
+    "size_bytes": 5225,
+    "sha256": "c0b93d6b7fd5dac926259e0691a58939537448672bae2139e1341d5e3c07550b",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-5hel2l2y/library/BNO055/0.0.0%2Bsha.f43b1aa99e08/BNO055-0.0.0%2Bsha.f43b1aa99e08.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-5hel2l2y/library/BNO055/0.0.0%2Bsha.f43b1aa99e08/BNO055-0.0.0%2Bsha.f43b1aa99e08.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-5hel2l2y/library/LSM6DS3/0.0.0+sha.ed14e6196255/LSM6DS3-0.0.0+sha.ed14e6196255.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM6DS3-0.0.0+sha.ed14e6196255.tar.gz",
+    "size_bytes": 6204,
+    "sha256": "4be96f54dc448420607313bfade0590bb4b378697b5fa0807722ce4bf943f377",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-5hel2l2y/library/LSM6DS3/0.0.0%2Bsha.ed14e6196255/LSM6DS3-0.0.0%2Bsha.ed14e6196255.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-5hel2l2y/library/LSM6DS3/0.0.0%2Bsha.ed14e6196255/LSM6DS3-0.0.0%2Bsha.ed14e6196255.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-5hel2l2y/library/LSM9DS1/0.0.0+sha.7ffcb378cfd4/LSM9DS1-0.0.0+sha.7ffcb378cfd4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LSM9DS1-0.0.0+sha.7ffcb378cfd4.tar.gz",
+    "size_bytes": 7015,
+    "sha256": "50d590c5935e4cb5d4be7684a59b7d862143a379af394be2c279b810edbfc512",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-5hel2l2y/library/LSM9DS1/0.0.0%2Bsha.7ffcb378cfd4/LSM9DS1-0.0.0%2Bsha.7ffcb378cfd4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-5hel2l2y/library/LSM9DS1/0.0.0%2Bsha.7ffcb378cfd4/LSM9DS1-0.0.0%2Bsha.7ffcb378cfd4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

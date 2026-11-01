@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dietergraef",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dietergraef/library/DISCO_F746NG_USBDevice/0.0.0+sha.0a2eaa300982/DISCO_F746NG_USBDevice-0.0.0+sha.0a2eaa300982.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DISCO_F746NG_USBDevice-0.0.0+sha.0a2eaa300982.tar.gz",
+    "size_bytes": 35511,
+    "sha256": "84660db7a5e8398911eef8feb2f1f3f4573f18b2ac54f454cd2bff232ce92fdd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dietergraef/library/DISCO_F746NG_USBDevice/0.0.0%2Bsha.0a2eaa300982/DISCO_F746NG_USBDevice-0.0.0%2Bsha.0a2eaa300982.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dietergraef/library/DISCO_F746NG_USBDevice/0.0.0%2Bsha.0a2eaa300982/DISCO_F746NG_USBDevice-0.0.0%2Bsha.0a2eaa300982.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dietergraef/library/F7_Ethernet/0.0.0+sha.28ba13dd96f7/F7_Ethernet-0.0.0+sha.28ba13dd96f7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "F7_Ethernet-0.0.0+sha.28ba13dd96f7.tar.gz",
+    "size_bytes": 435629,
+    "sha256": "51425c34ac526a045772376e77efaa368fd0b39083f7f2d54be4114aa52f0fb6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dietergraef/library/F7_Ethernet/0.0.0%2Bsha.28ba13dd96f7/F7_Ethernet-0.0.0%2Bsha.28ba13dd96f7.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dietergraef/library/F7_Ethernet/0.0.0%2Bsha.28ba13dd96f7/F7_Ethernet-0.0.0%2Bsha.28ba13dd96f7.tar.gz"
+    ]
+   }
+  }
+ ]
+}

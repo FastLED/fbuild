@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/scheffield",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "scheffield/library/SiC45xDriver/0.9.0/SiC45xDriver-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SiC45xDriver-0.9.0.tar.gz",
+    "size_bytes": 11378416,
+    "sha256": "9df9c51ca15365639f2c466e398e91a4feda8bce41e44fb87dce0622b10863bd",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/scheffield/library/SiC45xDriver/0.9.0/SiC45xDriver-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/scheffield/library/SiC45xDriver/0.9.0/SiC45xDriver-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

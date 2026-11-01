@@ -1,0 +1,204 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-dreschpe",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-dreschpe/library/C12832_lcd/0.0.0+sha.8f86576007d6/C12832_lcd-0.0.0+sha.8f86576007d6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "C12832_lcd-0.0.0+sha.8f86576007d6.tar.gz",
+    "size_bytes": 11218,
+    "sha256": "5dfa570da36939503e5c008e4581aa32c6779ad299a3f6c7d083d85e34a8155a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreschpe/library/C12832_lcd/0.0.0%2Bsha.8f86576007d6/C12832_lcd-0.0.0%2Bsha.8f86576007d6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreschpe/library/C12832_lcd/0.0.0%2Bsha.8f86576007d6/C12832_lcd-0.0.0%2Bsha.8f86576007d6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dreschpe/library/EaEpaper/0.0.0+sha.1371614703cd/EaEpaper-0.0.0+sha.1371614703cd.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EaEpaper-0.0.0+sha.1371614703cd.tar.gz",
+    "size_bytes": 12473,
+    "sha256": "87d24a385cd8138a1fde9af84ef8c82c65b41cf147608871f9c148b8c982a38d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreschpe/library/EaEpaper/0.0.0%2Bsha.1371614703cd/EaEpaper-0.0.0%2Bsha.1371614703cd.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreschpe/library/EaEpaper/0.0.0%2Bsha.1371614703cd/EaEpaper-0.0.0%2Bsha.1371614703cd.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dreschpe/library/FT800/0.0.0+sha.3c631ce6fbb5/FT800-0.0.0+sha.3c631ce6fbb5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FT800-0.0.0+sha.3c631ce6fbb5.tar.gz",
+    "size_bytes": 12952,
+    "sha256": "ed368bcdf697b32099987ef7699627f418aa560315cbbf4bbb6340fbc681a1b4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreschpe/library/FT800/0.0.0%2Bsha.3c631ce6fbb5/FT800-0.0.0%2Bsha.3c631ce6fbb5.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreschpe/library/FT800/0.0.0%2Bsha.3c631ce6fbb5/FT800-0.0.0%2Bsha.3c631ce6fbb5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dreschpe/library/FT800_2/0.0.0+sha.16e22c789f7d/FT800_2-0.0.0+sha.16e22c789f7d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FT800_2-0.0.0+sha.16e22c789f7d.tar.gz",
+    "size_bytes": 14879,
+    "sha256": "07ff3d28f6ee7ff4343eac6d560bf0c4af70886a239ebf9e2fcf56a821f982b0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreschpe/library/FT800_2/0.0.0%2Bsha.16e22c789f7d/FT800_2-0.0.0%2Bsha.16e22c789f7d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreschpe/library/FT800_2/0.0.0%2Bsha.16e22c789f7d/FT800_2-0.0.0%2Bsha.16e22c789f7d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dreschpe/library/LCD_fonts/0.0.0+sha.d0b7d7bf1f56/LCD_fonts-0.0.0+sha.d0b7d7bf1f56.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LCD_fonts-0.0.0+sha.d0b7d7bf1f56.tar.gz",
+    "size_bytes": 8919,
+    "sha256": "37d3809b8458c12d3493861625a198d04be26ce805ad4626db46b481111d6442",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreschpe/library/LCD_fonts/0.0.0%2Bsha.d0b7d7bf1f56/LCD_fonts-0.0.0%2Bsha.d0b7d7bf1f56.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreschpe/library/LCD_fonts/0.0.0%2Bsha.d0b7d7bf1f56/LCD_fonts-0.0.0%2Bsha.d0b7d7bf1f56.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dreschpe/library/SPI_TFT/0.0.0+sha.52cbeede86f0/SPI_TFT-0.0.0+sha.52cbeede86f0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_TFT-0.0.0+sha.52cbeede86f0.tar.gz",
+    "size_bytes": 14881,
+    "sha256": "a4037929be2a04f3a3e0201a5317c1225e236a083638d0006a0534283da3c40a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreschpe/library/SPI_TFT/0.0.0%2Bsha.52cbeede86f0/SPI_TFT-0.0.0%2Bsha.52cbeede86f0.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreschpe/library/SPI_TFT/0.0.0%2Bsha.52cbeede86f0/SPI_TFT-0.0.0%2Bsha.52cbeede86f0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dreschpe/library/SPI_TFT_ILI9341/0.0.0+sha.b2b3e5430f81/SPI_TFT_ILI9341-0.0.0+sha.b2b3e5430f81.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_TFT_ILI9341-0.0.0+sha.b2b3e5430f81.tar.gz",
+    "size_bytes": 18756,
+    "sha256": "72919c11819b3b4497831e3583b3965d5813095f8e0d749ccee8ca5629f7ebac",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreschpe/library/SPI_TFT_ILI9341/0.0.0%2Bsha.b2b3e5430f81/SPI_TFT_ILI9341-0.0.0%2Bsha.b2b3e5430f81.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreschpe/library/SPI_TFT_ILI9341/0.0.0%2Bsha.b2b3e5430f81/SPI_TFT_ILI9341-0.0.0%2Bsha.b2b3e5430f81.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dreschpe/library/SPI_TFT_no_dma/0.0.0+sha.b2dd49f04d5d/SPI_TFT_no_dma-0.0.0+sha.b2dd49f04d5d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_TFT_no_dma-0.0.0+sha.b2dd49f04d5d.tar.gz",
+    "size_bytes": 13559,
+    "sha256": "2c2d4c396cb6158c5c3a7b3104cb6c4d33188454ed36c32eeb98a219e7e56228",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreschpe/library/SPI_TFT_no_dma/0.0.0%2Bsha.b2dd49f04d5d/SPI_TFT_no_dma-0.0.0%2Bsha.b2dd49f04d5d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreschpe/library/SPI_TFT_no_dma/0.0.0%2Bsha.b2dd49f04d5d/SPI_TFT_no_dma-0.0.0%2Bsha.b2dd49f04d5d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dreschpe/library/SPI_TFT_old/0.0.0+sha.d525819cb601/SPI_TFT_old-0.0.0+sha.d525819cb601.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SPI_TFT_old-0.0.0+sha.d525819cb601.tar.gz",
+    "size_bytes": 13584,
+    "sha256": "f22583a8f2163e9e0b6fa1ead4763ea0a34524036f43c7c613008fde11cc9726",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreschpe/library/SPI_TFT_old/0.0.0%2Bsha.d525819cb601/SPI_TFT_old-0.0.0%2Bsha.d525819cb601.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreschpe/library/SPI_TFT_old/0.0.0%2Bsha.d525819cb601/SPI_TFT_old-0.0.0%2Bsha.d525819cb601.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dreschpe/library/ST_401_84MHZ/0.0.0+sha.b9343c8b85ec/ST_401_84MHZ-0.0.0+sha.b9343c8b85ec.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST_401_84MHZ-0.0.0+sha.b9343c8b85ec.tar.gz",
+    "size_bytes": 2342,
+    "sha256": "a9456328d85784b4e0bb73aab12c3a546b9026c069639fdcf744f957c1b47daa",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreschpe/library/ST_401_84MHZ/0.0.0%2Bsha.b9343c8b85ec/ST_401_84MHZ-0.0.0%2Bsha.b9343c8b85ec.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreschpe/library/ST_401_84MHZ/0.0.0%2Bsha.b9343c8b85ec/ST_401_84MHZ-0.0.0%2Bsha.b9343c8b85ec.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dreschpe/library/ST_L152_32MHZ/0.0.0+sha.1e82f1f333ad/ST_L152_32MHZ-0.0.0+sha.1e82f1f333ad.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ST_L152_32MHZ-0.0.0+sha.1e82f1f333ad.tar.gz",
+    "size_bytes": 2409,
+    "sha256": "118440596b7010702e68bfcf5526af369aac413eadeeb7f44951da61a378775e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreschpe/library/ST_L152_32MHZ/0.0.0%2Bsha.1e82f1f333ad/ST_L152_32MHZ-0.0.0%2Bsha.1e82f1f333ad.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreschpe/library/ST_L152_32MHZ/0.0.0%2Bsha.1e82f1f333ad/ST_L152_32MHZ-0.0.0%2Bsha.1e82f1f333ad.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dreschpe/library/TFT_fonts/0.0.0+sha.76774250fcec/TFT_fonts-0.0.0+sha.76774250fcec.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_fonts-0.0.0+sha.76774250fcec.tar.gz",
+    "size_bytes": 14031,
+    "sha256": "80cd6e08d3bda078453bca6e611c2234b4144471f10144d51bf41d2f8b426e36",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreschpe/library/TFT_fonts/0.0.0%2Bsha.76774250fcec/TFT_fonts-0.0.0%2Bsha.76774250fcec.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreschpe/library/TFT_fonts/0.0.0%2Bsha.76774250fcec/TFT_fonts-0.0.0%2Bsha.76774250fcec.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dreschpe/library/TFT_fonts_old/0.0.0+sha.31ce4466ecdf/TFT_fonts_old-0.0.0+sha.31ce4466ecdf.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TFT_fonts_old-0.0.0+sha.31ce4466ecdf.tar.gz",
+    "size_bytes": 13903,
+    "sha256": "1ec7ce65071dd2b0104e497428d1e28d7c19ecf5ff4e2d91c252a9d3a6703d1f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreschpe/library/TFT_fonts_old/0.0.0%2Bsha.31ce4466ecdf/TFT_fonts_old-0.0.0%2Bsha.31ce4466ecdf.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreschpe/library/TFT_fonts_old/0.0.0%2Bsha.31ce4466ecdf/TFT_fonts_old-0.0.0%2Bsha.31ce4466ecdf.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dreschpe/library/Touch_tft/0.0.0+sha.ef7972c29c0e/Touch_tft-0.0.0+sha.ef7972c29c0e.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Touch_tft-0.0.0+sha.ef7972c29c0e.tar.gz",
+    "size_bytes": 3502,
+    "sha256": "181670f264f3979031c1cc767503a39db6f14661a812908ab5708905b0fbd786",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreschpe/library/Touch_tft/0.0.0%2Bsha.ef7972c29c0e/Touch_tft-0.0.0%2Bsha.ef7972c29c0e.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreschpe/library/Touch_tft/0.0.0%2Bsha.ef7972c29c0e/Touch_tft-0.0.0%2Bsha.ef7972c29c0e.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-dreschpe/library/beep/0.0.0+sha.d8e14429a95f/beep-0.0.0+sha.d8e14429a95f.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "beep-0.0.0+sha.d8e14429a95f.tar.gz",
+    "size_bytes": 1679,
+    "sha256": "296443d676a2f76f447c7b480050b1c55a620913b2aa09b6e598bcb0a7c49842",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-dreschpe/library/beep/0.0.0%2Bsha.d8e14429a95f/beep-0.0.0%2Bsha.d8e14429a95f.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-dreschpe/library/beep/0.0.0%2Bsha.d8e14429a95f/beep-0.0.0%2Bsha.d8e14429a95f.tar.gz"
+    ]
+   }
+  }
+ ]
+}

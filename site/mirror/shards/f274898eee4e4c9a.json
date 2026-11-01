@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/sam4uk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "sam4uk/library/Filter%20Easy/0.1/FilterEasy-0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FilterEasy-0.1.tar.gz",
+    "size_bytes": 2502,
+    "sha256": "1b8e734d8d50cddbe271e0d1336df794b245185b5c1e93039aec4af0e986f036",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam4uk/library/Filter%2520Easy/0.1/FilterEasy-0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sam4uk/library/Filter%20Easy/0.1/FilterEasy-0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam4uk/library/NanitLib/1.5.0/NanitLib-1.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NanitLib-1.5.0.tar.gz",
+    "size_bytes": 427874,
+    "sha256": "350c6572718d02923ed45db655fdf8f08d50a4e5f1f56680a6c7f2a82d0d767a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam4uk/library/NanitLib/1.5.0/NanitLib-1.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sam4uk/library/NanitLib/1.5.0/NanitLib-1.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam4uk/library/NanitLib/1.5.1/NanitLib-1.5.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NanitLib-1.5.1.tar.gz",
+    "size_bytes": 421698,
+    "sha256": "13f5892fa8243b89d7f92b7152fe7f2609c1b36353b51fabc8580788fdb385b2",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam4uk/library/NanitLib/1.5.1/NanitLib-1.5.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sam4uk/library/NanitLib/1.5.1/NanitLib-1.5.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam4uk/library/NanitLib/1.5.2/NanitLib-1.5.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NanitLib-1.5.2.tar.gz",
+    "size_bytes": 421721,
+    "sha256": "cf0895c62c6974b1048d39a9c2647c7f75ceecc34dde1f44bece8b3c83c6030d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam4uk/library/NanitLib/1.5.2/NanitLib-1.5.2.tar.gz",
+     "https://dl.registry.platformio.org/download/sam4uk/library/NanitLib/1.5.2/NanitLib-1.5.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam4uk/library/Password/1.2.1/Password-1.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Password-1.2.1.tar.gz",
+    "size_bytes": 3832,
+    "sha256": "ed18a28aedc53af0322e1e65f3142832f49f4bfed3060c1b365979416c9e7d56",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam4uk/library/Password/1.2.1/Password-1.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sam4uk/library/Password/1.2.1/Password-1.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam4uk/library/RC.Easy/0.0.1/RC.Easy-0.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RC.Easy-0.0.1.tar.gz",
+    "size_bytes": 4118,
+    "sha256": "724292155b7e3abc6a12a1603f0cb9acda2bcbfedbe227a479145ba9e7c7d018",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam4uk/library/RC.Easy/0.0.1/RC.Easy-0.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/sam4uk/library/RC.Easy/0.0.1/RC.Easy-0.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam4uk/library/Terminal.Easy/0.0.0/Terminal.Easy-0.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Terminal.Easy-0.0.0.tar.gz",
+    "size_bytes": 2289,
+    "sha256": "255355bbc9972f6f49aa1e97305db794184e580b26b676840f9cd2d7b42dc923",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam4uk/library/Terminal.Easy/0.0.0/Terminal.Easy-0.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/sam4uk/library/Terminal.Easy/0.0.0/Terminal.Easy-0.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam4uk/library/Tools.Easy/0.1.4/Tools.Easy-0.1.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Tools.Easy-0.1.4.tar.gz",
+    "size_bytes": 2217,
+    "sha256": "2a5aef98005572ed83f148cc2e0510504a644f3ab6d6392fb2962bd74b2e1949",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam4uk/library/Tools.Easy/0.1.4/Tools.Easy-0.1.4.tar.gz",
+     "https://dl.registry.platformio.org/download/sam4uk/library/Tools.Easy/0.1.4/Tools.Easy-0.1.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "sam4uk/library/WD%20Easy/1.0.3/WDEasy-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WDEasy-1.0.3.tar.gz",
+    "size_bytes": 4366,
+    "sha256": "4d34126d3e3f904e5bfd3245aff5210acc2df792fb98b3aaa490eee96ba798d0",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/sam4uk/library/WD%2520Easy/1.0.3/WDEasy-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/sam4uk/library/WD%20Easy/1.0.3/WDEasy-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

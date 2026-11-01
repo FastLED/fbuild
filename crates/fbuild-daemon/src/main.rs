@@ -464,6 +464,11 @@ async fn main() {
             let mut daemon_empty_since: Option<std::time::Instant> = None;
             let mut last_lock_cleanup = std::time::Instant::now();
             let mut last_serial_reclaim = std::time::Instant::now();
+            // Resident memory is sampled on this tick, not per request, so the
+            // status file carries a trend even after the daemon wedges and
+            // stops answering `/health` (FastLED/fbuild#1785).
+            let memory_sample_interval = std::time::Duration::from_secs(10);
+            let mut last_memory_sample = std::time::Instant::now();
             // Periodic reminder of why the daemon is staying alive, so
             // users can see the blocker rather than thinking self-eviction
             // is broken. See FastLED/fbuild#51.
@@ -536,6 +541,11 @@ async fn main() {
                 if last_serial_reclaim.elapsed() >= DEAD_CLIENT_SERIAL_RECLAIM_INTERVAL {
                     last_serial_reclaim = std::time::Instant::now();
                     fbuild_daemon::handlers::locks::reclaim_dead_client_serial_sessions(&ctx).await;
+                }
+
+                if last_memory_sample.elapsed() >= memory_sample_interval {
+                    last_memory_sample = std::time::Instant::now();
+                    ctx.status_manager.refresh_memory();
                 }
 
                 if last_lock_cleanup.elapsed() >= STALE_LOCK_CHECK_INTERVAL {

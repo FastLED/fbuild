@@ -1,0 +1,87 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/pierrejay",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "pierrejay/library/AD7441XR/1.0.1/AD7441XR-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AD7441XR-1.0.1.tar.gz",
+    "size_bytes": 21875,
+    "sha256": "3a29b00c51056ff7c8a4f5d47575891b20962475fac427ce1959388ab3eb13c9",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierrejay/library/AD7441XR/1.0.1/AD7441XR-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/pierrejay/library/AD7441XR/1.0.1/AD7441XR-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierrejay/library/EZModbus/1.1.5/EZModbus-1.1.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EZModbus-1.1.5.tar.gz",
+    "size_bytes": 74555,
+    "sha256": "43d204ba7f84b184de49bfa2ec552526b6adce3df3735ba1702f4fe4c0dc25cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierrejay/library/EZModbus/1.1.5/EZModbus-1.1.5.tar.gz",
+     "https://dl.registry.platformio.org/download/pierrejay/library/EZModbus/1.1.5/EZModbus-1.1.5.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierrejay/library/EZModbus/1.1.7/EZModbus-1.1.7.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EZModbus-1.1.7.tar.gz",
+    "size_bytes": 85777,
+    "sha256": "b45b7186a4f16a66d29c106e4e284d5cf17a2e58ee9d422b1488c35c06b1afb5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierrejay/library/EZModbus/1.1.7/EZModbus-1.1.7.tar.gz",
+     "https://dl.registry.platformio.org/download/pierrejay/library/EZModbus/1.1.7/EZModbus-1.1.7.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierrejay/library/EZModbus/1.1.8/EZModbus-1.1.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EZModbus-1.1.8.tar.gz",
+    "size_bytes": 88277,
+    "sha256": "8e236f24dbed120d60a62fef969f47398ab18844fe035bb058535b124dc1df85",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierrejay/library/EZModbus/1.1.8/EZModbus-1.1.8.tar.gz",
+     "https://dl.registry.platformio.org/download/pierrejay/library/EZModbus/1.1.8/EZModbus-1.1.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierrejay/library/EZModbus/1.1.9/EZModbus-1.1.9.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EZModbus-1.1.9.tar.gz",
+    "size_bytes": 87213,
+    "sha256": "331d7b412db96f9092aaa5d09d4e9fd9b33dacf3fb0a8d6fb1f9fc5835d307f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierrejay/library/EZModbus/1.1.9/EZModbus-1.1.9.tar.gz",
+     "https://dl.registry.platformio.org/download/pierrejay/library/EZModbus/1.1.9/EZModbus-1.1.9.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "pierrejay/library/EZModbus/1.2.0/EZModbus-1.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "EZModbus-1.2.0.tar.gz",
+    "size_bytes": 96466,
+    "sha256": "952885a95bcd0c9baedef4f83bcaea32ab11db98b1e02754608567c815aee19e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/pierrejay/library/EZModbus/1.2.0/EZModbus-1.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/pierrejay/library/EZModbus/1.2.0/EZModbus-1.2.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

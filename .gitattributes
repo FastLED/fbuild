@@ -1,0 +1,3 @@
+# Pages-served mirror documents are hashed byte-for-byte (shard sha256 in
+# manifest.json); never let checkout convert their line endings.
+site/mirror/** -text

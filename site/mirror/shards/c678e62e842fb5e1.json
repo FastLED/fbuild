@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/hootrhino",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "hootrhino/library/MOTY-Mini%20Temperature%20Sensor/1.0.0/MOTY-MiniTemperatureSensor-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "MOTY-MiniTemperatureSensor-1.0.0.tar.gz",
+    "size_bytes": 2124,
+    "sha256": "028553c52d80bf11d24d23eaa1c6a6b19d5c56104dc996482593b0a66b8a9e13",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/hootrhino/library/MOTY-Mini%2520Temperature%2520Sensor/1.0.0/MOTY-MiniTemperatureSensor-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/hootrhino/library/MOTY-Mini%20Temperature%20Sensor/1.0.0/MOTY-MiniTemperatureSensor-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

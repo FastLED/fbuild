@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/plefunga",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "plefunga/library/AstroCalcs/1.0.0/AstroCalcs-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AstroCalcs-1.0.0.tar.gz",
+    "size_bytes": 18484,
+    "sha256": "1ada27fb0ba8ce36d9446d64314fe6d806cbadcf634e1a010ee503ec4b263c27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/plefunga/library/AstroCalcs/1.0.0/AstroCalcs-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/plefunga/library/AstroCalcs/1.0.0/AstroCalcs-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

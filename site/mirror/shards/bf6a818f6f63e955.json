@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/redbearlab",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "redbearlab/library/RBL_nRF8001/1.0.0/RBL_nRF8001-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RBL_nRF8001-1.0.0.tar.gz",
+    "size_bytes": 40082,
+    "sha256": "abc624bdc6aa53b560634eed0b8e0260416af45fa1ebc4ca8fdc2363bc08a825",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/redbearlab/library/RBL_nRF8001/1.0.0/RBL_nRF8001-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/redbearlab/library/RBL_nRF8001/1.0.0/RBL_nRF8001-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

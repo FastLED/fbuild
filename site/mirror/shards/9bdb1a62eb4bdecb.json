@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-defrost",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-defrost/library/messages/0.0.0+sha.6821aa3ca776/messages-0.0.0+sha.6821aa3ca776.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "messages-0.0.0+sha.6821aa3ca776.tar.gz",
+    "size_bytes": 2266,
+    "sha256": "b5891c5f9d534aeaa0dd59256c99d6436dc3c0c2f7164116caa0397b233484e8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-defrost/library/messages/0.0.0%2Bsha.6821aa3ca776/messages-0.0.0%2Bsha.6821aa3ca776.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-defrost/library/messages/0.0.0%2Bsha.6821aa3ca776/messages-0.0.0%2Bsha.6821aa3ca776.tar.gz"
+    ]
+   }
+  }
+ ]
+}

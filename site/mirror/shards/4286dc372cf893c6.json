@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-danielmckinnell",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-danielmckinnell/library/Modbus-Slave/0.0.0+sha.7621103c5a40/Modbus-Slave-0.0.0+sha.7621103c5a40.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modbus-Slave-0.0.0+sha.7621103c5a40.tar.gz",
+    "size_bytes": 22563,
+    "sha256": "b32c1f4405e276f3f28804900e53ac3bf8db2e6df2d451e931ba732b7d043b72",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-danielmckinnell/library/Modbus-Slave/0.0.0%2Bsha.7621103c5a40/Modbus-Slave-0.0.0%2Bsha.7621103c5a40.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-danielmckinnell/library/Modbus-Slave/0.0.0%2Bsha.7621103c5a40/Modbus-Slave-0.0.0%2Bsha.7621103c5a40.tar.gz"
+    ]
+   }
+  }
+ ]
+}

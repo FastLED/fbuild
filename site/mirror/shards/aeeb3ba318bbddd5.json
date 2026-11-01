@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sknn",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sknn/library/Adafruit_LEDBackpack/0.0.0+sha.caaae61819a4/Adafruit_LEDBackpack-0.0.0+sha.caaae61819a4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Adafruit_LEDBackpack-0.0.0+sha.caaae61819a4.tar.gz",
+    "size_bytes": 7621,
+    "sha256": "27a37fbfb8381372941d450223a89cf621efe61e988e360e45e13d23c8b152b7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sknn/library/Adafruit_LEDBackpack/0.0.0%2Bsha.caaae61819a4/Adafruit_LEDBackpack-0.0.0%2Bsha.caaae61819a4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sknn/library/Adafruit_LEDBackpack/0.0.0%2Bsha.caaae61819a4/Adafruit_LEDBackpack-0.0.0%2Bsha.caaae61819a4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

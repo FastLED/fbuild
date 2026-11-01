@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/blueskybv",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "blueskybv/library/Easy_Web_Remote_Control/1.1.0/Easy_Web_Remote_Control-1.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Easy_Web_Remote_Control-1.1.0.tar.gz",
+    "size_bytes": 8003,
+    "sha256": "0ce93685804d8bf45e2d2982345b51f06c4e057a8199979e673f04c2d018c6ee",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blueskybv/library/Easy_Web_Remote_Control/1.1.0/Easy_Web_Remote_Control-1.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blueskybv/library/Easy_Web_Remote_Control/1.1.0/Easy_Web_Remote_Control-1.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blueskybv/library/Easy_Web_Remote_Control/3.0.0/Easy_Web_Remote_Control-3.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Easy_Web_Remote_Control-3.0.0.tar.gz",
+    "size_bytes": 14224,
+    "sha256": "38cf47b11dc5f4766a45b2f362dd5b4940a71088730f632e8ffdaddd8aedfe69",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blueskybv/library/Easy_Web_Remote_Control/3.0.0/Easy_Web_Remote_Control-3.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/blueskybv/library/Easy_Web_Remote_Control/3.0.0/Easy_Web_Remote_Control-3.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "blueskybv/library/Easy_Web_Remote_Control/3.0.1/Easy_Web_Remote_Control-3.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Easy_Web_Remote_Control-3.0.1.tar.gz",
+    "size_bytes": 19465,
+    "sha256": "ccf150ef821325f23f38bcf4a08f86fa68a7dd76a48958cc19fe8dac5edf72f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/blueskybv/library/Easy_Web_Remote_Control/3.0.1/Easy_Web_Remote_Control-3.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/blueskybv/library/Easy_Web_Remote_Control/3.0.1/Easy_Web_Remote_Control-3.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-pclary",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-pclary/library/Motor/0.0.0+sha.0d650a332dcc/Motor-0.0.0+sha.0d650a332dcc.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Motor-0.0.0+sha.0d650a332dcc.tar.gz",
+    "size_bytes": 1008,
+    "sha256": "7388d10cf9276cf4022143772184788e0629618d7611beb1d96eebdb9f31ff50",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pclary/library/Motor/0.0.0%2Bsha.0d650a332dcc/Motor-0.0.0%2Bsha.0d650a332dcc.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pclary/library/Motor/0.0.0%2Bsha.0d650a332dcc/Motor-0.0.0%2Bsha.0d650a332dcc.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-pclary/library/Radio/0.0.0+sha.7953b5fa8aae/Radio-0.0.0+sha.7953b5fa8aae.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Radio-0.0.0+sha.7953b5fa8aae.tar.gz",
+    "size_bytes": 3371,
+    "sha256": "357adef58af0c7e3c64214ff8f01247eb73643f7735c850c6728e7132faa3f3e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-pclary/library/Radio/0.0.0%2Bsha.7953b5fa8aae/Radio-0.0.0%2Bsha.7953b5fa8aae.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-pclary/library/Radio/0.0.0%2Bsha.7953b5fa8aae/Radio-0.0.0%2Bsha.7953b5fa8aae.tar.gz"
+    ]
+   }
+  }
+ ]
+}

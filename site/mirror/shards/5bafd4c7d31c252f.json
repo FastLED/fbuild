@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/grfreire",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "grfreire/library/FakePWM/1.0.0/FakePWM-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "FakePWM-1.0.0.tar.gz",
+    "size_bytes": 2211,
+    "sha256": "963de9d0c68b36c0adcb57258f33dd26e16406d648de94fd70b37223b070603d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/grfreire/library/FakePWM/1.0.0/FakePWM-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/grfreire/library/FakePWM/1.0.0/FakePWM-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

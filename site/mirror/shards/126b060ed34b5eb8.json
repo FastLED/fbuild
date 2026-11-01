@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/heety313",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "heety313/library/ironlog-esp32-pio/0.2.6/ironlog-esp32-pio-0.2.6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ironlog-esp32-pio-0.2.6.tar.gz",
+    "size_bytes": 3401,
+    "sha256": "062f09cb0e7bb85bdac85e5ef1ac3c8d7edafbe26f2986241f7afbdadff1ffde",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/heety313/library/ironlog-esp32-pio/0.2.6/ironlog-esp32-pio-0.2.6.tar.gz",
+     "https://dl.registry.platformio.org/download/heety313/library/ironlog-esp32-pio/0.2.6/ironlog-esp32-pio-0.2.6.tar.gz"
+    ]
+   }
+  }
+ ]
+}

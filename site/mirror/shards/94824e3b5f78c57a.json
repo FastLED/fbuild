@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/efwob",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "efwob/library/ESPPubSubClientWrapper/1.0.2/ESPPubSubClientWrapper-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "ESPPubSubClientWrapper-1.0.2.tar.gz",
+    "size_bytes": 11274,
+    "sha256": "69fcda6203e130f5b2ed70c6cab508d961b33f9720cbc8bc71d5b0dbc701e3ef",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/efwob/library/ESPPubSubClientWrapper/1.0.2/ESPPubSubClientWrapper-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/efwob/library/ESPPubSubClientWrapper/1.0.2/ESPPubSubClientWrapper-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

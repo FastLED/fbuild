@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/nmaitland",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "nmaitland/library/esp32-I2Cbus/0.0.0+20221221120300/esp32-I2Cbus-0.0.0+20221221120300.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "esp32-I2Cbus-0.0.0+20221221120300.tar.gz",
+    "size_bytes": 6531,
+    "sha256": "75a7d247fd8844cd067be8cabb4d22aa8b99b80f107c632898fe2a62257be733",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/nmaitland/library/esp32-I2Cbus/0.0.0%2B20221221120300/esp32-I2Cbus-0.0.0%2B20221221120300.tar.gz",
+     "https://dl.registry.platformio.org/download/nmaitland/library/esp32-I2Cbus/0.0.0%2B20221221120300/esp32-I2Cbus-0.0.0%2B20221221120300.tar.gz"
+    ]
+   }
+  }
+ ]
+}

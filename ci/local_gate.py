@@ -239,7 +239,7 @@ def run_ubuntu(sha: str) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--lane", choices=("linux-minimal", "dylint"))
+    parser.add_argument("--lane", choices=("linux-minimal", "dylint", "lint"))
     lane = parser.parse_args().lane
     if (
         output(["git", "symbolic-ref", "refs/remotes/origin/HEAD"]).strip()
@@ -263,7 +263,9 @@ def main() -> None:
             "ci.test_shared_replay",
             "ci.test_local_gate",
             "ci.test_local_dylint_gate",
+            "ci.test_local_lint_gate",
             "ci.test_fractional_workflows",
+            "ci.test_publish_quota",
             "ci.test_test_cache_status",
         ],
         cwd=ROOT,
@@ -297,6 +299,13 @@ def main() -> None:
 
     if lane in (None, "dylint"):
         run_dylint(ROOT, sha)
+    from ci.local_lint_gate import run_lint
+
+    # Opt-in for now: the cold run is expensive, and GATE-007's cache key only
+    # skips a byte-identical tree. Promote to `lane in (None, "lint")` once a
+    # warm run is measured at <= max(30 s, 10% of cold) per fleet policy RUST-033.
+    if lane == "lint":
+        run_lint()
     if (
         output(["git", "rev-parse", "HEAD"]).strip() != sha
         or output(["git", "status", "--porcelain", "--untracked-files=normal"]).strip()

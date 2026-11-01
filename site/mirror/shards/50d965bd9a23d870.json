@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-christilut",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-christilut/library/nRF24L01P/0.0.0+sha.054a50936ab6/nRF24L01P-0.0.0+sha.054a50936ab6.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF24L01P-0.0.0+sha.054a50936ab6.tar.gz",
+    "size_bytes": 7469,
+    "sha256": "9ee90f602927ce5ef85647ad1e3dd1dfc61c99b5855801096b5a8ff58e718b88",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-christilut/library/nRF24L01P/0.0.0%2Bsha.054a50936ab6/nRF24L01P-0.0.0%2Bsha.054a50936ab6.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-christilut/library/nRF24L01P/0.0.0%2Bsha.054a50936ab6/nRF24L01P-0.0.0%2Bsha.054a50936ab6.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-christilut/library/nRF24L01P_Maniacbug/0.0.0+sha.56b693b59e16/nRF24L01P_Maniacbug-0.0.0+sha.56b693b59e16.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "nRF24L01P_Maniacbug-0.0.0+sha.56b693b59e16.tar.gz",
+    "size_bytes": 13877,
+    "sha256": "0b9908452b46375b606513319b076ad15dc469c2a78754742be744db30f55961",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-christilut/library/nRF24L01P_Maniacbug/0.0.0%2Bsha.56b693b59e16/nRF24L01P_Maniacbug-0.0.0%2Bsha.56b693b59e16.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-christilut/library/nRF24L01P_Maniacbug/0.0.0%2Bsha.56b693b59e16/nRF24L01P_Maniacbug-0.0.0%2Bsha.56b693b59e16.tar.gz"
+    ]
+   }
+  }
+ ]
+}

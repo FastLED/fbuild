@@ -1,0 +1,35 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/iqrfsdk",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "iqrfsdk/library/IQRF%20SPI/1.2.3/IQRFSPI-1.2.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "IQRFSPI-1.2.3.tar.gz",
+    "size_bytes": 19177,
+    "sha256": "69162374c9da3e875a4930d545aba4dd8deef7d25768fca3f70dfe9659bf811c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iqrfsdk/library/IQRF%2520SPI/1.2.3/IQRFSPI-1.2.3.tar.gz",
+     "https://dl.registry.platformio.org/download/iqrfsdk/library/IQRF%20SPI/1.2.3/IQRFSPI-1.2.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "iqrfsdk/library/cLibDPA-MCU/1.6.0/cLibDPA-MCU-1.6.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "cLibDPA-MCU-1.6.0.tar.gz",
+    "size_bytes": 835295,
+    "sha256": "7f6f741a5ce285af28194eb6e53f70a7e39aac2c089b43610a61d3342301cb4f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/iqrfsdk/library/cLibDPA-MCU/1.6.0/cLibDPA-MCU-1.6.0.tar.gz",
+     "https://dl.registry.platformio.org/download/iqrfsdk/library/cLibDPA-MCU/1.6.0/cLibDPA-MCU-1.6.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

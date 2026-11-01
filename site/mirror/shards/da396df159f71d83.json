@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-rohit99",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-rohit99/library/Bluetooth-Controlled-Semi-automatic-Car/0.0.0+sha.c37818d82347/Bluetooth-Controlled-Semi-automatic-Car-0.0.0+sha.c37818d82347.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Bluetooth-Controlled-Semi-automatic-Car-0.0.0+sha.c37818d82347.tar.gz",
+    "size_bytes": 2038,
+    "sha256": "d0851854c1aa9041d763e8ea91ff4f018dd36d938835d5ee06165fb4c3cc5329",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-rohit99/library/Bluetooth-Controlled-Semi-automatic-Car/0.0.0%2Bsha.c37818d82347/Bluetooth-Controlled-Semi-automatic-Car-0.0.0%2Bsha.c37818d82347.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-rohit99/library/Bluetooth-Controlled-Semi-automatic-Car/0.0.0%2Bsha.c37818d82347/Bluetooth-Controlled-Semi-automatic-Car-0.0.0%2Bsha.c37818d82347.tar.gz"
+    ]
+   }
+  }
+ ]
+}

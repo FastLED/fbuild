@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/armtronix",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "armtronix/library/LoRa_STM32/0.3.0/LoRa_STM32-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoRa_STM32-0.3.0.tar.gz",
+    "size_bytes": 11949,
+    "sha256": "49e97831191a3986e89472d4473ae0dc727befbafb1ad6e2811739e5fe5dc12a",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/armtronix/library/LoRa_STM32/0.3.0/LoRa_STM32-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/armtronix/library/LoRa_STM32/0.3.0/LoRa_STM32-0.3.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/argeorun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "argeorun/library/BACnetMSTP/1.0.1/BACnetMSTP-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BACnetMSTP-1.0.1.tar.gz",
+    "size_bytes": 956469,
+    "sha256": "065b025cb439c1ac2f694dfae930d90daa558e81268f6a7417f6258770a3bc8d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/argeorun/library/BACnetMSTP/1.0.1/BACnetMSTP-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/argeorun/library/BACnetMSTP/1.0.1/BACnetMSTP-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "argeorun/library/BACnetMSTP/1.0.4/BACnetMSTP-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BACnetMSTP-1.0.4.tar.gz",
+    "size_bytes": 964431,
+    "sha256": "1db1f6fff9d95b1654bf9ea0c2a3d7fda4465f95708271fe8aed360f502310ed",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/argeorun/library/BACnetMSTP/1.0.4/BACnetMSTP-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/argeorun/library/BACnetMSTP/1.0.4/BACnetMSTP-1.0.4.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "argeorun/library/BACnetMSTP/2.0.0/BACnetMSTP-2.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "BACnetMSTP-2.0.0.tar.gz",
+    "size_bytes": 956663,
+    "sha256": "ffa56137e59ff80164ab3bac97a96987736bb5ea91e4b579ea126b6eeb3cba1c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/argeorun/library/BACnetMSTP/2.0.0/BACnetMSTP-2.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/argeorun/library/BACnetMSTP/2.0.0/BACnetMSTP-2.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "argeorun/library/Modbus-SerialDevice-ArduinoLib/1.0.1/Modbus-SerialDevice-ArduinoLib-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Modbus-SerialDevice-ArduinoLib-1.0.1.tar.gz",
+    "size_bytes": 19953,
+    "sha256": "21e1ee5780d2a0c5d0557a600a3c2b33aaf11f4be2ac540413d8980e7df2c289",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/argeorun/library/Modbus-SerialDevice-ArduinoLib/1.0.1/Modbus-SerialDevice-ArduinoLib-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/argeorun/library/Modbus-SerialDevice-ArduinoLib/1.0.1/Modbus-SerialDevice-ArduinoLib-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

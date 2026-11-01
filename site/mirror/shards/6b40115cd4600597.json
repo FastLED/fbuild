@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/palatis",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "palatis/library/arduino-softpwm/1.0.1/arduino-softpwm-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "arduino-softpwm-1.0.1.tar.gz",
+    "size_bytes": 6523,
+    "sha256": "1b491742c7c4845d084af21531ac28c07e947f7cc18804c9105d0fe539eb56f5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/palatis/library/arduino-softpwm/1.0.1/arduino-softpwm-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/palatis/library/arduino-softpwm/1.0.1/arduino-softpwm-1.0.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

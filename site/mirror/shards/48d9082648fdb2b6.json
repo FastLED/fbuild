@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/arekushi",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "arekushi/library/Finite-State-Machine-Arduino/1.0.5/Finite-State-Machine-Arduino-1.0.5.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Finite-State-Machine-Arduino-1.0.5.tar.gz",
+    "size_bytes": 6819,
+    "sha256": "f49cb7b1a14d40bb87386d42e04f2bbb3d30400309b80aa7aa9c5ce4def3d923",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/arekushi/library/Finite-State-Machine-Arduino/1.0.5/Finite-State-Machine-Arduino-1.0.5.tar.gz",
+     "https://dl.registry.platformio.org/download/arekushi/library/Finite-State-Machine-Arduino/1.0.5/Finite-State-Machine-Arduino-1.0.5.tar.gz"
+    ]
+   }
+  }
+ ]
+}

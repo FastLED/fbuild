@@ -1,0 +1,61 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/abinsaji2008",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "abinsaji2008/library/GroqAudioStream/1.3.0/GroqAudioStream-1.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroqAudioStream-1.3.0.tar.gz",
+    "size_bytes": 7189,
+    "sha256": "3b91c823b648c54072bb2434a419653a635124b6a133de8052e11bd35efd8c9c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abinsaji2008/library/GroqAudioStream/1.3.0/GroqAudioStream-1.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/abinsaji2008/library/GroqAudioStream/1.3.0/GroqAudioStream-1.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abinsaji2008/library/GroqAudioStream/1.3.1/GroqAudioStream-1.3.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroqAudioStream-1.3.1.tar.gz",
+    "size_bytes": 8045,
+    "sha256": "bbdb7c67e182167dd13b456c6d7d107b8f58e78b50184525f4fc8fa28dee6f47",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abinsaji2008/library/GroqAudioStream/1.3.1/GroqAudioStream-1.3.1.tar.gz",
+     "https://dl.registry.platformio.org/download/abinsaji2008/library/GroqAudioStream/1.3.1/GroqAudioStream-1.3.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abinsaji2008/library/GroqReasoning/1.4.8/GroqReasoning-1.4.8.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "GroqReasoning-1.4.8.tar.gz",
+    "size_bytes": 22972,
+    "sha256": "b067c25c1bfe107110a6a044ee64e7d6a4efb0bcc4ce9be3b06ec41cd41731f8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abinsaji2008/library/GroqReasoning/1.4.8/GroqReasoning-1.4.8.tar.gz",
+     "https://dl.registry.platformio.org/download/abinsaji2008/library/GroqReasoning/1.4.8/GroqReasoning-1.4.8.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "abinsaji2008/library/WakeNet9Simplifier/2.2.1/WakeNet9Simplifier-2.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "WakeNet9Simplifier-2.2.1.tar.gz",
+    "size_bytes": 4004,
+    "sha256": "1c90d9e40e1c31ea92c793cf56daa9533897ee7af34a9bb8a6871b555a306b27",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/abinsaji2008/library/WakeNet9Simplifier/2.2.1/WakeNet9Simplifier-2.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/abinsaji2008/library/WakeNet9Simplifier/2.2.1/WakeNet9Simplifier-2.2.1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shiliu-yang",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shiliu-yang/library/SimpleLed/1.0.2/SimpleLed-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "SimpleLed-1.0.2.tar.gz",
+    "size_bytes": 4143,
+    "sha256": "f2bc3aa1df00506d80fc7c541af60a92bae6878f80bb04dae557c94927878a5f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shiliu-yang/library/SimpleLed/1.0.2/SimpleLed-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/shiliu-yang/library/SimpleLed/1.0.2/SimpleLed-1.0.2.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mussacharles60",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mussacharles60/library/StepperShiftRegister74HC595/1.0.0/StepperShiftRegister74HC595-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperShiftRegister74HC595-1.0.0.tar.gz",
+    "size_bytes": 5578,
+    "sha256": "5ffdf0fa8871a7672c7de497f211a45cb631d8277c9a6134f4d082086f98d0cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mussacharles60/library/StepperShiftRegister74HC595/1.0.0/StepperShiftRegister74HC595-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/mussacharles60/library/StepperShiftRegister74HC595/1.0.0/StepperShiftRegister74HC595-1.0.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mussacharles60/library/StepperShiftRegister74HC595/1.0.1/StepperShiftRegister74HC595-1.0.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperShiftRegister74HC595-1.0.1.tar.gz",
+    "size_bytes": 5574,
+    "sha256": "75842f753df14f06cba79e6f126c70a4d03af2d07bfcc34e94128cdf3051b5c1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mussacharles60/library/StepperShiftRegister74HC595/1.0.1/StepperShiftRegister74HC595-1.0.1.tar.gz",
+     "https://dl.registry.platformio.org/download/mussacharles60/library/StepperShiftRegister74HC595/1.0.1/StepperShiftRegister74HC595-1.0.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mussacharles60/library/StepperShiftRegister74HC595/1.0.2/StepperShiftRegister74HC595-1.0.2.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperShiftRegister74HC595-1.0.2.tar.gz",
+    "size_bytes": 7384,
+    "sha256": "c910c8c036ffec46ebdd404c491b2806697b584ad4019747ecff3b885e694a17",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mussacharles60/library/StepperShiftRegister74HC595/1.0.2/StepperShiftRegister74HC595-1.0.2.tar.gz",
+     "https://dl.registry.platformio.org/download/mussacharles60/library/StepperShiftRegister74HC595/1.0.2/StepperShiftRegister74HC595-1.0.2.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mussacharles60/library/StepperShiftRegister74HC595/1.0.3/StepperShiftRegister74HC595-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperShiftRegister74HC595-1.0.3.tar.gz",
+    "size_bytes": 7540,
+    "sha256": "6156b2c30ece642e1119830c912fb313b7e59936e684ed5d41ab2109190827f1",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mussacharles60/library/StepperShiftRegister74HC595/1.0.3/StepperShiftRegister74HC595-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/mussacharles60/library/StepperShiftRegister74HC595/1.0.3/StepperShiftRegister74HC595-1.0.3.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mussacharles60/library/StepperShiftRegister74HC595/1.0.4/StepperShiftRegister74HC595-1.0.4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "StepperShiftRegister74HC595-1.0.4.tar.gz",
+    "size_bytes": 7637,
+    "sha256": "1bfc69a57944670788fb03a6bf6dbdc1fa6ebe5e8750f311b1caa8ba12bf05cb",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mussacharles60/library/StepperShiftRegister74HC595/1.0.4/StepperShiftRegister74HC595-1.0.4.tar.gz",
+     "https://dl.registry.platformio.org/download/mussacharles60/library/StepperShiftRegister74HC595/1.0.4/StepperShiftRegister74HC595-1.0.4.tar.gz"
+    ]
+   }
+  }
+ ]
+}

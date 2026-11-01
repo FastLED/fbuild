@@ -1,0 +1,126 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/shaxzod",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "shaxzod/library/RisalDash/0.1.0/RisalDash-0.1.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RisalDash-0.1.0.tar.gz",
+    "size_bytes": 31473,
+    "sha256": "8321245ec3dae90e4c9dc1f492d2addf14917595204b1d2347757cfb104183fc",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shaxzod/library/RisalDash/0.1.0/RisalDash-0.1.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shaxzod/library/RisalDash/0.1.0/RisalDash-0.1.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shaxzod/library/RisalDash/0.10.0/RisalDash-0.10.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RisalDash-0.10.0.tar.gz",
+    "size_bytes": 140278,
+    "sha256": "bceaff8480d90548b18b1bb59d8e4c925760e44d5a0acc40e8bf3857de314310",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shaxzod/library/RisalDash/0.10.0/RisalDash-0.10.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shaxzod/library/RisalDash/0.10.0/RisalDash-0.10.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shaxzod/library/RisalDash/0.13.0/RisalDash-0.13.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RisalDash-0.13.0.tar.gz",
+    "size_bytes": 193899,
+    "sha256": "a92e1a10631e2781984548d82e004c46899b9d942b17249d70c0ce60583255c7",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shaxzod/library/RisalDash/0.13.0/RisalDash-0.13.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shaxzod/library/RisalDash/0.13.0/RisalDash-0.13.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shaxzod/library/RisalDash/0.2.0/RisalDash-0.2.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RisalDash-0.2.0.tar.gz",
+    "size_bytes": 41672,
+    "sha256": "0573dc43cde58cec8bcf2e88fecd40866fd12b8a98d416516b71c2dda025376f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shaxzod/library/RisalDash/0.2.0/RisalDash-0.2.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shaxzod/library/RisalDash/0.2.0/RisalDash-0.2.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shaxzod/library/RisalDash/0.2.1/RisalDash-0.2.1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RisalDash-0.2.1.tar.gz",
+    "size_bytes": 44375,
+    "sha256": "4304e341e95ae8311f1cab44737705e0023bf68b120a9db75c2b6fb8b1fd22b5",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shaxzod/library/RisalDash/0.2.1/RisalDash-0.2.1.tar.gz",
+     "https://dl.registry.platformio.org/download/shaxzod/library/RisalDash/0.2.1/RisalDash-0.2.1.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shaxzod/library/RisalDash/0.3.0/RisalDash-0.3.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RisalDash-0.3.0.tar.gz",
+    "size_bytes": 48594,
+    "sha256": "3056a90fd6ca18f57e3c090741cbd7ba6dd14210ec985cf07088cdbb0b4d1932",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shaxzod/library/RisalDash/0.3.0/RisalDash-0.3.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shaxzod/library/RisalDash/0.3.0/RisalDash-0.3.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shaxzod/library/RisalDash/0.4.0/RisalDash-0.4.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RisalDash-0.4.0.tar.gz",
+    "size_bytes": 61080,
+    "sha256": "81542b6fc0ad381c552ed3069c689b6f85b9e9c9b8e684656f4e7940e3ee3f7e",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shaxzod/library/RisalDash/0.4.0/RisalDash-0.4.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shaxzod/library/RisalDash/0.4.0/RisalDash-0.4.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shaxzod/library/RisalDash/0.5.0/RisalDash-0.5.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RisalDash-0.5.0.tar.gz",
+    "size_bytes": 73252,
+    "sha256": "f39c55372d445b1a59dd417fe3e45903582afb2a51f3ec0dfd6781df76f750f6",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shaxzod/library/RisalDash/0.5.0/RisalDash-0.5.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shaxzod/library/RisalDash/0.5.0/RisalDash-0.5.0.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "shaxzod/library/RisalDash/0.9.0/RisalDash-0.9.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "RisalDash-0.9.0.tar.gz",
+    "size_bytes": 99112,
+    "sha256": "b8020c74ef6558ee07ef6e12ce124861c91531a7e7b4eb4ba3bd098c05045226",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/shaxzod/library/RisalDash/0.9.0/RisalDash-0.9.0.tar.gz",
+     "https://dl.registry.platformio.org/download/shaxzod/library/RisalDash/0.9.0/RisalDash-0.9.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

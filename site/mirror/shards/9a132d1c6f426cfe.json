@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-devanlai",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-devanlai/library/USBDevice_STM32F103/0.0.0+sha.e410de636542/USBDevice_STM32F103-0.0.0+sha.e410de636542.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "USBDevice_STM32F103-0.0.0+sha.e410de636542.tar.gz",
+    "size_bytes": 49872,
+    "sha256": "c6f59e7e710d48b50f65de5fef3a08c4b831a5f8391b5565766ba624e0876e62",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-devanlai/library/USBDevice_STM32F103/0.0.0%2Bsha.e410de636542/USBDevice_STM32F103-0.0.0%2Bsha.e410de636542.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-devanlai/library/USBDevice_STM32F103/0.0.0%2Bsha.e410de636542/USBDevice_STM32F103-0.0.0%2Bsha.e410de636542.tar.gz"
+    ]
+   }
+  }
+ ]
+}

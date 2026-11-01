@@ -263,6 +263,11 @@ pub async fn build(
 
         let params = fbuild_build::BuildParams {
             project_dir: project_dir.clone(),
+            shrink: req
+                .shrink
+                .as_deref()
+                .and_then(|value| value.parse().ok())
+                .unwrap_or_default(),
             env_name: env_name.clone(),
             clean_all: req.clean_all,
             clean_only: req.clean_only,
@@ -712,6 +717,11 @@ pub async fn build(
 
         let params = fbuild_build::BuildParams {
             project_dir: project_dir.clone(),
+            shrink: req
+                .shrink
+                .as_deref()
+                .and_then(|value| value.parse().ok())
+                .unwrap_or_default(),
             env_name: env_name.clone(),
             clean_all: req.clean_all,
             clean_only: req.clean_only,

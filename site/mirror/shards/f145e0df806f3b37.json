@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/harryslabdotnet",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "harryslabdotnet/library/NESControllerInterface/1.0.3/NESControllerInterface-1.0.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "NESControllerInterface-1.0.3.tar.gz",
+    "size_bytes": 4878,
+    "sha256": "0b37abe446d72ca033bd15f416ef4de9fe3b36593bc720e38a12a55f86ca0407",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/harryslabdotnet/library/NESControllerInterface/1.0.3/NESControllerInterface-1.0.3.tar.gz",
+     "https://dl.registry.platformio.org/download/harryslabdotnet/library/NESControllerInterface/1.0.3/NESControllerInterface-1.0.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

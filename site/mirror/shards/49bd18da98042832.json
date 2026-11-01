@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-projet-long-ei2i4",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-projet-long-ei2i4/library/TCS34725/0.0.0+sha.69073a593c65/TCS34725-0.0.0+sha.69073a593c65.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "TCS34725-0.0.0+sha.69073a593c65.tar.gz",
+    "size_bytes": 4958,
+    "sha256": "fb9ce7168c9730c0d2cc1e377f8365452b3b4317d0c6f1811d3654ba086507cf",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-projet-long-ei2i4/library/TCS34725/0.0.0%2Bsha.69073a593c65/TCS34725-0.0.0%2Bsha.69073a593c65.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-projet-long-ei2i4/library/TCS34725/0.0.0%2Bsha.69073a593c65/TCS34725-0.0.0%2Bsha.69073a593c65.tar.gz"
+    ]
+   }
+  }
+ ]
+}

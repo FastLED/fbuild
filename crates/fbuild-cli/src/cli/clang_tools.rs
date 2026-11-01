@@ -55,7 +55,8 @@ pub async fn run_iwyu(
             None,
             true, // no_timestamp: compiledb generation doesn't need timestamps
             None,
-            false, // bloat_analysis
+            false,                                 // bloat_analysis
+            fbuild_build::shrink::ShrinkMode::Off, // compile_commands only
         )
         .await?;
         if !db_path.exists() {
@@ -527,6 +528,7 @@ pub async fn run_clang_tool(
         true, // no_timestamp: compiledb generation doesn't need timestamps
         None,
         false, // bloat_analysis
+        fbuild_build::shrink::ShrinkMode::Auto,
     )
     .await?;
 

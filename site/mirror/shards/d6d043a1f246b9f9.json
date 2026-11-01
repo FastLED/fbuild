@@ -1,0 +1,48 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-sveljko",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-sveljko/library/Pubnub_c_core/0.0.0+sha.d85e42c1125d/Pubnub_c_core-0.0.0+sha.d85e42c1125d.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pubnub_c_core-0.0.0+sha.d85e42c1125d.tar.gz",
+    "size_bytes": 36144,
+    "sha256": "3f4e270c9ef76cec14152e09639cc5869089062846f164eef030085ba49d2d20",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sveljko/library/Pubnub_c_core/0.0.0%2Bsha.d85e42c1125d/Pubnub_c_core-0.0.0%2Bsha.d85e42c1125d.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sveljko/library/Pubnub_c_core/0.0.0%2Bsha.d85e42c1125d/Pubnub_c_core-0.0.0%2Bsha.d85e42c1125d.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sveljko/library/Pubnub_c_core_mbed2_pal/0.0.0+sha.be58f6801809/Pubnub_c_core_mbed2_pal-0.0.0+sha.be58f6801809.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pubnub_c_core_mbed2_pal-0.0.0+sha.be58f6801809.tar.gz",
+    "size_bytes": 4920,
+    "sha256": "c6e85121cdc4d88b9964a4677fe3b5a21a0deb6a19c78d2276e9d2f0466d0341",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sveljko/library/Pubnub_c_core_mbed2_pal/0.0.0%2Bsha.be58f6801809/Pubnub_c_core_mbed2_pal-0.0.0%2Bsha.be58f6801809.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sveljko/library/Pubnub_c_core_mbed2_pal/0.0.0%2Bsha.be58f6801809/Pubnub_c_core_mbed2_pal-0.0.0%2Bsha.be58f6801809.tar.gz"
+    ]
+   }
+  },
+  {
+   "id": "mbed-sveljko/library/Pubnub_mbed2_sync/0.0.0+sha.4d49720c7200/Pubnub_mbed2_sync-0.0.0+sha.4d49720c7200.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Pubnub_mbed2_sync-0.0.0+sha.4d49720c7200.tar.gz",
+    "size_bytes": 3150,
+    "sha256": "17310bcb5a6ad7c4e606298db96d31969fe9ecbe66775bbcaabbe122a78bbc68",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-sveljko/library/Pubnub_mbed2_sync/0.0.0%2Bsha.4d49720c7200/Pubnub_mbed2_sync-0.0.0%2Bsha.4d49720c7200.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-sveljko/library/Pubnub_mbed2_sync/0.0.0%2Bsha.4d49720c7200/Pubnub_mbed2_sync-0.0.0%2Bsha.4d49720c7200.tar.gz"
+    ]
+   }
+  }
+ ]
+}

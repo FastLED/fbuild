@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-stefangun",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-stefangun/library/DS2482/0.0.0+sha.39243a42bc87/DS2482-0.0.0+sha.39243a42bc87.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "DS2482-0.0.0+sha.39243a42bc87.tar.gz",
+    "size_bytes": 7547,
+    "sha256": "4887d56bbfaa25075cce4bd7e505ff5d93e51303b53119f67e4c4cde17bc10d8",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-stefangun/library/DS2482/0.0.0%2Bsha.39243a42bc87/DS2482-0.0.0%2Bsha.39243a42bc87.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-stefangun/library/DS2482/0.0.0%2Bsha.39243a42bc87/DS2482-0.0.0%2Bsha.39243a42bc87.tar.gz"
+    ]
+   }
+  }
+ ]
+}

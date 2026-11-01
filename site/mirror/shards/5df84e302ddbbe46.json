@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/cirromulus",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "cirromulus/library/VL53L0X/1.4.3/VL53L0X-1.4.3.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "VL53L0X-1.4.3.tar.gz",
+    "size_bytes": 14829,
+    "sha256": "5a9458cc15ead679557b476e6fcb98e84c7089280a5856e3ab8e4e94b8ef0fa4",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/cirromulus/library/VL53L0X/1.4.3/VL53L0X-1.4.3.tar.gz",
+     "https://dl.registry.platformio.org/download/cirromulus/library/VL53L0X/1.4.3/VL53L0X-1.4.3.tar.gz"
+    ]
+   }
+  }
+ ]
+}

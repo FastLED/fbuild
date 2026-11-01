@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/thekakester",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "thekakester/library/LoraSx1262/1.0.0/LoraSx1262-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "LoraSx1262-1.0.0.tar.gz",
+    "size_bytes": 19220,
+    "sha256": "1bf4805ea9eac7f0f5a8542771961178e30b5d34aefc2e97eb690c53f89a526f",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/thekakester/library/LoraSx1262/1.0.0/LoraSx1262-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/thekakester/library/LoraSx1262/1.0.0/LoraSx1262-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/dzmitry-visual-studio-2022",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "dzmitry-visual-studio-2022/library/Winduino/1.0.0/Winduino-1.0.0.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Winduino-1.0.0.tar.gz",
+    "size_bytes": 1628,
+    "sha256": "8d32bd1a6978a0ce71c1ae8e80afe8ab7a285403289bd80210dd3c6d2be19c96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/dzmitry-visual-studio-2022/library/Winduino/1.0.0/Winduino-1.0.0.tar.gz",
+     "https://dl.registry.platformio.org/download/dzmitry-visual-studio-2022/library/Winduino/1.0.0/Winduino-1.0.0.tar.gz"
+    ]
+   }
+  }
+ ]
+}

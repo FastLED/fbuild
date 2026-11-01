@@ -57,12 +57,14 @@ jobs:
     if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'ci-full')
     needs: verify
     uses: ./.github/workflows/check-ubuntu.yml
+    secrets: inherit
     with:
       ref: ${{ needs.verify.outputs.candidate_sha }}
   windows:
     if: github.event_name != 'pull_request' || contains(github.event.pull_request.labels.*.name, 'ci-full')
     needs: verify
     uses: ./.github/workflows/check-windows.yml
+    secrets: inherit
     with:
       ref: ${{ needs.verify.outputs.candidate_sha }}
   macos:
@@ -126,13 +128,17 @@ jobs:
       CARGO_TERM_COLOR: always
       RUSTFLAGS: "-D warnings"
       SOLDR_TARGET_BLOCK_FREE_GB: "2"
+      SOLDR_S3_CACHE_ACCESS_KEY: ${{ secrets.SOLDR_S3_CACHE_ACCESS_KEY }}
+      SOLDR_S3_CACHE_SECRET_KEY: ${{ secrets.SOLDR_S3_CACHE_SECRET_KEY }}
     steps:
       - uses: actions/checkout@v6
         with:
           ref: ${{ needs.verify.outputs.candidate_sha }}
           persist-credentials: false
-      - uses: zackees/setup-soldr@b782f606a2f3beadc35b9e3bf5b4565e005f52ed # v0.9.86
+      - uses: zackees/setup-soldr@9337570234850b50322e696037127fa3cf8ac703 # setup-soldr#629 S3 remote cache
         with:
+          s3-bucket: forge-ci-cache
+          s3-endpoint: sfo3.digitaloceanspaces.com
           cache-preset: foundation
           prebuild-deps-flags: ""
           prebuild-deps: none
@@ -693,6 +699,7 @@ jobs:
             workflow_aliases: ["build-uno.yml"]
             toolchain_cache: false
     uses: ./.github/workflows/template_build.yml
+    secrets: inherit
     with:
       workflow-name: ${{ matrix.workflow_name }}
       test-dir: ${{ matrix.test_dir }}

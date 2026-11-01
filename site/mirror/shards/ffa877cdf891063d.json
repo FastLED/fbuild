@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-oschofield",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-oschofield/library/Elec350_OBS/0.0.0+sha.53c2a598dda1/Elec350_OBS-0.0.0+sha.53c2a598dda1.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "Elec350_OBS-0.0.0+sha.53c2a598dda1.tar.gz",
+    "size_bytes": 3707,
+    "sha256": "d14affa1c827b83735082d2147360b2bf77027a5a16b89e5c68bf53aa778a37d",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-oschofield/library/Elec350_OBS/0.0.0%2Bsha.53c2a598dda1/Elec350_OBS-0.0.0%2Bsha.53c2a598dda1.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-oschofield/library/Elec350_OBS/0.0.0%2Bsha.53c2a598dda1/Elec350_OBS-0.0.0%2Bsha.53c2a598dda1.tar.gz"
+    ]
+   }
+  }
+ ]
+}

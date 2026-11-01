@@ -22,9 +22,19 @@ here and is dispatched from `cli::async_main`.
 - **`daemon_cmd.rs`** -- `run_daemon` and friends (status / restart / kill / locks / cache-stats / gc), process-management helpers
 - **`daemon_stop.rs`** -- `fbuild daemon stop`: `StopPlan` (the decision), termination + exit confirmation (FastLED/fbuild#1360). Tests in `daemon_stop_tests.rs`
 - **`device.rs`** -- `run_device` (list / status / lease / release / take)
+- **`doctor.rs`** -- `run_doctor`: read-only host diagnostics; `--check-disk` reports per-root free space and reclaimable caches without building (#1750). Tests in `doctor_tests.rs`
 - **`show.rs`** -- `run_show`, `show_daemon_logs`
 - **`reset.rs`** -- `run_reset`
 - **`lnk.rs`** -- `run_lnk` (pull / check / add)
 - **`install.rs`** -- `run_install`: in-process `fbuild install` over `fbuild_build::provision_env`, text / JSON rendering, `--check` exit codes (FastLED/fbuild#1433)
 - **`windows_long_paths.rs`** -- Windows preflight, explicit UAC repair, fresh command restart, and graceful daemon handoff (#1673)
+- **`buildfs.rs`** -- `run` / `plan_image`: assemble a LittleFS/SPIFFS image from `data/`
+  at the partition CSV's filesystem region (#1358). Tests in `buildfs_tests.rs`
+- **`buildfs_geometry.rs`** -- `FsGeometry`: the block/page size one volume is
+  formatted and mounted with (ESP32 4096/256, ESP8266 from `_FS_block`/`_FS_page`)
+- **`buildfs_esp8266.rs`** -- ESP8266 region from the `eesz` menu's `eagle.flash.*.ld`
+  (`_FS_start`/`_FS_end`/`_FS_page`/`_FS_block`). Tests in `buildfs_esp8266_tests.rs`
+- **`uploadfs.rs`** -- `run`: flash that image to the same offset through the `esptool`
+  deployer (ESP32 partition offsets, ESP8266 mapped addresses minus `0x40200000`), with
+  `--verify` readback and a daemon port preempt (#1358). Tests in `uploadfs_tests.rs`
 - **`tests.rs`** -- unit tests for argument normalization and `fbuild ci` parsing

@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-esokic",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-esokic/library/mbedPAI/0.0.0+sha.05aad811ea07/mbedPAI-0.0.0+sha.05aad811ea07.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "mbedPAI-0.0.0+sha.05aad811ea07.tar.gz",
+    "size_bytes": 28697,
+    "sha256": "6d07b42d7a80c59a5bb8dcbf19cc6666e42793a871661c154db3c14c4ed32c96",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-esokic/library/mbedPAI/0.0.0%2Bsha.05aad811ea07/mbedPAI-0.0.0%2Bsha.05aad811ea07.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-esokic/library/mbedPAI/0.0.0%2Bsha.05aad811ea07/mbedPAI-0.0.0%2Bsha.05aad811ea07.tar.gz"
+    ]
+   }
+  }
+ ]
+}

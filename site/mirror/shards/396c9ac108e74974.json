@@ -1,0 +1,22 @@
+{
+ "$schema": "https://zackees.github.io/manifest.json/v1/manifest.schema.json",
+ "kind": "Release",
+ "schema_version": 1,
+ "tool": "fbuild-download-mirror/mbed-peyo",
+ "version": "2026.10.31",
+ "components": [
+  {
+   "id": "mbed-peyo/library/AWS-test/0.0.0+sha.3f75eb8d46f4/AWS-test-0.0.0+sha.3f75eb8d46f4.tar.gz",
+   "required": false,
+   "asset": {
+    "filename": "AWS-test-0.0.0+sha.3f75eb8d46f4.tar.gz",
+    "size_bytes": 81238,
+    "sha256": "8b8b257b8ddab84d080f7c5e3cb8153224ad110cdf675b5fdbd8f1eda239df6c",
+    "urls": [
+     "https://fbuild.sfo3.digitaloceanspaces.com/mbed-peyo/library/AWS-test/0.0.0%2Bsha.3f75eb8d46f4/AWS-test-0.0.0%2Bsha.3f75eb8d46f4.tar.gz",
+     "https://dl.registry.platformio.org/download/mbed-peyo/library/AWS-test/0.0.0%2Bsha.3f75eb8d46f4/AWS-test-0.0.0%2Bsha.3f75eb8d46f4.tar.gz"
+    ]
+   }
+  }
+ ]
+}
