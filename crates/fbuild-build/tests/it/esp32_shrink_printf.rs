@@ -17,7 +17,9 @@
 //! Run with: `soldr cargo test -p fbuild-build --test it esp32_shrink_printf:: -- --ignored`
 
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::Path;
+
+use fbuild_core::path::NormalizedPath;
 
 use fbuild_build::shrink::ShrinkMode;
 use fbuild_build::{BuildOrchestrator, BuildParams, BuildResult};
@@ -153,20 +155,20 @@ void loop() {
 /// `BuildParams` for this suite: defaults except project/build dirs and the
 /// shrink mode under test.
 fn params(
-    project_dir: PathBuf,
+    project_dir: &NormalizedPath,
     env_name: &str,
-    build_dir: PathBuf,
+    build_dir: &NormalizedPath,
     shrink: ShrinkMode,
 ) -> BuildParams {
     BuildParams {
-        project_dir,
+        project_dir: project_dir.as_path().to_path_buf(),
         shrink,
         env_name: env_name.to_string(),
         clean_all: false,
         clean_only: false,
         clean: true,
         profile: BuildProfile::Release,
-        build_dir,
+        build_dir: build_dir.as_path().to_path_buf(),
         verbose: true,
         jobs: None,
         generate_compiledb: false,
@@ -185,19 +187,23 @@ fn params(
 }
 
 /// Lay out a throwaway project holding [`PRINTF_BATTERY`] for `board`.
-fn write_project(root: &Path, board: &str) -> PathBuf {
-    let project_dir = root.join("printf_battery");
-    fs::create_dir_all(project_dir.join("src")).unwrap();
+fn write_project(root: &Path, board: &str) -> NormalizedPath {
+    let project_dir = NormalizedPath::new(root).join("printf_battery");
+    fs::create_dir_all(project_dir.join("src").as_path()).unwrap();
     fs::write(
-        project_dir.join("platformio.ini"),
+        project_dir.join("platformio.ini").as_path(),
         format!("[env:{board}]\nplatform = espressif32\nboard = {board}\nframework = arduino\n"),
     )
     .unwrap();
-    fs::write(project_dir.join("src").join("main.cpp"), PRINTF_BATTERY).unwrap();
+    fs::write(
+        project_dir.join("src").join("main.cpp").as_path(),
+        PRINTF_BATTERY,
+    )
+    .unwrap();
     project_dir
 }
 
-fn build_dir_for(project_dir: &Path, board: &str) -> PathBuf {
+fn build_dir_for(project_dir: &NormalizedPath, board: &str) -> NormalizedPath {
     project_dir.join(format!(
         "{}/{}/{board}/release",
         fbuild_paths::FBUILD_DIR_NAME,
@@ -222,14 +228,10 @@ async fn install_test_compile_backend() {
         .await;
 }
 
-async fn build(project_dir: &Path, board: &str, shrink: ShrinkMode) -> BuildResult {
+async fn build(project_dir: &NormalizedPath, board: &str, shrink: ShrinkMode) -> BuildResult {
     install_test_compile_backend().await;
-    let params = params(
-        project_dir.to_path_buf(),
-        board,
-        build_dir_for(project_dir, board),
-        shrink,
-    );
+    let build_dir = build_dir_for(project_dir, board);
+    let params = params(project_dir, board, &build_dir, shrink);
     let orchestrator = fbuild_build::esp32::orchestrator::Esp32Orchestrator;
     under_test_timeout(orchestrator.build(&params))
         .await
@@ -237,16 +239,17 @@ async fn build(project_dir: &Path, board: &str, shrink: ShrinkMode) -> BuildResu
 }
 
 /// The shrink record ESP32 wrote into `build_info_esp32dev.json`.
-fn shrink_record_for(project_dir: &Path, env: &str) -> serde_json::Value {
+fn shrink_record_for(project_dir: &NormalizedPath, env: &str) -> serde_json::Value {
     let path = project_dir.join(format!("build_info_{env}.json"));
-    let raw = fs::read_to_string(&path)
-        .unwrap_or_else(|e| panic!("build info {} unreadable: {e}", path.display()));
+    let raw = fs::read_to_string(path.as_path())
+        .unwrap_or_else(|e| panic!("build info {path} unreadable: {e}"));
     let json: serde_json::Value = serde_json::from_str(&raw).expect("build info is valid JSON");
     json[env]["shrink"].clone()
 }
 
-fn link_flags_for(project_dir: &Path, env: &str) -> Vec<String> {
-    let raw = fs::read_to_string(project_dir.join(format!("build_info_{env}.json"))).unwrap();
+fn link_flags_for(project_dir: &NormalizedPath, env: &str) -> Vec<String> {
+    let raw =
+        fs::read_to_string(project_dir.join(format!("build_info_{env}.json")).as_path()).unwrap();
     let json: serde_json::Value = serde_json::from_str(&raw).expect("build info is valid JSON");
     json[env]["link_flags"]
         .as_array()
