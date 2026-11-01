@@ -29,6 +29,7 @@ use fbuild_core::subprocess::run_command;
 use fbuild_core::{Platform, Result};
 
 use fbuild_build_engine::shrink::ShrinkMode;
+use fbuild_build_engine::shrink::record::{ShrinkRecord, Strategy};
 
 /// The GCC spec file that redirects `-lc`/`-lm` to newlib-nano.
 pub const SPECS_FLAG: &str = "-specs=nano.specs";
@@ -55,6 +56,39 @@ pub fn applies(mode: ShrinkMode, platform: Platform) -> bool {
 #[must_use]
 pub fn link_flags() -> Vec<String> {
     vec![SPECS_FLAG.to_string(), FLOAT_SUPPORT_FLAG.to_string()]
+}
+
+/// Category recorded in `build_info_<env>.json` when the reducer fired.
+pub const REDUCER_NAME: &str = "newlib-nano";
+
+/// The shrink decision written into `build_info_<env>.json`.
+///
+/// `mode` is the user-level request (already collapsed by
+/// `shrink::resolve_explicit`); `resolved` is the mode that actually
+/// reached the link. A toolchain without a nano variant builds unshrunk,
+/// so `resolved` drops back to [`ShrinkMode::Off`] and `applied` stays
+/// empty — the JSON then agrees with the terminal warning instead of
+/// claiming a reduction that never happened.
+///
+/// `nano_applied` is the only input because the probe, not this module,
+/// decides availability; keeping the mapping pure makes the kebab-case
+/// JSON contract testable without spawning a compiler.
+#[must_use]
+pub fn record_for(mode: ShrinkMode, nano_applied: bool) -> ShrinkRecord {
+    ShrinkRecord {
+        mode,
+        resolved: if nano_applied {
+            ShrinkMode::Printf
+        } else {
+            ShrinkMode::Off
+        },
+        applied: if nano_applied {
+            vec![REDUCER_NAME.to_string()]
+        } else {
+            Vec::new()
+        },
+        strategy: nano_applied.then_some(Strategy::SpecFile),
+    }
 }
 
 /// Parse `gcc -print-file-name=nano.specs` output.

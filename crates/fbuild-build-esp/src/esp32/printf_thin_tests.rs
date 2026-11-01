@@ -38,3 +38,39 @@ fn probe_output_is_only_accepted_as_an_absolute_specs_path() {
     assert_eq!(nano_specs_from_probe(""), None);
     assert_eq!(nano_specs_from_probe("/toolchain/lib/other.specs\n"), None);
 }
+
+#[test]
+fn record_reports_the_reducer_that_fired() {
+    let record = record_for(ShrinkMode::Printf, true);
+    assert_eq!(record.mode, ShrinkMode::Printf);
+    assert_eq!(record.resolved, ShrinkMode::Printf);
+    assert_eq!(record.applied, vec![REDUCER_NAME.to_string()]);
+    assert_eq!(
+        record.strategy,
+        Some(fbuild_build_engine::shrink::record::Strategy::SpecFile)
+    );
+}
+
+#[test]
+fn record_degrades_to_off_when_the_toolchain_has_no_nano_variant() {
+    let record = record_for(ShrinkMode::Printf, false);
+    assert_eq!(record.mode, ShrinkMode::Printf);
+    assert_eq!(record.resolved, ShrinkMode::Off);
+    assert!(record.applied.is_empty());
+    assert_eq!(record.strategy, None);
+}
+
+#[test]
+fn non_printf_modes_are_recorded_as_not_applied() {
+    for mode in [
+        ShrinkMode::Auto,
+        ShrinkMode::Off,
+        ShrinkMode::Safe,
+        ShrinkMode::Aggressive,
+    ] {
+        let record = record_for(mode, false);
+        assert_eq!(record.mode, mode);
+        assert_eq!(record.resolved, ShrinkMode::Off);
+        assert!(record.applied.is_empty());
+    }
+}

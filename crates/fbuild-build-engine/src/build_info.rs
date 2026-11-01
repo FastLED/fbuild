@@ -96,6 +96,17 @@ pub struct BuildInfo {
     /// consumers see no schema change.
     #[serde(default)]
     pub aliases: BTreeMap<String, NormalizedPath>,
+    /// Shrink decision that produced this image (FastLED/fbuild#1459,
+    /// #493, #506).
+    ///
+    /// `None` means the platform never entered the shrink pipeline (every
+    /// non-ESP32 platform today). ESP32 always emits a record, so a
+    /// deliberate `off`/`auto` build stays distinguishable from "shrink
+    /// was never considered". `resolved` reports the mode that actually
+    /// took effect, and `applied` names the reducer that fired — the same
+    /// facts the terminal reports.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub shrink: Option<crate::shrink::record::ShrinkRecord>,
 }
 
 impl BuildInfo {
@@ -163,7 +174,19 @@ impl BuildInfo {
             board,
             env,
             aliases,
+            shrink: None,
         }
+    }
+
+    /// Attach the build's shrink decision (FastLED/fbuild#1459).
+    ///
+    /// Kept as a builder so the thirteen-argument constructor — and its
+    /// dozens of call sites — stay untouched; platforms that never shrink
+    /// simply leave the field `None` and the key is omitted from JSON.
+    #[must_use]
+    pub fn with_shrink(mut self, record: Option<crate::shrink::record::ShrinkRecord>) -> Self {
+        self.shrink = record;
+        self
     }
 }
 
@@ -901,5 +924,43 @@ mod tests {
             aliases.get("objdump").and_then(|v| v.as_str()),
             Some("/bin/avr-objdump"),
         );
+    }
+
+    #[test]
+    fn shrink_record_is_omitted_when_no_reducer_ran() {
+        let tmp = tempfile::TempDir::new().unwrap();
+        emit_build_info(tmp.path(), "uno", &sample_info()).unwrap();
+        let bytes = std::fs::read_to_string(tmp.path().join("build_info_uno.json")).unwrap();
+        assert!(
+            !bytes.contains("\"shrink\""),
+            "a platform outside the shrink pipeline must not emit the key: {bytes}"
+        );
+    }
+
+    #[test]
+    fn shrink_record_serializes_next_to_the_toolchain_block() {
+        use crate::shrink::ShrinkMode;
+        use crate::shrink::record::{ShrinkRecord, Strategy};
+
+        let tmp = tempfile::TempDir::new().unwrap();
+        let info = sample_info().with_shrink(Some(ShrinkRecord {
+            mode: ShrinkMode::Printf,
+            resolved: ShrinkMode::Printf,
+            applied: vec!["newlib-nano".to_string()],
+            strategy: Some(Strategy::SpecFile),
+        }));
+        emit_build_info(tmp.path(), "esp32s3", &info).unwrap();
+
+        let bytes = std::fs::read_to_string(tmp.path().join("build_info_esp32s3.json")).unwrap();
+        let outer: BTreeMap<String, serde_json::Value> = serde_json::from_str(&bytes).unwrap();
+        let shrink = &outer["esp32s3"]["shrink"];
+        // Kebab-case strings, matching the CLI's accepted values.
+        assert_eq!(shrink["mode"], "printf");
+        assert_eq!(shrink["resolved"], "printf");
+        assert_eq!(shrink["applied"][0], "newlib-nano");
+        assert_eq!(shrink["strategy"], "spec-file");
+        // The PIO contract is unchanged by the extra key.
+        assert_eq!(outer["esp32s3"]["board"], "uno");
+        assert!(outer["esp32s3"]["cc_path"].is_string());
     }
 }
