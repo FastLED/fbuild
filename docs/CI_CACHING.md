@@ -94,7 +94,6 @@ If you skip the composite action, you MUST still bake the fbuild content hash in
     restore-keys: |
       fbuild-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.hash }}-${{ hashFiles('platformio.ini', '**/boards.txt', 'rust-toolchain.toml') }}-
       fbuild-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.hash }}-
-      fbuild-${{ runner.os }}-${{ runner.arch }}-
 ```
 
 If you manage zccache yourself in that setup, cache its store directory as well. The safest pattern is to set `ZCCACHE_DIR` explicitly in the job and cache that directory instead of guessing a platform-specific default.
@@ -128,6 +127,7 @@ The goal is to maximize hit rate without producing wrong output. In priority ord
 
 1. **Runner OS + arch** - `${{ runner.os }}-${{ runner.arch }}`. Toolchains are platform-pinned; sharing across OSes corrupts builds.
 2. **fbuild content hash** - **required**, not optional. Key on a content hash of the installed fbuild (e.g., sha256 of the wheel's dist-info `RECORD` file), not just the PyPI version string. A version string does not discriminate against re-released wheels, dev builds, or local installs; cached artifacts can encode fbuild-internal layout (response-file format, path embedding, fingerprint scheme) that changes silently across those. The composite `setup` action computes this hash for you and exports it via the `fbuild-hash` output - consumers who roll their own `actions/cache@v5` should do the equivalent.
+   The hash also bounds your **restore-keys**: a fallback that drops it restores a foreign release's tree, which the next save turns into duplicate bytes in the cache (see [Restore-key fallback chain](#restore-key-fallback-chain)).
 3. **Graph inputs** - `platformio.ini`, per-board JSONs, `rust-toolchain.toml`, any `lib_deps`-defining file. A change to these invalidates the warm-build fingerprint anyway, so it's cheap to bake them into the key to avoid carrying obsolete artifacts.
 4. **Manual bump** - a `.fbuild-cache-version` sentinel in the repo lets you force-invalidate with a one-line commit when the runtime has rotted for reasons GH Actions can't see.
 
@@ -155,18 +155,19 @@ If you also cache `ZCCACHE_DIR`, use the same OS/arch, `fbuild-hash`, and graph-
     key: fbuild-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.hash }}-${{ hashFiles('platformio.ini') }}
     restore-keys: |
       fbuild-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.hash }}-
-      fbuild-${{ runner.os }}-${{ runner.arch }}-
 ```
 
 ### Restore-key fallback chain
 
-GitHub Actions supports partial hits via `restore-keys`. Use them: a partial hit still restores the toolchains and frameworks (by far the biggest download cost) even when per-project build outputs will be rebuilt.
+GitHub Actions supports partial hits via `restore-keys`. Use them, but keep every fallback **inside one fbuild content hash**: a partial hit still restores toolchains, frameworks and packages (by far the biggest download cost) when only the project's graph inputs changed.
 
 ```yaml
 restore-keys: |
-  fbuild-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('platformio.ini') }}-
-  fbuild-${{ runner.os }}-${{ runner.arch }}-
+  fbuild-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.hash }}-${{ hashFiles('platformio.ini') }}-
+  fbuild-${{ runner.os }}-${{ runner.arch }}-${{ steps.fbuild-hash.outputs.hash }}-
 ```
+
+**Never fall back to `fbuild-<os>-<arch>-` alone.** Such a key matches entries from *any* fbuild release: an upgrade restores the previous release's package/toolchain tree, the job fetches its own packages alongside it, and the save writes the union under the new hash key - the entry roughly doubles on every upgrade until the repository's cache budget is gone. FastLED hit this after the 2.5.47 -> 2.5.49 bump: two 3.49 GB entries, over its declared 2304 MB per-entry max (fbuild#1843). The cost of the fix is one cold run per upgrade; pin the fbuild version explicitly if that is too expensive for your matrix, since a pinned version keeps the content hash stable until you choose to move it.
 
 The index SQLite file is the only thing that MUST match the archives/installed directories it references - and it does, because they're all under one cache path and restored atomically.
 

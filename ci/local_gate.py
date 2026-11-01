@@ -266,6 +266,7 @@ def main() -> None:
             "ci.test_local_lint_gate",
             "ci.test_fractional_workflows",
             "ci.test_publish_quota",
+            "ci.test_setup_action",
             "ci.test_test_cache_status",
         ],
         cwd=ROOT,
