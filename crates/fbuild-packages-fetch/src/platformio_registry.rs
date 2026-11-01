@@ -146,7 +146,13 @@ impl RegistryClient {
         kind: PackageKind,
         name: &str,
     ) -> Result<Vec<String>, RegistryError> {
-        let names = match self.index().await?.owner_shard(&names_key(name)).await {
+        let index = self.index().await?;
+        if !index.lists_names() {
+            return Err(RegistryError::IndexUnavailable(
+                "the served index predates the registry index format (no @names shards)".into(),
+            ));
+        }
+        let names = match index.owner_shard(&names_key(name)).await {
             ShardLookup::Loaded(names) => names,
             // No indexed package hashes into this names shard.
             ShardLookup::NotListed => return Ok(Vec::new()),
