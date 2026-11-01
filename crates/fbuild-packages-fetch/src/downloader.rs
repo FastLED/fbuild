@@ -476,6 +476,20 @@ impl DownloadProgress {
 /// entire response into memory). For large files with progress reporting,
 /// use [`download_file_with_progress`].
 pub async fn download_file(url: &str, dest_dir: &Path) -> Result<PathBuf> {
+    // Boxed `dyn Future` keeps the download state machine out of every
+    // caller's future, so it is compiled once rather than inlined per caller.
+    download_file_boxed(url, dest_dir).await
+}
+
+#[inline(never)]
+fn download_file_boxed<'a>(
+    url: &'a str,
+    dest_dir: &'a Path,
+) -> std::pin::Pin<Box<dyn std::future::Future<Output = Result<PathBuf>> + Send + 'a>> {
+    Box::pin(download_file_impl(url, dest_dir))
+}
+
+async fn download_file_impl(url: &str, dest_dir: &Path) -> Result<PathBuf> {
     let filename = url.rsplit('/').next().unwrap_or("download").to_string();
     let dest_path = dest_dir.join(&filename);
 

@@ -15,7 +15,11 @@ then from the raw copy on `main`. See `crates/fbuild-packages-fetch/README.md`
 for client behaviour.
 
 Do not hand-edit these files. Regenerate them after the bucket changes. Only
-new or resized objects are downloaded and hashed:
+new, resized or replaced objects are downloaded and hashed: the generator keeps
+`site/.mirror-hashes.tsv` (git-ignored, one `size\tetag\tsha256\tkey` line per
+object) so an object replaced with same-size bytes is noticed by its changed
+ETag, and a bare re-run keeps the version the shards already carry
+(FastLED/fbuild#1825).
 
 ```bash
 uv run --no-project --with boto3 python ci/gen_mirror_manifest.py --credentials <spaces-credentials.json>

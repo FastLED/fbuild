@@ -192,7 +192,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                 ),
             };
             let _ = socket
-                .send(Message::Text(serialize_or_fallback(&err_msg)))
+                .send(Message::Text(serialize_or_fallback(&err_msg).into()))
                 .await;
             return;
         }
@@ -212,7 +212,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                     if let Some(message) = active_preemption_error(&ctx, &port).await {
                         let err_msg = SerialServerMessage::Error { message };
                         let _ = socket
-                            .send(Message::Text(serialize_or_fallback(&err_msg)))
+                            .send(Message::Text(serialize_or_fallback(&err_msg).into()))
                             .await;
                         return;
                     }
@@ -234,7 +234,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                         if let Err(message) = open_result {
                             let err_msg = SerialServerMessage::Error { message };
                             let _ = socket
-                                .send(Message::Text(serialize_or_fallback(&err_msg)))
+                                .send(Message::Text(serialize_or_fallback(&err_msg).into()))
                                 .await;
                             return;
                         }
@@ -252,7 +252,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                         message: "expected attach message first".to_string(),
                     };
                     let _ = socket
-                        .send(Message::Text(serialize_or_fallback(&err_msg)))
+                        .send(Message::Text(serialize_or_fallback(&err_msg).into()))
                         .await;
                     return;
                 }
@@ -261,7 +261,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                         message: format!("invalid message: {}", e),
                     };
                     let _ = socket
-                        .send(Message::Text(serialize_or_fallback(&err_msg)))
+                        .send(Message::Text(serialize_or_fallback(&err_msg).into()))
                         .await;
                     return;
                 }
@@ -298,7 +298,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                 .unwrap_or_else(|| format!("port {} not open", port));
             let err_msg = SerialServerMessage::Error { message };
             let _ = socket
-                .send(Message::Text(serialize_or_fallback(&err_msg)))
+                .send(Message::Text(serialize_or_fallback(&err_msg).into()))
                 .await;
             cleanup_ws_serial_session(&ctx, &port, &client_id).await;
             return;
@@ -312,7 +312,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
         writer_pre_acquired: writer_acquired,
     };
     if socket
-        .send(Message::Text(serialize_or_fallback(&attached)))
+        .send(Message::Text(serialize_or_fallback(&attached).into()))
         .await
         .is_err()
     {
@@ -663,7 +663,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                                 .send(Message::Text(
                                     serde_json::to_string(&coalesced).expect(
                                         "fbuild-daemon: SerialServerMessage::Data serialization is infallible",
-                                    ),
+                                    ).into()
                                 ))
                                 .await
                                 .is_err()
@@ -675,7 +675,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                         if ws_sink
                             .send(Message::Text(serde_json::to_string(&other).expect(
                                 "fbuild-daemon: SerialServerMessage serialization is infallible",
-                            )))
+                            ).into()))
                             .await
                             .is_err()
                         {
@@ -698,7 +698,7 @@ async fn handle_serial_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                 if ws_sink
                     .send(Message::Text(serde_json::to_string(&coalesced).expect(
                         "fbuild-daemon: SerialServerMessage::Data serialization is infallible",
-                    )))
+                    ).into()))
                     .await
                     .is_err()
                 {
@@ -900,7 +900,7 @@ async fn handle_status_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
 
     // Send initial status snapshot
     let initial = build_status_snapshot(&ctx);
-    if socket.send(Message::Text(initial)).await.is_err() {
+    if socket.send(Message::Text(initial.into())).await.is_err() {
         return;
     }
 
@@ -913,7 +913,7 @@ async fn handle_status_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
             result = rx.recv() => {
                 match result {
                     Ok(msg) => {
-                        if socket.send(Message::Text(msg)).await.is_err() {
+                        if socket.send(Message::Text(msg.into())).await.is_err() {
                             break;
                         }
                     }
@@ -933,11 +933,11 @@ async fn handle_status_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                             match obj.get("type").and_then(|t| t.as_str()) {
                                 Some("ping") => {
                                     let pong = serde_json::json!({"type": "pong", "timestamp": now_unix()}).to_string();
-                                    let _ = socket.send(Message::Text(pong)).await;
+                                    let _ = socket.send(Message::Text(pong.into())).await;
                                 }
                                 Some("get_status") => {
                                     let snap = build_status_snapshot(&ctx);
-                                    let _ = socket.send(Message::Text(snap)).await;
+                                    let _ = socket.send(Message::Text(snap.into())).await;
                                 }
                                 _ => {}
                             }
@@ -981,7 +981,7 @@ async fn handle_logs_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
         "module": "websockets",
     })
     .to_string();
-    if socket.send(Message::Text(welcome)).await.is_err() {
+    if socket.send(Message::Text(welcome.into())).await.is_err() {
         return;
     }
 
@@ -994,7 +994,7 @@ async fn handle_logs_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
             result = rx.recv() => {
                 match result {
                     Ok(msg) => {
-                        if socket.send(Message::Text(msg)).await.is_err() {
+                        if socket.send(Message::Text(msg.into())).await.is_err() {
                             break;
                         }
                     }
@@ -1013,7 +1013,7 @@ async fn handle_logs_ws(mut socket: WebSocket, ctx: Arc<DaemonContext>) {
                         if let Ok(obj) = serde_json::from_str::<serde_json::Value>(&text) {
                             if obj.get("type").and_then(|t| t.as_str()) == Some("ping") {
                                 let pong = serde_json::json!({"type": "pong", "timestamp": now_unix()}).to_string();
-                                let _ = socket.send(Message::Text(pong)).await;
+                                let _ = socket.send(Message::Text(pong.into())).await;
                             }
                         }
                     }

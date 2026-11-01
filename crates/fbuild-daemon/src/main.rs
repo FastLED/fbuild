@@ -308,24 +308,24 @@ async fn main() {
         // leak being investigated, which is what made #1360 hard to chase.
         .route("/api/daemon/heap-dump", post(health::heap_dump))
         .route("/api/devices/list", post(devices::list_devices))
-        .route("/api/devices/:port/status", get(devices::device_status))
-        .route("/api/devices/:port/lease", post(devices::device_lease))
-        .route("/api/devices/:port/release", post(devices::device_release))
-        .route("/api/devices/:port/preempt", post(devices::device_preempt))
+        .route("/api/devices/{port}/status", get(devices::device_status))
+        .route("/api/devices/{port}/lease", post(devices::device_lease))
+        .route("/api/devices/{port}/release", post(devices::device_release))
+        .route("/api/devices/{port}/preempt", post(devices::device_preempt))
         .route("/api/locks/status", get(locks::lock_status))
         .route("/api/locks/clear", post(locks::clear_locks))
         .route("/api/cache/stats", get(cache::cache_stats))
         .route("/api/cache/gc", post(cache::run_gc))
         .route(
-            "/api/emulator/avr8js/:session_id",
+            "/api/emulator/avr8js/{session_id}",
             get(emulator::avr8js_session_json),
         )
         .route(
-            "/api/emulator/avr8js/:session_id/firmware.hex",
+            "/api/emulator/avr8js/{session_id}/firmware.hex",
             get(emulator::avr8js_firmware_hex),
         )
         .route("/emulator/avr8js/app.js", get(emulator::avr8js_app_js))
-        .route("/emulator/avr8js/:session_id", get(emulator::avr8js_page))
+        .route("/emulator/avr8js/{session_id}", get(emulator::avr8js_page))
         .route("/plotter", get(plotter::plotter_page))
         .route("/build-progress", get(build_progress::build_progress_page))
         .route("/boards", get(boards::boards_page))
@@ -336,7 +336,7 @@ async fn main() {
         .route("/ws/status", get(websockets::ws_status))
         .route("/ws/logs", get(websockets::ws_logs))
         .route(
-            "/ws/monitor/:session_id",
+            "/ws/monitor/{session_id}",
             get(websockets::ws_monitor_session),
         )
         .with_state(context.clone())

@@ -65,11 +65,11 @@ pub(crate) fn present_usb_problem_devices() -> Vec<UsbProblemDevice> {
         SetupDiGetClassDevsW(
             std::ptr::null(),
             enumerator.as_ptr(),
-            0,
+            std::ptr::null_mut(),
             DIGCF_PRESENT | DIGCF_ALLCLASSES,
         )
     };
-    if hdi == INVALID_HANDLE_VALUE {
+    if hdi == INVALID_HANDLE_VALUE as HDEVINFO {
         return Vec::new();
     }
 
@@ -126,11 +126,11 @@ pub(crate) fn present_usb_reset_interfaces() -> Vec<UsbResetInterface> {
         SetupDiGetClassDevsW(
             std::ptr::null(),
             enumerator.as_ptr(),
-            0,
+            std::ptr::null_mut(),
             DIGCF_PRESENT | DIGCF_ALLCLASSES,
         )
     };
-    if hdi == INVALID_HANDLE_VALUE {
+    if hdi == INVALID_HANDLE_VALUE as HDEVINFO {
         return Vec::new();
     }
 
@@ -210,14 +210,14 @@ pub(crate) fn reset_usb_interface_to_bootsel(interface: &UsbResetInterface) -> i
             std::ptr::null(),
             OPEN_EXISTING,
             FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED,
-            0,
+            std::ptr::null_mut(),
         )
     };
     if device == INVALID_HANDLE_VALUE {
         return Err(io::Error::last_os_error());
     }
 
-    let mut winusb: WINUSB_INTERFACE_HANDLE = 0;
+    let mut winusb: WINUSB_INTERFACE_HANDLE = std::ptr::null_mut();
     if unsafe { WinUsb_Initialize(device, &mut winusb) } == FALSE {
         let error = io::Error::last_os_error();
         unsafe {
@@ -359,11 +359,11 @@ fn pico_reset_interface_paths() -> HashMap<String, String> {
         SetupDiGetClassDevsW(
             &PICO_RESET_INTERFACE_GUID,
             std::ptr::null(),
-            0,
+            std::ptr::null_mut(),
             DIGCF_PRESENT | DIGCF_DEVICEINTERFACE,
         )
     };
-    if hdi == INVALID_HANDLE_VALUE {
+    if hdi == INVALID_HANDLE_VALUE as HDEVINFO {
         return HashMap::new();
     }
 

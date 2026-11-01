@@ -632,9 +632,13 @@ pub async fn run_monitor(
         client_metadata: None,
     };
     socket
-        .send(Message::Text(serde_json::to_string(&attach).map_err(
-            |e| fbuild_core::FbuildError::DaemonError(format!("monitor attach failed: {e}")),
-        )?))
+        .send(Message::Text(
+            serde_json::to_string(&attach)
+                .map_err(|e| {
+                    fbuild_core::FbuildError::DaemonError(format!("monitor attach failed: {e}"))
+                })?
+                .into(),
+        ))
         .await
         .map_err(|e| {
             fbuild_core::FbuildError::DaemonError(format!("monitor attach failed: {e}"))
@@ -697,7 +701,8 @@ pub async fn run_monitor(
                         let _ = socket
                             .send(Message::Text(
                                 serde_json::to_string(&SerialClientMessage::Detach)
-                                    .unwrap_or_default(),
+                                    .unwrap_or_default()
+                                    .into(),
                             ))
                             .await;
                         return Ok(());
@@ -713,7 +718,9 @@ pub async fn run_monitor(
     }
     let _ = socket
         .send(Message::Text(
-            serde_json::to_string(&SerialClientMessage::Detach).unwrap_or_default(),
+            serde_json::to_string(&SerialClientMessage::Detach)
+                .unwrap_or_default()
+                .into(),
         ))
         .await;
     if expect_re.is_some() && !expect_found {

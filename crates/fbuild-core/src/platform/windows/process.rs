@@ -156,7 +156,7 @@ pub(crate) fn launch_elevated(
         }
         return Err(std::io::Error::from_raw_os_error(error as i32));
     }
-    if execute.hProcess == 0 {
+    if execute.hProcess.is_null() {
         return Err(std::io::Error::other(
             "elevated launch returned no process handle",
         ));

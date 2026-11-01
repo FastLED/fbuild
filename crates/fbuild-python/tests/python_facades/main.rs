@@ -78,7 +78,7 @@ async fn handle_ws(stream: tokio::net::TcpStream, knobs: DaemonKnobs) {
                 "type": "attached", "success": true, "message": "ok", "writer_pre_acquired": true
             });
             if sink
-                .send(tungstenite::Message::Text(ack.to_string()))
+                .send(tungstenite::Message::Text(ack.to_string().into()))
                 .await
                 .is_err()
             {
@@ -89,7 +89,7 @@ async fn handle_ws(stream: tokio::net::TcpStream, knobs: DaemonKnobs) {
                     "type": "data", "lines": ["echo:boot"], "current_index": 0
                 })
                 .to_string();
-                let _ = sink.send(tungstenite::Message::Text(line)).await;
+                let _ = sink.send(tungstenite::Message::Text(line.into())).await;
             }
             continue;
         }
@@ -111,7 +111,7 @@ async fn handle_ws(stream: tokio::net::TcpStream, knobs: DaemonKnobs) {
                         "bytes_written": 0, "message": "injected serial failure"
                     });
                     if sink
-                        .send(tungstenite::Message::Text(ack.to_string()))
+                        .send(tungstenite::Message::Text(ack.to_string().into()))
                         .await
                         .is_err()
                     {
@@ -123,7 +123,7 @@ async fn handle_ws(stream: tokio::net::TcpStream, knobs: DaemonKnobs) {
                     "type": "write_ack", "success": true, "bytes_written": decoded.len(), "message": null
                 });
                 if sink
-                    .send(tungstenite::Message::Text(ack.to_string()))
+                    .send(tungstenite::Message::Text(ack.to_string().into()))
                     .await
                     .is_err()
                 {
@@ -152,7 +152,11 @@ async fn handle_ws(stream: tokio::net::TcpStream, knobs: DaemonKnobs) {
                     "type": "data", "lines": [echoed], "current_index": 0
                 })
                 .to_string();
-                if sink.send(tungstenite::Message::Text(line)).await.is_err() {
+                if sink
+                    .send(tungstenite::Message::Text(line.into()))
+                    .await
+                    .is_err()
+                {
                     return;
                 }
             }
@@ -162,7 +166,7 @@ async fn handle_ws(stream: tokio::net::TcpStream, knobs: DaemonKnobs) {
                 }
                 let reply = serde_json::json!({ "type": "in_waiting", "count": 0 });
                 if sink
-                    .send(tungstenite::Message::Text(reply.to_string()))
+                    .send(tungstenite::Message::Text(reply.to_string().into()))
                     .await
                     .is_err()
                 {
