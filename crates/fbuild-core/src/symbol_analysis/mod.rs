@@ -611,6 +611,16 @@ pub fn region_from_output_section(name: &str) -> Option<MemoryRegion> {
     }
 }
 
+/// True when an output section lives in the flash-mapped image region
+/// (`.flash.text`, `.flash.rodata`, `.flash.appdesc`, `.flash.data`).
+/// Placement there is physical: the linker folded those input bytes
+/// into the image, so nm's `d`/`b` letter is misleading — ESP-IDF
+/// `__func__` string literals are `d` but land in `.flash.rodata`
+/// (FastLED/fbuild#1832).
+pub fn is_flash_mapped_output_section(name: &str) -> bool {
+    name.starts_with(".flash")
+}
+
 /// Classify an nm type letter into Flash vs Ram. Matches the existing
 /// `SymbolMap::classify` logic so reports compare apples-to-apples.
 pub fn classify_region(sym_type: char) -> Option<MemoryRegion> {
@@ -777,13 +787,21 @@ pub fn build_fine_grained_map_with_synth(
     let mut total_ram = 0u64;
     for ((addr, size, sym_type, mangled), demangled) in nm_rows.into_iter().zip(demangled) {
         let attribution = index.lookup(addr);
-        let region = if matches!(sym_type, 'V' | 'v') {
-            attribution
-                .and_then(|r| region_from_output_section(&r.output_section))
-                .or_else(|| classify_region(sym_type))
-        } else {
-            classify_region(sym_type)
-        };
+        // A `.flash*` output section is physical ground truth: those bytes
+        // are in the image, so a `d`/`b` type letter must not be counted as
+        // DRAM (#1832). Everything else stays type-letter driven — `.iram*`
+        // storage is loaded from flash yet still consumes RAM, so the letter
+        // must keep winning there.
+        let region =
+            if attribution.is_some_and(|r| is_flash_mapped_output_section(&r.output_section)) {
+                Some(MemoryRegion::Flash)
+            } else if matches!(sym_type, 'V' | 'v') {
+                attribution
+                    .and_then(|r| region_from_output_section(&r.output_section))
+                    .or_else(|| classify_region(sym_type))
+            } else {
+                classify_region(sym_type)
+            };
         let Some(region) = region else {
             continue;
         };

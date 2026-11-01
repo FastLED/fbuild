@@ -169,7 +169,15 @@ pub(super) fn probe_elf(map: &mut FineGrainedSymbolMap, path: &Path) -> Result<b
         {
             continue;
         }
-        let region = if section.kind() == object::SectionKind::UninitializedData
+        let section_name = section.name().unwrap_or("");
+        // Placement in a flash-mapped output section wins over the
+        // writable flag: `.data.rel.ro` vtables/typeinfo are SHF_WRITE
+        // before relocation, yet the linker lands them in
+        // `.flash.rodata`, where they are read-only bytes of the image
+        // (FastLED/fbuild#1832).
+        let region = if is_flash_mapped_output_section(section_name) {
+            MemoryRegion::Flash
+        } else if section.kind() == object::SectionKind::UninitializedData
             || matches!(section.flags(), object::SectionFlags::Elf {sh_flags} if sh_flags & u64::from(object::elf::SHF_WRITE) != 0)
         {
             MemoryRegion::Ram
@@ -178,7 +186,7 @@ pub(super) fn probe_elf(map: &mut FineGrainedSymbolMap, path: &Path) -> Result<b
         };
         weak.insert(
             (name.to_string(), symbol.address()),
-            (region, section.name().unwrap_or("").to_string()),
+            (region, section_name.to_string()),
         );
     }
     map.symbols.retain_mut(|symbol| {

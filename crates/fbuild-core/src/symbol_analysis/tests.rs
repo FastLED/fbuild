@@ -207,6 +207,77 @@ fn build_fine_grained_map_attributes_symbols() {
     assert_eq!(map.total_ram, 0);
 }
 
+// ---------------- Issue #1832: flash-mapped rodata is not RAM ----------------
+
+/// ESP-IDF emits `__func__`/`__FUNCTION__` string literals with an nm
+/// type letter of `d` (they start in `.data.__func__` input sections),
+/// but the linker folds them into the flash-mapped `.flash.rodata`
+/// output section.  The output section is the ground truth for where
+/// the bytes physically live, so such a symbol must be `flash` even
+/// though `classify_region('d')` says RAM — otherwise `total_ram`
+/// counts flash constants as DRAM and budget guards fire spuriously
+/// (FastLED/FastLED#4982).
+#[test]
+fn build_fine_grained_map_flash_rodata_beats_nm_type_letter() {
+    let ranges = vec![
+        InputSectionRange {
+            addr: 0x3c000020,
+            size: 0x40,
+            output_section: ".flash.rodata".into(),
+            input_section: ".rodata.__func__.0".into(),
+            archive: Some("libesp_common.a".into()),
+            object: "esp_err_to_name.c.obj".into(),
+        },
+        InputSectionRange {
+            addr: 0x3fc80000,
+            size: 0x40,
+            output_section: ".dram0.data".into(),
+            input_section: ".data.counter".into(),
+            archive: Some("libFastLED.a".into()),
+            object: "blink.cpp.o".into(),
+        },
+        InputSectionRange {
+            addr: 0x40080000,
+            size: 0x40,
+            output_section: ".iram0.data".into(),
+            input_section: ".data.hot".into(),
+            archive: Some("libFastLED.a".into()),
+            object: "isr.cpp.o".into(),
+        },
+    ];
+    let nm = vec![
+        (0x3c000020u64, 0x10u64, 'd', "__func__0".to_string()),
+        (0x3c000030u64, 0x10u64, 'V', "weak_flash_str".to_string()),
+        (0x3fc80000u64, 0x20u64, 'd', "counter".to_string()),
+        (0x40080000u64, 0x08u64, 'd', "hot_isr_state".to_string()),
+    ];
+    let demangled: Vec<String> = nm.iter().map(|(_, _, _, n)| n.clone()).collect();
+    let map = build_fine_grained_map("fw.elf".into(), None, nm, demangled, ranges);
+
+    let by_name = |name: &str| {
+        map.symbols
+            .iter()
+            .find(|s| s.mangled == name)
+            .unwrap_or_else(|| panic!("{name} missing"))
+    };
+    assert_eq!(
+        by_name("__func__0").region,
+        MemoryRegion::Flash,
+        ".flash.rodata is in the image, not DRAM, whatever nm says (#1832)"
+    );
+    assert_eq!(by_name("weak_flash_str").region, MemoryRegion::Flash);
+    assert_eq!(by_name("counter").region, MemoryRegion::Ram);
+    // `.iram0.data` is populated from the image at boot but occupies
+    // real DRAM: the type letter stays authoritative there.
+    assert_eq!(
+        by_name("hot_isr_state").region,
+        MemoryRegion::Ram,
+        "IRAM static storage still consumes DRAM (#1832)"
+    );
+    assert_eq!(map.total_flash, 0x20);
+    assert_eq!(map.total_ram, 0x28);
+}
+
 // ---------------- Issue #425: map-derived owner extraction ----------------
 
 #[test]
