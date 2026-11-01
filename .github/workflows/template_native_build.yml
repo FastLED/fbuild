@@ -218,9 +218,12 @@ jobs:
             dsymutil --version
             exit 0
           fi
+          # No `find -L /usr/bin`: the runner's /usr/bin/X11 -> . symlink loop
+          # makes find exit 1, which pipefail turns into "not found" even when
+          # the tool is there. Glob the versioned names directly instead.
           find_dsymutil() {
             command -v llvm-dsymutil 2>/dev/null && return 0
-            find -L /usr/bin -maxdepth 1 -type f -executable -name 'llvm-dsymutil*' -print | sort -V | tail -n 1 | grep .
+            { ls -1 /usr/bin/llvm-dsymutil-* /usr/lib/llvm-*/bin/dsymutil 2>/dev/null || true; } | sort -V | tail -n 1 | grep .
           }
           if ! llvm_dsymutil="$(find_dsymutil)"; then
             sudo apt-get -o Acquire::http::Timeout=30 -o Acquire::Retries=3 update
