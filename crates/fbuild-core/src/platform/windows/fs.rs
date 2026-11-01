@@ -19,7 +19,7 @@ impl FileSystemPolicyKey {
             .encode_utf16()
             .chain(Some(0))
             .collect::<Vec<_>>();
-        let mut key = 0;
+        let mut key = std::ptr::null_mut();
         // SAFETY: `path` is a live NUL-terminated UTF-16 buffer and `key` is
         // writable storage. This opens only the fixed HKLM filesystem key.
         let status =
@@ -395,7 +395,7 @@ pub(crate) fn cancel_blocking_io(worker: &std::thread::JoinHandle<()>) -> std::i
 
     // SAFETY: `as_raw_handle` is valid for the lifetime of `worker`; Windows
     // permits cancellation through another live thread's handle.
-    Ok(unsafe { CancelSynchronousIo(worker.as_raw_handle() as isize) } != 0)
+    Ok(unsafe { CancelSynchronousIo(worker.as_raw_handle()) } != 0)
 }
 
 #[cfg(test)]
