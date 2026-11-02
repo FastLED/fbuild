@@ -283,7 +283,8 @@ jobs:
   queue-cache-janitor:
     name: End-of-queue cache janitor
     needs: [policy, dylint, gate]
-    if: always() && github.event_name == 'merge_group'
+    # Only the standalone run sweeps; ci-minimal's call leaves it to ci-minimal.
+    if: always() && github.event_name == 'merge_group' && github.workflow == 'Dylint'
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     concurrency:
