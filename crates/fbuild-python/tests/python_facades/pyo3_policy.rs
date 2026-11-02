@@ -146,8 +146,8 @@ fn pyo3_029_policy_stays_target_python_independent() {
     // blessed path is the only entry point left. The template collapsed four
     // per-target branches into these two commands.
     for command in [
-        "PYO3_NO_PYTHON=1 soldr build --release \\",
-        "soldr build --release --target ${{ inputs.target }} \\",
+        "PYO3_NO_PYTHON=1 soldr build --profile \"$CARGO_PROFILE_NAME\" \\",
+        "soldr build --profile \"$CARGO_PROFILE_NAME\" --target ${{ inputs.target }} \\",
     ] {
         assert!(
             workflow.contains(command),

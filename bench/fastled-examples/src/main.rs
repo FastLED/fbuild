@@ -41,8 +41,9 @@
 //!
 //! `--max-warm-ms <f64>` enforces AC#5: each example whose warm timing
 //! exceeds the threshold causes the binary to exit 1 after the table is
-//! printed. Wired in CI at 50 ms (`~25x` headroom over current ~1-2 ms
-//! warm numbers — absorbs runner noise without false positives).
+//! printed. Wired in CI at 50 ms; measured warm timings are ~11 ms on the
+//! 2026-05 Windows capture and 31-41 ms on a 16-core Linux host (2026-11-01),
+//! so the headroom is 1.2-4.5x, not 25x — see `README.md`.
 //!
 //! Refs: #205 Phase 7 (AC#5), #218.
 

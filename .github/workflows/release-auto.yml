@@ -253,6 +253,10 @@ jobs:
             binary_ext: ".exe"
             linux_cross: false
             macos_cross: false
+            # Same carve-out as zccache's release matrix: lld-link's PDB on
+            # the aarch64 MSVC cross lane is not yet proven, so a missing
+            # sidecar warns instead of blocking the release.
+            require_debug_sidecars: "false"
 
     uses: ./.github/workflows/template_native_build.yml
     permissions:
@@ -267,6 +271,11 @@ jobs:
       macos_cross: ${{ matrix.macos_cross }}
       mac_cross_linux: ${{ matrix.mac_cross_linux == true }}
       ref: ${{ needs.prepare.outputs.release_ref }}
+      # Release-only profile: [profile.release] + fat LTO (see Cargo.toml).
+      cargo_profile: dist
+      # zccache idiom: an unset matrix key must mean "required". `!= false`
+      # does not work -- expressions coerce null and false both to 0.
+      require_debug_sidecars: ${{ (matrix.require_debug_sidecars || 'true') == 'true' }}
 
   full-ci:
     name: Full validation on release commit
@@ -359,6 +368,12 @@ jobs:
           pattern: binaries-*
           path: artifacts
 
+      - name: Download debug sidecars
+        uses: actions/download-artifact@v8
+        with:
+          pattern: debug-*
+          path: debug-artifacts
+
       - name: Package release archives
         shell: bash
         run: |
@@ -377,6 +392,23 @@ jobs:
             mkdir -p "$package_dir"
             cp -a "$artifact_dir"/. "$package_dir"/
 
+            if [[ "$target" == *windows* ]]; then
+              (cd pkg && zip -r "../dist/${package_name}.zip" "$package_name")
+            else
+              tar -C pkg -czf "dist/${package_name}.tar.gz" "$package_name"
+            fi
+          done
+
+          # Split debug info (.dwp / .dSYM / .pdb) ships as a separate
+          # `-debug` asset per target so the binaries and wheels stay slim.
+          for debug_dir in debug-artifacts/debug-*; do
+            [ -d "$debug_dir" ] || continue
+            [ -n "$(ls -A "$debug_dir")" ] || continue
+            target="${debug_dir#debug-artifacts/debug-}"
+            package_name="fbuild-${version}-${target}-debug"
+            rm -rf "pkg/${package_name}"
+            mkdir -p "pkg/${package_name}"
+            cp -a "$debug_dir"/. "pkg/${package_name}"/
             if [[ "$target" == *windows* ]]; then
               (cd pkg && zip -r "../dist/${package_name}.zip" "$package_name")
             else
@@ -466,6 +498,12 @@ jobs:
           wheels = publish.build_all_wheels(*meta)
           print(f"Built {len(wheels)} wheel(s)")
           PY
+
+      # Refuse wheels that embed debug info (it belongs in the GitHub-release
+      # `-debug` sidecars) or exceed the per-wheel / per-release size budget.
+      - name: Check wheels for debug info and size budget
+        shell: bash
+        run: python ci/wheel_check.py dist/wheels/*.whl
 
       - name: Check PyPI storage headroom
         shell: bash
